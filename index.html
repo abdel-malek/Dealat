@@ -34,12 +34,18 @@
 	<div class="social-fixed">
 		<!--	<span><i class="fas fa-arrow"></i></span>-->
 		<div class="social">
+			<!--
 
 			<span class="icon facebook"><i class="fab fa-facebook-square fa-2x"></i></span>
 			<span class="icon youtube"><i class="fab fa-youtube-square fa-2x"></i></span>
 			<span class="icon twitter"><i class="fab fa-twitter-square fa-2x"></i></span>
 			<span class="icon google"><i class="fab fa-google-plus-square fa-2x"></i></span>
-			<!--			<i class="fab fa-facebook-square fa-2x icon facebook"></i><i class="fab fa-youtube-square fa-2x icon youtube"></i><i class="fab fa-twitter-square fa-2x icon twitter"></i><i class="fab fa-google-plus-square fa-2x icon google"></i>-->
+			
+-->
+			<span class="icon facebook"><a href=""><img src="images/social-media/facebook.png" alt=""></a></span>
+			<span class="icon youtube"><a href=""><img src="images/social-media/youtube.png" alt=""></a></span>
+			<span class="icon twitter"><a href=""><img src="images/social-media/twitter.png" alt=""></a></span>
+			<span class="icon instagram"><a href=""><img src="images/social-media/instagram.png" alt=""></a></span>
 
 		</div>
 	</div>
@@ -79,7 +85,35 @@
 
 	<section>
 		<div class="container-fluid">
-			<!--			<div class="ads"></div>-->
+			<div class="ads-slider">
+				<!--
+				<div class="slide ">
+					<img class="d-block w-100" src="images/slider1.png" alt="First slide">
+				</div>
+				<div class="slide ">
+					<img class="d-block w-100" src="images/banner-772x250.jpg" alt="Second slide">
+				</div>
+				<div class="slide">
+					<img class="d-block w-100" src="images/slider1.png" alt="Third slide">
+				</div>
+-->
+				<div class="slide">
+					<a href="">
+						<div class="ad-image" style="background-image: url(images/slider1.png)"></div>
+					</a>
+				</div>
+				<div class="slide">
+					<a href="">
+						<div class="ad-image" style="background-image: url(images/banner-772x250.jpg)"></div>
+					</a>
+				</div>
+				<div class="slide">
+					<a href="">
+						<div class="ad-image" style="background-image: url(images/slider1.png)"></div>
+					</a>
+				</div>
+			</div>
+			<!--
 			<div id="ads-slider" class="carousel slide" data-ride="carousel" data-interval="2500">
 				<ol class="carousel-indicators">
 					<li data-target="#ads-slider" data-slide-to="0" class="active"></li>
@@ -98,6 +132,7 @@
 					</div>
 				</div>
 			</div>
+-->
 		</div>
 	</section>
 
@@ -117,8 +152,15 @@
 						<div class="download ios"><a href=""><img src="images/ios%20en%20black.png" height="45px" alt=""></a></div>
 					</div>
 					<!--					<div class="col-md-1"><button class="btn button2 filter">Filter</button></div>-->
-					<div class="col-md-5"><input type="search" class="form-control" placeholder="Search"></div>
+					<div class="col-md-5">
+						<div class="search-wrapper">
+							<input type="search" class="form-control" placeholder="Search">
+							<span class="icon"><i class="fas fa-search"></i></span>
+						</div>
+					</div>
+
 				</div>
+
 				<!--				<button class="btn button2 ad">Place an Ad</button>-->
 			</header>
 		</div>
@@ -126,7 +168,7 @@
 
 	<section class="products">
 		<div class="categories">
-			<div class="slider">
+			<div class="category-slider slick-slider">
 				<div class="category">
 					<img src="images/Categories/Art%20and%20music.png" width="60px" alt="Art and Music">
 					<h6>Art and Music</h6>
@@ -161,6 +203,15 @@
 				<div class="category"><img src="images/Categories/vehicls.png" width="60px" alt="Vehicles">
 					<h6>Vehicles</h6>
 				</div>
+				<div class="category"><img src="images/Categories/Clothes.png" width="60px" alt="Clothes">
+					<h6>Clothes</h6>
+				</div>
+				<div class="category"><img src="images/Categories/electronics.png" width="60px" alt="Electronics">
+					<h6>Electronics</h6>
+				</div>
+				<div class="category"><img src="images/Categories/furniture.png" width="60px" alt="Furniture">
+					<h6>Furniture</h6>
+				</div>
 			</div>
 		</div>
 
@@ -178,7 +229,7 @@
 						</ul>
 					</div>
 					<div class="row ">
-						<button class="btn button2 ad invisible">Place an Ad</button>
+						<!--						<button class="btn button2 ad invisible">Place an Ad</button>-->
 						<div class="col-md-6 col-lg-4 mix motors">
 							<div class="card mb-4">
 								<div class="overlay">
@@ -189,32 +240,21 @@
 									<div class="row">
 										<div class="col-7">
 											<div class="card-title">Product Title</div>
-											<div class="location"><span class="location-lbl">Location: </span><span class="location-val">Syria, Damascus</span></div>
-											<div class="status"><span class="status-lbl">Status: </span><span class="status-val">New</span></div>
+											<div class="location"><span class="location-lbl"></span><span class="location-val">Damascus</span></div>
+											<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
 										</div>
 										<div class="col-5">
 											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
-											<!--									<div class="rating">stars</div>-->
-											<div>
-												<fieldset class="rating">
-													<input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-													<input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-													<input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-													<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-													<input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-													<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-													<input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-													<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-													<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-													<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-												</fieldset>
-											</div>
 											<div class="clearfix"></div>
-											<div class="date"><span class="date-lbl">Published </span><span class="date-val">12/12/2015</span></div>
+											<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
 										</div>
 									</div>
 									<div class="price">
 										<div class="price-val">3000$</div>
+									</div>
+									<div class="fav">
+										<!--										<span class="text">Add to favorites</span>-->
+										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>
 									</div>
 								</div>
 							</div>
@@ -405,15 +445,19 @@
 					</div>
 				</div>
 				<div class="col-md-2 right-col">
-					<button class="btn button2 ad1 animated infinite pulse w-100">Place an Ad</button>
+					<button class="btn button2 place-ad animated infinite pulse w-100">Place an Ad</button>
 					<aside class="banners">
 						<div class="banner">
+							<button type="button" class="close">
+							  <span>&times;</span>
+							</button>
 							<a href=""><img src="images/af-coinbase-2.jpg" class="img-fluid" alt=""></a>
+
 						</div>
 						<div class="banner">
-							<a href=""><img src="images/af-coinbase-2.jpg" class="img-fluid" alt=""></a>
-						</div>
-						<div class="banner">
+							<button type="button" class="close">
+							  <span>&times;</span>
+							</button>
 							<a href=""><img src="images/af-coinbase-2.jpg" class="img-fluid" alt=""></a>
 						</div>
 					</aside>
@@ -456,7 +500,7 @@
 		</div>
 	</footer>
 
-	<!--card-modal-->
+	<!--card modal-->
 	<div id="card-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -467,7 +511,18 @@
 				</div>
 				<div class="modal-body">
 					<div class="card">
-						<div class="card-img-top" style="background-image: url(images/car3.png)"></div>
+
+						<div class="card-img-slider slick-slider">
+							<!--
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+-->
+							<div class="card-img-top" style="background-image: url(images/car1.png)"></div>
+							<div class="card-img-top" style="background-image: url(images/car2.jpg)"></div>
+							<div class="card-img-top" style="background-image: url(images/car3.png)"></div>
+							<div class="card-img-top" style="background-image: url(images/bike1.jpg)"></div>
+						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-12 mb-4 text-center">
@@ -475,17 +530,54 @@
 									<div class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam dolorum assumenda</div>
 								</div>
 								<div class="col-7">
-									<div class="location"><span class="location-lbl">Location: </span><span class="location-val">Syria, Damascus</span></div>
-									<div class="status"><span class="status-lbl">Status: </span><span class="status-val">New</span></div>
-									<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
-									<div class="seller"><span class="seller-lbl">Seller: </span><span class="seller-val">Jhon Doe</span></div>
+									
+									<div class="seller"><span class="seller-lbl">Seller Name: </span><span class="seller-val">Jhon Doe</span></div>
+									<div class="seller"><span class="rating-lbl">Seller Rating: </span>
+										<span class="rating-val">
+											<fieldset class="rating">
+												<span class="rate-group" data-value="5">
+													<input type="radio" id="star5" name="rating" value="5" />
+													<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												</span>
+
+												<div class="rate-group" data-value="4">
+													<input type="radio" id="star4" name="rating" value="4" />
+													<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+												</div>
+
+												<div class="rate-group" data-value="3">
+													<input type="radio" id="star3" name="rating" value="3" />
+													<label class="full" for="star3" title="Meh - 3 stars"></label>
+												</div>
+
+												<div class="rate-group" data-value="2">
+													<input type="radio" id="star2" name="rating" value="2" />
+													<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+												</div>
+
+												<div class="rate-group" data-value="1">
+													<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+												</div>
+
+											</fieldset>
+										<div class="clearfix"></div>
+										</span>
+									</div>
+									<h6 class="mb-1 mt-2">Contact Seller:</h6>
+									<div class="phone"><span class="phone-lbl">Phone: </span><span class="phone-val">123456789</span></div>
+									<div class="mobile"><span class="mobile-lbl">Mobile: </span><span class="mobile-val">09123456789</span></div>
+									<div class="whatsapp"><span class="whatsapp-lbl">WhatsApp: </span><span class="whatsapp-val">09123456789</span></div>
 								</div>
 								<div class="col-5">
-									<div class="views"><span class="views-lbl">Views </span><span class="views-val">350 </span></div>
+								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
+									<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
+									<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
+									<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 									<!--									<div class="likes"><span class="likes-lbl">Likes </span><span class="likes-val">350 </span></div>-->
 									<!--									<div class="rating">stars</div>-->
-									<div class="date"><span class="date-lbl">Published </span><span class="date-val">12/12/2015</span></div>
+									<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
 								</div>
+								<input type="text" class="form-control form-control-sm mt-2" placeholder="Send a message to the seller">
 							</div>
 							<div class="price">
 								<div class="price-val">3000$</div>
@@ -572,8 +664,6 @@
 						<span class="text">Sign in with:</span>
 					</div>
 -->
-
-
 					<form action="">
 						<div class="form-group">
 							<input type="text" class="form-control" name="user_name" placeholder="User Name">
@@ -607,8 +697,8 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+					  <span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
 					<form action="">
@@ -685,7 +775,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn button2 submit">Done</button>
-					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>
+					<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
 				</div>
 			</div>
 		</div>
@@ -728,7 +818,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn button2 submit">Authorize</button>
-					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>
+					<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
 				</div>
 			</div>
 		</div>
@@ -772,35 +862,55 @@
 	<script src="js/slick.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$('.slider').slick({
+			$('.ads-slider').slick({
+				infinite: true,
+				slidesToShow: 1,
+				mobileFirst: true,
+				swipeToSlide: true,
+				dots: true,
+				adaptiveHeight: false,
+				autoplay: true,
+				autoplaySpeed: 2000,
+				arrows: false,
+				speed: 500,
+				fade: true,
+				cssEase: 'linear',
+				pauseOnHover: false
+			});
+
+			$('#card-modal .card-img-slider').slick({
+				infinite: true,
+				slidesToShow: 1,
+				mobileFirst: true,
+				swipeToSlide: true
+			});
+
+			$('.category-slider').slick({
 				infinite: false,
 				slidesToShow: 3,
 				mobileFirst: true,
 				swipeToSlide: true,
-				nextArrow: '<span class="slider-arrow right"><i class="fas fa-angle-right"></i></span>',
-				prevArrow: '<span class="slider-arrow left"><i class="fas fa-angle-left"></i></span>',
-				//				speed: 300,
-				//				slidesToShow: 4,
-				//				slidesToScroll: 4,
+				touchThreshold: 20,
 				responsive: [{
 						breakpoint: 1024,
 						settings: {
 							slidesToShow: 10,
-							slidesToScroll: 3
+							swipeToSlide: true
+
 						}
 					},
 					{
 						breakpoint: 600,
 						settings: {
 							slidesToShow: 6,
-							slidesToScroll: 2
+							swipeToSlide: true
 						}
 					},
 					{
 						breakpoint: 480,
 						settings: {
 							slidesToShow: 4,
-							slidesToScroll: 1
+							swipeToSlide: true
 						}
 					}
 					// You can unslick at a given breakpoint now by adding:
