@@ -32,16 +32,8 @@
 
 <body class="home-page">
 	<div class="social-fixed">
-		<!--	<span><i class="fas fa-arrow"></i></span>-->
-		<div class="social">
-			<!--
-
-			<span class="icon facebook"><i class="fab fa-facebook-square fa-2x"></i></span>
-			<span class="icon youtube"><i class="fab fa-youtube-square fa-2x"></i></span>
-			<span class="icon twitter"><i class="fab fa-twitter-square fa-2x"></i></span>
-			<span class="icon google"><i class="fab fa-google-plus-square fa-2x"></i></span>
-			
--->
+			<span class="show-social"><i class="fas fa-angle-right"></i></span>
+		<div class="icons" data-show="0">
 			<span class="icon facebook"><a href=""><img src="images/social-media/facebook.png" alt=""></a></span>
 			<span class="icon youtube"><a href=""><img src="images/social-media/youtube.png" alt=""></a></span>
 			<span class="icon twitter"><a href=""><img src="images/social-media/twitter.png" alt=""></a></span>
@@ -52,18 +44,10 @@
 	<header class="home">
 		<div class="container">
 			<div class="row align-items-center">
-				<div class="col-sm-2 col-md-2 offset-1 offset-sm-0 offset-md-1">
-					<!--					<span class="logo"><a href=""><img class="" src="images/Dealat%20logo%20Red%20background.png" alt=""></a></span>-->
+				<div class="col-6 col-sm-3 col-lg-2  offset-sm-0 offset-md-1">
 					<span class="logo"><a href=""><img class="" src="images/Dealat%20logo%20Red%20background-lined.png" width="150px" alt=""></a></span>
-
 				</div>
-				<div class="col-sm-4 col-md-3">
-					<!--
-					<div class="title">
-						<h4 class="">Dealat</h4>
-						<h6>Your portal to a new world of ease</h6>
-					</div>
--->
+				<div class="col-5 col-sm-3 col-md-2 offset-1 offset-sm-0">
 					<div class="language-wrapper">
 						<div class="language-switch">
 
@@ -73,11 +57,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3 col-md-2 offset-md-2">
-					<button class="btn button1 login">Sign In</button>
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+					<!--					<button class="btn button1 login">Sign In</button>-->
+					<button class="btn button2 login">Sign In</button>
 				</div>
-				<div class="col-sm-3 col-md-2">
-					<button class="btn button1 register">Register</button>
+				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
+					<!--					<button class="btn button1 register">Register</button>-->
+					<button class="btn button2 register">Register</button>
 				</div>
 			</div>
 		</div>
@@ -113,46 +99,37 @@
 					</a>
 				</div>
 			</div>
-			<!--
-			<div id="ads-slider" class="carousel slide" data-ride="carousel" data-interval="2500">
-				<ol class="carousel-indicators">
-					<li data-target="#ads-slider" data-slide-to="0" class="active"></li>
-					<li data-target="#ads-slider" data-slide-to="1"></li>
-					<li data-target="#ads-slider" data-slide-to="2"></li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img class="d-block w-100" src="images/slider1.png" alt="First slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block w-100" src="images/banner-772x250.jpg" alt="Second slide">
-					</div>
-					<div class="carousel-item">
-						<img class="d-block w-100" src="images/slider1.png" alt="Third slide">
-					</div>
-				</div>
-			</div>
--->
 		</div>
 	</section>
 
 	<section class="search">
 		<div class="container">
 			<header>
-				<div class="row align-items-center text-center">
-					<div class="col-sm-1"><span class="logo"><img src="images/Dealat%20logo%20white%20background.png" width="60px" alt=""></span></div>
+				<div class="row align-items-center">
+					<div class="col-0 col-md-2">
+						<span class="logo"><img src="images/Dealat%20logo%20white%20background.png" width="60px" alt=""></span>
+					</div>
 					<!--
 					<div class="col-md-5 col-md-5">
 						<div class="download android"><a href=""><button class="btn button1"><i class="fab fa-android fa-lg"></i> Download Android App</button></a></div>
 						<div class="download ios"><a href=""><button class="btn button1"><i class="fab fa-apple fa-lg"></i> Download ios App</button></a></div>
 					</div>
 -->
+					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
+						<div class="download android text-center"><a href=""><img src="images/google-play-badge.png" height="45px" alt=""></a></div>
+					</div>
+					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
+						<div class="download ios  text-center"><a href=""><img src="images/ios%20en%20black.png" height="45px" alt=""></a></div>
+					</div>
+
+					<!--
 					<div class="col-md-5 col-md-5">
 						<div class="download android"><a href=""><img src="images/google-play-badge.png" height="45px" alt=""></a></div>
 						<div class="download ios"><a href=""><img src="images/ios%20en%20black.png" height="45px" alt=""></a></div>
 					</div>
-					<!--					<div class="col-md-1"><button class="btn button2 filter">Filter</button></div>-->
-					<div class="col-md-5">
+-->
+
+					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
 						<div class="search-wrapper">
 							<input type="search" class="form-control" placeholder="Search">
 							<span class="icon"><i class="fas fa-search"></i></span>
@@ -220,30 +197,40 @@
 				<div class="col-md-10 left-col">
 					<div class="controls">
 						<div class="category-name">Vehicles</div>
-						<ul>
-							<li class="selected" data-filter="all">All</li>
-							<li data-filter=".cars">Cars</li>
-							<li data-filter=".bicycle">Bicycles</li>
-							<li data-filter=".motors">Motors</li>
-							<li data-filter=".accessories">Cars Accessories</li>
-						</ul>
+						<div class="nav-wrapper">
+
+							<button class="nav-scroller prev d-none">
+							<i class="fas fa-angle-left fa-lg"></i>
+						</button>
+							<button class="nav-scroller next d-none">
+							<i class="fas fa-angle-right fa-lg"></i>
+						</button>
+							<ul>
+								<li class="selected" data-filter="all">All</li>
+								<li data-filter=".cars">Cars</li>
+								<li data-filter=".bicycle">Bicycles</li>
+								<li data-filter=".motors">Motors</li>
+								<li data-filter=".accessories">Cars Accessories</li>
+							</ul>
+						</div>
 					</div>
 					<div class="row ">
 						<!--						<button class="btn button2 ad invisible">Place an Ad</button>-->
-						<div class="col-md-6 col-lg-4 mix motors">
+						<div class="col-sm-6 col-lg-4 mix motors">
 							<div class="card mb-4">
-								<div class="overlay">
-									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
-								</div>
-								<div class="card-img-top" style="background-image: url(images/motor1.jpg)"></div>
+									<div class="overlay">
+										<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
+									</div>
+									<div class="card-img-top" style="background-image: url(images/motor1.jpg)">
+
+									</div>
 								<div class="card-body">
 									<div class="row">
-										<div class="col-7">
+										<div class="col-7 mt-2">
 											<div class="card-title">Product Title</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val">Damascus</span></div>
-											<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
 										</div>
-										<div class="col-5">
+										<div class="col-5 mt-2">
 											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 											<div class="clearfix"></div>
 											<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
@@ -260,7 +247,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-lg-4 mix cars">
+						<div class="col-sm-6 col-lg-4 mix cars">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -286,7 +273,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-lg-4 mix bicycle">
+						<div class="col-sm-6 col-lg-4 mix bicycle">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -311,7 +298,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-lg-4 mix cars">
+						<div class="col-sm-6 col-lg-4 mix cars">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -338,7 +325,7 @@
 						</div>
 
 
-						<div class="col-md-6 col-lg-4 mix accessories">
+						<div class="col-sm-6 col-lg-4 mix accessories">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -364,7 +351,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-lg-4 mix cars">
+						<div class="col-sm-6 col-lg-4 mix cars">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -390,7 +377,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-lg-4 mix motors">
+						<div class="col-sm-6 col-lg-4 mix motors">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -416,7 +403,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-lg-4 mix accessories">
+						<div class="col-sm-6 col-lg-4 mix accessories">
 							<div class="card mb-4">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -444,8 +431,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-2 right-col">
-					<button class="btn button2 place-ad animated infinite pulse w-100">Place an Ad</button>
+				<div class="col-md-2 right-col order-first order-md-last">
+					<button class="btn button2 place-ad animated infinite pulse ">Place an Ad</button>
 					<aside class="banners">
 						<div class="banner">
 							<button type="button" class="close">
@@ -530,7 +517,7 @@
 									<div class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam dolorum assumenda</div>
 								</div>
 								<div class="col-7">
-									
+
 									<div class="seller"><span class="seller-lbl">Seller Name: </span><span class="seller-val">Jhon Doe</span></div>
 									<div class="seller"><span class="rating-lbl">Seller Rating: </span>
 										<span class="rating-val">
@@ -540,36 +527,39 @@
 													<label class="full" for="star5" title="Awesome - 5 stars"></label>
 												</span>
 
-												<div class="rate-group" data-value="4">
-													<input type="radio" id="star4" name="rating" value="4" />
-													<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-												</div>
+										<div class="rate-group" data-value="4">
+											<input type="radio" id="star4" name="rating" value="4" />
+											<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+										</div>
 
-												<div class="rate-group" data-value="3">
-													<input type="radio" id="star3" name="rating" value="3" />
-													<label class="full" for="star3" title="Meh - 3 stars"></label>
-												</div>
+										<div class="rate-group" data-value="3">
+											<input type="radio" id="star3" name="rating" value="3" />
+											<label class="full" for="star3" title="Meh - 3 stars"></label>
+										</div>
 
-												<div class="rate-group" data-value="2">
-													<input type="radio" id="star2" name="rating" value="2" />
-													<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-												</div>
+										<div class="rate-group" data-value="2">
+											<input type="radio" id="star2" name="rating" value="2" />
+											<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+										</div>
 
-												<div class="rate-group" data-value="1">
-													<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-												</div>
+										<div class="rate-group" data-value="1">
+											<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+										</div>
 
-											</fieldset>
+										</fieldset>
 										<div class="clearfix"></div>
 										</span>
 									</div>
-									<h6 class="mb-1 mt-2">Contact Seller:</h6>
-									<div class="phone"><span class="phone-lbl">Phone: </span><span class="phone-val">123456789</span></div>
-									<div class="mobile"><span class="mobile-lbl">Mobile: </span><span class="mobile-val">09123456789</span></div>
-									<div class="whatsapp"><span class="whatsapp-lbl">WhatsApp: </span><span class="whatsapp-val">09123456789</span></div>
+									<details>
+										<summary><span class="mb-1 mt-2">Contact Information</span></summary>
+										<div class="phone"><span class="phone-lbl">Phone: </span><span class="phone-val">123456789</span></div>
+										<div class="mobile"><span class="mobile-lbl">Mobile: </span><span class="mobile-val">09123456789</span></div>
+										<div class="whatsapp"><span class="whatsapp-lbl">WhatsApp: </span><span class="whatsapp-val">09123456789</span></div>
+									</details>
+
 								</div>
 								<div class="col-5">
-								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
+									<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
 									<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
 									<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
 									<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>

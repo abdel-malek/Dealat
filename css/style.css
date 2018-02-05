@@ -3,6 +3,7 @@ html,
 body {
   font-family: sans-serif;
   font-size: 18px;
+  color: #333;
   padding: 0px;
   margin: 0px;
   background-color: #eeeeee; }
@@ -78,6 +79,10 @@ button.close:hover {
   color: #c30a30;
   opacity: 1; }
 
+button:focus,
+summary:focus {
+  outline: none; }
+
 .slick-slider {
   margin: auto;
   width: 100%;
@@ -110,25 +115,176 @@ button.close:hover {
   content: "\f105";
   position: relative; }
 
+.search-page .products .card,
+.profile-page .products .card, .home-page .products .card {
+  font-size: .7rem;
+  margin: auto;
+  box-shadow: 0px 6px 20px 0px #a8a8a8;
+  position: relative; }
+  .search-page .products .card .card-body,
+  .profile-page .products .card .card-body, .home-page .products .card .card-body {
+    background-color: #fff;
+    padding: 10px;
+    position: relative; }
+  .search-page .products .card .fav,
+  .profile-page .products .card .fav, .home-page .products .card .fav {
+    position: absolute;
+    text-align: center;
+    top: -35px;
+    right: 0px;
+    z-index: 3;
+    color: #999;
+    font-size: .9rem; }
+    .search-page .products .card .fav .icon,
+    .profile-page .products .card .fav .icon, .home-page .products .card .fav .icon {
+      transition: 0.1s; }
+    .search-page .products .card .fav .icon:hover,
+    .profile-page .products .card .fav .icon:hover, .home-page .products .card .fav .icon:hover {
+      font-size: .95rem;
+      color: orange;
+      cursor: pointer; }
+  .search-page .products .card .price,
+  .profile-page .products .card .price, .home-page .products .card .price {
+    position: absolute;
+    font-weight: bold;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: #c30a30;
+    text-align: center;
+    z-index: 1;
+    color: #fff;
+    font-size: .9rem;
+    box-shadow: 2px 1px 10px 0px #a8a8a8; }
+  .search-page .products .card .price-val,
+  .profile-page .products .card .price-val, .home-page .products .card .price-val {
+    margin-top: 35%; }
+  .search-page .products .card .overlay,
+  .profile-page .products .card .overlay, .home-page .products .card .overlay {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: #c30a30;
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+    transition: .2s;
+    transition-timing-function: step-middle; }
+    .search-page .products .card .overlay .text,
+    .profile-page .products .card .overlay .text, .home-page .products .card .overlay .text {
+      color: white;
+      width: 100%;
+      font-size: .9rem;
+      letter-spacing: 1.5px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      text-align: center; }
+  .search-page .products .card .card-img-top,
+  .profile-page .products .card .card-img-top, .home-page .products .card .card-img-top {
+    background: no-repeat center;
+    background-size: contain;
+    display: block;
+    height: 200px;
+    position: relative;
+    z-index: 0;
+    transition: 0.2s; }
+  .search-page .products .card .card-title,
+  .profile-page .products .card .card-title, .home-page .products .card .card-title {
+    font-weight: bold;
+    margin-bottom: 0; }
+  .search-page .products .card fieldset,
+  .profile-page .products .card fieldset, .home-page .products .card fieldset {
+    font-size: 0.6rem; }
+
+.search-page .products .card,
+.profile-page .products .card {
+  width: 95%;
+  min-height: 200px; }
+  .search-page .products .card .container,
+  .profile-page .products .card .container {
+    padding-left: 0; }
+  .search-page .products .card .card-left,
+  .profile-page .products .card .card-left {
+    height: 100%;
+    min-height: 200px; }
+  .search-page .products .card .card-img-top,
+  .profile-page .products .card .card-img-top {
+    height: 100%; }
+  .search-page .products .card .price,
+  .profile-page .products .card .price {
+    bottom: 5%;
+    left: -35px; }
+  .search-page .products .card .card-body,
+  .profile-page .products .card .card-body {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100%; }
+    .search-page .products .card .card-body .details,
+    .profile-page .products .card .card-body .details {
+      max-height: 55px;
+      max-width: 100%;
+      overflow: auto; }
+.search-page .products .card:hover .overlay,
+.profile-page .products .card:hover .overlay {
+  height: 12%;
+  cursor: pointer; }
+.search-page .products .card:hover .card-img-top,
+.profile-page .products .card:hover .card-img-top {
+  cursor: pointer; }
+
+.home-page .products .card {
+  width: 95%;
+  min-height: 320px; }
+  .home-page .products .card .card-body {
+    padding-left: 40px; }
+  .home-page .products .card .price {
+    top: -35px;
+    left: -30px; }
+  .home-page .products .card .card-img-top {
+    height: 200px; }
+.home-page .products .card:hover .overlay {
+  height: 12%;
+  cursor: pointer; }
+.home-page .products .card:hover .card-img-top {
+  transform: translateY(30px);
+  cursor: pointer; }
+
 /*End Main Rules*/
 .social-fixed {
   position: fixed;
-  left: -0;
   top: 35vh;
-  z-index: 100;
-  background-color: #eee;
-  border-radius: .5rem; }
-  .social-fixed .icon {
-    display: block;
-    padding: 0;
-    margin: 0;
+  z-index: 100; }
+  .social-fixed .show-social {
+    padding: 3px 5px;
+    padding-left: 4px;
+    background-color: #c30a30;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
     cursor: pointer;
-    transition: .2s;
-    line-height: normal; }
-    .social-fixed .icon img {
-      width: 35px; }
-  .social-fixed .icon:hover {
-    transform: scale(1.1); }
+    color: #eee; }
+  .social-fixed .icons {
+    position: relative;
+    left: -30px;
+    background-color: #eee;
+    transition: .2s; }
+    .social-fixed .icons .icon {
+      display: block;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      transition: .2s;
+      line-height: normal; }
+      .social-fixed .icons .icon img {
+        width: 35px; }
+    .social-fixed .icons .icon:hover {
+      transform: scale(1.1); }
 
 .social-fixed:hover {
   left: 0; }
@@ -141,6 +297,8 @@ header.home {
     min-height: 60px; }
   header.home .logo {
     background: #c30a30; }
+    header.home .logo img {
+      width: 100%; }
   header.home .language-wrapper .language-switch {
     text-transform: uppercase; }
   header.home .language-wrapper .language-switch a {
@@ -160,10 +318,11 @@ header.home {
     margin-bottom: 0; }
   header.home .title h6 {
     font-size: 0.7rem; }
-  header.home .button1 {
+  header.home .button2 {
     width: 100%;
-    margin-bottom: 3px; }
-  header.home .button1:hover {
+    margin-bottom: 3px;
+    border: 2px solid #fff; }
+  header.home .button2:hover {
     border: 2px solid #fff; }
 
 .ads-slider {
@@ -182,14 +341,9 @@ header.home {
 section.search header {
   margin-top: 20px;
   margin-bottom: 20px; }
-  section.search header .download {
-    text-align: left;
-    display: inline-block; }
-    section.search header .download .btn {
-      box-shadow: 0px 3px 10px 0px #a8a8a8; }
-  section.search header .android {
-    margin-bottom: 8px;
-    margin-right: 25px; }
+  section.search header .download img {
+    height: 45px;
+    max-width: 153px; }
   section.search header .search-wrapper {
     position: relative; }
     section.search header .search-wrapper input[type="search"] {
@@ -247,38 +401,6 @@ section.search header {
     .categories .slick-next {
       right: -10px; } }
 
-.home-page .card-body {
-  background-color: #fff; }
-  .home-page .card-body .price {
-    position: absolute;
-    font-weight: bold;
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    background-color: #c30a30;
-    text-align: center;
-    top: -35px;
-    left: -30px;
-    z-index: 1;
-    color: #fff;
-    font-size: .9rem;
-    box-shadow: 0px 1px 10px 0px #a8a8a8; }
-  .home-page .card-body .price-val {
-    margin-top: 35%; }
-  .home-page .card-body .fav {
-    position: absolute;
-    text-align: center;
-    top: -35px;
-    right: 0px;
-    z-index: 3;
-    color: #999;
-    font-size: .9rem; }
-    .home-page .card-body .fav .icon {
-      transition: 0.1s; }
-    .home-page .card-body .fav .icon:hover {
-      font-size: .95rem;
-      color: orange;
-      cursor: pointer; }
 .home-page .products {
   margin-top: 25px;
   margin-bottom: 30px;
@@ -294,6 +416,8 @@ section.search header {
       margin-right: auto; }
     .home-page .products .main .right-col {
       padding-right: 20px; }
+      .home-page .products .main .right-col .place-ad {
+        width: 100%; }
       .home-page .products .main .right-col .banners {
         margin-top: 50px; }
       .home-page .products .main .right-col .banner {
@@ -302,23 +426,48 @@ section.search header {
         .home-page .products .main .right-col .banner .close {
           top: -10px;
           right: -10px; }
+    @media (max-width: 768px) {
+      .home-page .products .main .right-col {
+        padding-left: 20px; }
+        .home-page .products .main .right-col .place-ad {
+          width: 75%; }
+      .home-page .products .main .banners {
+        display: none; } }
   .home-page .products .controls {
     margin-top: 10px;
     position: relative;
     margin-bottom: 30px; }
+    .home-page .products .controls .nav-wrapper {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid #c30a30; }
+    .home-page .products .controls .nav-scroller {
+      border: none;
+      color: #c30a30;
+      cursor: pointer;
+      background-color: #eee;
+      position: absolute; }
+    .home-page .products .controls .nav-scroller.prev {
+      left: 0; }
+    .home-page .products .controls .nav-scroller.next {
+      right: 0; }
     .home-page .products .controls .category-name {
       position: absolute;
       left: -30px;
-      bottom: -32%;
+      bottom: -72%;
       background-color: #eee;
       padding-right: 5px;
       color: #c30a30;
       font-size: .85rem;
-      font-weight: bold; }
+      font-weight: bold;
+      z-index: 1; }
     .home-page .products .controls ul {
       list-style: none;
       margin: 0;
-      border-bottom: 1px solid #c30a30; }
+      display: inline;
+      white-space: nowrap;
+      transition: 0.2s; }
     .home-page .products .controls li {
       display: inline-block;
       margin-right: 40px;
@@ -327,159 +476,95 @@ section.search header {
       color: #c30a30; }
     .home-page .products .controls li:hover {
       cursor: pointer; }
-  .home-page .products .card {
-    font-size: .7rem;
-    width: 95%;
-    min-height: 320px;
-    margin: auto;
-    box-shadow: 0px 6px 20px 0px #a8a8a8;
-    position: relative; }
-    .home-page .products .card .overlay {
-      position: absolute;
-      width: 100%;
-      height: 0;
-      top: 0;
-      right: 0;
-      left: 0;
-      overflow: hidden;
-      background-color: #c30a30;
-      color: #fff;
-      text-align: center;
-      z-index: 2;
-      transition: .2s;
-      transition-timing-function: step-middle; }
-      .home-page .products .card .overlay .text {
-        color: white;
-        width: 100%;
-        font-size: .9rem;
-        letter-spacing: 1.5px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center; }
-    .home-page .products .card .card-img-top {
-      background: no-repeat center;
-      background-size: cover;
-      display: block;
-      height: 200px;
-      position: relative;
-      z-index: 0;
-      transition: 0.2s; }
-    .home-page .products .card .card-body {
-      padding: 10px;
-      padding-left: 40px;
-      position: relative; }
-      .home-page .products .card .card-body .date {
-        font-size: 0.6rem; }
-    .home-page .products .card .card-title {
-      font-weight: bold;
-      margin-bottom: 0; }
-    .home-page .products .card fieldset {
-      font-size: 0.6rem; }
-  .home-page .products .card:hover .overlay {
-    height: 12%;
-    cursor: pointer; }
-  .home-page .products .card:hover .card-img-top {
-    transform: translateY(30px); }
 
-.search-page .products {
+.search-page .products,
+.profile-page .products {
   margin-top: 25px;
   margin-bottom: 30px; }
-  .search-page .products .main {
+  .search-page .products .main,
+  .profile-page .products .main {
     padding-top: 40px; }
-    .search-page .products .main .left-col {
+    .search-page .products .main .left-col,
+    .profile-page .products .main .left-col {
       padding-right: 45px;
       padding-left: 45px;
       margin-left: auto;
       margin-right: auto; }
-    .search-page .products .main .right-col {
+    .search-page .products .main .right-col,
+    .profile-page .products .main .right-col {
       padding-right: 20px; }
-      .search-page .products .main .right-col .banners {
+      .search-page .products .main .right-col .banners,
+      .profile-page .products .main .right-col .banners {
         margin-top: 50px; }
-      .search-page .products .main .right-col .banner {
+      .search-page .products .main .right-col .banner,
+      .profile-page .products .main .right-col .banner {
         margin-bottom: 30px; }
-  .search-page .products .card {
-    font-size: .7rem;
-    width: 95%;
-    min-height: 200px;
-    margin: auto;
-    box-shadow: 0px 6px 20px 0px #a8a8a8;
-    position: relative; }
-    .search-page .products .card .container {
-      padding-left: 0; }
-    .search-page .products .card .overlay {
-      position: absolute;
-      width: 100%;
-      height: 0;
-      top: 0;
-      right: 0;
-      left: 0;
-      overflow: hidden;
-      background-color: #c30a30;
-      color: #fff;
-      text-align: center;
-      z-index: 2;
-      transition: .2s;
-      transition-timing-function: step-middle; }
-      .search-page .products .card .overlay .text {
-        color: white;
-        width: 100%;
-        font-size: .9rem;
-        letter-spacing: 1.5px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center; }
-    .search-page .products .card .card-left {
-      height: 100%;
-      min-height: 200px; }
-      .search-page .products .card .card-left .card-img-top {
-        background: no-repeat center;
-        background-size: 100%;
-        display: block;
-        height: 100%;
-        position: relative;
-        z-index: 0;
-        transition: .2s; }
-      .search-page .products .card .card-left .price {
-        position: absolute;
-        font-weight: bold;
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-        background-color: #c30a30;
-        text-align: center;
-        bottom: 5%;
-        left: -35px;
-        z-index: 1;
-        color: #fff;
-        font-size: .9rem;
-        box-shadow: 4px 4px 18px 0px #666; }
-      .search-page .products .card .card-left .price-val {
-        margin-top: 35%; }
-    .search-page .products .card .card-body {
-      padding: 10px;
-      padding-top: 30px;
-      padding-bottom: 30px;
-      position: relative;
-      height: 100%; }
-      .search-page .products .card .card-body .details {
-        max-height: 55px;
-        max-width: 100%;
-        overflow: auto; }
-    .search-page .products .card .card-title {
-      font-weight: bold;
-      margin-bottom: 0; }
-    .search-page .products .card fieldset {
-      font-size: 0.6rem; }
-  .search-page .products .card:hover {
-    cursor: pointer; }
-    .search-page .products .card:hover .overlay {
-      height: 12%; }
+
+.profile-page .user-details {
+  font-size: .85rem;
+  color: #333; }
+  .profile-page .user-details .default-img,
+  .profile-page .user-details .image {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #fff;
+    border-radius: 50%; }
+    .profile-page .user-details .default-img .image,
+    .profile-page .user-details .image .image {
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat; }
+.profile-page .my-ads .status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #c30a30;
+  font-size: 1rem; }
+.profile-page .my-ads .card:hover .overlay {
+  height: 0; }
+.profile-page .my-ads .card:hover .card-img-top {
+  cursor: auto; }
+.profile-page #profile-tabs .tab {
+  padding-right: 10%; }
+.profile-page #profile-tabs .etabs {
+  text-align: center;
+  border-bottom: solid 1px #c30a30; }
+.profile-page #profile-tabs .tab {
+  display: inline-block;
+  width: calc(90% / 3); }
+.profile-page #profile-tabs .tab a {
+  font-size: .9rem;
+  line-height: 2em;
+  display: block;
+  padding: 0 10px;
+  outline: none;
+  color: #aaa;
+  text-decoration: none; }
+.profile-page #profile-tabs .tab:first-child a {
+  white-space: nowrap; }
+.profile-page #profile-tabs .tab a:hover {
+  color: #999; }
+.profile-page #profile-tabs .tab.active {
+  padding-top: 6px;
+  position: relative;
+  top: 1px; }
+.profile-page #profile-tabs .tab a.active {
+  font-weight: bold;
+  color: #c30a30; }
+.profile-page #profile-tabs .tab-container .panel-container {
+  border: solid #666 1px;
+  padding: 10px; }
+.profile-page #profile-tabs .chats ul {
+  list-style: none;
+  padding: 0; }
+.profile-page #profile-tabs .chats li {
+  padding: 10px;
+  transition: .2s; }
+.profile-page #profile-tabs .chats li:hover {
+  background-color: #fff;
+  cursor: pointer; }
+.profile-page #profile-tabs .chats hr {
+  margin: 0; }
 
 footer {
   min-height: 400px;
@@ -538,7 +623,8 @@ footer {
     padding: 0; }
   #card-modal .card {
     font-size: .8rem;
-    border: none; }
+    border: none;
+    box-shadow: 0 0 0 0; }
     #card-modal .card .card-img-top {
       background: no-repeat center;
       background-size: contain;
@@ -552,8 +638,21 @@ footer {
       padding-right: 40px;
       position: relative; }
       #card-modal .card .card-body .price {
+        position: absolute;
+        font-weight: bold;
         height: 80px;
-        width: 80px; }
+        width: 80px;
+        border-radius: 50%;
+        background-color: #c30a30;
+        text-align: center;
+        top: -35px;
+        left: -30px;
+        z-index: 1;
+        color: #fff;
+        font-size: .9rem;
+        box-shadow: 2px 1px 10px 0px #a8a8a8; }
+      #card-modal .card .card-body .price-val {
+        margin-top: 35%; }
       #card-modal .card .card-body .views-lbl,
       #card-modal .card .card-body .likes-lbl {
         padding-right: 20px; }
@@ -765,7 +864,5 @@ label {
 .rating label {
   color: #ddd;
   float: right; }
-
-/***** CSS Magic to Highlight Stars on Hover *****/
 
 /*# sourceMappingURL=style.css.map */

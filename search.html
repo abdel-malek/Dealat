@@ -32,35 +32,38 @@
 
 <body class="search-page">
 	<div class="social-fixed">
-		<!--	<span><i class="fas fa-arrow"></i></span>-->
-		<div class="social">
-
-			<span class="icon facebook"><i class="fab fa-facebook-square fa-2x"></i></span>
-			<span class="icon youtube"><i class="fab fa-youtube-square fa-2x"></i></span>
-			<span class="icon twitter"><i class="fab fa-twitter-square fa-2x"></i></span>
-			<span class="icon google"><i class="fab fa-google-plus-square fa-2x"></i></span>
-			<!--			<i class="fab fa-facebook-square fa-2x icon facebook"></i><i class="fab fa-youtube-square fa-2x icon youtube"></i><i class="fab fa-twitter-square fa-2x icon twitter"></i><i class="fab fa-google-plus-square fa-2x icon google"></i>-->
+			<span class="show-social"><i class="fas fa-angle-right"></i></span>
+		<div class="icons" data-show="0">
+			<span class="icon facebook"><a href=""><img src="images/social-media/facebook.png" alt=""></a></span>
+			<span class="icon youtube"><a href=""><img src="images/social-media/youtube.png" alt=""></a></span>
+			<span class="icon twitter"><a href=""><img src="images/social-media/twitter.png" alt=""></a></span>
+			<span class="icon instagram"><a href=""><img src="images/social-media/instagram.png" alt=""></a></span>
 
 		</div>
 	</div>
 	<header class="home">
 		<div class="container">
 			<div class="row align-items-center">
-				<div class="col-2 col-sm-2 col-md-2 offset-1 offset-sm-0 offset-md-1">
-					<span class="logo"><a href=""><img class="" width="50px" src="images/Dealat%20logo%20Red%20background.png" alt=""></a></span>
-
+				<div class="col-6 col-sm-3 col-lg-2  offset-sm-0 offset-md-1">
+					<span class="logo"><a href=""><img class="" src="images/Dealat%20logo%20Red%20background-lined.png" width="150px" alt=""></a></span>
 				</div>
-				<div class="col-9 col-sm-4 col-md-3">
-					<div class="title">
-						<h4 class="">Dealat</h4>
-						<h6>Your portal to a new world of ease</h6>
+				<div class="col-5 col-sm-3 col-md-2 offset-1 offset-sm-0">
+					<div class="language-wrapper">
+						<div class="language-switch">
+
+							<a class="selected" href="" data-locale="en">en</a>
+
+							<a class="" href="" data-locale="ar">ar</a>
+						</div>
 					</div>
 				</div>
-				<div class="col-sm-3 col-md-2 offset-md-2">
-					<button class="btn button1 login">Sign In</button>
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+					<!--					<button class="btn button1 login">Sign In</button>-->
+					<button class="btn button2 login">Sign In</button>
 				</div>
-				<div class="col-sm-3 col-md-2">
-					<button class="btn button1 register">Register</button>
+				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
+					<!--					<button class="btn button1 register">Register</button>-->
+					<button class="btn button2 register">Register</button>
 				</div>
 			</div>
 		</div>
@@ -89,12 +92,13 @@
 						<div class="col-md-6">
 							<div class="card mb-4">
 								<div class="container">
-									<div class="overlay">
-										<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
-									</div>
+									
 									<div class="row no-gutters">
 										<div class="col-md-6">
 											<div class="card-left">
+											<div class="overlay">
+										<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
+									</div>
 												<div class="card-img-top" style="background-image: url(images/motor1.jpg)"></div>
 
 												<div class="price">
@@ -248,7 +252,7 @@
 		</div>
 	</footer>
 
-	<!--card-modal-->
+	<!--card modal-->
 	<div id="card-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -259,7 +263,18 @@
 				</div>
 				<div class="modal-body">
 					<div class="card">
-						<div class="card-img-top" style="background-image: url(images/car3.png)"></div>
+
+						<div class="card-img-slider slick-slider">
+							<!--
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
+-->
+							<div class="card-img-top" style="background-image: url(images/car1.png)"></div>
+							<div class="card-img-top" style="background-image: url(images/car2.jpg)"></div>
+							<div class="card-img-top" style="background-image: url(images/car3.png)"></div>
+							<div class="card-img-top" style="background-image: url(images/bike1.jpg)"></div>
+						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-12 mb-4 text-center">
@@ -267,17 +282,57 @@
 									<div class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam dolorum assumenda</div>
 								</div>
 								<div class="col-7">
-									<div class="location"><span class="location-lbl">Location: </span><span class="location-val">Syria, Damascus</span></div>
-									<div class="status"><span class="status-lbl">Status: </span><span class="status-val">New</span></div>
-									<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
-									<div class="seller"><span class="seller-lbl">Seller: </span><span class="seller-val">Jhon Doe</span></div>
+
+									<div class="seller"><span class="seller-lbl">Seller Name: </span><span class="seller-val">Jhon Doe</span></div>
+									<div class="seller"><span class="rating-lbl">Seller Rating: </span>
+										<span class="rating-val">
+											<fieldset class="rating">
+												<span class="rate-group" data-value="5">
+													<input type="radio" id="star5" name="rating" value="5" />
+													<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												</span>
+
+										<div class="rate-group" data-value="4">
+											<input type="radio" id="star4" name="rating" value="4" />
+											<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+										</div>
+
+										<div class="rate-group" data-value="3">
+											<input type="radio" id="star3" name="rating" value="3" />
+											<label class="full" for="star3" title="Meh - 3 stars"></label>
+										</div>
+
+										<div class="rate-group" data-value="2">
+											<input type="radio" id="star2" name="rating" value="2" />
+											<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+										</div>
+
+										<div class="rate-group" data-value="1">
+											<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+										</div>
+
+										</fieldset>
+										<div class="clearfix"></div>
+										</span>
+									</div>
+									<details>
+										<summary><span class="mb-1 mt-2">Contact Information</span></summary>
+										<div class="phone"><span class="phone-lbl">Phone: </span><span class="phone-val">123456789</span></div>
+										<div class="mobile"><span class="mobile-lbl">Mobile: </span><span class="mobile-val">09123456789</span></div>
+										<div class="whatsapp"><span class="whatsapp-lbl">WhatsApp: </span><span class="whatsapp-val">09123456789</span></div>
+									</details>
+
 								</div>
 								<div class="col-5">
-									<div class="views"><span class="views-lbl">Views </span><span class="views-val">350 </span></div>
+									<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
+									<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
+									<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
+									<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 									<!--									<div class="likes"><span class="likes-lbl">Likes </span><span class="likes-val">350 </span></div>-->
 									<!--									<div class="rating">stars</div>-->
-									<div class="date"><span class="date-lbl">Published </span><span class="date-val">12/12/2015</span></div>
+									<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
 								</div>
+								<input type="text" class="form-control form-control-sm mt-2" placeholder="Send a message to the seller">
 							</div>
 							<div class="price">
 								<div class="price-val">3000$</div>
@@ -602,35 +657,55 @@
 	<script src="js/slick.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$('.slider').slick({
+			$('.ads-slider').slick({
+				infinite: true,
+				slidesToShow: 1,
+				mobileFirst: true,
+				swipeToSlide: true,
+				dots: true,
+				adaptiveHeight: false,
+				autoplay: true,
+				autoplaySpeed: 2000,
+				arrows: false,
+				speed: 500,
+				fade: true,
+				cssEase: 'linear',
+				pauseOnHover: false
+			});
+
+			$('#card-modal .card-img-slider').slick({
+				infinite: true,
+				slidesToShow: 1,
+				mobileFirst: true,
+				swipeToSlide: true
+			});
+
+			$('.category-slider').slick({
 				infinite: false,
 				slidesToShow: 3,
 				mobileFirst: true,
 				swipeToSlide: true,
-				nextArrow: '<span class="slider-arrow right"><i class="fas fa-angle-right"></i></span>',
-				prevArrow: '<span class="slider-arrow left"><i class="fas fa-angle-left"></i></span>',
-				//				speed: 300,
-				//				slidesToShow: 4,
-				//				slidesToScroll: 4,
+				touchThreshold: 20,
 				responsive: [{
 						breakpoint: 1024,
 						settings: {
 							slidesToShow: 10,
-							slidesToScroll: 3
+							swipeToSlide: true
+
 						}
 					},
 					{
 						breakpoint: 600,
 						settings: {
 							slidesToShow: 6,
-							slidesToScroll: 2
+							swipeToSlide: true
 						}
 					},
 					{
 						breakpoint: 480,
 						settings: {
 							slidesToShow: 4,
-							slidesToScroll: 1
+							swipeToSlide: true
 						}
 					}
 					// You can unslick at a given breakpoint now by adding:
