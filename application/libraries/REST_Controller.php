@@ -284,7 +284,6 @@ abstract class REST_Controller extends CI_Controller {
         }
 
         $this->response->lang = $this->_detect_lang();
-		dump( $this->response->lang);
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
         $this->rest = new StdClass();
@@ -1358,7 +1357,7 @@ abstract class REST_Controller extends CI_Controller {
 
         if (!in_array($this->input->ip_address(), $whitelist)) {
             if ($this->response->format == "html")
-                redirect(site_url('users_control/index'));
+                redirect(site_url('users_control_web/index'));
             else {
                 $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));
             }
@@ -1385,7 +1384,7 @@ abstract class REST_Controller extends CI_Controller {
         // When there is no specific override for the current class/method, use the default auth value set in the config
         if ($this->auth_override !== TRUE) {
             if ($this->response->format == "html"){
-                redirect(site_url('users_control/index')); //login	
+                redirect(site_url('users_control_web/index')); //login	
             }
             else {
                 $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));

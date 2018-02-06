@@ -1,7 +1,5 @@
-<?php $this->load->view('header'); ?>
-
 <body class="home-page">
-	<?php $this->load->view('common'); ?>
+	<?php $this->load->view('website/common'); ?>
 
 	<section>
 		<div class="container-fluid">
@@ -55,10 +53,13 @@
 		<div class="categories">
 			<div class="category-slider slick-slider">
 			
+			  <?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category">
-					<img src="images/Categories/Art%20and%20music.png" width="60px" alt="Art and Music">
-					<h6>Art and Music</h6>
+					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
+					<h6><?php echo $category->category_name ?></h6>
 				</div>
+			  <?php endforeach; ?>
+			  <?php endif; ?>
 				
 			</div>
 		</div>
@@ -140,7 +141,3 @@
 			</div>
 		</div>
 	</section>
-	
-	<?php $this->load->view('footer'); ?>
-
-	

@@ -10,8 +10,8 @@ class Categories_control extends REST_Controller {
 		$this->load->model('data_sources/categories');
 	    $this->data['lang']=  $this->response->lang;
 	}
-	
-	
+
+
 	public function get_nested_categories_get()
 	{
     	$categories  = $this->categories->get_nested($this->data['lang']);

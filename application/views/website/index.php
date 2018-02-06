@@ -1,8 +1,6 @@
-<?php $this->load->view('header'); ?>
-
 <body class="home-page">
-	<?php $this->load->view('common'); ?>
-
+	<?php $this->load->view('website/common'); ?>
+    <!-- <?php dump($main_categories) ?> -->
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
@@ -55,12 +53,13 @@
 	<section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
-			
+			  <?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category">
-					<img src="images/Categories/Art%20and%20music.png" width="60px" alt="Art and Music">
-					<h6>Art and Music</h6>
+					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
+					<h6><?php echo $category->category_name ?></h6>
 				</div>
-				
+			  <?php endforeach; ?>
+			  <?php endif; ?>
 			</div>
 		</div>
 
@@ -69,29 +68,29 @@
 				<div class="col-md-10 left-col">
 				<h2>Latest Ads</h2>
 					<div class="row ">
-						
+					<?php if($ads != null): foreach ($ads as $ad): ?>
 						<div class="col-sm-6 col-lg-4">
 							<div class="card mb-4">
 									<div class="overlay">
 										<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
 									</div>
-									<div class="card-img-top" style="background-image: url('<?php echo base_url("assets/images/motor1.png"); ?>')">
+									<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 
 									</div>
 								<div class="card-body">
 									<div class="row">
 										<div class="col-7 mt-2">
-											<div class="card-title">Product Title</div>
-											<div class="location"><span class="location-lbl"></span><span class="location-val">Damascus</span></div>
+											<div class="card-title"><?php echo $ad->title ?></div>
+											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->parent_location .'-'.$ad->location_name ?></span></div>
 										</div>
 										<div class="col-5 mt-2">
 											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 											<div class="clearfix"></div>
-											<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
+											 <div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>
 									</div>
 									<div class="price">
-										<div class="price-val">3000$</div>
+										<div class="price-val"><?php echo $ad->price; ?></div>
 									</div>
 									<div class="fav">
 										<!--										<span class="text">Add to favorites</span>-->
@@ -100,6 +99,8 @@
 								</div>
 							</div>
 						</div>
+				   <?php endforeach; ?>
+			       <?php endif; ?>
 						
 					</div>
 				</div>
@@ -126,7 +127,3 @@
 			</div>
 		</div>
 	</section>
-	
-	<?php $this->load->view('footer'); ?>
-
-	

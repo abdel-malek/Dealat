@@ -11,7 +11,6 @@ class Ads_control extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 	}
 	
-	
 	public function get_latest_ads_get()
 	{
     	$ads_list  = $this->ads->get_latest_ads($this->data['lang']);
