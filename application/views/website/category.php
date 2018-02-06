@@ -38,7 +38,6 @@
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
 						<div class="download ios  text-center"><a href=""><img src="<?php echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" alt=""></a></div>
 					</div>
-
 					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
 						<div class="search-wrapper">
 							<input type="search" class="form-control" placeholder="Search">
@@ -67,10 +66,27 @@
 		<div class="container-fluid main">
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-				<h2>Latest Ads</h2>
+					<div class="controls">
+						<div class="category-name">Vehicles</div>
+						<div class="nav-wrapper">
+
+							<button class="nav-scroller prev d-none">
+							<i class="fas fa-angle-left fa-lg"></i>
+						</button>
+							<button class="nav-scroller next d-none">
+							<i class="fas fa-angle-right fa-lg"></i>
+						</button>
+							<ul>
+								<li class="selected" data-filter="all">All</li>
+								<li data-filter=".cars">Cars</li>
+								<li data-filter=".bicycle">Bicycles</li>
+								<li data-filter=".motors">Motors</li>
+								<li data-filter=".accessories">Cars Accessories</li>
+							</ul>
+						</div>
+					</div>
 					<div class="row ">
-						
-						<div class="col-sm-6 col-lg-4">
+						<div class="col-sm-6 col-lg-4 mix motors">
 							<div class="card mb-4">
 									<div class="overlay">
 										<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -100,10 +116,9 @@
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
-				
 				<div class="col-md-2 right-col order-first order-md-last">
 					<button class="btn button2 place-ad animated infinite pulse ">Place an Ad</button>
 					<aside class="banners">
@@ -122,7 +137,6 @@
 						</div>
 					</aside>
 				</div>
-				
 			</div>
 		</div>
 	</section>
