@@ -50,28 +50,30 @@
 	</section>
 
 
-    <section class="products">
+	<section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
-			
-			  <?php if($main_categories != null): foreach ($main_categories as $category): ?>
+
+				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category">
 					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
-					<h6><?php echo $category->category_name ?></h6>
+					<h6>
+						<?php echo $category->category_name ?>
+					</h6>
 				</div>
-			  <?php endforeach; ?>
-			  <?php endif; ?>
-				
+				<?php endforeach; ?>
+				<?php endif; ?>
+
 			</div>
 		</div>
-        <div class='chnage'>
-        	<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
-        </div>
-         
+		<div class='chnage'>
+			<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
+		</div>
+
 	</section>
-   
-   
-   <!-- <section class="products">
+
+
+	<!-- <section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
 			

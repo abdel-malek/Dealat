@@ -12,8 +12,9 @@
 	<title>
 Dealat
 	</title>
-	<!--  css bootstrap  -->
+	<!--  bootstrap  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.min.css"); ?>" />
+	<!--  font-awesome  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/font-awesome.css"); ?>" />
 
 	<!--  sumo select  -->
@@ -22,18 +23,15 @@ Dealat
 	<!--  file upload  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/uploadfile.css"); ?>" />
 
-	<!--	slick slider-->
+	<!--  slick slider  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/slick.css"); ?>" />
-
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/slick-theme.css"); ?>" />
 
-	<!--font awesome css library-->
 	<!--  animate  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/animate.css"); ?>" />
 
 	<!--  main css style file  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/style.css"); ?>" />
-
 
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.min.js"></script>

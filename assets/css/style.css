@@ -202,6 +202,22 @@ summary:focus {
   .search-page .products .card fieldset,
   .profile-page .products .card fieldset, .home-page .products .card fieldset {
     font-size: 0.6rem; }
+  .search-page .products .card .featured,
+  .profile-page .products .card .featured, .home-page .products .card .featured {
+    width: 0;
+    height: 0;
+    border-right: 45px solid transparent;
+    border-top: 35px solid orange;
+    position: absolute;
+    top: 0;
+    z-index: 2; }
+  .search-page .products .card .featured-icon,
+  .profile-page .products .card .featured-icon, .home-page .products .card .featured-icon {
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    color: #fff;
+    z-index: 2; }
 
 .search-page .products .card,
 .profile-page .products .card {
@@ -415,7 +431,8 @@ section.search header {
       margin-left: auto;
       margin-right: auto; }
     .home-page .products .main .right-col {
-      padding-right: 20px; }
+      padding-right: 20px;
+      text-align: center; }
       .home-page .products .main .right-col .place-ad {
         width: 100%; }
       .home-page .products .main .right-col .banners {
@@ -429,6 +446,8 @@ section.search header {
     @media (max-width: 768px) {
       .home-page .products .main .right-col {
         padding-left: 20px; }
+        .home-page .products .main .right-col .place-ad {
+          margin-bottom: 10px; }
         .home-page .products .main .right-col .place-ad {
           width: 75%; }
       .home-page .products .main .banners {

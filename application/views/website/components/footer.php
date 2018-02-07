@@ -33,11 +33,11 @@
 		</div>
 	</footer>
 	
-	<!-- jQuery library -->
+	<!--  jQuery library  -->
 	<script src="<?php echo base_url("assets/js/jquery-3.2.1.min.js"); ?>"></script>
-		<script src="<?php echo base_url("assets/js/bootstrap.min.js"); ?>"></script>
-
-		<script src="<?php echo base_url("assets/js/popper.min.js"); ?>"></script>
+	<!--  bootstrap  -->
+	<script src="<?php echo base_url("assets/js/bootstrap.min.js"); ?>"></script>
+	<script src="<?php echo base_url("assets/js/popper.min.js"); ?>"></script>
 
 	<!--  smooth scroll  -->
 	<!--	<script src="js/SmoothScroll.min.js"></script>-->
@@ -63,13 +63,12 @@
 -->
 	<!--  mustache  -->
 	<script src="<?php echo base_url("assets/js/mustache.min.js"); ?>"></script>
-	<!-- mixit up-->
+	<!--  mixit up  -->
 	<script src="<?php echo base_url("assets/js/mixitup.min.js"); ?>"></script>
 	<script>
-		//		$("#container").mixitup();
 		var mixer = mixitup('.products');
 	</script>
-	<!--	slick slider-->
+	<!--  slick slider  -->
 	<script src="<?php echo base_url("assets/js/slick.min.js"); ?>"></script>
 	<script>
 		$(document).ready(function() {
@@ -128,7 +127,9 @@
 			});
 		});
 	</script>
+	<!--  fontawesome  -->
 	<script src="<?php echo base_url("assets/js/fontawesome-all.min.js"); ?>"></script>
+	<!--  sumoselect  -->
 	<script src="<?php echo base_url("assets/js/jquery.sumoselect.min.js"); ?>"></script>
 	<script>
 		$(document).ready(function() {
@@ -175,6 +176,7 @@
 	<script>
 		new WOW().init();
 	</script>
+	<!-- main js file -->
 	<script src="<?php echo base_url("assets/js/script.js"); ?>"></script>
 </body>
 

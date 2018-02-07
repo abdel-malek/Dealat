@@ -5,7 +5,7 @@ $(function () {
 	});
 
 	$(".home-page .card .card-img-top,.home-page .card .overlay,.profile-page .favorites .card-left, .search-page .card-left").click(function () {
-//		$(".products .row .ad").addClass("invisible");
+		//		$(".products .row .ad").addClass("invisible");
 		$("#card-modal").modal("show");
 		//		setTimeout(function () {
 		//$(window).trigger('resize');
@@ -35,11 +35,23 @@ $(function () {
 		$("#ad-modal").modal("show");
 	});
 
-	$("#ad-modal .submit").click(function () {
-		$("#ad-modal").modal("hide");
-		setTimeout(function () {
-			$("#pay-modal").modal("show");
-		}, 500);
+	$("#place-ad-form").submit(function () {
+//		evnt.preventDefault();
+//		evnt.stopImmediatePropagation();
+		if ($("#ad-modal .featured input").is(':checked')) {
+			$("#ad-modal").modal("hide");
+			setTimeout(function () {
+				$("#pay-modal").modal("show");
+			}, 500);
+		} else {
+			$("#ad-modal").modal("hide");
+			setTimeout(function () {
+				$("#success-modal").modal("show");
+			}, 500);
+		}
+		$("#place-ad-form").trigger("reset");
+		return false;
+		
 	});
 
 	$(window).scroll(function () {
@@ -178,5 +190,21 @@ $(function () {
 			$(".social-fixed svg").addClass("fa-angle-right");
 		}
 	});
+
+	$(".profile-page .my-ads .delete-ad").click(function () {
+		$("#delete-modal").modal("show");
+	});
+	$(".profile-page .my-ads .edit-ad").click(function () {
+		$("#ad-modal").modal("show");
+	});
+
+	$("#ad-modal .featured").click(function () {
+		if ($(this).find("input").is(':checked')) {
+			$(this).find(".warning").removeClass("d-none");
+		} else {
+			$(this).find(".warning").addClass("d-none");
+		}
+	});
+
 
 });
