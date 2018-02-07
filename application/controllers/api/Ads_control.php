@@ -23,5 +23,12 @@ class Ads_control extends REST_Controller {
 		$ads_list = $this->ads->get_ads_by_category($main_category_id , $this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
+	
+	public function get_ad_details_get()
+	{
+		$ad_id = $this->input->get('ad_id');
+		$deatils = $this->ads->get_ad_details($ad_id , $this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
+	}
 
 }

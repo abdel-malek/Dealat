@@ -37,7 +37,14 @@ class Categories extends MY_Model {
 	public function get_category_subcategories($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_name , description');
-		return parent::get_by(array('parent_id'=>$category_id));
+		$q = parent::get_by(array('parent_id'=>$category_id));
+		$array = array();
+		if($q != null){
+			foreach ($q as $row) {
+				$array[] = $row;
+			}
+		}
+		return $array;
 	}
 
 }

@@ -49,7 +49,29 @@
 		</div>
 	</section>
 
-	<section class="products">
+
+    <section class="products">
+		<div class="categories">
+			<div class="category-slider slick-slider">
+			
+			  <?php if($main_categories != null): foreach ($main_categories as $category): ?>
+				<div class="category">
+					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
+					<h6><?php echo $category->category_name ?></h6>
+				</div>
+			  <?php endforeach; ?>
+			  <?php endif; ?>
+				
+			</div>
+		</div>
+        <div class='chnage'>
+        	<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
+        </div>
+         
+	</section>
+   
+   
+   <!-- <section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
 			
@@ -111,7 +133,7 @@
 										<div class="price-val">3000$</div>
 									</div>
 									<div class="fav">
-										<!--										<span class="text">Add to favorites</span>-->
+										<!--										<span class="text">Add to favorites</span>--
 										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>
 									</div>
 								</div>
@@ -140,4 +162,4 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
