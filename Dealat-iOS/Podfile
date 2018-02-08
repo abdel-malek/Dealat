@@ -1,0 +1,36 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'Dealat-iOS' do
+
+pod 'Alamofire'
+pod 'SwiftyJSON'
+pod 'AlamofireObjectMapper'
+pod 'ObjectMapper'
+pod 'SDWebImage'
+pod 'Kingfisher'
+
+pod 'SideMenu'
+pod 'DropDown'
+pod 'DLRadioButton'
+pod 'CHIPageControl/Aji'
+
+pod 'DatePickerDialog'
+pod 'AFDateHelper'
+pod 'Toast-Swift'
+pod 'JGProgressHUD'
+pod 'KSToastView'
+pod 'SwipeBack'
+
+pod 'IQKeyboardManagerSwift'
+
+pod 'Firebase/Core'
+pod 'Firebase/Messaging'
+
+#pod 'FacebookCore'
+#pod 'FacebookLogin'
+#pod 'KMPlaceholderTextView'
+#pod 'PayPal-iOS-SDK'
+#pod 'CardIO'
+
+end
