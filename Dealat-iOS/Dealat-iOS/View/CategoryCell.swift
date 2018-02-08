@@ -2,7 +2,7 @@
 //  CategoryCell.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 2/6/18.
+//  Created by Yahya Tabba on 2/6/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 
