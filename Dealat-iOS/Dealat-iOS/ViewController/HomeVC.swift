@@ -190,7 +190,7 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource, UISearchBarDelegat
             self.present(vc, animated: true, completion: nil)
         }else{
             
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsVC") as! AdsVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
             self.navigationController?.pushViewController(vc, animated: true)
 
         }

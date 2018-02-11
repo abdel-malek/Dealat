@@ -186,6 +186,7 @@ class Communication: BaseManager {
         
         
         var headers :  [String : String] = [:]
+        headers["lang"] = "ar"
         
         if User.isRegistered(){
             

@@ -41,3 +41,21 @@ class AdCell: BaseCell {
     }
     
 }
+
+
+class AdCell2 : UICollectionViewCell{
+    @IBOutlet weak var img : UIImageView!
+    
+    
+    var ad : AD!{
+        didSet{
+            self.img.image = UIImage.init(named: ad.main_image)
+            //            self.nameLbl.text = ad.title
+            //            self.priceLbl.text = ad.price.stringValue
+            //            self.viewsLbl.text = ad.show_period.stringValue
+            //            self.dateLbl.text = ad.publish_date
+            
+        }
+    }
+
+}
