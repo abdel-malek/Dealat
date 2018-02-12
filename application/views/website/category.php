@@ -1,4 +1,4 @@
-<body class="home-page">
+<body class="category-page">
 	<?php $this->load->view('website/common'); ?>
 
 	<section>
@@ -23,18 +23,19 @@
 		</div>
 	</section>
 
+<!--
 	<section class="search">
 		<div class="container">
 			<header>
 				<div class="row align-items-center">
 					<div class="col-0 col-md-2">
-						<span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
+						<span class="logo"><img src="<?php //echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download android text-center"><a href=""><img src="<?php echo base_url("assets/images/google-play-badge.png"); ?>" height="45px" alt=""></a></div>
+						<div class="download android text-center"><a href=""><img src="<?php //echo base_url("assets/images/google-play-badge.png"); ?>" height="45px" alt=""></a></div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download ios  text-center"><a href=""><img src="<?php echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" alt=""></a></div>
+						<div class="download ios  text-center"><a href=""><img src="<?php //echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" alt=""></a></div>
 					</div>
 					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
 						<div class="search-wrapper">
@@ -48,30 +49,33 @@
 			</header>
 		</div>
 	</section>
+-->
 
 
-    <section class="products">
+	<section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
-			
-			  <?php if($main_categories != null): foreach ($main_categories as $category): ?>
+
+				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category">
 					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
-					<h6><?php echo $category->category_name ?></h6>
+					<h6>
+						<?php echo $category->category_name ?>
+					</h6>
 				</div>
-			  <?php endforeach; ?>
-			  <?php endif; ?>
-				
+				<?php endforeach; ?>
+				<?php endif; ?>
+
 			</div>
 		</div>
-        <div class='chnage'>
-        	<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
-        </div>
-         
+		<div class='change'>
+			<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
+		</div>
+
 	</section>
-   
-   
-   <!-- <section class="products">
+
+
+	<!-- <section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
 			

@@ -70,7 +70,6 @@
 </div>
 -->
 				<li class='tab'><a href="#my-ads">My Ads</a></li>
-				<li class='tab'><a href="#favorites">Favorites</a></li>
 				<li class='tab'><a href="#chats">Chats</a></li>
 			</ul>
 			<div id="my-ads" class="my-ads">
@@ -122,90 +121,7 @@
 
 				</section>
 			</div>
-			<div id="favorites" class="favorites">
-				<section class="products">
 
-					<div class="container-fluid main">
-						<div class="row">
-
-							<div class="col-md-6">
-								<div class="card mb-4">
-									<div class="container">
-
-										<div class="row no-gutters">
-											<div class="col-md-6">
-												<div class="card-left">
-													<div class="overlay">
-														<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
-													</div>
-													<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/motor1.jpg "); ?>')"></div>
-
-													<div class="price">
-														<div class="price-val">3000$</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="card-body">
-													<div class="card-title mb-1">Product Title</div>
-													<div class="details mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,</div>
-													<div class="location"><span class="location-lbl">Location: </span><span class="location-val">Syria, Damascus</span></div>
-													<div class="status"><span class="status-lbl">Status: </span><span class="status-val">New</span></div>
-
-													<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
-													<!--									<div class="rating">stars</div>-->
-
-
-													<div class="date"><span class="date-lbl">Published </span><span class="date-val">12/12/2015</span></div>
-													<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
-													<div class="seller"><span class="seller-lbl">Seller: </span><span class="seller-val">Jhon Doe</span></div>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="card mb-4">
-									<div class="container">
-										<div class="overlay">
-											<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
-										</div>
-										<div class="row no-gutters">
-											<div class="col-md-6">
-												<div class="card-left">
-													<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/bike1.jpg "); ?>')"></div>
-
-													<div class="price">
-														<div class="price-val">3000$</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="card-body">
-													<div class="card-title mb-1">Product Title</div>
-													<div class="details mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,</div>
-													<div class="location"><span class="location-lbl">Location: </span><span class="location-val">Syria, Damascus</span></div>
-													<div class="status"><span class="status-lbl">Status: </span><span class="status-val">New</span></div>
-
-													<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
-													<!--									<div class="rating">stars</div>-->
-													<div class="date"><span class="date-lbl">Published </span><span class="date-val">12/12/2015</span></div>
-													<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
-													<div class="seller"><span class="seller-lbl">Seller: </span><span class="seller-val">Jhon Doe</span></div>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-			</div>
 			<div id="chats" class="chats">
 				<div class="container">
 					<ul>
