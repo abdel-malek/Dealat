@@ -1,4 +1,4 @@
-<body class="home-page">
+<body class="category-page">
 	<?php $this->load->view('website/common'); ?>
 
 	<section>
@@ -23,18 +23,19 @@
 		</div>
 	</section>
 
+<!--
 	<section class="search">
 		<div class="container">
 			<header>
 				<div class="row align-items-center">
 					<div class="col-0 col-md-2">
-						<span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
+						<span class="logo"><img src="<?php //echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download android text-center"><a href=""><img src="<?php echo base_url("assets/images/google-play-badge.png"); ?>" height="45px" alt=""></a></div>
+						<div class="download android text-center"><a href=""><img src="<?php //echo base_url("assets/images/google-play-badge.png"); ?>" height="45px" alt=""></a></div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download ios  text-center"><a href=""><img src="<?php echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" alt=""></a></div>
+						<div class="download ios  text-center"><a href=""><img src="<?php //echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" alt=""></a></div>
 					</div>
 					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
 						<div class="search-wrapper">
@@ -48,6 +49,7 @@
 			</header>
 		</div>
 	</section>
+-->
 
 
 	<section class="products">
@@ -66,7 +68,7 @@
 
 			</div>
 		</div>
-		<div class='chnage'>
+		<div class='change'>
 			<?php $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
 		</div>
 

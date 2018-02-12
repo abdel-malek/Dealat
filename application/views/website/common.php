@@ -1,6 +1,6 @@
 <div class="social-fixed">
-	<span class="show-social"><i class="fas fa-angle-right"></i></span>
-	<div class="icons" data-show="0">
+	<span class="show-social"><i class="fas fa-angle-left"></i></span>
+	<div class="icons" data-show="1">
 		<span class="icon facebook"><a href=""><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
 		<span class="icon youtube"><a href=""><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>
 		<span class="icon twitter"><a href=""><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>
@@ -55,10 +55,10 @@
 							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
 							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
 -->
-						<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/car1.png "); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/car2.jpg "); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/car3.png "); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/bike1.jpg "); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car1.png'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car2.jpg'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car3.png'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/bike1.jpg'); ?>')"></div>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -288,7 +288,7 @@
 -->
 					<label class="featured">
 						<input id="featured-ad" type="checkbox" name="featured_ad" value="false"><span class=""> Set as featured advertisement</span>
-						<span class="warning d-none text-danger"> <b>This will cost you some money</b></span>
+						<span class="warning d-none text-warning"> This will cost you some money</span>
 					</label>
 					<div class="">
 						<input id="terms-agree" type="checkbox" name="terms_agree" class="" required value="false">
@@ -313,28 +313,66 @@
 </div>
 
 <!--filter modal-->
-<div id="filter-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<div id="filter-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-			</div>
-			<div class="modal-body">
-				<form action="">
-					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="User Name">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Done</button>
-				<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
+				</div>
+				<div class="modal-body">
+					<form action="">
+						<div class="form-group">
+							<input type="text" class="form-control" name="user_name" placeholder="Search">
+						</div>
+						<div class="form-group">
+							<select name="" class="location-select" placeholder="Choose lacation">
+								<option disabled selected value="foo" >
+								<option value="1">lacation1</option>
+								<option value="2">lacation2</option>
+								<option value="3">lacation3</option>
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<input type="range" class="form-control" min="1" max="10" value="5" name="user_name" placeholder="Search">
+						</div>
+						
+						<div class="form-group">
+							<select name="" class="category-select" placeholder="Select Category">
+								<option disabled selected value="foo" >
+								<option value="art-music">Art and music</option>
+								<option value="clothes">Clothes</option>
+								<option value="electronics">Electronics</option>
+								<option value="furniture">Furniture</option>
+								<option value="jobs">Jobs</option>
+								<option value="kids">Kids</option>
+								<option value="mobile">Mobile</option>
+								<option value="pets">Pets</option>
+								<option value="estate">Real Estate</option>
+								<option value="sports">Sports</option>
+								<option value="vehicles">Vehicles</option>
+							</select>
+						</div>
+						
+						<div class="status form-group">
+							<label class="text-center title">Status</label>
+							<label class="radio-inline new">
+                            <input type="radio" name="status" id="status-new" value="male"> New</label>
+							<label class="radio-inline old">
+                            <input type="radio" name="status" id="status-old" value="female"> Old</label>
+						</div>
+						
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn button2 submit">Done</button>
+<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 <!--pay modal-->
 <div id="pay-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

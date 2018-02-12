@@ -62,7 +62,7 @@
 			<div class="category-slider slick-slider">
 				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category">
-					<a href="<?php echo base_url(" index.php/home_control/load_ads_by_category_page?category_id=3&category_name=Vehicles "); ?>"><img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>"></a>
+					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
 					<h6>
 						<?php echo $category->category_name ?>
 					</h6>

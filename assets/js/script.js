@@ -36,8 +36,8 @@ $(function () {
 	});
 
 	$("#place-ad-form").submit(function () {
-//		evnt.preventDefault();
-//		evnt.stopImmediatePropagation();
+		//		evnt.preventDefault();
+		//		evnt.stopImmediatePropagation();
 		if ($("#ad-modal .featured input").is(':checked')) {
 			$("#ad-modal").modal("hide");
 			setTimeout(function () {
@@ -51,9 +51,18 @@ $(function () {
 		}
 		$("#place-ad-form").trigger("reset");
 		return false;
-		
+
 	});
 
+	$("#ad-modal .featured").click(function () {
+		if ($(this).find("input").is(':checked')) {
+			$(this).find(".warning").removeClass("d-none");
+		} else {
+			$(this).find(".warning").addClass("d-none");
+		}
+	});
+
+	
 	$(window).scroll(function () {
 		//		if ($(this).scrollTop() > $(".products .row").offset().top + 100 && $(this).scrollTop() < ($(".products .row").offset().top + $(".products").innerHeight())) {
 		//			$(".products .row .ad").removeClass("invisible");
@@ -198,13 +207,21 @@ $(function () {
 		$("#ad-modal").modal("show");
 	});
 
-	$("#ad-modal .featured").click(function () {
-		if ($(this).find("input").is(':checked')) {
-			$(this).find(".warning").removeClass("d-none");
-		} else {
-			$(this).find(".warning").addClass("d-none");
+	$(".category").click(function () {
+		var firstTime = 0,
+			is_category_pg, is_home_pg;
+		is_home_pg = $(this).parents(".home-page").length;
+		is_category_pg = $(this).parents(".category-page").length;
+		if (is_home_pg > 0) {
+			firstTime = 1;
+			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=3&category_name=vehicles&first_time=1";
+		} else if (is_category_pg > 0) {
+			firstTime = 0;
+			$(this).parents(".products").find(".change").html(" ");
+			console.log(base_url + "/home_control/test?category_id=3&category_name=vehicles");
+			$(this).parents(".products").find(".change").load(base_url + "/home_control/load_subcategories_div?category_id=2&category_name=vehicles");
 		}
-	});
 
+	});
 
 });
