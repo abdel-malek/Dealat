@@ -27,23 +27,24 @@ class Home_control extends REST_Controller {
 		$this->data['ads'] = $this->ads->get_ads_by_category($category_id , $this->data['lang']);
 		$this->data['subcategories'] = $this->categories->get_category_subcategories($category_id , $this->data['lang']);
 		$this->data['category_name']= $category_name;
-	    $this -> data['subview'] = 'website/category';
+		$this -> data['subview'] = 'website/category';
 		echo $this -> load -> view('website/_main_layout', $this -> data);
 	}
 	
-	public function functionName($value='')
-	{
-		
-	}
-	
+	public function load_subcategories_div_get()
+    {
+       $category_id = $this->input->get('category_id');
+       $category_name = $this->input->get('category_name');
+       $this->data['ads'] = $this->ads->get_ads_by_category($category_id , $this->data['lang']);
+       $this->data['subcategories'] = $this->categories->get_category_subcategories($category_id , $this->data['lang']);
+       $this->data['category_name']= $category_name;
+       echo $this -> load -> view('website/category_div', $this -> data);
+    }
 	
 
-	public function test_get()
-	{
-		$this->data['subcategories'] = $this->categories->get_category_subcategories(2 , $this->data['lang']);
-		dump($this->data['subcategories']);
-	}
-
-    
-	
+	// public function test_get()
+	// {
+		// $this->data['subcategories'] = $this->categories->get_category_subcategories(2 , $this->data['lang']);
+		// dump($this->data['subcategories']);
+	// }
 }

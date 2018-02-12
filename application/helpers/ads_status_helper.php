@@ -6,4 +6,5 @@ class STATUS{
 	const EXPIRED = 3;
 	const HIDDEN = 4;
 	const REJECTED = 5;
+	const DELETED = 6;
 }

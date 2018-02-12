@@ -18,4 +18,10 @@ class Categories_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
 	}
 	
+	public function get_all_get()
+	{
+		$categories = $this->categories->get_all($this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
+	}
+	
 }

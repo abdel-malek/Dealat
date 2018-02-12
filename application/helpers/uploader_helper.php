@@ -27,7 +27,7 @@ function upload_attachement($controller, $path, $new_name=null) {
 function set_upload_options($path , $new_name) {
     $config = array();
     $config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]) . "/" . $path;
-    $config['allowed_types'] = '*';
+    $config['allowed_types'] = 'jpeg|png|jpg|gif';
 	$config['file_name'] = $new_name;
     ini_set("upload_max_filesize", '20M');
     return $config;
