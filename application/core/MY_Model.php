@@ -47,9 +47,9 @@ class MY_Model extends CI_Model {
 	  return $this->db->get($this->_table_name , $limit)->$method();
 	}
 	
-	public function get_by($where, $single = FALSE){
+	public function get_by($where, $single = FALSE,$limit= null){
 		$this->db->where($where);
-		return $this->get(NULL, $single);
+		return $this->get(NULL, $single,$limit);
 	}
 	
 	public function save($data, $id = NULL){

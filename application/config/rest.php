@@ -182,14 +182,22 @@ $config['auth_library_function'] = 'check_user';
 $config['auth_override_class_method']['home_control']['load_ads_by_category_page'] = 'none';
 $config['auth_override_class_method']['home_control']['load_subcategories_div'] = 'none';
 $config['auth_override_class_method']['home_control']['index'] = 'none';
+$config['auth_override_class_method']['search_control']['index'] = 'none';
 $config['auth_override_class_method']['ads_control']['get_latest_ads'] = 'none';
 $config['auth_override_class_method']['ads_control']['get_ads_by_main_category'] = 'none';
 $config['auth_override_class_method']['ads_control']['get_ad_details'] = 'none';
 $config['auth_override_class_method']['ads_control']['search'] = 'none';
+$config['auth_override_class_method']['ads_control']['get_data_lists'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['users_control_web']['index'] = 'none';
+$config['auth_override_class_method']['users_control_web']['change_language'] = 'none';
 $config['auth_override_class_method']['users_control']['index'] = 'none';
+
+//to be deleted 
+$config['auth_override_class_method']['ads_control']['post_new_ad'] = 'none';
+
+
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';
 

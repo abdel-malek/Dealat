@@ -16,16 +16,31 @@ class TAMPLATES {
 		switch($id) {
 			case 1 :
 				return array('type_id', 'type_model_id', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer');
+		    break;
 			case 2 :
 				return array('space', 'rooms_num', 'floor', 'state', 'with_furniture');
+		    break;
 			case 3 :
 				return array('type_id', 'is_new');
+			break;
 			case 4 :
 				return array('type_id', 'size', 'is_new');
-			case (5 || 6 || 7 || 9) :
+			break;
+			case 5 :
 				return array('is_new');
+			break;
+			case 6  :
+				return array('is_new');
+			break;
+			case 7 :
+				return array('is_new');
+			break;
+			case 9 :
+				return array('is_new');
+			break;
 			case 8 :
-				return array('schedule_id', 'education_id', 'experince', 'salary');
+				return array('schedule_id', 'education_id', 'experience', 'salary');
+			break;
 			default :
 				return array();
 		}
@@ -36,26 +51,37 @@ class TAMPLATES {
 		switch($id) {
 			case 1 :
 				return 'vehicles';
+				break;
 			case 2 :
 				return 'properties';
+				break;
 			case 3 :
 				return 'mobiles';
+				break;
 			case 4 :
 				return 'electronics';
+				break;
 			case 5 :
 				return 'fashion';
+				break;
 			case 6 :
 				return 'kids';
+				break;
 			case 7 :
 				return 'sports';
+				break;
 			case 8 :
 				return 'job_positions';
+				break;
 			case 9 :
 				return 'industries';
+				break;
 			case 10 :
 				return 'services';
+				break;
 			case 11 :
 				return 'basic';
+				break;
 			default :
 				return 'basic';
 		}

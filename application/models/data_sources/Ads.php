@@ -52,8 +52,10 @@ class Ads extends MY_Model {
 	{
 	    $this->db->select('ads.* ,
 		                   categories.'.$lang.'_name as category_name ,
+		                   users.name as seller_name
 		                  ');
        	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
@@ -92,7 +94,7 @@ class Ads extends MY_Model {
 		$this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
 			$this -> db -> trans_rollback();
-			unlink(ADS_IMAGES_PATH.$main_image);
+			unlink($main_image);
 			return false;
 		} else {
 			$this -> db -> trans_commit();
@@ -121,14 +123,72 @@ class Ads extends MY_Model {
 	 }
 	 return parent::get();
   }
-
-  
-
  
-  public function filter_ads()
+  public function serach_with_filter($lang , $query_string = null , $category_id = null)
   {
-      
+	 //filter
+	 if($category_id != null){
+	 	$this->load->model('data_sources/categories');
+	 	$category_info = $this->categories->get($category_id);
+		if($category_info->tamplate_id != TAMPLATES::BASIC){
+		  	$tamplate_name = TAMPLATES::get_tamplate_name($category_info->tamplate_id);
+			$model = $tamplate_name.'_tamplate';
+			$this->load->model('data_sources/'.$model);
+		    $this->$model->filter();
+			$this->db->select('ads.* ,
+			                   c1.'.$lang.'_name as category_name ,
+		                       c.'.$lang.'_name as parent_category_name ,
+		                       users.name as seller_name,
+		                       locations.'.$lang.'_name as location_name ,
+		                       cites.'.$lang.'_name as  city_name,
+					           tamplate.*
+		                      ');
+			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');	
+		}else{
+			$this->db->select('ads.* ,
+			                   c1.'.$lang.'_name as category_name ,
+		                       c.'.$lang.'_name as parent_category_name ,
+		                       users.name as seller_name,
+		                       locations.'.$lang.'_name as location_name ,
+		                       cites.'.$lang.'_name as  city_name,
+		                      ');
+		}
+		$this->db->where('ads.category_id' , $category_id);
+	 }else{
+		$this->db->select('ads.* ,
+		                   c1.'.$lang.'_name as category_name ,
+	                       c.'.$lang.'_name as parent_category_name ,
+	                       users.name as seller_name,
+	                       locations.'.$lang.'_name as location_name ,
+		                   cites.'.$lang.'_name as  city_name,
+                          ');
+	 }
+	//serach
+	 if($query_string != null){
+	     if(strlen($query_string) < 3){
+		 	$this->db->like('ads.title', $query_string); 
+			$this->db->or_like('ads.description', $query_string); 
+		 }else{
+		 	$this->db->where('MATCH(ads.title) AGAINST (' . $this->db->escape($query_string) . '  IN BOOLEAN MODE)', NULL, FALSE);
+		    $this->db->or_where('MATCH(ads.description) AGAINST  (' . $this->db->escape($query_string) . ' IN BOOLEAN MODE)', NULL, FALSE);
+		 }
+	     if($category_id != null){
+		 	$this->db->where('ads.category_id' , $category_id);
+        }
+	 }
+	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
+	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
+	 $this->db->join('users' , 'ads.user_id = users.user_id', 'left');
+	 $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+	 $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	// users.name as seller_name
+	 if($this->input->get('location_id')){
+	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
+	 }
+	 $this->db->where('status' , STATUS::ACCEPTED);
+     return parent::get(); 
   }
+
  
   public function get_lists($lang)
   {
@@ -142,7 +202,17 @@ class Ads extends MY_Model {
 	 $schedules = $this->schedules->get_all($lang);
 	 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 	 return $data;
-  }
+   }
+
+   public function check_category_ads_existence($category_id)
+	{
+	   $ads = parent::get_by(array('category_id' => $category_id), false ,1);
+	   if($ads != null){
+	   	 return true;
+	   }else{
+	   	 return false;
+	   }
+	}
 
 
 }
