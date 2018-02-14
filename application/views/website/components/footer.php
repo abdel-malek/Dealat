@@ -3,11 +3,11 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="section about">
-						<h3>About</h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima cum ipsum amet id sunt distinctio eos! Impedit dolorum neque alias sequi distinctio nam quas provident? Commodi nesciunt, asperiores! Quis, accusamus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero qui est aperiam accusamus nobis, voluptatibus sapiente fugiat atque ipsam consequatur eius laudantium aliquid quidem hic alias officiis rem praesentium dicta.</div>
+						<h3><?php echo $this->lang->line('about'); ?></h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima cum ipsum amet id sunt distinctio eos! Impedit dolorum neque alias sequi distinctio nam quas provident? Commodi nesciunt, asperiores! Quis, accusamus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero qui est aperiam accusamus nobis, voluptatibus sapiente fugiat atque ipsam consequatur eius laudantium aliquid quidem hic alias officiis rem praesentium dicta.</div>
 				</div>
 				<div class="col-md-4">
 					<div class="section reviews">
-						<h3>Client Reviews</h3>
+						<h3><?php echo $this->lang->line('reviews'); ?></h3>
 						<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquam adipisci voluptas placeat, dolor, non nemo praesentium eum? Velit necessitatibus vero, earum est quidem, repellat recusandae perspiciatis nemo ad iste!</div>
 						<br>
 						<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus laborum reprehenderit quibusdam veritatis commodi excepturi deserunt sint corporis, ipsum. Nobis architecto inventore, voluptatibus distinctio ratione odio minus quis, amet rerum.</div>
@@ -15,7 +15,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="section contact">
-						<h3>Contact Us</h3>
+						<h3><?php echo $this->lang->line('contact_us'); ?></h3>
 						<div class="social">
 							<span class="facebook"><i class="fab fa-facebook-square fa-2x"></i></span>
 							<span class="youtube"><i class="fab fa-youtube-square fa-2x"></i></span>

@@ -413,7 +413,7 @@ header.home {
   .home-page .products .row, .category-page .products .row {
     position: relative; }
   .home-page .products .main, .category-page .products .main {
-    padding-top: 110px; }
+    padding-top: 150px; }
     .home-page .products .main .left-col, .category-page .products .main .left-col {
       padding-right: 45px;
       padding-left: 45px;
@@ -441,6 +441,12 @@ header.home {
           width: 75%; }
       .home-page .products .main .banners, .category-page .products .main .banners {
         display: none; } }
+  .home-page .products .category-name, .category-page .products .category-name {
+    padding-top: 3px;
+    color: #c30a30;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: capitalize; }
   .home-page .products .controls, .category-page .products .controls {
     margin-top: 10px;
     position: relative;
@@ -460,19 +466,11 @@ header.home {
       left: 0; }
     .home-page .products .controls .nav-scroller.next, .category-page .products .controls .nav-scroller.next {
       right: 0; }
-    .home-page .products .controls .category-name, .category-page .products .controls .category-name {
-      position: absolute;
-      left: -30px;
-      bottom: -72%;
-      background-color: #eee;
-      padding-right: 5px;
-      color: #c30a30;
-      font-size: .85rem;
-      font-weight: bold;
-      z-index: 1; }
     .home-page .products .controls ul, .category-page .products .controls ul {
       list-style: none;
       margin: 0;
+      padding: 0;
+      padding-left: 10px;
       display: inline;
       white-space: nowrap;
       transition: 0.2s; }

@@ -8,6 +8,8 @@
 	<script type="text/javascript" >
 	var base_url = "<?php echo base_url() . 'index.php'; ?>";
     var site_url = "<?php echo base_url() ; ?>";
+	var lang = "<?php echo $this->session->userdata('language') ?>";
+	console.log(lang);
 </script>
 	<title>
 Dealat
@@ -32,7 +34,9 @@ Dealat
 
 	<!--  main css style file  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/style.css"); ?>" />
-
+<?php if($this->session->userdata('language') == "ar"){ ?>
+<link rel="stylesheet" href="<?php echo base_url("assets/css/style-ar.css"); ?>" />
+<?php }	?>
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.min.js"></script>
     <![endif]-->

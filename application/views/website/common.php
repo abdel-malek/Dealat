@@ -13,25 +13,25 @@
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-6 col-sm-3 col-lg-2  offset-sm-0 offset-md-1">
-				<span class="logo"><a href=""><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
+				<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
 			</div>
 			<div class="col-5 col-sm-3 col-md-2 offset-1 offset-sm-0">
 				<div class="language-wrapper">
 					<div class="language-switch">
-
-						<a class="selected" href="" data-locale="en">en</a>
-
-						<a class="" href="" data-locale="ar">ar</a>
+						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
+						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
+						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url("/users_control_web/change_language?language=en") ?>" data-locale="en">en</a>
+						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url("/users_control_web/change_language?language=ar") ?>" data-locale="ar">ar</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
 				<!--					<button class="btn button1 login">Sign In</button>-->
-				<button class="btn button2 login">Sign In</button>
+				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
 				<!--					<button class="btn button1 register">Register</button>-->
-				<button class="btn button2 register">Register</button>
+				<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -68,8 +68,8 @@
 							</div>
 							<div class="col-7">
 
-								<div class="seller"><span class="seller-lbl">Seller Name: </span><span class="seller-val">Jhon Doe</span></div>
-								<div class="seller"><span class="rating-lbl">Seller Rating: </span>
+								<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
+								<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
 									<span class="rating-val">
 											<fieldset class="rating">
 												<span class="rate-group" data-value="5">
@@ -111,13 +111,13 @@
 							<div class="col-5">
 								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
 								<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
-								<div class="negotiable"><span class="negotiable-lbl">Price: </span><span class="negotiable-val">None negotiable</span></div>
+								<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">None negotiable</span></div>
 								<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 								<!--									<div class="likes"><span class="likes-lbl">Likes </span><span class="likes-val">350 </span></div>-->
 								<!--									<div class="rating">stars</div>-->
 								<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
 							</div>
-							<input type="text" class="form-control form-control-sm mt-2" placeholder="Send a message to the seller">
+
 						</div>
 						<div class="price">
 							<div class="price-val">3000$</div>
@@ -126,7 +126,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn button2">Chat with seller</button>
+				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -178,7 +178,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Register</button>
+				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -212,7 +212,7 @@
 						<input type="password" class="form-control" name="password" placeholder="Password">
 					</div>
 				</form>
-				<button type="submit" class="btn button2 submit">Sign In</button>
+				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 
 				<div class="title lines">
 					<span class="text">or sign in with:</span>
@@ -293,7 +293,7 @@
 					<div class="">
 						<input id="terms-agree" type="checkbox" name="terms_agree" class="" required value="false">
 						<label for="terms-agree" class="">
-							<span class="">I agree to the dealat <a href="" target="_blank">Terms of Service</a></span>
+							<span class=""><?php echo $this->lang->line('agree_policy'); ?> <a href="" target="_blank"><?php echo $this->lang->line('terms'); ?></a></span>
 							<span class="d-none text-danger">(required) <i class="fas fa-exclamation"></i></span>
 						</label>
 					</div>
@@ -313,34 +313,34 @@
 </div>
 
 <!--filter modal-->
-	<div id="filter-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<div id="filter-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-				</div>
-				<div class="modal-body">
-					<form action="">
-						<div class="form-group">
-							<input type="text" class="form-control" name="user_name" placeholder="Search">
-						</div>
-						<div class="form-group">
-							<select name="" class="location-select" placeholder="Choose lacation">
+			</div>
+			<div class="modal-body">
+				<form action="">
+					<div class="form-group">
+						<input type="text" class="form-control" name="user_name" placeholder="Search">
+					</div>
+					<div class="form-group">
+						<select name="" class="location-select" placeholder="Choose lacation">
 								<option disabled selected value="foo" >
 								<option value="1">lacation1</option>
 								<option value="2">lacation2</option>
 								<option value="3">lacation3</option>
 							</select>
-						</div>
-						
-						<div class="form-group">
-							<input type="range" class="form-control" min="1" max="10" value="5" name="user_name" placeholder="Search">
-						</div>
-						
-						<div class="form-group">
-							<select name="" class="category-select" placeholder="Select Category">
+					</div>
+
+					<div class="form-group">
+						<input type="range" class="form-control" min="1" max="10" value="5" name="user_name" placeholder="Search">
+					</div>
+
+					<div class="form-group">
+						<select name="" class="category-select" placeholder="Select Category">
 								<option disabled selected value="foo" >
 								<option value="art-music">Art and music</option>
 								<option value="clothes">Clothes</option>
@@ -354,25 +354,25 @@
 								<option value="sports">Sports</option>
 								<option value="vehicles">Vehicles</option>
 							</select>
-						</div>
-						
-						<div class="status form-group">
-							<label class="text-center title">Status</label>
-							<label class="radio-inline new">
+					</div>
+
+					<div class="status form-group">
+						<label class="text-center title">Status</label>
+						<label class="radio-inline new">
                             <input type="radio" name="status" id="status-new" value="male"> New</label>
-							<label class="radio-inline old">
+						<label class="radio-inline old">
                             <input type="radio" name="status" id="status-old" value="female"> Old</label>
-						</div>
-						
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn button2 submit">Done</button>
-<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
-				</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn button2 submit">Done</button>
+				<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
 			</div>
 		</div>
 	</div>
+</div>
 
 <!--pay modal-->
 <div id="pay-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -431,6 +431,25 @@
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn button2 submit">Yes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--chat modal-->
+<div id="chat-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<input type="text" class="form-control form-control-sm mt-2" placeholder="Send a message to the seller">
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn button2 submit">Send</button>
 			</div>
 		</div>
 	</div>

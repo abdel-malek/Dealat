@@ -590,7 +590,7 @@ header.home {
 			position: relative;
 		}
 		.main {
-			padding-top: 110px;
+			padding-top: 150px;
 			.left-col {
 				padding-right: 45px;
 				padding-left: 45px;
@@ -636,6 +636,7 @@ header.home {
 			color: $main;
 			font-weight: bold;
 			font-size: 1.1rem;
+			text-transform: capitalize
 		}
 		.controls {
 			margin-top: 10px;
@@ -677,6 +678,8 @@ header.home {
 			ul {
 				list-style: none;
 				margin: 0;
+				padding: 0;
+				padding-left: 10px;
 				display: inline;
 				white-space: nowrap;
 				transition: .2s //		flex-wrap: nowrap;
