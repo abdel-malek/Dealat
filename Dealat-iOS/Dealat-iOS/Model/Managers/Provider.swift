@@ -9,11 +9,13 @@
 import Foundation
 import UIKit
 import SDWebImage
+import Kingfisher
 
 class Provider : BaseManager {
     
     static let shared = Provider()
-    
+    static var cats = [Cat]()
+    static var isArabic : Bool = false
     
     static func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -52,10 +54,18 @@ class Provider : BaseManager {
     
     static func sd_setImage(_ img : UIImageView, urlString : String!){
         
-        if let us = urlString, let url = URL.init(string: "http://192.168.9.53/Dealat/" + us){
+        if let u = urlString,
+        let us = u.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
+        let url = URL.init(string: Communication.shared.baseImgsURL + us){
+            
+            print("------\n" + url.absoluteString + "\n------")
+            
             img.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: nil)
-            print("OKKK : \(urlString)")
-            print("http://192.168.9.53/Dealat/" + us)
+            
+//            img.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: nil)
+            
+        }else{
+            img.image = nil
         }
     }
     

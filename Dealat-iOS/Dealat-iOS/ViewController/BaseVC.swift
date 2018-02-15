@@ -162,6 +162,7 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         self.view.endEditing(true)
     }
     
+        
     
     //    func showAlert(title : String, message : String){
     //        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)

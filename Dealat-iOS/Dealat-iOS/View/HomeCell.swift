@@ -16,10 +16,10 @@ class HomeCell: BaseCell {
     
     var cat : Cat!{
         didSet{
-//           Provider.sd_setImage(img, urlString: cat.web_image)
-            self.img.image = UIImage.init(named: cat.mobile_image)
-            self.lbl.text = cat.category_name
             
+            Provider.sd_setImage(img, urlString: cat.mobile_image)
+            self.lbl.text = cat.category_name
+
             self.lbl.textAlignment = (self.tag % 2 == 0) ? .right : .left
         }
     }

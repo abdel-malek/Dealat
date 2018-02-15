@@ -2,18 +2,20 @@
 //  AdsListVC.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 2/11/18.
+//  Created by Yahya Tabba on 2/11/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 
 import UIKit
 import CHIPageControl
 
-class AdsListVC: BaseVC {
+class AdsListVC: BaseVC, UISearchBarDelegate {
     
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var pageControl : CHIPageControlAji!
+    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
+    
     
     @IBOutlet weak var viewBtn: UIBarButtonItem!
     
@@ -30,32 +32,60 @@ class AdsListVC: BaseVC {
         return ar
     }
     
-    var ads : [AD]{
-        var arr = [AD]()
-        arr.append(AD(JSON: ["main_image" : "ad1"])!)
-        arr.append(AD(JSON: ["main_image" : "ad2"])!)
-        arr.append(AD(JSON: ["main_image" : "ad3"])!)
-        arr.append(AD(JSON: ["main_image" : "ad4"])!)
-        arr.append(AD(JSON: ["main_image" : "ad5"])!)
-        arr.append(AD(JSON: ["main_image" : "ad6"])!)
-        arr.append(AD(JSON: ["main_image" : "ad7"])!)
-        arr.append(AD(JSON: ["main_image" : "ad8"])!)
-        arr.append(AD(JSON: ["main_image" : "ad9"])!)
-        return arr
-    }
+    var cat = Cat()
+    var ads : [AD] = [AD]()
+    /*{
+     var arr = [AD]()
+     arr.append(AD(JSON: ["main_image" : "ad1"])!)
+     arr.append(AD(JSON: ["main_image" : "ad2"])!)
+     arr.append(AD(JSON: ["main_image" : "ad3"])!)
+     arr.append(AD(JSON: ["main_image" : "ad4"])!)
+     arr.append(AD(JSON: ["main_image" : "ad5"])!)
+     arr.append(AD(JSON: ["main_image" : "ad6"])!)
+     arr.append(AD(JSON: ["main_image" : "ad7"])!)
+     arr.append(AD(JSON: ["main_image" : "ad8"])!)
+     arr.append(AD(JSON: ["main_image" : "ad9"])!)
+     return arr
+     }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getData()
+    }
+    
+    override func getRefreshing() {
+        Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
+            self.hideLoading()
+            self.ads = res
+            self.collectionView2.reloadData()
+        }
+    }
+    
+    override func setupViews() {
+        // CollectionView
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView2.dataSource = self
         collectionView2.delegate = self
         
+        //PageControl
         pageControl.numberOfPages = self.commericals.count
         self.timer.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
         self.timer.fire()
+        
+        // Search bar
+        if #available(iOS 11.0, *) {
+            //searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        }
+        
+        self.searchBar.placeholder =  "Search".localized
+        self.searchBar.change(Theme.Font.Calibri)
+        self.searchBar.sizeToFit()
+        self.navigationItem.titleView = searchBar
+        self.searchBar.delegate = self
+        
         
     }
     
@@ -94,6 +124,12 @@ class AdsListVC: BaseVC {
         self.collectionView.setContentOffset(CGPoint(x: self.collectionView.frame.size.width * CGFloat(u), y: 0) , animated: true)
     }
     
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    
 }
 
 
@@ -116,7 +152,7 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
         }else{
             
             let identifier = "cell-\(self.viewsType)"
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! AdCell2
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! AdCell
             
             cell.ad = self.ads[indexPath.row]
             return cell
@@ -124,8 +160,12 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsVC") as! AdDetailsVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        if collectionView == self.collectionView2{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
+            vc.tamplateId = self.ads[indexPath.row].tamplate_id.intValue
+            vc.ad = self.ads[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

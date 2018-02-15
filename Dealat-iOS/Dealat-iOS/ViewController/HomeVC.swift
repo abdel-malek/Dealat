@@ -32,7 +32,8 @@ class HomeVC: BaseVC {
         return ar
     }
     
-    var cats  : [Cat] {
+    var cats  : [Cat] = [Cat]()
+    /*{
         
         let c1 = Cat(JSON: ["category_name" : "Vehicles","mobile_image" : "Sc01 - cat"])
         
@@ -52,12 +53,12 @@ class HomeVC: BaseVC {
         let c5 = Cat(JSON: ["category_name" : "Kids","mobile_image" : "toy"])
         
         return [c1!,c2!,c3!,c4!,c5!]
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        getData()
+        getData()
         setupSideMenuNavController()
     }
     
@@ -80,7 +81,7 @@ class HomeVC: BaseVC {
 //            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         }
 
-        self.searchBar.placeholder = "Search"
+        self.searchBar.placeholder = "Search".localized
         self.searchBar.change(Theme.Font.Calibri)
         self.searchBar.sizeToFit()
         self.navigationItem.titleView = searchBar
@@ -88,24 +89,31 @@ class HomeVC: BaseVC {
 
     }
         
-//    override func getRefreshing() {
+    override func getRefreshing() {
+        Communication.shared.get_all { (res) in
+            self.hideLoading()
+            self.cats = res
+            self.tableView.reloadData()
+        }
+        
 //        Communication.shared.get_nested_categories { (res) in
-//            
 //            self.hideLoading()
 //            self.cats = res
 //            self.tableView.reloadData()
-//            
 //        }
-//    }
+    }
 
     @IBAction func sellAction(){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
-        vc.parentVC = self
-        vc.isBrowse = false
-        vc.cats = self.cats
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+//        self.navigationController?.pushViewController(vc, animated: true)
+        
+        
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
+//        vc.homeVC = self
+//        
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.modalTransitionStyle = .crossDissolve
+//        self.present(vc, animated: true, completion: nil)
     }
     
     
@@ -132,11 +140,18 @@ class HomeVC: BaseVC {
     func setupSideMenuNavController(){
         let menuController = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuVC") as! SideMenuVC
         
+        menuController.homeVC = self
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuController)
         menuLeftNavigationController.isNavigationBarHidden = true
         
-        menuLeftNavigationController.leftSide = true
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+        if Provider.isArabic{
+            menuLeftNavigationController.leftSide = false
+            SideMenuManager.default.menuRightNavigationController = menuLeftNavigationController
+        }else{
+            menuLeftNavigationController.leftSide = true
+            SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+
+        }
         
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 2 / 3
         SideMenuManager.default.menuAllowPushOfSameClassTwice = false
@@ -151,7 +166,11 @@ class HomeVC: BaseVC {
     
     @IBAction func addSideMenuNavController()
     {
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        if Provider.isArabic{
+            present(SideMenuManager.default.menuRightNavigationController!, animated: true, completion: nil)
+        }else{
+            present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        }
     }
 
     
@@ -181,9 +200,8 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource, UISearchBarDelegat
         
         if self.cats[indexPath.row].children.count > 1{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
-            vc.parentVC = self
-            vc.catBase = self.self.cats[indexPath.row]
-            vc.cats = self.cats[indexPath.row].children
+            vc.homeVC = self
+            vc.cat = self.cats[indexPath.row]
             
             vc.modalPresentationStyle = .overCurrentContext
             vc.modalTransitionStyle = .crossDissolve
@@ -191,6 +209,7 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource, UISearchBarDelegat
         }else{
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
+            vc.cat = self.cats[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
 
         }

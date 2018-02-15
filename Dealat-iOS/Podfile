@@ -27,6 +27,14 @@ pod 'IQKeyboardManagerSwift'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
 
+pod 'JVFloatLabeledTextField'
+pod 'SkyFloatingLabelTextField'
+pod 'TLPhotoPicker'
+
+
+pod 'IQDropDownTextField'
+
+
 #pod 'FacebookCore'
 #pod 'FacebookLogin'
 #pod 'KMPlaceholderTextView'

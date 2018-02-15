@@ -25,12 +25,14 @@ class Communication: BaseManager {
     let encodingBody = URLEncoding(destination: .httpBody)
     
     let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.53/Dealat/"
 
     let get_latest_adsURL = "/ads_control/get_latest_ads/format/json"
+    let get_allURL = "/categories_control/get_all/format/json"
     let get_ads_by_main_categoryURL = "/ads_control/get_ads_by_main_category/format/json"
     let get_ad_detailsURL = "/ads_control/get_ad_details/format/json"
     let get_nested_categoriesURL = "/categories_control/get_nested_categories/format/json"
-
+    let get_data_listsURL = "/ads_control/get_data_lists/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_adsURL)!
@@ -64,6 +66,7 @@ class Communication: BaseManager {
         }
     }
 
+    
     func get_ads_by_main_category(_ category_id : Int, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_ads_by_main_categoryURL)!
         let params : [String : Any] = ["category_id" : category_id]
@@ -128,6 +131,61 @@ class Communication: BaseManager {
         }
     }
 
+    func get_data_lists(_ callback :  @escaping ( _ locations : [location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule]) -> Void){
+        let url = URL(string: baseURL + get_data_listsURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var locations = [location]()
+                    var types = [Type]()
+                    var educations = [Education]()
+                    var schedules = [Schedule]()
+                    
+                    for i in value.data["location"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = location(JSON: obj){
+                            locations.append(a)
+                        }
+                    }
+                    
+                    for i in value.data["types"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = Type(JSON: obj){
+                            types.append(a)
+                        }
+                    }
+                    
+                    for i in value.data["educations"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = Education(JSON: obj){
+                            educations.append(a)
+                        }
+                    }
+
+                    for i in value.data["schedules"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = Schedule(JSON: obj){
+                            schedules.append(a)
+                        }
+                    }
+
+
+                    callback(locations,types,educations,schedules)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
     
     func get_nested_categories(_ callback : @escaping ([Cat]) -> Void){
         let url = URL(string: baseURL + get_nested_categoriesURL)!
@@ -163,6 +221,53 @@ class Communication: BaseManager {
     
     
     
+    func get_all(_ callback : @escaping ([Cat]) -> Void){
+        let url = URL(string: baseURL + get_allURL)!
+        print(url.absoluteString)
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [Cat]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = Cat(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    let resFinal = self.loadCats(res, i: 0)
+                    Provider.cats = resFinal
+                    callback(resFinal)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func loadCats(_ res : [Cat] , i : Int) -> [Cat]{
+        let catsBases = res.filter({$0.parent_id.intValue == i})
+        
+        for j in catsBases{
+            j.children += loadCats(res,i : j.category_id.intValue)
+        }
+        
+        return catsBases
+    }
+
+    
     func output(_ res : DataResponse<CustomResponse>){
         if let urlString = res.request?.url?.absoluteString{
             print(urlString)
@@ -184,9 +289,8 @@ class Communication: BaseManager {
     
     func getHearders() -> [String : String]{
         
-        
         var headers :  [String : String] = [:]
-        headers["lang"] = "ar"
+        headers["lang"] = "en"
         
         if User.isRegistered(){
             

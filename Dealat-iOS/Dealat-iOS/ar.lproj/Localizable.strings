@@ -1,0 +1,58 @@
+/* 
+  Localizable.strings
+  Dealat-iOS
+
+  Created by Yahya Tabba on 2/13/18.
+  Copyright © 2018 Tradinos UG. All rights reserved.
+*/
+
+//Register
+"Register" = "تسجيل";
+"EmailOrPhone" = "الإيميل أو رقم الهاتف";
+"Password" = "كلمة المرور";
+"ConfirmPassword" = "تأكيد كلمة المرور";
+"SetLocation" = "اختيار موقع";
+"SignIn" = "تسجيل الدخول";
+"Already" = "هل لديك حساب من قبل؟";
+"Skip" = "تخطي";
+
+
+//SIDE MENU
+"Home" = "الرئيسية";
+"My Profile" = "ملفي الشخصي";
+"My Ads" = "إعلاناتي";
+"Categories" = "المجموعات";
+"Saved searches" = "الأرشيف";
+"Edit Profile" = "تعديل ملفي";
+"Change Language" = "تغيير اللغة";
+"Settings" = "الإعدادات";
+"Help" = "مساعدة";
+
+//General
+"Category" = "Category";
+"Seller" = "اسم البائع";
+"Negotiable" = "قابل للتفاوض";
+"Description" = "الوصف";
+
+
+//Properties
+"Space" = "المساحة";
+"Rooms" = "عدد الغرف";
+"Floor" = "الطابق";
+"State" = "الحالة";
+"Furniture" = "Furniture";
+
+//Job
+"Education" = "التعليم";
+"Schedule" = "البرنامج";
+
+
+
+"Search" = "بحث";
+"OK" = "موافق";
+"Cancel" = "إلغاء";
+"AR" = "العربية";
+"EN" = "English";
+"ChangeLangTitle" = "اختر لغة التطبيق";
+"ChangeLangMessage" = "يجب إعادة تشغيل التطبيق ليتم تطبيق الإعدادات الجديدة";
+

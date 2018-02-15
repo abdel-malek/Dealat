@@ -14,7 +14,7 @@ class Theme {
     static let shared = Theme()
     
     class Font{
-        static let CenturyGothic = UIFont.init(name: "CenturyGothic", size: 25)!
+        static let CenturyGothic = UIFont.init(name: "CenturyGothic", size: 23)!
         static let Calibri = UIFont.init(name: "Calibri", size: 20)!
     }
     

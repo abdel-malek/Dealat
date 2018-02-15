@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 import UIKit
 
 
@@ -26,6 +26,14 @@ extension String{
         }
     }
     
+    var localized : String{
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    var localized_currancy : String{
+        return String(format: NSLocalizedString("%@ Price", comment: ""), "\(self)")
+    }
+
     
     // to get string after convert from html
     //    var html2String: String {
@@ -181,6 +189,32 @@ extension UISearchBar {
                 textField.font = textFont
             }
         }
-    } }
+    }
+}
+
+
+extension Double{
+    
+    func formatDigital() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0;
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        let result = formatter.string(from: self as NSNumber);
+        return result!;
+    }
+    
+}
+
+extension JSON{
+    
+    var Boolean : Bool{
+        if self.boolValue || self.intValue == 1{
+            return true
+        }else{
+            return false
+        }
+    }
+}
 
 

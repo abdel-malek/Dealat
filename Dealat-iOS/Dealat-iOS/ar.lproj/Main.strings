@@ -1,0 +1,150 @@
+
+/* Class = "UIButton"; normalTitle = "Edit profile"; ObjectID = "2s0-77-zg1"; */
+"2s0-77-zg1.normalTitle" = "Edit profile";
+
+/* Class = "UITextField"; placeholder = "Set location"; ObjectID = "4AQ-4U-NfX"; */
+"4AQ-4U-NfX.placeholder" = "Set location";
+
+/* Class = "UILabel"; text = "1450 views"; ObjectID = "6IW-eg-ILp"; */
+"6IW-eg-ILp.text" = "1450 views";
+
+/* Class = "UILabel"; text = "1450 views"; ObjectID = "7iV-O2-mH9"; */
+"7iV-O2-mH9.text" = "1450 views";
+
+/* Class = "UILabel"; text = "Syria, Damascus, Mazzeh"; ObjectID = "98P-Oq-a3E"; */
+"98P-Oq-a3E.text" = "Syria, Damascus, Mazzeh";
+
+/* Class = "UIButton"; normalTitle = "REGISTER"; ObjectID = "BM1-qo-GUW"; */
+"BM1-qo-GUW.normalTitle" = "REGISTER";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "CpM-oa-85F"; */
+"CpM-oa-85F.text" = "7/2/2018";
+
+/* Class = "UILabel"; text = "Vehicle"; ObjectID = "CqJ-RZ-ZuL"; */
+"CqJ-RZ-ZuL.text" = "Vehicle";
+
+/* Class = "UITextField"; placeholder = "Email or Phone number"; ObjectID = "EVc-mC-Wuf"; */
+"EVc-mC-Wuf.placeholder" = "Email or Phone number";
+
+/* Class = "UIButton"; normalTitle = "My profile"; ObjectID = "EWg-9x-UkH"; */
+"EWg-9x-UkH.normalTitle" = "My profile";
+
+/* Class = "UILabel"; text = "80.000 $"; ObjectID = "F0D-Vn-1LT"; */
+"F0D-Vn-1LT.text" = "80.000 $";
+
+/* Class = "UILabel"; text = "80.000 $"; ObjectID = "Fk0-Ff-hzw"; */
+"Fk0-Ff-hzw.text" = "80.000 $";
+
+/* Class = "UILabel"; text = "80.000 $"; ObjectID = "Fso-Xg-02h"; */
+"Fso-Xg-02h.text" = "80.000 $";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "GLR-2Q-gw4"; */
+"GLR-2Q-gw4.text" = "7/2/2018";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Hkg-wh-u4L"; */
+"Hkg-wh-u4L.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "I5I-kZ-ljO"; */
+"I5I-kZ-ljO.text" = "7/2/2018";
+
+/* Class = "UILabel"; text = "1450 views"; ObjectID = "Irt-7F-KR1"; */
+"Irt-7F-KR1.text" = "1450 views";
+
+/* Class = "UILabel"; text = "Vehicle"; ObjectID = "J3K-YC-rrS"; */
+"J3K-YC-rrS.text" = "Vehicle";
+
+/* Class = "UILabel"; text = "Vehicle"; ObjectID = "JkE-b6-2kG"; */
+"JkE-b6-2kG.text" = "Vehicle";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "Lda-NH-wgY"; */
+"Lda-NH-wgY.text" = "7/2/2018";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "MnP-QV-D2p"; */
+"MnP-QV-D2p.text" = "Label";
+
+/* Class = "UILabel"; text = "BMW 435!I"; ObjectID = "NPk-wQ-xnI"; */
+"NPk-wQ-xnI.text" = "BMW 435!I";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "NfO-0A-DOf"; */
+"NfO-0A-DOf.text" = "7/2/2018";
+
+/* Class = "UILabel"; text = "7/2/2018"; ObjectID = "P0s-eV-m3P"; */
+"P0s-eV-m3P.text" = "7/2/2018";
+
+/* Class = "UIButton"; normalTitle = "Language"; ObjectID = "Q5Q-hD-qn5"; */
+"Q5Q-hD-qn5.normalTitle" = "Language";
+
+/* Class = "UIButton"; normalTitle = "Sign in"; ObjectID = "S0T-ab-Cxc"; */
+"S0T-ab-Cxc.normalTitle" = "Sign in";
+
+/* Class = "UIButton"; normalTitle = "My ads"; ObjectID = "WBo-6y-WJe"; */
+"WBo-6y-WJe.normalTitle" = "My ads";
+
+/* Class = "UILabel"; text = "50.000\n$"; ObjectID = "XE9-mn-5Gf"; */
+"XE9-mn-5Gf.text" = "50.000\n$";
+
+/* Class = "UIButton"; normalTitle = "Home"; ObjectID = "Xug-mw-x8c"; */
+"Xug-mw-x8c.normalTitle" = "Home";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "ZLP-yK-tPw"; */
+"ZLP-yK-tPw.normalTitle" = "Skip";
+
+/* Class = "UIButton"; normalTitle = "Help"; ObjectID = "a94-Pk-mUK"; */
+"a94-Pk-mUK.normalTitle" = "Help";
+
+/* Class = "UIButton"; normalTitle = "Categories"; ObjectID = "aJy-0D-xHa"; */
+"aJy-0D-xHa.normalTitle" = "Categories";
+
+/* Class = "UILabel"; text = "Vehicle"; ObjectID = "bZh-an-IvF"; */
+"bZh-an-IvF.text" = "Vehicle";
+
+/* Class = "UIBarButtonItem"; title = "Filter"; ObjectID = "bb0-lk-cg1"; */
+"bb0-lk-cg1.title" = "Filter";
+
+/* Class = "UITextField"; placeholder = "Confirm password"; ObjectID = "cl9-Y3-4mx"; */
+"cl9-Y3-4mx.placeholder" = "Confirm password";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cyy-Do-j08"; */
+"cyy-Do-j08.text" = "Label";
+
+/* Class = "UILabel"; text = "1450 views"; ObjectID = "dBP-5S-dYi"; */
+"dBP-5S-dYi.text" = "1450 views";
+
+/* Class = "UILabel"; text = "1450 views"; ObjectID = "fsb-qQ-lYf"; */
+"fsb-qQ-lYf.text" = "1450 views";
+
+/* Class = "UILabel"; text = "100 views"; ObjectID = "iX8-fU-ZGW"; */
+"iX8-fU-ZGW.text" = "100 views";
+
+/* Class = "UILabel"; text = "Vehicle"; ObjectID = "nmW-ch-3UV"; */
+"nmW-ch-3UV.text" = "Vehicle";
+
+/* Class = "UILabel"; text = "80.000 $"; ObjectID = "o9I-m7-fU6"; */
+"o9I-m7-fU6.text" = "80.000 $";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "ode-rT-457"; */
+"ode-rT-457.placeholder" = "Password";
+
+/* Class = "UILabel"; text = "Already have an account?"; ObjectID = "pLf-Lr-KFT"; */
+"pLf-Lr-KFT.text" = "Already have an account?";
+
+/* Class = "UIButton"; normalTitle = "Selll your item"; ObjectID = "rUe-Xt-FHl"; */
+"rUe-Xt-FHl.normalTitle" = "Selll your item";
+
+/* Class = "UIBarButtonItem"; title = "Vehicls"; ObjectID = "sgX-oU-re2"; */
+"sgX-oU-re2.title" = "Vehicls";
+
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "tLR-P1-htx"; */
+"tLR-P1-htx.normalTitle" = "Settings";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "vcK-xf-adk"; */
+"vcK-xf-adk.normalTitle" = "Register";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "wKn-Z2-YK1"; */
+"wKn-Z2-YK1.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Saved searches"; ObjectID = "yq2-Xb-fA3"; */
+"yq2-Xb-fA3.normalTitle" = "Saved searches";
+
+/* Class = "UILabel"; text = "80.000 $"; ObjectID = "zqC-Vo-JnP"; */
+"zqC-Vo-JnP.text" = "80.000 $";

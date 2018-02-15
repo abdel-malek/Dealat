@@ -19,6 +19,7 @@ class Cat : BaseEntity {
     var mobile_image : String!
     var tamplate_name : String!
     var description : String!
+    var tamplate_id : JSON!
     var children : [Cat] = [Cat]()
 
     
@@ -31,6 +32,7 @@ class Cat : BaseEntity {
         mobile_image <- map["mobile_image"]
         tamplate_name <- map["tamplate_name"]
         description <- map["description"]
+        tamplate_id <- map["tamplate_id"]
         children <- map["children"]
     }
 }
