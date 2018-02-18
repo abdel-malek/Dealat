@@ -24,4 +24,11 @@ class Categories_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
 	}
 	
+	public function get_subcategories_get()
+	{
+		$category_id = $this->input->get('category_id');
+		$subcategoirs = $this->categories->get_category_subcategories($category_id, $this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$subcategoirs, 'message' => ''));
+	}
+	
 }

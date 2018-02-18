@@ -35,13 +35,12 @@ class Ads_control extends REST_Controller {
     public function post_new_ad_post()
     {
         $this->load->model('data_sources/categories');
-     //   $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
+     // $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
 		$this -> form_validation -> set_rules('category_id', 'Category id', 'required');
 		$this -> form_validation -> set_rules('location_id', 'Location id', 'required');
 		$this -> form_validation -> set_rules('show_period', 'Show Period', 'required');
 		$this -> form_validation -> set_rules('price', 'Price', 'required');
 		$this -> form_validation -> set_rules('title', 'Title', 'required');
-	 //   $this -> form_validation -> set_rules('main_image', 'Main image', 'required');
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
@@ -57,21 +56,35 @@ class Ads_control extends REST_Controller {
 		     'is_featured' => $this->input->post('is_featured'),
 		     'status' => 2    // temp
 		   );
-		//   $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
-		   $image_name = date('m-d-Y_hia').'-'.'1';
-	       $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
-		   if (isset($image['main_image'])) {
-				$basic_data['main_image'] =  ADS_IMAGES_PATH.$image['main_image']['upload_data']['file_name'];
+		   $main_image = null;
+		   if ($this->input->post('main_image')) {
+			  $main_image = $this->input->post('main_image');
+		   }
+		   $ads_images_paths = array();
+		   if($this->input->post('images')){
+		   	   $ads_images_paths = $this->input->post('images');
 		   }
 		   $category_info = $this->categories->get($this->input->post('category_id'));
 		   $tamplate_id = $category_info->tamplate_id;
-		   $save_result = $this->ads->create_an_ad($basic_data, $basic_data['main_image'] , $tamplate_id);
+		   $save_result = $this->ads->create_an_ad($basic_data, $main_image , $ads_images_paths , $tamplate_id);
 		   if($save_result != false){
 		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => 'Successfully created'));
 		   }else{
 		   	 $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
 		   }
 		}
+    }
+
+    public function ad_images_upload_post()
+    {
+   //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+       $image_name = date('m-d-Y_hia').'-'.'1';
+	   if (isset($image['image'])) {
+		   $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
+		   $this -> response(array('status' => false, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
+	   }else{
+	   	 $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
+	   }
     }
 
     // public function search_get()
@@ -98,7 +111,7 @@ class Ads_control extends REST_Controller {
 		 $this->load->model('data_sources/schedules');
 		 $this->load->model('data_sources/locations');
 		 $locations = $this->locations->get_all($this->data['lang']);
-		 $types = $this->types->get_all($this->data['lang']);
+		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
 		 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);

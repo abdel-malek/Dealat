@@ -52,14 +52,28 @@ class Ads extends MY_Model {
 	{
 	    $this->db->select('ads.* ,
 		                   categories.'.$lang.'_name as category_name ,
-		                   users.name as seller_name
+		                   c.'.$lang.'_name as parent_category_name ,
+		                   categories.tamplate_id,
+		                   users.name as seller_name,
+		                   locations.'.$lang.'_name as location_name ,
+		                   cites.'.$lang.'_name as  city_name,
 		                  ');
        	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
 			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');
+		    $tamplate_secondry_tamplate = TAMPLATES::get_tamplate_secondry_tables($tamplate_id);
+		    if($tamplate_secondry_tamplate){
+		       foreach ($tamplate_secondry_tamplate as $table) {
+				  $this->db->select($table.'s.'.$lang.'_name as '.$table.'_name');
+				  $this->db->join($table.'s' , $table.'s.'.$table.'_id = tamplate.'.$table.'_id','left' );
+			   }
+		    }
 		}
 		$q = parent::get($ad_id);
 		$q->images = $this->get_ad_images($ad_id);
@@ -72,13 +86,15 @@ class Ads extends MY_Model {
 	   return $this->ad_images->get_by(array('ad_id'=>$ad_id));
 	}
 	
-   public function create_an_ad($basic_data,$main_image, $tamplate_id = TAMPLATES::BASIC)
+   public function create_an_ad($basic_data,$main_image, $second_images , $tamplate_id = TAMPLATES::BASIC)
     {
    	 	$this -> db -> trans_start();
+		// save basic info
 		$new_ad_id = $this->save($basic_data);
+		// save tamplate info 
 		$tamplate_date = array();
 		$tamplate_date['ad_id'] = $new_ad_id;
-		if($tamplate_id !=  TAMPLATES::BASIC && $tamplate_id != TAMPLATES::SERVICES){
+		if($tamplate_id !=  TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$model = $tamplate_name.'_tamplate';
 			$this->load->model('data_sources/'.$model);
@@ -86,15 +102,40 @@ class Ads extends MY_Model {
 			foreach ($attributes as  $attribute) {
 				$tamplate_date[$attribute] = $this->input->post($attribute);
 			}
+		    // save ad main image according to tamplate
+		    $ad_main_image = null;
+		    if($main_image != null){
+		    	$ad_main_image = ADS_IMAGES_PATH.$main_image;
+		    }else{
+		    	$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
+		    }
+			$this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
+		    // save tamplate info
 			$this->$model->save($tamplate_date);
-		}else if($tamplate_id == TAMPLATES::SERVICES){
-			$this->load->model('data_sources/services_tamplate');
-			$this->services_tamplate->save($tamplate_date);
 		}
+		// else if($tamplate_id == TAMPLATES::SERVICES){
+			// $this->load->model('data_sources/services_tamplate');
+			// $this->services_tamplate->save($tamplate_date);
+		// }
+        // save ad images 
+        if($second_images!= null){
+        	$this->load->model('data_sources/ad_images');
+        	foreach ($second_images as $image) {
+				$data = array('ad_id'=>$new_ad_id , 'image'=>$image);
+				$this->ad_images->save($data);
+			}
+        }
 		$this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
+			if($main_image != null){
+				unlink($main_image);
+			}
+			if($second_images != null){
+				foreach ($second_images as $image) {
+				  unlink($image);
+				}
+			}
 			$this -> db -> trans_rollback();
-			unlink($main_image);
 			return false;
 		} else {
 			$this -> db -> trans_commit();

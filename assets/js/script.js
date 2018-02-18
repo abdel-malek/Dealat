@@ -53,29 +53,29 @@ $(function () {
 //		}
 //		$("#place-ad-form").trigger("reset");
 //		return false;
-			$.ajax({
-				type: "post",
-				url: base_url + '/api/ads_control/post_new_ad',
-				dataType: "json",
-				data: {
-					category_id: ,
-					location_id: ,
-					show_period: ,
-					title: ,
-					description: ,
-					price: ,
-					main_image: 
-					//ad template parameters
-				}
-			}).done(function (data) {
-				if (data.status === false) {
-					alert("error status false");
-				} else {
-					alert("success status true");
-				}
-			}).fail(function (response) {
-				alert("fail");
-			});
+			// $.ajax({
+				// type: "post",
+				// url: base_url + '/api/ads_control/post_new_ad',
+				// dataType: "json",
+				// data: {
+					// category_id: ,
+					// location_id: ,
+					// show_period: ,
+					// title: ,
+					// description: ,
+					// price: ,
+					// main_image: 
+					// //ad template parameters
+				// }
+			// }).done(function (data) {
+				// if (data.status === false) {
+					// alert("error status false");
+				// } else {
+					// alert("success status true");
+				// }
+			// }).fail(function (response) {
+				// alert("fail");
+			// });
 
 	});
 
