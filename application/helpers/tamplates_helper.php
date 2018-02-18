@@ -41,9 +41,34 @@ class TAMPLATES {
 			case 8 :
 				return array('schedule_id', 'education_id', 'experience', 'salary');
 			break;
+			case 10 :
+				return array();
+			break;
 			default :
 				return array();
 		}
+	}
+	
+	public static  function get_tamplate_secondry_tables($id)
+	{
+		switch($id) {
+			case 1 :
+				return array('type', 'type_model');
+		    break;
+			case 3 :
+				return array('type');
+		    break;
+			case 4 :
+			    return array('type');
+			break;
+			case 8 :
+				return array('education' ,'schedule');
+			break;
+			default :
+				return array();
+			break;
+		}
+		
 	}
 
 	public static function get_tamplate_name($id) {
