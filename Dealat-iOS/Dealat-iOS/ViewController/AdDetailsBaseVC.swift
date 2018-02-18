@@ -10,7 +10,7 @@ import UIKit
 
 class AdDetailsBaseVC: UIViewController {
 
-    var ad : AD!
+    var ad : AD2!
     var tamplateId : Int = -1
 
     override func viewDidLoad() {

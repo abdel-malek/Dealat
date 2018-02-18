@@ -11,7 +11,7 @@ import UIKit
 class CategoriesVC: BaseVC {
     
     
-    @IBOutlet weak var tableView : UITableView!
+    @IBOutlet weak var tableView : UITableView2!
     
     var cat : Cat = Cat()
     var chooseCatVC : ChooseCatVC!

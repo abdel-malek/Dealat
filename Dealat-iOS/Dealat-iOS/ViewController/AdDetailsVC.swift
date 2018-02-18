@@ -10,7 +10,6 @@ import UIKit
 
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    
     @IBOutlet weak var collectionView : UICollectionView!
     
     //General
@@ -36,6 +35,14 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     // 8 Job
     @IBOutlet weak var education_nameLbl : UILabel!
     @IBOutlet weak var schedule_nameLbl : UILabel!
+    
+    // 8 Education
+    @IBOutlet weak var education_nameLbl2 : UILabel!
+    
+    // 8 Verciv
+    @IBOutlet weak var vercive_nameLbl2 : UILabel!
+
+
     
     var ad : AD!
 //    var tamplateId : Int = -1
@@ -94,6 +101,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         }
         
         
+        self.schedule_nameLbl.text = ad.job.schedule_name2
+        self.education_nameLbl.text = ad.job.education_name2
+
         
         
         self.tableView.reloadData()

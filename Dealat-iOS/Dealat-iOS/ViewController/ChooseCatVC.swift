@@ -15,7 +15,7 @@ class ChooseCatVC: BaseVC {
     
     var cat = Cat()
     
-    private var embeddedViewController: CategoriesVC!
+    private var embeddedViewController: CategoriesVC2!
     
     override func viewDidLoad() {
         super.viewDidLoad()

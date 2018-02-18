@@ -13,7 +13,7 @@ import KSToastView
 class BaseTVC: UITableViewController {
 
     var hud = JGProgressHUD.init(style: JGProgressHUDStyle.extraLight)
-    var ref = UIRefreshControl()
+    var ref = UIRefreshControl2()
 
     override func viewDidLoad() {
         super.viewDidLoad()

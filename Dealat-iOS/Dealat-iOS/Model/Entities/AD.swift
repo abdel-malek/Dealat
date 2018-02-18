@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class AD : BaseEntity {
     
-    var ad_id : JSON!
+    var ad_id : JSON2!
     var user_id : JSON!
     var location_id : JSON!
     var category_id : JSON!

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class location : BaseEntity {
     
-    var location_id : JSON!
+    var location_id : JSON2!
     var location_name : String!
     var city_id : JSON!
     var city_name : String!

@@ -12,6 +12,7 @@ import Photos
 
 class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate {
 
+    @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var collectionView : UICollectionView!
 //    var selectedAssets = [TLPHAsset]()
     
