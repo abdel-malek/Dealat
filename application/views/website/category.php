@@ -44,7 +44,34 @@
 			<?php// $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
 		</div>
 -->
+
 <div class="container-fluid main">
+<div class="sub-categories">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="sub">
+					<a href="#" class="link"><li>car</li></a>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="sub">
+					<a href="#" class="link"><li>car</li></a>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="sub">
+					<a href="#" class="link"><li>car</li></a>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="sub">
+					<a href="#" class="link"><li>car</li></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 	<div class="row no-gutters">
 		<div class="col-md-10 left-col">
 			<div class="row mb-4">

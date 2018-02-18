@@ -99,8 +99,11 @@
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i> <?php echo $this->lang->line('view_details'); ?></div>
 								</div>
+<!--
 								<div class="featured" title="Featured Ad"></div>
 								<span class="featured-icon" title="Featured Ad"><i class="fas fa-bookmark fa-lg"></i></span>
+-->
+							<div class="feat"><img src="<?php echo base_url("assets/images/featured-ads.png"); ?>" alt=""></div>
 								<!--									<span class="featured-icon">uu</span>-->
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 

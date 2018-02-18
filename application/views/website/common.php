@@ -20,8 +20,8 @@
 					<div class="language-switch">
 						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
 						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
-						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url("/users_control_web/change_language?language=en") ?>" data-locale="en">en</a>
-						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url("/users_control_web/change_language?language=ar") ?>" data-locale="ar">ar</a>
+						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=en')?>" data-locale="en">en</a>
+						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=ar') ?>" data-locale="ar">ar</a>
 					</div>
 				</div>
 			</div>
@@ -243,11 +243,11 @@
 				<form id="place-ad-form">
 
 					<div class="form-group">
-						<input type="text" class="form-control" name="name" placeholder="Item's name">
+						<input type="text" class="form-control" name="title" placeholder="Item's name" required>
 					</div>
 
 					<div class="form-group">
-						<select name="" class="category-select" placeholder="Select Category">
+						<select name="category" class="category-select" placeholder="Select Category">
 							<option disabled selected value="foo" >
 							<option value="art-music">Art and music</option>
 							<option value="clothes">Clothes</option>
@@ -264,7 +264,16 @@
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control" name="price" placeholder="Item's price">
+						<select name="location" class="location-select" placeholder="Item's location">
+							<option disabled selected value="foo" >
+								<option value="1">lacation1</option>
+								<option value="2">lacation2</option>
+								<option value="3">lacation3</option>
+						</select>
+					</div>
+					<!--					show_period-->
+					<div class="form-group">
+						<input type="text" class="form-control" name="price" placeholder="Item's price" required>
 					</div>
 
 					<div class="form-group">
@@ -272,7 +281,7 @@
 					</div>
 
 					<div class="form-group">
-						<textarea class="form-control" name="location" rows="4" placeholder="Add description"></textarea>
+						<textarea class="form-control" name="description" rows="4" placeholder="Add description"></textarea>
 					</div>
 
 					<div id="fileuploader-ad">Upload</div>
@@ -285,7 +294,7 @@
 							<span class="d-none text-danger"> This will cost you some money</span>
 						</label>
 					</div>
--->
+					-->
 					<label class="featured">
 						<input id="featured-ad" type="checkbox" name="featured_ad" value="false"><span class=""> Set as featured advertisement</span>
 						<span class="warning d-none text-warning"> This will cost you some money</span>

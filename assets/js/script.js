@@ -39,8 +39,26 @@ $(function () {
 		//		evnt.preventDefault();
 		//		evnt.stopImmediatePropagation();
 		
-		
-//		if ($("#ad-modal .featured input").is(':checked')) {
+//			$.ajax({
+//				type: "post",
+//				url: base_url + '/api/ads_control/post_new_ad',
+//				dataType: "json"
+//				,
+//				data: {
+//					category_id: ,
+//					location_id: ,
+//					show_period: ,
+//					title: ,
+//					description: ,
+//					price: ,
+//					main_image: 
+//					//ad template parameters
+//				}
+//			}).done(function (data) {
+//				if (data.status === false) {
+//					alert("error status false");
+//				} else {
+//					if ($("#ad-modal .featured input").is(':checked')) {
 //			$("#ad-modal").modal("hide");
 //			setTimeout(function () {
 //				$("#pay-modal").modal("show");
@@ -53,29 +71,11 @@ $(function () {
 //		}
 //		$("#place-ad-form").trigger("reset");
 //		return false;
-			$.ajax({
-				type: "post",
-				url: base_url + '/api/ads_control/post_new_ad',
-				dataType: "json",
-				data: {
-					category_id: ,
-					location_id: ,
-					show_period: ,
-					title: ,
-					description: ,
-					price: ,
-					main_image: 
-					//ad template parameters
-				}
-			}).done(function (data) {
-				if (data.status === false) {
-					alert("error status false");
-				} else {
-					alert("success status true");
-				}
-			}).fail(function (response) {
-				alert("fail");
-			});
+//					alert("success status true");
+//				}
+//			}).fail(function (response) {
+//				alert("fail");
+//			});
 
 	});
 
@@ -252,9 +252,23 @@ $(function () {
 		var id, name;
 		id = $(this).data("categoryId");
 		name = $(this).find(".name").text().trim();
-		console.log(base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name);
+//		$.ajax({
+//				type: "get",
+//				url: base_url + '/api/categories_control/get_subcategories?category_id=' + id,
+//				dataType: "json"
+//			}).done(function (data) {
+//				if (data.status === false) {
+//					//					console.log("error status false");
+//					alert("error status false");
+//				} else {
+//					alert("success status true");
+//				}
+//			}).fail(function (response) {
+//				alert("fail");
+//			});
 		window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
 	});
+	
 	//search
 	$('input[type="search"]').keypress(function (e) {
 		var key, data, query = 0;
@@ -314,4 +328,6 @@ $(function () {
 //			alert("fail");
 //		});
 //	});
+	
+	
 });
