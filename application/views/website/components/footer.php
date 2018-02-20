@@ -36,9 +36,12 @@
 	<!--  jQuery library  -->
 	<script src="<?php echo base_url("assets/js/jquery-3.2.1.min.js"); ?>"></script>
 	<!--  bootstrap  -->
-	<script src="<?php echo base_url("assets/js/bootstrap.min.js"); ?>"></script>
 	<script src="<?php echo base_url("assets/js/popper.min.js"); ?>"></script>
+	<script src="<?php echo base_url("assets/js/bootstrap.min.js"); ?>"></script>
 
+	<!--  multi level dropdown  -->
+	<script src="<?php echo base_url("assets/js/bootstrap-4-navbar.js"); ?>"></script>
+	
 	<!--  smooth scroll  -->
 	<!--	<script src="js/SmoothScroll.min.js"></script>-->
 	<script src="<?php echo base_url("assets/js/smooth-scroll.min.js"); ?>"></script>

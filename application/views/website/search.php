@@ -6,8 +6,14 @@
 			<header>
 				<div class="row align-items-center text-center">
 					<div class="col-sm-3"><span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span></div>
-					<div class="col-md-3"><button class="btn button2 w-75 filter">Filter</button></div>
-					<div class="col-md-5 "><input type="search" class="form-control" placeholder="Search"></div>
+					<div class="col-md-3"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+<!--					<div class="col-md-5 "><input type="search" class="form-control" placeholder="Search"></div>-->
+					<div class="col-md-5 ">
+						<div class="search-wrapper">
+						<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
+						<span class="icon"><i class="fas fa-search"></i></span>
+					</div>
+					</div>
 				</div>
 				<!--				<button class="btn button2 ad">Place an Ad</button>-->
 			</header>
@@ -150,14 +156,13 @@
 				<div class="col-md-2 right-col">
 					<aside class="banners">
 						<div class="banner">
-							<a href=""><img src="images/af-coinbase-2.jpg" class="img-fluid" alt=""></a>
+							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
 						</div>
 						<div class="banner">
-							<a href=""><img src="images/af-coinbase-2.jpg" class="img-fluid" alt=""></a>
+							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
 						</div>
 					</aside>
 				</div>
 			</div>
 		</div>
 	</section>
-	<?php $this->load->view('website/common'); ?>

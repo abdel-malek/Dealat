@@ -33,28 +33,30 @@
 					</div>
 -->
 					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
-						<h2 class="text"><?php echo $this->lang->line('download_app'); ?></h2>
+						<h2 class="text">
+							<?php echo $this->lang->line('download_app'); ?>
+						</h2>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
 						<div class="download android text-center">
-						<a href="">
-						<?php if( $this->session->userdata("language")  == "en" ) { ?>
-						<img src="<?php echo base_url("assets/images/google-play-badge.png"); ?>" height="45px" alt="">
-						<?php } else {?>
-						<img src="<?php echo base_url("assets/images/google-play-badge-arabic.png"); ?>" height="45px" alt="">
-						<?php }?>
-						</a>
+							<a href="">
+								<?php if( $this->session->userdata("language")  == "en" ) { ?>
+								<img src="<?php echo base_url('assets/images/google-play-badge.png'); ?>" height="45px" alt="">
+								<?php } else {?>
+								<img src="<?php echo base_url('assets/images/google-play-badge-arabic.png'); ?>" height="45px" alt="">
+								<?php }?>
+							</a>
 						</div>
 					</div>
 					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
 						<div class="download ios text-center">
-						<a href="">
-						<?php if( $this->session->userdata("language")  == "en" ) { ?>
-						<img src="<?php echo base_url("assets/images/ios%20en%20black.png"); ?>" height="45px" width="152.5px" alt="">
-						<?php } else {?>
-						<img src="<?php echo base_url("assets/images/ios%20ar%20black.png"); ?>" height="45px" width="152.5px" alt="">
-						<?php }?>
-						</a>
+							<a href="">
+								<?php if( $this->session->userdata("language")  == "en" ) { ?>
+								<img src="<?php echo base_url('assets/images/ios%20en%20black.png'); ?>" height="45px" width="152.5px" alt="">
+								<?php } else {?>
+								<img src="<?php echo base_url('assets/images/ios%20ar%20black.png'); ?>" height="45px" width="152.5px" alt="">
+								<?php }?>
+							</a>
 						</div>
 					</div>
 
@@ -91,19 +93,23 @@
 		<div class="container-fluid main">
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-					<h5 class="recent-txt"><?php echo $this->lang->line('latest_ads'); ?></h5>
+					<h5 class="recent-txt">
+						<?php echo $this->lang->line('latest_ads'); ?>
+					</h5>
 					<div class="row ">
 						<?php if($ads != null): foreach ($ads as $ad): ?>
 						<div class="col-sm-6 col-lg-4">
 							<div class="card mb-4">
 								<div class="overlay">
-									<div class="text"><i class="fas fa-info-circle"></i> <?php echo $this->lang->line('view_details'); ?></div>
+									<div class="text"><i class="fas fa-info-circle"></i>
+										<?php echo $this->lang->line('view_details'); ?>
+									</div>
 								</div>
-<!--
+								<!--
 								<div class="featured" title="Featured Ad"></div>
 								<span class="featured-icon" title="Featured Ad"><i class="fas fa-bookmark fa-lg"></i></span>
 -->
-							<div class="feat"><img src="<?php echo base_url("assets/images/featured-ads.png"); ?>" alt=""></div>
+								<div class="feat"><img src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt=""></div>
 								<!--									<span class="featured-icon">uu</span>-->
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 
@@ -128,7 +134,7 @@
 											<?php echo $ad->price; ?>
 										</div>
 									</div>
-									  <?php endif; ?>
+									<?php endif; ?>
 									<div class="fav">
 										<!--										<span class="text">Add to favorites</span>-->
 										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>

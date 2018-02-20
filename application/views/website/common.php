@@ -250,19 +250,27 @@
 						<select name="category" class="category-select" placeholder="Select Category">
 							<option disabled selected value="foo" >
 							<option value="art-music">Art and music</option>
-							<option value="clothes">Clothes</option>
-							<option value="electronics">Electronics</option>
-							<option value="furniture">Furniture</option>
-							<option value="jobs">Jobs</option>
-							<option value="kids">Kids</option>
-							<option value="mobile">Mobile</option>
-							<option value="pets">Pets</option>
-							<option value="estate">Real Estate</option>
-							<option value="sports">Sports</option>
-							<option value="vehicles">Vehicles</option>
 						</select>
 					</div>
-
+					
+					<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Category</a>
+								<ul class="dropdown-menu main-categories" aria-labelledby="navbarDropdownMenuLink">
+<!--
+									<li><a class="dropdown-item dropdown-toggle" href="#">damascus</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">muhagreen</a></li>
+											<li><a class="dropdown-item" href="#">mazzeh</a></li>
+										</ul>
+									</li>
+-->
+								</ul>
+							</li>
+						</ul>
+					</nav>
+					
 					<div class="form-group">
 						<select name="location" class="location-select" placeholder="Item's location">
 							<option disabled selected value="foo" >
@@ -271,21 +279,161 @@
 								<option value="3">lacation3</option>
 						</select>
 					</div>
-					<!--					show_period-->
+
+					<!--
+	<nav class="navbar navbar-expand-md navbar-light bg-light">
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</a>
+				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<li><a class="dropdown-item" href="#">Action</a></li>
+					<li><a class="dropdown-item" href="#">Another action</a></li>
+					<li><a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Submenu action</a></li>
+							<li><a class="dropdown-item" href="#">Another submenu action</a></li>
+						</ul>
+					</li>
+					<li><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="#">Submenu action 2</a></li>
+							<li><a class="dropdown-item" href="#">Another submenu action 2</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+-->
+					<nav class="navbar navbar-expand-md navbar-light bg-light location-nav">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</a>
+								<ul class="dropdown-menu cities" aria-labelledby="navbarDropdownMenuLink">
+<!--
+									<li><a class="dropdown-item dropdown-toggle" href="#">damascus</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">muhagreen</a></li>
+											<li><a class="dropdown-item" href="#">mazzeh</a></li>
+										</ul>
+									</li>
+-->
+								</ul>
+							</li>
+						</ul>
+					</nav>
+					
 					<div class="form-group">
+						<select name="show_period" class="period-select" placeholder="Keep ad for...">
+							<option disabled selected value="foo" >
+								<option value="week">a week</option>
+								<option value="10_days">10 days</option>
+								<option value="month">a month</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<!--todo display currency/ take only numbers-->
+
 						<input type="text" class="form-control" name="price" placeholder="Item's price" required>
 					</div>
 
+					<!--
 					<div class="form-group">
 						<input type="text" class="form-control" name="location" placeholder="Item's location">
 					</div>
+-->
 
 					<div class="form-group">
 						<textarea class="form-control" name="description" rows="4" placeholder="Add description"></textarea>
 					</div>
 
-					<div id="fileuploader-ad">Upload</div>
+					<!--properties template-->
+					<div class="">
+						<div class="form-group">
+							<input type="text" class="form-control" name="space" placeholder="Space">
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" name="rooms_num" placeholder="Rooms">
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" name="floor" placeholder="Floor">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="state" placeholder="State">
+						</div>
+						<label class="">
+						<input type="checkbox" name="with_furniture" value="false"><span class=""> With furniture</span>
+					</label>
+					</div>
+					<!--sports template-->
+					<div class="template-sports">
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New Equipments</span>
+					</label>
+					</div>
+					<!--vehicles template-->
+					<!--type id/ type model id-->
+					<div class="template-vehicles">
+						<div class="form-group">
+							<input type="date" class="form-control" name="manufacture_date" placeholder="Manufacturing date">
+						</div>
+						<label class="">
+						<input type="checkbox" name="is_automatic" value="false"><span class=""> Automatic</span>
+					</label>
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+						<div class="form-group">
+							<input type="text" class="form-control" name="kilometer" placeholder="Kilometers">
+						</div>
+					</div>
+					<!--electronics template-->
+					<!--type id-->
+					<div class="template-electronics">
+						<div class="form-group">
+							<input type="text" class="form-control" name="size" placeholder="Size">
+						</div>
 
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+					</div>
+					<!--mobiles template-->
+					<!--type id-->
+					<div class="template-mobiles">
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+					</div>
+					<!--fashion template-->
+					<div class="template-fashion">
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+					</div>
+					<!--services template-->
+					<div class="template-services"></div>
+					<!--kids template-->
+					<div class="template-kids">
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+					</div>
+					<!--industries template-->
+					<div class="template-industries">
+						<label class="">
+						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+					</label>
+					</div>
+					<!--job positions template-->
+					<!--schedule id/experience id/education id-->
+					<div class="template-job">
+						<div class="form-group">
+							<input type="text" class="form-control" name="salary" placeholder="Salary">
+						</div>
+					</div>
+
+					<div id="fileuploader-ad">Upload</div>
 					<!--
 					<div class="">
 						<input id="terms-agree" type="checkbox" name="featured" class="featured" value="false">
@@ -474,3 +622,30 @@
 		</div>
 	</div>
 </div>
+
+<!--
+<a href="#" class="link" >
+				<li><span class="name" data-id={{id}}>{{name}}</span></li>
+			</a>
+-->
+<script id="sub-categories-template" type="text/template">
+	{{ #. }}
+	<div class="col-sm-3">
+		<div class="sub">
+			<li><span class="name" data-id={{id}}>{{name}}</span></li>
+		</div>
+	</div>
+	{{ /. }}
+</script>
+
+<script id="ad-modal-categories-template" type="text/template">
+	{{ #. }}
+		<li><a class="dropdown-item dropdown-toggle" href="#">{{category_name}}</a></li>
+	{{ /. }}
+</script>
+<script id="ad-modal-locations-template" type="text/template">
+	{{ #. }}
+		<li><a class="dropdown-item dropdown-toggle" href="#">{{city}}</a></li>
+	{{ /. }}
+</script>
+

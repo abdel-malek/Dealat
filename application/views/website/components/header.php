@@ -9,16 +9,19 @@
 	var base_url = "<?php echo base_url() . 'index.php'; ?>";
     var site_url = "<?php echo base_url() ; ?>";
 	var lang = "<?php echo $this->session->userdata('language') ?>";
-	console.log(lang);
 </script>
 	<title>
 Dealat
 	</title>
 	<!--  bootstrap  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.min.css"); ?>" />
+	
 	<!--  font-awesome  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/font-awesome.css"); ?>" />
 
+<!--  multi level dropdown  -->
+	<link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap-4-navbar.css"); ?>" />
+	
 	<!--  sumo select  -->
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/sumoselect.min.css"); ?>" />
 

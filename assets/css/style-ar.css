@@ -13,12 +13,17 @@ section.search {
   .category-page .products .main .left-col .overlay .text {
     direction: ltr; }
 
-.home-page .products .main .right-col .place-ad, .category-page .products .main .right-col .place-ad {
+.home-page .products .main .right-col .place-ad,
+.category-page .products .main .right-col .place-ad {
   direction: rtl; }
 
 .home-page .products .card,
 .category-page .products .card {
   direction: ltr; }
+
+.home-page .products .main .sub-categories,
+.category-page .products .main .sub-categories {
+  direction: rtl; }
 
 .home-page .products .card .card-body,
 .category-page .products .card .card-body {
@@ -26,6 +31,7 @@ section.search {
   text-align: right; }
 
 .search-wrapper .icon {
+  right: auto;
   left: 20px; }
 
 .home-page .products .category-name,

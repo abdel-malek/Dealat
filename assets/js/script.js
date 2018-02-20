@@ -1,3 +1,6 @@
+/*jslint browser: true*/
+/*global $, alert, Mustache*/
+
 $(function () {
 	$(".controls li").click(function () {
 		$(this).siblings("li").removeClass("selected");
@@ -33,49 +36,97 @@ $(function () {
 	$("button.place-ad").click(function () {
 		$("button.ad").addClass("invisible");
 		$("#ad-modal").modal("show");
+
+
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/categories_control/get_nested_categories',
+			dataType: "json"
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+				alert("error status false");
+			} else {
+				var i, template, rendered;
+				console.log(data);
+				//				$("#ad-modal .categories-nav .main-categories").append('<li><a class="dropdown-item dropdown-toggle" href="#">' + data.data[i].category_name + '</a></li>');
+
+				template = $('#ad-modal-categories-template').html();
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data.data);
+				$("#ad-modal .categories-nav .main-categories").append(rendered);
+			}
+		}).fail(function (response) {
+			alert("fail");
+		});
+
+
+		//		$('.cart__time-picker .select-delivery-time').append($('<option>', {
+		//		value: i,
+		//		text: now
+		//	}));
+
+				$.ajax({
+					type: "get",
+					url: base_url + '/api/ads_control/get_data_lists',
+					dataType: "json"
+				}).done(function (data) {
+					if (data.status === false) {
+											console.log(data);
+						alert("error status false");
+					} else {
+						console.log(data);
+					}
+				}).fail(function (response) {
+					alert("fail");
+				});
 	});
 
+	//view template fields when change category in place ad modal
+	$('#ad-modal .category-select').change(function () {
+
+	});
 	$("#place-ad-form").submit(function () {
 		//		evnt.preventDefault();
 		//		evnt.stopImmediatePropagation();
-		
-//			$.ajax({
-//				type: "post",
-//				url: base_url + '/api/ads_control/post_new_ad',
-//				dataType: "json"
-//				,
-//				data: {
-//					category_id: ,
-//					location_id: ,
-//					show_period: ,
-//					title: ,
-//					description: ,
-//					price: ,
-//					main_image: 
-//					//ad template parameters
-//				}
-//			}).done(function (data) {
-//				if (data.status === false) {
-//					alert("error status false");
-//				} else {
-//					if ($("#ad-modal .featured input").is(':checked')) {
-//			$("#ad-modal").modal("hide");
-//			setTimeout(function () {
-//				$("#pay-modal").modal("show");
-//			}, 500);
-//		} else {
-//			$("#ad-modal").modal("hide");
-//			setTimeout(function () {
-//				$("#success-modal").modal("show");
-//			}, 500);
-//		}
-//		$("#place-ad-form").trigger("reset");
-//		return false;
-//					alert("success status true");
-//				}
-//			}).fail(function (response) {
-//				alert("fail");
-//			});
+
+		//			$.ajax({
+		//				type: "post",
+		//				url: base_url + '/api/ads_control/post_new_ad',
+		//				dataType: "json"
+		//				,
+		//				data: {
+		//					category_id: ,
+		//					location_id: ,
+		//					show_period: ,
+		//					title: ,
+		//					description: ,
+		//					price: ,
+		//					main_image: 
+		//					//ad template parameters
+		//				}
+		//			}).done(function (data) {
+		//				if (data.status === false) {
+		//					alert("error status false");
+		//				} else {
+		//					if ($("#ad-modal .featured input").is(':checked')) {
+		//			$("#ad-modal").modal("hide");
+		//			setTimeout(function () {
+		//				$("#pay-modal").modal("show");
+		//			}, 500);
+		//		} else {
+		//			$("#ad-modal").modal("hide");
+		//			setTimeout(function () {
+		//				$("#success-modal").modal("show");
+		//			}, 500);
+		//		}
+		//		$("#place-ad-form").trigger("reset");
+		//		return false;
+		//					alert("success status true");
+		//				}
+		//			}).fail(function (response) {
+		//				alert("fail");
+		//			});
 
 	});
 
@@ -231,44 +282,88 @@ $(function () {
 	$(".profile-page .my-ads .edit-ad").click(function () {
 		$("#ad-modal").modal("show");
 	});
-//
-//	$(".category").click(function () {
-//		var firstTime = 0,
-//			is_category_pg, is_home_pg;
-//		is_home_pg = $(this).parents(".home-page").length;
-//		is_category_pg = $(this).parents(".category-page").length;
-//		if (is_home_pg > 0) {
-//			firstTime = 1;
-//			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=3&category_name=vehicles&first_time=1";
-//		} else if (is_category_pg > 0) {
-//			firstTime = 0;
-//			$(this).parents(".products").find(".change").html(" ");
-//			console.log(base_url + "/home_control/test?category_id=3&category_name=vehicles");
-//			$(this).parents(".products").find(".change").load(base_url + "/home_control/load_subcategories_div?category_id=2&category_name=vehicles");
-//		}
-//	});
+	//
+	//	$(".category").click(function () {
+	//		var firstTime = 0,
+	//			is_category_pg, is_home_pg;
+	//		is_home_pg = $(this).parents(".home-page").length;
+	//		is_category_pg = $(this).parents(".category-page").length;
+	//		if (is_home_pg > 0) {
+	//			firstTime = 1;
+	//			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=3&category_name=vehicles&first_time=1";
+	//		} else if (is_category_pg > 0) {
+	//			firstTime = 0;
+	//			$(this).parents(".products").find(".change").html(" ");
+	//			console.log(base_url + "/home_control/test?category_id=3&category_name=vehicles");
+	//			$(this).parents(".products").find(".change").load(base_url + "/home_control/load_subcategories_div?category_id=2&category_name=vehicles");
+	//		}
+	//	});
 
 	$(".category").click(function () {
 		var id, name;
 		id = $(this).data("categoryId");
 		name = $(this).find(".name").text().trim();
-//		$.ajax({
-//				type: "get",
-//				url: base_url + '/api/categories_control/get_subcategories?category_id=' + id,
-//				dataType: "json"
-//			}).done(function (data) {
-//				if (data.status === false) {
-//					//					console.log("error status false");
-//					alert("error status false");
-//				} else {
-//					alert("success status true");
-//				}
-//			}).fail(function (response) {
-//				alert("fail");
-//			});
-		window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/categories_control/get_subcategories?category_id=' + id,
+			dataType: "json"
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log("error status false");
+			} else {
+				$(".home-page .sub-categories, .category-page .sub-categories").remove();
+				if (data.data.length > 1) {
+					var i, template, rendered, string, sub = [],
+						all;
+					if (lang === "ar") {
+						all = "الكل";
+					} else {
+						all = 'All';
+					}
+					console.log(data);
+					for (i in data.data) {
+						sub.push({
+							id: data.data[i].category_id,
+							name: data.data[i].category_name
+						});
+					}
+					template = $('#sub-categories-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, sub);
+					string = '<div class="sub-categories">' + '<div class="container">' + '<div class="row">' +
+						'<div class="col-sm-3">' + '<div class="sub">' + '<li><span class="name all" data-id=' + id + '>' + all +
+						'</span></li>' + '</div></div></div></div></div>';
+					$(".home-page .main, .category-page .main").prepend(string);
+					//					$(".home-page .main, .category-page .main").prepend('<div class="sub-categories"><div class="container"><div class="row"><div class="col-sm-3"><div class="sub"><li><span class="name all" data-id={{id}}>{{name}}</span></li>
+					//		</div></div></div></div></div>');
+					$(".home-page .sub-categories .row, .category-page .sub-categories .row").append(rendered);
+					//	smooth scroll
+					$("html, body").animate({
+						scrollTop: $(".main").offset().top
+					}, 700);
+				} else {
+					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
+				}
+			}
+
+		}).fail(function (response) {
+			alert("fail");
+		});
+
 	});
-	
+
+	$(".home-page, .category-page").on("click", ".sub-categories .name", function () {
+		var id, name, is_all;
+		id = $(this).data("id");
+		name = $(this).text().trim();
+		window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
+		if ($(this).hasClass("all")) {
+			is_all = 1;
+			$(".controls").hide();
+		}
+
+	});
+
 	//search
 	$('input[type="search"]').keypress(function (e) {
 		var key, data, query = 0;
@@ -278,22 +373,23 @@ $(function () {
 			data = {
 				query: $(this).val()
 			};
-			$.ajax({
-				type: "get",
-//				url: base_url + '/api/ads_control/search?query=' + query,
-				url: base_url + '/api/ads_control/search',
-				dataType: "json",
-				data: data
-			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log("error status false");
-					alert("error status false");
-				} else {
-					alert("success status true");
-				}
-			}).fail(function (response) {
-				alert("fail");
-			});
+			window.location = base_url + '/search_control?query=' + query;
+			//			$.ajax({
+			//				type: "get",
+			//				//				url: base_url + '/api/ads_control/search?query=' + query,
+			//				url: base_url + '/api/ads_control/search',
+			//				dataType: "json",
+			//				data: data
+			//			}).done(function (data) {
+			//				if (data.status === false) {
+			//					//					console.log("error status false");
+			//					alert("error status false");
+			//				} else {
+			//					alert("success status true");
+			//				}
+			//			}).fail(function (response) {
+			//				alert("fail");
+			//			});
 		}
 	});
 
@@ -304,30 +400,31 @@ $(function () {
 			$("#chat-modal").modal("show");
 		}, 500);
 	});
+
 	//language
-//	$(".language-switch span").click(function (e) {
-////		e.preventDefault();
-//		var language = "en";
-//		if ($(this).hasClass("english")) {
-//			language = "en";
-//		} else if ($(this).hasClass("arabic")) {
-//			language = "ar";
-//		}
-//		$.ajax({
-//			type: "get",
-//			url: base_url + '/users_control_web/change_language?language=' + language,
-//			dataType: "json"
-//		}).done(function (data) {
-//			if (data.status === false) {
-//				location.reload();
-//				console.log(data);
-////				return false;
-//			} else {
-//			}
-//		}).fail(function (response) {
-//			alert("fail");
-//		});
-//	});
-	
-	
+	//	$(".language-switch span").click(function (e) {
+	////		e.preventDefault();
+	//		var language = "en";
+	//		if ($(this).hasClass("english")) {
+	//			language = "en";
+	//		} else if ($(this).hasClass("arabic")) {
+	//			language = "ar";
+	//		}
+	//		$.ajax({
+	//			type: "get",
+	//			url: base_url + '/users_control_web/change_language?language=' + language,
+	//			dataType: "json"
+	//		}).done(function (data) {
+	//			if (data.status === false) {
+	//				location.reload();
+	//				console.log(data);
+	////				return false;
+	//			} else {
+	//			}
+	//		}).fail(function (response) {
+	//			alert("fail");
+	//		});
+	//	});
+
+
 });
