@@ -29,8 +29,6 @@ import java.util.TimerTask;
 
 public class HomeActivity extends DrawerActivity {
 
-    public static final int ACTION_VIEW =1, ACTION_SELL =2;
-
 
     private int currentPage =0;
     private List<Category> mainCategories;
@@ -51,7 +49,34 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void getData() {
-        ShowProgressDialog();
+
+
+        Category category = new Category();
+        category.setId("1");
+        category.setParentId("0");
+        category.setName("Kids");
+
+        Category sub = new Category();
+        sub.setId("2");
+        sub.setParentId(category.getId());
+        sub.setName("toys");
+        sub.setTemplateId(6);
+
+        category.addSubCat(sub);
+
+
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.getMain());
+        categories.add(category);
+        categories.add(sub);
+
+
+        ((MyApplication)getApplication()).setAllCategories(categories);
+
+        mainCategories = ((MyApplication)getApplication()).getSubCatsById("0");
+        listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
+
+     /*   ShowProgressDialog();
         CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<List<Category>>() {
             @Override
             public void OnSuccess(List<Category> result) {
@@ -64,7 +89,7 @@ public class HomeActivity extends DrawerActivity {
 
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
             }
-        });
+        });*/
     }
 
     @Override
@@ -78,7 +103,6 @@ public class HomeActivity extends DrawerActivity {
 
         CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(),commercialAds );
         commercialPager.setAdapter(commercialAdapter);
-
 
         final Handler handler = new Handler();
         final Runnable update = new Runnable() {
@@ -112,9 +136,8 @@ public class HomeActivity extends DrawerActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
-                Category category = mainCategories.get(i);
-                intent.putExtra("category", category);
-                intent.putExtra("action", ACTION_SELL);
+                intent.putExtra("category", mainCategories.get(i));
+                intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
                 startActivity(intent);
             }
         });
@@ -129,7 +152,7 @@ public class HomeActivity extends DrawerActivity {
             category.setSubCategories(mainCategories);
             intent.putExtra("category", category);
 
-            intent.putExtra("action", ACTION_VIEW);
+            intent.putExtra("action", SubCategoriesActivity.ACTION_SELL);
             startActivity(intent);
         }
     }

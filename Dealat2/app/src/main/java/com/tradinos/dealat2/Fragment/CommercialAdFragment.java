@@ -41,7 +41,7 @@ public class CommercialAdFragment extends Fragment {
 
 
         ImageView imageView = rootView.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.ad_image_43);
+        imageView.setImageResource(R.drawable.ad_image_39);
 
         return rootView;
     }

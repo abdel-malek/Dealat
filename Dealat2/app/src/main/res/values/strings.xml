@@ -10,28 +10,69 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-
     <!-- Ad Status -->
+    <string name="statusPending">Pending</string>
+    <string name="statusAccepted">Accepted</string>
+    <string name="statusExpired">Expired</string>
+    <string name="statusDeleted">Deleted</string>
+    <string name="statusHidden">Hidden</string>
+    <string name="statusRejected">Rejected</string>
+
+
+    <!-- Show Periods -->
+    <string name="periodWeek">Week</string>
+    <string name="periodTenDays">Ten Days</string>
+    <string name="periodMonth">Month</string>
 
 
     <!-- Internal Strings -->
     <string name="all">All</string>
 
+
     <!-- Views -->
 
     <string name="labelHaveAccoutn">Already have an account?</string>
     <string name="labelchooseCategory">Choose a Category</string>
+    <string name="labelNegotiable">Negotiable</string>
+    <string name="labelSecondhand">Secondhand</string>
+    <string name="labelAutomatic">Automatic</string>
+    <string name="labelWithFurn">With Furniture</string>
+    <string name="labelSelectBrand">Select Brand</string>
+    <string name="labelSelectModel">Select Model</string>
+    <string name="labelSelectEdu">Select Education</string>
+    <string name="labelSelectSch">Select Schedule</string>
+    <string name="labelManufactureYear">Manufacturing Year</string>
+    <string name="labelShowPeriod">Show Period</string>
+
 
     <string name="hintEmailPhone">Email or Phone Number</string>
     <string name="hintPassword">Password</string>
     <string name="hintConfirmPassword">Confirm Password</string>
     <string name="hintSetLocation">Set Location</string>
+    <string name="hintChooseLocation">Choose Location</string>
     <string name="hintSearch">Search</string>
+    <string name="hintTitle">Title</string>
+    <string name="hintDesc">Description...</string>
+    <string name="hintPrice">Price</string>
+    <string name="hintExperience">Experience</string>
+    <string name="hintSize">Size</string>
+    <string name="hintKilometer">Kilometers</string>
+    <string name="hintSpace">Space</string>
+    <string name="hintRooms">Number of Rooms</string>
+    <string name="hintFloors">Number of Floors</string>
+    <string name="hintState">State</string>
+    <string name="hintSalary">Salary</string>
+
 
     <string name="buttonSignIn">Sign In</string>
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
     <string name="buttonSell">Sell your item</string>
+    <string name="buttonTakePhoto">Take a photo</string>
+    <string name="buttonDone">Done</string>
+    <string name="buttonCancel">Cancel</string>
+    <string name="buttonSubmit">Submit</string>
+
     <string name="title_activity_drawer">DrawerActivity</string>
 
 
@@ -44,12 +85,16 @@
     <string name="navLanguage">Language</string>
     <string name="navSettings">Settings</string>
     <string name="navHelp">Help</string>
+    <string name="title_activity_main">MainActivity</string>
 
 
     <!-- Errors -->
+    <string name="errorRequired">This field is required</string>
 
 
     <!-- Toasts -->
+    <string name="toastMaxImages">You can\'t select more images</string>
+    <string name="toastAdSubmit">Ad Submitted Successfully</string>
 
 
 </resources>

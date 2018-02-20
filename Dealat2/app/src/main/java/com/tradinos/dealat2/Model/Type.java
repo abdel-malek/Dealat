@@ -8,6 +8,22 @@ import java.util.List;
 
 public class Type extends Item {
 
+    private int templateId;
     private List<Item> models;
 
+    public int getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(int templateId) {
+        this.templateId = templateId;
+    }
+
+    public List<Item> getModels() {
+        return models;
+    }
+
+    public void setModels(List<Item> models) {
+        this.models = models;
+    }
 }

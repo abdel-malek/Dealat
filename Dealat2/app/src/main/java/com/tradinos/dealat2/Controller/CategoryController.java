@@ -10,7 +10,7 @@ import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
 import com.tradinos.dealat2.Model.Category;
-import com.tradinos.dealat2.Parser.Category.CategoryListParser;
+import com.tradinos.dealat2.Parser.Parser.Category.CategoryListParser;
 
 import java.util.List;
 

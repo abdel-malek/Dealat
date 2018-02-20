@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tradinos.dealat2">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -22,17 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".View.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".View.HomeActivity"
-            android:theme="@style/noTitleTheme.NoActionBar"
+            android:theme="@style/noTitleTheme.NoActionBar" />
+
+        <activity android:name=".View.SubCategoriesActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
             />
 
-        <activity android:name=".View.SubCategoriesActivity"/>
+        <activity android:name=".View.SelectImagesActivity"/>
+
+        <activity android:name=".View.ItemInfoActivity"
+            android:windowSoftInputMode="adjustNothing"
+            />
+
+        <activity
+            android:name=".View.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/noTitleTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -5,4 +5,9 @@ package com.tradinos.dealat2.Model;
  */
 
 public class Ad {
+    // Ad status
+    public final static int PENDING = 1, ACCEPTED = 2, EXPIRED = 3,
+            HIDDEN = 4, REJECTED = 5, DELETED = 6;
+
+
 }

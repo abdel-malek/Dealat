@@ -1,4 +1,4 @@
-package com.tradinos.dealat2.Parser.Category;
+package com.tradinos.dealat2.Parser.Parser.Category;
 
 import com.tradinos.core.network.TradinosParser;
 import com.tradinos.dealat2.Model.Category;

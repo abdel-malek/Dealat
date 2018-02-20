@@ -1,19 +1,30 @@
 package com.tradinos.dealat2.Model;
 
+import com.tradinos.dealat2.MyApplication;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by developer on 18.02.18.
  */
 
-public class Category implements Serializable{
+public class Category implements Serializable {
+
+    // templates
+    public static final int VEHICLES = 1, PROPERTIES = 2, MOBILES = 3, ELECTRONICS = 4,
+            FASHION = 5, KIDS = 6, SPORTS = 7, JOBS = 8, INDUSTRIES = 9, SERVICES = 10;
+
     private String id, name, parentId, imageUrl;
     private int templateId;
     private List<Category> subCategories;
 
+    public Category() {
+        this.subCategories = new ArrayList<>();
+    }
 
-    public static Category getMain(){
+    public static Category getMain() {
         Category category = new Category();
 
         category.setId("0");
@@ -36,6 +47,12 @@ public class Category implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFullName() {
+        if (parentId.equals("0"))
+            return this.name;
+        return MyApplication.getCategoryById(this.parentId).getFullName() + " - " + this.name;
     }
 
     public String getParentId() {
@@ -70,7 +87,13 @@ public class Category implements Serializable{
         this.subCategories = subCategories;
     }
 
-    public void addSubCat(Category category){
+    public void addSubCat(Category category) {
         this.subCategories.add(0, category);
+    }
+
+    public boolean hasSubCats() {
+        if (this.subCategories.size() > 0)
+            return true;
+        return false;
     }
 }

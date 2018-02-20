@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tradinos.dealat2.View.DrawerActivity">
+    tools:context="com.tradinos.dealat2.View.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="2dp"
+        android:padding="2dp"
         android:theme="@style/noTitleTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -30,7 +29,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_drawer"
-        />
+    <include layout="@layout/content_main" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,8 +1,14 @@
 package com.tradinos.dealat2.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
 
+import com.tradinos.dealat2.Adapter.CategoryAdapter;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
@@ -13,8 +19,18 @@ import com.tradinos.dealat2.R;
 
 public class SubCategoriesActivity extends MasterActivity {
 
+    public static final int ACTION_VIEW =1, ACTION_SELL =2, ACTION_SELECT_CAT =3;
+
+    private MyApplication application;
+
     private int action;
     private Category category;
+
+    private CategoryAdapter adapter;
+
+    //views
+    private ListView listView;
+    private ImageButton buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,38 +40,83 @@ public class SubCategoriesActivity extends MasterActivity {
 
     @Override
     public void getData() {
+        application = (MyApplication) getApplication();
+
         action = getIntent().getIntExtra("action", 0);
         category = (Category) getIntent().getSerializableExtra("category");
     }
 
     @Override
     public void showData() {
-        if(action == HomeActivity.ACTION_VIEW){
+        if(action == ACTION_VIEW){
             Category all = new Category();
-            category.setId(category.getId());
-            category.setParentId(category.getParentId());
-            category.setName(getString(R.string.all));
+            all.setId(category.getId());
+            all.setParentId(category.getParentId());
+            all.setName(getString(R.string.all));
 
-            category.setSubCategories(((MyApplication)getApplication()).getSubCatsById(category.getId()));
+            category.setSubCategories(application.getSubCatsById(category.getId()));
             category.addSubCat(all);
         }
-        else if(action == HomeActivity.ACTION_SELL){
-            category.setSubCategories(((MyApplication)getApplication()).getSubCatsById(category.getId()));
+        else if(action == ACTION_SELL){
+
         }
+        else if(action == ACTION_SELECT_CAT){
+          //  buttonBack.setVisibility(View.VISIBLE);
+        }
+
+        adapter = new CategoryAdapter(mContext, category.getSubCategories());
+        listView.setAdapter(adapter);
     }
 
     @Override
     public void assignUIReferences() {
-
+        buttonBack = (ImageButton) findViewById(R.id.buttonTrue);
+        listView = (ListView) findViewById(R.id.listView);
     }
 
     @Override
     public void assignActions() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                category = adapter.getItem(i);
 
+                category.setSubCategories(application.getSubCatsById(category.getId()));
+
+                if (category.hasSubCats()){
+                    adapter = new CategoryAdapter(mContext, category.getSubCategories());
+                    listView.setAdapter(adapter);
+
+                    buttonBack.setVisibility(View.VISIBLE);
+                }
+                else {
+                    if (action == ACTION_SELL){
+                        Intent intent = new Intent(mContext, SelectImagesActivity.class);
+                        intent.putExtra("category", category);
+                        startActivity(intent);
+                    }
+                    else if (action == ACTION_VIEW){
+
+                    }
+
+                }
+
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.buttonTrue){
+            category = MyApplication.getCategoryById(category.getParentId());
+            category.setSubCategories(application.getSubCatsById(category.getId()));
 
+            adapter = new CategoryAdapter(mContext, category.getSubCategories());
+            listView.setAdapter(adapter);
+
+            if (category.getId().equals("0"))
+                buttonBack.setVisibility(View.INVISIBLE);
+        }
     }
 }
