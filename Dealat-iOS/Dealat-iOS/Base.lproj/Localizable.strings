@@ -46,6 +46,17 @@
 "ChooseCategory" = "ChooseCategory";
 
 
+//
+"Year" = "Year";
+"IsAutomatic" = "Transmission";
+"Kilometer" = "Kilometer";
+"TypeName" = "Type";
+"TypeModelName" = "Model";
+"Automatic" = "Automatic";
+"Manual" = "Manual";
+
+
+
 //Properties
 "Space" = "Space";
 "Rooms" = "Rooms";

@@ -282,6 +282,7 @@ extension NewAddVC{
             for asset: PHAsset in photoAssets
             {
                 imageManager.requestImage(for: asset, targetSize: customSize, contentMode: .aspectFill, options: options, resultHandler: { (image, info) in
+                    self.uploadImage(image!)
                     mutableImages.add(image!)
                 })
             }
@@ -293,7 +294,7 @@ extension NewAddVC{
     }
     
     
-    /*func uploadImage(_ img : UIImage){
+    func uploadImage(_ img : UIImage){
 
         let path = savePhotoLocal(img)
         
@@ -324,7 +325,6 @@ extension NewAddVC{
                         
                         Communication.shared.output(response)
                         self.hideLoading()
-                        Communication.shared.output(response)
                         
                         switch response.result{
                         case .success(let value):
@@ -380,6 +380,6 @@ extension NewAddVC{
         
         return  rrr.appendingPathComponent("img.png")
     }
-*/
+
     
 }

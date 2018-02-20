@@ -38,12 +38,27 @@ class AD : BaseEntity {
     var seller_phone : String!
     var images = [IMG]()
     
+    var vehicle = Vehicle()
     var property = Property()
+    var mobile = Mobile()
+    var electronic = Electronic()
+    var fashion = Fashion()
     var kids = Kids()
+    var sport = Sport()
     var job = Job()
     var industry = Industry()
 
+    // 1 Vehicles
+    class Vehicle : BaseEntity{
+        var manufacture_date : String!
+        var is_automatic : JSON!
+        var is_new : JSON!
+        var kilometer : JSON!
+        var type_name : String!
+        var type_model_name : String!
+    }
 
+    
     // 2 Properties
     class Property : BaseEntity{
         var state : String!
@@ -53,10 +68,34 @@ class AD : BaseEntity {
         var space : String!
     }
     
+    // 3 Mobiles
+    class Mobile : BaseEntity{
+        var is_new : JSON!
+        var type_name : String!
+    }
+    
+    // 4 Electronic
+    class Electronic : BaseEntity{
+        var is_new : JSON!
+        var type_name : String!
+    }
+    
+    // 5 Fashion
+    class Fashion : BaseEntity{
+        var is_new : JSON!
+    }
+
+
     // 6 Kids
     class Kids : BaseEntity{
         var is_new : JSON!
     }
+    
+    // 7 Sport
+    class Sport : BaseEntity{
+        var is_new : JSON!
+    }
+
     
     // 8 Job
     class Job{
@@ -101,6 +140,14 @@ class AD : BaseEntity {
         seller_phone <- map["seller_phone"]
         images <- map["images"]
         
+        // 1 Vehicle
+        vehicle.manufacture_date <- map["manufacture_date"]
+        vehicle.is_automatic <- map["is_automatic"]
+        vehicle.is_new <- map["is_new"]
+        vehicle.kilometer <- map["kilometer"]
+        vehicle.type_name <- map["type_name"]
+        vehicle.type_model_name <- map["type_model_name"]
+        
         // 2 property
         property.state <- map["state"]
         property.rooms_num <- map["rooms_num"]
@@ -108,8 +155,22 @@ class AD : BaseEntity {
         property.with_furniture <- map["with_furniture"]
         property.space <- map["space"]
         
+        // 3 Mobile
+        mobile.is_new <- map["is_new"]
+        mobile.type_name <- map["type_name"]
+
+        // 4 Electronic
+        electronic.is_new <- map["is_new"]
+        electronic.type_name <- map["type_name"]
+
+        // 5 Fashion
+        fashion.is_new <- map["is_new"]
+
         // 6 Kids
         kids.is_new <- map["is_new"]
+        
+        // 7 Sport
+        sport.is_new <- map["is_new"]
         
         // 8 job
         job.education_name <- map["education_name"]

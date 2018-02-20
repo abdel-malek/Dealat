@@ -92,8 +92,9 @@ class HomeVC: BaseVC {
     }
     
     @IBAction func sellAction(){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
-        self.navigationController?.pushViewController(vc, animated: true)
+        //TODO
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+//        self.navigationController?.pushViewController(vc, animated: true)
         
         
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC

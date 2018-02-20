@@ -16,6 +16,9 @@ class AdsListVC: BaseVC {
     @IBOutlet weak var pageControl : CHIPageControlAji!
     
     
+    @IBOutlet weak var categoryImg: UIBarButtonItem!
+    @IBOutlet weak var categoryNameLbl: UIBarButtonItem!
+    
     @IBOutlet weak var viewBtn: UIBarButtonItem!
     
     var x1 = -1
@@ -60,6 +63,10 @@ class AdsListVC: BaseVC {
                 self.hideLoading()
                 self.ads = res
                 self.collectionView2.reloadData()
+                
+                self.categoryNameLbl.title = nil
+                self.categoryImg.image = nil
+
             })
         }
     }
@@ -82,6 +89,9 @@ class AdsListVC: BaseVC {
         
         if type == 1{
             self.searchBar.text = Provider.searchText
+        }else{
+            self.categoryNameLbl.title = self.cat.category_name
+            self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         }
         
     }

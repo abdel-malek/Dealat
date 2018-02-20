@@ -50,6 +50,7 @@
 		82ABA87F203AC650000627CB /* FilterBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ABA87E203AC650000627CB /* FilterBaseVC.swift */; };
 		82CEA2B52031C7D400E5F017 /* localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CEA2B42031C7D400E5F017 /* localizations.swift */; };
 		82CEA2B72031C89800E5F017 /* IMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CEA2B62031C89800E5F017 /* IMG.swift */; };
+		82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E2CC5F203C34C600A375E9 /* LocationsVC.swift */; };
 		82E8BD0D202B139000684368 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82E8BD0C202B139000684368 /* Media.xcassets */; };
 		82E8BD0F202B143800684368 /* CommericalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD0E202B143800684368 /* CommericalCell.swift */; };
 		82E8BD13202B285100684368 /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD12202B285100684368 /* AdCell.swift */; };
@@ -157,6 +158,7 @@
 		82CEA2B32031A25C00E5F017 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		82CEA2B42031C7D400E5F017 /* localizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = localizations.swift; sourceTree = "<group>"; };
 		82CEA2B62031C89800E5F017 /* IMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMG.swift; sourceTree = "<group>"; };
+		82E2CC5F203C34C600A375E9 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
 		82E8BD0C202B139000684368 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		82E8BD0E202B143800684368 /* CommericalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommericalCell.swift; sourceTree = "<group>"; };
 		82E8BD12202B285100684368 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				82ABA87E203AC650000627CB /* FilterBaseVC.swift */,
 				8208B31A2039B00B000817A4 /* FilterVC.swift */,
+				82E2CC5F203C34C600A375E9 /* LocationsVC.swift */,
 			);
 			path = "Filter vcs";
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				82893DBE2032E710009151FC /* NewAddBaesVC.swift in Sources */,
 				822516E92029DF4A009FF0DE /* ChooseCatVC.swift in Sources */,
 				829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */,
+				82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */,
 				823547C42029B131003478F1 /* BaseCell.swift in Sources */,
 				823547C12029AB94003478F1 /* HomeCell.swift in Sources */,
 				82E8BD15202B3DB600684368 /* AdDetailsVC.swift in Sources */,
@@ -848,6 +852,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -909,6 +914,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -935,11 +941,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Dealat-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "tradinos.Dealat-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dealat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -953,11 +960,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Dealat-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "tradinos.Dealat-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dealat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

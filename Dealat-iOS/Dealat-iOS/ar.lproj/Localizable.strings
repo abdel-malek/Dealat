@@ -45,6 +45,16 @@
 "ChooseCategory" = "اختر الفئة";
 
 
+//
+"Year" = "السنة";
+"IsAutomatic" = "ناقل الحركة";
+"Kilometer" = "كيلومتراج";
+"TypeName" = "النوع";
+"TypeModelName" = "الموديل";
+"Automatic" = "أوتوماتيك";
+"Manual" = "عادي";
+
+
 //Properties
 "Space" = "المساحة";
 "Rooms" = "عدد الغرف";

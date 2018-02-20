@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFDateHelper
 
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -27,6 +28,15 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var locationLbl : UILabel!
     @IBOutlet weak var desLbl : UILabel!
 
+    // 1 Vehicle
+    @IBOutlet weak var manufacture_dateLbl : UILabel!
+    @IBOutlet weak var is_automaticLbl : UILabel!
+    @IBOutlet weak var is_new1 : UILabel!
+    @IBOutlet weak var kilometerLbl : UILabel!
+    @IBOutlet weak var type_nameLbl : UILabel!
+    @IBOutlet weak var type_model_nameLbl : UILabel!
+
+    
     // 2 Property
     @IBOutlet weak var stateLbl : UILabel!
     @IBOutlet weak var rooms_numLbl : UILabel!
@@ -34,8 +44,24 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var with_furnitureLbl : UILabel!
     @IBOutlet weak var spaceLbl : UILabel!
     
-    // 2 Kids
+    
+    // 3 Mobile
+    @IBOutlet weak var is_new3 : UILabel!
+    @IBOutlet weak var type_nameLbl3 : UILabel!
+
+    // 4 Electronic
+    @IBOutlet weak var is_new4 : UILabel!
+    @IBOutlet weak var type_nameLbl4 : UILabel!
+
+    // 5 Fashion
+    @IBOutlet weak var is_new5 : UILabel!
+
+    // 6 Kids
     @IBOutlet weak var is_new2 : UILabel!
+    
+    // 7 Sport
+    @IBOutlet weak var is_new7 : UILabel!
+
 
     // 8 Job
     @IBOutlet weak var education_nameLbl : UILabel!
@@ -84,7 +110,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
         }
         self.viewsLbl.text = ad.show_period.stringValue
-        self.dateLbl.text = ad.publish_date
+        let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
+        self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
         var cat = ""
         cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!)-" : ""
         cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""
@@ -105,6 +132,23 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.tableView.estimatedRowHeight = 100
         self.tableView.tableFooterView = UIView()  // it's just 1 line, awesome!
 
+        //1 Vehicles
+        if self.ad.tamplate_id.intValue == 1{
+            
+            self.manufacture_dateLbl.text = ad.vehicle.manufacture_date
+            if ad.vehicle.is_automatic != nil{
+                self.is_automaticLbl.text = ad.vehicle.is_automatic.Boolean ? "Automatic".localized : "Manual".localized
+            }
+            if ad.vehicle.is_new != nil{
+                self.is_new1.text = ad.vehicle.is_new.Boolean ? "new".localized : "old".localized
+            }
+            if self.ad.vehicle.kilometer != nil{
+                self.kilometerLbl.text = ad.vehicle.kilometer.doubleValue.formatDigital()
+            }
+            self.type_nameLbl.text = ad.vehicle.type_name
+            self.type_model_nameLbl.text = ad.vehicle.type_model_name
+        }
+
         
         //2 Properties
         if self.ad.tamplate_id.intValue == 2{
@@ -117,10 +161,42 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.spaceLbl.text = ad.property.space
         }
         
+        //3 Mobiles
+        if self.ad.tamplate_id.intValue == 3{
+            if ad.industry.is_new != nil{
+                self.is_new3.text = ad.mobile.is_new.Boolean ? "new".localized : "old".localized
+            }
+            self.type_nameLbl3.text = ad.mobile.type_name
+        }
+
+        //4 Electronic
+        if self.ad.tamplate_id.intValue == 4{
+            if ad.electronic.is_new != nil{
+                self.is_new4.text = ad.electronic.is_new.Boolean ? "new".localized : "old".localized
+            }
+            self.type_nameLbl4.text = ad.electronic.type_name
+        }
+        
+        //5 Fashion
+        if self.ad.tamplate_id.intValue == 5{
+            if ad.fashion.is_new != nil{
+                self.is_new5.text = ad.fashion.is_new.Boolean ? "new".localized : "old".localized
+            }
+        }
+
+        
         //6 Kids
         if self.ad.tamplate_id.intValue == 6,ad.kids.is_new != nil {
             self.is_new2.text = ad.kids.is_new.Boolean ? "new".localized : "old".localized
         }
+        
+        //7 Fashion
+        if self.ad.tamplate_id.intValue == 7{
+            if ad.sport.is_new != nil{
+                self.is_new7.text = ad.sport.is_new.Boolean ? "new".localized : "old".localized
+            }
+        }
+
         
         //8 Job
         if self.ad.tamplate_id.intValue == 8{

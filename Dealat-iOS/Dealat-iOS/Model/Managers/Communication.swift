@@ -24,8 +24,12 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-    let baseImgsURL = "http://192.168.9.53/Dealat/"
+//    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+//    let baseImgsURL = "http://192.168.9.53/Dealat/"
+    
+    let baseURL = "http://dealat.tradinos.com/index.php/api"
+    let baseImgsURL = "http://dealat.tradinos.com/"
+
 
     let get_latest_adsURL = "/ads_control/get_latest_ads/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
@@ -332,6 +336,8 @@ class Communication: BaseManager {
         
         var headers :  [String : String] = [:]
         headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
+        
+//        headers["Authorization"]  = "Basic b2xhOjgyN2NjYjBlZWE4YTcwNmM0YzM0YTE2ODkxZjg0ZTdi"
         
         if User.isRegistered(){
             

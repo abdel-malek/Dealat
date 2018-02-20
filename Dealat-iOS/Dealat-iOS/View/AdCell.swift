@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFDateHelper
 
 
 class AdCell : UICollectionViewCell{
@@ -37,7 +38,8 @@ class AdCell : UICollectionViewCell{
             }
             
             self.viewsLbl.text = ad.show_period.stringValue
-            self.dateLbl.text = ad.publish_date
+            let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
+            self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
         }
     }
 
