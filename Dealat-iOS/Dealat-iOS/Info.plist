@@ -21,11 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>You need Usage Camera Description</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>You need Usage Microphone Description</string>
+	<string>The camera is used to take a new photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You need Usage Photo Description</string>
+	<string>The photo library is used to select photos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>calibri.ttf</string>

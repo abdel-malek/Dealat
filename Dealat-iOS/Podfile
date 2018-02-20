@@ -29,7 +29,8 @@ pod 'Firebase/Messaging'
 
 pod 'JVFloatLabeledTextField'
 pod 'SkyFloatingLabelTextField'
-pod 'TLPhotoPicker'
+#pod 'TLPhotoPicker'
+pod 'YangMingShan'
 
 
 pod 'IQDropDownTextField'

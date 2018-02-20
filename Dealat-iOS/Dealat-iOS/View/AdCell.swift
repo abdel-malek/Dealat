@@ -23,7 +23,19 @@ class AdCell : UICollectionViewCell{
 
             Provider.sd_setImage(self.img, urlString: ad.main_image)
             self.nameLbl.text = ad.title
-            self.priceLbl.text = ad.price.doubleValue.formatDigital() + " S.P"
+            
+            if ad.price.doubleValue == 0{
+                self.priceLbl.text =  "Free".localized
+            }else{
+                self.priceLbl.text = ad.price.doubleValue.formatDigital() + " " + "S.P".localized
+            }
+            
+            if ad.tamplate_id.intValue == 8{
+                self.priceLbl.isHidden = true
+            }else{
+                self.priceLbl.isHidden = false
+            }
+            
             self.viewsLbl.text = ad.show_period.stringValue
             self.dateLbl.text = ad.publish_date
         }

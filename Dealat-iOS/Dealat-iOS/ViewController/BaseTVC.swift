@@ -10,11 +10,13 @@ import UIKit
 import JGProgressHUD
 import KSToastView
 
-class BaseTVC: UITableViewController {
+class BaseTVC: UITableViewController,UISearchBarDelegate {
 
     var hud = JGProgressHUD.init(style: JGProgressHUDStyle.extraLight)
-    var ref = UIRefreshControl2()
+    var ref = UIRefreshControl()
+    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -108,6 +110,19 @@ class BaseTVC: UITableViewController {
 
     @objc func onTouch() {
         self.view.endEditing(true)
+    }
+
+    func setupSearchBar(){
+        self.searchBar.placeholder = "Search".localized
+        self.searchBar.change(Theme.Font.Calibri)
+        self.searchBar.sizeToFit()
+        self.navigationItem.titleView = searchBar
+        self.searchBar.delegate = self
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
     }
 
     

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class AD : BaseEntity {
     
-    var ad_id : JSON2!
+    var ad_id : JSON!
     var user_id : JSON!
     var location_id : JSON!
     var category_id : JSON!
@@ -32,28 +32,44 @@ class AD : BaseEntity {
     var parent_category_name : String!
     var tamplate_id : JSON!
     var location_name: String!
+    var city_name : String!
     var parent_location: String!
     var seller_name : String!
+    var seller_phone : String!
     var images = [IMG]()
     
     var property = Property()
+    var kids = Kids()
     var job = Job()
+    var industry = Industry()
 
-    
+
     // 2 Properties
     class Property : BaseEntity{
         var state : String!
         var rooms_num : String!
         var floor : String!
-        var with_furniture : String!
+        var with_furniture : JSON!
         var space : String!
+    }
+    
+    // 6 Kids
+    class Kids : BaseEntity{
+        var is_new : JSON!
     }
     
     // 8 Job
     class Job{
         var education_name : String!
         var schedule_name : String!
+        var experience : String!
     }
+    
+    // 9 Industry
+    class Industry : BaseEntity{
+        var is_new : JSON!
+    }
+
     
     
     // Mappable
@@ -79,8 +95,10 @@ class AD : BaseEntity {
         parent_category_name <- map["parent_category_name"]
         tamplate_id <- map["tamplate_id"]
         location_name <- map["location_name"]
+        city_name <- map["city_name"]
         parent_location <- map["parent_location"]
         seller_name <- map["seller_name"]
+        seller_phone <- map["seller_phone"]
         images <- map["images"]
         
         // 2 property
@@ -90,9 +108,17 @@ class AD : BaseEntity {
         property.with_furniture <- map["with_furniture"]
         property.space <- map["space"]
         
+        // 6 Kids
+        kids.is_new <- map["is_new"]
+        
         // 8 job
         job.education_name <- map["education_name"]
         job.schedule_name <- map["schedule_name"]
+        job.experience <- map["experience"]
+        
+        // 6 industry
+        industry.is_new <- map["is_new"]
+
 
     }
     

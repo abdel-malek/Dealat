@@ -11,18 +11,14 @@ import SideMenu
 import CHIPageControl
 
 class HomeVC: BaseVC {
-
+    
     @IBOutlet weak var tableView : UITableView!
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var pageControl : CHIPageControlAji!
-
-
-    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
-
     
     var x1 = -1
     var timer : Timer = Timer()
-
+    
     var commericals : [String]{
         var ar = [String]()
         ar.append("ad_image_39")
@@ -34,30 +30,30 @@ class HomeVC: BaseVC {
     
     var cats  : [Cat] = [Cat]()
     /*{
-        
-        let c1 = Cat(JSON: ["category_name" : "Vehicles","mobile_image" : "Sc01 - cat"])
-        
-        c1?.children = [Cat(JSON: ["category_name" : "Hyundai"])!,
-                        Cat(JSON: ["category_name" : "BMW"])!,
-                        Cat(JSON: ["category_name" : "Audi"])!,
-                        Cat(JSON: ["category_name" : "Volkswagen"])!,
-                        Cat(JSON: ["category_name" : "Mercedes-Benz"])!
-        ]
-        
-        let c2 = Cat(JSON: ["category_name" : "Real estate","mobile_image" : "real-estats"])
-
-        let c3 = Cat(JSON: ["category_name" : "Mobile Phones","mobile_image" : "mobile"])
-
-        let c4 = Cat(JSON: ["category_name" : "Furniture","mobile_image" : "furn"])
-      
-        let c5 = Cat(JSON: ["category_name" : "Kids","mobile_image" : "toy"])
-        
-        return [c1!,c2!,c3!,c4!,c5!]
-    }*/
+     
+     let c1 = Cat(JSON: ["category_name" : "Vehicles","mobile_image" : "Sc01 - cat"])
+     
+     c1?.children = [Cat(JSON: ["category_name" : "Hyundai"])!,
+     Cat(JSON: ["category_name" : "BMW"])!,
+     Cat(JSON: ["category_name" : "Audi"])!,
+     Cat(JSON: ["category_name" : "Volkswagen"])!,
+     Cat(JSON: ["category_name" : "Mercedes-Benz"])!
+     ]
+     
+     let c2 = Cat(JSON: ["category_name" : "Real estate","mobile_image" : "real-estats"])
+     
+     let c3 = Cat(JSON: ["category_name" : "Mobile Phones","mobile_image" : "mobile"])
+     
+     let c4 = Cat(JSON: ["category_name" : "Furniture","mobile_image" : "furn"])
+     
+     let c5 = Cat(JSON: ["category_name" : "Kids","mobile_image" : "toy"])
+     
+     return [c1!,c2!,c3!,c4!,c5!]
+     }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         getData()
         setupSideMenuNavController()
     }
@@ -77,18 +73,10 @@ class HomeVC: BaseVC {
         self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
         self.timer.fire()
         
-        if #available(iOS 11.0, *) {
-//            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        }
-
-        self.searchBar.placeholder = "Search".localized
-        self.searchBar.change(Theme.Font.Calibri)
-        self.searchBar.sizeToFit()
-        self.navigationItem.titleView = searchBar
-        self.searchBar.delegate = self
-
-    }
         
+        self.setupSearchBar()
+    }
+    
     override func getRefreshing() {
         Communication.shared.get_all { (res) in
             self.hideLoading()
@@ -96,24 +84,24 @@ class HomeVC: BaseVC {
             self.tableView.reloadData()
         }
         
-//        Communication.shared.get_nested_categories { (res) in
-//            self.hideLoading()
-//            self.cats = res
-//            self.tableView.reloadData()
-//        }
+        //        Communication.shared.get_nested_categories { (res) in
+        //            self.hideLoading()
+        //            self.cats = res
+        //            self.tableView.reloadData()
+        //        }
     }
-
+    
     @IBAction func sellAction(){
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+        self.navigationController?.pushViewController(vc, animated: true)
         
         
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
-//        vc.homeVC = self
-//        
-//        vc.modalPresentationStyle = .overCurrentContext
-//        vc.modalTransitionStyle = .crossDissolve
-//        self.present(vc, animated: true, completion: nil)
+        //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
+        //        vc.homeVC = self
+        //
+        //        vc.modalPresentationStyle = .overCurrentContext
+        //        vc.modalTransitionStyle = .crossDissolve
+        //        self.present(vc, animated: true, completion: nil)
     }
     
     
@@ -150,7 +138,7 @@ class HomeVC: BaseVC {
         }else{
             menuLeftNavigationController.leftSide = true
             SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-
+            
         }
         
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 2 / 3
@@ -158,11 +146,10 @@ class HomeVC: BaseVC {
         SideMenuManager.default.menuPresentMode = .menuSlideIn // YAHYA
         SideMenuManager.default.menuAnimationPresentDuration = 0.25 // YAHYA
         
-        //        SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.view)
         SideMenuManager.default.menuAnimationBackgroundColor = UIColor.clear
     }
-
+    
     
     @IBAction func addSideMenuNavController()
     {
@@ -172,11 +159,21 @@ class HomeVC: BaseVC {
             present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
         }
     }
-
+    
+    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if let searchBarText = searchBar.text{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
+            vc.type = 1
+            Provider.searchText = searchBarText
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     
 }
 
-extension HomeVC : UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate{
+extension HomeVC : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.cats.count
@@ -211,14 +208,11 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource, UISearchBarDelegat
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
             vc.cat = self.cats[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
-
+            
         }
         
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
     
 }
 
@@ -239,13 +233,6 @@ extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollec
         return CGSize.init(width: collectionView.frame.width, height: collectionView.frame.height)
     }
     
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        if scrollView == self.collectionView{
-//            let i = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
-//            self.pageControl.set(progress: i, animated: true)
-//        }
-//    }
-    
     //Delegate With ScrollView (scroll item photos)
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.collectionView{
@@ -260,7 +247,7 @@ extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollec
             }
         }
     }
-
+    
     
     
 }

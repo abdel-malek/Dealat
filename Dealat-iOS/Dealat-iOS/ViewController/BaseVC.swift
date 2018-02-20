@@ -11,10 +11,12 @@ import UIKit
 import JGProgressHUD
 import KSToastView
 
-class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate {
+class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate,UISearchBarDelegate {
     
     var hud = JGProgressHUD.init(style: JGProgressHUDStyle.extraLight)
     var ref = UIRefreshControl()
+    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,6 +121,9 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         //        if let nav = self.navigationController{
         //            nav.isNavigationBarHidden = false
         
+//        navigationController?.navigationBar.barStyle = UIBarStyle.black;
+
+        
         //setup back button
         self.navigationItem.hidesBackButton = false
         let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
@@ -126,6 +131,18 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         //        }
         
     }
+    
+    func setupSearchBar(){
+        self.searchBar.placeholder = "Search".localized
+        self.searchBar.change(Theme.Font.Calibri)
+        self.searchBar.sizeToFit()
+        self.navigationItem.titleView = searchBar
+        self.searchBar.delegate = self
+    }
+    
+//    override var preferredStatusBarStyle: UIStatusBarStyle{
+//        return UIStatusBarStyle.lightContent
+//    }
     
     @objc func navigateBack() {
         let _ = self.navigationController?.popViewController(animated: true)
@@ -160,6 +177,11 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
     
     @objc func onTouch() {
         self.view.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
     }
     
         

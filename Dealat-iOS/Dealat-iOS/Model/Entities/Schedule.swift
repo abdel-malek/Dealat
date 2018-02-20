@@ -12,7 +12,7 @@ import Foundation
 import ObjectMapper
 import SwiftyJSON
 
-class Schedule : BaseEntity2 {
+class Schedule : BaseEntity {
     
     var schedual_id : JSON!
     var name : String!

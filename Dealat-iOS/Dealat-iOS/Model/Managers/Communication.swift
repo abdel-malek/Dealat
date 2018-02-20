@@ -32,6 +32,7 @@ class Communication: BaseManager {
     let get_ads_by_main_categoryURL = "/ads_control/get_ads_by_main_category/format/json"
     let get_ad_detailsURL = "/ads_control/get_ad_details/format/json"
     let get_nested_categoriesURL = "/categories_control/get_nested_categories/format/json"
+    let searchURL = "/ads_control/search/format/json"
     let get_data_listsURL = "/ads_control/get_data_lists/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
@@ -131,7 +132,7 @@ class Communication: BaseManager {
         }
     }
 
-    func get_data_lists(_ callback :  @escaping ( _ locations : [location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule]) -> Void){
+    func get_data_lists(_ callback :  @escaping ( _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule]) -> Void){
         let url = URL(string: baseURL + get_data_listsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -143,13 +144,13 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var locations = [location]()
+                    var locations = [Location]()
                     var types = [Type]()
                     var educations = [Education]()
                     var schedules = [Schedule]()
                     
                     for i in value.data["location"].arrayValue{
-                        if let obj = i.dictionaryObject, let a = location(JSON: obj){
+                        if let obj = i.dictionaryObject, let a = Location(JSON: obj){
                             locations.append(a)
                         }
                     }
@@ -174,6 +175,46 @@ class Communication: BaseManager {
 
 
                     callback(locations,types,educations,schedules)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func search(query : String!,category : Cat!,location : Location!, callback : @escaping ([AD]) -> Void){
+        let url = URL(string: baseURL + searchURL)!
+        
+        var params : [String : Any] = [:]
+        
+        params["query"] = (query != nil && !query.isEmpty) ? query : nil
+        params["category_id"] = (category != nil) ? category.category_id.intValue : nil
+        params["location_id"] = (location != nil) ? location.location_id.intValue : nil
+
+        
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [AD]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -242,7 +283,7 @@ class Communication: BaseManager {
                     }
                     
                     let resFinal = self.loadCats(res, i: 0)
-                    Provider.cats = resFinal
+                    Provider.shared.cats = resFinal
                     callback(resFinal)
                     
                 }else{
@@ -290,7 +331,7 @@ class Communication: BaseManager {
     func getHearders() -> [String : String]{
         
         var headers :  [String : String] = [:]
-        headers["lang"] = "en"
+        headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
         
         if User.isRegistered(){
             

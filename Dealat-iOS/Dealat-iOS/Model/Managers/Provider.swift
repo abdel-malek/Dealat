@@ -14,8 +14,13 @@ import Kingfisher
 class Provider : BaseManager {
     
     static let shared = Provider()
-    static var cats = [Cat]()
     static var isArabic : Bool = false
+    
+    var cats = [Cat]()
+    static var searchText : String!
+    static var selectedCategory : Cat!
+    static var selectedLocation : Location!
+
     
     static func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

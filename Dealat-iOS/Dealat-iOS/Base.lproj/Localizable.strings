@@ -30,10 +30,20 @@
 
 
 //General
+"Sell" = "Sell your item";
 "Category" = "Category";
+"Location" = "Location";
 "Seller" = "Seller name";
 "Negotiable" = "Negotiable";
 "Description" = "Description";
+"old" = "Old";
+"new" = "New";
+"yes" = "Yes";
+"no" = "No";
+"S.P" = "S.P";
+"Free" = "Free";
+"All" = "All";
+"ChooseCategory" = "ChooseCategory";
 
 
 //Properties
@@ -46,6 +56,7 @@
 //Job
 "Education" = "Education";
 "Schedule" = "Schedule";
+"Experience" = "Experience";
 
 
 

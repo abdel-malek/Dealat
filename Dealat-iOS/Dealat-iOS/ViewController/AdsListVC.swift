@@ -9,12 +9,11 @@
 import UIKit
 import CHIPageControl
 
-class AdsListVC: BaseVC, UISearchBarDelegate {
+class AdsListVC: BaseVC {
     
     @IBOutlet weak var collectionView : UICollectionView!
     @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var pageControl : CHIPageControlAji!
-    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
     
     
     @IBOutlet weak var viewBtn: UIBarButtonItem!
@@ -22,6 +21,14 @@ class AdsListVC: BaseVC, UISearchBarDelegate {
     var x1 = -1
     var timer : Timer = Timer()
     var viewsType : Int = 1
+    
+    var type : Int = 0 // 0 from category, 1 from search
+    
+    //Search Fields
+//    var query : String!
+//    var selectedCategory : Cat!
+//    var selectedLocation : Location!
+
     
     var commericals : [String]{
         var ar = [String]()
@@ -34,19 +41,6 @@ class AdsListVC: BaseVC, UISearchBarDelegate {
     
     var cat = Cat()
     var ads : [AD] = [AD]()
-    /*{
-     var arr = [AD]()
-     arr.append(AD(JSON: ["main_image" : "ad1"])!)
-     arr.append(AD(JSON: ["main_image" : "ad2"])!)
-     arr.append(AD(JSON: ["main_image" : "ad3"])!)
-     arr.append(AD(JSON: ["main_image" : "ad4"])!)
-     arr.append(AD(JSON: ["main_image" : "ad5"])!)
-     arr.append(AD(JSON: ["main_image" : "ad6"])!)
-     arr.append(AD(JSON: ["main_image" : "ad7"])!)
-     arr.append(AD(JSON: ["main_image" : "ad8"])!)
-     arr.append(AD(JSON: ["main_image" : "ad9"])!)
-     return arr
-     }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +49,18 @@ class AdsListVC: BaseVC, UISearchBarDelegate {
     }
     
     override func getRefreshing() {
-        Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
-            self.hideLoading()
-            self.ads = res
-            self.collectionView2.reloadData()
+        if self.type == 0{
+            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView2.reloadData()
+            }
+        }else{
+            Communication.shared.search(query: Provider.searchText, category: Provider.selectedCategory, location: Provider.selectedLocation, callback: { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView2.reloadData()
+            })
         }
     }
     
@@ -76,16 +78,11 @@ class AdsListVC: BaseVC, UISearchBarDelegate {
         self.timer.fire()
         
         // Search bar
-        if #available(iOS 11.0, *) {
-            //searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        self.setupSearchBar()
+        
+        if type == 1{
+            self.searchBar.text = Provider.searchText
         }
-        
-        self.searchBar.placeholder =  "Search".localized
-        self.searchBar.change(Theme.Font.Calibri)
-        self.searchBar.sizeToFit()
-        self.navigationItem.titleView = searchBar
-        self.searchBar.delegate = self
-        
         
     }
     
@@ -125,10 +122,23 @@ class AdsListVC: BaseVC, UISearchBarDelegate {
     }
     
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
+        if let searchBarText = searchBar.text {
+            self.type = 1
+            Provider.searchText = searchBarText
+            self.getData()
+        }
     }
     
+    
+    @IBAction func openFilter(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterBaseVC") as! FilterBaseVC
+        vc.adsList = self
+        let nv = UINavigationController.init(rootViewController: vc)
+        self.present(nv, animated: true, completion: nil)
+    }
     
 }
 

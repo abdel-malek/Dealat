@@ -54,8 +54,10 @@ PODS:
   - SkyFloatingLabelTextField (3.4.0)
   - SwiftyJSON (4.0.0)
   - SwipeBack (1.1.1)
-  - TLPhotoPicker (0.1.0)
   - Toast-Swift (3.0.1)
+  - YangMingShan (2.0.1):
+    - YangMingShan/YMSPhotoPicker (= 2.0.1)
+  - YangMingShan/YMSPhotoPicker (2.0.1)
 
 DEPENDENCIES:
   - AFDateHelper
@@ -79,8 +81,8 @@ DEPENDENCIES:
   - SkyFloatingLabelTextField
   - SwiftyJSON
   - SwipeBack
-  - TLPhotoPicker
   - Toast-Swift
+  - YangMingShan
 
 SPEC CHECKSUMS:
   AFDateHelper: 4ad66fb19503041fbba8a3018cb7ef9c71b2ff88
@@ -110,9 +112,9 @@ SPEC CHECKSUMS:
   SkyFloatingLabelTextField: 703aa1420b697392b1e7dba25571180dde018477
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwipeBack: d6759601b40da1f4161033feb30ab475d7d04322
-  TLPhotoPicker: 05463d0aea62633f4066acf219f3952ab8b1d488
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
+  YangMingShan: 561cfbb769e8cf679d3f23d8ae7030402ddb6495
 
-PODFILE CHECKSUM: baa8deae48ce7b0c0bb0301181fa8f38bd9f0bf6
+PODFILE CHECKSUM: 585e28219dc78ad26ea72be87fdc262a4c834081
 
 COCOAPODS: 1.4.0

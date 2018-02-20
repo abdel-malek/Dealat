@@ -20,13 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.sharedManager().enable = true
         
-//        UINavigationBar.appearance().barTintColor = .white//UIColor.groupTableViewBackground
+        UINavigationBar.appearance().barTintColor = Theme.Color.red//UIColor.groupTableViewBackground
         UINavigationBar.appearance().tintColor = Theme.Color.White
         UINavigationBar.appearance().titleTextAttributes = [
             NSAttributedStringKey.foregroundColor : Theme.Color.White,
             NSAttributedStringKey.font : Theme.Font.CenturyGothic
         ]
-        
+        UINavigationBar.appearance().barStyle = UIBarStyle.black
+
 
 //        UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
         

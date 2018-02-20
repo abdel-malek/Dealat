@@ -15,8 +15,6 @@ class RegisterVC: BaseVC {
     @IBOutlet weak var tfConfirmPassword : UITextField!
     @IBOutlet weak var tfLocation : UITextField!
 
-    @IBOutlet weak var tfLocation2 : UITextField!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

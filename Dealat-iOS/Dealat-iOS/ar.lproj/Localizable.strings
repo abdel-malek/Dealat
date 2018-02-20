@@ -29,10 +29,20 @@
 "Help" = "مساعدة";
 
 //General
-"Category" = "Category";
+"Sell" = "بيع منتجاتك";
+"Category" = "الصنف";
+"Location" = "الموقع";
 "Seller" = "اسم البائع";
 "Negotiable" = "قابل للتفاوض";
 "Description" = "الوصف";
+"old" = "مستعمل";
+"new" = "جديد";
+"yes" = "نعم";
+"no" = "لا";
+"S.P" = "ل.س";
+"Free" = "مجاناً";
+"All" = "الكل";
+"ChooseCategory" = "اختر الفئة";
 
 
 //Properties
@@ -40,11 +50,12 @@
 "Rooms" = "عدد الغرف";
 "Floor" = "الطابق";
 "State" = "الحالة";
-"Furniture" = "Furniture";
+"Furniture" = "مفروش";
 
 //Job
-"Education" = "التعليم";
-"Schedule" = "البرنامج";
+"Education" = "المستوى التعليمي";
+"Schedule" = "نوع العمل";
+"Experience" = "مستوى الخبرة";
 
 
 
