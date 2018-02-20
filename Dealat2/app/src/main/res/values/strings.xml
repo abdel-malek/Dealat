@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Dealat</string>
+
+    <string name="wait">Please wait..</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Ad Status -->
+
+
+    <!-- Internal Strings -->
+    <string name="all">All</string>
+
+    <!-- Views -->
+
+    <string name="labelHaveAccoutn">Already have an account?</string>
+    <string name="labelchooseCategory">Choose a Category</string>
+
+    <string name="hintEmailPhone">Email or Phone Number</string>
+    <string name="hintPassword">Password</string>
+    <string name="hintConfirmPassword">Confirm Password</string>
+    <string name="hintSetLocation">Set Location</string>
+    <string name="hintSearch">Search</string>
+
+    <string name="buttonSignIn">Sign In</string>
+    <string name="buttonRegister">Register</string>
+    <string name="buttonSkip">Skip</string>
+    <string name="buttonSell">Sell your item</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+
+
+    <!-- Drawer -->
+    <string name="navHome">Home</string>
+    <string name="navMyProfile">My Profile</string>
+    <string name="navMyAds">My Ads</string>
+    <string name="navCategories">Categories</string>
+    <string name="navSavedSearches">Saved Searches</string>
+    <string name="navLanguage">Language</string>
+    <string name="navSettings">Settings</string>
+    <string name="navHelp">Help</string>
+
+
+    <!-- Errors -->
+
+
+    <!-- Toasts -->
+
+
+</resources>

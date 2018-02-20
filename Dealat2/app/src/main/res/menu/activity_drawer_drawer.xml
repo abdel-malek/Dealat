@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/navHome" />
+        <item
+            android:id="@+id/nav_MyProfile"
+            android:title="@string/navMyProfile" />
+        <item
+            android:id="@+id/nav_MyAds"
+            android:title="@string/navMyAds" />
+        <item
+            android:id="@+id/nav_categories"
+            android:title="@string/navCategories" />
+
+        <item
+            android:id="@+id/nav_savedSearches"
+            android:title="@string/navSavedSearches" />
+    </group>
+
+
+    <group android:id="@+id/container"
+        >
+        <item
+            android:id="@+id/navLang"
+            android:title="@string/navLanguage"
+            />
+
+        <item
+            android:id="@+id/navSettings"
+            android:title="@string/navSettings"
+            />
+
+        <item
+            android:id="@+id/navHelp"
+            android:title="@string/navHelp" />
+
+    </group>
+
+</menu>

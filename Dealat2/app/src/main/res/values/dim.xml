@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="mediumHeight">100dp</dimen>
+
+    <dimen name="imageViewSmall">20dp</dimen>
+    <dimen name="imageViewMedium">56dp</dimen>
+    <dimen name="imageViewLarge">100dp</dimen>
+
+</resources>
