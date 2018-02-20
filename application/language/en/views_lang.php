@@ -31,3 +31,26 @@ $lang['yes'] = "Yes";
 $lang['no'] = "No";
 $lang['send'] = "Send";
 $lang['all'] = "All";
+
+//admin
+$lang['welcome'] = "Welcome";
+$lang['management'] = "Management";
+$lang['categories_management'] = "Categories Management";
+$lang['ads_management'] = "Ads Management";
+
+//ads manage
+$lang['users_ads_list'] = "Users' Ads List";
+$lang['status'] = "Ad Status";
+$lang['all'] = "All";
+$lang['created_at'] = "Created at";
+$lang['tamplate_name'] = 'Type';
+$lang['title'] = 'Title';
+$lang['publish_date'] = 'Publish Date';
+$lang['price'] = 'Price';
+$lang['location'] = 'Location';
+$lang['details'] = 'Details';
+$lang['is_negotiable']= 'Is negotiable';
+$lang['is_featured']= 'Is featured';
+$lang['ad_details']= 'Ads Details';
+
+

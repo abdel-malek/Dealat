@@ -1,5 +1,6 @@
 <?php
 $lang['sign_in'] = "تسجيل دخول";
+$lang['logout'] = "تسجيل خروج";
 $lang['register'] = "إنشاء حساب";
 $lang['download_app'] = "حمل تطبيق ديلات مجاناً";
 $lang['place_ad'] = "أضف إعلان";
@@ -32,6 +33,26 @@ $lang['no'] = "لا";
 $lang['send'] = "إرسال";
 $lang['all'] = "الكل";
 
+//admin
+$lang['welcome'] = "مرحبًا";
+$lang['management'] = "الإدارة";
+$lang['categories_management'] = "إدارة الأصناف";
+$lang['ads_management'] = "إدارة الإعلانات";
+
+
+//ads manage
+$lang['users_ads_list'] = "قائمة إعلانات المستخدمين";
+$lang['status'] = "حالة الإعلان";
+$lang['all'] = "الكل";
+$lang['created_at'] = "تاريخ الإنشاء";
+$lang['tamplate_name'] = 'من نوع';
+$lang['title'] = 'العنوان';
+$lang['price'] = 'السعر';
+$lang['location'] = 'الموقع';
+$lang['details'] = 'التفاصيل';
+$lang['is_negotiable']= 'قابل للنقاش';
+$lang['is_featured']= 'إعلان مميَز';
+$lang['ad_details']= 'تفاصيل الإعلان';
 
 
 

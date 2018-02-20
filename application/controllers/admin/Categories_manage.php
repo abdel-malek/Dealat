@@ -11,6 +11,12 @@ class Categories_manage extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 	}
 	
+	public function index_get($value='')
+	{
+		$this -> data['subview'] = 'admin/categories/index';
+		$this -> load -> view('admin/_main_layout', $this -> data);
+	}
+	
 	public function add_post()
 	{
 //      $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);

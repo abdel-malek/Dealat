@@ -15,6 +15,7 @@ class Types extends MY_Model {
 		$this->load->model('data_sources/type_models');
 		$this->db->select('types.'.$lang.'_name as name , tamplate_id , category_id , types.type_id');
 		$this->db->where('types.is_active' , 1);
+		$this->db->group_by('tamplate_id');
 		$q =  parent::get();
 		foreach ($q as  $row) {
 		  $row->models = null;

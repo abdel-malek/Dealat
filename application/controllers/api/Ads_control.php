@@ -81,26 +81,33 @@ class Ads_control extends REST_Controller {
        $image_name = date('m-d-Y_hia').'-'.'1';
 	   if (isset($image['image'])) {
 		   $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
-		   $this -> response(array('status' => false, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
+		   $this -> response(array('status' => true, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
 	   }else{
 	   	 $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
 	   }
     }
+	
+	public function delete_images_post()
+	{
+		$images = $this->input_post('images');
+		if(!$images){
+			throw new Parent_Exception('You have to provide images array');
+		}
+		$images_array = json_decode($images, true);
+	    $deleted = $this->ads->delete_images($images_array);
+		if($deleted){
+		   $this -> response(array('status' => true, 'data' => '', 'message' => 'Successfully deleted'));	
+		}else{
+		   $this -> response(array('status' => true, 'data' => '', 'message' => 'Some thing went wrong'));
+		}
+	}
 
-    // public function search_get()
-    // {
-        // $query = $this->input->get('query');
-		// $category_id = $this->input->get('category_id');
-		// $ads = $this->ads->serach_ads($query , $this->data['lang'] ,$category_id);
-		// $this->response(array('status' => true, 'data' =>$ads, 'message' => ''));
-	// }
 	
 	public function search_get()
 	{
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$resuts = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
-		//dump($resuts);
 		$this->response(array('status' => true, 'data' =>$resuts, 'message' => ''));
 	}
 	
@@ -111,10 +118,12 @@ class Ads_control extends REST_Controller {
 		 $this->load->model('data_sources/schedules');
 		 $this->load->model('data_sources/locations');
 		 $locations = $this->locations->get_all($this->data['lang']);
+		 //$cities = $this->locations->get_cities($this->data['lang']);
+		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
 		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
-		 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
+		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 

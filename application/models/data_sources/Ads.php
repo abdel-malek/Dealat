@@ -55,6 +55,7 @@ class Ads extends MY_Model {
 		                   c.'.$lang.'_name as parent_category_name ,
 		                   categories.tamplate_id,
 		                   users.name as seller_name,
+		                   users.phone as seller_phone,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
 		                  ');
@@ -143,6 +144,15 @@ class Ads extends MY_Model {
 		}
    }
 
+  public function delete_images($images_array)
+  {
+  	  $ok = true;
+      foreach ($images_array as $image_path) {
+        $ok = unlink($image_path); 
+      }
+	  return $ok;
+  }
+
   public function serach_ads($query_string ,$lang , $category_id = null)
   {
  	 $this->db->select('ads.* ,
@@ -151,13 +161,14 @@ class Ads extends MY_Model {
 	                  ');
      $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	 if(strlen($query_string) < 3){
-	 	$this->db->like('ads.title', $query_string); 
-		$this->db->or_like('ads.description', $query_string); 
-	 }else{
-	 	$this->db->where('MATCH(ads.title) AGAINST (' . $this->db->escape($query_string) . '  IN BOOLEAN MODE)', NULL, FALSE);
-	    $this->db->or_where('MATCH(ads.description) AGAINST  (' . $this->db->escape($query_string) . ' IN BOOLEAN MODE)', NULL, FALSE);
-	 }
+	 // if(strlen($query_string) <  3){
+	 	// $this->db->like('ads.title', $query_string); 
+		// $this->db->or_like('ads.description', $query_string); 
+	 // }
+	// else{
+	 	$this->db->where('MATCH(ads.title) AGAINST (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
+	    $this->db->or_where('MATCH(ads.description) AGAINST  (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
+	 //}
      $this->db->where('status' , STATUS::ACCEPTED);
 	 if($category_id){
 	    $this->db->where("(categories.category_id = '$category_id' OR categories.parent_id = '$category_id' OR c.parent_id = '$category_id')");
@@ -178,6 +189,7 @@ class Ads extends MY_Model {
 		    $this->$model->filter();
 			$this->db->select('ads.* ,
 			                   c1.'.$lang.'_name as category_name ,
+			                   c1.tamplate_id,
 		                       c.'.$lang.'_name as parent_category_name ,
 		                       users.name as seller_name,
 		                       locations.'.$lang.'_name as location_name ,
@@ -188,6 +200,7 @@ class Ads extends MY_Model {
 		}else{
 			$this->db->select('ads.* ,
 			                   c1.'.$lang.'_name as category_name ,
+			                   c1.tamplate_id,
 		                       c.'.$lang.'_name as parent_category_name ,
 		                       users.name as seller_name,
 		                       locations.'.$lang.'_name as location_name ,
@@ -198,6 +211,7 @@ class Ads extends MY_Model {
 	 }else{
 		$this->db->select('ads.* ,
 		                   c1.'.$lang.'_name as category_name ,
+		                   c1.tamplate_id,
 	                       c.'.$lang.'_name as parent_category_name ,
 	                       users.name as seller_name,
 	                       locations.'.$lang.'_name as location_name ,
@@ -206,13 +220,13 @@ class Ads extends MY_Model {
 	 }
 	//serach
 	 if($query_string != null){
-	     if(strlen($query_string) < 3){
-		 	$this->db->like('ads.title', $query_string); 
-			$this->db->or_like('ads.description', $query_string); 
-		 }else{
-		 	$this->db->where('MATCH(ads.title) AGAINST (' . $this->db->escape($query_string) . '  IN BOOLEAN MODE)', NULL, FALSE);
-		    $this->db->or_where('MATCH(ads.description) AGAINST  (' . $this->db->escape($query_string) . ' IN BOOLEAN MODE)', NULL, FALSE);
-		 }
+	     // if(strlen($query_string) < 3){
+		 	// $this->db->like('ads.title', $query_string); 
+			// $this->db->or_like('ads.description', $query_string); 
+		// }else{
+		 	$this->db->where("MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
+		    $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
+		// }
 	     if($category_id != null){
 		 	$this->db->where('ads.category_id' , $category_id);
         }
@@ -253,6 +267,25 @@ class Ads extends MY_Model {
 	   }else{
 	   	 return false;
 	   }
+	}
+	
+	public function get_all_ads_with_details($lang)
+	{
+	    $this->db->select('ads.* ,
+		                  categories.'.$lang.'_name as category_name ,
+		                  categories.tamplate_id,
+		                  c.'.$lang.'_name as parent_category_name ,
+		                  locations.'.$lang.'_name as location_name ,
+		                  cites.'.$lang.'_name as  city_name,
+		                 ');
+		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+    	$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+		if($this->input->get('status')){
+			$this->db->where('status' , $this->input->get('status'));
+		}
+		return parent::get();
 	}
 
 
