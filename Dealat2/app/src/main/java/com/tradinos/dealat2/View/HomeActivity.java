@@ -29,7 +29,6 @@ import java.util.TimerTask;
 
 public class HomeActivity extends DrawerActivity {
 
-
     private int currentPage =0;
     private List<Category> mainCategories;
 
@@ -50,8 +49,7 @@ public class HomeActivity extends DrawerActivity {
     @Override
     public void getData() {
 
-
-        Category category = new Category();
+        /*Category category = new Category();
         category.setId("1");
         category.setParentId("0");
         category.setName("Kids");
@@ -74,9 +72,9 @@ public class HomeActivity extends DrawerActivity {
         ((MyApplication)getApplication()).setAllCategories(categories);
 
         mainCategories = ((MyApplication)getApplication()).getSubCatsById("0");
-        listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
+        listView.setAdapter(new MainCatAdapter(mContext, mainCategories));*/
 
-     /*   ShowProgressDialog();
+       ShowProgressDialog();
         CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<List<Category>>() {
             @Override
             public void OnSuccess(List<Category> result) {
@@ -89,7 +87,7 @@ public class HomeActivity extends DrawerActivity {
 
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
             }
-        });*/
+        });
     }
 
     @Override

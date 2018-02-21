@@ -1,4 +1,4 @@
-package  com.tradinos.core.network;
+package com.tradinos.core.network;
 
 import android.content.Context;
 
@@ -26,45 +26,45 @@ import com.android.volley.toolbox.HttpHeaderParser;
 public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
 
 
-    private static final String FILE_PART_NAME = "document";
+    private static final String FILE_PART_NAME = "image";
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
 
 
     /* To hold the parameter name and the File to upload */
-    private Map<String,File> fileUploads = new HashMap<String,File>();
+    private Map<String, File> fileUploads = new HashMap<String, File>();
 
     /* To hold the parameter name and the string content to upload */
-    private Map<String,String> stringUploads = new HashMap<String,String>();
-    Context context ;
+    private Map<String, String> stringUploads = new HashMap<String, String>();
+    Context context;
+
     public PhotoMultipartRequest(Context context, String url, RequestMethod method, final TradinosParser<T> parser, SuccessCallback<T> successCallback, final FaildCallback faildCallback) {
-        super(context , url , method ,parser,successCallback,faildCallback );
+        super(context, url, method, parser, successCallback, faildCallback);
 
     }
 
-    public void addFileUpload(String param,File file) {
-        fileUploads.put(param,file);
+    public void addFileUpload(File file) {
+        fileUploads.put(FILE_PART_NAME, file);
         buildMultipartEntity();
     }
 
-    public void addStringUpload(String param,String content) {
-        stringUploads.put(param,content);
+    public void addStringUpload(String param, String content) {
+        stringUploads.put(param, content);
         buildMultipartEntity(param);
     }
 
     /**
      * 要上传的文件
      */
-    public Map<String,File> getFileUploads() {
+    public Map<String, File> getFileUploads() {
         return fileUploads;
     }
 
     /**
      * 要上传的参数
      */
-    public Map<String,String> getStringUploads() {
+    public Map<String, String> getStringUploads() {
         return stringUploads;
     }
-
 
 
     @Override
@@ -81,37 +81,30 @@ public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
         return headers;
     }
 
-    private void buildMultipartEntity()
-    {
-        mBuilder.addBinaryBody(FILE_PART_NAME, fileUploads.get("document"));
+    private void buildMultipartEntity() {
+        mBuilder.addBinaryBody(FILE_PART_NAME, fileUploads.get(FILE_PART_NAME));
         mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         mBuilder.setLaxMode().setBoundary("xx").setCharset(Charset.forName("UTF-8"));
     }
 
-    private void buildMultipartEntity(String key)
-    {
+    private void buildMultipartEntity(String key) {
         mBuilder.addTextBody(key, stringUploads.get(key), ContentType.APPLICATION_JSON);
         mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         mBuilder.setLaxMode().setBoundary("xx").setCharset(Charset.forName("UTF-8"));
     }
 
     @Override
-    public String getBodyContentType()
-    {
+    public String getBodyContentType() {
         String contentTypeHeader = mBuilder.build().getContentType().getValue();
         return contentTypeHeader;
     }
 
     @Override
-    public byte[] getBody() throws AuthFailureError
-    {
+    public byte[] getBody() throws AuthFailureError {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try
-        {
+        try {
             mBuilder.build().writeTo(bos);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             VolleyLog.e("IOException writing to ByteArrayOutputStream bos, building the multipart request.");
         }
 

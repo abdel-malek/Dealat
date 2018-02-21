@@ -15,7 +15,6 @@ import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.View.MasterActivity;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,8 +78,6 @@ public class ImageAdapter extends BaseAdapter {
         ImageGetter task = new ImageGetter(imageView);
         task.execute(getItem(i).getPath());
        // view.setTag(task);
-       //   imageView.setImageBitmap(new ImageDecoder().decodeSampledBitmapFromUri(getItem(i).getPath()));
-
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

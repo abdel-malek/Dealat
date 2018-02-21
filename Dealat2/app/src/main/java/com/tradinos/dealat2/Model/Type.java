@@ -11,6 +11,17 @@ public class Type extends Item {
     private int templateId;
     private List<Item> models;
 
+    public Type(){}
+
+    public Type(String id, String name){
+        super(id, name);
+    }
+
+    public static Type getNoItem(){
+
+        return new Type("-1", "--");
+    }
+
     public int getTemplateId() {
         return templateId;
     }
@@ -25,5 +36,11 @@ public class Type extends Item {
 
     public void setModels(List<Item> models) {
         this.models = models;
+    }
+
+    public void addNoModel(){
+        if (this.models == null)
+            return;
+        this.models.add(0, Item.getNoItem());
     }
 }

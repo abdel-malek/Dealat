@@ -23,7 +23,11 @@ public class TypeParser implements TradinosParser<Type> {
         type.setName(jsonObject.getString("name"));
 
         type.setTemplateId(jsonObject.getInt("tamplate_id"));
-       // type.setModels(); models
+
+        if (!jsonObject.getString("models").equals("null")){ // type may not have models
+            type.setModels(new ItemListParser("type_model_id").Parse(jsonObject.getString("models")));
+            type.addNoModel();
+        }
 
         return type;
     }

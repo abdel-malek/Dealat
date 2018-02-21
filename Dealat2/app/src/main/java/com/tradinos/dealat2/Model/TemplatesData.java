@@ -10,7 +10,8 @@ import java.util.List;
 public class TemplatesData {
 
     private List<Item> educations, schedules;
-    private HashMap<Integer, List<Type>> types;
+    private HashMap<Integer, List<Type>> brands;
+    private List<Location> locations;
 
     public List<Item> getEducations() {
         return educations;
@@ -28,11 +29,19 @@ public class TemplatesData {
         this.schedules = schedules;
     }
 
-    public HashMap<Integer, List<Type>> getTypes() {
-        return types;
+    public HashMap<Integer, List<Type>> getBrands() {
+        return brands;
     }
 
-    public void setTypes(HashMap<Integer, List<Type>> types) {
-        this.types = types;
+    public void setBrands(HashMap<Integer, List<Type>> brands) {
+        this.brands = brands;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 }

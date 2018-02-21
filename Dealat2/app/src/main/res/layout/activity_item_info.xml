@@ -31,6 +31,8 @@
                 android:id="@+id/editDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:padding="24dp"
                 android:hint="@string/hintDesc"
                 style="@style/editTextWhite"
@@ -48,6 +50,8 @@
                 android:id="@+id/autoCompleteLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:completionThreshold="1"
                 android:hint="@string/hintChooseLocation"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
@@ -64,12 +68,14 @@
                 android:id="@+id/spinnerPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 />
 
             <EditText
                 android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:textIsSelectable="true"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
@@ -79,6 +85,7 @@
                 android:id="@+id/editPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:hint="@string/hintPrice"
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
@@ -87,8 +94,9 @@
 
             <CheckBox
                 android:id="@+id/checkboxNegotiable"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@string/labelNegotiable"
                 android:textColor="@color/white"
                 />
@@ -99,6 +107,7 @@
                 android:id="@+id/textBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelSelectBrand"
                 android:textColor="@color/white"
                 />
@@ -107,12 +116,15 @@
                 android:id="@+id/spinnerBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 />
 
             <TextView
                 android:id="@+id/textModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelSelectModel"
                 android:textColor="@color/white"
                 />
@@ -121,12 +133,15 @@
                 android:id="@+id/spinnerModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 />
 
             <TextView
                 android:id="@+id/textDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelManufactureYear"
                 android:textColor="@color/white"
                 />
@@ -135,12 +150,16 @@
                 android:id="@+id/spinnerYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 />
 
             <EditText
                 android:id="@+id/editKilo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:hint="@string/hintKilometer"
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
@@ -149,8 +168,10 @@
 
             <CheckBox
                 android:id="@+id/checkboxAutomatic"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:text="@string/labelAutomatic"
                 android:textColor="@color/white"
                 />
@@ -161,6 +182,7 @@
                 android:id="@+id/editSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:hint="@string/hintSize"
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
@@ -173,6 +195,7 @@
                 android:id="@+id/editSpace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:inputType="numberDecimal"
                 android:hint="@string/hintSpace"
                 style="@style/editTextWhite"
@@ -183,6 +206,7 @@
                 android:id="@+id/editRooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:inputType="number"
                 android:hint="@string/hintRooms"
                 style="@style/editTextWhite"
@@ -193,6 +217,7 @@
                 android:id="@+id/editFloors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:inputType="number"
                 android:hint="@string/hintFloors"
                 style="@style/editTextWhite"
@@ -203,6 +228,8 @@
                 android:id="@+id/editState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:hint="@string/hintState"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
@@ -210,8 +237,10 @@
 
             <CheckBox
                 android:id="@+id/checkboxFurn"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:text="@string/labelWithFurn"
                 android:textColor="@color/white"
                 />
@@ -222,6 +251,7 @@
                 android:id="@+id/textEdu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelSelectEdu"
                 android:textColor="@color/white"/>
 
@@ -229,12 +259,15 @@
                android:id="@+id/spinnerEdu"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:layout_marginBottom="8dp"
+               android:visibility="gone"
                />
 
             <TextView
                 android:id="@+id/textSch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelSelectSch"
                 android:textColor="@color/white"/>
 
@@ -242,12 +275,15 @@
                 android:id="@+id/spinnerSch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 />
 
             <EditText
                 android:id="@+id/editEx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:hint="@string/hintExperience"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
@@ -257,6 +293,8 @@
                 android:id="@+id/editSalary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:hint="@string/hintSalary"
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
@@ -267,12 +305,12 @@
 
             <CheckBox
                 android:id="@+id/checkboxSecondhand"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="@string/labelSecondhand"
                 android:textColor="@color/white"
                 />
-
         </LinearLayout>
     </ScrollView>
 

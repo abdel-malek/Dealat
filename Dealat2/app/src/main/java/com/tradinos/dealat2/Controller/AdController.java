@@ -4,13 +4,17 @@ import android.content.Context;
 
 import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.FaildCallback;
+import com.tradinos.core.network.PhotoMultipartRequest;
 import com.tradinos.core.network.RequestMethod;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
+import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
+import com.tradinos.dealat2.Parser.Parser.TemplatesDataParser;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +35,15 @@ public class AdController extends ParentController {
         return new AdController(controller);
     }
 
+    public void uploadImage(File image, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "ad_images_upload").getURL(getmContext());
+        PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addFileUpload(image);
+
+        request.Call();
+    }
+
     public void submitAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback){
         String url = new URLBuilder(APIModel.ads, "post_new_ad").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
@@ -42,5 +55,10 @@ public class AdController extends ParentController {
         request.Call();
     }
 
+    public void getTemplatesData(SuccessCallback<TemplatesData> successCallback){
+        String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());
 
+        request.Call();
+    }
 }

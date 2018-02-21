@@ -19,7 +19,9 @@ import com.tradinos.dealat2.R;
 
 public class SubCategoriesActivity extends MasterActivity {
 
-    public static final int ACTION_VIEW =1, ACTION_SELL =2, ACTION_SELECT_CAT =3;
+    public static final int ACTION_VIEW = 1, ACTION_SELL = 2, ACTION_SELECT_CAT = 3;
+
+    public final int REQUEST_SELECT_IMG = 1;
 
     private MyApplication application;
 
@@ -48,7 +50,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
     @Override
     public void showData() {
-        if(action == ACTION_VIEW){
+        if (action == ACTION_VIEW) {
             Category all = new Category();
             all.setId(category.getId());
             all.setParentId(category.getParentId());
@@ -56,12 +58,9 @@ public class SubCategoriesActivity extends MasterActivity {
 
             category.setSubCategories(application.getSubCatsById(category.getId()));
             category.addSubCat(all);
-        }
-        else if(action == ACTION_SELL){
-
-        }
-        else if(action == ACTION_SELECT_CAT){
-          //  buttonBack.setVisibility(View.VISIBLE);
+        } else if (action == ACTION_SELECT_CAT) {
+            if (!category.getId().equals("0")) //this check is really not necessary
+                buttonBack.setVisibility(View.VISIBLE);
         }
 
         adapter = new CategoryAdapter(mContext, category.getSubCategories());
@@ -81,36 +80,64 @@ public class SubCategoriesActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 category = adapter.getItem(i);
 
-                category.setSubCategories(application.getSubCatsById(category.getId()));
+                if (category.hasSubCats()) {
 
-                if (category.hasSubCats()){
+                    category.setSubCategories(application.getSubCatsById(category.getId()));
+
+                    if (action == ACTION_VIEW){
+                        Category all = new Category();
+                        all.setId(category.getId());
+                        all.setParentId(category.getParentId());
+                        all.setName(getString(R.string.all));
+                        category.addSubCat(all);
+                    }
+
                     adapter = new CategoryAdapter(mContext, category.getSubCategories());
                     listView.setAdapter(adapter);
 
                     buttonBack.setVisibility(View.VISIBLE);
-                }
-                else {
-                    if (action == ACTION_SELL){
-                        Intent intent = new Intent(mContext, SelectImagesActivity.class);
+                } else {
+                    Intent intent;
+                    if (action == ACTION_SELL) {
+                        intent = new Intent(mContext, SelectImagesActivity.class);
+                        intent.putExtra("category", category);
+                        startActivityForResult(intent, REQUEST_SELECT_IMG);
+
+                    } else if (action == ACTION_VIEW) {
+                        intent = new Intent(mContext, ViewAdsActivity.class);
                         intent.putExtra("category", category);
                         startActivity(intent);
-                    }
-                    else if (action == ACTION_VIEW){
 
+                    } else if (action == ACTION_SELECT_CAT){
+                        intent = new Intent();
+                        intent.putExtra("category", category);
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }
-
                 }
-
-
             }
         });
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SELECT_IMG)
+            finish();
+    }
+
+    @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonTrue){
+        if (view.getId() == R.id.buttonTrue) { // back
             category = MyApplication.getCategoryById(category.getParentId());
             category.setSubCategories(application.getSubCatsById(category.getId()));
+
+            if (action == ACTION_VIEW && !category.getId().equals("0")){
+                Category all = new Category();
+                all.setId(category.getId());
+                all.setParentId(category.getParentId());
+                all.setName(getString(R.string.all));
+                category.addSubCat(all);
+            }
 
             adapter = new CategoryAdapter(mContext, category.getSubCategories());
             listView.setAdapter(adapter);

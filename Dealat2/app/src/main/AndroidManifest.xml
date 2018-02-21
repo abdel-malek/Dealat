@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".View.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -40,10 +41,8 @@
             android:windowSoftInputMode="adjustNothing"
             />
 
-        <activity
-            android:name=".View.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/noTitleTheme.NoActionBar"></activity>
+        <activity android:name=".View.ViewAdsActivity"/>
+
     </application>
 
 </manifest>

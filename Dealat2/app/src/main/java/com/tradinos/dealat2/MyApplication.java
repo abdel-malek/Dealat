@@ -76,9 +76,25 @@ public class MyApplication extends Application {
 
         for (int i = 0; i < categories.size(); i++) {
             category = categories.get(i);
-            if (category.getParentId().equals(parentId))
+            if (category.getParentId().equals(parentId)){
                 result.add(category);
+                hasChildAtLeast(category);
+            }
         }
         return result;
+    }
+
+    private boolean hasChildAtLeast(Category parentCat){
+        List<Category> categories = getAllCategories();
+        Category category;
+
+        for (int i = 0; i < categories.size(); i++) {
+            category = categories.get(i);
+            if (category.getParentId().equals(parentCat.getId())){
+                parentCat.addSubCat(category);
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class SelectImagesActivity extends MasterActivity {
 
+    private final int REQUEST_SUBMIT = 1, REQUEST_CAMERA = 2;
+
     private Category selectedCategory;
 
     private ImageAdapter adapter;
@@ -60,22 +62,33 @@ public class SelectImagesActivity extends MasterActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.container:
+            case R.id.container: // camera
+
 
                 break;
 
             case R.id.buttonTrue: //done
                 Intent intent = new Intent(mContext, ItemInfoActivity.class);
 
-                intent.putExtra("images", (ArrayList)adapter.getSelectedImages());
+                intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
                 intent.putExtra("category", selectedCategory);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_SUBMIT);
                 break;
 
             case R.id.buttonFalse: //cancel
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+            if (requestCode == REQUEST_SUBMIT)
+                finish();
+        else if (requestCode == REQUEST_CAMERA){
+
+            }
     }
 
     private ArrayList<Image> getAllShownImagesPath() {
@@ -86,8 +99,8 @@ public class SelectImagesActivity extends MasterActivity {
         String absolutePathOfImage = null;
         uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
-        String[] projection = { MediaStore.MediaColumns.DATA,
-                MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
+        String[] projection = {MediaStore.MediaColumns.DATA,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
 
         cursor = getContentResolver().query(uri, projection, null,
                 null, null);
