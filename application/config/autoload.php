@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('exceptions/Parent_Exception',
+$autoload['model'] = array("exceptions/Parent_Exception",
                            "exceptions/Validation_Exception",
                            "exceptions/Database_Exception",
                            "data_sources/user_permission"

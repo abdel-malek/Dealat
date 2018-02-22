@@ -75,6 +75,7 @@ var status_name = $("#status_select").find("option:selected").text();
  function show_ad_details (ad_id , tamplate_id) {
  	  console.log(ad_id);
  	  console.log(tamplate_id);
+ 	  $('.ads_details  .template_info').css('display', 'none');
  	  var url =  base_url + '/api/ads_control/get_ad_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
         url: url,
@@ -82,6 +83,8 @@ var status_name = $("#status_select").find("option:selected").text();
         dataType: "json",
         success: function(response) {
             console.log(response.data);   
+            $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
+            
             $('.ads_details').modal('show');
         },error: function(xhr, status, error){
         	new PNotify({

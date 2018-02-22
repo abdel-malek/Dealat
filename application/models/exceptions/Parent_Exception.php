@@ -25,5 +25,4 @@ class Parent_Exception extends Exception {
 		return $msg;
 		//   }
 	}
-
 }

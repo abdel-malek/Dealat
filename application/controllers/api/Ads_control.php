@@ -76,16 +76,17 @@ class Ads_control extends REST_Controller {
     }
 
     public function ad_images_upload_post()
-    {
-   //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
-       $image_name = date('m-d-Y_hia').'-'.'1';
-	   if (isset($image['image'])) {
-		   $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
-		   $this -> response(array('status' => true, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
-	   }else{
-	   	 $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
-	   }
-    }
+	  {
+	 //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+	     $image_name = date('m-d-Y_hia').'-'.'1';
+	      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
+	      if (isset($image['image'])) {
+	          $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
+	          $this -> response(array('status' => true, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
+	      }else{
+	           $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
+	      }
+	  }
 	
 	public function delete_images_post()
 	{
@@ -125,6 +126,12 @@ class Ads_control extends REST_Controller {
 		 $schedules = $this->schedules->get_all($this->data['lang']);
 		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
+	}
+	
+	public function get_templates_attrs_get()
+	{
+		$attrs = TAMPLATES::get_tamplate_attributes_array();
+		$this -> response(array('status' => true, 'data' => $attrs, 'message' => ''));
 	}
 
 }

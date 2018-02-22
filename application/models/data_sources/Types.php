@@ -41,7 +41,7 @@ class Types extends MY_Model {
 		}
 	    $result_array = array();
 		foreach ($q as $row) {
-		  $result_array[$row->tamplate_id]= $row;
+		  $result_array[$row->tamplate_id][]= $row;
 		}
 		return $result_array;
 	}

@@ -52,7 +52,34 @@ $lang['location'] = 'الموقع';
 $lang['details'] = 'التفاصيل';
 $lang['is_negotiable']= 'قابل للنقاش';
 $lang['is_featured']= 'إعلان مميَز';
+$lang['is_new']= 'جديد';
+$lang['type'] = 'النوع';
+$lang['type_model'] = 'الطراز';
+$lang['manufacture_date'] = 'سنة الصنع';
+$lang['kilometrage'] = 'عدد الكيلوميترات';
+$lang['motion'] = 'ناقل الحركة';
+$lang['automatic'] = 'اوتوماتيكي';
+$lang['manual'] = 'يدوي';
+$lang['manual'] = 'يدوي';
+$lang['space'] = 'مساحة العقار';
+$lang['rooms_num'] = 'عدد الغرف';
+$lang['floor'] = 'رقم الطابق';
+$lang['state'] = 'حالة العقار';
+$lang['with_furniture'] = 'مع أثاث';
+$lang['size'] = 'الحجم';
+$lang['education'] = 'المستوى التعليمي';
+$lang['schedule'] = 'جدول الدوام ';
+$lang['experience'] = 'مستوى الخبرة';
+$lang['salary'] = 'الراتب';
 $lang['ad_details']= 'تفاصيل الإعلان';
+$lang['basic_info']= 'المعلومات الرئيسية';
+$lang['detailed_info']= 'المعلومات التفصيلية';
+$lang['seller_info']= 'معلومات البائع';
+$lang['description']= 'الوصف';
+$lang['seller_name']= 'اسم';
+$lang['seller_phone']= 'رقم';
+$lang['not_set']= 'غير محدد';
+
 
 
 

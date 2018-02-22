@@ -49,6 +49,24 @@ class TAMPLATES {
 		}
 	}
 	
+	public static function get_tamplate_attributes_array()
+	{
+		
+		return array(
+		  1 =>  array('type_id', 'type_model_id', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer'),
+		  2 =>  array('space', 'rooms_num', 'floor', 'state', 'with_furniture'),
+		  3 =>  array('type_id', 'is_new'),
+		  4 =>  array('type_id', 'size', 'is_new'),
+		  5 =>  array('is_new'),
+		  6 =>  array('is_new'),
+		  7 =>  array('is_new'), 
+		  8 =>  array('schedule_id', 'education_id', 'experience', 'salary'),
+		  9 =>  array('is_new'),
+		  10 => array(),
+		  11 => array()
+		);
+	}
+	
 	public static  function get_tamplate_secondry_tables($id)
 	{
 		switch($id) {
