@@ -12,6 +12,7 @@ import AFDateHelper
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView : UICollectionView!
+    @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var collectionViewHeight : NSLayoutConstraint!
     var parentBase: AdDetailsBaseVC?
     
@@ -27,7 +28,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var negotiableLbl : UILabel!
     @IBOutlet weak var locationLbl : UILabel!
     @IBOutlet weak var desLbl : UILabel!
-
+    
     // 1 Vehicle
     @IBOutlet weak var manufacture_dateLbl : UILabel!
     @IBOutlet weak var is_automaticLbl : UILabel!
@@ -35,7 +36,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var kilometerLbl : UILabel!
     @IBOutlet weak var type_nameLbl : UILabel!
     @IBOutlet weak var type_model_nameLbl : UILabel!
-
+    
     
     // 2 Property
     @IBOutlet weak var stateLbl : UILabel!
@@ -48,21 +49,21 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     // 3 Mobile
     @IBOutlet weak var is_new3 : UILabel!
     @IBOutlet weak var type_nameLbl3 : UILabel!
-
+    
     // 4 Electronic
     @IBOutlet weak var is_new4 : UILabel!
     @IBOutlet weak var type_nameLbl4 : UILabel!
-
+    
     // 5 Fashion
     @IBOutlet weak var is_new5 : UILabel!
-
+    
     // 6 Kids
     @IBOutlet weak var is_new2 : UILabel!
     
     // 7 Sport
     @IBOutlet weak var is_new7 : UILabel!
-
-
+    
+    
     // 8 Job
     @IBOutlet weak var education_nameLbl : UILabel!
     @IBOutlet weak var schedule_nameLbl : UILabel!
@@ -70,11 +71,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     // 9 Industry
     @IBOutlet weak var is_new9 : UILabel!
-
     
+    var selectedIndex : Int = 0
     var ad : AD!
-//    var tamplateId : Int = -1
-//    var category_full_name : String!
+    //    var tamplateId : Int = -1
+    //    var category_full_name : String!
     
     override func viewDidLoad() {
         
@@ -120,7 +121,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
         loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
         self.locationLbl.text = "\(loc)"
-
+        
         self.sellerLbl.text = ad.seller_name
         self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
         self.desLbl.text = ad.description
@@ -131,7 +132,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.tableFooterView = UIView()  // it's just 1 line, awesome!
-
+        
         //1 Vehicles
         if self.ad.tamplate_id.intValue == 1{
             
@@ -148,7 +149,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.type_nameLbl.text = ad.vehicle.type_name
             self.type_model_nameLbl.text = ad.vehicle.type_model_name
         }
-
+        
         
         //2 Properties
         if self.ad.tamplate_id.intValue == 2{
@@ -168,7 +169,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             }
             self.type_nameLbl3.text = ad.mobile.type_name
         }
-
+        
         //4 Electronic
         if self.ad.tamplate_id.intValue == 4{
             if ad.electronic.is_new != nil{
@@ -183,7 +184,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new5.text = ad.fashion.is_new.Boolean ? "new".localized : "old".localized
             }
         }
-
+        
         
         //6 Kids
         if self.ad.tamplate_id.intValue == 6,ad.kids.is_new != nil {
@@ -196,7 +197,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new7.text = ad.sport.is_new.Boolean ? "new".localized : "old".localized
             }
         }
-
+        
         
         //8 Job
         if self.ad.tamplate_id.intValue == 8{
@@ -221,6 +222,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
+        self.collectionView2.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -246,21 +248,57 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
         
-//        cell.imageName = "ad\(indexPath.row + 1)"
         cell.im = self.ad.images[indexPath.row]
+        
+        if collectionView.tag != 2{
+            if indexPath.row == self.selectedIndex{
+                cell.layer.borderColor = Theme.Color.red.cgColor
+                cell.layer.borderWidth = 3
+            }else{
+                cell.layer.borderWidth = 0
+            }
+            
+        }else{
+            cell.layer.borderWidth = 0
+        }
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let h = collectionView.frame.height - 20
+        if collectionView.tag == 2{
+            return CGSize.init(width: collectionView.frame.width, height: collectionView.frame.height)
+        }
         return CGSize.init(width: h, height: h)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Provider.sd_setImage(self.img, urlString: self.ad.images[indexPath.row].image)
+        
+        if collectionView.tag != 2{
+            self.collectionView2.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            self.selectedIndex = indexPath.row
+            self.collectionView.reloadSections(IndexSet.init(integer: IndexSet.Element.init(0)))
+            //            self.collectionView.reloadData()
+        }
+        //        Provider.sd_setImage(self.img, urlString: self.ad.images[indexPath.row].image)
     }
-
+    
+    
+    //Delegate With ScrollView (scroll item photos)
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.collectionView2{
+            if self.ad.images.count > 0 {
+                if self.collectionView2.visibleCells.count > 0{
+                    let pp = round(self.collectionView2.contentOffset.x / self.collectionView2.frame.size.width)
+                    self.selectedIndex = Int(pp)
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
