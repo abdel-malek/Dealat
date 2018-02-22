@@ -91,11 +91,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.ad = res
             self.parentBase?.ad = res
             
-            if !res.images.isEmpty{
+//            if !res.images.isEmpty{
                 let im = IMG()
                 im.image = self.ad.main_image
                 self.ad.images.insert(im, at: 0)
-            }
+//            }
             
             self.refreshData()
         }

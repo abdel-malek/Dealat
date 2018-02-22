@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4666C0978B0CF9C0E04AF01370A6D715"
-               BlueprintName = "SwipeBack"
+               BlueprintIdentifier = "D53804E34279A83A61915C6ACA3C0D06"
+               BlueprintName = "KMPlaceholderTextView"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "SwipeBack.framework">
+               BuildableName = "KMPlaceholderTextView.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

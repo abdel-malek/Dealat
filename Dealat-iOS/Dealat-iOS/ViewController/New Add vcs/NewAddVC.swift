@@ -19,6 +19,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     let cellIdentifier = "imageCellIdentifier"
     var images: NSArray! = []
     
+    var imagesPaths: [String] = []
+    
+    
     @IBOutlet weak var locationLbl : UITextField!
     @IBOutlet weak var categoryLbl : UITextField!
     
@@ -35,11 +38,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
     }
-    
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         getData()
         setupViews()
@@ -84,12 +86,21 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return UITableViewAutomaticDimension
+            return (indexPath.row == 0 || indexPath.row == 6) ? UITableViewAutomaticDimension : 50
         default:
-            return 50
+            return UITableViewAutomaticDimension
         }
     }
     
+    //    func textViewDidChange(_ textView: UITextView) {
+    //        let currentOffset = tableView.contentOffset
+    //        UIView.setAnimationsEnabled(false)
+    //        tableView.beginUpdates()
+    //        tableView.endUpdates()
+    //        UIView.setAnimationsEnabled(true)
+    //        tableView.setContentOffset(currentOffset, animated: false)
+    //    }
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         
@@ -103,8 +114,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             tableView?.beginUpdates()
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            
-            let thisIndexPath = IndexPath.init(row: 2, section: 1)
+
+            let thisIndexPath = IndexPath.init(row: 6, section: 0)
             
             tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
         }
@@ -113,7 +124,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1,indexPath.row == 1{
+        if indexPath.section == 0,indexPath.row == 2{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC2") as! ChooseCatVC
             
             let c = Cat()
@@ -126,11 +137,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             vc.modalTransitionStyle = .crossDissolve
             self.present(vc, animated: true, completion: nil)
         }
-        if indexPath.section == 1,indexPath.row == 2{
+        if indexPath.section == 0,indexPath.row == 3{
             self.locationDropDown.show()
         }
     }
     
+    @objc func reset(){
+        print(self.imagesPaths)
+    }
     
 }
 
@@ -144,14 +158,18 @@ extension NewAddVC{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
         
-        cell.tag = indexPath.row
-        cell.newAdd = true
+        //        cell.tag = indexPath.row
+        //        cell.newAdd = true
+        //
+        //        if images != nil && indexPath.row < images.count {
+        //            cell.img.image = self.images.object(at: (indexPath as NSIndexPath).item) as? UIImage
+        //        }else{
+        //            cell.img.image = nil
+        //        }
         
-        if images != nil && indexPath.row < images.count {
-            cell.img.image = self.images.object(at: (indexPath as NSIndexPath).item) as? UIImage
-        }else{
-            cell.img.image = nil
-        }
+        let img : UIImage! = (images != nil && indexPath.row < images.count) ?  self.images.object(at: indexPath.row) as? UIImage : nil
+        cell.newAddVC = self
+        cell.imageNew = (indexPath.row,img)
         
         return cell
     }
@@ -281,10 +299,22 @@ extension NewAddVC{
             
             for asset: PHAsset in photoAssets
             {
-                imageManager.requestImage(for: asset, targetSize: customSize, contentMode: .aspectFill, options: options, resultHandler: { (image, info) in
-                    self.uploadImage(image!)
-                    mutableImages.add(image!)
+                
+                imageManager.requestImageData(for: asset, options: options, resultHandler: { (dat, ss, oo, rr) in
+                    self.imagesPaths.append("")
+                    mutableImages.add(UIImage.init(data: dat!)!)
                 })
+                
+//                imageManager.requestImage(for: asset, targetSize: CGSize.init(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: PHImageContentMode.aspectFit, options: options, resultHandler: { (image, info) in
+//                    self.imagesPaths.append("")
+//                    mutableImages.add(image!)
+//                })
+                
+                
+//                imageManager.requestImage(for: asset, targetSize: customSize, contentMode: .aspectFill, options: options, resultHandler: { (image, info) in
+//                    self.imagesPaths.append("")
+//                    mutableImages.add(image!)
+//                })
             }
             
             
@@ -295,7 +325,7 @@ extension NewAddVC{
     
     
     func uploadImage(_ img : UIImage){
-
+        
         let path = savePhotoLocal(img)
         
         Alamofire.upload(
@@ -348,7 +378,7 @@ extension NewAddVC{
                     print(encodingError)
                 }
         })
-
+        
         
     }
     
@@ -380,6 +410,6 @@ extension NewAddVC{
         
         return  rrr.appendingPathComponent("img.png")
     }
-
+    
     
 }

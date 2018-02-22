@@ -24,11 +24,11 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-//    let baseImgsURL = "http://192.168.9.53/Dealat/"
+    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.53/Dealat/"
     
-    let baseURL = "http://dealat.tradinos.com/index.php/api"
-    let baseImgsURL = "http://dealat.tradinos.com/"
+//    let baseURL = "http://dealat.tradinos.com/index.php/api"
+//    let baseImgsURL = "http://dealat.tradinos.com/"
 
 
     let get_latest_adsURL = "/ads_control/get_latest_ads/format/json"
@@ -38,6 +38,7 @@ class Communication: BaseManager {
     let get_nested_categoriesURL = "/categories_control/get_nested_categories/format/json"
     let searchURL = "/ads_control/search/format/json"
     let get_data_listsURL = "/ads_control/get_data_lists/format/json"
+    let post_new_adURL = "/ads_control/post_new_ad/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_adsURL)!
@@ -310,6 +311,37 @@ class Communication: BaseManager {
         }
         
         return catsBases
+    }
+
+    
+    func post_new_ad(category_id : Int,location_id : Int,show_period : Int,title : String,description : String,price : String,images : [String], _ callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + post_new_adURL)!
+
+        let params : [String : Any] = [:]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
     }
 
     
