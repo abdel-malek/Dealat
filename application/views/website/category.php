@@ -115,7 +115,8 @@
 							</div>
 							<div class="fav">
 								<!--										<span class="text">Add to favorites</span>-->
-								<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>
+<!--								<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
+						<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
 							</div>
 						</div>
 					</div>

@@ -1,11 +1,11 @@
 /*//Copy this css*/
 .navbar-light .navbar-nav .nav-link {
     color: rgb(64, 64, 64);
+	
 }
 .btco-menu li > a {
-    padding: 10px 15px;
+    padding: 0px 5px;
     color: #000;
-
 }
 
 .btco-menu .active a:focus,
@@ -14,8 +14,16 @@
     background: transparent;
     outline: 0;
 }
-
-
+.btco-menu .active a:active,
+.btco-menu li a:active ,
+.navbar > .show > a:active{
+    background: transparent;
+    outline: 0;
+}
+.navbar li:active,.navbar li:focus{
+	background-color: transparent
+}
 .dropdown-menu .show > .dropdown-toggle::after{
     transform: rotate(-90deg);
 }
+

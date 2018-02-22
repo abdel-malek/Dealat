@@ -7,7 +7,8 @@
 
 
 $( document ).ready( function () {
-    $( '.dropdown-menu a.dropdown-toggle' ).on( 'click', function ( e ) {
+    $( '.dropdown-menu' ).on( 'click','a.dropdown-toggle', function ( e ) {
+		e.preventDefault();
         var $el = $( this );
         var $parent = $( this ).offsetParent( ".dropdown-menu" );
         if ( !$( this ).next().hasClass( 'show' ) ) {
@@ -28,4 +29,7 @@ $( document ).ready( function () {
 
         return false;
     } );
+	$( '.dropdown-menu' ).on( 'click','a.dropdown-item', function ( e ) {
+		e.preventDefault();
+	});
 } );

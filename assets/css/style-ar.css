@@ -1,3 +1,28 @@
+.btn {
+  font-size: .95rem;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+
+.btn.facebook,
+.btn.google {
+  font-size: 0.8rem; }
+
+.categories .category-slider .slick-slide h6 {
+  font-size: .8rem;
+  font-weight: bold; }
+
+.search-page .products .card,
+.profile-page .products .card,
+.home-page .products .card,
+.category-page .products .card {
+  font-size: 0.8rem; }
+
+.search-page .products .card .overlay .text,
+.profile-page .products .card .overlay .text,
+.home-page .products .card .overlay .text,
+.category-page .products .card .overlay .text {
+  font-size: 1rem; }
+
 section.search {
   direction: rtl; }
   section.search .text {
@@ -51,6 +76,32 @@ section.search {
 .category-page .products .controls li {
   margin: 0;
   margin-left: 40px; }
+
+#ad-modal .modal-content {
+  direction: rtl;
+  text-align: right; }
+  #ad-modal .modal-content ul.navbar-nav {
+    padding: 0; }
+  #ad-modal .modal-content li.dropdown {
+    padding-right: 0; }
+  #ad-modal .modal-content a.select {
+    direction: ltr; }
+
+#register-modal .form-group,
+#login-modal .form-group {
+  direction: rtl;
+  text-align: right; }
+
+#fileuploader-ad .ajax-upload-dragdrop,
+#fileuploader-register .ajax-upload-dragdrop {
+  text-align: right; }
+
+#card-modal .card {
+  font-size: .9rem; }
+#card-modal .card-body .row {
+  direction: rtl; }
+#card-modal .info-col {
+  text-align: right; }
 
 footer {
   direction: rtl; }

@@ -14,15 +14,42 @@ $lang['seller_name'] = "اسم البائع";
 $lang['seller_rating'] = "تقييم البائع";
 $lang['price'] = "السعر";
 $lang['chat_seller'] = "تواصل مع البائع";
+$lang['contact_info'] = "معلومات الاتصال";
 //place ad modal
 $lang['item_name'] = "اسم القطعة";
 $lang['item_price'] = "سعر القطعة";
 $lang['item_location'] = "مكان القطعة";
-$lang['add_description'] = "أصف وصف";
+$lang['add_description'] = "أضف وصف";
+$lang['select_category'] = "اختر فئة";
+$lang['show_period'] = "مدة بقاء الإعلان";
+$lang['select_type'] = "اختر النوع";
+$lang['manufacture_date'] = "تاريخ التصنيع";
+$lang['kilometers'] = "عدد الكيلومترات";
+$lang['space'] = "المساحة";
+$lang['rooms'] = "عدد الغرف";
+$lang['floor'] = "الطابق";
+$lang['state'] = "الحالة";
+$lang['with_furniture'] = "يحتوي مفروشات";
+$lang['size'] = "الحجم";
+$lang['schedule'] = "الدوام";
+$lang['education'] = "الدراسة";
+$lang['salary'] = "الراتب";
 $lang['set_as_featured'] = "إضافة كإعلان مميز";
-$lang['agree_policy'] = "أنا أوافق";
+$lang['featured_cost'] = "يتطلب دفع";
+$lang['agree_policy'] = "أنا أوافق على";
 $lang['terms'] = "بنود الخدمة لديلات";
 $lang['select_category'] = "اختر تصنيف";
+$lang['submit_ad'] = "نشر الإعلان";
+//register/login modal
+$lang['username'] = "اسم المستخدم";
+$lang['password'] = "كلمة المرور";
+$lang['repassword'] = "تأكيد كلمة المرور";
+$lang['email'] = "البريد الإلكتروني";
+$lang['phone'] = "هاتف";
+$lang['create_account1'] = "أنشئ حساب باستخدام";
+$lang['create_account2'] = "أو أدخل بياناتك هنا";
+$lang['signin_with'] = "ادخل إلى حسابك باستخدام";
+
 //footer
 $lang['about'] = "حول ديلات";
 $lang['reviews'] = "آراء الزبائن";

@@ -1,3 +1,35 @@
+	<!--  loading -->
+<!--
+	<section class="loading-overlay">
+		<div class="logo">
+			<img src="images/icons/LOGO.png" alt="Aura">
+		</div>
+
+		<div class="spinner">
+			<div class="dot1"></div>
+			<div class="dot2"></div>
+		</div>
+	</section>
+-->
+<section class="loading-overlay">
+<div class="spinner">
+<div class="sk-circle">
+  <div class="sk-circle1 sk-child"></div>
+  <div class="sk-circle2 sk-child"></div>
+  <div class="sk-circle3 sk-child"></div>
+  <div class="sk-circle4 sk-child"></div>
+  <div class="sk-circle5 sk-child"></div>
+  <div class="sk-circle6 sk-child"></div>
+  <div class="sk-circle7 sk-child"></div>
+  <div class="sk-circle8 sk-child"></div>
+  <div class="sk-circle9 sk-child"></div>
+  <div class="sk-circle10 sk-child"></div>
+  <div class="sk-circle11 sk-child"></div>
+  <div class="sk-circle12 sk-child"></div>
+</div>
+</div>
+	</section>
+	<!--end loading-->
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
@@ -66,7 +98,7 @@
 								<div class="card-title">Product Title</div>
 								<div class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam dolorum assumenda</div>
 							</div>
-							<div class="col-7">
+							<div class="col-7 info-col">
 
 								<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
 								<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
@@ -100,15 +132,15 @@
 									<div class="clearfix"></div>
 									</span>
 								</div>
-								<details>
-									<summary><span class="mb-1 mt-2">Contact Information</span></summary>
+								<details open>
+									<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
 									<div class="phone"><span class="phone-lbl"><i class="fas fa-home fa-fw"></i></span> <span class="phone-val">123456789</span></div>
 									<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:09123456789">09123456789</a></span></div>
 									<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:09123456789">09123456789</a></span></div>
 								</details>
 
 							</div>
-							<div class="col-5">
+							<div class="col-5 info-col">
 								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
 								<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
 								<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">None negotiable</span></div>
@@ -147,7 +179,7 @@
 					<button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Sign up with Google</button>
 -->
 				<div class="title lines">
-					<span class="text">Create an account using</span>
+					<span class="text"><?php echo $this->lang->line('create_account1'); ?></span>
 				</div>
 				<div class="container">
 					<div class="row">
@@ -156,24 +188,24 @@
 					</div>
 				</div>
 				<div class="title lines">
-					<span class="text">or create a new one here</span>
+					<span class="text"><?php echo $this->lang->line('create_account2'); ?></span>
 				</div>
 				<form action="">
 					<div id="fileuploader-register">Upload</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="User Name">
+						<input type="text" class="form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" name="email" placeholder="Email">
+						<input type="email" class="form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="phone" placeholder="Phone number">
+						<input type="text" class="form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" placeholder="Password">
+						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+						<input type="password" class="form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
 					</div>
 				</form>
 			</div>
@@ -197,7 +229,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="modal-title">
-					<h5>Log Into Your Account</h5>
+					<h5><?php echo $this->lang->line('log_into_account'); ?></h5>
 				</div>
 				<!--
 					<div class="title lines">
@@ -206,16 +238,16 @@
 -->
 				<form action="">
 					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="User Name">
+						<input type="text" class="form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" placeholder="Password">
+						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>">
 					</div>
 				</form>
 				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 
 				<div class="title lines">
-					<span class="text">or sign in with:</span>
+					<span class="text"><?php echo $this->lang->line('signin_with'); ?></span>
 				</div>
 				<div class="container">
 					<div class="row">
@@ -240,198 +272,200 @@
 					</button>
 			</div>
 			<div class="modal-body">
+				<div class="error-message full modal-error-message d-none"></div>
 				<form id="place-ad-form">
 
+					<input type="hidden" name="category_id" class="category-id">
+					<input type="hidden" name="location_id" class="location-id">
 					<div class="form-group">
-						<input type="text" class="form-control" name="title" placeholder="Item's name" required>
+						<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
+					</div>
+					<div class="form-group">
+						<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
+							<ul class="navbar-nav">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
+									<ul class="dropdown-menu main-categories">
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<div class="form-group">
+						<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
+							<ul class="navbar-nav">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
+									<ul class="dropdown-menu cities">
+
+									</ul>
+								</li>
+							</ul>
+						</nav>
 					</div>
 
+
 					<div class="form-group">
-						<select name="category" class="category-select" placeholder="Select Category">
+						<select name="show_period" class="period-select" placeholder="<?php echo $this->lang->line('show_period'); ?>" required>
 							<option disabled selected value="foo" >
-							<option value="art-music">Art and music</option>
-						</select>
-					</div>
-					
-					<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
-						<ul class="navbar-nav">
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Category</a>
-								<ul class="dropdown-menu main-categories" aria-labelledby="navbarDropdownMenuLink">
-<!--
-									<li><a class="dropdown-item dropdown-toggle" href="#">damascus</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">muhagreen</a></li>
-											<li><a class="dropdown-item" href="#">mazzeh</a></li>
-										</ul>
-									</li>
--->
-								</ul>
-							</li>
-						</ul>
-					</nav>
-					
-					<div class="form-group">
-						<select name="location" class="location-select" placeholder="Item's location">
-							<option disabled selected value="foo" >
-								<option value="1">lacation1</option>
-								<option value="2">lacation2</option>
-								<option value="3">lacation3</option>
+								<option value="1">a week</option>
+								<option value="2">10 days</option>
+								<option value="3">a month</option>
 						</select>
 					</div>
 
-					<!--
-	<nav class="navbar navbar-expand-md navbar-light bg-light">
-		<ul class="navbar-nav">
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</a>
-				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Submenu action</a></li>
-							<li><a class="dropdown-item" href="#">Another submenu action</a></li>
-						</ul>
-					</li>
-					<li><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Submenu action 2</a></li>
-							<li><a class="dropdown-item" href="#">Another submenu action 2</a></li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
--->
-					<nav class="navbar navbar-expand-md navbar-light bg-light location-nav">
-						<ul class="navbar-nav">
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</a>
-								<ul class="dropdown-menu cities" aria-labelledby="navbarDropdownMenuLink">
-<!--
-									<li><a class="dropdown-item dropdown-toggle" href="#">damascus</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">muhagreen</a></li>
-											<li><a class="dropdown-item" href="#">mazzeh</a></li>
-										</ul>
-									</li>
--->
-								</ul>
-							</li>
-						</ul>
-					</nav>
-					
-					<div class="form-group">
-						<select name="show_period" class="period-select" placeholder="Keep ad for...">
-							<option disabled selected value="foo" >
-								<option value="week">a week</option>
-								<option value="10_days">10 days</option>
-								<option value="month">a month</option>
-						</select>
-					</div>
 					<div class="form-group">
 						<!--todo display currency/ take only numbers-->
-
-						<input type="text" class="form-control" name="price" placeholder="Item's price" required>
+						<input type="text" class="form-control" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
 					</div>
-
-					<!--
-					<div class="form-group">
-						<input type="text" class="form-control" name="location" placeholder="Item's location">
-					</div>
--->
 
 					<div class="form-group">
-						<textarea class="form-control" name="description" rows="4" placeholder="Add description"></textarea>
+						<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>"></textarea>
 					</div>
 
-					<!--properties template-->
-					<div class="">
-						<div class="form-group">
-							<input type="text" class="form-control" name="space" placeholder="Space">
-						</div>
-						<div class="form-group">
-							<input type="number" class="form-control" name="rooms_num" placeholder="Rooms">
-						</div>
-						<div class="form-group">
-							<input type="number" class="form-control" name="floor" placeholder="Floor">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" name="state" placeholder="State">
-						</div>
-						<label class="">
-						<input type="checkbox" name="with_furniture" value="false"><span class=""> With furniture</span>
-					</label>
-					</div>
-					<!--sports template-->
-					<div class="template-sports">
-						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New Equipments</span>
-					</label>
-					</div>
 					<!--vehicles template-->
 					<!--type id/ type model id-->
-					<div class="template-vehicles">
+					<div class="template-vehicles template d-none" data-template-id="1">
+
 						<div class="form-group">
-							<input type="date" class="form-control" name="manufacture_date" placeholder="Manufacturing date">
+							<nav class="navbar navbar-expand-md navbar-light bg-light types-nav">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_type'); ?></a>
+										<ul class="dropdown-menu types">
+										</ul>
+									</li>
+								</ul>
+							</nav>
 						</div>
-						<label class="">
-						<input type="checkbox" name="is_automatic" value="false"><span class=""> Automatic</span>
-					</label>
-						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+
+						<!--
+					<script id="ad-modal-types-template" type="text/template">
+						{{ #types }}
+						<li><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
+							<ul class="dropdown-menu">
+								{{ #models }}
+								<li><a class="dropdown-item model" href="" data-type-id={{type_id}} data-type-model-id={{type_model_id}}>{{name}}</a></li>
+								{{ /models }}
+							</ul>
+						</li>
+						{{ /types }}
+					</script>
+-->
+						<script id="ad-modal-types-template" type="text/template">
+							{{ #types }}
+							<li><a class="dropdown-item type" href="" data-type-id={{type_id}}>{{name}}</a>
+
+							</li>
+							{{ /types }}
+						</script>
+
+
 						<div class="form-group">
-							<input type="text" class="form-control" name="kilometer" placeholder="Kilometers">
-						</div>
-					</div>
-					<!--electronics template-->
-					<!--type id-->
-					<div class="template-electronics">
-						<div class="form-group">
-							<input type="text" class="form-control" name="size" placeholder="Size">
+							<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 						</div>
 
 						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+							<input type="checkbox" name="is_automatic" value="false"><span class=""> Automatic</span>
+						</label>
+
+						<label class="">
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
+
+						<div class="form-group">
+							<input type="text" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
+						</div>
+					</div>
+					<!--properties template-->
+					<div class="template-properties template d-none" data-template-id="2">
+						<div class="form-group">
+							<input type="text" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
+						</div>
+
+						<div class="form-group">
+							<input type="number" class="form-control" name="rooms_num" placeholder="<?php echo $this->lang->line('rooms'); ?>">
+						</div>
+
+						<div class="form-group">
+							<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="form-control" name="state" placeholder="<?php echo $this->lang->line('state'); ?>">
+						</div>
+
+						<label class="">
+							<input type="checkbox" name="with_furniture" value="false"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
+						</label>
 					</div>
 					<!--mobiles template-->
 					<!--type id-->
-					<div class="template-mobiles">
+					<div class="template-mobiles template d-none" data-template-id="3">
 						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
+					</div>
+					<!--electronics template-->
+					<!--type id-->
+					<div class="template-electronics template d-none" data-template-id="4">
+						<div class="form-group">
+							<input type="text" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+						</div>
+
+						<label class="">
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
 					</div>
 					<!--fashion template-->
-					<div class="template-fashion">
+					<div class="template-fashion template d-none" data-template-id="5">
 						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
 					</div>
-					<!--services template-->
-					<div class="template-services"></div>
 					<!--kids template-->
-					<div class="template-kids">
+					<div class="template-kids template d-none" data-template-id="6">
 						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
 					</div>
-					<!--industries template-->
-					<div class="template-industries">
+					<!--sports template-->
+					<div class="template-sports template d-none" data-template-id="7">
 						<label class="">
-						<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
-					</label>
+							<input type="checkbox" name="is_new" value="false"><span class=""> New Equipments</span>
+						</label>
 					</div>
 					<!--job positions template-->
 					<!--schedule id/experience id/education id-->
-					<div class="template-job">
+					<div class="template-job template d-none" data-template-id="8">
 						<div class="form-group">
-							<input type="text" class="form-control" name="salary" placeholder="Salary">
+							<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>" required>
+								<option disabled selected value="foo" >
+							</select>
+						</div>
+
+						<div class="form-group">
+							<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>" required>
+								<option disabled selected value="foo" >
+							</select>
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 						</div>
 					</div>
+
+					<!--industries template-->
+					<div class="template-industries template d-none" data-template-id="9">
+						<label class="">
+							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+						</label>
+					</div>
+					<!--services template-->
+					<div class="template-services template d-none" data-template-id="10"></div>
+
+					<!--services template-->
+					<div class="template-services template d-none" data-template-id="11"></div>
 
 					<div id="fileuploader-ad">Upload</div>
 					<!--
@@ -444,8 +478,8 @@
 					</div>
 					-->
 					<label class="featured">
-						<input id="featured-ad" type="checkbox" name="featured_ad" value="false"><span class=""> Set as featured advertisement</span>
-						<span class="warning d-none text-warning"> This will cost you some money</span>
+						<input id="featured-ad" type="checkbox" name="featured_ad" value="false"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
+						<span class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></span>
 					</label>
 					<div class="">
 						<input id="terms-agree" type="checkbox" name="terms_agree" class="" required value="false">
@@ -455,7 +489,7 @@
 						</label>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn button2 submit">Submit Ad</button>
+						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('submit_ad'); ?></button>
 					</div>
 				</form>
 
@@ -639,13 +673,25 @@
 </script>
 
 <script id="ad-modal-categories-template" type="text/template">
-	{{ #. }}
-		<li><a class="dropdown-item dropdown-toggle" href="#">{{category_name}}</a></li>
-	{{ /. }}
-</script>
-<script id="ad-modal-locations-template" type="text/template">
-	{{ #. }}
-		<li><a class="dropdown-item dropdown-toggle" href="#">{{city}}</a></li>
-	{{ /. }}
+	{{ #categories }}
+	<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
+		<ul class="dropdown-menu">
+			{{ #children }}
+			<li><a class="dropdown-item last-subcategory" href="" data-template-id={{tamplate_id}} data-parent-id={{parent_id}}>{{category_name}}</a></li>
+			{{ /children }}
+		</ul>
+	</li>
+	{{ /categories }}
 </script>
 
+<script id="ad-modal-cities-template" type="text/template">
+	{{ #cities }}
+	<li><a class="dropdown-item dropdown-toggle" href="" data-city-id={{city_id}}>{{city_name}}</a>
+		<ul class="dropdown-menu">
+			{{ #locations }}
+			<li><a class="dropdown-item location" href="" data-location-id={{location_id}}>{{location_name}}</a></li>
+			{{ /locations }}
+		</ul>
+	</li>
+	{{ /cities }}
+</script>

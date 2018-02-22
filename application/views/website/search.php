@@ -155,13 +155,20 @@
 				</div>
 				<div class="col-md-2 right-col">
 					<aside class="banners">
-						<div class="banner">
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-						</div>
-						<div class="banner">
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-						</div>
-					</aside>
+				<div class="banner">
+					<button type="button" class="close">
+							  <span>&times;</span>
+							</button>
+					<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
+
+				</div>
+				<div class="banner">
+					<button type="button" class="close">
+							  <span>&times;</span>
+							</button>
+					<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
+				</div>
+			</aside>
 				</div>
 			</div>
 		</div>

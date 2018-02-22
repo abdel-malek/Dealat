@@ -1,6 +1,5 @@
 <body class="home-page">
 	<?php $this->load->view('website/common'); ?>
-	<!-- <?php dump($main_categories) ?> -->
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
@@ -137,7 +136,8 @@
 									<?php endif; ?>
 									<div class="fav">
 										<!--										<span class="text">Add to favorites</span>-->
-										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>
+<!--										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
+										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
 									</div>
 								</div>
 							</div>
