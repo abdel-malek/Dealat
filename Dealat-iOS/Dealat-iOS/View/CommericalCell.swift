@@ -101,7 +101,6 @@ class CommericalCell: UICollectionViewCell {
                                 Provider.sd_setImage(self.img, urlString: value.data.stringValue)
 //                                self.img.image = #imageLiteral(resourceName: "ad6")
                                 
-                                
                             }else{
                                 notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                             }

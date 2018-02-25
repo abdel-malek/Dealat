@@ -43,7 +43,9 @@
 "S.P" = "S.P";
 "Free" = "Free";
 "All" = "All";
-"ChooseCategory" = "ChooseCategory";
+"Title" = "Title";
+"ChooseCategory" = "Choose Category";
+"Price" = "Price";
 
 
 //

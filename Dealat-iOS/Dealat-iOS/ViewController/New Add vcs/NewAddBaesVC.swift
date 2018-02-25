@@ -32,7 +32,7 @@ class NewAddBaesVC: UIViewController {
     }
 
     @IBAction func submitAction(_ sender: UIButton) {
-        
+        self.embeddedViewController.submitAction()
     }
     
 }

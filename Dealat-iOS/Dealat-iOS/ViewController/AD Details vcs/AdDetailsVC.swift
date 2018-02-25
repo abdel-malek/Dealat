@@ -111,8 +111,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
         }
         self.viewsLbl.text = ad.show_period.stringValue
-        let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
-        self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
+        if ad.publish_date != nil{
+            let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
+            self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
+        }else{
+            self.dateLbl.text = nil
+        }
         var cat = ""
         cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!)-" : ""
         cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""

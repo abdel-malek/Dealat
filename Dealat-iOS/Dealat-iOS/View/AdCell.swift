@@ -21,7 +21,7 @@ class AdCell : UICollectionViewCell{
     var ad : AD!{
         didSet{
             //self.img.image = UIImage.init(named: ad.main_image)
-
+            
             Provider.sd_setImage(self.img, urlString: ad.main_image)
             self.nameLbl.text = ad.title
             
@@ -38,11 +38,15 @@ class AdCell : UICollectionViewCell{
             }
             
             self.viewsLbl.text = ad.show_period.stringValue
-            let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
-            self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
+            if ad.publish_date != nil{
+                let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
+                self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
+            }else{
+                self.dateLbl.text = nil
+            }
         }
     }
-
+    
 }
 
 
