@@ -104,5 +104,8 @@ $lang['description']= 'Description';
 $lang['seller_name']= 'Name';
 $lang['seller_phone']= 'Phone';
 $lang['not_set']= 'Not set';
+$lang['accept_ad'] = 'Accept';
+$lang['hide_ad'] = 'Hide';
+$lang['reject_ad'] = 'Reject';
 
 

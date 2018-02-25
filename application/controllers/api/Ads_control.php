@@ -128,10 +128,43 @@ class Ads_control extends REST_Controller {
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
-	public function get_templates_attrs_get()
+	public function get_data_get()
 	{
 		$attrs = TAMPLATES::get_tamplate_attributes_array();
-		$this -> response(array('status' => true, 'data' => $attrs, 'message' => ''));
+		$status = STATUS::get_list();
+		$data = array('attrs'=>$attrs , 'status'=>$status);
+		$this -> response(array('status' => true, 'data' => $data, 'message' => ''));
+	}
+	
+	public function action_post()
+	{
+		if(!$this->input->post('ad_id')){
+		  	throw Parent_Exception('you have to provide an id');
+		}
+		else if(!$this->input->post('action')){
+			throw Parent_Exception('you have to provide an action');
+		}else{
+			$ad_id = $this->input->post('ad_id');
+			$action = $this->input->post('action');
+			if($action == 'accept'){
+				if(!$this->input->post('publish_date')){
+				  throw Parent_Exception('you have to provide a publish date');	
+				}else{
+				   $data = array(
+				     'publish_date'=>$this->input->post('publish_date'),
+				     'status' => STATUS::ACCEPTED 
+				   );
+				   $this->ads->save($data , $ad_id);
+				}
+			}else if($action == 'reject'){
+			   $this->ads->save(array('status'=>STATUS::REJECTED ) , $ad_id);
+			}else if($action == 'hide'){
+			   $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
+			}else{
+			   throw Parent_Exception('No Such action'); 	
+			}
+		  $this -> response(array('status' => true, 'data' => '', 'message' => 'sucess'));
+		}
 	}
 
 }

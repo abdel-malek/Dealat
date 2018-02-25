@@ -40,17 +40,4 @@ class Home_control extends REST_Controller {
        $this->data['category_name']= $category_name;
        echo $this -> load -> view('website/category_div', $this -> data);
     }
-	
-	public function get_subcategories_get()
-	{
-		$test = $this->categories->get_category_subcategories($this->input->get('category_id') , $this->data['lang']);
-		dump($test);
-	}
-	
-
-	// public function test_get()
-	// {
-		// $this->data['subcategories'] = $this->categories->get_category_subcategories(2 , $this->data['lang']);
-		// dump($this->data['subcategories']);
-	// }
 }

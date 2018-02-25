@@ -15,6 +15,7 @@ class Ads extends MY_Model {
 	{
 		$this->db->select('ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
+		                  categories.tamplate_id,
 		                  c.'.$lang.'_name as parent_category_name ,
 		                  locations.'.$lang.'_name as location_name ,
 		                  cites.'.$lang.'_name as  city_name,
@@ -24,7 +25,7 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
-        $q = parent::get(null , false, 10);
+        $q = parent::get(null , false, 12);
 		return $q; 
 	}
 	

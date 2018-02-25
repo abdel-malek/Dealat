@@ -106,6 +106,9 @@ $lang['description']= 'الوصف';
 $lang['seller_name']= 'اسم';
 $lang['seller_phone']= 'رقم';
 $lang['not_set']= 'غير محدد';
+$lang['accept_ad'] = 'قبول الأعلان';
+$lang['hide_ad'] = 'إخفاء الأعلان';
+$lang['reject_ad'] = 'رفض الأعلان';
 
 
 

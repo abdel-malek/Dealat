@@ -10,7 +10,7 @@ class Industries_tamplate extends MY_Model {
 	{
 	  $attributes = TAMPLATES::get_tamplate_attributes(TAMPLATES::INDUSTRIES);
 	  foreach ($attributes as $attribute) {
-		  if($this->input->get($attribute)){
+		  if($this->input->get($attribute)&& $this->input->get($attribute) != ''){
 		  	$this->db->where($attribute , $this->input->get($attribute));
 		  }
 	  }

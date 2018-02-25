@@ -9,12 +9,12 @@
        
        
       $( document ).ajaxStart(function() {
-         console.log('show');
+        // console.log('show');
          $('.dim-overlay').css('display','block');
          $('.loader').css('display','block');
       });
       $( document ).ajaxStop(function() {
-      	  console.log('hide');
+      	  //console.log('hide');
          $('.loader').fadeOut(500, function () {
             $('.dim-overlay').fadeOut(100, function () {
             });
