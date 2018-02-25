@@ -1,4 +1,4 @@
-	<!--  loading -->
+<!--  loading -->
 <!--
 	<section class="loading-overlay">
 		<div class="logo">
@@ -12,24 +12,24 @@
 	</section>
 -->
 <section class="loading-overlay">
-<div class="spinner">
-<div class="sk-circle">
-  <div class="sk-circle1 sk-child"></div>
-  <div class="sk-circle2 sk-child"></div>
-  <div class="sk-circle3 sk-child"></div>
-  <div class="sk-circle4 sk-child"></div>
-  <div class="sk-circle5 sk-child"></div>
-  <div class="sk-circle6 sk-child"></div>
-  <div class="sk-circle7 sk-child"></div>
-  <div class="sk-circle8 sk-child"></div>
-  <div class="sk-circle9 sk-child"></div>
-  <div class="sk-circle10 sk-child"></div>
-  <div class="sk-circle11 sk-child"></div>
-  <div class="sk-circle12 sk-child"></div>
-</div>
-</div>
-	</section>
-	<!--end loading-->
+	<div class="spinner">
+		<div class="sk-circle">
+			<div class="sk-circle1 sk-child"></div>
+			<div class="sk-circle2 sk-child"></div>
+			<div class="sk-circle3 sk-child"></div>
+			<div class="sk-circle4 sk-child"></div>
+			<div class="sk-circle5 sk-child"></div>
+			<div class="sk-circle6 sk-child"></div>
+			<div class="sk-circle7 sk-child"></div>
+			<div class="sk-circle8 sk-child"></div>
+			<div class="sk-circle9 sk-child"></div>
+			<div class="sk-circle10 sk-child"></div>
+			<div class="sk-circle11 sk-child"></div>
+			<div class="sk-circle12 sk-child"></div>
+		</div>
+	</div>
+</section>
+<!--end loading-->
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
@@ -58,11 +58,9 @@
 				</div>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
-				<!--					<button class="btn button1 login">Sign In</button>-->
 				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
-				<!--					<button class="btn button1 register">Register</button>-->
 				<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
 			</div>
 		</div>
@@ -71,7 +69,7 @@
 
 <!--card modal-->
 <div id="card-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -79,18 +77,14 @@
         </button>
 			</div>
 			<div class="modal-body">
+				<!--
 				<div class="card">
 
 					<div class="card-img-slider slick-slider">
-						<!--
-							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
-							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
-							<div class="card-img-top"><img src="images/bike1.jpg" alt=""></div>
--->
-						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car1.png'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car2.jpg'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/car3.png'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/bike1.jpg'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car1.png'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car2.jpg'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car3.png'); ?>')"></div>
+						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/bike1.jpg'); ?>')"></div>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -100,8 +94,8 @@
 							</div>
 							<div class="col-7 info-col">
 
-								<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
-								<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
+								<div class="seller"><span class="seller-lbl"><?php// echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
+								<div class="seller"><span class="rating-lbl"><?php// echo $this->lang->line('seller_rating'); ?>: </span>
 									<span class="rating-val">
 											<fieldset class="rating">
 												<span class="rate-group" data-value="5">
@@ -133,7 +127,7 @@
 									</span>
 								</div>
 								<details open>
-									<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
+									<summary><span class="mb-1 mt-2"><?php //echo $this->lang->line('contact_info'); ?></span></summary>
 									<div class="phone"><span class="phone-lbl"><i class="fas fa-home fa-fw"></i></span> <span class="phone-val">123456789</span></div>
 									<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:09123456789">09123456789</a></span></div>
 									<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:09123456789">09123456789</a></span></div>
@@ -143,10 +137,8 @@
 							<div class="col-5 info-col">
 								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
 								<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
-								<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">None negotiable</span></div>
+								<div class="negotiable"><span class="negotiable-lbl"><?php// echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">None negotiable</span></div>
 								<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
-								<!--									<div class="likes"><span class="likes-lbl">Likes </span><span class="likes-val">350 </span></div>-->
-								<!--									<div class="rating">stars</div>-->
 								<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
 							</div>
 
@@ -156,6 +148,8 @@
 						</div>
 					</div>
 				</div>
+-->
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
@@ -163,6 +157,151 @@
 		</div>
 	</div>
 </div>
+
+<script id="ad-details-template" type="text/template">
+	<div class="card">
+		<div class="card-img-slider slick-slider">
+			<div class="card-img-top" style="background-image: url('<?php echo base_url('{{ad.main_image}}'); ?>')"></div>
+			{{#ad.images}}
+			<div class="card-img-top" style="background-image: url('<?php echo base_url('{{image}}'); ?>')"></div>
+			{{/ad.images}}
+		</div>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-12 mb-4 text-center">
+					<div class="card-title">{{ad.title}}</div>
+					<div class="details">{{ad.description}}</div>
+				</div>
+
+				<div class="col-4 info-col">
+					<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
+					<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
+						<span class="rating-val">
+							<fieldset class="rating">
+								<span class="rate-group" data-value="5">
+									<input type="radio" id="star5" name="rating" value="5" />
+									<label class="full" for="star5" title="Awesome - 5 stars"></label>
+								</span>
+
+						<div class="rate-group" data-value="4">
+							<input type="radio" id="star4" name="rating" value="4" />
+							<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+						</div>
+
+						<div class="rate-group" data-value="3">
+							<input type="radio" id="star3" name="rating" value="3" />
+							<label class="full" for="star3" title="Meh - 3 stars"></label>
+						</div>
+
+						<div class="rate-group" data-value="2">
+							<input type="radio" id="star2" name="rating" value="2" />
+							<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+						</div>
+
+						<div class="rate-group" data-value="1">
+							<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+						</div>
+
+						</fieldset>
+						<div class="clearfix"></div>
+						</span>
+					</div>
+					<details open>
+						<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
+						<div class="phone"><span class="phone-lbl"><i class="fas fa-home fa-fw"></i></span> <span class="phone-val">{{ad.seller_phone}}</span></div>
+						<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:09123456789">09123456789</a></span></div>
+						<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:09123456789">09123456789</a></span></div>
+					</details>
+
+				</div>
+
+				<div class="col-4 info-col">
+					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}-{{ad.location_name}}</span></div>
+					<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
+					<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
+					<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
+				</div>
+
+				<div class="col-4 info-col templates">
+					<!--vehicles template-->
+					<div class="template-vehicles template d-none" data-template-id="1">
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
+						<div class="manufacture_date"><span class="manufacture_date-lbl">Manufacture date:</span><span class="manufacture_date-val">{{ad.manufacture_date}}</span></div>
+						<div class="is_automatic"><span class="is_automatic-lbl">Automatic:</span><span class="is_automatic-val">{{automatic}}</span></div>
+						<div class="is_new"><span class="is_new-lbl"></span>Status:<span class="is_new-val">{{status}}</span></div>
+						<div class="kilometer"><span class="kilometer-lbl">Kilometer:</span><span class="kilometer-val">{{ad.kilometer}}</span></div>
+					</div>
+
+					<!--properties template-->
+					<div class="template-properties template d-none" data-template-id="2">
+						<div class="space"><span class="space-lbl">Space:</span><span class="space-val">{{ad.space}}</span></div>
+						<div class="rooms_num"><span class="rooms_num-lbl">Rooms:</span><span class="rooms_num-val">{{ad.rooms_num}}</span></div>
+						<div class="floor"><span class="floor-lbl">Floor:</span><span class="floor-val">{{ad.floor}}</span></div>
+						<div class="state"><span class="state-lbl">State:</span><span class="state-val">{{ad.state}}</span></div>
+						<div class="with_furniture"><span class="with_furniture-lbl">Furniture:</span><span class="with_furniture-val">{{furniture}}</span></div>
+					</div>
+
+					<!--mobiles template-->
+					<!--type id-->
+					<div class="template-mobiles template d-none" data-template-id="3">
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--electronics template-->
+					<!--type id-->
+					<div class="template-electronics template d-none" data-template-id="4">
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
+						<div class="size"><span class="size-lbl">Size:</span><span class="size-val">{{ad.size}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--fashion template-->
+					<div class="template-fashion template d-none" data-template-id="5">
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--kids template-->
+					<div class="template-kids template d-none" data-template-id="6">
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--sports template-->
+					<div class="template-sports template d-none" data-template-id="7">
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--job positions template-->
+					<!--schedule id/experience id/education id-->
+					<div class="template-job template d-none" data-template-id="8">
+						<div class="schedule"><span class="schedule-lbl">Schedule:</span><span class="schedule-val">{{ad.schedule}}</span></div>
+						<div class="education"><span class="education-lbl">Education:</span><span class="education-val">{{ad.education}}</span></div>
+						<div class="salary"><span class="salary-lbl">Salary:</span><span class="salary-val">{{ad.salary}}</span></div>
+					</div>
+
+					<!--industries template-->
+					<div class="template-industries template d-none" data-template-id="9">
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+					</div>
+
+					<!--services template-->
+					<div class="template-services template d-none" data-template-id="10"></div>
+
+					<!--services template-->
+					<div class="template-services template d-none" data-template-id="11"></div>
+				</div>
+
+			</div>
+			<div class="price">
+				<div class="price-val">{{ad.price}}</div>
+			</div>
+		</div>
+	</div>
+</script>
+
 
 <!--register modal-->
 <div id="register-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -229,7 +368,9 @@
 			</div>
 			<div class="modal-body">
 				<div class="modal-title">
-					<h5><?php echo $this->lang->line('log_into_account'); ?></h5>
+					<h5>
+						<?php echo $this->lang->line('log_into_account'); ?>
+					</h5>
 				</div>
 				<!--
 					<div class="title lines">
@@ -277,9 +418,13 @@
 
 					<input type="hidden" name="category_id" class="category-id">
 					<input type="hidden" name="location_id" class="location-id">
+					<input type="hidden" name="type_id" class="type-id">
+					<input type="hidden" name="type_model_id" class="type-model-id">
+					
 					<div class="form-group">
 						<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
 					</div>
+
 					<div class="form-group">
 						<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
 							<ul class="navbar-nav">
@@ -291,6 +436,19 @@
 							</ul>
 						</nav>
 					</div>
+
+					<script id="ad-modal-categories-template" type="text/template">
+						{{ #categories }}
+						<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
+							<ul class="dropdown-menu">
+								{{ #children }}
+								<li><a class="dropdown-item last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a></li>
+								{{ /children }}
+							</ul>
+						</li>
+						{{ /categories }}
+					</script>
+
 					<div class="form-group">
 						<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
 							<ul class="navbar-nav">
@@ -304,6 +462,17 @@
 						</nav>
 					</div>
 
+					<script id="ad-modal-cities-template" type="text/template">
+						{{ #cities }}
+						<li><a class="dropdown-item dropdown-toggle" href="" data-city-id={{city_id}}>{{city_name}}</a>
+							<ul class="dropdown-menu">
+								{{ #locations }}
+								<li><a class="dropdown-item location" href="" data-location-id={{location_id}}>{{location_name}}</a></li>
+								{{ /locations }}
+							</ul>
+						</li>
+						{{ /cities }}
+					</script>
 
 					<div class="form-group">
 						<select name="show_period" class="period-select" placeholder="<?php echo $this->lang->line('show_period'); ?>" required>
@@ -339,30 +508,20 @@
 							</nav>
 						</div>
 
-						<!--
-					<script id="ad-modal-types-template" type="text/template">
-						{{ #types }}
-						<li><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
-							<ul class="dropdown-menu">
-								{{ #models }}
-								<li><a class="dropdown-item model" href="" data-type-id={{type_id}} data-type-model-id={{type_model_id}}>{{name}}</a></li>
-								{{ /models }}
-							</ul>
-						</li>
-						{{ /types }}
-					</script>
--->
 						<script id="ad-modal-types-template" type="text/template">
 							{{ #types }}
-							<li><a class="dropdown-item type" href="" data-type-id={{type_id}}>{{name}}</a>
-
+							<li><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
+								<ul class="dropdown-menu">
+									{{ #models }}
+									<li><a class="dropdown-item model" href="" data-type-id={{type_id}} data-type-model-id={{type_model_id}}>{{name}}</a></li>
+									{{ /models }}
+								</ul>
 							</li>
 							{{ /types }}
 						</script>
 
-
 						<div class="form-group">
-							<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
+							<input type="text" class="form-control m" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 						</div>
 
 						<label class="">
@@ -670,28 +829,4 @@
 		</div>
 	</div>
 	{{ /. }}
-</script>
-
-<script id="ad-modal-categories-template" type="text/template">
-	{{ #categories }}
-	<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
-		<ul class="dropdown-menu">
-			{{ #children }}
-			<li><a class="dropdown-item last-subcategory" href="" data-template-id={{tamplate_id}} data-parent-id={{parent_id}}>{{category_name}}</a></li>
-			{{ /children }}
-		</ul>
-	</li>
-	{{ /categories }}
-</script>
-
-<script id="ad-modal-cities-template" type="text/template">
-	{{ #cities }}
-	<li><a class="dropdown-item dropdown-toggle" href="" data-city-id={{city_id}}>{{city_name}}</a>
-		<ul class="dropdown-menu">
-			{{ #locations }}
-			<li><a class="dropdown-item location" href="" data-location-id={{location_id}}>{{location_name}}</a></li>
-			{{ /locations }}
-		</ul>
-	</li>
-	{{ /cities }}
 </script>

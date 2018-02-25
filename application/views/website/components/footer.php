@@ -99,12 +99,12 @@
 			pauseOnHover: false
 		});
 
-		$('#card-modal .card-img-slider').slick({
-			infinite: true,
-			slidesToShow: 1,
-			mobileFirst: true,
-			swipeToSlide: true
-		});
+//		$('#card-modal .card-img-slider').slick({
+//			infinite: true,
+//			slidesToShow: 1,
+//			mobileFirst: true,
+//			swipeToSlide: true
+//		});
 
 		$('.category-slider').slick({
 			infinite: false,

@@ -1,5 +1,6 @@
-<body class="home-page">
+<body class="category-page">
 	<?php $this->load->view('website/common'); ?>
+
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
@@ -22,51 +23,10 @@
 		</div>
 	</section>
 
-	<section class="search">
-		<div class="container">
-			<header>
-				<div class="row align-items-center">
-					<!--
-					<div class="col-0 col-md-2">
-						<span class="logo"><img src="<?php //echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
-					</div>
--->
-					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
-						<h2 class="text">
-							<?php echo $this->lang->line('download_app'); ?>
-						</h2>
-					</div>
-					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download android text-center">
-							<a href="">
-								<?php if( $this->session->userdata("language")  == "en" ) { ?>
-								<img src="<?php echo base_url('assets/images/google-play-badge.png'); ?>" height="45px" alt="">
-								<?php } else {?>
-								<img src="<?php echo base_url('assets/images/google-play-badge-arabic.png'); ?>" height="45px" alt="">
-								<?php }?>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
-						<div class="download ios text-center">
-							<a href="">
-								<?php if( $this->session->userdata("language")  == "en" ) { ?>
-								<img src="<?php echo base_url('assets/images/ios%20en%20black.png'); ?>" height="45px" width="152.5px" alt="">
-								<?php } else {?>
-								<img src="<?php echo base_url('assets/images/ios%20ar%20black.png'); ?>" height="45px" width="152.5px" alt="">
-								<?php }?>
-							</a>
-						</div>
-					</div>
-				</div>
-
-			</header>
-		</div>
-	</section>
-
 	<section class="products">
 		<div class="categories">
 			<div class="category-slider slick-slider">
+
 				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
 				<div class="category" data-category-id="<?php echo $category->category_id; ?>">
 					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
@@ -76,18 +36,30 @@
 				</div>
 				<?php endforeach; ?>
 				<?php endif; ?>
+
 			</div>
 		</div>
 
 		<div class="container-fluid main">
+
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-					<h5 class="recent-txt">
-						<?php echo $this->lang->line('latest_ads'); ?>
-					</h5>
+					<div class="row mb-4">
+						<div class="col-md-2">
+							<div class="category-name">
+								<?php echo $category_name ?>:</div>
+						</div>
+						<div class="col-md-6">
+							<div class="search-wrapper">
+								<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
+								<span class="icon"><i class="fas fa-search"></i></span>
+							</div>
+						</div>
+						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+					</div>
 					<div class="row ">
-						<?php if($ads != null): foreach ($ads as $ad): ?>
-						<div class="col-sm-6 col-lg-4">
+						<?php if($ads != null): foreach ($ads as $ad):?>
+						<div class="col-sm-6 col-lg-4 mix <?php echo $ad->category_name ?> ">
 							<div class="card mb-4" data-ad-id="<?php echo $ad->ad_id ?>" data-template-id="<?php echo $ad->tamplate_id ?>">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i>
@@ -116,29 +88,25 @@
 											<div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>
 									</div>
-									<?php if($ad->price != 0): ?>
 									<div class="price">
 										<div class="price-val">
 											<?php echo $ad->price; ?>
 										</div>
 									</div>
-									<?php endif; ?>
 									<div class="fav">
 										<!--										<span class="text">Add to favorites</span>-->
-										<!--										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
+										<!--								<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
 										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<?php endforeach; ?>
-						<?php endif; ?>
-
+						<?php endforeach ?>
+						<?php endif;?>
 					</div>
 				</div>
-
 				<div class="col-md-2 right-col order-first order-md-last">
-					<button class="btn button2 place-ad animated infinite pulse"><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
+					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
 						<div class="banner">
 							<button type="button" class="close">
@@ -155,7 +123,7 @@
 						</div>
 					</aside>
 				</div>
-
 			</div>
 		</div>
+
 	</section>

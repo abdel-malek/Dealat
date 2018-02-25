@@ -8,7 +8,7 @@
 			<div class="row ">
 				<div class="col-md-2">
 					<div class="default-img m-auto" style="background-color: #fff">
-						<div class="image" style="background-image: url('<?php echo base_url(" assets/images/Dealat%20logo%20red.png "); ?>')">
+						<div class="image" style="background-image: url('<?php echo base_url('assets/images/Dealat%20logo%20red.png'); ?>')">
 						</div>
 					</div>
 
@@ -86,7 +86,7 @@
 										<div class="row no-gutters">
 											<div class="col-md-6">
 												<div class="card-left">
-													<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/motor1.jpg "); ?>')"></div>
+													<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/motor1.jpg'); ?>')"></div>
 
 													<div class="price">
 														<div class="price-val">3000$</div>
@@ -138,7 +138,7 @@
 													<div class="overlay">
 														<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
 													</div>
-													<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/motor1.jpg "); ?>')"></div>
+													<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/motor1.jpg'); ?>')"></div>
 
 													<div class="price">
 														<div class="price-val">3000$</div>
@@ -176,7 +176,7 @@
 										<div class="row no-gutters">
 											<div class="col-md-6">
 												<div class="card-left">
-													<div class="card-img-top" style="background-image: url('<?php echo base_url(" assets/images/bike1.jpg "); ?>')"></div>
+													<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/bike1.jpg'); ?>')"></div>
 
 													<div class="price">
 														<div class="price-val">3000$</div>
@@ -213,7 +213,7 @@
 							<div class="row">
 								<div class="col-2">
 									<div class="chat-img">
-										<img src="<?php echo base_url(" assets/images/Dealat%20logo%20white%20background.png "); ?>" width="50px" alt="">
+										<img src="<?php echo base_url('assets/images/Dealat%20logo%20white%20background.png'); ?>" width="50px" alt="">
 									</div>
 								</div>
 								<div class="col-8">
@@ -229,7 +229,7 @@
 							<div class="row">
 								<div class="col-2">
 									<div class="chat-img">
-										<img src="<?php echo base_url(" assets/images/Dealat%20logo%20white%20background.png "); ?>" width="50px" alt="">
+										<img src="<?php echo base_url('assets/images/Dealat%20logo%20white%20background.png'); ?>" width="50px" alt="">
 									</div>
 								</div>
 								<div class="col-8">

@@ -180,6 +180,7 @@ $config['auth_library_function'] = 'check_user';
  */
 
 $config['auth_override_class_method']['home_control']['load_ads_by_category_page'] = 'none';
+$config['auth_override_class_method']['home_control']['load_ads_by_category_page_all'] = 'none';
 $config['auth_override_class_method']['home_control']['load_subcategories_div'] = 'none';
 $config['auth_override_class_method']['home_control']['index'] = 'none';
 $config['auth_override_class_method']['search_control']['index'] = 'none';

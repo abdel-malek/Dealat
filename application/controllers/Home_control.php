@@ -31,6 +31,17 @@ class Home_control extends REST_Controller {
 		echo $this -> load -> view('website/_main_layout', $this -> data);
 	}
 	
+	public function load_ads_by_category_page_all_get()
+	{
+		$category_id = $this->input->get('category_id');
+		$category_name = $this->input->get('category_name');
+		$this->data['ads'] = $this->ads->get_ads_by_category($category_id , $this->data['lang']);
+		$this->data['subcategories'] = $this->categories->get_category_subcategories($category_id , $this->data['lang']);
+		$this->data['category_name']= $category_name;
+		$this -> data['subview'] = 'website/category_all';
+		echo $this -> load -> view('website/_main_layout', $this -> data);
+	}
+	
 	public function load_subcategories_div_get()
     {
        $category_id = $this->input->get('category_id');
