@@ -51,6 +51,8 @@ public class CategoryAdapter extends BaseAdapter {
         ((TextView)view.findViewById(R.id.textView)).setText(getItem(i).getName());
 
 
+
+
         return view;
     }
 }

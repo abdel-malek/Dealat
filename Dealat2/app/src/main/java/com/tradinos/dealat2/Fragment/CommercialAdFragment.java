@@ -39,7 +39,6 @@ public class CommercialAdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_commercial_ad, container, false);
 
-
         ImageView imageView = rootView.findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.ad_image_39);
 

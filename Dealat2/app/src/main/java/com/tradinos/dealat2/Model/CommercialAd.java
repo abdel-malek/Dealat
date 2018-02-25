@@ -5,7 +5,25 @@ package com.tradinos.dealat2.Model;
  */
 
 public class CommercialAd {
-    private String title, description, imageUrl;
+    private String id, categoryId,
+            title, description, imageUrl,
+            adUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getTitle() {
         return title;
@@ -29,5 +47,13 @@ public class CommercialAd {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getAdUrl() {
+        return adUrl;
+    }
+
+    public void setAdUrl(String adUrl) {
+        this.adUrl = adUrl;
     }
 }

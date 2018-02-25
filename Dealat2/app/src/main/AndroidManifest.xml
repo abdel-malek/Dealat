@@ -10,9 +10,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/dealat_logo_red"
+        android:icon="@drawable/dealat_logo_white_background"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/dealat_logo_red"
+        android:roundIcon="@drawable/dealat_logo_white_background"
         android:supportsRtl="true"
         android:theme="@style/noTitleTheme">
         <activity android:name=".SplashActivity">
@@ -35,13 +35,26 @@
             android:theme="@style/Theme.AppCompat.Translucent"
             />
 
-        <activity android:name=".View.SelectImagesActivity"/>
+        <activity android:name=".View.SelectImagesActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
 
         <activity android:name=".View.ItemInfoActivity"
             android:windowSoftInputMode="adjustNothing"
             />
 
         <activity android:name=".View.ViewAdsActivity"/>
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
 

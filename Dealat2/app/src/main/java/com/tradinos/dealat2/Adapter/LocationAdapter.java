@@ -1,8 +1,6 @@
 package com.tradinos.dealat2.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,41 +31,14 @@ public class LocationAdapter extends ArrayAdapter<Location> {
     }
 
     @Override
-    public int getCount() {
-        return this.locations.size();
-    }
-
-    @Override
-    public Location getItem(int i) {
-        return this.locations.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null){
-            view = this.inflater.inflate(R.layout.row_item, null);
+            view = this.inflater.inflate(R.layout.row_location, viewGroup, false);
         }
 
         Location location = getItem(i);
-        //view.setTag(location);
-        ((TextView)view.findViewById(R.id.textView)).setText(location.getFullName());
-
-        return view;
-    }
-
-    @Override
-    public View getDropDownView(int i, @Nullable View view, @NonNull ViewGroup parent) {
-        if (view == null){
-            view = this.inflater.inflate(R.layout.row_location, parent, false);
-        }
-
-        Location location = getItem(i);
+        view.setTag(location);
 
         ((TextView)view.findViewById(R.id.textView)).setText(location.getName());
         ((TextView)view.findViewById(R.id.text2)).setText(location.getCityName());

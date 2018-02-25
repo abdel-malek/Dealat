@@ -67,11 +67,14 @@
     <string name="buttonSignIn">Sign In</string>
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
-    <string name="buttonSell">Sell your item</string>
+    <string name="buttonSell">Submit an Ad</string>
     <string name="buttonTakePhoto">Take a photo</string>
     <string name="buttonDone">Done</string>
     <string name="buttonCancel">Cancel</string>
     <string name="buttonSubmit">Submit</string>
+    <string name="buttonMarkAsMain">Mark as main</string>
+    <string name="buttonDelete">Delete</string>
+    <string name="buttonBack">Back</string>
 
     <string name="title_activity_drawer">DrawerActivity</string>
 
@@ -95,6 +98,8 @@
     <!-- Toasts -->
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
+
+    <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
 
 
 </resources>

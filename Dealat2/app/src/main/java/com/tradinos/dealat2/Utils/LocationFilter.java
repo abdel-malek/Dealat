@@ -1,8 +1,8 @@
 package com.tradinos.dealat2.Utils;
 
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
-import com.tradinos.dealat2.Adapter.LocationAdapter;
 import com.tradinos.dealat2.Model.Location;
 
 import java.util.ArrayList;
@@ -13,19 +13,19 @@ import java.util.List;
  */
 
 public class LocationFilter extends Filter {
-    LocationAdapter customAdapter;
+    ArrayAdapter customAdapter;
     List<Location> data = new ArrayList<>();
 
-    public LocationFilter(LocationAdapter adapter, List<Location> data){
+    public LocationFilter(ArrayAdapter adapter, List<Location> data) {
         this.customAdapter = adapter;
-        this.data=data;
+        this.data = data;
     }
 
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
         FilterResults result = new FilterResults();
         // if no constraint is given, return the whole list
-        if (constraint == null ) {
+        if (constraint == null) {
             result.values = data;
             result.count = data.size();
         } else {
@@ -33,8 +33,7 @@ public class LocationFilter extends Filter {
 
             final ArrayList<Location> retList = new ArrayList<>();
             for (Location o : data) {
-                if (o.toString().toLowerCase().contains(substr) || o.getCityName().toLowerCase().contains(substr))
-                {
+                if (o.toString().toLowerCase().contains(substr) || o.getCityName().toLowerCase().contains(substr)) {
                     retList.add(o);
                 }
             }

@@ -1,5 +1,6 @@
 package com.tradinos.dealat2.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,15 +12,18 @@ public class Type extends Item {
     private int templateId;
     private List<Item> models;
 
-    public Type(){}
-
-    public Type(String id, String name){
-        super(id, name);
+    public Type(){ // every type has "--" option
+        this.models = new ArrayList<>();
+        this.addNoModel();
     }
 
-    public static Type getNoItem(){
+    public static Type getNoType(){
+        Type type = new Type();
 
-        return new Type("-1", "--");
+        type.setId("-1");
+        type.setName("--");
+
+        return type;
     }
 
     public int getTemplateId() {

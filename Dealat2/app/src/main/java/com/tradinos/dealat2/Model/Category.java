@@ -14,7 +14,7 @@ public class Category implements Serializable {
 
     // templates
     public static final int VEHICLES = 1, PROPERTIES = 2, MOBILES = 3, ELECTRONICS = 4,
-            FASHION = 5, KIDS = 6, SPORTS = 7, JOBS = 8, INDUSTRIES = 9, SERVICES = 10;
+            FASHION = 5, KIDS = 6, SPORTS = 7, JOBS = 8, INDUSTRIES = 9, SERVICES = 10, BASIC = 11;
 
     private String id, name, parentId, imageUrl;
     private int templateId;

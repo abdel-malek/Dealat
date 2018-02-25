@@ -13,6 +13,7 @@ import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.CommercialAdapter;
 import com.tradinos.dealat2.Adapter.MainCatAdapter;
 import com.tradinos.dealat2.Controller.CategoryController;
+import com.tradinos.dealat2.Controller.CommercialAdsController;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.CommercialAd;
 import com.tradinos.dealat2.MyApplication;
@@ -78,27 +79,55 @@ public class HomeActivity extends DrawerActivity {
         CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<List<Category>>() {
             @Override
             public void OnSuccess(List<Category> result) {
-                HideProgressDialog();
 
                 result.add(Category.getMain());
                 ((MyApplication)getApplication()).setAllCategories(result);
 
                 mainCategories = ((MyApplication)getApplication()).getSubCatsById("0");
-
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
+
+                HideProgressDialog();
+                /*
+                CommercialAdsController.getInstance(mController).getCommercialAds("0", new SuccessCallback<List<CommercialAd>>() {
+                    @Override
+                    public void OnSuccess(final List<CommercialAd> result) {
+                        HideProgressDialog();
+
+                        CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
+                        commercialPager.setAdapter(commercialAdapter);
+
+                        final Handler handler = new Handler();
+                        final Runnable update = new Runnable() {
+                            public void run() {
+                                if (currentPage == result.size()) {
+                                    currentPage = 0;
+                                }
+                                commercialPager.setCurrentItem(currentPage++, true);
+                            }
+                        };
+
+                        new Timer().schedule(new TimerTask() {
+
+                            @Override
+                            public void run() {
+                                handler.post(update);
+                            }
+                        }, 100, 5000);
+                    }
+                });*/
             }
         });
     }
 
     @Override
     public void showData() {
+
         final List<CommercialAd> commercialAds = new ArrayList<>();
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
-
-
+        
         CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(),commercialAds );
         commercialPager.setAdapter(commercialAdapter);
 

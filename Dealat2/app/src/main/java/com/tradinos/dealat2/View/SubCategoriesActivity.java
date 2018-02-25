@@ -61,6 +61,9 @@ public class SubCategoriesActivity extends MasterActivity {
         } else if (action == ACTION_SELECT_CAT) {
             if (!category.getId().equals("0")) //this check is really not necessary
                 buttonBack.setVisibility(View.VISIBLE);
+
+            category = MyApplication.getCategoryById(category.getParentId());
+            category.setSubCategories(application.getSubCatsById(category.getId()));
         }
 
         adapter = new CategoryAdapter(mContext, category.getSubCategories());
@@ -84,7 +87,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
                     category.setSubCategories(application.getSubCatsById(category.getId()));
 
-                    if (action == ACTION_VIEW){
+                    if (action == ACTION_VIEW) {
                         Category all = new Category();
                         all.setId(category.getId());
                         all.setParentId(category.getParentId());
@@ -108,7 +111,7 @@ public class SubCategoriesActivity extends MasterActivity {
                         intent.putExtra("category", category);
                         startActivity(intent);
 
-                    } else if (action == ACTION_SELECT_CAT){
+                    } else if (action == ACTION_SELECT_CAT) {
                         intent = new Intent();
                         intent.putExtra("category", category);
                         setResult(RESULT_OK, intent);
@@ -131,7 +134,7 @@ public class SubCategoriesActivity extends MasterActivity {
             category = MyApplication.getCategoryById(category.getParentId());
             category.setSubCategories(application.getSubCatsById(category.getId()));
 
-            if (action == ACTION_VIEW && !category.getId().equals("0")){
+            if (action == ACTION_VIEW && !category.getId().equals("0")) {
                 Category all = new Category();
                 all.setId(category.getId());
                 all.setParentId(category.getParentId());

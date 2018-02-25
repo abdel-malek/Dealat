@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.tradinos.dealat2.Model.Image;
@@ -39,37 +38,34 @@ public class ImageAdapter extends BaseAdapter {
         return this.images.size();
     }
 
-    public int getSelectedCount() {
-        return this.selectedImages.size();
-    }
-
     @Override
     public Image getItem(int i) {
         return this.images.get(i);
     }
 
-    public Image getSelectedItem(int i) {
-        return this.selectedImages.get(i);
-    }
 
     @Override
     public long getItemId(int i) {
         return i;
     }
 
-    public List<Image> getSelectedImages(){
+    public List<Image> getSelectedImages() {
         return this.selectedImages;
+    }
+
+    public void addCapturedImage(Image image) {
+        image.select();
+        this.images.add(0, image);
+        this.selectedImages.add(image);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-      //  if (view == null) {
-            view = this.inflater.inflate(R.layout.row_image, null);
-            view.setTag(i);
+        view = this.inflater.inflate(R.layout.row_image, null);
+        view.setTag(i);
+        //view.setLayoutParams(new FrameLayout.LayoutParams(220, 220));
 
-            view.setLayoutParams(new FrameLayout.LayoutParams(340, 340));
-      //  }
 
         ImageView imageView = view.findViewById(R.id.imageView);
         final ImageView imageViewCheck = view.findViewById(R.id.imageViewCheck);
@@ -77,21 +73,22 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setImageBitmap(null);
         ImageGetter task = new ImageGetter(imageView);
         task.execute(getItem(i).getPath());
-       // view.setTag(task);
+
+        if (getItem(i).isSelected())
+            imageViewCheck.setVisibility(View.VISIBLE);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Image clickedImage = images.get(Integer.parseInt(view.getTag().toString()));
 
-                if (clickedImage.isSelected()){
+                if (clickedImage.isSelected()) {
                     clickedImage.unselect();
                     selectedImages.remove(clickedImage);
                     imageViewCheck.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    if (Image.ImageCounter == 6){
-                        ((MasterActivity)context).showMessageInToast(R.string.toastMaxImages);
+                } else {
+                    if (Image.ImageCounter >= 6) {
+                        ((MasterActivity) context).showMessageInToast(R.string.toastMaxImages);
                         return;
                     }
 

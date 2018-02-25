@@ -6,7 +6,8 @@ package com.tradinos.dealat2.API;
 public enum APIModel {
     users,
     ads,
-    categories
+    categories,
+    commercialAds;
     ;
 
     @Override
@@ -20,6 +21,9 @@ public enum APIModel {
 
             case categories:
                 return "categories_control";
+
+            case commercialAds:
+                return "commercial_ads_control";
 
             default:
                 return  "" ;

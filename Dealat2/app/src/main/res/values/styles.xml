@@ -11,12 +11,22 @@
 
     <style name="noTitleTheme" parent="AppTheme">
         <item name="windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="editTextWhite" >
         <item name="android:textColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorHint">@color/whiteTransparent</item>
     </style>
+
+    <style name="textHeadline" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">CenturyGothicRegular</item>
+    </style>
+
+    <style name="textNormal" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">calibri</item>
+    </style>
+
 
     <style name="noTitleTheme.NoActionBar">
         <item name="windowActionBar">false</item>

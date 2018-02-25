@@ -35,7 +35,7 @@ public class TypeMapParser implements TradinosParser<HashMap<Integer, List<Type>
                 typeList = new ArrayList<>();
                 jsonArray = new JSONArray(jsonObject.getString(String.valueOf(i)));
 
-                typeList.add(Type.getNoItem());
+                typeList.add(Type.getNoType());
 
                 for (int j =0; j< jsonArray.length(); j++){
                     jsonType = jsonArray.getJSONObject(j);

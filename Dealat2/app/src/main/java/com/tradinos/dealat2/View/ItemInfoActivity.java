@@ -1,16 +1,23 @@
 package com.tradinos.dealat2.View;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
@@ -22,14 +29,21 @@ import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
+import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.ImageDecoder;
 
+import org.json.JSONArray;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by developer on 20.02.18.
@@ -39,17 +53,21 @@ public class ItemInfoActivity extends MasterActivity {
 
     private final int REQUEST_SELECT_CAT = 1;
 
-
     private Category selectedCategory;
     private List<Image> images;
     private int currentTemplate;
 
+    private HashMap<Integer, List<Type>> brands = new HashMap<>();
+
     private HashMap<String, String> parameters = new HashMap<>();
+
+    private JSONArray imagesJsonArray = new JSONArray(), deletedImgsJsonArray = new JSONArray();
 
     private HorizontalAdapter adapter;
 
     //views
     private LinearLayout linearLayout;
+    private PopupWindow popupWindow;
 
     private TextView textBrand, textModel,
             textDate,
@@ -85,7 +103,6 @@ public class ItemInfoActivity extends MasterActivity {
 
         images = (List<Image>) getIntent().getSerializableExtra("images");
 
-
         ShowProgressDialog();
         AdController.getInstance(mController).getTemplatesData(new SuccessCallback<TemplatesData>() {
             @Override
@@ -94,9 +111,10 @@ public class ItemInfoActivity extends MasterActivity {
 
                 autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
 
-                List<Type> brands = result.getBrands().get(currentTemplate);
-                if (brands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, brands));
+                brands = result.getBrands();
+                List<Type> templateBrands = brands.get(currentTemplate);
+                if (templateBrands != null)
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
 
                 spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
 
@@ -125,13 +143,18 @@ public class ItemInfoActivity extends MasterActivity {
         List<Item> years = new ArrayList<>();
         years.add(Item.getNoItem());
 
-        for (int i=startYear; i<= currentYear; i++)
+        for (int i = startYear; i <= currentYear; i++)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
 
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
         adapter = new HorizontalAdapter(mContext, linearLayout);
         adapter.setViews(images);
+
+
+        // uploading images
+        for (int i = 0; i < images.size(); i++)
+            new UploadImage(i).execute(images.get(i));
     }
 
     @Override
@@ -181,16 +204,12 @@ public class ItemInfoActivity extends MasterActivity {
     @Override
     public void assignActions() {
 
-        autoCompleteLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Item selectedItem = ((ItemAdapter) autoCompleteLocation.getAdapter()).getItem(i);
-                parameters.put("location_id", selectedItem.getId());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Location selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
+                parameters.put("location_id", selectedLocation.getId());
+                autoCompleteLocation.setText(selectedLocation.getFullName());
             }
         });
 
@@ -208,8 +227,9 @@ public class ItemInfoActivity extends MasterActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+                intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
                 intent.putExtra("category", selectedCategory);
-             //   startActivityForResult(intent, );
+                startActivityForResult(intent, REQUEST_SELECT_CAT);
             }
         });
 
@@ -230,12 +250,31 @@ public class ItemInfoActivity extends MasterActivity {
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Item selectedItem = ((ItemAdapter) spinnerBrand.getAdapter()).getItem(i);
+                Type selectedType = ((TypeAdapter) spinnerBrand.getAdapter()).getItem(i);
 
-                if (selectedItem.getId().equals("-1")) // --
+                if (selectedType.getId().equals("-1")) // --
                     parameters.remove("type_id");
                 else
-                    parameters.put("type_id", selectedItem.getId());
+                    parameters.put("type_id", selectedType.getId());
+
+                spinnerModel.setAdapter(new ItemAdapter(mContext, selectedType.getModels()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Item selectedItem = ((ItemAdapter) spinnerModel.getAdapter()).getItem(i);
+
+                if (selectedItem.getId().equals("-1")) // --
+                    parameters.remove("type_model_id");
+                else
+                    parameters.put("type_model_id", selectedItem.getId());
             }
 
             @Override
@@ -260,6 +299,40 @@ public class ItemInfoActivity extends MasterActivity {
 
             }
         });
+
+        spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Item selectedItem = ((ItemAdapter) spinnerEdu.getAdapter()).getItem(i);
+
+                if (selectedItem.getId().equals("-1")) // --
+                    parameters.remove("education_id");
+                else
+                    parameters.put("education_id", selectedItem.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerSch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Item selectedItem = ((ItemAdapter) spinnerSch.getAdapter()).getItem(i);
+
+                if (selectedItem.getId().equals("-1")) // --
+                    parameters.remove("schedule_id");
+                else
+                    parameters.put("schedule_id", selectedItem.getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -270,17 +343,52 @@ public class ItemInfoActivity extends MasterActivity {
 
                 getTemplateInput();
 
-             /*   ShowProgressDialog();
+                ShowProgressDialog();
                 AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
                     @Override
                     public void OnSuccess(String result) {
                         HideProgressDialog();
-                        showMessageInToast(R.string.buttonSubmit);
+                        showMessageInToast(R.string.toastAdSubmit);
 
                         setResult(RESULT_OK);
                         finish();
                     }
-                });*/
+                });
+            }
+        } else if (view.getId() == R.id.layoutHorizontal) {
+            final int position = Integer.parseInt(view.getTag().toString());
+            final Image clickedImage = adapter.getItem(position);
+
+            if (!clickedImage.isLoading()) {
+
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //Inflate the view from a predefined XML layout
+                View layout = inflater.inflate(R.layout.popup_layout,
+                        (ViewGroup) findViewById(R.id.popupLayout));
+
+                ImageView imageView = layout.findViewById(R.id.imageView);
+                imageView.setImageBitmap(new ImageDecoder().decodeFile(clickedImage.getPath()));
+
+                popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
+
+                layout.findViewById(R.id.buttonTrue).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        adapter.replaceMain(position);
+                        popupWindow.dismiss();
+                    }
+                });
+
+                layout.findViewById(R.id.buttonFalse).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        adapter.deleteImage(position);
+                        deletedImgsJsonArray.put(clickedImage.getServerPath());
+                        popupWindow.dismiss();
+                    }
+                });
+
+                popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
             }
         }
     }
@@ -292,8 +400,15 @@ public class ItemInfoActivity extends MasterActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
 
-                if (selectedCategory.getTemplateId() != currentTemplate)
+                if (selectedCategory.getTemplateId() != currentTemplate) {
                     replaceTemplate();
+
+                    List<Type> templateBrands = brands.get(currentTemplate);
+                    if (templateBrands != null)
+                        spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+
+                    parameters.clear();
+                }
             }
         }
     }
@@ -305,7 +420,7 @@ public class ItemInfoActivity extends MasterActivity {
     }
 
     private void setTemplateVisibility(int visibility) {
-        if (visibility != View.VISIBLE || visibility != View.GONE)
+        if (visibility != View.VISIBLE && visibility != View.GONE)
             return;
 
         switch (currentTemplate) {
@@ -370,20 +485,43 @@ public class ItemInfoActivity extends MasterActivity {
 
     private boolean checkGeneralInput() {
 
-        if (editTitle.getText().toString().equals(""))
+        if (inputIsEmpty(editTitle))
             editTitle.setError(getString(R.string.errorRequired));
-        else if (currentTemplate != Category.JOBS && editPrice.getText().toString().equals(""))
+        else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice))
             editPrice.setError(getString(R.string.errorRequired));
+        else if (!parameters.containsKey("location_id"))
+            autoCompleteLocation.setError(getString(R.string.errorRequired));
+        else if (adapter.isLoading())
+            showMessageInToast(getString(R.string.toastWaitTillUploading));
         else {
-            if (!editDesc.getText().toString().equals(""))
-                parameters.put("description", String.valueOf(editDesc.getText()));
+            if (!inputIsEmpty(editDesc))
+                parameters.put("description", stringInput(editDesc));
+
+            if (currentTemplate != Category.JOBS)
+                parameters.put("price", stringInput(editPrice));
 
             if (checkboxNegotiable.isChecked())
                 parameters.put("is_negotiable", "1");
 
-            parameters.put("title", String.valueOf(editTitle.getText()));
+            parameters.put("title", stringInput(editTitle));
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
+
+            Image image;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                image = adapter.getItem(i);
+                if (image.isMarkedAsMain())
+                    parameters.put("main_image", image.getServerPath());
+                else
+                    imagesJsonArray.put(image.getServerPath());
+            }
+            // none of the images is marked as main
+            if (!parameters.containsKey("main_image")){
+           //     parameters.put("")
+            }
+
+            parameters.put("images", imagesJsonArray.toString());
+            parameters.put("deletedImages", deletedImgsJsonArray.toString());
 
             return true;
         }
@@ -423,10 +561,6 @@ public class ItemInfoActivity extends MasterActivity {
                     parameters.put("salary", stringInput(editSalary));
                 }
 
-                // spinnerSch.setVisibility();
-
-                //spinnerEdu.setVisibility();
-
                 break;
 
             case Category.VEHICLES:
@@ -441,10 +575,6 @@ public class ItemInfoActivity extends MasterActivity {
                 if (!checkboxSecondhand.isChecked())
                     parameters.put("is_new", "1");
 
-                //    spinnerModel.setVisibility();
-
-                //  spinnerYear.setVisibility();
-
                 break;
 
             case Category.ELECTRONICS:
@@ -453,8 +583,6 @@ public class ItemInfoActivity extends MasterActivity {
                     parameters.put("size", stringInput(editSize));
 
             case Category.MOBILES:
-
-                // spinnerBrand.setVisibility(visibility);
 
             case Category.FASHION:
             case Category.KIDS:
@@ -474,5 +602,40 @@ public class ItemInfoActivity extends MasterActivity {
 
     private String stringInput(EditText editText) {
         return String.valueOf(editText.getText());
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (popupWindow != null && popupWindow.isShowing())
+            popupWindow.dismiss();
+        else
+            super.onBackPressed();
+    }
+
+    class UploadImage extends AsyncTask<Image, Void, String> {
+
+        int position;
+
+        public UploadImage(int position) {
+            this.position = position;
+        }
+
+        @Override
+        protected String doInBackground(Image... images) {
+
+            final Image image = images[0];
+            AdController.getInstance(mController).uploadImage(new File(image.getPath()), new SuccessCallback<String>() {
+                @Override
+                public void OnSuccess(String result) {
+                    image.setServerPath(result);
+
+                    image.setLoading(false);
+                    adapter.updateViews(position);
+                }
+            });
+            return null;
+        }
     }
 }

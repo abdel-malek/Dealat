@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
+    android:id="@+id/container2"
     >
     <ScrollView
         android:layout_width="match_parent"
@@ -32,26 +33,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:padding="24dp"
                 android:hint="@string/hintDesc"
                 style="@style/editTextWhite"
                 android:background="@drawable/outline_white"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hintChooseLocation"
-                android:textColor="@color/white"
-                />
-
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:completionThreshold="1"
+                android:dropDownHeight="140dp"
                 android:hint="@string/hintChooseLocation"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
@@ -62,13 +57,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/labelShowPeriod"
                 android:textColor="@color/white"
+                android:textAppearance="@style/textNormal"
                 />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spinnerPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
                 />
 
             <EditText
@@ -96,7 +94,7 @@
                 android:id="@+id/checkboxNegotiable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/labelNegotiable"
                 android:textColor="@color/white"
                 />
@@ -116,8 +114,10 @@
                 android:id="@+id/spinnerBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
                 />
 
             <TextView
@@ -133,8 +133,10 @@
                 android:id="@+id/spinnerModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
                 />
 
             <TextView
@@ -150,8 +152,10 @@
                 android:id="@+id/spinnerYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
                 />
 
             <EditText
@@ -259,8 +263,10 @@
                android:id="@+id/spinnerEdu"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="8dp"
+               android:layout_marginBottom="16dp"
                android:visibility="gone"
+               style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+               android:backgroundTint="@color/white"
                />
 
             <TextView
@@ -275,8 +281,10 @@
                 android:id="@+id/spinnerSch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
                 />
 
             <EditText
@@ -338,6 +346,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:onClick="onClick"
         android:text="@string/buttonSubmit"
         android:textColor="@color/white"
         android:background="@color/red"

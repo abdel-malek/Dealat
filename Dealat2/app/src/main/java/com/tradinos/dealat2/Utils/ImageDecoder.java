@@ -3,6 +3,11 @@ package com.tradinos.dealat2.Utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Created by developer on 20.02.18.
  */
@@ -48,4 +53,37 @@ public class ImageDecoder {
         }
         return inSampleSize;
     }
+
+  /*  File ConvertBitmapToFile(String path) throws IOException {
+
+
+        File f = new File(path);
+        if (f.exists()) {
+            f.delete();
+        }
+
+        ByteArrayOutputStream bmpStream = new ByteArrayOutputStream();
+        try {
+            bmpStream.flush();//to avoid out of memory error
+            bmpStream.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bmpStream);
+       // byte[] bmpPicByteArray = bmpStream.toByteArray();
+
+        FileOutputStream fo;
+
+        try {
+            fo = new FileOutputStream(f);
+            fo.write(bmpStream.toByteArray());
+            fo.flush();
+            fo.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return f;
+
+    }*/
 }

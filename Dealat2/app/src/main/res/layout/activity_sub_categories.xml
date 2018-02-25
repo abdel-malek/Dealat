@@ -34,10 +34,10 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="@string/labelchooseCategory"
+            android:textAppearance="@style/textHeadline"
             android:textColor="@color/white"
             />
     </LinearLayout>
-
 
     <ListView
         android:id="@+id/listView"
@@ -48,6 +48,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/white"
         android:dividerHeight="2dp"
+        android:divider="@color/grayLight"
         />
 
 </LinearLayout>
