@@ -51,7 +51,6 @@ class TAMPLATES {
 	
 	public static function get_tamplate_attributes_array()
 	{
-		
 		return array(
 		  1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer'),
 		  2 =>  array('space', 'rooms_num', 'floor', 'state', 'with_furniture'),

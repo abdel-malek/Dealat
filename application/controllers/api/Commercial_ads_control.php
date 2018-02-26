@@ -13,7 +13,7 @@ class Commercial_ads_control extends REST_Controller {
 	
 	public function get_commercial_ads_get($value='')
 	{
-		if(!$this->input->get('category_id')){
+		if($this->input->get('category_id') == null){
 			throw new Parent_Exception('category id is required');
 		}else{
 			$category_id = $this->input->get('category_id');

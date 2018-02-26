@@ -3,7 +3,7 @@
 class Ads extends MY_Model {
 	protected $_table_name = 'ads';
 	protected $_primary_key = 'ads.ad_id';
-	protected $_order_by = 'is_featured DESC , publish_date ASC';
+	protected $_order_by = 'is_featured DESC , publish_date DESC'; //ASC
 	public $rules = array();
 	
     function __construct() {
@@ -96,22 +96,17 @@ class Ads extends MY_Model {
 		// save tamplate info 
 		$tamplate_date = array();
 		$tamplate_date['ad_id'] = $new_ad_id;
+		$tamplate_name = 'basic';
 		if($tamplate_id !=  TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$model = $tamplate_name.'_tamplate';
 			$this->load->model('data_sources/'.$model);
 			$attributes = TAMPLATES::get_tamplate_attributes($tamplate_id);
 			foreach ($attributes as  $attribute) {
-				$tamplate_date[$attribute] = $this->input->post($attribute);
+			  if($this->input->post($attribute) != null && $this->input->post($attribute)!=''){
+			  		$tamplate_date[$attribute] = $this->input->post($attribute);
+			  }
 			}
-		    // save ad main image according to tamplate
-		    $ad_main_image = null;
-		    if($main_image != null){
-		    	$ad_main_image = ADS_IMAGES_PATH.$main_image;
-		    }else{
-		    	$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
-		    }
-			$this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
 		    // save tamplate info
 			$this->$model->save($tamplate_date);
 		}
@@ -119,8 +114,16 @@ class Ads extends MY_Model {
 			// $this->load->model('data_sources/services_tamplate');
 			// $this->services_tamplate->save($tamplate_date);
 		// }
+	    // save ad main image according to tamplate
+	    $ad_main_image = null;
+	    if($main_image != null){
+	    	$ad_main_image = $main_image;
+	    }else{
+	    	$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
+	    }
+		$updated_ad_id = $this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
         // save ad images 
-        if($second_images!= null){
+        if($second_images!= null && is_array($second_images)){
         	$this->load->model('data_sources/ad_images');
         	foreach ($second_images as $image) {
 				$data = array('ad_id'=>$new_ad_id , 'image'=>$image);

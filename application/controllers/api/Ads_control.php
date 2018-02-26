@@ -62,7 +62,7 @@ class Ads_control extends REST_Controller {
 		   }
 		   $ads_images_paths = array();
 		   if($this->input->post('images')){
-		   	   $ads_images_paths = $this->input->post('images');
+		   	   $ads_images_paths = json_decode($this -> input -> post('images'), true);
 		   }
 		   $category_info = $this->categories->get($this->input->post('category_id'));
 		   $tamplate_id = $category_info->tamplate_id;
@@ -90,7 +90,7 @@ class Ads_control extends REST_Controller {
 	
 	public function delete_images_post()
 	{
-		$images = $this->input_post('images');
+		$images = json_decode($this -> input -> post('images'), true);
 		if(!$images){
 			throw new Parent_Exception('You have to provide images array');
 		}

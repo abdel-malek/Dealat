@@ -3,7 +3,7 @@
 class Categories extends MY_Model {
 	protected $_table_name = 'categories';
 	protected $_primary_key = 'categories.category_id';
-	protected $_order_by = 'parent_id , category_id';
+	protected $_order_by = 'parent_id ,is_other, category_id';
 	public $rules = array();
 
 	
