@@ -54,6 +54,11 @@ public class HorizontalAdapter {
 
         for (int i = 0; i < images.size(); i++) {
 
+            // first image is Main by default
+            if (i == 0)
+                images.get(0).markAsMain();
+
+
             view = this.inflater.inflate(R.layout.row_image_horizontal, null);
             // view.setLayoutParams(new FrameLayout.LayoutParams(260, 260));
             view.setPadding(4, 4, 4, 4);
@@ -86,7 +91,7 @@ public class HorizontalAdapter {
 
         if (!image.isLoading()) {
             textView.setVisibility(View.VISIBLE);
-            textView.setText(String.valueOf(position+1));
+            textView.setText(String.valueOf(position + 1));
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
@@ -101,11 +106,12 @@ public class HorizontalAdapter {
     }
 
     public void replaceMain(int position) {
+        images.get(0).unMarkAsMain();
+
         View mainView = views.remove(position);
         Image mainImage = images.remove(position);
         linearLayout.removeView(mainView);
 
-        images.get(0).unMarkAsMain();
         mainImage.markAsMain();
 
         images.add(0, mainImage);

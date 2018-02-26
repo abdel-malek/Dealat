@@ -14,7 +14,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_home); // change layout!!!!
+        setContentView(R.layout.activity_view_ads);
         super.onCreate(savedInstanceState);
 
      //   TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

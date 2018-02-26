@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.util.List;
@@ -110,10 +111,8 @@ public class MainCatAdapter extends BaseAdapter {
                 defaultDrawable = R.drawable.others;
         }
 
-        final String BASE = "http://dealat.tradinos.com/";
-        // final String BASE = "http://192.168.9.53/Dealat/";
         ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-        mImageLoader.get(BASE + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,
+        mImageLoader.get(MyApplication.getBaseUrlForImages() + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,
                 defaultDrawable, defaultDrawable));
 
         return view;

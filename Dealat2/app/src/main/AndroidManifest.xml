@@ -29,7 +29,9 @@
 
         <activity
             android:name=".View.HomeActivity"
-            android:theme="@style/noTitleTheme.NoActionBar" />
+            android:theme="@style/noTitleTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            />
 
         <activity android:name=".View.SubCategoriesActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
@@ -40,7 +42,7 @@
             />
 
         <activity android:name=".View.ItemInfoActivity"
-            android:windowSoftInputMode="adjustNothing"
+            android:windowSoftInputMode="adjustPan"
             />
 
         <activity android:name=".View.ViewAdsActivity"/>

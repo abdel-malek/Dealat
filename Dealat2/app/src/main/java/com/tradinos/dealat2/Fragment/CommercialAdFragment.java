@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.CommercialAd;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 /**
@@ -40,7 +43,11 @@ public class CommercialAdFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_commercial_ad, container, false);
 
         ImageView imageView = rootView.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.ad_image_39);
+        //imageView.setImageResource(R.drawable.ad_image_39);
+
+        ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
+        mImageLoader.get(MyApplication.getBaseUrlForImages() + this.commercialAd.getImageUrl(), ImageLoader.getImageListener(imageView,
+                R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
 
         return rootView;
     }

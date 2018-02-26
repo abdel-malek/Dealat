@@ -1,6 +1,8 @@
 package com.tradinos.dealat2.View;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class ItemInfoActivity extends MasterActivity {
     private final int REQUEST_SELECT_CAT = 1;
 
     private Category selectedCategory;
+    private Location selectedLocation;
     private List<Image> images;
     private int currentTemplate;
 
@@ -61,7 +65,7 @@ public class ItemInfoActivity extends MasterActivity {
 
     private HashMap<String, String> parameters = new HashMap<>();
 
-    private JSONArray imagesJsonArray = new JSONArray(), deletedImgsJsonArray = new JSONArray();
+    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray();
 
     private HorizontalAdapter adapter;
 
@@ -207,8 +211,7 @@ public class ItemInfoActivity extends MasterActivity {
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Location selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
-                parameters.put("location_id", selectedLocation.getId());
+                selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getFullName());
             }
         });
@@ -230,20 +233,6 @@ public class ItemInfoActivity extends MasterActivity {
                 intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
                 intent.putExtra("category", selectedCategory);
                 startActivityForResult(intent, REQUEST_SELECT_CAT);
-            }
-        });
-
-        spinnerPeriod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Item selectedItem = ((ItemAdapter) spinnerPeriod.getAdapter()).getItem(i);
-
-                parameters.put("show_period", selectedItem.getId());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -485,13 +474,19 @@ public class ItemInfoActivity extends MasterActivity {
 
     private boolean checkGeneralInput() {
 
-        if (inputIsEmpty(editTitle))
+        if (inputIsEmpty(editTitle)) {
             editTitle.setError(getString(R.string.errorRequired));
-        else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice))
+            editTitle.requestFocus();
+
+        } else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
-        else if (!parameters.containsKey("location_id"))
+            editPrice.requestFocus();
+
+        } else if (selectedLocation == null) {
             autoCompleteLocation.setError(getString(R.string.errorRequired));
-        else if (adapter.isLoading())
+            autoCompleteLocation.requestFocus();
+
+        } else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
         else {
             if (!inputIsEmpty(editDesc))
@@ -506,7 +501,10 @@ public class ItemInfoActivity extends MasterActivity {
             parameters.put("title", stringInput(editTitle));
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
+            parameters.put("location_id", selectedLocation.getId());
 
+
+            imagesJsonArray = new JSONArray();
             Image image;
             for (int i = 0; i < adapter.getCount(); i++) {
                 image = adapter.getItem(i);
@@ -515,13 +513,12 @@ public class ItemInfoActivity extends MasterActivity {
                 else
                     imagesJsonArray.put(image.getServerPath());
             }
-            // none of the images is marked as main
-            if (!parameters.containsKey("main_image")){
-           //     parameters.put("")
-            }
 
-            parameters.put("images", imagesJsonArray.toString());
-            parameters.put("deletedImages", deletedImgsJsonArray.toString());
+            if (imagesJsonArray.length() > 0)
+                parameters.put("images", imagesJsonArray.toString());
+
+            if (deletedImgsJsonArray.length() > 0)
+                parameters.put("deletedImages", deletedImgsJsonArray.toString());
 
             return true;
         }
@@ -610,8 +607,55 @@ public class ItemInfoActivity extends MasterActivity {
 
         if (popupWindow != null && popupWindow.isShowing())
             popupWindow.dismiss();
-        else
-            super.onBackPressed();
+        else {
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                            JSONArray jsonArray = new JSONArray();
+
+                            Image image;
+                            for (int i = 0; i < adapter.getCount(); i++) {
+                                image = adapter.getItem(i);
+                                if (!image.isLoading())
+                                    jsonArray.put(image.getServerPath());
+                            }
+
+                            try {
+                                for (int i = 0; i < deletedImgsJsonArray.length(); i++) {
+                                    jsonArray.put(deletedImgsJsonArray.getString(i));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (jsonArray.length() > 0) {
+                                ShowProgressDialog();
+                                AdController.getInstance(mController).deleteImage(jsonArray, new SuccessCallback<String>() {
+                                    @Override
+                                    public void OnSuccess(String result) {
+                                        HideProgressDialog();
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.areYouSureDiscard).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                    .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+        }
     }
 
     class UploadImage extends AsyncTask<Image, Void, String> {

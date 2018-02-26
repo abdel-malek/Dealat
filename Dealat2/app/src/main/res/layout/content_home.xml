@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.tradinos.dealat2.View.DrawerActivity"
-    tools:showIn="@layout/app_bar_drawer">
+    tools:showIn="@layout/app_bar_home">
 
     <FrameLayout
         android:id="@+id/container"
@@ -51,9 +51,10 @@
         android:paddingEnd="16dp"
         android:padding="8dp"
         android:elevation="8dp"
-       android:text="@string/buttonSell"
+        android:text="@string/buttonSell"
         android:background="@drawable/rounded_corner_red"
         android:textColor="@color/white"
+        android:textAppearance="@style/textNormal"
         />
 
 </RelativeLayout>

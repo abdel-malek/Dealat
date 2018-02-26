@@ -102,4 +102,7 @@
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
 
 
+    <!-- Alert Dialog -->
+    <string name="areYouSureDiscard">Are you sure you want to discard this ad?</string>
+
 </resources>

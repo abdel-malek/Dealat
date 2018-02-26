@@ -27,7 +27,6 @@
         <item name="android:fontFamily">calibri</item>
     </style>
 
-
     <style name="noTitleTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

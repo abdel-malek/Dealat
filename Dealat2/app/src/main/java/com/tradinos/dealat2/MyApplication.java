@@ -97,4 +97,9 @@ public class MyApplication extends Application {
         }
         return false;
     }
+
+    public static String getBaseUrlForImages(){
+        return "http://dealat.tradinos.com/";
+        //return "http://192.168.9.53/Dealat/";
+    }
 }

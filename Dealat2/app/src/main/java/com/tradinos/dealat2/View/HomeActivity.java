@@ -86,8 +86,8 @@ public class HomeActivity extends DrawerActivity {
                 mainCategories = ((MyApplication)getApplication()).getSubCatsById("0");
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
 
-                HideProgressDialog();
-                /*
+              //  HideProgressDialog();
+
                 CommercialAdsController.getInstance(mController).getCommercialAds("0", new SuccessCallback<List<CommercialAd>>() {
                     @Override
                     public void OnSuccess(final List<CommercialAd> result) {
@@ -114,7 +114,7 @@ public class HomeActivity extends DrawerActivity {
                             }
                         }, 100, 5000);
                     }
-                });*/
+                });
             }
         });
     }
@@ -122,12 +122,12 @@ public class HomeActivity extends DrawerActivity {
     @Override
     public void showData() {
 
-        final List<CommercialAd> commercialAds = new ArrayList<>();
+      /*  final List<CommercialAd> commercialAds = new ArrayList<>();
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
         commercialAds.add(new CommercialAd());
-        
+
         CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(),commercialAds );
         commercialPager.setAdapter(commercialAdapter);
 
@@ -147,7 +147,7 @@ public class HomeActivity extends DrawerActivity {
             public void run() {
                 handler.post(update);
             }
-        }, 100, 5000);
+        }, 100, 5000);*/
     }
 
     @Override

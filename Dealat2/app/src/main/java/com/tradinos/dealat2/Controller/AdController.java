@@ -14,6 +14,8 @@ import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
 import com.tradinos.dealat2.Parser.Parser.TemplatesDataParser;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,15 @@ public class AdController extends ParentController {
         PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
 
         request.addFileUpload(image);
+
+        request.Call();
+    }
+
+    public void deleteImage(JSONArray jsonArray, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "delete_images").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("images", jsonArray.toString());
 
         request.Call();
     }
