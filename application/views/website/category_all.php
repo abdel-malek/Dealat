@@ -41,7 +41,14 @@
 		</div>
 
 		<div class="container-fluid main">
-
+<div class="sub-categories d-none">
+				<div class="container">
+					<div class="row">
+					
+						
+					</div>
+				</div>
+			</div>
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<div class="row mb-4">

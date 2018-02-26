@@ -153,61 +153,61 @@
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
 <script>
 	$(document).ready(function() {
-		$("#fileuploader-register").uploadFile({
-			//				url: base_url + '/api/ads_control/ad_images_upload',
-			multiple: false,
-			dragDrop: false,
-			//				fileName:"myfile"
-			acceptFiles: "image/*",
-			maxFileSize: 10000 * 1024,
-			showDelete: true,
-			showPreview: true,
-			previewHeight: "100px",
-			previewWidth: "100px",
-			uploadStr: "Upload Image"
-		});
-
-		$("#fileuploader-ad").uploadFile({
-			url: base_url + '/api/ads_control/ad_images_upload',
-			multiple: true,
-			dragDrop: true,
-			fileName: "image",
-			acceptFiles: "image/*",
-			maxFileSize: 10000 * 1024,
-			//see docs for localization(lang)
-			showDelete: true,
-			//				statusBarWidth:600,
-			dragdropWidth: "100%",
-			showPreview: true,
-			previewHeight: "100px",
-			previewWidth: "100px",
-			uploadStr: "Upload Images",
-			returnType: "json",
-			onSuccess: function(files, data, xhr, pd) {
-				console.log("success");
-				console.log(data);
-			},
-			onError: function(files, status, errMsg, pd) {
-				console.log("fail");
-				console.log(data);
-			},
-			deleteCallback: function(data, pd) {
-				console.log(data.data);
-				var arr;
-				arr=[data.data];
-//				for (var i = 0; i < data.data.length; i++) {
-					$.post(base_url + '/api/ads_control/delete_images', {
-							images: arr
-						},
-						function(resp, textStatus, jqXHR) {
-							//Show Message    
-							alert("File Deleted");
-						});
-//				}
-//				pd.statusbar.hide(); 
-
-			}
-		});
+//		$("#fileuploader-register").uploadFile({
+//			//				url: base_url + '/api/ads_control/ad_images_upload',
+//			multiple: false,
+//			dragDrop: false,
+//			//				fileName:"myfile"
+//			acceptFiles: "image/*",
+//			maxFileSize: 10000 * 1024,
+//			showDelete: true,
+//			showPreview: true,
+//			previewHeight: "100px",
+//			previewWidth: "100px",
+//			uploadStr: "Upload Image"
+//		});
+//
+//		$("#fileuploader-ad").uploadFile({
+//			url: base_url + '/api/ads_control/ad_images_upload',
+//			multiple: true,
+//			dragDrop: true,
+//			fileName: "image",
+//			acceptFiles: "image/*",
+//			maxFileSize: 10000 * 1024,
+//			//see docs for localization(lang)
+//			showDelete: true,
+//			//				statusBarWidth:600,
+//			dragdropWidth: "100%",
+//			showPreview: true,
+//			previewHeight: "100px",
+//			previewWidth: "100px",
+//			uploadStr: "Upload Images",
+//			returnType: "json",
+//			onSuccess: function(files, data, xhr, pd) {
+//				console.log("success");
+//				console.log(data);
+//			},
+//			onError: function(files, status, errMsg, pd) {
+//				console.log("fail");
+//				console.log(data);
+//			},
+//			deleteCallback: function(data, pd) {
+//				console.log(data.data);
+//				var arr;
+//				arr=[data.data];
+////				for (var i = 0; i < data.data.length; i++) {
+//					$.post(base_url + '/api/ads_control/delete_images', {
+//							images: arr
+//						},
+//						function(resp, textStatus, jqXHR) {
+//							//Show Message    
+//							alert("File Deleted");
+//						});
+////				}
+////				pd.statusbar.hide(); 
+//
+//			}
+//		});
 
 	});
 

@@ -39,14 +39,15 @@
 
 			</div>
 		</div>
-		<!--
-		<div class='change'>
-			<?php// $this->load->view('website/category_div', array('ads' =>$ads ,'subcategories' =>$subcategories , 'category_name'=>$category_name)) ?>
-		</div>
--->
-
+		
 		<div class="container-fluid main">
-
+<div class="sub-categories d-none">
+				<div class="container">
+					<div class="row">
+						
+					</div>
+				</div>
+			</div>
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<div class="row mb-4">
@@ -62,16 +63,15 @@
 						</div>
 						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
 					</div>
+					
 					<div class="controls">
-
 						<div class="nav-wrapper">
-
 							<button class="nav-scroller prev d-none">
-							<i class="fas fa-angle-left fa-lg"></i>
-						</button>
+								<i class="fas fa-angle-left fa-lg"></i>
+							</button>
 							<button class="nav-scroller next d-none">
-							<i class="fas fa-angle-right fa-lg"></i>
-						</button>
+								<i class="fas fa-angle-right fa-lg"></i>
+							</button>
 							<ul>
 								<li class="selected" data-filter="all">
 									<?php echo $this->lang->line('all'); ?>
@@ -87,9 +87,10 @@
 							</ul>
 						</div>
 					</div>
+					
 					<div class="row ">
 						<?php if($ads != null): foreach ($ads as $ad):?>
-						<div class="col-sm-6 col-lg-4 mix <?php echo $ad->category_name ?> ">
+						<div class="col-sm-6 col-lg-4 mix <?php echo $ad->category_name ?>">
 							<div class="card mb-4" data-ad-id="<?php echo $ad->ad_id ?>" data-template-id="<?php echo $ad->tamplate_id ?>">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i>

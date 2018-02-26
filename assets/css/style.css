@@ -620,15 +620,20 @@ header.home {
     padding-top: 150px; }
     .home-page .products .main .sub-categories,
     .category-page .products .main .sub-categories {
-      padding-bottom: 30px;
+      margin-bottom: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      transition: .5s;
+      font-size: .9rem;
       color: #666; }
       .home-page .products .main .sub-categories .name,
       .category-page .products .main .sub-categories .name {
-        cursor: pointer; }
+        cursor: pointer;
+        text-decoration: underline; }
       .home-page .products .main .sub-categories .name:hover,
       .category-page .products .main .sub-categories .name:hover {
-        text-decoration: underline;
-        cursor: pointer; }
+        cursor: pointer;
+        color: #c30a30; }
     .home-page .products .main .left-col,
     .category-page .products .main .left-col {
       padding-right: 45px;
@@ -1133,5 +1138,10 @@ label {
 .rating label {
   color: #ddd;
   float: right; }
+
+#success-modal p {
+  margin-bottom: 0;
+  padding: 1rem 0;
+  font-size: 1rem; }
 
 /*# sourceMappingURL=style.css.map */

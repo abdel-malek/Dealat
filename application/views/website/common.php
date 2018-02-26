@@ -77,78 +77,6 @@
         </button>
 			</div>
 			<div class="modal-body">
-				<!--
-				<div class="card">
-
-					<div class="card-img-slider slick-slider">
-						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car1.png'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car2.jpg'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/car3.png'); ?>')"></div>
-						<div class="card-img-top" style="background-image: url('<?php// echo base_url('assets/images/bike1.jpg'); ?>')"></div>
-					</div>
-					<div class="card-body">
-						<div class="row">
-							<div class="col-12 mb-4 text-center">
-								<div class="card-title">Product Title</div>
-								<div class="details">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam dolorum assumenda</div>
-							</div>
-							<div class="col-7 info-col">
-
-								<div class="seller"><span class="seller-lbl"><?php// echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
-								<div class="seller"><span class="rating-lbl"><?php// echo $this->lang->line('seller_rating'); ?>: </span>
-									<span class="rating-val">
-											<fieldset class="rating">
-												<span class="rate-group" data-value="5">
-													<input type="radio" id="star5" name="rating" value="5" />
-													<label class="full" for="star5" title="Awesome - 5 stars"></label>
-												</span>
-
-									<div class="rate-group" data-value="4">
-										<input type="radio" id="star4" name="rating" value="4" />
-										<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-									</div>
-
-									<div class="rate-group" data-value="3">
-										<input type="radio" id="star3" name="rating" value="3" />
-										<label class="full" for="star3" title="Meh - 3 stars"></label>
-									</div>
-
-									<div class="rate-group" data-value="2">
-										<input type="radio" id="star2" name="rating" value="2" />
-										<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-									</div>
-
-									<div class="rate-group" data-value="1">
-										<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-									</div>
-
-									</fieldset>
-									<div class="clearfix"></div>
-									</span>
-								</div>
-								<details open>
-									<summary><span class="mb-1 mt-2"><?php //echo $this->lang->line('contact_info'); ?></span></summary>
-									<div class="phone"><span class="phone-lbl"><i class="fas fa-home fa-fw"></i></span> <span class="phone-val">123456789</span></div>
-									<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:09123456789">09123456789</a></span></div>
-									<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:09123456789">09123456789</a></span></div>
-								</details>
-
-							</div>
-							<div class="col-5 info-col">
-								<div class="location"><span class="location-lbl"></span><span class="location-val">Syria, Damascus</span></div>
-								<div class="status"><span class="status-lbl"></span><span class="status-val">New</span></div>
-								<div class="negotiable"><span class="negotiable-lbl"><?php// echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">None negotiable</span></div>
-								<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
-								<div class="date"><span class="date-lbl"></span><span class="date-val">12/12/2015</span></div>
-							</div>
-
-						</div>
-						<div class="price">
-							<div class="price-val">3000$</div>
-						</div>
-					</div>
-				</div>
--->
 
 			</div>
 			<div class="modal-footer">
@@ -216,7 +144,7 @@
 				</div>
 
 				<div class="col-4 info-col">
-					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}-{{ad.location_name}}</span></div>
+					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}-  {{ad.location_name}}</span></div>
 					<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
 					<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
 					<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
@@ -225,66 +153,66 @@
 				<div class="col-4 info-col templates">
 					<!--vehicles template-->
 					<div class="template-vehicles template d-none" data-template-id="1">
-						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
-						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
-						<div class="manufacture_date"><span class="manufacture_date-lbl">Manufacture date:</span><span class="manufacture_date-val">{{ad.manufacture_date}}</span></div>
-						<div class="is_automatic"><span class="is_automatic-lbl">Automatic:</span><span class="is_automatic-val">{{automatic}}</span></div>
-						<div class="is_new"><span class="is_new-lbl"></span>Status:<span class="is_new-val">{{status}}</span></div>
-						<div class="kilometer"><span class="kilometer-lbl">Kilometer:</span><span class="kilometer-val">{{ad.kilometer}}</span></div>
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val"> {{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+						<div class="manufacture_date"><span class="manufacture_date-lbl">Manufacture date:</span><span class="manufacture_date-val"> {{ad.manufacture_date}}</span></div>
+						<div class="is_automatic"><span class="is_automatic-lbl">Automatic:</span><span class="is_automatic-val"> {{automatic}}</span></div>
+						<div class="is_new"><span class="is_new-lbl"></span>Status:<span class="is_new-val"> {{status}}</span></div>
+						<div class="kilometer"><span class="kilometer-lbl">Kilometer:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
 					</div>
 
 					<!--properties template-->
 					<div class="template-properties template d-none" data-template-id="2">
-						<div class="space"><span class="space-lbl">Space:</span><span class="space-val">{{ad.space}}</span></div>
-						<div class="rooms_num"><span class="rooms_num-lbl">Rooms:</span><span class="rooms_num-val">{{ad.rooms_num}}</span></div>
-						<div class="floor"><span class="floor-lbl">Floor:</span><span class="floor-val">{{ad.floor}}</span></div>
-						<div class="state"><span class="state-lbl">State:</span><span class="state-val">{{ad.state}}</span></div>
-						<div class="with_furniture"><span class="with_furniture-lbl">Furniture:</span><span class="with_furniture-val">{{furniture}}</span></div>
+						<div class="space"><span class="space-lbl">Space:</span><span class="space-val"> {{ad.space}}</span></div>
+						<div class="rooms_num"><span class="rooms_num-lbl">Rooms:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
+						<div class="floor"><span class="floor-lbl">Floor:</span><span class="floor-val"> {{ad.floor}}</span></div>
+						<div class="state"><span class="state-lbl">State:</span><span class="state-val"> {{ad.state}}</span></div>
+						<div class="with_furniture"><span class="with_furniture-lbl">Furniture:</span><span class="with_furniture-val"> {{furniture}}</span></div>
 					</div>
 
 					<!--mobiles template-->
 					<!--type id-->
 					<div class="template-mobiles template d-none" data-template-id="3">
-						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
-						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val"> {{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--electronics template-->
 					<!--type id-->
 					<div class="template-electronics template d-none" data-template-id="4">
-						<div class="type"><span class="type-lbl">Type:</span><span class="type-val">{{ad.type_name}}</span></div>
-						<div class="model"><span class="model-lbl">Model:</span><span class="model-val">{{ad.type_model_name}}</span></div>
-						<div class="size"><span class="size-lbl">Size:</span><span class="size-val">{{ad.size}}</span></div>
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="type"><span class="type-lbl">Type:</span><span class="type-val"> {{ad.type_name}}</span></div>
+						<div class="model"><span class="model-lbl">Model:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+						<div class="size"><span class="size-lbl">Size:</span><span class="size-val"> {{ad.size}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--fashion template-->
 					<div class="template-fashion template d-none" data-template-id="5">
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--kids template-->
 					<div class="template-kids template d-none" data-template-id="6">
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--sports template-->
 					<div class="template-sports template d-none" data-template-id="7">
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--job positions template-->
 					<!--schedule id/experience id/education id-->
 					<div class="template-job template d-none" data-template-id="8">
-						<div class="schedule"><span class="schedule-lbl">Schedule:</span><span class="schedule-val">{{ad.schedule}}</span></div>
-						<div class="education"><span class="education-lbl">Education:</span><span class="education-val">{{ad.education}}</span></div>
-						<div class="salary"><span class="salary-lbl">Salary:</span><span class="salary-val">{{ad.salary}}</span></div>
+						<div class="schedule"><span class="schedule-lbl">Schedule:</span><span class="schedule-val"> {{ad.schedule}}</span></div>
+						<div class="education"><span class="education-lbl">Education:</span><span class="education-val"> {{ad.education}}</span></div>
+						<div class="salary"><span class="salary-lbl">Salary:</span><span class="salary-val"> {{ad.salary}}</span></div>
 					</div>
 
 					<!--industries template-->
 					<div class="template-industries template d-none" data-template-id="9">
-						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val">{{status}}</span></div>
+						<div class="is_new"><span class="is_new-lbl">Status:</span><span class="is_new-val"> {{status}}</span></div>
 					</div>
 
 					<!--services template-->
@@ -420,7 +348,8 @@
 					<input type="hidden" name="location_id" class="location-id">
 					<input type="hidden" name="type_id" class="type-id">
 					<input type="hidden" name="type_model_id" class="type-model-id">
-					
+					<input type="hidden" name="main_image" class="main-image">
+
 					<div class="form-group">
 						<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
 					</div>
@@ -510,7 +439,7 @@
 
 						<script id="ad-modal-types-template" type="text/template">
 							{{ #types }}
-							<li><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
+							<li class="li" data-type-id={{type_id}}><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
 								<ul class="dropdown-menu">
 									{{ #models }}
 									<li><a class="dropdown-item model" href="" data-type-id={{type_id}} data-type-model-id={{type_model_id}}>{{name}}</a></li>
@@ -521,15 +450,15 @@
 						</script>
 
 						<div class="form-group">
-							<input type="text" class="form-control m" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
+							<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 						</div>
 
 						<label class="">
-							<input type="checkbox" name="is_automatic" value="false"><span class=""> Automatic</span>
+							<input type="checkbox" name="is_automatic" value="1"><span class=""> Automatic</span>
 						</label>
-
+						<br>
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 
 						<div class="form-group">
@@ -555,14 +484,14 @@
 						</div>
 
 						<label class="">
-							<input type="checkbox" name="with_furniture" value="false"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
+							<input type="checkbox" name="with_furniture" value="1"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
 						</label>
 					</div>
 					<!--mobiles template-->
 					<!--type id-->
 					<div class="template-mobiles template d-none" data-template-id="3">
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 					</div>
 					<!--electronics template-->
@@ -573,25 +502,25 @@
 						</div>
 
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 					</div>
 					<!--fashion template-->
 					<div class="template-fashion template d-none" data-template-id="5">
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 					</div>
 					<!--kids template-->
 					<div class="template-kids template d-none" data-template-id="6">
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 					</div>
 					<!--sports template-->
 					<div class="template-sports template d-none" data-template-id="7">
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New Equipments</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New Equipments</span>
 						</label>
 					</div>
 					<!--job positions template-->
@@ -617,7 +546,7 @@
 					<!--industries template-->
 					<div class="template-industries template d-none" data-template-id="9">
 						<label class="">
-							<input type="checkbox" name="is_new" value="false"><span class=""> New</span>
+							<input type="checkbox" name="is_new" value="1"><span class=""> New</span>
 						</label>
 					</div>
 					<!--services template-->
@@ -627,9 +556,11 @@
 					<div class="template-services template d-none" data-template-id="11"></div>
 
 					<div id="fileuploader-ad">Upload</div>
+					
+					<div id="fileuploader-ad-imgs">Upload</div>
 					<!--
 					<div class="">
-						<input id="terms-agree" type="checkbox" name="featured" class="featured" value="false">
+						<input id="terms-agree" type="checkbox" name="featured" class="featured" value="1">
 						<label for="terms-agree" class="">
 							<span class="">Set as featured advertisement</span>
 							<span class="d-none text-danger"> This will cost you some money</span>
@@ -637,11 +568,11 @@
 					</div>
 					-->
 					<label class="featured">
-						<input id="featured-ad" type="checkbox" name="featured_ad" value="false"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
+						<input id="featured-ad" type="checkbox" name="featured_ad" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
 						<span class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></span>
 					</label>
 					<div class="">
-						<input id="terms-agree" type="checkbox" name="terms_agree" class="" required value="false">
+						<input id="terms-agree" type="checkbox" name="terms_agree" class="" value="1" required>
 						<label for="terms-agree" class="">
 							<span class=""><?php echo $this->lang->line('agree_policy'); ?> <a href="" target="_blank"><?php echo $this->lang->line('terms'); ?></a></span>
 							<span class="d-none text-danger">(required) <i class="fas fa-exclamation"></i></span>
@@ -810,23 +741,24 @@
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-body text-center">
-				<h6>Advertisement Added Successfully</h6>
+				<p>Advertisement Added Successfully</p>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!--
-<a href="#" class="link" >
-				<li><span class="name" data-id={{id}}>{{name}}</span></li>
-			</a>
--->
 <script id="sub-categories-template" type="text/template">
-	{{ #. }}
+
 	<div class="col-sm-3">
 		<div class="sub">
-			<li><span class="name" data-id={{id}}>{{name}}</span></li>
+			<li><span class="name all" data-id={{catId}}><?php echo $this->lang->line('all'); ?></span></li>
 		</div>
 	</div>
-	{{ /. }}
+	{{ #sub }}
+	<div class="col-sm-3">
+		<div class="sub">
+			<li><span class="name" data-id={{category_id}}>{{category_name}}</span></li>
+		</div>
+	</div>
+	{{ /sub }}
 </script>

@@ -14,13 +14,26 @@ $(function () {
 		});
 	});
 
-	$(".controls li").click(function () {
-		$(this).siblings("li").removeClass("selected");
-		$(this).addClass("selected");
+	$("button.register").click(function () {
+		$("#register-modal").modal("show");
+	});
+
+	$("button.login").click(function () {
+		$("#login-modal").modal("show");
+	});
+
+	$("button.filter").click(function () {
+		$("#filter-modal").modal("show");
 	});
 
 	$("#ad-modal").on("hide.bs.modal", function () {
 		$("#place-ad-form").trigger("reset");
+	});
+
+	//change selected in controls
+	$(".controls li").click(function () {
+		$(this).siblings("li").removeClass("selected");
+		$(this).addClass("selected");
 	});
 
 	//get categories and subcategories
@@ -33,7 +46,6 @@ $(function () {
 			console.log(data);
 			alert("error status false");
 		} else {
-			console.log(data);
 			var i, template, rendered, catData;
 			catData = {
 				categories: data.data
@@ -47,7 +59,7 @@ $(function () {
 		alert("fail");
 	});
 
-	//get cities and areas - types
+	//get cities and areas - types - educations - schedules
 	$.ajax({
 		type: "get",
 		url: base_url + '/api/ads_control/get_data_lists',
@@ -57,7 +69,6 @@ $(function () {
 			console.log(data);
 			alert("error status false");
 		} else {
-			//			console.log(data);
 			var i, j, template, rendered, locData, arr1 = [],
 				typesData,
 				arr2 = [];
@@ -82,7 +93,6 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-			console.log(typesData);
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
@@ -212,6 +222,12 @@ $(function () {
 					swipeToSlide: true
 				});
 
+				$("#card-modal .templates [class*='-val']").each(function () {
+					if ($(this).text() === " ") {
+						$(this).text(" -");
+					}
+				});
+
 				templateId = parseInt(data.data.tamplate_id, 10);
 				$("#card-modal .template").each(function () {
 					if ($(this).data("templateId") === templateId) {
@@ -231,16 +247,10 @@ $(function () {
 		});
 	});
 
-	$("button.register").click(function () {
-		$("#register-modal").modal("show");
-	});
-
-	$("button.login").click(function () {
-		$("#login-modal").modal("show");
-	});
-
-	$("button.filter").click(function () {
-		$("#filter-modal").modal("show");
+	//post ad modal
+	$("button.place-ad").click(function () {
+		$("button.ad").addClass("invisible");
+		$("#ad-modal").modal("show");
 	});
 
 	//view template fields when change category in place ad modal
@@ -262,6 +272,7 @@ $(function () {
 		$("#ad-modal .categories-nav .select").text($(this).text());
 	});
 
+	//locations select
 	$("#ad-modal .locations-nav").on("click", ".location", function () {
 		var locationId;
 		locationId = $(this).data("locationId");
@@ -270,45 +281,133 @@ $(function () {
 		$("#ad-modal .locations-nav .select").text($(this).text());
 	});
 
+	//types select
+	$("#ad-modal .types-nav").on("click", ".li", function () {
+		if($(this).find("ul").length > 0) {
+			//has children models
+		} else{
+			//has no children models
+			var typeId
+		typeId = $(this).data("typeId");
+			$("#place-ad-form .type-model-id").val("");
+		$("#place-ad-form .type-id").val(typeId);
+		}
+//		console.log("type: " + $("#place-ad-form .type-id").val());
+//		console.log("model: " + $("#place-ad-form .type-model-id").val());
+		//change select placeholder
+		$("#ad-modal .types-nav .select").text($(this).text());
+	});
+	
+	//model select
 	$("#ad-modal .types-nav").on("click", ".model", function () {
 		var typeId, typeModelId;
 		typeId = $(this).data("typeId");
 		typeModelId = $(this).data("typeModelId");
-		console.log(typeId);
-		console.log(typeModelId);
 		$("#place-ad-form .type-id").val(typeId);
 		$("#place-ad-form .type-model-id").val(typeModelId);
-		//change select placeholder
-		//		$("#ad-modal .locations-nav .select").text($(this).text());
 	});
 
-	$("button.place-ad").click(function () {
-		$("button.ad").addClass("invisible");
-		$("#ad-modal").modal("show");
+	//featured ad
+	$("#ad-modal .featured").click(function () {
+		if ($(this).find("input").is(':checked')) {
+			$(this).find(".warning").removeClass("d-none");
+		} else {
+			$(this).find(".warning").addClass("d-none");
+		}
 	});
 
-	//place ad
+	//upload register image
+	$("#fileuploader-register").uploadFile({
+		//				url: base_url + '/api/ads_control/ad_images_upload',
+		multiple: false,
+		dragDrop: false,
+		fileName: "image",
+		acceptFiles: "image/*",
+		maxFileSize: 10000 * 1024,
+		showDelete: true,
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		uploadStr: "Upload Image"
+	});
+
+	var adImgs = [];
+	//upload ad main image
+	$("#fileuploader-ad").uploadFile({
+		url: base_url + '/api/ads_control/ad_images_upload',
+		multiple: true,
+		dragDrop: true,
+		fileName: "image",
+		acceptFiles: "image/*",
+		maxFileSize: 10000 * 1024,
+		//see docs for localization(lang)
+		showDelete: true,
+		//				statusBarWidth:600,
+		dragdropWidth: "100%",
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		uploadStr: "Upload Images",
+		returnType: "json",
+		onSuccess: function (files, data, xhr, pd) {
+			console.log(data);
+			adImgs.push(data.data.slice(12));
+			console.log(adImgs);
+			//			$("#ad-modal .main-image").val(data.data.slice(12));
+		},
+		onError: function (files, status, errMsg, pd) {
+			console.log("upload failed");
+		},
+		deleteCallback: function (data, pd) {
+			console.log(data.data);
+
+			var arr;
+			arr = [data.data];
+			//				for (var i = 0; i < data.data.length; i++) {
+			$.post(base_url + '/api/ads_control/delete_images', {
+					images: arr
+				},
+				function (resp, textStatus, jqXHR) {
+					//Show Message    
+					alert("File Deleted");
+					var i, deleted;
+					deleted = data.data.slice(12);
+					for (i in adImgs) {
+						if (adImgs[i] === deleted) {
+							adImgs.splice(i, 1);
+						}
+					}
+					console.log(adImgs);
+				});
+			//				}
+		}
+	});
+
+	//place ad form submit
 	$("#place-ad-form").submit(function (evnt) {
 		evnt.preventDefault();
 		evnt.stopImmediatePropagation();
 
+		var main, imgs;
+		main = adImgs[0];
+		adImgs.splice(0, 1);
+		imgs = adImgs;
+		var data = $(this).serializeArray(); // convert form to array
+		data.push({
+			name: "main_image",
+			value: main
+		}, {
+			name: "images",
+			value: imgs
+		});
 		console.log($(this).serializeArray());
-		console.log(typeof ($("#place-ad-form .m").val()));
+		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/ads_control/post_new_ad',
 			dataType: "json",
-			data: $(this).serialize()
-			//			{
-			//				category_id: ,
-			//				location_id: ,
-			//				show_period: ,
-			//				title: ,
-			//				description: ,
-			//				price: ,
-			//				main_image:
-			//				//ad template parameters
-			//			}
+			data: $.param(data)
+			//				$(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
 				console.log(data);
@@ -325,38 +424,33 @@ $(function () {
 				}
 				$('#ad-modal .error-message').html(wholeMessage);
 				$('#ad-modal .error-message').removeClass("d-none");
+				$("#ad-modal").animate({
+					scrollTop: $("body").offset().top
+				}, 500);
 			} else {
-				//				if ($("#ad-modal .featured input").is(':checked')) {
-				//					$("#ad-modal").modal("hide");
-				//					setTimeout(function () {
-				//						$("#pay-modal").modal("show");
-				//					}, 500);
-				//				} else {
-				//					$("#ad-modal").modal("hide");
-				//					setTimeout(function () {
-				//						$("#success-modal").modal("show");
-				//					}, 500);
-				//				}
-				//				$("#place-ad-form").trigger("reset");
-				//				return false;
 				console.log(data);
-				alert("success status true");
+				if ($("#ad-modal .featured input").is(':checked')) {
+					$("#ad-modal").modal("hide");
+					setTimeout(function () {
+						$("#pay-modal").modal("show");
+					}, 500);
+				} else {
+					$("#ad-modal").modal("hide");
+					setTimeout(function () {
+						$("#success-modal").modal("show");
+					}, 500);
+					setTimeout(function () {
+						$("#success-modal").modal("hide");
+					}, 2000);
+				}
+				$("#place-ad-form").trigger("reset");
+				$("#ad-modal .featured .warning").addClass("d-none");
 			}
 		}).fail(function (response) {
 			console.log(response);
 			alert("fail");
 		});
-
 	});
-
-	$("#ad-modal .featured").click(function () {
-		if ($(this).find("input").is(':checked')) {
-			$(this).find(".warning").removeClass("d-none");
-		} else {
-			$(this).find(".warning").addClass("d-none");
-		}
-	});
-
 
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > $(".products").offset().top && $(this).scrollTop() < ($(".products .row").offset().top + $(".products").innerHeight())) {
@@ -386,7 +480,6 @@ $(function () {
 				$(".category-slider h6").css("font-size", ".7rem");
 			}
 		}
-
 	});
 
 	//remove aside ads
@@ -441,7 +534,6 @@ $(function () {
 			//			$(this).siblings(".text").text("Remove from favorites");
 			$(this).attr("title", "Add to favorites");
 		}
-
 	});
 
 	//menu nav left and right arrows
@@ -470,17 +562,14 @@ $(function () {
 	});
 
 	$(".nav-scroller.prev").click(function () {
-		console.log("1");
 		$(".nav-scroller.next").removeClass("d-none");
 		if ($(".controls ul").offset().left >= $(".controls").offset().left) {
-			console.log("2");
 			$(this).addClass("d-none");
 			$(".controls ul").css({
 				"margin-left": "0px"
 			});
 			return;
 		}
-		console.log("3");
 		if (lang === "ar") {
 			$(".controls ul").css("margin-right", "-=100px");
 		} else {
@@ -517,6 +606,7 @@ $(function () {
 		$("#ad-modal").modal("show");
 	});
 
+	//view subcategories when click on category slider
 	$(".category").click(function () {
 		var id, name;
 		id = $(this).data("categoryId");
@@ -529,7 +619,8 @@ $(function () {
 			if (data.status === false) {
 				console.log("error status false");
 			} else {
-				$(".home-page .sub-categories, .category-page .sub-categories").remove();
+				var subData;
+				$(".main .sub-categories .row").empty();
 				if (data.data.length > 1) {
 					var i, template, rendered, string, sub = [],
 						all;
@@ -538,25 +629,23 @@ $(function () {
 					} else {
 						all = 'All';
 					}
-					console.log(data);
-					for (i in data.data) {
-						sub.push({
-							id: data.data[i].category_id,
-							name: data.data[i].category_name
-						});
+					subData = {
+						sub: data.data,
+						catId: id
 					}
 					template = $('#sub-categories-template').html();
 					Mustache.parse(template);
-					rendered = Mustache.render(template, sub);
-					string = '<div class="sub-categories">' + '<div class="container">' + '<div class="row">' +
-						'<div class="col-sm-3">' + '<div class="sub">' + '<li><span class="name all" data-id=' + id + '>' + all +
-						'</span></li>' + '</div></div></div></div></div>';
-					$(".home-page .main, .category-page .main").prepend(string);
-					$(".home-page .sub-categories .row, .category-page .sub-categories .row").append(rendered);
+					rendered = Mustache.render(template, subData);
+					$(".main .sub-categories .row").append(rendered);
+					$(".main .sub-categories").removeClass("d-none");
 					//	smooth scroll
 					$("html, body").animate({
 						scrollTop: $(".main").offset().top
 					}, 700);
+					$(".main .sub-categories").css("background-color", "lightyellow");
+					setTimeout(function () {
+						$(".main .sub-categories").removeAttr("style");
+					}, 1100);
 				} else {
 					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
 				}
@@ -567,13 +656,13 @@ $(function () {
 
 	});
 
+	//click on subcategory
 	$(".home-page, .category-page").on("click", ".sub-categories .name", function () {
-		var id, name, is_all;
+		var id, name;
 		id = $(this).data("id");
 		name = $(this).text().trim();
 
 		if ($(this).hasClass("all")) {
-			is_all = 1;
 			window.location = base_url + "/home_control/load_ads_by_category_page_all?category_id=" + id + "&category_name=" + name;
 		} else {
 			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;

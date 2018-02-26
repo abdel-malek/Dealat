@@ -80,6 +80,14 @@
 		</div>
 
 		<div class="container-fluid main">
+			<div class="sub-categories d-none">
+				<div class="container">
+					<div class="row">
+					
+						
+					</div>
+				</div>
+			</div>
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<h5 class="recent-txt">
@@ -101,7 +109,7 @@
 
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 								</div>
-								
+
 								<div class="card-body">
 									<div class="row">
 										<div class="col-7 mt-2">
