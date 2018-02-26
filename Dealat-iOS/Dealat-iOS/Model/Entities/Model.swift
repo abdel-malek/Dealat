@@ -13,7 +13,7 @@ import SwiftyJSON
 class Model : BaseEntity {
     
     var type_id : JSON!
-    var type_model_id : String!
+    var type_model_id : JSON!
     var name : String!
     
     // Mappable

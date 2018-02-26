@@ -39,6 +39,7 @@ class Communication: BaseManager {
     let searchURL = "/ads_control/search/format/json"
     let get_data_listsURL = "/ads_control/get_data_lists/format/json"
     let post_new_adURL = "/ads_control/post_new_ad/format/json"
+    let get_commercial_adsURL = "/commercial_ads_control/get_commercial_ads/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_adsURL)!
@@ -383,6 +384,43 @@ class Communication: BaseManager {
             }
         }
     }
+    
+    
+    
+    func get_commercial_ads(_ category_id : Int, callback : @escaping ([AD]) -> Void){
+        let url = URL(string: baseURL + get_commercial_adsURL)!
+        let params : [String : Any] = ["category_id" : category_id]
+        
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [AD]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
     
     
     func output(_ res : DataResponse<CustomResponse>){

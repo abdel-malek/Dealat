@@ -13,9 +13,9 @@ import DropDown
 import Alamofire
 import KMPlaceholderTextView
 import SkyFloatingLabelTextField
-import IQDropDownTextField
+//import IQDropDownTextField
 
-class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,YMSPhotoPickerViewControllerDelegate,IQDropDownTextFieldDelegate {
+class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,YMSPhotoPickerViewControllerDelegate {
     
     @IBOutlet weak var collectionView : UICollectionView!
     
@@ -25,21 +25,81 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var imagesPaths: [String] = []
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
-    @IBOutlet var tfields2: [IQDropDownTextField]!
-
     
-    @IBOutlet weak var tfTitle : UITextField!
-    @IBOutlet weak var tfLocation : IQDropDownTextField!
-    @IBOutlet weak var tfCategory : UITextField!
+    
+    @IBOutlet weak var tfTitle : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfLocation : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice : SkyFloatingLabelTextField!
     @IBOutlet weak var negotiableSwitch : UISwitch!
     @IBOutlet weak var tfDescription : KMPlaceholderTextView!
-    @IBOutlet weak var tfType : IQDropDownTextField!
-    @IBOutlet weak var tfModel : IQDropDownTextField!
+    
+    // 1
+    @IBOutlet weak var tfType : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfModel : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfYear : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfTrans : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfStatus : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfKilometers : SkyFloatingLabelTextField!
+    
+    // 2
+    @IBOutlet weak var tfStatus2 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfRooms_num : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfFloor : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfWith_furniture : UISwitch!
+    @IBOutlet weak var tfSpace : SkyFloatingLabelTextField!
+    
+    //3
+    @IBOutlet weak var tfStatus3 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfType3 : SkyFloatingLabelTextField!
+    
+    //4
+    @IBOutlet weak var tfStatus4 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfType4 : SkyFloatingLabelTextField!
+    
+    //5
+    @IBOutlet weak var tfStatus5 : SkyFloatingLabelTextField!
+
+    //6
+    @IBOutlet weak var tfStatus6 : SkyFloatingLabelTextField!
+
+    //7
+    @IBOutlet weak var tfStatus7 : SkyFloatingLabelTextField!
+    
+    //8
+    @IBOutlet weak var tfSchedule : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfEducation : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfExperince : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfSalary : SkyFloatingLabelTextField!
+
+    //9
+    @IBOutlet weak var tfStatus9 : SkyFloatingLabelTextField!
+
+    
+    
     
     var locations = [Location]()
     var typesBase = [Type]()
     var types = [Type]()
+    var schedules = [Schedule]()
+    var educations = [Education]()
+
+    
+    var years : [String] {
+        var arr = [String]()
+        for i in 1970...2018{
+            arr.append("\(i)")
+        }
+        return arr
+    }
+    
+    var transmission : [String] {
+        return ["Manual".localized,"Automatic".localized]
+    }
+    
+    var status : [String] {
+        return ["old".localized,"new".localized]
+    }
     
     
     var selectedCategory : Cat!{
@@ -47,10 +107,80 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             if self.tfCategory != nil{
                 self.tfCategory.text = selectedCategory.category_name
                 self.setupTypes()
+                self.refreshData()
             }
         }
     }
+    
+    var selectedLocation : Location!{
+        didSet{
+            if let loc = selectedLocation{
+                var name = ""
+                name += loc.city_name != nil ? loc.city_name! + " - " : ""
+                name += loc.location_name != nil ? loc.location_name! : ""
+                self.tfLocation.text = name
+            }
+        }
+    }
+    
+    var selectedType : Type!{
+        didSet{
+            self.tfType.text = (selectedType != nil) ? selectedType.name : nil
+            self.tfType3.text = (selectedType != nil) ? selectedType.name : nil
+        }
+    }
+    var selectedModel : Model!{
+        didSet{
+            self.tfModel.text = (selectedModel != nil) ? selectedModel.name : nil
+        }
+    }
+    
+    var selectedYear : Int!{
+        didSet{
+            if selectedYear != nil{
+            self.tfYear.text = self.years[selectedYear]
+            }
+        }
+    }
+    var selectedTransmission : Int!{
+        didSet{
+            if selectedTransmission != nil{
+            self.tfTrans.text = self.transmission[selectedTransmission]
+            }
+        }
+    }
+    var selectedStatus : Int!{
+        didSet{
+            if selectedStatus != nil{
+            self.tfStatus.text = self.status[selectedStatus]
+            self.tfStatus3.text = self.status[selectedStatus]
+            self.tfStatus4.text = self.status[selectedStatus]
+            self.tfStatus5.text = self.status[selectedStatus]
+            self.tfStatus6.text = self.status[selectedStatus]
+            self.tfStatus7.text = self.status[selectedStatus]
+            self.tfStatus9.text = self.status[selectedStatus]
+            }
+        }
+    }
+    
+    var selectedSchedule : Schedule!{
+        didSet{
+            self.tfSchedule.text = (selectedSchedule != nil) ? selectedSchedule.name : nil
+        }
+    }
 
+    var selectedEducation : Education!{
+        didSet{
+            self.tfEducation.text = (selectedEducation != nil) ? selectedEducation.name : nil
+        }
+    }
+
+    
+    //    var selectedKilometers : String!{
+    //        didSet{
+    //            self.tfKilometers.text = selectedKilometers
+    //        }
+    //    }
     
     
     override func viewDidLoad() {
@@ -67,14 +197,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             self.typesBase = types
             self.locations = locations
-            self.setupLocations()
+            self.educations = educations
+            self.schedules = schedules
+            //            self.setupLocations()
         }
     }
     
     func setupViews(){
         
         tfDescription.placeholder = "Description"
-
+        tfDescription.placeholderColor = .white
+        
         // CollectionView
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -89,7 +222,35 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
         self.title = "Add new"
         
+        
+        self.setPickerViewOn(self.tfLocation)
+        
+        //1
+        self.setPickerViewOn(self.tfType)
+        self.setPickerViewOn(self.tfModel)
+        self.setPickerViewOn(self.tfYear)
+        self.setPickerViewOn(self.tfTrans)
+        self.setPickerViewOn(self.tfStatus)
+        //3
+        self.setPickerViewOn(self.tfType3)
+        self.setPickerViewOn(self.tfStatus3)
+        //4
+        self.setPickerViewOn(self.tfType4)
+        self.setPickerViewOn(self.tfStatus4)
+        //5
+        self.setPickerViewOn(self.tfStatus5)
+//6
+        self.setPickerViewOn(self.tfStatus6)
+//7
+        self.setPickerViewOn(self.tfStatus7)
+        //8
+        self.setPickerViewOn(self.tfSchedule)
+        self.setPickerViewOn(self.tfEducation)
 
+//9
+        self.setPickerViewOn(self.tfStatus9)
+
+        
         // IQDropDownTextField
         for i in tfields{
             i.lineColor = .clear
@@ -97,9 +258,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             i.selectedLineColor = .clear
             i.selectedLineHeight = 0
             
-            i.selectedTitleColor = Theme.Color.White
+            i.selectedTitleColor = UIColor.lightGray
             i.placeholderColor = Theme.Color.White
-            i.titleColor = Theme.Color.White
+            i.titleColor = UIColor.lightGray
             i.textColor = .white
             
             if let place = i.placeholder{
@@ -110,32 +271,154 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
         
-        for i in tfields2{
-            
-            i.placeHolderColor = Theme.Color.White
-            
-            
-            if let place = i.placeholder{
-                let arr = place.components(separatedBy: "*")
-                if let temp = arr.first{
-                    i.placeholder = temp.localized + "*"
-                }
-            }
-        }
+        /*for i in tfields2{
+         if let place = i.placeholder{
+         let arr = place.components(separatedBy: "*")
+         if let temp = arr.first{
+         i.placeholder = temp.localized + "*"
+         i.placeHolderColor = Theme.Color.White
+         
+         }
+         }
+         }*/
         
         
     }
     
     
-    func textField(_ textField: IQDropDownTextField, didSelectItem item: String?) {
+    /*func textField(_ textField: IQDropDownTextField, didSelectItem item: String?) {
+     if textField == tfType{
+     self.setupModels()
+     }
+     }*/
+    
+    
+    func setPickerViewOn(_ textField : UITextField){
         
-        if textField == tfType{
-            self.setupModels()
-        }
+        // UIPickerView
+        let pickerView = UIPickerView(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
+        //        let c = UIColor.groupTableViewBackground
+        let c = UIColor.init(red: 215/255, green: 217/255, blue: 223/255, alpha: 1)
+        pickerView.setValue(c, forKey: "backgroundColor")
+        
+        textField.inputView = pickerView
+        pickerView.tag = textField.tag
+        
+        // ToolBar
+        //        let toolBar = UIToolbar()
+        //        toolBar.barStyle = .default
+        //        toolBar.isTranslucent = true
+        //        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        //        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        //        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: nil)
+        //        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        //        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: nil)
+        //        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        //        toolBar.isUserInteractionEnabled = true
+        //        textField.inputAccessoryView = toolBar
     }
     
-    
+    func refreshData(){
+        
+        tfType.text = nil
+        tfModel.text = nil
+        tfYear.text = nil
+        tfTrans.text = nil
+        tfStatus.text = nil
+        tfKilometers.text = nil
+        tfStatus2.text = nil
+        tfRooms_num.text = nil
+        tfFloor.text = nil
+        tfSpace.text = nil
+        tfStatus3.text = nil
+        tfType3.text = nil
+        tfStatus4.text = nil
+        tfType4.text = nil
+        tfStatus5.text = nil
+        tfStatus6.text = nil
+        tfStatus7.text = nil
+        tfSchedule.text = nil
+        tfEducation.text = nil
+        tfExperince.text = nil
+        tfSalary.text = nil
+        tfStatus9.text = nil
+        
+        tfType.isEnabled = false
+        tfModel.isEnabled = false
+        tfYear.isEnabled = false
+        tfTrans.isEnabled = false
+        tfStatus.isEnabled = false
+        tfKilometers.isEnabled = false
+        tfStatus2.isEnabled = false
+        tfRooms_num.isEnabled = false
+        tfFloor.isEnabled = false
+        tfSpace.isEnabled = false
+        tfStatus3.isEnabled = false
+        tfType3.isEnabled = false
+        tfStatus4.isEnabled = false
+        tfType4.isEnabled = false
+        tfStatus5.isEnabled = false
+        tfStatus6.isEnabled = false
+        tfStatus7.isEnabled = false
+        tfSchedule.isEnabled = false
+        tfEducation.isEnabled = false
+        tfExperince.isEnabled = false
+        tfSalary.isEnabled = false
+        tfStatus9.isEnabled = false
+
+
+        
+        switch self.selectedCategory.tamplate_id.intValue {
+        case 1:
+            tfType.isEnabled = true
+            tfModel.isEnabled = true
+            tfYear.isEnabled = true
+            tfTrans.isEnabled = true
+            tfStatus.isEnabled = true
+            tfKilometers.isEnabled = true
+        case 2:
+            tfStatus2.isEnabled = true
+            tfRooms_num.isEnabled = true
+            tfFloor.isEnabled = true
+            tfSpace.isEnabled = true
+        case 3:
+            tfStatus3.isEnabled = true
+            tfType3.isEnabled = true
+        case 4:
+            tfStatus4.isEnabled = true
+            tfType4.isEnabled = true
+        case 5:
+            tfStatus5.isEnabled = true
+        case 6:
+            tfStatus6.isEnabled = true
+        case 7:
+            tfStatus7.isEnabled = true
+        case 8:
+            tfSchedule.isEnabled = true
+            tfEducation.isEnabled = true
+            tfExperince.isEnabled = true
+            tfSalary.isEnabled = true
+        case 9:
+            tfStatus9.isEnabled = true
+        default:
+            break
+        }
+        
+        selectedType = nil
+        selectedModel = nil
+        selectedYear = nil
+        selectedTransmission = nil
+        selectedStatus = nil
+        selectedSchedule = nil
+        selectedEducation = nil
+        
+        self.tableView.reloadData()
+    }
     
     
     
@@ -144,7 +427,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         case 0:
             return (indexPath.row == 0 || indexPath.row == 6) ? UITableViewAutomaticDimension : 50
         default:
-            return UITableViewAutomaticDimension
+            if self.selectedCategory != nil{
+                return (self.selectedCategory.tamplate_id.intValue == indexPath.section) ? 50 : 0
+            }else{
+                return 0
+            }
         }
     }
     
@@ -197,6 +484,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         (view as! UITableViewHeaderFooterView).backgroundView?.backgroundColor = UIColor.clear
     }
     
+    
     @objc func reset(){
         print(self.imagesPaths)
     }
@@ -210,6 +498,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     @IBAction func submitAction(){
+        var params : [String : Any] = [:]
         
         guard let titleAd = self.tfTitle.text, !titleAd.isEmpty else {
             self.validMessage("Please enter title")
@@ -220,7 +509,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             return
         }
         guard let loc = self.selectedLocation, let location_id = loc.location_id else {
-            self.validMessage("Please select category")
+            self.validMessage("Please select location")
             return
         }
         guard let desAd = self.tfDescription.text, !desAd.isEmpty else {
@@ -236,8 +525,124 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             return
         }
         
-        var params : [String : Any] = [:]
         params["is_negotiable"] = self.negotiableSwitch.isOn ? 1 : 0
+        
+        
+        switch self.selectedCategory.tamplate_id.intValue {
+        case 1:
+            guard let type = self.selectedType, let type_id = type.type_id else {
+                self.validMessage("Please select Type")
+                return
+            }
+            guard let model = self.selectedModel, let type_model_id = model.type_model_id else {
+                self.validMessage("Please select model")
+                return
+            }
+            guard let manufacture_date = self.selectedYear else {
+                self.validMessage("Please select year")
+                return
+            }
+            guard let is_automatic = self.selectedTransmission else {
+                self.validMessage("Please select Transmission")
+                return
+            }
+            guard let is_new = self.selectedStatus else {
+                self.validMessage("Please select state")
+                return
+            }
+            
+            guard let kilometer = self.tfKilometers.text, !kilometer.isEmpty else {
+                self.validMessage("Please select Kilometers")
+                return
+            }
+            
+            params["type_id"] = type_id.intValue
+            params["type_model_id"] = type_model_id.intValue
+            params["manufacture_date"] = self.years[manufacture_date]
+            params["is_automatic"] = is_automatic
+            params["is_new"] = is_new
+            params["kilometer"] = kilometer
+            
+            
+        case 2:
+            guard let is_new = self.selectedStatus else {
+                self.validMessage("Please select state")
+                return
+            }
+            
+            guard let rooms = self.tfRooms_num.text, !rooms.isEmpty else {
+                self.validMessage("Please select rooms")
+                return
+            }
+            guard let floor = self.tfFloor.text, !floor.isEmpty else {
+                self.validMessage("Please select floor")
+                return
+            }
+            guard let space = self.tfSpace.text, !space.isEmpty else {
+                self.validMessage("Please select space")
+                return
+            }
+            
+            params["state"] = is_new
+            params["rooms_num"] = rooms
+            params["floor"] = floor
+            params["space"] = space
+            params["is_new"] = is_new
+            params["with_furniture"] = tfWith_furniture.isOn ? 1 : 0
+            
+        case 3:
+            guard let is_new = self.selectedStatus else {
+                self.validMessage("Please select state")
+                return
+            }
+            guard let type = self.selectedType, let type_id = type.type_id else {
+                self.validMessage("Please select Type")
+                return
+            }
+            
+            params["type_id"] = type_id.intValue
+            params["is_new"] = is_new
+            
+        case 5,6,7,9:
+            guard let is_new = self.selectedStatus else {
+                self.validMessage("Please select state")
+                return
+            }
+
+            params["is_new"] = is_new
+            
+            
+        case 8:
+            guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedual_id else {
+                self.validMessage("Please select schedule")
+                return
+            }
+            
+            guard let education = self.selectedEducation, let education_id = education.education_id else {
+                self.validMessage("Please select education")
+                return
+            }
+
+            guard let experience = self.tfExperince.text, !experience.isEmpty else {
+                self.validMessage("Please enter experince")
+                return
+            }
+
+            guard let salary = self.tfSalary.text, !salary.isEmpty else {
+                self.validMessage("Please enter salary")
+                return
+            }
+
+
+            params["schedule_id"] = schedule_id.intValue
+            params["education_id"] = education_id.intValue
+            params["experience"] = experience
+            params["salary"] = salary
+            
+        default:
+            break
+        }
+        
         
         self.showLoading()
         Communication.shared.post_new_ad(category_id: category_id.intValue, location_id: location_id.intValue, show_period: 1, title: titleAd, description: desAd, price: price, images: self.imagesPaths,paramsAdditional : params) { (res) in
@@ -393,8 +798,8 @@ extension NewAddVC{
             
             let mutableImages: NSMutableArray! = []
             
-//            let w = self.collectionView.frame.width - 12
-//            let customSize = CGSize(width: w / 4, height: w / 4)
+            //            let w = self.collectionView.frame.width - 12
+            //            let customSize = CGSize(width: w / 4, height: w / 4)
             
             for i in self.images{
                 mutableImages.add(i)
@@ -418,91 +823,91 @@ extension NewAddVC{
     
     
     /*func uploadImage(_ img : UIImage){
-        
-        let path = savePhotoLocal(img)
-        
-        Alamofire.upload(
-            multipartFormData: { multipartFormData in
-                
-                if let p = path{
-                    multipartFormData.append(p, withName: "image")
-                }else{
-                    multipartFormData.append("".getData, withName: "image")
-                }
-                
-        },
-            to: "http://192.168.9.53/Dealat/index.php/api/ads_control/ad_images_upload/format/json" ,headers : Communication.shared.getHearders(),
-            encodingCompletion: { encodingResult in
-                
-                switch encodingResult {
-                case .success(let upload, _, _):
-                    
-                    upload.uploadProgress(closure: { (Progress) in
-                        print("Upload Progress: \(Progress.fractionCompleted)")
-                        if Progress.fractionCompleted == 1{
-                        }
-                    })
-                    
-                    upload.responseObject { (response : DataResponse<CustomResponse>) in
-                        debugPrint(response)
-                        
-                        Communication.shared.output(response)
-                        self.hideLoading()
-                        
-                        switch response.result{
-                        case .success(let value):
-                            
-                            if value.status{
-                                
-                                
-                            }else{
-                                notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
-                            }
-                            break
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                            notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
-                            break
-                        }
-                        
-                    }
-                case .failure(let encodingError):
-                    self.hideLoading()
-                    print(encodingError)
-                }
-        })
-        
-        
-    }
-    
-    func savePhotoLocal(_ img : UIImage) -> URL?{
-        let tt = img.resized(toWidth: 512)
-        
-        var imageData = UIImagePNGRepresentation(tt!)
-        
-        let imageSize: Int = imageData!.count
-        print("size of image in KB: %f ", imageSize / 1024)
-        
-        if (imageSize / 1024) > 2000 {
-            
-            return nil
-        }
-        
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            
-            let path = dir.appendingPathComponent("img.png")
-            
-            //writing
-            do {
-                try imageData!.write(to: path, options: Data.WritingOptions.atomic)
-            }
-            catch {}
-        }
-        
-        let rrr = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-        return  rrr.appendingPathComponent("img.png")
-    }*/
+     
+     let path = savePhotoLocal(img)
+     
+     Alamofire.upload(
+     multipartFormData: { multipartFormData in
+     
+     if let p = path{
+     multipartFormData.append(p, withName: "image")
+     }else{
+     multipartFormData.append("".getData, withName: "image")
+     }
+     
+     },
+     to: "http://192.168.9.53/Dealat/index.php/api/ads_control/ad_images_upload/format/json" ,headers : Communication.shared.getHearders(),
+     encodingCompletion: { encodingResult in
+     
+     switch encodingResult {
+     case .success(let upload, _, _):
+     
+     upload.uploadProgress(closure: { (Progress) in
+     print("Upload Progress: \(Progress.fractionCompleted)")
+     if Progress.fractionCompleted == 1{
+     }
+     })
+     
+     upload.responseObject { (response : DataResponse<CustomResponse>) in
+     debugPrint(response)
+     
+     Communication.shared.output(response)
+     self.hideLoading()
+     
+     switch response.result{
+     case .success(let value):
+     
+     if value.status{
+     
+     
+     }else{
+     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+     }
+     break
+     case .failure(let error):
+     print(error.localizedDescription)
+     notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+     break
+     }
+     
+     }
+     case .failure(let encodingError):
+     self.hideLoading()
+     print(encodingError)
+     }
+     })
+     
+     
+     }
+     
+     func savePhotoLocal(_ img : UIImage) -> URL?{
+     let tt = img.resized(toWidth: 512)
+     
+     var imageData = UIImagePNGRepresentation(tt!)
+     
+     let imageSize: Int = imageData!.count
+     print("size of image in KB: %f ", imageSize / 1024)
+     
+     if (imageSize / 1024) > 2000 {
+     
+     return nil
+     }
+     
+     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+     
+     let path = dir.appendingPathComponent("img.png")
+     
+     //writing
+     do {
+     try imageData!.write(to: path, options: Data.WritingOptions.atomic)
+     }
+     catch {}
+     }
+     
+     let rrr = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+     
+     return  rrr.appendingPathComponent("img.png")
+     }*/
     
     
 }
@@ -510,62 +915,158 @@ extension NewAddVC{
 // IQTEXTFIELD
 extension NewAddVC{
     
-    
-    var selectedLocation : Location!{
-        let row = self.tfLocation.selectedRow
-        if row != -1, self.locations.count > row{
-            return self.locations[row]
-        }
-        return nil
-    }
-    
-    var selectedType : Type!{
-        let row = self.tfType.selectedRow
-        if row != -1, self.types.count > row{
-            return self.types[row]
-        }
-        return nil
-    }
-    
-    
-    var selectedModel : Model!{
-        let row = self.tfModel.selectedRow
-        if row != -1, self.selectedType.models.count > row{
-            return self.selectedType.models[row]
-        }
-        return nil
-    }
-    
-    
-    func setupLocations(){
-        let list = self.locations.map({"\($0.city_name!) - \($0.location_name!)"})
-        tfLocation.itemList = list
-        tfLocation.itemListUI = list
-        tfLocation.dropDownMode = .textPicker
-        tfLocation.isOptionalDropDown = true
-        tfLocation.delegate = self
-    }
-    
-    
-    func setupModels(){
-        let list = self.selectedType.models.map({"\($0.name!)"})
-        tfModel.itemList = list
-        tfModel.itemListUI = list
-        tfModel.dropDownMode = .textPicker
-        tfModel.isOptionalDropDown = true
-        tfModel.delegate = self
-    }
-    
     func setupTypes(){
         types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
-        
-        let list = self.types.map({"\($0.name!)"})
-        tfType.itemList = list
-        tfType.itemListUI = list
-        tfType.dropDownMode = .textPicker
-        tfType.isOptionalDropDown = true
-        tfType.delegate = self
     }
+    
+    
+    /*var selectedLocation : Location!{
+     let row = self.tfLocation.selectedRow
+     if row != -1, self.locations.count > row{
+     return self.locations[row]
+     }
+     return nil
+     }
+     
+     var selectedType : Type!{
+     let row = self.tfType.selectedRow
+     if row != -1, self.types.count > row{
+     return self.types[row]
+     }
+     return nil
+     }
+     
+     
+     var selectedModel : Model!{
+     let row = self.tfModel.selectedRow
+     if row != -1, self.selectedType.models.count > row{
+     return self.selectedType.models[row]
+     }
+     return nil
+     }
+     
+     
+     func setupLocations(){
+     let list = self.locations.map({"\($0.city_name!) - \($0.location_name!)"})
+     tfLocation.itemList = list
+     tfLocation.itemListUI = list
+     tfLocation.dropDownMode = .textPicker
+     tfLocation.isOptionalDropDown = true
+     tfLocation.delegate = self
+     }
+     
+     
+     func setupModels(){
+     let list = self.selectedType.models.map({"\($0.name!)"})
+     tfModel.itemList = list
+     tfModel.itemListUI = list
+     tfModel.dropDownMode = .textPicker
+     tfModel.isOptionalDropDown = true
+     tfModel.delegate = self
+     }
+     
+     func setupTypes(){
+     types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
+     
+     let list = self.types.map({"\($0.name!)"})
+     tfType.itemList = list
+     tfType.itemListUI = list
+     tfType.dropDownMode = .textPicker
+     tfType.isOptionalDropDown = true
+     tfType.delegate = self
+     }
+     */
+    
+}
 
+extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        switch pickerView.tag {
+        case 1: // Locations
+            return self.locations.count
+        case 2,13,15: // Types
+            return self.types.count
+        case 3: // Models
+            if self.selectedType != nil{
+                return self.selectedType.models.count
+            }else{
+                return 0
+            }
+        case 4: // Years
+            return self.self.years.count
+        case 5: // Transmission
+            return self.transmission.count
+        case 6,14,16,17,18,19,20: // Status
+            return self.status.count
+        case 21:
+            return self.schedules.count
+        case 22:
+            return self.educations.count
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        switch pickerView.tag {
+        case 1: // Locations
+            let loc = self.locations[row]
+            var name = ""
+            name += loc.city_name != nil ? loc.city_name! + " - " : ""
+            name += loc.location_name != nil ? loc.location_name! : ""
+            return name
+        case 2,13,15: // Types
+            return self.types[row].name
+        case 3: // Models
+            return self.self.selectedType.models[row].name
+        case 4: // Years
+            return self.self.years[row]
+        case 5: // Transmission
+            return self.transmission[row]
+        case 6,14,16,17,18,19,20: // Status
+            return self.status[row]
+        case 21:
+            return self.schedules[row].name
+        case 22:
+            return self.educations[row].name
+
+        default:
+            return ""
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch pickerView.tag {
+        case 1: // Locations
+            self.selectedLocation = self.locations[row]
+        case 2,13,15: // Types
+            self.selectedType = self.types[row]
+        case 3: // Models
+            if let type = self.selectedType, selectedType.models.count > row{
+                self.selectedModel = type.models[row]
+            }
+        case 4: // Years
+            self.selectedYear = row
+        case 5: // Transmission
+            self.selectedTransmission = row
+        case 6,14,16,17,18,19,20: // Status
+            self.selectedStatus = row
+        case 21:
+            self.selectedSchedule = self.schedules[row]
+        case 22:
+            self.selectedEducation = self.educations[row]
+        default:
+            break
+        }
+    }
+    
+    
     
 }
