@@ -161,6 +161,28 @@
                 android:backgroundTint="@color/white"
                 />
 
+            <CheckBox
+                android:id="@+id/checkboxAutomatic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:text="@string/labelAutomatic"
+                android:textColor="@color/white"
+                />
+
+            <!-- -->
+
+            <CheckBox
+                android:id="@+id/checkboxSecondhand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:text="@string/labelSecondhand"
+                android:textColor="@color/white"
+                />
+
             <EditText
                 android:id="@+id/editKilo"
                 android:layout_width="match_parent"
@@ -171,16 +193,6 @@
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
-                />
-
-            <CheckBox
-                android:id="@+id/checkboxAutomatic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                android:text="@string/labelAutomatic"
-                android:textColor="@color/white"
                 />
 
             <!-- -->
@@ -314,17 +326,6 @@
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
-                />
-
-            <!-- -->
-
-            <CheckBox
-                android:id="@+id/checkboxSecondhand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="@string/labelSecondhand"
-                android:textColor="@color/white"
                 />
         </LinearLayout>
     </ScrollView>

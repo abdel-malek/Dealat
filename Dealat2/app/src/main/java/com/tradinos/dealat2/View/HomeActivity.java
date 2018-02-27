@@ -31,7 +31,7 @@ import java.util.TimerTask;
 public class HomeActivity extends DrawerActivity {
 
     private int currentPage =0;
-    private List<Category> mainCategories;
+    private List<Category> mainCategories = new ArrayList<>();
 
     //views
     private ViewPager commercialPager;
@@ -42,9 +42,6 @@ public class HomeActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_home);
         super.onCreate(savedInstanceState);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(commercialPager);
     }
 
     @Override
@@ -86,6 +83,17 @@ public class HomeActivity extends DrawerActivity {
                 mainCategories = ((MyApplication)getApplication()).getSubCatsById("0");
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+
+                        intent.putExtra("category", mainCategories.get(i));
+                        intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
+                        startActivity(intent);
+                    }
+                });
+
               //  HideProgressDialog();
 
                 CommercialAdsController.getInstance(mController).getCommercialAds("0", new SuccessCallback<List<CommercialAd>>() {
@@ -95,6 +103,9 @@ public class HomeActivity extends DrawerActivity {
 
                         CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
                         commercialPager.setAdapter(commercialAdapter);
+
+                        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+                        tabLayout.setupWithViewPager(commercialPager);
 
                         final Handler handler = new Handler();
                         final Runnable update = new Runnable() {
@@ -158,16 +169,7 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void assignActions() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
-                intent.putExtra("category", mainCategories.get(i));
-                intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

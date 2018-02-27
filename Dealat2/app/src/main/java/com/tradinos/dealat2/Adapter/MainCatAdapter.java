@@ -13,6 +13,7 @@ import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.View.MasterActivity;
 
 import java.util.List;
 
@@ -63,53 +64,7 @@ public class MainCatAdapter extends BaseAdapter {
         else
             textView.setGravity(View.TEXT_ALIGNMENT_VIEW_START);
 
-
-        int defaultDrawable = 0;
-
-        switch (getItem(i).getTemplateId()) {
-            case Category.VEHICLES:
-                defaultDrawable = R.drawable.car_copy;
-                break;
-
-            case Category.PROPERTIES:
-                defaultDrawable = R.drawable.home;
-                break;
-
-            case Category.MOBILES:
-                defaultDrawable = R.drawable.smartphone_call;
-                break;
-
-            case Category.ELECTRONICS:
-                defaultDrawable = R.drawable.photo_camera;
-                break;
-
-            case Category.FASHION:
-                defaultDrawable = R.drawable.female_black_dress;
-                break;
-
-            case Category.KIDS:
-                defaultDrawable = R.drawable.teddy_bear;
-                break;
-
-            case Category.SPORTS:
-                defaultDrawable = R.drawable.dumbbell;
-                break;
-
-            case Category.JOBS:
-                defaultDrawable = R.drawable.old_fashion_briefcase;
-                break;
-
-            case Category.INDUSTRIES:
-                defaultDrawable = R.drawable.industries;
-                break;
-
-            case Category.SERVICES:
-                defaultDrawable = R.drawable.services;
-                break;
-
-            default:
-                defaultDrawable = R.drawable.others;
-        }
+        int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(getItem(i).getTemplateId());
 
         ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
         mImageLoader.get(MyApplication.getBaseUrlForImages() + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,

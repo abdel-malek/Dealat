@@ -75,6 +75,7 @@
     <string name="buttonMarkAsMain">Mark as main</string>
     <string name="buttonDelete">Delete</string>
     <string name="buttonBack">Back</string>
+    <string name="buttonFilter">Filter</string>
 
     <string name="title_activity_drawer">DrawerActivity</string>
 

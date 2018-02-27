@@ -130,6 +130,7 @@ public class SelectImagesActivity extends MasterActivity {
                 break;
 
             case R.id.buttonFalse: //cancel
+                setResult(RESULT_CANCELED);
                 finish();
                 break;
         }
@@ -138,8 +139,10 @@ public class SelectImagesActivity extends MasterActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SUBMIT)
+            if (requestCode == REQUEST_SUBMIT) {
+                setResult(RESULT_OK);
                 finish();
+            }
             else if (requestCode == REQUEST_CAMERA) {
 
                 adapter.addCapturedImage(new Image(mCurrentPhotoPath));

@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -14,14 +16,19 @@ import java.io.IOException;
 
 public class ImageDecoder {
 
-    private final int factor = 150;
+    private final int smallFactor = 150, largeFactor = 300;
 
-    public Bitmap decodeFile(String path){
-        return BitmapFactory.decodeFile(path);
+    public Bitmap decodeLargeImage(String path) {
+        //  return BitmapFactory.decodeFile(path);
+        return decodeImage(path, this.largeFactor);
     }
 
-    public Bitmap decodeSampledBitmapFromUri(String path) {
+    public Bitmap decodeSmallImage(String path) {
 
+        return decodeImage(path, this.smallFactor);
+    }
+
+    public Bitmap decodeImage(String path, int factor) {
         Bitmap bm = null;
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -29,7 +36,7 @@ public class ImageDecoder {
         BitmapFactory.decodeFile(path, options);
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options);
+        options.inSampleSize = calculateInSampleSize(options, factor);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
@@ -38,7 +45,8 @@ public class ImageDecoder {
         return bm;
     }
 
-    public int calculateInSampleSize(BitmapFactory.Options options) {
+
+    public int calculateInSampleSize(BitmapFactory.Options options, int factor) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -46,16 +54,15 @@ public class ImageDecoder {
 
         if (height > factor || width > factor) {
             if (width > height) {
-                inSampleSize = Math.round((float)height / (float)factor);
+                inSampleSize = Math.round((float) height / (float) factor);
             } else {
-                inSampleSize = Math.round((float)width / (float)factor);
+                inSampleSize = Math.round((float) width / (float) factor);
             }
         }
         return inSampleSize;
     }
-
-  /*  File ConvertBitmapToFile(String path) throws IOException {
-
+/*
+    public File ConvertBitmapToFile(String path) throws IOException {
 
         File f = new File(path);
         if (f.exists()) {
@@ -69,8 +76,10 @@ public class ImageDecoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bmpStream);
-       // byte[] bmpPicByteArray = bmpStream.toByteArray();
+
+        Bitmap bitmap = decodeLargeImage(path);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bmpStream);
+        byte[] bmpPicByteArray = bmpStream.toByteArray();
 
         FileOutputStream fo;
 
@@ -84,6 +93,22 @@ public class ImageDecoder {
         }
 
         return f;
+    }
 
+    public Bitmap codec(String path){
+        File file = new File(path);
+
+        FileInputStream fileInputStream = null;
+        try {
+             fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap original = BitmapFactory.decodeStream(fileInputStream);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        original.compress(Bitmap.CompressFormat.JPEG, 3, os);
+        byte[] array = os.toByteArray();
+        return BitmapFactory.decodeByteArray(array, 0, array.length);
     }*/
 }

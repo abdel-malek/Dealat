@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -68,6 +69,8 @@ public class ItemInfoActivity extends MasterActivity {
     private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray();
 
     private HorizontalAdapter adapter;
+
+    private Bitmap popupBitmap;
 
     //views
     private LinearLayout linearLayout;
@@ -356,7 +359,8 @@ public class ItemInfoActivity extends MasterActivity {
                         (ViewGroup) findViewById(R.id.popupLayout));
 
                 ImageView imageView = layout.findViewById(R.id.imageView);
-                imageView.setImageBitmap(new ImageDecoder().decodeFile(clickedImage.getPath()));
+                popupBitmap = new ImageDecoder().decodeLargeImage(clickedImage.getPath());
+                imageView.setImageBitmap(popupBitmap);
 
                 popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
 
@@ -364,7 +368,11 @@ public class ItemInfoActivity extends MasterActivity {
                     @Override
                     public void onClick(View view) {
                         adapter.replaceMain(position);
+
+                        popupBitmap.recycle();
                         popupWindow.dismiss();
+                        popupWindow = null;
+                        popupBitmap = null;
                     }
                 });
 
@@ -373,7 +381,11 @@ public class ItemInfoActivity extends MasterActivity {
                     public void onClick(View view) {
                         adapter.deleteImage(position);
                         deletedImgsJsonArray.put(clickedImage.getServerPath());
+
+                        popupBitmap.recycle();
                         popupWindow.dismiss();
+                        popupWindow = null;
+                        popupBitmap = null;
                     }
                 });
 
@@ -605,8 +617,12 @@ public class ItemInfoActivity extends MasterActivity {
     @Override
     public void onBackPressed() {
 
-        if (popupWindow != null && popupWindow.isShowing())
+        if (popupWindow != null && popupWindow.isShowing()){
+            popupBitmap.recycle();
             popupWindow.dismiss();
+            popupWindow = null;
+            popupBitmap = null;
+        }
         else {
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

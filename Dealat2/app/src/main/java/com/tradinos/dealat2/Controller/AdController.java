@@ -10,7 +10,9 @@ import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
+import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.TemplatesData;
+import com.tradinos.dealat2.Parser.Parser.Ad.AdListParser;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
 import com.tradinos.dealat2.Parser.Parser.TemplatesDataParser;
 
@@ -18,6 +20,7 @@ import org.json.JSONArray;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,6 +72,15 @@ public class AdController extends ParentController {
     public void getTemplatesData(SuccessCallback<TemplatesData> successCallback){
         String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());
+
+        request.Call();
+    }
+
+    public void getCategoryAds(String categoryId, SuccessCallback<List<Ad>> successCallback){
+        String url = new URLBuilder(APIModel.ads, "get_ads_by_main_category").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("category_id", categoryId);
 
         request.Call();
     }

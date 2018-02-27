@@ -54,10 +54,10 @@ public class AdAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
             view = this.inflater.inflate(resourceLayout, null);
-            view.setTag(new ViewHolder(view));
+           // view.setTag(new ViewHolder(view));
         }
 
-        initializeView(getItem(i), (ViewHolder) view.getTag());
+        //initializeView(getItem(i), (ViewHolder) view.getTag());
 
         return view;
     }

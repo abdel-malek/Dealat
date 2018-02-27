@@ -125,7 +125,8 @@ public class SubCategoriesActivity extends MasterActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SELECT_IMG)
-            finish();
+            if (resultCode == RESULT_OK)
+                finish();
     }
 
     @Override

@@ -112,7 +112,7 @@ public class ImageAdapter extends BaseAdapter {
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            return new ImageDecoder().decodeSampledBitmapFromUri(params[0]);
+            return new ImageDecoder().decodeSmallImage(params[0]);
         }
 
         @Override

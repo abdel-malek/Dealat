@@ -24,6 +24,7 @@ import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
+import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.CustomProgressDialog;
 
@@ -274,6 +275,44 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+    public int getTemplateDefaultImage(int template){
+
+        switch (template) {
+            case Category.VEHICLES:
+                 return R.drawable.car_copy;
+
+            case Category.PROPERTIES:
+                return R.drawable.home;
+
+            case Category.MOBILES:
+                return R.drawable.smartphone_call;
+
+            case Category.ELECTRONICS:
+                return R.drawable.photo_camera;
+
+            case Category.FASHION:
+                return R.drawable.female_black_dress;
+
+            case Category.KIDS:
+                return R.drawable.teddy_bear;
+
+            case Category.SPORTS:
+                return R.drawable.dumbbell;
+
+            case Category.JOBS:
+                return R.drawable.old_fashion_briefcase;
+
+            case Category.INDUSTRIES:
+                return R.drawable.industries;
+
+            case Category.SERVICES:
+                return R.drawable.services;
+
+            default:
+                return R.drawable.others;
+        }
     }
 
     protected String formattedNumber(int number){

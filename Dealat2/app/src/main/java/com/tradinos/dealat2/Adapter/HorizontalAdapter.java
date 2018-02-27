@@ -1,14 +1,10 @@
 package com.tradinos.dealat2.Adapter;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -58,7 +54,6 @@ public class HorizontalAdapter {
             if (i == 0)
                 images.get(0).markAsMain();
 
-
             view = this.inflater.inflate(R.layout.row_image_horizontal, null);
             // view.setLayoutParams(new FrameLayout.LayoutParams(260, 260));
             view.setPadding(4, 4, 4, 4);
@@ -66,7 +61,7 @@ public class HorizontalAdapter {
 
             imageView = view.findViewById(R.id.imageView);
 
-            imageView.setImageBitmap(new ImageDecoder().decodeSampledBitmapFromUri(images.get(i).getPath()));
+            imageView.setImageBitmap(new ImageDecoder().decodeSmallImage(images.get(i).getPath()));
 
             this.linearLayout.addView(view);
             this.views.add(view);
@@ -101,6 +96,11 @@ public class HorizontalAdapter {
         images.remove(position);
 
         linearLayout.removeView(removedView);
+
+        if (position == 0){ // if first and main image is deleted
+            if (images.size() >0) // mark the current first image
+                images.get(0).markAsMain();
+        }
 
         enumerate();
     }
