@@ -17,6 +17,12 @@ class CommericalCell: UICollectionViewCell {
     var newAddVC : NewAddVC!
     
     
+    var commercial : Commercial!{
+        didSet{
+            Provider.sd_setImage(self.img, urlString: commercial.image)
+        }
+    }
+    
     var imageName : String!{
         didSet{
             self.img.image = UIImage.init(named: imageName)

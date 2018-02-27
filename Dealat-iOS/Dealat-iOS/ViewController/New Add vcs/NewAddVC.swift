@@ -26,7 +26,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
     
-    
     @IBOutlet weak var tfTitle : SkyFloatingLabelTextField!
     @IBOutlet weak var tfLocation : SkyFloatingLabelTextField!
     @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
@@ -77,7 +76,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
 
     
     
-    
     var locations = [Location]()
     var typesBase = [Type]()
     var types = [Type]()
@@ -105,6 +103,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedCategory : Cat!{
         didSet{
             if self.tfCategory != nil{
+                print("TEST TEST")
+                print("\(selectedCategory.category_name)")
+                let nn = Cat.getName(selectedCategory.category_id.intValue)
+                print(nn)
+                print("TEST TEST")
+
                 self.tfCategory.text = selectedCategory.category_name
                 self.setupTypes()
                 self.refreshData()
@@ -425,10 +429,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return (indexPath.row == 0 || indexPath.row == 6) ? UITableViewAutomaticDimension : 50
+            return (indexPath.row == 0 || indexPath.row == 6) ? UITableViewAutomaticDimension : 54
         default:
             if self.selectedCategory != nil{
-                return (self.selectedCategory.tamplate_id.intValue == indexPath.section) ? 50 : 0
+                return (self.selectedCategory.tamplate_id.intValue == indexPath.section) ? 54 : 0
             }else{
                 return 0
             }

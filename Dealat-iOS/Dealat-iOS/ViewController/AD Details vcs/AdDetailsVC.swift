@@ -19,6 +19,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     //General
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var vvPrice : UIView!
+    @IBOutlet weak var numberLbl : UILabel!
     @IBOutlet weak var nameLbl : UILabel!
     @IBOutlet weak var priceLbl : UILabel!
     @IBOutlet weak var viewsLbl : UILabel!
@@ -104,13 +105,22 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     func refreshData(){
         self.title = ad.title
         Provider.sd_setImage(self.img, urlString: ad.main_image)
+        
+        var number = "#"
+        let n = 5 - self.ad.ad_id.stringValue.count
+        for _ in 0..<n{
+            number += "0"
+        }
+        number += self.ad.ad_id.stringValue
+        self.numberLbl.text = number
+        
         self.nameLbl.text = ad.title
         if ad.price.doubleValue == 0{
             self.priceLbl.text = "Free".localized
         }else{
             self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
         }
-        self.viewsLbl.text = ad.show_period.stringValue
+        self.viewsLbl.text = nil
         if ad.publish_date != nil{
             let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
             self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
@@ -239,6 +249,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         case 0:
             let collectionVHeight : CGFloat = (self.ad.images.isEmpty) ? 40 : 110
             return (indexPath.row == 0) ? tableView.frame.height / 2 + collectionVHeight : UITableViewAutomaticDimension
+        case 11:
+            return UITableViewAutomaticDimension
         default:
             return (self.ad.tamplate_id.intValue == indexPath.section) ? UITableViewAutomaticDimension : 0
         }

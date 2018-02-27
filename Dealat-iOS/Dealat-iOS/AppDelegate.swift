@@ -31,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //        UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
         
-        
-        
                 
         Provider.isArabic = AppDelegate.isArabic()
         

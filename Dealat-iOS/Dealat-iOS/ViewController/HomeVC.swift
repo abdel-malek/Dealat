@@ -19,14 +19,15 @@ class HomeVC: BaseVC {
     var x1 = -1
     var timer : Timer = Timer()
     
-    var commericals : [String]{
-        var ar = [String]()
-        ar.append("ad_image_39")
-        ar.append("ad_image_40")
-        ar.append("ad_image_42")
-        ar.append("ad_image_43")
-        return ar
-    }
+    //    var commericals : [String]{
+    //        var ar = [String]()
+    //        ar.append("ad_image_39")
+    //        ar.append("ad_image_40")
+    //        ar.append("ad_image_42")
+    //        ar.append("ad_image_43")
+    //        return ar
+    //    }
+    var commericals : [Commercial] = [Commercial]()
     
     var cats  : [Cat] = [Cat]()
     /*{
@@ -51,8 +52,16 @@ class HomeVC: BaseVC {
      return [c1!,c2!,c3!,c4!,c5!]
      }*/
     
+    var isChangeLanguage : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if isChangeLanguage{
+            let alert = UIAlertController.init(title: "ChangeLangTitle2".localized, message: "ChangeLangMessage2".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
         getData()
         setupSideMenuNavController()
@@ -68,16 +77,38 @@ class HomeVC: BaseVC {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        pageControl.numberOfPages = self.commericals.count
-        self.timer.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
-        self.timer.fire()
-        
-        
         self.setupSearchBar()
     }
     
     override func getRefreshing() {
+        
+        Communication.shared.get_commercial_ads(0) { (res) in
+
+//            while(res == nil){
+//                self.getRefreshing()
+//                return
+//            }
+
+            if let coms = res{
+                self.hideLoading()
+                self.commericals = coms
+                
+                self.pageControl.numberOfPages = self.commericals.count
+                self.timer.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                self.timer.fire()
+                self.collectionView.reloadData()
+                
+                if coms.isEmpty{
+                    let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                    im.contentMode = .scaleAspectFit
+                    self.collectionView.backgroundView = im
+                }
+            }
+            
+        }
+        
+        
         Communication.shared.get_all { (res) in
             self.hideLoading()
             self.cats = res
@@ -93,12 +124,10 @@ class HomeVC: BaseVC {
     
     @IBAction func sellAction(){
         //TODO
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
-//        self.navigationController?.pushViewController(vc, animated: true)
+        //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+        //        self.navigationController?.pushViewController(vc, animated: true)
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddVC") as! NewAddVC
         self.navigationController?.pushViewController(vc, animated: true)
-
-        
         
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
         //        vc.homeVC = self
@@ -123,8 +152,12 @@ class HomeVC: BaseVC {
             x1 = 0;
         }
         
-        let u = x1 % cnt
+        if cnt == 0{
+            return 
+        }
         
+        
+        let u = x1 % cnt
         
         self.collectionView.setContentOffset(CGPoint(x: self.collectionView.frame.size.width * CGFloat(u), y: 0) , animated: true)
     }
@@ -224,17 +257,26 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource{
 extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return self.commericals.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
-        cell.imageName = self.commericals[indexPath.row]
+        //        cell.imageName = self.commericals[indexPath.row]
+        cell.commercial = self.commericals[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize.init(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let urlString = self.commericals[indexPath.row].ad_url, let url = URL.init(string: urlString){
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     
     //Delegate With ScrollView (scroll item photos)
@@ -251,7 +293,6 @@ extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollec
             }
         }
     }
-    
-    
-    
 }
+
+

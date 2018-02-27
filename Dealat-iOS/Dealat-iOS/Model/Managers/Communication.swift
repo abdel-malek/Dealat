@@ -387,7 +387,7 @@ class Communication: BaseManager {
     
     
     
-    func get_commercial_ads(_ category_id : Int, callback : @escaping ([AD]) -> Void){
+    func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]!) -> Void){
         let url = URL(string: baseURL + get_commercial_adsURL)!
         let params : [String : Any] = ["category_id" : category_id]
         
@@ -400,21 +400,25 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var res = [AD]()
+                    var res = [Commercial]()
                     
                     for i in value.data.arrayValue{
-                        let a = AD(JSON: i.dictionaryObject!)!
+                        let a = Commercial(JSON: i.dictionaryObject!)!
                         res.append(a)
                     }
+                    
+                    res = res.filter({$0.position.intValue == 3})
                     
                     callback(res)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                    callback(nil)
                 }
                 break
             case .failure(let error):
                 notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                callback(nil)
                 break
             }
         }

@@ -27,8 +27,22 @@ extension String{
     }
     
     var localized : String{
-        return NSLocalizedString(self, comment: "")
+        
+        if let arr =  UserDefaults.standard.value(forKey: "AppleLanguages") as? [String]{
+            if let lang = arr.first{
+                let path  = Bundle.main.path(forResource: lang, ofType: "lproj")
+                let bundle = Bundle.init(path: path!)
+                let s = bundle!.localizedString(forKey: self, value: nil, table: nil)
+                return s
+            }
+        }
+
+        return "TEST";
+//        return NSLocalizedString(self, comment: "")
     }
+    
+    
+    
     
     var localized_currancy : String{
         return String(format: NSLocalizedString("%@ Price", comment: ""), "\(self)")

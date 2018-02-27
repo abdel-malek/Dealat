@@ -37,7 +37,7 @@ class AdCell : UICollectionViewCell{
                 self.priceLbl.isHidden = false
             }
             
-            self.viewsLbl.text = ad.show_period.stringValue
+            self.viewsLbl.text = " "//ad.show_period.stringValue
             if ad.publish_date != nil{
                 let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
                 self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)

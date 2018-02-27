@@ -33,14 +33,17 @@ class AdsListVC: BaseVC {
 //    var selectedLocation : Location!
 
     
-    var commericals : [String]{
-        var ar = [String]()
-        ar.append("ad_image_39")
-        ar.append("ad_image_40")
-        ar.append("ad_image_42")
-        ar.append("ad_image_43")
-        return ar
-    }
+//    var commericals : [String]{
+//        var ar = [String]()
+//        ar.append("ad_image_39")
+//        ar.append("ad_image_40")
+//        ar.append("ad_image_42")
+//        ar.append("ad_image_43")
+//        return ar
+//    }
+    
+    var commericals : [Commercial] = [Commercial]()
+
     
     var cat = Cat()
     var ads : [AD] = [AD]()
@@ -52,6 +55,35 @@ class AdsListVC: BaseVC {
     }
     
     override func getRefreshing() {
+        
+        
+        var cat_id = 0
+        if (self.type == 0){
+            cat_id = self.cat.category_id.intValue
+        }else if Provider.selectedCategory != nil{
+            cat_id = Provider.selectedCategory.category_id.intValue
+        }
+        
+        Communication.shared.get_commercial_ads(cat_id) { (res) in
+            if let coms = res{
+                self.hideLoading()
+                self.commericals = coms
+                
+                self.pageControl.numberOfPages = self.commericals.count
+                self.timer.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                self.timer.fire()
+                self.collectionView.reloadData()
+                
+                if coms.isEmpty{
+                    let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                    im.contentMode = .scaleAspectFit
+                    self.collectionView.backgroundView = im
+                }
+
+            }
+        }
+
         if self.type == 0{
             Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
                 self.hideLoading()
@@ -77,12 +109,6 @@ class AdsListVC: BaseVC {
         collectionView.delegate = self
         collectionView2.dataSource = self
         collectionView2.delegate = self
-        
-        //PageControl
-        pageControl.numberOfPages = self.commericals.count
-        self.timer.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
-        self.timer.fire()
         
         // Search bar
         self.setupSearchBar()
@@ -123,6 +149,10 @@ class AdsListVC: BaseVC {
         }
         else if (cnt == 1 || x1 > cnt - 1) {
             x1 = 0;
+        }
+        
+        if cnt == 0 {
+            return
         }
         
         let u = x1 % cnt
@@ -167,7 +197,8 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
         
         if collectionView == self.collectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
-            cell.imageName = self.commericals[indexPath.row]
+//            cell.imageName = self.commericals[indexPath.row]
+            cell.commercial = self.commericals[indexPath.row]
             return cell
         }else{
             
@@ -179,8 +210,19 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
         }
     }
     
+
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.collectionView2{
+        
+        if collectionView == self.collectionView{
+            if let urlString = self.commericals[indexPath.row].ad_url, let url = URL.init(string: urlString){
+                if UIApplication.shared.canOpenURL(url){
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        
+        else if collectionView == self.collectionView2{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
             vc.tamplateId = self.ads[indexPath.row].tamplate_id.intValue
             vc.ad = self.ads[indexPath.row]

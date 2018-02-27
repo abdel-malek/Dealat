@@ -6,7 +6,7 @@
   Copyright © 2018 Tradinos UG. All rights reserved.
 */
 
-
+/*
 //Register
 "Register" = "Register";
 "EmailOrPhone" = "Email or Phone number";
@@ -81,4 +81,4 @@
 "EN" = "English";
 "ChangeLangTitle" = "Select App Language";
 "ChangeLangMessage" = "You need to restart the app to apply the new language";
-
+*/

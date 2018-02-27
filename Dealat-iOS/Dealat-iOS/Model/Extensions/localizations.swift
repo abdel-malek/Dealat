@@ -14,24 +14,28 @@ extension UITextField {
     @IBInspectable var localizedPlaceholder: String! {
         get { return self.placeholder }
         set {
-            self.placeholder = NSLocalizedString(newValue, comment: "")
+            self.self.placeholder = newValue.localized
+//            self.placeholder = NSLocalizedString(newValue, comment: "")
         }
     }
     
     @IBInspectable var localizedText: String! {
         get { return self.text }
         set {
-            self.text = NSLocalizedString(newValue, comment: "")
+            self.text = newValue.localized
+//            self.text = NSLocalizedString(newValue, comment: "")
         }
     }
 }
+
 
 extension UITextView {
     
     @IBInspectable var localizedText: String! {
         get { return self.text }
         set {
-            self.text = NSLocalizedString(newValue, comment: "")
+            self.text = newValue.localized
+//            self.text = NSLocalizedString(newValue, comment: "")
         }
     }
 }
@@ -41,7 +45,8 @@ extension UIBarItem {
     @IBInspectable var localizedTitle: String! {
         get { return self.title }
         set {
-            self.title = NSLocalizedString(newValue, comment: "")
+            self.title = newValue.localized
+//            self.title = NSLocalizedString(newValue, comment: "")
         }
     }
 }
@@ -51,7 +56,8 @@ extension UILabel {
     @IBInspectable var localizedText: String! {
         get { return self.text }
         set {
-            self.text = NSLocalizedString(newValue, comment: "")
+            self.text = newValue.localized
+//            self.text = NSLocalizedString(newValue, comment: "")
         }
     }
 }
@@ -61,7 +67,8 @@ extension UINavigationItem {
     @IBInspectable var localizedTitle: String! {
         get { return self.title }
         set {
-            self.title = NSLocalizedString(newValue, comment: "")
+            self.title = newValue.localized
+//            self.title = NSLocalizedString(newValue, comment: "")
         }
     }
 }
@@ -71,7 +78,8 @@ extension UIButton {
     @IBInspectable var localizedTitle: String! {
         get { return self.titleLabel?.text }
         set {
-            self.setTitle(NSLocalizedString(newValue, comment: ""), for: .normal)
+            self.setTitle(newValue.localized, for: .normal)
+//            self.setTitle(NSLocalizedString(newValue, comment: ""), for: .normal)
         }
     }
     
@@ -82,14 +90,16 @@ extension UISearchBar {
     @IBInspectable var localizedPrompt: String! {
         get { return self.prompt }
         set {
-            self.prompt = NSLocalizedString(newValue, comment: "")
+            self.prompt = newValue.localized
+//            self.prompt = NSLocalizedString(newValue, comment: "")
         }
     }
     
     @IBInspectable var localizedPlaceholder: String! {
         get { return self.placeholder }
         set {
-            self.placeholder = NSLocalizedString(newValue, comment: "")
+            self.placeholder = newValue.localized
+//            self.placeholder = NSLocalizedString(newValue, comment: "")
         }
     }
 }
@@ -100,7 +110,8 @@ extension UISegmentedControl {
         get { return true }
         set {
             for index in 0..<numberOfSegments {
-                let title = NSLocalizedString(titleForSegment(at: index)!, comment: "")
+                let title = titleForSegment(at: index)!.localized
+//                let title = NSLocalizedString(titleForSegment(at: index)!, comment: "")
                 self.setTitle(title, forSegmentAt: index)
             }
         }

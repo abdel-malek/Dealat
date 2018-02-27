@@ -16,7 +16,6 @@ class HomeCell: BaseCell {
     
     var cat : Cat!{
         didSet{
-            
             Provider.sd_setImage(img, urlString: cat.mobile_image)
             self.lbl.text = cat.category_name
 

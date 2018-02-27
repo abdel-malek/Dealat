@@ -139,6 +139,7 @@
 		823547C32029B131003478F1 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		823547C52029C27E003478F1 /* pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic.png; sourceTree = "<group>"; };
 		823547C72029C3D9003478F1 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
+		823E478220455ABA00DF280C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		824663D72030316000F303EA /* UIViewX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewX.swift; sourceTree = "<group>"; };
 		824663D9203031E000F303EA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		824663DB203084CE00F303EA /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
@@ -801,6 +802,7 @@
 			children = (
 				82893DE520332389009151FC /* Base */,
 				82893DE62033238F009151FC /* ar */,
+				823E478220455ABA00DF280C /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

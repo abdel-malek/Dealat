@@ -15,7 +15,7 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
     
     var hud = JGProgressHUD.init(style: JGProgressHUDStyle.extraLight)
     var ref = UIRefreshControl()
-    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 20))
+    var searchBar:UISearchBar = UISearchBar(frame: CGRect.init(x : 0,y : 0,width : 200,height : 12))
 
     
     override func viewDidLoad() {
@@ -58,7 +58,6 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         notific.addObserver(self, selector: #selector(self.connectionErrorNotificationReceived(_:)), name: _ConnectionErrorNotification.not, object: nil)
         
         notific.addObserver(self, selector: #selector(self.RequestErrorNotificationRecived(_:)), name: _RequestErrorNotificationReceived.not, object: nil)
-        
     }
     
     func unregisterReceivers()
@@ -133,11 +132,27 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
     }
     
     func setupSearchBar(){
+//        if #available(iOS 11.0, *) {
+//            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+//        }
+//        self.extendedLayoutIncludesOpaqueBars = true
+
         self.searchBar.placeholder = "Search".localized
         self.searchBar.change(Theme.Font.Calibri)
-        self.searchBar.sizeToFit()
-        self.navigationItem.titleView = searchBar
+        self.searchBar.tintColor = Theme.Color.red
         self.searchBar.delegate = self
+//        self.navigationItem.titleView = searchBar
+//        self.searchBar.sizeToFit()
+
+        
+        if #available(iOS 11.0, *) {
+            let searchBarContainer = SearchBarContainerView(customSearchBar: self.searchBar)
+            searchBarContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 34)
+            navigationItem.titleView = searchBarContainer
+        }else{
+            navigationItem.titleView = self.searchBar
+        }
+
     }
     
 //    override var preferredStatusBarStyle: UIStatusBarStyle{
@@ -199,4 +214,37 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
     
     
 }
+
+
+class SearchBarContainerView: UIView {
+    
+    let searchBar: UISearchBar
+    
+    init(customSearchBar: UISearchBar) {
+        searchBar = customSearchBar
+        super.init(frame: CGRect.zero)
+        
+        addSubview(searchBar)
+        
+//        searchBar.placeholder = "Search.Place.Holder".localized
+    }
+    
+    override convenience init(frame: CGRect) {
+        self.init(customSearchBar: UISearchBar())
+        self.frame = frame
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        searchBar.frame = bounds
+        
+    }
+}
+
+
 
