@@ -36,11 +36,11 @@ class Ads_control extends REST_Controller {
     {
         $this->load->model('data_sources/categories');
      // $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
-		$this -> form_validation -> set_rules('category_id', 'Category id', 'required');
-		$this -> form_validation -> set_rules('location_id', 'Location id', 'required');
-		$this -> form_validation -> set_rules('show_period', 'Show Period', 'required');
-		$this -> form_validation -> set_rules('price', 'Price', 'required');
-		$this -> form_validation -> set_rules('title', 'Title', 'required');
+		$this -> form_validation -> set_rules('category_id', 'lang:category_id', 'required');
+		$this -> form_validation -> set_rules('location_id', 'lang:location_id', 'required');
+		$this -> form_validation -> set_rules('show_period', 'lang:show_period', 'required');
+		$this -> form_validation -> set_rules('price', 'lang:price', 'required');
+		$this -> form_validation -> set_rules('title', 'lang:title', 'required');
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
@@ -54,6 +54,7 @@ class Ads_control extends REST_Controller {
 		     'description' => $this->input->post('description'),
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
+		     'is_negotiable' => $this->input->post('is_negotiable'),
 		     'status' => 2    // temp
 		   );
 		   $main_image = null;
@@ -68,9 +69,9 @@ class Ads_control extends REST_Controller {
 		   $tamplate_id = $category_info->tamplate_id;
 		   $save_result = $this->ads->create_an_ad($basic_data, $main_image , $ads_images_paths , $tamplate_id);
 		   if($save_result != false){
-		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => 'Successfully created'));
+		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => $this->lang->line('sucess')));
 		   }else{
-		   	 $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
+		   	 $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		   }
 		}
     }
@@ -82,9 +83,9 @@ class Ads_control extends REST_Controller {
 	      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
 	      if (isset($image['image'])) {
 	          $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
-	          $this -> response(array('status' => true, 'data' => $image_path, 'message' => 'Successfully Uploaded'));
+	          $this -> response(array('status' => true, 'data' => $image_path, 'message' => $this->lang->line('sucess')));
 	      }else{
-	           $this -> response(array('status' => false, 'data' => '', 'message' => 'Some thing went wrong'));
+	           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 	      }
 	  }
 	
@@ -97,9 +98,9 @@ class Ads_control extends REST_Controller {
 		$images_array = json_decode($images, true);
 	    $deleted = $this->ads->delete_images($images_array);
 		if($deleted){
-		   $this -> response(array('status' => true, 'data' => '', 'message' => 'Successfully deleted'));	
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
 		}else{
-		   $this -> response(array('status' => true, 'data' => '', 'message' => 'Some thing went wrong'));
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
 	}
 
@@ -163,7 +164,7 @@ class Ads_control extends REST_Controller {
 			}else{
 			   throw Parent_Exception('No Such action'); 	
 			}
-		  $this -> response(array('status' => true, 'data' => '', 'message' => 'sucess'));
+		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
 	}
 

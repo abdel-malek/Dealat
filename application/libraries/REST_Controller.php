@@ -1186,14 +1186,21 @@ abstract class REST_Controller extends CI_Controller {
             log_message('debug', 'Library Auth: failure, empty auth_library_function');
             return false;
         }
+		$user_type;
+		$header = $this->input->request_headers();
+	    if (isset($header['Api-call']) && $header['Api-call'] == 1) {
+            $user_type = ACCOUNT_TYPE::MOBILE;
+        }
+        else{
+            $user_type = ACCOUNT_TYPE::WEB;
+        }
         $this->load->model($auth_library_class);
-        $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password);
+	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type);	
         $this->data['user'] = $this->current_user;
 		if ($this->current_user) {
             $this->load->model('data_sources/user_permission');
             $this->permissions = $this->user_permission->get_user_permissions_ids($this->current_user->user_id);
         }
-
         return $this->current_user;
     }
 
@@ -1257,7 +1264,6 @@ abstract class REST_Controller extends CI_Controller {
             $username = $this->input->server('PHP_AUTH_USER');
             $password = $this->input->server('PHP_AUTH_PW');
         }
-
         // most other servers
         elseif ($this->input->server('HTTP_AUTHENTICATION')) {
             if (strpos(strtolower($this->input->server('HTTP_AUTHENTICATION')), 'basic') === 0) {
@@ -1357,7 +1363,7 @@ abstract class REST_Controller extends CI_Controller {
 
         if (!in_array($this->input->ip_address(), $whitelist)) {
             if ($this->response->format == "html")
-                redirect(site_url('users_control_web/index'));
+                redirect(site_url('home_control'));
             else {
                 $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));
             }
@@ -1384,7 +1390,7 @@ abstract class REST_Controller extends CI_Controller {
         // When there is no specific override for the current class/method, use the default auth value set in the config
         if ($this->auth_override !== TRUE) {
             if ($this->response->format == "html"){
-                redirect(site_url('users_control_web/index')); //login	
+                redirect(site_url('home_control')); //login	
             }
             else {
                 $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));

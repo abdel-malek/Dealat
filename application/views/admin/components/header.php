@@ -36,6 +36,10 @@
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    
+    <!--  slick slider  -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick-theme.css'); ?>" />
 
     <!-- Custom Theme Style -->
     <!-- <link href="<?php echo base_url() ?>admin_assets/build/css/custom.min.css" rel="stylesheet">  arabic layout --> 

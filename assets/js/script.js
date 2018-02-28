@@ -392,6 +392,7 @@ $(function () {
 		main = adImgs[0];
 		adImgs.splice(0, 1);
 		imgs = adImgs;
+		console.log(imgs);
 		var data = $(this).serializeArray(); // convert form to array
 		data.push({
 			name: "main_image",

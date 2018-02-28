@@ -7,8 +7,8 @@ class Authentication extends MY_Model {
 		$this -> load -> model('data_sources/users');
 	}
 
-	public function check_user($username, $password) {
-		$user = $this -> users -> check_authentication($username, $password);
+	public function check_user($username, $password , $type) {
+	    $user = $this -> users -> check_authentication($username, $password ,$type);
 		return $user;
 	}
 }

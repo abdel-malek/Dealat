@@ -48,7 +48,7 @@ var status_array;
 			 },
              "bServerSide": false,
              aaSorting : [[0, 'desc']],
-             "sAjaxSource": base_url + '/admin/ads_manage/all_ads/format/json',
+             "sAjaxSource": base_url + '/admin/ads_manage/all/format/json',
              "columnDefs": [
                  {
                     "targets": -1, // details
@@ -240,7 +240,7 @@ var status_array;
 	               });
 	              }
 	            }
-	         ads_table.ajax.url(base_url + '/admin/ads_manage/all_ads/format/json?status='+status_val ).load();
+	         ads_table.ajax.url(base_url + '/admin/ads_manage/all/format/json?status='+status_val ).load();
 	         $('.ads_details').modal('hide');
 	        },error: function(xhr, status, error){
 	        	new PNotify({

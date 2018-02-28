@@ -195,6 +195,8 @@ $config['auth_override_class_method']['categories_control']['get_subcategories']
 $config['auth_override_class_method']['users_control_web']['index'] = 'none';
 $config['auth_override_class_method']['users_control_web']['change_language'] = 'none';
 $config['auth_override_class_method']['users_control']['index'] = 'none';
+$config['auth_override_class_method']['users_control']['register'] = 'none';
+$config['auth_override_class_method']['users_control']['verify'] = 'none';
 $config['auth_override_class_method']['commercial_ads_control']['get_commercial_ads'] = 'none';
 
 //to be deleted 

@@ -123,6 +123,7 @@ class Ads extends MY_Model {
 	    }
 		$updated_ad_id = $this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
         // save ad images 
+        dump($second_images);
         if($second_images!= null && is_array($second_images)){
         	$this->load->model('data_sources/ad_images');
         	foreach ($second_images as $image) {
