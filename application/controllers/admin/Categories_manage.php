@@ -29,9 +29,9 @@ class Categories_manage extends REST_Controller {
 		} else {
 		   $create_result = $this->categories->create_category();
 		   if($create_result != false){
-		   	 $this->response(array('status' => true, 'data' =>$create_result, 'message' => 'Successfully created'));
+		   	 $this->response(array('status' => true, 'data' =>$create_result, 'message' => $this->lang->line('sucess')));
 		   }else{
-		   	 $this->response(array('status' => false, 'data' =>$create_result, 'message' => 'Something went wrong!')); 
+		   	 $this->response(array('status' => false, 'data' =>$create_result, 'message' => $this->lang->line('failed'))); 
 		   }
 		}
 	}

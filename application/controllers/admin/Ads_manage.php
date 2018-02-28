@@ -17,7 +17,7 @@ class Ads_manage extends REST_Controller {
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
 	
-	public function all_ads_get()
+	public function all_get()
 	{
 	   $filter_option = array();
 	   if($this->input->get('status')){

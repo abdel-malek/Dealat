@@ -171,7 +171,7 @@ $(function () {
 				console.log(data);
 				alert("error status false");
 			} else {
-				//				console.log(data);
+								console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, i, template, rendered, templateId;
 				if (data.data.is_negotiable === "0") {
 					if (lang === "ar") {
@@ -437,7 +437,8 @@ $(function () {
 	$("#place-ad-form").submit(function (evnt) {
 		evnt.preventDefault();
 		evnt.stopImmediatePropagation();
-		//		console.log(adImgs);
+
+				console.log(adImgs);
 		var i, upladed_imgs = [],
 			main_img = "",
 			secondary_imgs = [];
@@ -449,6 +450,7 @@ $(function () {
 		upladed_imgs.splice(0, 1);
 		secondary_imgs = upladed_imgs;
 		secondary_imgs = JSON.stringify(secondary_imgs);
+
 		var data = $(this).serializeArray(); // convert form to array
 		data.push({
 			name: "main_image",
@@ -458,7 +460,7 @@ $(function () {
 			value: secondary_imgs
 		});
 		//		console.log($(this).serializeArray());
-		//		console.log(data);
+				console.log(data);
 		//		console.log($.param(data));
 		$.ajax({
 			type: "post",
