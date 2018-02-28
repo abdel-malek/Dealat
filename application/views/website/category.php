@@ -1,4 +1,4 @@
-<body class="category-page">
+<body class="category-page" data-category-id="<?php echo $parent_id ?>" data-category-name="<?php echo $parent_name ?>">
 	<?php $this->load->view('website/common'); ?>
 
 	<section>
@@ -53,7 +53,7 @@
 					<div class="row mb-4">
 						<div class="col-md-2">
 							<div class="category-name">
-								<?php echo $category_name ?>:</div>
+								<?php echo $category_name ?></div>
 						</div>
 						<div class="col-md-6">
 							<div class="search-wrapper">
@@ -61,7 +61,7 @@
 								<span class="icon"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
-						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+<!--						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>-->
 					</div>
 					
 					<div class="controls">
@@ -107,14 +107,16 @@
 								
 								<div class="card-body">
 									<div class="row">
-										<div class="col-7 mt-2">
+<!--										<div class="col-7 mt-2">-->
+										<div class="col-12 mt-2">
 											<div class="card-title">
 												<?php echo $ad->title ?>
 											</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
 										</div>
-										<div class="col-5 mt-2">
-											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
+<!--										<div class="col-5 mt-2">-->
+										<div class="col-12 mt-2">
+<!--											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
 											<div class="clearfix"></div>
 											<div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>

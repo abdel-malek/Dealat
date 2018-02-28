@@ -40,6 +40,12 @@ $lang['agree_policy'] = "أنا أوافق على";
 $lang['terms'] = "بنود الخدمة لديلات";
 $lang['select_category'] = "اختر تصنيف";
 $lang['submit_ad'] = "نشر الإعلان";
+$lang['automatic'] = "اوتوماتيكي";
+$lang['new'] = "جديد";
+$lang['negotiable'] = "السعر قابل للتفاوض";
+$lang['week'] = "أسبوع";
+$lang['10_days'] = "عشر أيام";
+$lang['month'] = "شهر";
 //register/login modal
 $lang['username'] = "اسم المستخدم";
 $lang['password'] = "كلمة المرور";

@@ -86,6 +86,14 @@ section.search {
     padding-right: 0; }
   #ad-modal .modal-content a.select {
     direction: ltr; }
+  #ad-modal .modal-content .dropdown-menu {
+    direction: ltr;
+    text-align: right; }
+  #ad-modal .modal-content .dropdown-menu.main-dropdown {
+    left: auto;
+    right: 0; }
+  #ad-modal .modal-content .dropdown-menu .show > .dropdown-toggle::after {
+    transform: rotate(90deg); }
 
 #register-modal .form-group,
 #login-modal .form-group {

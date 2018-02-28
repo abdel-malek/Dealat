@@ -76,7 +76,7 @@
 <!--  mixit up  -->
 <script src="<?php echo base_url('assets/js/mixitup.min.js'); ?>"></script>
 <script>
-	var mixer = mixitup('.products');
+//	var mixer = mixitup('.products');
 
 </script>
 <!--  slick slider  -->

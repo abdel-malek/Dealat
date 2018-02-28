@@ -117,6 +117,18 @@ section.search {
 	a.select {
 		direction: ltr;
 	}
+	.dropdown-menu{
+		direction: ltr;
+	text-align: right;
+		
+	}
+	.dropdown-menu.main-dropdown{
+		left: auto;
+		right: 0;
+	}
+	.dropdown-menu .show > .dropdown-toggle::after{
+    transform: rotate(90deg);
+}
 }
 
 #register-modal .form-group,

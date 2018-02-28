@@ -3,7 +3,10 @@
 
 $(function () {
 	//global variables
-
+	var mixer = mixitup('.products');
+	var category_id, category_name;
+	category_id = $(".category-page").data("categoryId");
+	category_name = $(".category-page").data("categoryName");
 	//    Loading screen
 	$(window).on('load', function () {
 		$(".loading-overlay .spinner").fadeOut(500, function () {
@@ -23,11 +26,33 @@ $(function () {
 	});
 
 	$("button.filter").click(function () {
-		$("#filter-modal").modal("show");
+		//		$("#filter-modal").modal("show");
+	});
+
+	function resetPostAd() {
+		$("#place-ad-form").trigger("reset");
+		if (lang === "ar") {
+			$("#ad-modal .categories-nav .select").text("اختر فئة");
+			$("#ad-modal .locations-nav .select").text("مكان القطعة");
+			$("#ad-modal .types-nav .select").text("اختر النوع");
+		} else {
+			$("#ad-modal .categories-nav .select").text("Select Category");
+			$("#ad-modal .locations-nav .select").text("Item's Location");
+			$("#ad-modal .types-nav .select").text("Select type");
+		}
+		$("#ad-modal .ajax-file-upload-container").empty();
+		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+		adImgs = [];
+		$("#ad-modal .featured .warning").addClass("d-none");
+		$('#ad-modal .error-message').addClass("d-none");
+	}
+	$("#ad-modal").on("show.bs.modal", function () {
+		mixer.destroy();
 	});
 
 	$("#ad-modal").on("hide.bs.modal", function () {
-		$("#place-ad-form").trigger("reset");
+		resetPostAd();
+		mixer = mixitup('.products');
 	});
 
 	//change selected in controls
@@ -69,6 +94,7 @@ $(function () {
 			console.log(data);
 			alert("error status false");
 		} else {
+			//			console.log(data);
 			var i, j, template, rendered, locData, arr1 = [],
 				typesData,
 				arr2 = [];
@@ -93,11 +119,13 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
+			//			console.log(typesData.types);
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
 			$("#ad-modal .types-nav .types").append(rendered);
 
+			//if type with no models don't open a menu and remove arrow 
 			$("#ad-modal .types-nav ul.dropdown-menu").each(function () {
 				if ($(this).html().trim() === "") {
 					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
@@ -143,7 +171,7 @@ $(function () {
 				console.log(data);
 				alert("error status false");
 			} else {
-				console.log(data);
+				//				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, i, template, rendered, templateId;
 				if (data.data.is_negotiable === "0") {
 					if (lang === "ar") {
@@ -255,7 +283,7 @@ $(function () {
 
 	//view template fields when change category in place ad modal
 	$("#ad-modal .categories-nav").on("click", ".last-subcategory", function () {
-		var templateId, subId;
+		var templateId, subId, has_types = 0;
 		templateId = $(this).data("templateId");
 		subId = $(this).data("categoryId");
 		//		$("#ad-modal .template").addClass("d-none");
@@ -266,6 +294,26 @@ $(function () {
 				$(this).removeClass("d-none");
 			}
 		});
+		//only display selected template types
+		$("#ad-modal .types-nav .type-item").each(function () {
+			$(this).addClass("d-none");
+			if ($(this).data("templateId") === templateId) {
+				has_types = 1;
+				$(this).removeClass("d-none");
+			}
+		});
+		if (has_types !== 0) {
+			$("#ad-modal .types-nav").parent(".form-group").removeClass("d-none");
+		} else {
+			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+		}
+		if (lang === "ar") {
+			$("#ad-modal .types-nav .select").text("اختر النوع");
+		} else {
+			$("#ad-modal .types-nav .select").text("Select type");
+		}
+		$("#place-ad-form .type-model-id").val("");
+		$("#place-ad-form .type-id").val("");
 		$("#place-ad-form .category-id").val(subId);
 
 		//change select placeholder
@@ -282,22 +330,22 @@ $(function () {
 	});
 
 	//types select
-	$("#ad-modal .types-nav").on("click", ".li", function () {
-		if($(this).find("ul").length > 0) {
+	$("#ad-modal .types-nav").on("click", ".type-item", function () {
+		if ($(this).find("ul").length > 0) {
 			//has children models
-		} else{
+		} else {
 			//has no children models
-			var typeId
-		typeId = $(this).data("typeId");
+			var typeId;
+			typeId = $(this).data("typeId");
 			$("#place-ad-form .type-model-id").val("");
-		$("#place-ad-form .type-id").val(typeId);
+			$("#place-ad-form .type-id").val(typeId);
 		}
-//		console.log("type: " + $("#place-ad-form .type-id").val());
-//		console.log("model: " + $("#place-ad-form .type-model-id").val());
+		//		console.log("type: " + $("#place-ad-form .type-id").val());
+		//		console.log("model: " + $("#place-ad-form .type-model-id").val());
 		//change select placeholder
 		$("#ad-modal .types-nav .select").text($(this).text());
 	});
-	
+
 	//model select
 	$("#ad-modal .types-nav").on("click", ".model", function () {
 		var typeId, typeModelId;
@@ -350,16 +398,17 @@ $(function () {
 		uploadStr: "Upload Images",
 		returnType: "json",
 		onSuccess: function (files, data, xhr, pd) {
-			console.log(data);
-			adImgs.push(data.data.slice(12));
-			console.log(adImgs);
+			//			console.log(data);
+			//			adImgs.push(data.data.slice(12));
+			adImgs.push(data.data);
+			//			console.log(adImgs);
 			//			$("#ad-modal .main-image").val(data.data.slice(12));
 		},
 		onError: function (files, status, errMsg, pd) {
 			console.log("upload failed");
 		},
 		deleteCallback: function (data, pd) {
-			console.log(data.data);
+			//			console.log(data.data);
 
 			var arr;
 			arr = [data.data];
@@ -369,15 +418,16 @@ $(function () {
 				},
 				function (resp, textStatus, jqXHR) {
 					//Show Message    
-					alert("File Deleted");
+					//					alert("File Deleted");
 					var i, deleted;
-					deleted = data.data.slice(12);
+					//					deleted = data.data.slice(12);
+					deleted = data.data;
 					for (i in adImgs) {
 						if (adImgs[i] === deleted) {
 							adImgs.splice(i, 1);
 						}
 					}
-					console.log(adImgs);
+					//					console.log(adImgs);
 				});
 			//				}
 		}
@@ -387,21 +437,29 @@ $(function () {
 	$("#place-ad-form").submit(function (evnt) {
 		evnt.preventDefault();
 		evnt.stopImmediatePropagation();
-
-		var main, imgs;
-		main = adImgs[0];
-		adImgs.splice(0, 1);
-		imgs = adImgs;
+		//		console.log(adImgs);
+		var i, upladed_imgs = [],
+			main_img = "",
+			secondary_imgs = [];
+		//copy adimgs into uploaded_imgs
+		for (i in adImgs) {
+			upladed_imgs.push(adImgs[i]);
+		}
+		main_img = upladed_imgs[0];
+		upladed_imgs.splice(0, 1);
+		secondary_imgs = upladed_imgs;
+		secondary_imgs = JSON.stringify(secondary_imgs);
 		var data = $(this).serializeArray(); // convert form to array
 		data.push({
 			name: "main_image",
-			value: main
+			value: main_img
 		}, {
 			name: "images",
-			value: imgs
+			value: secondary_imgs
 		});
-		console.log($(this).serializeArray());
-		console.log(data);
+		//		console.log($(this).serializeArray());
+		//		console.log(data);
+		//		console.log($.param(data));
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/ads_control/post_new_ad',
@@ -428,23 +486,23 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				console.log(data);
-				if ($("#ad-modal .featured input").is(':checked')) {
-					$("#ad-modal").modal("hide");
-					setTimeout(function () {
-						$("#pay-modal").modal("show");
-					}, 500);
-				} else {
-					$("#ad-modal").modal("hide");
-					setTimeout(function () {
-						$("#success-modal").modal("show");
-					}, 500);
-					setTimeout(function () {
-						$("#success-modal").modal("hide");
-					}, 2000);
-				}
-				$("#place-ad-form").trigger("reset");
-				$("#ad-modal .featured .warning").addClass("d-none");
+				//				console.log(data);
+				//				if ($("#ad-modal .featured input").is(':checked')) {
+				//					$("#ad-modal").modal("hide");
+				//					setTimeout(function () {
+				//						$("#pay-modal").modal("show");
+				//					}, 500);
+				//				} else {
+				$("#ad-modal").modal("hide");
+				setTimeout(function () {
+					$("#success-modal").modal("show");
+				}, 500);
+				setTimeout(function () {
+					$("#success-modal").modal("hide");
+				}, 2000);
+				//				}
+				//reset
+				resetPostAd();
 			}
 		}).fail(function (response) {
 			console.log(response);
@@ -608,12 +666,12 @@ $(function () {
 
 	//view subcategories when click on category slider
 	$(".category").click(function () {
-		var id, name;
-		id = $(this).data("categoryId");
-		name = $(this).find(".name").text().trim();
+
+		category_id = $(this).data("categoryId");
+		category_name = $(this).find(".name").text().trim();
 		$.ajax({
 			type: "get",
-			url: base_url + '/api/categories_control/get_subcategories?category_id=' + id,
+			url: base_url + '/api/categories_control/get_subcategories?category_id=' + category_id,
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
@@ -631,8 +689,8 @@ $(function () {
 					}
 					subData = {
 						sub: data.data,
-						catId: id
-					}
+						catId: category_id
+					};
 					template = $('#sub-categories-template').html();
 					Mustache.parse(template);
 					rendered = Mustache.render(template, subData);
@@ -647,7 +705,7 @@ $(function () {
 						$(".main .sub-categories").removeAttr("style");
 					}, 1100);
 				} else {
-					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
+					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + category_id + "&category_name=" + category_name;
 				}
 			}
 		}).fail(function (response) {
@@ -663,9 +721,9 @@ $(function () {
 		name = $(this).text().trim();
 
 		if ($(this).hasClass("all")) {
-			window.location = base_url + "/home_control/load_ads_by_category_page_all?category_id=" + id + "&category_name=" + name;
+			window.location = base_url + "/home_control/load_ads_by_category_page_all?category_id=" + id + "&category_name=" + name + "&parent_id=" + category_id + "&parent_name=" + category_name;
 		} else {
-			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name;
+			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + id + "&category_name=" + name + "&parent_id=" + category_id + "&parent_name=" + category_name;
 		}
 	});
 
@@ -674,10 +732,16 @@ $(function () {
 		var key, data, query = 0;
 		key = e.which;
 		query = $(this).val();
+
 		if (key === 13) {
 			data = {
 				query: $(this).val()
 			};
+//			if ($(this).parents(".category-page").length > 0) {
+//				window.location = base_url + '/search_control?query=' + query + '&category_id=' + category_id ;
+//			} else {
+//				window.location = base_url + '/search_control?query=' + query;
+//			}
 			window.location = base_url + '/search_control?query=' + query;
 			//			$.ajax({
 			//				type: "get",
@@ -700,10 +764,10 @@ $(function () {
 
 	//chat with seller
 	$("#card-modal button.chat").click(function () {
-		$("#card-modal").modal("hide");
-		setTimeout(function () {
-			$("#chat-modal").modal("show");
-		}, 500);
+		//		$("#card-modal").modal("hide");
+		//		setTimeout(function () {
+		//			$("#chat-modal").modal("show");
+		//		}, 500);
 	});
 
 	//language

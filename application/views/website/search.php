@@ -68,7 +68,7 @@
 												</div>
 												<div class="location"><span class="location-lbl">Location: </span><span class="location-val"><?php echo $ad->city_name.'-'.$ad->location_name ?></span></div>
 
-												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>
+<!--												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
 												<!--									<div class="rating">stars</div>-->
 
 

@@ -24,7 +24,11 @@ $( document ).ready( function () {
         } );
         
          if ( !$parent.parent().hasClass( 'navbar-nav' ) ) {
-            $el.next().css( { "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 } );
+			 if (lang === "ar") {
+            $el.next().css( { "top": $el[0].offsetTop, "left": -$parent.outerWidth() + 4 } );
+			 } else{
+				 $el.next().css( { "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 } );
+			 }
         }
 
         return false;
