@@ -24,11 +24,11 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-    let baseImgsURL = "http://192.168.9.53/Dealat/"
+//    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+//    let baseImgsURL = "http://192.168.9.53/Dealat/"
     
-    //    let baseURL = "http://dealat.tradinos.com/index.php/api"
-    //    let baseImgsURL = "http://dealat.tradinos.com/"
+    let baseURL = "http://dealat.tradinos.com/index.php/api"
+    let baseImgsURL = "http://dealat.tradinos.com/"
     
     
     let get_latest_adsURL = "/ads_control/get_latest_ads/format/json"
@@ -298,8 +298,11 @@ class Communication: BaseManager {
                         res.append(a)
                     }
                     
+                    Provider.shared.catsFull = res
+                    
                     let resFinal = self.loadCats(res, i: 0)
                     Provider.shared.cats = resFinal
+                    
                     callback(resFinal)
                     
                 }else{
@@ -325,7 +328,7 @@ class Communication: BaseManager {
     }
     
     
-    func post_new_ad(category_id : Int,location_id : Int,show_period : Int,title : String,description : String,price : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (Bool) -> Void){
+    func post_new_ad(category_id : Int,location_id : Int,show_period : Int,title : String,description : String,price : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
         
         let url = URL(string: baseURL + post_new_adURL)!
         
@@ -372,7 +375,7 @@ class Communication: BaseManager {
                     
                     
                     
-                    callback(true)
+                    callback(value)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)

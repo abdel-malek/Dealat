@@ -40,26 +40,19 @@ class Cat : BaseEntity {
         
         var n = ""
         
-        print("category_id \(category_id)")
-        print("Provider.shared.cats.count \(Provider.shared.cats.count)")
-
-        
-        if let f = Provider.shared.cats.filter({$0.category_id == JSON(1)}).first{
+        if let f = Provider.shared.catsFull.filter({$0.category_id.intValue == category_id}).first{
             n += f.category_name!
             
-            print("okkk")
-
-            if let f2 = Provider.shared.cats.filter({$0.category_id == f.parent_id}).first{
-                n += " - \(f2.category_name!)"
-                n += " - \(getName(f2.category_id.intValue))"
+            if let f2 = Provider.shared.catsFull.filter({$0.category_id.intValue == f.parent_id.intValue}).first{
+                n += "-\(getName(f2.category_id.intValue))"
             }
-            
         }
         
-        print(n)
         
         return n
     }
+    
+    
     
 }
 

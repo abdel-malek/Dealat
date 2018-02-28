@@ -13,11 +13,14 @@ import DropDown
 import Alamofire
 import KMPlaceholderTextView
 import SkyFloatingLabelTextField
+import SwiftyJSON
 //import IQDropDownTextField
 
 class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,YMSPhotoPickerViewControllerDelegate {
     
     @IBOutlet weak var collectionView : UICollectionView!
+    var homeVC : HomeVC!
+
     
     let cellIdentifier = "imageCellIdentifier"
     var images: NSArray! = []
@@ -31,7 +34,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice : SkyFloatingLabelTextField!
     @IBOutlet weak var negotiableSwitch : UISwitch!
-    @IBOutlet weak var tfDescription : KMPlaceholderTextView!
+    @IBOutlet weak var tfDescription : UITextView!
     
     // 1
     @IBOutlet weak var tfType : SkyFloatingLabelTextField!
@@ -58,10 +61,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     //5
     @IBOutlet weak var tfStatus5 : SkyFloatingLabelTextField!
-
+    
     //6
     @IBOutlet weak var tfStatus6 : SkyFloatingLabelTextField!
-
+    
     //7
     @IBOutlet weak var tfStatus7 : SkyFloatingLabelTextField!
     
@@ -70,10 +73,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet weak var tfEducation : SkyFloatingLabelTextField!
     @IBOutlet weak var tfExperince : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSalary : SkyFloatingLabelTextField!
-
+    
     //9
     @IBOutlet weak var tfStatus9 : SkyFloatingLabelTextField!
-
+    
     
     
     var locations = [Location]()
@@ -81,7 +84,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var types = [Type]()
     var schedules = [Schedule]()
     var educations = [Education]()
-
+    
     
     var years : [String] {
         var arr = [String]()
@@ -103,13 +106,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedCategory : Cat!{
         didSet{
             if self.tfCategory != nil{
-                print("TEST TEST")
-                print("\(selectedCategory.category_name)")
                 let nn = Cat.getName(selectedCategory.category_id.intValue)
-                print(nn)
-                print("TEST TEST")
-
-                self.tfCategory.text = selectedCategory.category_name
+                
+                //                var arr = nn.components(separatedBy: "-")
+                //                arr = arr.reversed()
+                //                print(arr)
+                //                let t = arr.joined(separator: "-")
+                
+                self.tfCategory.text = nn//selectedCategory.category_name
+                self.tfCategory.adjustsFontSizeToFitWidth = true
+                self.tfCategory.minimumFontSize = 8
+                
                 self.setupTypes()
                 self.refreshData()
             }
@@ -142,27 +149,27 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedYear : Int!{
         didSet{
             if selectedYear != nil{
-            self.tfYear.text = self.years[selectedYear]
+                self.tfYear.text = self.years[selectedYear]
             }
         }
     }
     var selectedTransmission : Int!{
         didSet{
             if selectedTransmission != nil{
-            self.tfTrans.text = self.transmission[selectedTransmission]
+                self.tfTrans.text = self.transmission[selectedTransmission]
             }
         }
     }
     var selectedStatus : Int!{
         didSet{
             if selectedStatus != nil{
-            self.tfStatus.text = self.status[selectedStatus]
-            self.tfStatus3.text = self.status[selectedStatus]
-            self.tfStatus4.text = self.status[selectedStatus]
-            self.tfStatus5.text = self.status[selectedStatus]
-            self.tfStatus6.text = self.status[selectedStatus]
-            self.tfStatus7.text = self.status[selectedStatus]
-            self.tfStatus9.text = self.status[selectedStatus]
+                self.tfStatus.text = self.status[selectedStatus]
+                self.tfStatus3.text = self.status[selectedStatus]
+                self.tfStatus4.text = self.status[selectedStatus]
+                self.tfStatus5.text = self.status[selectedStatus]
+                self.tfStatus6.text = self.status[selectedStatus]
+                self.tfStatus7.text = self.status[selectedStatus]
+                self.tfStatus9.text = self.status[selectedStatus]
             }
         }
     }
@@ -172,13 +179,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.tfSchedule.text = (selectedSchedule != nil) ? selectedSchedule.name : nil
         }
     }
-
+    
     var selectedEducation : Education!{
         didSet{
             self.tfEducation.text = (selectedEducation != nil) ? selectedEducation.name : nil
         }
     }
-
+    
     
     //    var selectedKilometers : String!{
     //        didSet{
@@ -209,8 +216,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     func setupViews(){
         
-        tfDescription.placeholder = "Description"
-        tfDescription.placeholderColor = .white
+//        tfDescription.placeholder = "Description".localized
+//        tfDescription.placeholderColor = .white
+        
+        
+        tfDescription.text = "Description".localized
+        tfDescription.delegate = self
+        tfDescription.textColor = UIColor.white
+        
+//        tfDescription.becomeFirstResponder()
+        tfDescription.selectedTextRange = tfDescription.textRange(from: tfDescription.beginningOfDocument, to: tfDescription.beginningOfDocument)
+
         
         // CollectionView
         self.collectionView.delegate = self
@@ -223,12 +239,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.tableView.backgroundView = img
         
         // Navigation Item
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
-        self.title = "Add new"
+        //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
+        self.title = "Sell".localized
         
         
         self.setPickerViewOn(self.tfLocation)
-        
         //1
         self.setPickerViewOn(self.tfType)
         self.setPickerViewOn(self.tfModel)
@@ -243,17 +258,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.setPickerViewOn(self.tfStatus4)
         //5
         self.setPickerViewOn(self.tfStatus5)
-//6
+        //6
         self.setPickerViewOn(self.tfStatus6)
-//7
+        //7
         self.setPickerViewOn(self.tfStatus7)
         //8
         self.setPickerViewOn(self.tfSchedule)
         self.setPickerViewOn(self.tfEducation)
-
-//9
+        
+        //9
         self.setPickerViewOn(self.tfStatus9)
-
+        
         
         // IQDropDownTextField
         for i in tfields{
@@ -374,8 +389,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfExperince.isEnabled = false
         tfSalary.isEnabled = false
         tfStatus9.isEnabled = false
-
-
+        
+        
         
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
@@ -429,7 +444,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return (indexPath.row == 0 || indexPath.row == 6) ? UITableViewAutomaticDimension : 54
+            return (indexPath.row == 0) ? UITableViewAutomaticDimension : 54
+        case 11:
+            return UITableViewAutomaticDimension
         default:
             if self.selectedCategory != nil{
                 return (self.selectedCategory.tamplate_id.intValue == indexPath.section) ? 54 : 0
@@ -440,6 +457,33 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        // Combine the textView text and the replacement text to
+        // create the updated text string
+        let currentText:String = textView.text
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        // If updated text view will be empty, add the placeholder
+        // and set the cursor to the beginning of the text view
+        if updatedText.isEmpty {
+            
+            textView.text = "Description".localized
+            textView.textColor = UIColor.white
+            
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            
+            return false
+        }
+            
+            // Else if the text view's placeholder is showing and the
+            // length of the replacement string is greater than 0, clear
+            // the text view and set its color to black to prepare for
+            // the user's entry
+        else if textView.text == "Description".localized && !text.isEmpty {
+            textView.text = nil
+            textView.textColor = UIColor.white
+        }
+
         
         
         let size = textView.bounds.size
@@ -453,13 +497,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
             
-            let thisIndexPath = IndexPath.init(row: 6, section: 0)
+            let thisIndexPath = IndexPath.init(row: 0, section: 11)
             
             tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
         }
         
         return true
     }
+    
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.text == "Description".localized {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
+        }
+    }
+
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0,indexPath.row == 2{
@@ -612,7 +667,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.validMessage("Please select state")
                 return
             }
-
+            
             params["is_new"] = is_new
             
             
@@ -626,18 +681,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.validMessage("Please select education")
                 return
             }
-
+            
             guard let experience = self.tfExperince.text, !experience.isEmpty else {
                 self.validMessage("Please enter experince")
                 return
             }
-
+            
             guard let salary = self.tfSalary.text, !salary.isEmpty else {
                 self.validMessage("Please enter salary")
                 return
             }
-
-
+            
+            
             params["schedule_id"] = schedule_id.intValue
             params["education_id"] = education_id.intValue
             params["experience"] = experience
@@ -652,6 +707,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         Communication.shared.post_new_ad(category_id: category_id.intValue, location_id: location_id.intValue, show_period: 1, title: titleAd, description: desAd, price: price, images: self.imagesPaths,paramsAdditional : params) { (res) in
             self.hideLoading()
             
+            self.navigationController?.popViewController(animated: true)
+            self.homeVC.showErrorMessage(text: res.message)
             
         }
         
@@ -1040,7 +1097,7 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
             return self.schedules[row].name
         case 22:
             return self.educations[row].name
-
+            
         default:
             return ""
         }

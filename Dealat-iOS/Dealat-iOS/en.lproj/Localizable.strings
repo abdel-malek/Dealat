@@ -82,6 +82,7 @@
 "EN" = "English";
 "ChangeLangTitle" = "Select App Language";
 "ChangeLangMessage" = "You need to restart the app to apply the new language";
+"AddImages" = "Add images";
 
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";

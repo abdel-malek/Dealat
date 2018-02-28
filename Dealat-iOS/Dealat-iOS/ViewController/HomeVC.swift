@@ -127,6 +127,7 @@ class HomeVC: BaseVC {
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
         //        self.navigationController?.pushViewController(vc, animated: true)
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddVC") as! NewAddVC
+        vc.homeVC = self
         self.navigationController?.pushViewController(vc, animated: true)
         
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC

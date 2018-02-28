@@ -30,7 +30,12 @@ extension String{
         
         if let arr =  UserDefaults.standard.value(forKey: "AppleLanguages") as? [String]{
             if let lang = arr.first{
-                let path  = Bundle.main.path(forResource: lang, ofType: "lproj")
+                var lang2 = lang
+                if lang != "ar" && lang != "en"{
+                    print("OKK \(lang)")
+                    lang2 = "en"
+                }
+                let path  = Bundle.main.path(forResource: lang2, ofType: "lproj")
                 let bundle = Bundle.init(path: path!)
                 let s = bundle!.localizedString(forKey: self, value: nil, table: nil)
                 return s

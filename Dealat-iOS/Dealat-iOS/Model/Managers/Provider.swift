@@ -17,6 +17,9 @@ class Provider : BaseManager {
     static var isArabic : Bool = false
     
     var cats = [Cat]()
+    var catsFull = [Cat]()
+
+    
     static var searchText : String!
     static var selectedCategory : Cat!
     static var selectedLocation : Location!
