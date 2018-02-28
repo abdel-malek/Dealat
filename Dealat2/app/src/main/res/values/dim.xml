@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="mediumHeight">100dp</dimen>
+    <dimen name="mediumHeight">140dp</dimen>
+    <dimen name="largeHeight">180dp</dimen>
 
-    <dimen name="imageViewSmall">20dp</dimen>
+    <dimen name="imageXSmall">20dp</dimen>
+    <dimen name="imageSmall">36dp</dimen>
     <dimen name="imageViewMedium">56dp</dimen>
     <dimen name="imageViewLarge">100dp</dimen>
+
+
+    <dimen name="view1Height">@dimen/mediumHeight</dimen>
+    <dimen name="view2Height">@dimen/largeHeight</dimen>
+    <dimen name="view3Height">@dimen/largeHeight</dimen>
 
 </resources>

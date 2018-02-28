@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -14,6 +16,7 @@ import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.View.MasterActivity;
 
 import java.util.List;
 
@@ -53,11 +56,15 @@ public class AdAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = this.inflater.inflate(resourceLayout, null);
-           // view.setTag(new ViewHolder(view));
+            if (resourceLayout == R.layout.row_view2 && (i % 2 != 0))
+                view = this.inflater.inflate(R.layout.row_view2_left, null);
+            else
+                view = this.inflater.inflate(resourceLayout, null);
+
+            view.setTag(new ViewHolder(view));
         }
 
-        //initializeView(getItem(i), (ViewHolder) view.getTag());
+        initializeView(getItem(i), (ViewHolder) view.getTag());
 
         return view;
     }
@@ -70,18 +77,22 @@ public class AdAdapter extends BaseAdapter {
                             R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
         }
 
+        holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice()));
+        holder.textViewTitle.setText(item.getTitle());
 
+        holder.textView.setText("500 Views");
+        holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
     }
 
     class ViewHolder {
         ImageView imageView;
-        TextView textViewPrice, textViewNegotiable, textView, textViewDate;
+        TextView textViewPrice, textViewTitle, textView, textViewDate;
         ImageButton buttonFav;
 
         ViewHolder(View view) {
             imageView = view.findViewById(R.id.imageView);
             textViewPrice = view.findViewById(R.id.textViewPrice);
-            textViewNegotiable = view.findViewById(R.id.textViewNegotiable);
+            textViewTitle = view.findViewById(R.id.title);
             textView = view.findViewById(R.id.textView);
             textViewDate = view.findViewById(R.id.textViewDate);
             buttonFav = view.findViewById(R.id.buttonFav);

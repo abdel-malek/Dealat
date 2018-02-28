@@ -6,13 +6,10 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-
     private String id;
-    private int role;
     private String name;
     private String username;
     private String password;
-    private int country;
 
 
     public String getId() {
@@ -21,20 +18,6 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public int getRole(){return role;}
-
-    public void setRole(int role){
-        this.role = role;
-    }
-
-    public int getCountry() {
-        return country;
-    }
-
-    public void setCountry(int country) {
-        this.country = country;
     }
 
     public String getName() {

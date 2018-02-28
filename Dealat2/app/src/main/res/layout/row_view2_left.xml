@@ -1,44 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/view1Height"
-            >
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                />
-
-            <ImageButton
-                android:id="@+id/buttonFav"
-                android:layout_width="@dimen/imageSmall"
-                android:layout_height="@dimen/imageSmall"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="8dp"
-                android:scaleType="fitCenter"
-                android:background="@null"
-                />
-        </FrameLayout>
+        android:orientation="horizontal"
+        >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_height="match_parent"
             android:padding="8dp"
             >
+
             <TextView
                 android:id="@+id/textViewPrice"
                 android:layout_width="wrap_content"
@@ -59,7 +38,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/textViewDate"
                 />
 
             <TextView
@@ -67,12 +46,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 style="@style/TextAppearance.AppCompat.Caption"
                 />
-
         </RelativeLayout>
 
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="@dimen/view2Height"
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonFav"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                />
+        </FrameLayout>
+
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

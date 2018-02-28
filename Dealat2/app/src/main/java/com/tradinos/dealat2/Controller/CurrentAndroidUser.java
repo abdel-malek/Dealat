@@ -25,10 +25,8 @@ public class CurrentAndroidUser implements CurrentUser {
 		if(customer.getId()!= null){
 			editor.putString("id", customer.getId());
 			editor.putString("name", customer.getName());
-			editor.putInt("role_id", customer.getRole());
 			editor.putString("username", customer.getUsername());
 			editor.putString("password", customer.getPassword());
-			editor.putInt("country", customer.getCountry());
 		}
 
 		editor.commit();
@@ -49,10 +47,8 @@ public class CurrentAndroidUser implements CurrentUser {
 			User user = new User();
 			user.setId(preferences.getString("id", ""));
 			user.setName(preferences.getString("name", ""));
-			user.setRole(preferences.getInt("role_id", -1));
 			user.setUsername(preferences.getString("username", ""));
 			user.setPassword(preferences.getString("password", ""));
-			user.setCountry(preferences.getInt("country", -1));
 
 			return user;
 		}

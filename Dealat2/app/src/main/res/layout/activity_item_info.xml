@@ -23,21 +23,10 @@
                 android:id="@+id/editTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:hint="@string/hintTitle"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
-                />
-
-            <EditText
-                android:id="@+id/editDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:padding="24dp"
-                android:hint="@string/hintDesc"
-                style="@style/editTextWhite"
-                android:background="@drawable/outline_white"
                 />
 
             <AutoCompleteTextView
@@ -201,6 +190,7 @@
                 android:id="@+id/editSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:visibility="gone"
                 android:hint="@string/hintSize"
                 android:inputType="numberDecimal"
@@ -326,6 +316,18 @@
                 android:inputType="numberDecimal"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
+                />
+
+            <EditText
+                android:id="@+id/editDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="24dp"
+                android:hint="@string/hintDesc"
+                style="@style/editTextWhite"
+                android:background="@drawable/outline_white"
                 />
         </LinearLayout>
     </ScrollView>

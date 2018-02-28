@@ -28,9 +28,12 @@ import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.CustomProgressDialog;
 
-
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -315,11 +318,11 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         }
     }
 
-    protected String formattedNumber(int number){
+    public String formattedNumber(int number){
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
-    protected String formattedNumber(double number){
+    public String formattedNumber(double number){
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
@@ -329,5 +332,56 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         // and dot is treated as decimal separator
 
         return NumberFormat.getInstance(Locale.US).parse(editText.getText().toString()).doubleValue();
+    }
+
+    public String formattedDate(String stringDate){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM");
+      //  SimpleDateFormat timeWithoutSeconds = new SimpleDateFormat("hh:mm a");
+        DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH); //time without seconds
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date today = calendar.getTime();
+
+
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date yesterday = calendar.getTime();
+
+        try {
+            calendar = Calendar.getInstance();
+            calendar.setTime(dateFormat.parse(stringDate));
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            Date currentDate = calendar.getTime();
+
+            if (currentDate.equals(today))
+                return getString(R.string.today)+" "+timeInstance.format(dateFormat.parse(stringDate));
+            else if (currentDate.equals(yesterday))
+                return getString(R.string.yesterday)+" "+timeInstance.format(dateFormat.parse(stringDate));
+            else
+                return dateWithoutYearFormat.format(currentDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

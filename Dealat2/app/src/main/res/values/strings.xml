@@ -27,6 +27,8 @@
 
     <!-- Internal Strings -->
     <string name="all">All</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 
 
     <!-- Views -->

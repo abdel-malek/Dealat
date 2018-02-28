@@ -84,4 +84,13 @@ public class AdController extends ParentController {
 
         request.Call();
     }
+
+    public void test(SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "test").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());
+
+        authenticationRequired(request);
+
+        request.Call();
+    }
 }

@@ -53,6 +53,7 @@ public class SubCategoriesActivity extends MasterActivity {
         if (action == ACTION_VIEW) {
             Category all = new Category();
             all.setId(category.getId());
+            all.setTemplateId(category.getTemplateId());
             all.setParentId(category.getParentId());
             all.setName(getString(R.string.all));
 
@@ -90,6 +91,7 @@ public class SubCategoriesActivity extends MasterActivity {
                     if (action == ACTION_VIEW) {
                         Category all = new Category();
                         all.setId(category.getId());
+                        all.setTemplateId(category.getTemplateId());
                         all.setParentId(category.getParentId());
                         all.setName(getString(R.string.all));
                         category.addSubCat(all);
@@ -138,6 +140,7 @@ public class SubCategoriesActivity extends MasterActivity {
             if (action == ACTION_VIEW && !category.getId().equals("0")) {
                 Category all = new Category();
                 all.setId(category.getId());
+                all.setTemplateId(category.getTemplateId());
                 all.setParentId(category.getParentId());
                 all.setName(getString(R.string.all));
                 category.addSubCat(all);

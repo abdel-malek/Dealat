@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/container"
         android:layout_above="@+id/container2"
+        android:layout_margin="4dp"
         android:columnWidth="100dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="4dp"
@@ -45,15 +46,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:padding="4dp"
+        android:padding="8dp"
         android:background="@color/red"
         >
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/imageViewSmall"
-            android:layout_height="@dimen/imageViewSmall"
-            android:layout_margin="4dp"
+            android:layout_width="@dimen/imageSmall"
+            android:layout_height="@dimen/imageSmall"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
             />
 
@@ -62,13 +64,16 @@
             android:layout_width="wrap_content"
             android:layout_weight="2"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/whiteTransparent"
+            style="@style/TextAppearance.AppCompat.Caption"
             />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/white"
             />
 
@@ -77,31 +82,32 @@
             android:layout_height="match_parent"
             android:text="@string/buttonFilter"
             android:textColor="@color/white"
+            android:textAppearance="@style/textNormal"
             android:background="@null"
             />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/white"
             />
 
         <ImageButton
             android:id="@+id/buttonViews"
-            android:layout_width="@dimen/imageViewSmall"
-            android:layout_height="@dimen/imageViewSmall"
-            android:layout_margin="4dp"
+            android:layout_width="@dimen/imageSmall"
+            android:layout_height="@dimen/imageSmall"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
             android:background="@null"
-            android:src="@drawable/views"
             />
 
         <ImageButton
             android:id="@+id/buttonFav"
-            android:layout_width="@dimen/imageViewSmall"
-            android:layout_height="@dimen/imageViewSmall"
+            android:layout_width="@dimen/imageXSmall"
+            android:layout_height="@dimen/imageXSmall"
             android:layout_margin="4dp"
             android:scaleType="fitCenter"
             android:background="@null"

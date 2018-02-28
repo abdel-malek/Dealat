@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.AdController;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
 
 /**
@@ -21,6 +25,20 @@ public class LoginActivity extends MasterActivity {
     @Override
     public void getData() {
 
+      /*  User user = new User();
+        user.setId("1");
+        user.setUsername("097367429");
+        user.setName("ola");
+        user.setPassword("3dfe48960147c43eab5e8731a6a45a07");
+        new CurrentAndroidUser(mContext).Save(user);
+
+        ShowProgressDialog();
+        AdController.getInstance(mController).test(new SuccessCallback<String>() {
+            @Override
+            public void OnSuccess(String result) {
+                HideProgressDialog();
+            }
+        });*/
     }
 
     @Override

@@ -8,14 +8,17 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +27,10 @@ import java.util.List;
 
 public class ViewAdsActivity extends DrawerActivity {
 
-    private int currentPage = 0, currentView = 1;
+    private int currentPage = 0, currentView;
 
     private Category selectedCategory;
-    private List<Ad> ads;
+    private List<Ad> ads = new ArrayList<>();
 
     private AdAdapter adapter;
 
@@ -50,6 +53,9 @@ public class ViewAdsActivity extends DrawerActivity {
     public void getData() {
         selectedCategory = (Category) getIntent().getSerializableExtra("category");
 
+        // if preference isn't exist, the default view is 1
+        currentView = ((MyApplication) getApplication()).getCurrentView();
+
         ShowProgressDialog();
         AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
             @Override
@@ -57,8 +63,7 @@ public class ViewAdsActivity extends DrawerActivity {
                 HideProgressDialog();
                 ads = result;
 
-                adapter = new AdAdapter(mContext, ads, R.layout.row_view1);
-                gridView.setAdapter(adapter);
+                gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
             }
         });
     }
@@ -67,6 +72,10 @@ public class ViewAdsActivity extends DrawerActivity {
     public void showData() {
         imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,
                 getTemplateDefaultImage(selectedCategory.getTemplateId())));
+
+        ((TextView)findViewById(R.id.textView)).setText(selectedCategory.getFullName());
+
+        buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
     }
 
     @Override
@@ -82,35 +91,15 @@ public class ViewAdsActivity extends DrawerActivity {
         buttonViews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int rowResource = R.layout.row_view1;
-                int imageResource = R.drawable.views;
 
                 currentView++;
-                if (currentView >3)
+                if (currentView > 3)
                     currentView = 1;
 
-                switch (currentView){
-                    case 1:
-                        rowResource = R.layout.row_view1;
-                        imageResource = R.drawable.views;
-                        gridView.setNumColumns(1);
-                        break;
+                ((MyApplication) getApplication()).setCurrentView(currentView);
 
-                    case 2:
-                        rowResource = R.layout.row_view2;
-                        imageResource = R.drawable.views_2;
-                        gridView.setNumColumns(1);
-                        break;
-                    case 3:
-                        rowResource = R.layout.row_view3;
-                        imageResource = R.drawable.views_3;
-                        gridView.setNumColumns(2);
-                        break;
-                }
-
-                buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, imageResource));
-                adapter = new AdAdapter(mContext, ads, rowResource);
-                gridView.setAdapter(adapter);
+                buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
+                gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
             }
         });
     }
@@ -118,5 +107,42 @@ public class ViewAdsActivity extends DrawerActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+    private int getButtonViewsResource() {
+
+        switch (currentView) {
+            case 1:
+                return R.drawable.views;
+
+            case 2:
+                return R.drawable.views_2;
+
+            case 3:
+                return R.drawable.views_3;
+
+            default:
+                return R.drawable.views;
+        }
+    }
+
+    private int getGridCellResource() {
+        switch (currentView) {
+            case 1:
+                gridView.setNumColumns(1);
+                return R.layout.row_view1;
+
+            case 2:
+                gridView.setNumColumns(1);
+                return R.layout.row_view2;
+
+            case 3:
+                gridView.setNumColumns(2);
+                return R.layout.row_view3;
+
+            default:
+                gridView.setNumColumns(1);
+                return R.layout.row_view1;
+        }
     }
 }

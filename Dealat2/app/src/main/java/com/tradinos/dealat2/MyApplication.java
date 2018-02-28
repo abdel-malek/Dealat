@@ -20,6 +20,7 @@ public class MyApplication extends Application {
 
     static SharedPreferences sharedPreferences;
 
+
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         sharedPreferences = getSharedPreferences("dealat", Context.MODE_PRIVATE);
@@ -98,8 +99,18 @@ public class MyApplication extends Application {
         return false;
     }
 
+    public int getCurrentView(){
+        return sharedPreferences.getInt("view", 1);
+    }
+
+    public void setCurrentView(int i){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("view", i);
+        editor.commit();
+    }
+
     public static String getBaseUrlForImages(){
         return "http://dealat.tradinos.com/";
-        //return "http://192.168.9.53/Dealat/";
+        //return "http://192.168.9.53/Dealat";
     }
 }
