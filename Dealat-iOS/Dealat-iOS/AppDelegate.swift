@@ -28,15 +28,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         
-        
         //        UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
         
                 
         Provider.isArabic = AppDelegate.isArabic()
         
+        AppDelegate.setupViews()
+        
         return true
     }
     
+    
+    
+    static func setupViews(){
+        
+        
+        if let arr =  UserDefaults.standard.value(forKey: "AppleLanguages") as? [String]{
+            if let lang = arr.first{
+                if lang.contains("ar"){
+                    UserDefaults.standard.setValue(["ar"], forKey: "AppleLanguages")
+                }else{
+                    UserDefaults.standard.setValue(["en"], forKey: "AppleLanguages")
+                }
+            }
+        }
+        
+    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let me = User.getCurrentUser()
+        
+        if Provider.getLocation() == 0 {
+            let vc = storyboard.instantiateViewController(withIdentifier: "SelectLocationVC") as! SelectLocationVC
+            appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
+        }
+            
+        else{
+            
+            if me.statues_key == User.USER_STATUES.NEW_USER.rawValue{
+                let vc = storyboard.instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
+                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
+                
+            }else if me.statues_key == User.USER_STATUES.PENDING_CODE.rawValue{
+                let vc = storyboard.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
+                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
+
+            }else if me.statues_key == User.USER_STATUES.USER_REGISTERED.rawValue{
+                let vc = storyboard.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
+                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
+            }
+            
+        }
+    }
     
     static func isArabic() -> Bool
     {
@@ -48,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return false
     }
-    
+        
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

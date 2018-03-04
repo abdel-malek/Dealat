@@ -26,5 +26,14 @@ class Location : BaseEntity {
         city_name <- map["city_name"]
 
     }
+    
+    
+    
+    func getLocName() -> String{
+        var name = ""
+        name += self.city_name != nil ? self.city_name! + " - " : ""
+        name += self.location_name != nil ? self.location_name! : ""
+        return name
+    }
 }
 

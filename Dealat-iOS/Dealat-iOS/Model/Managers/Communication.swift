@@ -24,25 +24,28 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-//    let baseImgsURL = "http://192.168.9.53/Dealat/"
+    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.53/Dealat/"
     
-    let baseURL = "http://dealat.tradinos.com/index.php/api"
-    let baseImgsURL = "http://dealat.tradinos.com/"
+    //    let baseURL = "http://dealat.tradinos.com/index.php/api"
+    //    let baseImgsURL = "http://dealat.tradinos.com/"
     
-    
-    let get_latest_adsURL = "/ads_control/get_latest_ads/format/json"
+    let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
-    let get_ads_by_main_categoryURL = "/ads_control/get_ads_by_main_category/format/json"
-    let get_ad_detailsURL = "/ads_control/get_ad_details/format/json"
+    let get_items_by_main_categoryURL = "/items_control/get_items_by_main_category/format/json"
+    let get_item_detailsURL = "/items_control/get_item_details/format/json"
     let get_nested_categoriesURL = "/categories_control/get_nested_categories/format/json"
-    let searchURL = "/ads_control/search/format/json"
-    let get_data_listsURL = "/ads_control/get_data_lists/format/json"
-    let post_new_adURL = "/ads_control/post_new_ad/format/json"
-    let get_commercial_adsURL = "/commercial_ads_control/get_commercial_ads/format/json"
+    let searchURL = "/items_control/search/format/json"
+    let get_data_listsURL = "/items_control/get_data_lists/format/json"
+    let post_new_itemURL = "/items_control/post_new_item/format/json"
+    let get_commercial_itemsURL = "/commercial_items_control/get_commercial_items/format/json"
+    
+    let users_registerURL = "/users_control/register/format/json"
+    let verifyURL = "/users_control/verify/format/json"
+    let save_user_tokenURL = "/users_control/save_user_token/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
-        let url = URL(string: baseURL + get_latest_adsURL)!
+        let url = URL(string: baseURL + get_latest_itemsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -75,7 +78,7 @@ class Communication: BaseManager {
     
     
     func get_ads_by_main_category(_ category_id : Int, callback : @escaping ([AD]) -> Void){
-        let url = URL(string: baseURL + get_ads_by_main_categoryURL)!
+        let url = URL(string: baseURL + get_items_by_main_categoryURL)!
         let params : [String : Any] = ["category_id" : category_id]
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -108,7 +111,7 @@ class Communication: BaseManager {
     }
     
     func get_ad_details(ad_id : Int,template_id : Int, callback : @escaping (AD) -> Void){
-        let url = URL(string: baseURL + get_ad_detailsURL)!
+        let url = URL(string: baseURL + get_item_detailsURL)!
         let params : [String : Any] = ["ad_id" : ad_id,"template_id" :template_id]
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -330,7 +333,7 @@ class Communication: BaseManager {
     
     func post_new_ad(category_id : Int,location_id : Int,show_period : Int,title : String,description : String,price : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
         
-        let url = URL(string: baseURL + post_new_adURL)!
+        let url = URL(string: baseURL + post_new_itemURL)!
         
         var params : [String : Any] = [:]
         for i in paramsAdditional{
@@ -391,7 +394,7 @@ class Communication: BaseManager {
     
     
     func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]!) -> Void){
-        let url = URL(string: baseURL + get_commercial_adsURL)!
+        let url = URL(string: baseURL + get_commercial_itemsURL)!
         let params : [String : Any] = ["category_id" : category_id]
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -426,7 +429,104 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
+    
+    func users_register(phone : String,name : String,location_id : Int, callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + users_registerURL)!
+        
+        let params : [String : Any] = ["phone" : phone,"name" : name,"location_id" : location_id]
+        
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    if let i = value.data, let obj = i.dictionaryObject{
+                        let newUser = User.getObject(obj)
+                        newUser.statues_key = User.USER_STATUES.PENDING_CODE.rawValue
+                        User.saveMe(me: newUser)
+                        callback(true)
+                    }
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    func verify(_ code : String, callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + verifyURL)!
+        
+        let phone : String = User.getCurrentUser().phone!
+        let params : [String : Any] = ["phone" : phone,"verification_code" : code]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    if let i = value.data, let obj = i.dictionaryObject{
+                        let newUser = User.getObject(obj)
+                        newUser.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
+                        User.saveMe(me: newUser)
+                        callback(true)
+                    }
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func save_user_token(_ token : String, callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + save_user_tokenURL)!
+        
+        let params : [String : Any] = ["token" : token,"os" : 2]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
     
     
     
@@ -453,15 +553,17 @@ class Communication: BaseManager {
         
         var headers :  [String : String] = [:]
         headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
+        headers["location"] = "\(Provider.getLocation())"
         
-        //        headers["Authorization"]  = "Basic b2xhOjgyN2NjYjBlZWE4YTcwNmM0YzM0YTE2ODkxZjg0ZTdi"
         
         if User.isRegistered(){
-            
-            //            if let t = User.getCurrentUser().token{
-            //                headers["Authorization"]  = "Bearer \(t)"
-            //            }
-            
+            let me = User.getCurrentUser()
+            if let username = me.phone, let password = me.server_key{
+                let plainString = "\(username):\(password)" as NSString
+                let plainData = plainString.data(using: String.Encoding.utf8.rawValue)
+                let base64String = plainData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                headers["Authorization"] = "Basic \(base64String!)"
+            }
         }
         
         return headers

@@ -9,6 +9,8 @@
 
 //Register
 "Register" = "Register";
+"Name" = "Name";
+"PhoneNumber" = "Phone Number";
 "EmailOrPhone" = "Email or Phone number";
 "Password" = "Password";
 "ConfirmPassword" = "Confirm password";
@@ -16,6 +18,10 @@
 "SignIn" = "Sign in";
 "Already" = "Already have an account?";
 "Skip" = "Skip";
+"Verification" =  "Verification";
+"VerificationCode" = "Verification Code";
+"Activate" = "activate";
+
 
 //SIDE MENU
 "Home" = "Home";
@@ -46,6 +52,7 @@
 "Title" = "Title";
 "ChooseCategory" = "Choose Category";
 "Price" = "Price";
+"Price SP" = "Price (S.P)";
 "AdNumber" = "Number";
 "AdDate" = "Date";
 

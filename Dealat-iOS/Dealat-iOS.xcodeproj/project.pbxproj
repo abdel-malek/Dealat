@@ -57,6 +57,8 @@
 		82E8BD0F202B143800684368 /* CommericalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD0E202B143800684368 /* CommericalCell.swift */; };
 		82E8BD13202B285100684368 /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD12202B285100684368 /* AdCell.swift */; };
 		82E8BD15202B3DB600684368 /* AdDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD14202B3DB600684368 /* AdDetailsVC.swift */; };
+		82EB4803204C134B00D25E1D /* SelectLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EB4802204C134B00D25E1D /* SelectLocationVC.swift */; };
+		82EB4805204C215600D25E1D /* VerificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EB4804204C215600D25E1D /* VerificationVC.swift */; };
 		82EF0C24202AFC8F00349107 /* AD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EF0C23202AFC8F00349107 /* AD.swift */; };
 		82F0C1E720286404008922A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C1E620286404008922A0 /* AppDelegate.swift */; };
 		82F0C1E920286404008922A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C1E820286404008922A0 /* ViewController.swift */; };
@@ -168,6 +170,8 @@
 		82E8BD0E202B143800684368 /* CommericalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommericalCell.swift; sourceTree = "<group>"; };
 		82E8BD12202B285100684368 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
 		82E8BD14202B3DB600684368 /* AdDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailsVC.swift; sourceTree = "<group>"; };
+		82EB4802204C134B00D25E1D /* SelectLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationVC.swift; sourceTree = "<group>"; };
+		82EB4804204C215600D25E1D /* VerificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationVC.swift; sourceTree = "<group>"; };
 		82EF0C23202AFC8F00349107 /* AD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AD.swift; sourceTree = "<group>"; };
 		82F0C1E320286404008922A0 /* Dealat-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dealat-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82F0C1E620286404008922A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -348,7 +352,9 @@
 			children = (
 				823547B72029A6AB003478F1 /* BaseVC.swift */,
 				82893DBB2032E480009151FC /* BaseTVC.swift */,
+				82EB4802204C134B00D25E1D /* SelectLocationVC.swift */,
 				829C214320345C3B00FFFC9B /* RegisterVC.swift */,
+				82EB4804204C215600D25E1D /* VerificationVC.swift */,
 				823547C72029C3D9003478F1 /* SideMenuVC.swift */,
 				823547BD2029AA72003478F1 /* HomeVC.swift */,
 				8267E27F20302D43007130A4 /* AdsListVC.swift */,
@@ -747,9 +753,11 @@
 				823547B82029A6AB003478F1 /* BaseVC.swift in Sources */,
 				8226F00B202883670077FA74 /* extensions.swift in Sources */,
 				824663DC203084CE00F303EA /* CategoriesVC.swift in Sources */,
+				82EB4803204C134B00D25E1D /* SelectLocationVC.swift in Sources */,
 				82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */,
 				82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */,
 				8226F017202886D50077FA74 /* Theme.swift in Sources */,
+				82EB4805204C215600D25E1D /* VerificationVC.swift in Sources */,
 				82893DB42032D7BE009151FC /* Model.swift in Sources */,
 				82E8BD13202B285100684368 /* AdCell.swift in Sources */,
 				823547C82029C3D9003478F1 /* SideMenuVC.swift in Sources */,

@@ -32,6 +32,26 @@ class Provider : BaseManager {
         return emailTest.evaluate(with: testStr)
     }
     
+    static func goToHome(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
+        let nv = UINavigationController.init(rootViewController: vc)
+        
+        appDelegate.window?.rootViewController = nv
+    }
+    
+    static func setLocation(_ location_id : Int){
+        UserDefaults.standard.set(location_id, forKey: "location_id")
+    }
+    
+    static func getLocation() -> Int{
+        if let location_id = UserDefaults.standard.value(forKey: "location_id") as? Int{
+            return location_id
+        }
+        return 0
+    }
+    
     static func getEnglishNumber(_ NumberStr : String) -> String{
         let Formatter: NumberFormatter = NumberFormatter()
         Formatter.locale = Locale(identifier: "EN")

@@ -18,6 +18,16 @@ class SideMenuVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let me = User.getCurrentUser()
+        
+        if me.statues_key != User.USER_STATUES.USER_REGISTERED.rawValue{
+            for i in btns{
+                if i.tag != 0 && i.tag < 6{
+                    i.isHidden = true
+                }
+            }
+        }
+        
     }
     
     override func setupViews() {
@@ -91,7 +101,6 @@ class SideMenuVC: BaseVC {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
         vc.isChangeLanguage = true
         let nv = UINavigationController.init(rootViewController: vc)
-        
         appDelegate.window?.rootViewController = nv
     }
     

@@ -8,6 +8,8 @@
 
 //Register
 "Register" = "تسجيل";
+"Name" = "الاسم";
+"PhoneNumber" = "رقم الهاتف";
 "EmailOrPhone" = "الإيميل أو رقم الهاتف";
 "Password" = "كلمة المرور";
 "ConfirmPassword" = "تأكيد كلمة المرور";
@@ -15,6 +17,10 @@
 "SignIn" = "تسجيل الدخول";
 "Already" = "هل لديك حساب من قبل؟";
 "Skip" = "تخطي";
+"Verification" =  "تفعيل الحساب";
+"VerificationCode" = "كود التحقق";
+"Activate" = "تفعيل";
+
 
 
 //SIDE MENU
@@ -45,6 +51,7 @@
 "Title" = "عنوان الإعلان";
 "ChooseCategory" = "اختر الفئة";
 "Price" = "السعر";
+"Price SP" = "السعر (ل.س)";
 "AdNumber" = "رقم الإعلان";
 "AdDate" = "التاريخ";
 

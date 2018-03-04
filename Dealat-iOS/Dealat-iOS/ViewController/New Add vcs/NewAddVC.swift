@@ -20,7 +20,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     @IBOutlet weak var collectionView : UICollectionView!
     var homeVC : HomeVC!
-
+    
     
     let cellIdentifier = "imageCellIdentifier"
     var images: NSArray! = []
@@ -130,6 +130,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 name += loc.city_name != nil ? loc.city_name! + " - " : ""
                 name += loc.location_name != nil ? loc.location_name! : ""
                 self.tfLocation.text = name
+            }else{
+                self.tfLocation.text = nil
             }
         }
     }
@@ -148,29 +150,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     var selectedYear : Int!{
         didSet{
-            if selectedYear != nil{
-                self.tfYear.text = self.years[selectedYear]
-            }
+            self.tfYear.text = (selectedYear != nil) ? self.years[selectedYear] : nil
         }
     }
     var selectedTransmission : Int!{
         didSet{
-            if selectedTransmission != nil{
-                self.tfTrans.text = self.transmission[selectedTransmission]
-            }
+            self.tfTrans.text = (selectedTransmission != nil) ? self.transmission[selectedTransmission] : nil
         }
     }
     var selectedStatus : Int!{
         didSet{
-            if selectedStatus != nil{
-                self.tfStatus.text = self.status[selectedStatus]
-                self.tfStatus3.text = self.status[selectedStatus]
-                self.tfStatus4.text = self.status[selectedStatus]
-                self.tfStatus5.text = self.status[selectedStatus]
-                self.tfStatus6.text = self.status[selectedStatus]
-                self.tfStatus7.text = self.status[selectedStatus]
-                self.tfStatus9.text = self.status[selectedStatus]
-            }
+            let status = (selectedStatus != nil) ? self.status[selectedStatus] : nil
+            self.tfStatus.text = status
+            self.tfStatus3.text = status
+            self.tfStatus4.text = status
+            self.tfStatus5.text = status
+            self.tfStatus6.text = status
+            self.tfStatus7.text = status
+            self.tfStatus9.text = status
         }
     }
     
@@ -216,17 +213,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     func setupViews(){
         
-//        tfDescription.placeholder = "Description".localized
-//        tfDescription.placeholderColor = .white
+        //        tfDescription.placeholder = "Description".localized
+        //        tfDescription.placeholderColor = .white
         
         
         tfDescription.text = "Description".localized
         tfDescription.delegate = self
         tfDescription.textColor = UIColor.white
         
-//        tfDescription.becomeFirstResponder()
+        //        tfDescription.becomeFirstResponder()
         tfDescription.selectedTextRange = tfDescription.textRange(from: tfDescription.beginningOfDocument, to: tfDescription.beginningOfDocument)
-
+        
         
         // CollectionView
         self.collectionView.delegate = self
@@ -483,7 +480,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             textView.text = nil
             textView.textColor = UIColor.white
         }
-
+        
         
         
         let size = textView.bounds.size
@@ -513,7 +510,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
     }
-
+    
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -1048,55 +1045,64 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
+        var cnt = 0
+        
         switch pickerView.tag {
         case 1: // Locations
-            return self.locations.count
+            cnt = self.locations.count
         case 2,13,15: // Types
-            return self.types.count
+            cnt =  self.types.count
         case 3: // Models
             if self.selectedType != nil{
-                return self.selectedType.models.count
+                cnt =  self.selectedType.models.count
             }else{
-                return 0
+                cnt =  0
             }
         case 4: // Years
-            return self.self.years.count
+            cnt =  self.self.years.count
         case 5: // Transmission
-            return self.transmission.count
+            cnt =  self.transmission.count
         case 6,14,16,17,18,19,20: // Status
-            return self.status.count
+            cnt =  self.status.count
         case 21:
-            return self.schedules.count
+            cnt =  self.schedules.count
         case 22:
-            return self.educations.count
+            cnt = self.educations.count
         default:
-            return 0
+            cnt =  0
         }
+        
+        
+        return (cnt == 0) ? 0 : cnt + 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
+        if row == 0{
+            return "select one"
+        }
+        
         switch pickerView.tag {
         case 1: // Locations
-            let loc = self.locations[row]
+            let loc = self.locations[row - 1]
             var name = ""
             name += loc.city_name != nil ? loc.city_name! + " - " : ""
             name += loc.location_name != nil ? loc.location_name! : ""
             return name
         case 2,13,15: // Types
-            return self.types[row].name
+            return self.types[row - 1].name
         case 3: // Models
-            return self.self.selectedType.models[row].name
+            return self.self.selectedType.models[row - 1].name
         case 4: // Years
-            return self.self.years[row]
+            return self.self.years[row - 1]
         case 5: // Transmission
-            return self.transmission[row]
+            return self.transmission[row - 1]
         case 6,14,16,17,18,19,20: // Status
-            return self.status[row]
+            return self.status[row - 1]
         case 21:
-            return self.schedules[row].name
+            return self.schedules[row - 1].name
         case 22:
-            return self.educations[row].name
+            return self.educations[row - 1].name
             
         default:
             return ""
@@ -1104,30 +1110,69 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
         switch pickerView.tag {
         case 1: // Locations
-            self.selectedLocation = self.locations[row]
+            if row == 0{
+                self.selectedLocation = nil
+                return
+            }
+            self.selectedLocation = self.locations[row - 1]
         case 2,13,15: // Types
-            self.selectedType = self.types[row]
+            if row == 0{
+                self.selectedType = nil
+                return
+            }
+            self.selectedType = self.types[row - 1]
         case 3: // Models
-            if let type = self.selectedType, selectedType.models.count > row{
-                self.selectedModel = type.models[row]
+            if row == 0{
+                self.selectedModel = nil
+                return
+            }
+            if let type = self.selectedType, selectedType.models.count > row - 1{
+                self.selectedModel = type.models[row - 1]
             }
         case 4: // Years
-            self.selectedYear = row
+            if row == 0{
+                self.selectedYear = nil
+                return
+            }
+            self.selectedYear = row - 1
         case 5: // Transmission
-            self.selectedTransmission = row
+            if row == 0{
+                self.selectedTransmission = nil
+                return
+            }
+            self.selectedTransmission = row - 1
         case 6,14,16,17,18,19,20: // Status
-            self.selectedStatus = row
+            if row == 0{
+                self.selectedStatus = nil
+                return
+            }
+            self.selectedStatus = row - 1
         case 21:
-            self.selectedSchedule = self.schedules[row]
+            if row == 0{
+                self.selectedSchedule = nil
+                return
+            }
+            self.selectedSchedule = self.schedules[row - 1]
         case 22:
-            self.selectedEducation = self.educations[row]
+            if row == 0{
+                self.selectedEducation = nil
+                return
+            }
+            self.selectedEducation = self.educations[row - 1]
         default:
             break
         }
     }
     
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if row == 0{
+            return NSAttributedString.init(string: "select one", attributes: [NSAttributedStringKey.foregroundColor : UIColor.lightGray])
+        }
+        return nil
+    }
     
     
 }
