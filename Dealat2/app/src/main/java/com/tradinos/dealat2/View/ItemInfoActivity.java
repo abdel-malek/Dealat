@@ -145,7 +145,7 @@ public class ItemInfoActivity extends MasterActivity {
         spinnerPeriod.setAdapter(new ItemAdapter(mContext, showPeriods));
 
 
-        int startYear = 1990;
+        int startYear = 1980;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         List<Item> years = new ArrayList<>();
         years.add(Item.getNoItem());
@@ -603,27 +603,15 @@ public class ItemInfoActivity extends MasterActivity {
         }
     }
 
-    private boolean inputIsEmpty(EditText editText) {
-        if (TextUtils.isEmpty(editText.getText().toString()))
-            return true;
-        return false;
-    }
-
-    private String stringInput(EditText editText) {
-        return String.valueOf(editText.getText());
-    }
-
-
     @Override
     public void onBackPressed() {
 
-        if (popupWindow != null && popupWindow.isShowing()){
+        if (popupWindow != null && popupWindow.isShowing()) {
             popupBitmap.recycle();
             popupWindow.dismiss();
             popupWindow = null;
             popupBitmap = null;
-        }
-        else {
+        } else {
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override

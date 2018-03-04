@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -128,8 +129,8 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         mController = new Controller(this, new FaildCallback() {
             @Override
             public void OnFaild(Code errorCode, String Message, String data) {
-               // if(findViewById(R.id.refreshLayout) != null)
-                  //  ((SwipeRefreshLayout)findViewById(R.id.refreshLayout)).setRefreshing(false);
+                if(findViewById(R.id.refreshLayout) != null)
+                    ((SwipeRefreshLayout)findViewById(R.id.refreshLayout)).setRefreshing(false);
 
                 if (findViewById(R.id.parentPanel) != null)
                     Snackbar.make(findViewById(R.id.parentPanel), Html.fromHtml(Message), Snackbar.LENGTH_LONG).show();
@@ -326,6 +327,16 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
+    protected boolean inputIsEmpty(EditText editText) {
+        if (TextUtils.isEmpty(editText.getText().toString()))
+            return true;
+        return false;
+    }
+
+    protected String stringInput(EditText editText) {
+        return String.valueOf(editText.getText());
+    }
+
     protected double doubleEditText(EditText editText) throws ParseException {
         // need to assign Local
         // so in US, comma is treated as grouping (thousand) separator
@@ -338,7 +349,6 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM");
-      //  SimpleDateFormat timeWithoutSeconds = new SimpleDateFormat("hh:mm a");
         DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH); //time without seconds
 
         Calendar calendar = Calendar.getInstance();

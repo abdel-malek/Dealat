@@ -60,10 +60,11 @@ public class SubCategoriesActivity extends MasterActivity {
             category.setSubCategories(application.getSubCatsById(category.getId()));
             category.addSubCat(all);
         } else if (action == ACTION_SELECT_CAT) {
-            if (!category.getId().equals("0")) //this check is really not necessary
+            if (!category.getId().equals("0")){
                 buttonBack.setVisibility(View.VISIBLE);
+                category = MyApplication.getCategoryById(category.getParentId());
+            }
 
-            category = MyApplication.getCategoryById(category.getParentId());
             category.setSubCategories(application.getSubCatsById(category.getId()));
         }
 
@@ -110,6 +111,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
                     } else if (action == ACTION_VIEW) {
                         intent = new Intent(mContext, ViewAdsActivity.class);
+                        intent.putExtra("action", ViewAdsActivity.ACTION_VIEW);
                         intent.putExtra("category", category);
                         startActivity(intent);
 

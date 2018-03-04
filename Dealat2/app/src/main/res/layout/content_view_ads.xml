@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.tradinos.dealat2.View.DrawerActivity"
+    tools:showIn="@layout/app_bar_view_ads">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <include layout="@layout/pager_commercial" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        >
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"
-            />
-    </FrameLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/container"
+        android:layout_above="@+id/container2"
+        android:id="@+id/refreshLayout">
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/container"
-        android:layout_above="@+id/container2"
-        android:layout_margin="4dp"
         android:columnWidth="100dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="4dp"
         android:horizontalSpacing="4dp"
         android:gravity="center"
         />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/container2"
@@ -65,6 +54,8 @@
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/whiteTransparent"
             style="@style/TextAppearance.AppCompat.Caption"
             />
@@ -78,8 +69,10 @@
             />
 
         <Button
+            android:id="@+id/buttonTrue"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:onClick="onClick"
             android:text="@string/buttonFilter"
             android:textColor="@color/white"
             android:textAppearance="@style/textNormal"
@@ -109,6 +102,7 @@
             android:layout_width="@dimen/imageXSmall"
             android:layout_height="@dimen/imageXSmall"
             android:layout_margin="4dp"
+            android:visibility="invisible"
             android:scaleType="fitCenter"
             android:background="@null"
             android:src="@drawable/star_copy"

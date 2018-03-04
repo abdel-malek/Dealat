@@ -1,17 +1,31 @@
 package com.tradinos.dealat2.View;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Adapter.CommercialAdapter;
+import com.tradinos.dealat2.Controller.CommercialAdsController;
+import com.tradinos.dealat2.Model.CommercialAd;
 import com.tradinos.dealat2.R;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class DrawerActivity extends MasterActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int currentPage =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,5 +90,42 @@ public abstract class DrawerActivity extends MasterActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected void getCommercialAds(String categoryId){
+        final ViewPager commercialPager = (ViewPager) findViewById(R.id.viewpager);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+        CommercialAdsController.getInstance(mController).getCommercialAds(categoryId, new SuccessCallback<List<CommercialAd>>() {
+            @Override
+            public void OnSuccess(final List<CommercialAd> result) {
+                HideProgressDialog();
+                if(findViewById(R.id.refreshLayout) != null)
+                    ((SwipeRefreshLayout)findViewById(R.id.refreshLayout)).setRefreshing(false);
+
+                CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
+                commercialPager.setAdapter(commercialAdapter);
+
+                tabLayout.setupWithViewPager(commercialPager);
+
+                final Handler handler = new Handler();
+                final Runnable update = new Runnable() {
+                    public void run() {
+                        if (currentPage == result.size()) {
+                            currentPage = 0;
+                        }
+                        commercialPager.setCurrentItem(currentPage++, true);
+                    }
+                };
+
+                new Timer().schedule(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        handler.post(update);
+                    }
+                }, 100, 5000);
+            }
+        });
     }
 }

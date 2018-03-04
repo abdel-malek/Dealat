@@ -17,13 +17,13 @@ public enum APIModel {
                 return "users" ;
 
             case ads:
-                return "ads_control";
+                return "items_control";
 
             case categories:
                 return "categories_control";
 
             case commercialAds:
-                return "commercial_ads_control";
+                return "commercial_items_control";
 
             default:
                 return  "" ;

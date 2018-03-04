@@ -162,6 +162,9 @@ public class SelectImagesActivity extends MasterActivity {
                 adapter = new ImageAdapter(mContext, getAllShownImagesPath());
                 gridView.setAdapter(adapter);
             }
+            else { // to avoid NullPointerException in case Done is clicked
+                adapter = new ImageAdapter(mContext, new ArrayList<Image>());
+            }
         }
     }
 

@@ -29,8 +29,14 @@ public class Category implements Serializable {
 
         category.setId("0");
         category.setParentId("-1");
+        category.setTemplateId(BASIC);
+        category.setName("");
 
         return category;
+    }
+
+    public boolean isMain(){
+        return this.id.equals("0");
     }
 
     public String getId() {
@@ -50,7 +56,7 @@ public class Category implements Serializable {
     }
 
     public String getFullName() {
-        if (parentId.equals("0"))
+        if (parentId.equals("0") || parentId.equals("-1"))
             return this.name;
         return MyApplication.getCategoryById(this.parentId).getFullName() + " - " + this.name;
     }

@@ -26,17 +26,18 @@
                 android:id="@+id/buttonFav"
                 android:layout_width="@dimen/imageSmall"
                 android:layout_height="@dimen/imageSmall"
-                android:layout_gravity="bottom|end"
                 android:layout_margin="8dp"
+                android:layout_gravity="bottom|end"
+                android:padding="4dp"
                 android:scaleType="fitCenter"
-                android:background="@null"
+                android:background="@drawable/circel_white_transparent"
+                android:src="@drawable/star_gray"
                 />
         </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="8dp"
             >
             <TextView
@@ -49,9 +50,14 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@+id/textViewDate"
                 android:layout_below="@+id/textViewPrice"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
                 android:textColor="@color/grayDark"
                 />
 

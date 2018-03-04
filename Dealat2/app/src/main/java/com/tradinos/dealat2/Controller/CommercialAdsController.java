@@ -32,7 +32,7 @@ public class CommercialAdsController extends ParentController {
     }
 
     public void getCommercialAds(String categoryId, SuccessCallback<List<CommercialAd>> successCallback){
-        String url = new URLBuilder(APIModel.commercialAds, "get_commercial_ads").getURL(getmContext());
+        String url = new URLBuilder(APIModel.commercialAds, "get_commercial_items").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new CommercialAdListParser(), successCallback,getmFaildCallback());
 
         request.addParameter("category_id", categoryId);

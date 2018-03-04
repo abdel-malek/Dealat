@@ -45,8 +45,15 @@
             android:windowSoftInputMode="adjustPan"
             />
 
-        <activity android:name=".View.ViewAdsActivity"/>
+        <activity android:name=".View.ViewAdsActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
 
+        <activity android:name=".View.FilterActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        <activity android:name=".View.AdDetailsActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

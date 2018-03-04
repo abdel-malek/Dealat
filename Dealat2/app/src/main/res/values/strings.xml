@@ -45,6 +45,10 @@
     <string name="labelSelectSch">Select Schedule</string>
     <string name="labelManufactureYear">Manufacturing Year</string>
     <string name="labelShowPeriod">Show Period</string>
+    <string name="labelTo">To</string>
+    <string name="labelFrom">From</string>
+    <string name="labelTransmission">Transmission</string>
+    <string name="labelFurnished">Furnished</string>
 
 
     <string name="hintEmailPhone">Email or Phone Number</string>
@@ -78,6 +82,7 @@
     <string name="buttonDelete">Delete</string>
     <string name="buttonBack">Back</string>
     <string name="buttonFilter">Filter</string>
+    <string name="buttonShow">Show</string>
 
     <string name="title_activity_drawer">DrawerActivity</string>
 

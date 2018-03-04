@@ -20,17 +20,22 @@
 
             <TextView
                 android:id="@+id/textViewPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textColor="@color/red"
                 style="@style/textHeadline"
                 />
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewPrice"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAlignment="viewStart"
                 android:textColor="@color/grayDark"
                 />
 
@@ -71,8 +76,10 @@
                 android:layout_height="@dimen/imageSmall"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="8dp"
+                android:padding="4dp"
                 android:scaleType="fitCenter"
-                android:background="@null"
+                android:background="@drawable/circel_white_transparent"
+                android:src="@drawable/star_gray"
                 />
         </FrameLayout>
 

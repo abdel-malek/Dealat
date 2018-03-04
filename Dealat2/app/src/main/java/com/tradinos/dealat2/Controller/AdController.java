@@ -12,6 +12,7 @@ import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.TemplatesData;
+import com.tradinos.dealat2.Parser.Parser.Ad.AdDetailsParser;
 import com.tradinos.dealat2.Parser.Parser.Ad.AdListParser;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
 import com.tradinos.dealat2.Parser.Parser.TemplatesDataParser;
@@ -41,7 +42,7 @@ public class AdController extends ParentController {
     }
 
     public void uploadImage(File image, SuccessCallback<String> successCallback){
-        String url = new URLBuilder(APIModel.ads, "ad_images_upload").getURL(getmContext());
+        String url = new URLBuilder(APIModel.ads, "item_images_upload").getURL(getmContext());
         PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
 
         request.addFileUpload(image);
@@ -59,7 +60,7 @@ public class AdController extends ParentController {
     }
 
     public void submitAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback){
-        String url = new URLBuilder(APIModel.ads, "post_new_ad").getURL(getmContext());
+        String url = new URLBuilder(APIModel.ads, "post_new_item").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
 
         for (Map.Entry<String, String> entry : parameters.entrySet())
@@ -77,10 +78,30 @@ public class AdController extends ParentController {
     }
 
     public void getCategoryAds(String categoryId, SuccessCallback<List<Ad>> successCallback){
-        String url = new URLBuilder(APIModel.ads, "get_ads_by_main_category").getURL(getmContext());
+        String url = new URLBuilder(APIModel.ads, "get_items_by_main_category").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
 
         request.addParameter("category_id", categoryId);
+
+        request.Call();
+    }
+
+    public void getAdDetails(String adId, String templateId, SuccessCallback<Ad> successCallback){
+        String url = new URLBuilder(APIModel.ads, "get_item_details").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdDetailsParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("ad_id", adId);
+        request.addParameter("template_id", templateId);
+
+        request.Call();
+    }
+
+    public void search(HashMap<String, String> parameters, SuccessCallback<List<Ad>> successCallback){
+        String url = new URLBuilder(APIModel.ads, "search").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
+
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
 
         request.Call();
     }

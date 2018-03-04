@@ -55,14 +55,14 @@ public class AdAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            if (resourceLayout == R.layout.row_view2 && (i % 2 != 0))
-                view = this.inflater.inflate(R.layout.row_view2_left, null);
-            else
-                view = this.inflater.inflate(resourceLayout, null);
+        //  if (view == null) {
+        if (resourceLayout == R.layout.row_view2 && (i % 2 != 0))
+            view = this.inflater.inflate(R.layout.row_view2_left, null);
+        else
+            view = this.inflater.inflate(resourceLayout, null);
 
-            view.setTag(new ViewHolder(view));
-        }
+        view.setTag(new ViewHolder(view));
+        //}
 
         initializeView(getItem(i), (ViewHolder) view.getTag());
 

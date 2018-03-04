@@ -1,9 +1,10 @@
 package com.tradinos.dealat2.View;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,63 +29,95 @@ import java.util.List;
 
 public class ViewAdsActivity extends DrawerActivity {
 
-    private int currentPage = 0, currentView;
+    public static final int ACTION_SEARCH = 1, ACTION_VIEW = 2;
+
+    private int currentView, action;
 
     private Category selectedCategory;
+    private int currentTemplate;
     private List<Ad> ads = new ArrayList<>();
-
-    private AdAdapter adapter;
+    private HashMap<String, String> searchParameters = new HashMap<>();
 
     // views
-    private ViewPager commercialPager;
     private GridView gridView;
     private ImageButton buttonViews;
-    ImageView imageViewCategory;
+    private ImageView imageViewCategory;
+    private TextView textViewCategory;
+    private SwipeRefreshLayout refreshLayout;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_view_ads);
         super.onCreate(savedInstanceState);
-
-        //   TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        // tabLayout.setupWithViewPager(commercialPager);
     }
 
     @Override
     public void getData() {
-        selectedCategory = (Category) getIntent().getSerializableExtra("category");
-
         // if preference isn't exist, the default view is 1
         currentView = ((MyApplication) getApplication()).getCurrentView();
 
-        ShowProgressDialog();
-        AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
-            @Override
-            public void OnSuccess(List<Ad> result) {
-                HideProgressDialog();
-                ads = result;
+        selectedCategory = (Category) getIntent().getSerializableExtra("category");
+        currentTemplate = selectedCategory.getTemplateId();
 
-                gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
-            }
-        });
+        action = getIntent().getIntExtra("action", 0);
+
+        if (action == ACTION_SEARCH)
+            searchParameters = (HashMap<String, String>) getIntent().getSerializableExtra("parameters");
+
+        getAds();
+    }
+
+    private void getAds() {
+        if (!refreshLayout.isRefreshing())
+            ShowProgressDialog();
+
+        if (action == ACTION_SEARCH) {
+            AdController.getInstance(mController).search(searchParameters, new SuccessCallback<List<Ad>>() {
+                @Override
+                public void OnSuccess(List<Ad> result) {
+
+                    ads = result;
+                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+
+                    getCommercialAds(selectedCategory.getId());
+                }
+            });
+
+        } else if (action == ACTION_VIEW) {
+
+            AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
+                @Override
+                public void OnSuccess(List<Ad> result) {
+
+                    ads = result;
+                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+
+                    getCommercialAds(selectedCategory.getId());
+                }
+            });
+        }
     }
 
     @Override
     public void showData() {
+
         imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,
                 getTemplateDefaultImage(selectedCategory.getTemplateId())));
 
-        ((TextView)findViewById(R.id.textView)).setText(selectedCategory.getFullName());
+        textViewCategory.setText(selectedCategory.getFullName());
 
         buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
     }
 
     @Override
     public void assignUIReferences() {
-        commercialPager = (ViewPager) findViewById(R.id.viewpager);
         gridView = (GridView) findViewById(R.id.gridView);
         buttonViews = (ImageButton) findViewById(R.id.buttonViews);
         imageViewCategory = (ImageView) findViewById(R.id.imageView);
+        textViewCategory = (TextView) findViewById(R.id.textView);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        searchView = (SearchView) findViewById(R.id.searchView);
     }
 
     @Override
@@ -102,11 +136,64 @@ public class ViewAdsActivity extends DrawerActivity {
                 gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchParameters.clear();
+                searchParameters.put("query", query);
+
+                if (!selectedCategory.isMain())
+                    searchParameters.put("category_id", selectedCategory.getId());
+
+                action = ACTION_SEARCH;
+
+                getAds();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(true);
+                getAds();
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.buttonTrue) { //Filter
+            Intent intent = new Intent(mContext, FilterActivity.class);
+            intent.putExtra("category", selectedCategory);
 
+            startActivityForResult(intent, ACTION_SEARCH);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+            if (requestCode == ACTION_SEARCH) {
+                selectedCategory = (Category) data.getSerializableExtra("category");
+                searchParameters = (HashMap<String, String>) data.getSerializableExtra("parameters");
+
+                if (currentTemplate != selectedCategory.getTemplateId()){
+                    imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,
+                            getTemplateDefaultImage(selectedCategory.getTemplateId())));
+
+                    textViewCategory.setText(selectedCategory.getFullName());
+                }
+
+                action = ACTION_SEARCH;
+                getAds();
+            }
     }
 
     private int getButtonViewsResource() {

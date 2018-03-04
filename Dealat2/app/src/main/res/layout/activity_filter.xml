@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_blur"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/buttonTrue"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp"
+            >
+
+            <EditText
+                android:id="@+id/editQuery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/hintSearch"
+                style="@style/editTextWhite"
+                android:backgroundTint="@color/white"
+                />
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:completionThreshold="1"
+                android:dropDownHeight="140dp"
+                android:hint="@string/hintChooseLocation"
+                style="@style/editTextWhite"
+                android:backgroundTint="@color/white"
+                />
+
+            <EditText
+                android:id="@+id/editCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/labelchooseCategory"
+                android:textIsSelectable="true"
+                style="@style/editTextWhite"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hintPrice"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editPriceMin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editPriceMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <!-- Templates -->
+
+            <TextView
+                android:id="@+id/textBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelSelectBrand"
+                android:textColor="@color/white"
+                style="@style/textHeadline"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelSelectModel"
+                android:textColor="@color/white"
+                style="@style/textHeadline"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelManufactureYear"
+                android:textColor="@color/white"
+                style="@style/textHeadline"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textTransmission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelTransmission"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerTransmission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textKilo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintKilometer"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerKilometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editKilometerMin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editKilometerMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <!-- -->
+
+            <CheckBox
+                android:id="@+id/checkboxSecondhand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:text="@string/labelSecondhand"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintSize"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editSizeMin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editSizeMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <!-- -->
+
+            <TextView
+                android:id="@+id/textEdu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelSelectEdu"
+                android:textColor="@color/white"
+                style="@style/textHeadline"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerEdu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textSch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelSelectSch"
+                android:textColor="@color/white"
+                style="@style/textHeadline"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerSch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintSalary"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editSalaryMin"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editSalaryMax"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <!-- properties -->
+
+            <TextView
+                android:id="@+id/textSpace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintSpace"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerSpace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editSpaceMin"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editSpaceMax"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textRooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintRooms"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerRooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editRoomsMin"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editRoomsMax"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textFloor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintFloors"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerFloors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textFrom"
+                    />
+
+                <EditText
+                    android:id="@+id/editFloorsMin"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelFrom"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/textTo"
+                    />
+
+                <EditText
+                    android:id="@+id/editFloorsMax"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/labelTo"
+                    style="@style/editTextWhite"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textFurn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelFurnished"
+                style="@style/textHeadline"
+                android:textColor="@color/white"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerFurn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonTrue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="onClick"
+        android:text="@string/buttonShow"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        />
+
+</RelativeLayout>

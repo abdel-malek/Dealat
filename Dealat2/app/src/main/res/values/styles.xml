@@ -27,6 +27,17 @@
         <item name="android:fontFamily">calibri</item>
     </style>
 
+    <style name="textFrom" parent="textNormal">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">@string/labelFrom</item>
+    </style>
+
+    <style name="textTo" parent="textNormal">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:text">@string/labelTo</item>
+    </style>
+
     <style name="noTitleTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
