@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . '/libraries/REST_Controller.php';
 
-class Ads_control extends REST_Controller {
+class Items_control extends REST_Controller {
 
 	function __construct() {
 		parent::__construct();
@@ -11,20 +11,20 @@ class Ads_control extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 	}
 	
-	public function get_latest_ads_get()
+	public function get_latest_items_get()
 	{
     	$ads_list  = $this->ads->get_latest_ads($this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
 	
-	public function get_ads_by_main_category_get()
+	public function get_items_by_main_category_get()
 	{
 		$main_category_id = $this->input->get('category_id');
 		$ads_list = $this->ads->get_ads_by_category($main_category_id , $this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
 	
-	public function get_ad_details_get()
+	public function get_item_details_get()
 	{
 		$ad_id = $this->input->get('ad_id');
 		$tamplate_id = $this->input->get('template_id');
@@ -32,7 +32,7 @@ class Ads_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
 	}
 
-    public function post_new_ad_post()
+    public function post_new_item_post()
     {
         $this->load->model('data_sources/categories');
      // $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
@@ -76,7 +76,7 @@ class Ads_control extends REST_Controller {
 		}
     }
 
-    public function ad_images_upload_post()
+    public function item_images_upload_post()
 	  {
 	 //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
 	     $image_name = date('m-d-Y_hia').'-'.'1';

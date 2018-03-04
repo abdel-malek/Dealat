@@ -5,6 +5,7 @@
 	              <div class="title_left">
 	                 <h3><b id="pending_label"><?php echo $this->lang->line('users_ads_list') ?></b></h3>  
 	              </div>
+	        
 	              	 <!-- filter form -->
 		             <div class="row" id="filter_panel">
 		              <div class="col-md-12 col-sm-12 col-xs-12">

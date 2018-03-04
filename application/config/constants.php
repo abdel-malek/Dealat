@@ -38,7 +38,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
 // my constanats
-define('ADS_IMAGES_PATH', '/ads_images/');
+define('ADS_IMAGES_PATH', '/items_images/');
 define('CATEGORIES_IMAGES_WEB_PATH', '/assets/images/Categories/web/');
 define('CATEGORIES_IMAGES_MOBILE_PATH', '/assets/images/Categories/mobile/');
 

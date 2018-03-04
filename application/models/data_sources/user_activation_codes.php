@@ -35,4 +35,37 @@ class User_activation_codes extends MY_Model {
 		}
 	}
 	
+	public function generate_activation_code() {
+
+        $digites = '0123456789';
+        $randomString = $digites[rand(0, strlen($digites) - 1)]
+                . $digites[rand(0, strlen($digites) - 1)]
+                . $digites[rand(0, strlen($digites) - 1)]
+                . $digites[rand(0, strlen($digites) - 1)]
+                . $digites[rand(0, strlen($digites) - 1)]
+                . $digites[rand(0, strlen($digites) - 1)]
+        ;
+
+        return $randomString;
+    }
+
+    public function send_code_to_email($email , $code)
+    {
+    	$this->email->set_mailtype('html');
+	    $this->email->from('ola.mh237@gmail.com','Dealat Team');
+	    $this->email->to($email);
+	    $this->email->subject('Dealat Activation Code');
+		
+	    $msg = $this->lang->line('verification_sms').'<p><b> '.$code. '</b></p>';
+		
+	    $this->email->message($msg);
+	    $result = $this->email->send();
+	
+	    if ($result){
+	        return true;
+	    } else {
+	        return false;  
+	    }
+    }
+	
 }

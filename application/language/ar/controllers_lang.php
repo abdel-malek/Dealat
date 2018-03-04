@@ -18,4 +18,8 @@ $lang['price'] = 'السعر';
 $lang['title'] = 'العنوان';
 
 
+// sms validation msg 
+$lang['verification_msg'] = '<p> مرحبًا بك في ديلات.</p><p> رمز التفعيل الخاص بك هو</p>';
+
+
 

@@ -184,11 +184,11 @@ $config['auth_override_class_method']['home_control']['load_ads_by_category_page
 $config['auth_override_class_method']['home_control']['load_subcategories_div'] = 'none';
 $config['auth_override_class_method']['home_control']['index'] = 'none';
 $config['auth_override_class_method']['search_control']['index'] = 'none';
-$config['auth_override_class_method']['ads_control']['get_latest_ads'] = 'none';
-$config['auth_override_class_method']['ads_control']['get_ads_by_main_category'] = 'none';
-$config['auth_override_class_method']['ads_control']['get_ad_details'] = 'none';
-$config['auth_override_class_method']['ads_control']['search'] = 'none';
-$config['auth_override_class_method']['ads_control']['get_data_lists'] = 'none';
+$config['auth_override_class_method']['items_control']['get_latest_items'] = 'none';
+$config['auth_override_class_method']['items_control']['get_items_by_main_category'] = 'none';
+$config['auth_override_class_method']['items_control']['get_item_details'] = 'none';
+$config['auth_override_class_method']['items_control']['search'] = 'none';
+$config['auth_override_class_method']['items_control']['get_data_lists'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';
@@ -197,17 +197,17 @@ $config['auth_override_class_method']['users_control_web']['change_language'] = 
 $config['auth_override_class_method']['users_control']['index'] = 'none';
 $config['auth_override_class_method']['users_control']['register'] = 'none';
 $config['auth_override_class_method']['users_control']['verify'] = 'none';
-$config['auth_override_class_method']['commercial_ads_control']['get_commercial_ads'] = 'none';
+$config['auth_override_class_method']['commercial_items_control']['get_commercial_items'] = 'none';
 
 //to be deleted 
-$config['auth_override_class_method']['ads_control']['post_new_ad'] = 'none';
-$config['auth_override_class_method']['ads_control']['delete_images'] = 'none';
-$config['auth_override_class_method']['ads_control']['ad_images_upload'] = 'none';
-$config['auth_override_class_method']['ads_control']['get_data'] = 'none';
-$config['auth_override_class_method']['ads_control']['action'] = 'none';
+$config['auth_override_class_method']['items_control']['post_new_item'] = 'none';
+$config['auth_override_class_method']['items_control']['delete_images'] = 'none';
+$config['auth_override_class_method']['items_control']['item_images_upload'] = 'none';
+$config['auth_override_class_method']['items_control']['get_data'] = 'none';
+$config['auth_override_class_method']['items_control']['action'] = 'none';
 $config['auth_override_class_method']['categories_manage']['index'] = 'none';
-$config['auth_override_class_method']['ads_manage']['index'] = 'none';
-$config['auth_override_class_method']['ads_manage']['all_ads'] = 'none';
+$config['auth_override_class_method']['items_manage']['index'] = 'none';
+$config['auth_override_class_method']['items_manage']['all'] = 'none';
 
 
 // ---Uncomment list line for the wildard unit test

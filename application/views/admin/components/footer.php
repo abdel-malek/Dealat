@@ -75,6 +75,9 @@
     
     <!-- vars --> 
 
+   <!--  slick slider  -->
+   <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
+   
     
     <!-- my js -->
     <script src="<?php echo base_url() ?>admin_assets/js/general.js"></script>

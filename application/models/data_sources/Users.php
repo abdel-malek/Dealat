@@ -25,24 +25,25 @@ class Users extends MY_Model {
 				   -> get() 
 				   -> row();
 	   }
-	}
+    }
 	 
 	 
    public function register($data , $account_type = ACCOUNT_TYPE::MOBILE) {
    	    $this->load->model('data_sources/user_activation_codes');
         $user = $this->get_by(array('phone'=>$data['phone']) , true);
 		$new_user_id = null;
+		$code = null;
+		$user_activation_id = null;
         if ($user) {
             $user_id  = $user->user_id;
-			$code = $this->generate_activation_code();
-		    $this->user_activation_codes->add_new_for_user($code , $user_id);
+			$code = $this->user_activation_codes->generate_activation_code();
+		    $user_activation_id = $this->user_activation_codes->add_new_for_user($code , $user_id);
 		    if($user->account_type != $account_type && $user->account_type !=  ACCOUNT_TYPE::BOTH){
 		    	$data['account_type'] = ACCOUNT_TYPE::BOTH;
 		    }
-            $new_user_id = $this->save($data , $user_id);
+            $new_user_id = $this->save($data , $user_id);			
             //$this->send_sms->send_sms($phone, $this->lang->line('verification_sms') . $code);
         } else {
-            $code = $this->generate_activation_code();
 			$data['account_type'] = $account_type;
 			if($account_type == ACCOUNT_TYPE::MOBILE){
 			    $server_key = uniqid();
@@ -52,11 +53,23 @@ class Users extends MY_Model {
 				$data['server_key'] =  md5($server_key);
 		    }
             $new_user_id = $this->save($data);
-			$this->user_activation_codes->add_new_for_user($code , $new_user_id);
+		    $code = $this->user_activation_codes->generate_activation_code();
+			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
             //$this->send_sms->send_sms($phone, $this->lang->line('verification_sms') . $code);
         }
-        $user = $this->get($new_user_id);
-        return $user;
+		
+		// send verification code to email.
+	    if($user_activation_id){
+			$email_sent = $this->user_activation_codes->send_code_to_email('olamahmalji@hotmail.com' , $code);
+			if($email_sent){
+				 $user = $this->get($new_user_id);
+                 return $user;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
     }
 
    public function verify($phone , $code)
@@ -80,20 +93,6 @@ class Users extends MY_Model {
 	  	return false; 
 	  }
    }
-
-    function generate_activation_code() {
-
-        $digites = '0123456789';
-        $randomString = $digites[rand(0, strlen($digites) - 1)]
-                . $digites[rand(0, strlen($digites) - 1)]
-                . $digites[rand(0, strlen($digites) - 1)]
-                . $digites[rand(0, strlen($digites) - 1)]
-                . $digites[rand(0, strlen($digites) - 1)]
-                . $digites[rand(0, strlen($digites) - 1)]
-        ;
-
-        return $randomString;
-    }
 	
 	
 

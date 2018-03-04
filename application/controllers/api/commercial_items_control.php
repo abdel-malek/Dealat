@@ -11,7 +11,7 @@ class Commercial_ads_control extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 	}
 	
-	public function get_commercial_ads_get($value='')
+	public function get_commercial_items_get($value='')
 	{
 		if($this->input->get('category_id') == null){
 			throw new Parent_Exception('category id is required');

@@ -9,11 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Dealat</title>
+    
+    <script type="text/javascript">
+		var base_url = "<?php echo base_url() . 'index.php'; ?>";
+		var site_url = "<?php echo base_url() ; ?>";
+		var lang = "<?php echo $this->session->userdata('language') ?>";
+	</script>
 
     <!-- Bootstrap -->
     <link href="<?php echo base_url() ?>admin_assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- <link href="<?php echo base_url() ?>admin_assets/css/rtl.css" rel="stylesheet"> arabic layout -->
+    <?php if($this->session->userdata('language') == "ar"):?>
+    	 <link href="<?php echo base_url() ?>admin_assets/css/rtl.css" rel="stylesheet"> 
+    <?php endif; ?>
+    
     <!-- Font Awesome -->
     <link href="<?php echo base_url() ?>admin_assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
@@ -43,14 +52,16 @@
 
     <!-- Custom Theme Style -->
     <!-- <link href="<?php echo base_url() ?>admin_assets/build/css/custom.min.css" rel="stylesheet">  arabic layout --> 
-    <link href="<?php echo base_url() ?>admin_assets/build/css/en/custom.min.css" rel="stylesheet">
+    <?php if($this->session->userdata('language') == "ar"):?>
+    	 <link href="<?php echo base_url() ?>admin_assets/build/css/custom.min.css" rel="stylesheet">
+    <?php else: ?>
+    	 <link href="<?php echo base_url() ?>admin_assets/build/css/en/custom.min.css" rel="stylesheet">
+    <?php endif;?>
     
     <!-- datepicker -->
     <link href="<?php echo base_url() ?>admin_assets/datepicker/datepicker.min.css" rel="stylesheet">
 
     <link href="<?php echo base_url() ?>admin_assets/css/general.css" rel="stylesheet">
-    
-    <script type="text/javascript" >var base_url ="<?php echo base_url(). 'index.php'; ?>";</script>
   </head>
 
   <body class="nav-md">

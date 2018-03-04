@@ -54,7 +54,7 @@ class Users_control extends REST_Controller {
 				$this->response(array('status' => false, 'data' => $user, "message" => $this->lang->line('failed')));
 			}
         }
-     }
+    }
 	
 	public function save_user_token_post()
 	{

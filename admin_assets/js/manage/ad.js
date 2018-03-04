@@ -7,7 +7,7 @@ var status_array;
  	
  	// get templates attrbutes. 
  	 $.ajax({
-        url: base_url + '/api/ads_control/get_data/format/json',
+        url: base_url + '/api/items_control/get_data/format/json',
         type: "get",
         dataType: "json",
         success: function(response) {
@@ -48,7 +48,7 @@ var status_array;
 			 },
              "bServerSide": false,
              aaSorting : [[0, 'desc']],
-             "sAjaxSource": base_url + '/admin/ads_manage/all/format/json',
+             "sAjaxSource": base_url + '/admin/items_manage/all/format/json',
              "columnDefs": [
                  {
                     "targets": -1, // details
@@ -73,6 +73,10 @@ var status_array;
         }();
 
        ads_TableManageButtons.init();  
+       
+       
+       
+       
  	
  });
 
@@ -102,7 +106,9 @@ var status_array;
  	  console.log(tamplate_id);
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.ads_details  .template_info').css('display', 'none');
- 	  var url =  base_url + '/api/ads_control/get_ad_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
+ 	  //$('.images-slider').css('display', 'none');
+ 	  $('.images-slider').empty();
+ 	  var url =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
         url: url,
         type: "get",
@@ -115,6 +121,24 @@ var status_array;
             if($item_info['description'] != null){
                $('.ads_details  #ad_description').html($item_info['description']);	
             } 
+            // image slider 
+             var main_image = $item_info['main_image'];
+             $('.images-slider').append('<div> <img style="margin: auto; height:100%" src="'+site_url+main_image+'"  alt=""></div>');
+             
+             var images = $item_info['images'];
+            // console.log(images);
+             if(images.length != 0){ // not empty
+             //  $('.images-slider').css('display', 'inline');
+               var str ='';
+               $.each( images, function( key, value ) {	
+               	   //console.log(value);
+               	   str +='<div>'; 
+               	   str +='<img   style="margin: auto; height:100%" src="'+site_url+value.image+'"  alt="">'; 
+               	   str += '</div>';
+               });
+               //console.log(str);
+                $('.images-slider').append(str);
+             }
       
             // fill deteilad basic info
             $('.ads_details  #ad_creation_date').html($item_info['created_at']);
@@ -154,12 +178,16 @@ var status_array;
             	}
 			});
 			
+			
 			//fill seller info
 			$('.ads_details  #ad_seller_name').html($item_info['seller_name']);
 			$('.ads_details  #ad_seller_phone').html($item_info['seller_phone']);
             
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             $('.ads_details').modal('show');
+            setTimeout(function () {
+                $(".images-slider").slick("refresh");
+            }, 200);
         },error: function(xhr, status, error){
         	new PNotify({
                   title: 'Oh no, Error',
@@ -173,6 +201,13 @@ var status_array;
         }
       });
  }
+ 
+ $('.ads_details').on('hidden.bs.modal', function () {
+      $('.ads_details  .template_info').css('display', 'none');
+ 	  //$('.images-slider').css('display', 'none');
+ 	  $('.images-slider').html(''); 
+ });
+ 
  
  function perform_action (action) {
  	 var can_proceed = true; 
@@ -192,7 +227,7 @@ var status_array;
 	     }
 	     
 	     $.ajax({
-	        url: base_url + '/api/ads_control/action/format/json',
+	        url: base_url + '/api/items_control/action/format/json',
 	        type: "post",
 	        dataType: "json",
 	        data: data,
@@ -240,7 +275,7 @@ var status_array;
 	               });
 	              }
 	            }
-	         ads_table.ajax.url(base_url + '/admin/ads_manage/all/format/json?status='+status_val ).load();
+	         ads_table.ajax.url(base_url + '/admin/items_manage/all/format/json?status='+status_val ).load();
 	         $('.ads_details').modal('hide');
 	        },error: function(xhr, status, error){
 	        	new PNotify({
@@ -257,6 +292,15 @@ var status_array;
  	 }
  }
  
+
+$('.images-slider').slick({
+        infinite: true,
+        slidesToShow: 1,
+        mobileFirst: true,
+        swipeToSlide: true,
+        touchThreshold: 20
+        
+  }); 
   
   
   

@@ -68,7 +68,7 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {
-			console.log(data);
+			//console.log(data);
 			alert("error status false");
 		} else {
 			var i, template, rendered, catData;
@@ -85,13 +85,14 @@ $(function () {
 	});
 
 	//get cities and areas - types - educations - schedules
+	console.log(base_url + '/api/items_control/get_data_lists');
 	$.ajax({
 		type: "get",
-		url: base_url + '/api/ads_control/get_data_lists',
+		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {
-			console.log(data);
+			//console.log(data);
 			alert("error status false");
 		} else {
 			//			console.log(data);
@@ -119,7 +120,7 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-			//			console.log(typesData.types);
+			//			//console.log(typesData.types);
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
@@ -160,7 +161,7 @@ $(function () {
 		$("#card-modal .card").remove();
 		$.ajax({
 			type: "get",
-			url: base_url + '/api/ads_control/get_ad_details',
+			url: base_url + '/api/items_control/get_item_details',
 			dataType: "json",
 			data: {
 				ad_id: $(this).parents(".card").data("adId"),
@@ -171,7 +172,7 @@ $(function () {
 				console.log(data);
 				alert("error status false");
 			} else {
-								console.log(data);
+								//console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, i, template, rendered, templateId;
 				if (data.data.is_negotiable === "0") {
 					if (lang === "ar") {
@@ -366,7 +367,7 @@ $(function () {
 
 	//upload register image
 	$("#fileuploader-register").uploadFile({
-		//				url: base_url + '/api/ads_control/ad_images_upload',
+		//				url: base_url + '/api/items_control/ad_images_upload',
 		multiple: false,
 		dragDrop: false,
 		fileName: "image",
@@ -382,7 +383,7 @@ $(function () {
 	var adImgs = [];
 	//upload ad main image
 	$("#fileuploader-ad").uploadFile({
-		url: base_url + '/api/ads_control/ad_images_upload',
+		url: base_url + '/api/items_control/item_images_upload',
 		multiple: true,
 		dragDrop: true,
 		fileName: "image",
@@ -405,7 +406,7 @@ $(function () {
 			//			$("#ad-modal .main-image").val(data.data.slice(12));
 		},
 		onError: function (files, status, errMsg, pd) {
-			console.log("upload failed");
+			//console.log("upload failed");
 		},
 		deleteCallback: function (data, pd) {
 			//			console.log(data.data);
@@ -413,7 +414,7 @@ $(function () {
 			var arr;
 			arr = [data.data];
 			//				for (var i = 0; i < data.data.length; i++) {
-			$.post(base_url + '/api/ads_control/delete_images', {
+			$.post(base_url + '/api/items_control/delete_images', {
 					images: arr
 				},
 				function (resp, textStatus, jqXHR) {
@@ -438,7 +439,7 @@ $(function () {
 		evnt.preventDefault();
 		evnt.stopImmediatePropagation();
 
-				console.log(adImgs);
+				//console.log(adImgs);
 		var i, upladed_imgs = [],
 			main_img = "",
 			secondary_imgs = [];
@@ -460,23 +461,23 @@ $(function () {
 			value: secondary_imgs
 		});
 		//		console.log($(this).serializeArray());
-				console.log(data);
+		//		console.log(data);
 		//		console.log($.param(data));
 		$.ajax({
 			type: "post",
-			url: base_url + '/api/ads_control/post_new_ad',
+			url: base_url + '/api/items_control/post_new_item',
 			dataType: "json",
 			data: $.param(data)
 			//				$(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//console.log(data);
 				var errorMessage = $.parseHTML(data.message),
 					node,
 					wholeMessage = '';
 				for (node in errorMessage) {
 					if (errorMessage[node].nodeName === 'P') {
-						console.log(errorMessage[node].innerHTML);
+						//console.log(errorMessage[node].innerHTML);
 						wholeMessage += errorMessage[node].innerHTML;
 					} else {
 						wholeMessage += '<br>';
@@ -507,7 +508,7 @@ $(function () {
 				resetPostAd();
 			}
 		}).fail(function (response) {
-			console.log(response);
+			//console.log(response);
 			alert("fail");
 		});
 	});
@@ -677,7 +678,7 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log("error status false");
+				//console.log("error status false");
 			} else {
 				var subData;
 				$(".main .sub-categories .row").empty();

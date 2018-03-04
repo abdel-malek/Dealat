@@ -35,6 +35,8 @@
 		      	         </div>
 		               </div> 
                     </form>
+	               	<div class="images-slider slick-slider">
+					</div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                    <form id="detailed_info_ad" acrion="post" data-parsley-validate class="form-horizontal form-label-left">
@@ -226,7 +228,7 @@
         <input type="hidden"  id="post_id"/>
         <div class="modal-footer">
           <div class="pull-left">
-          	 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          	 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
           </div>
           <button onclick="perform_action('hide')" id="accept_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('hide_ad') ?></button>
           <button onclick="perform_action('reject')"  id="reject_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('reject_ad') ?></button>

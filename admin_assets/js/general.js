@@ -49,3 +49,6 @@
         zIndex: 2000
       });
     });
+    
+  //image slider
+  
