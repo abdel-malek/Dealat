@@ -56,6 +56,7 @@ PODS:
   - SwiftyJSON (4.0.0)
   - SwipeBack (1.1.1)
   - Toast-Swift (3.0.1)
+  - XLPagerTabStrip (8.0.0)
   - YangMingShan (2.0.1):
     - YangMingShan/YMSPhotoPicker (= 2.0.1)
   - YangMingShan/YMSPhotoPicker (2.0.1)
@@ -84,6 +85,7 @@ DEPENDENCIES:
   - SwiftyJSON
   - SwipeBack
   - Toast-Swift
+  - XLPagerTabStrip
   - YangMingShan
 
 SPEC CHECKSUMS:
@@ -116,8 +118,9 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   SwipeBack: d6759601b40da1f4161033feb30ab475d7d04322
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
+  XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YangMingShan: 561cfbb769e8cf679d3f23d8ae7030402ddb6495
 
-PODFILE CHECKSUM: 8db518162326d1c830a9f38f272be1763b0ee7ee
+PODFILE CHECKSUM: 15be06a810c49fdec561a9e83c803c1253053c54
 
 COCOAPODS: 1.4.0

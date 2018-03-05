@@ -2,7 +2,7 @@
 //  LocationsVC.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 2/20/18.
+//  Created by Yahya Tabba on 2/20/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 

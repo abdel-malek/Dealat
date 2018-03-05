@@ -12,17 +12,21 @@ class SideMenuVC: BaseVC {
     
     @IBOutlet weak var img : UIImageView!
     @IBOutlet var btns: [UIButton]!
-    
+    @IBOutlet weak var regVV: UIView!
+
     var homeVC : HomeVC!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let me = User.getCurrentUser()
-        
-        if me.statues_key != User.USER_STATUES.USER_REGISTERED.rawValue{
+
+        if me.statues_key == User.USER_STATUES.USER_REGISTERED.rawValue{
+            self.regVV.isHidden = true
+        }else{
             for i in btns{
-                if i.tag != 0 && i.tag < 6{
+                
+                if i.tag > 0 && i.tag < 6{
                     i.isHidden = true
                 }
             }
@@ -55,6 +59,17 @@ class SideMenuVC: BaseVC {
 
         
         self.dismiss(animated: true) {
+            
+            
+            if i.tag == -1{
+                AppDelegate.setupViews()
+            }
+            
+            if i.tag == 1{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+            
             
             // CHANGE LANGUAGE
             if i.tag == 6{
@@ -111,6 +126,8 @@ class SideMenuVC: BaseVC {
             i.setTitleColor(Theme.Color.darkGrey, for: .normal)
         }
     }
+    
+    
     
     
 }

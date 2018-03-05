@@ -17,6 +17,8 @@ class AdCell : UICollectionViewCell{
     @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
     
+    @IBOutlet weak var imgStatus : UIImageView!
+
     
     var ad : AD!{
         didSet{
@@ -46,6 +48,14 @@ class AdCell : UICollectionViewCell{
             }
         }
     }
+    
+    var fromMyAds : Bool = false{
+        didSet{
+            self.imgStatus.image = self.ad.getStatus().1
+            self.priceLbl.text = self.ad.getStatus().0
+        }
+    }
+    
     
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import AFDateHelper
+import SwiftyJSON
 
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -22,13 +23,18 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var numberLbl : UILabel!
     @IBOutlet weak var nameLbl : UILabel!
     @IBOutlet weak var priceLbl : UILabel!
-    @IBOutlet weak var viewsLbl : UILabel!
+//    @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
     @IBOutlet weak var catLbl : UILabel!
     @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var negotiableLbl : UILabel!
     @IBOutlet weak var locationLbl : UILabel!
     @IBOutlet weak var desLbl : UILabel!
+    
+    @IBOutlet weak var favVV : UIView!
+    @IBOutlet weak var imgFav : UIImageView!
+
+
     
     // 1 Vehicle
     @IBOutlet weak var manufacture_dateLbl : UILabel!
@@ -120,7 +126,6 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         }else{
             self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
         }
-        self.viewsLbl.text = nil
         if ad.publish_date != nil{
             let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
             self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
@@ -226,6 +231,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.is_new9.text = ad.industry.is_new.Boolean ? "new".localized : "old".localized
         }
         
+        
+        // ALL DATA
         if self.ad.images.isEmpty{
             self.collectionViewHeight.constant = 40
             self.collectionView.backgroundColor = .clear
@@ -234,9 +241,57 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.collectionView.backgroundColor = .white
         }
         
+        if User.isRegistered(){
+            self.favVV.isHidden = false
+            let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.changeFav))
+            self.imgFav.addGestureRecognizer(tap)
+            self.imgFav.isUserInteractionEnabled = true
+            if let is_favorite = self.ad.is_favorite{
+                self.imgFav.image = (is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
+            }else{
+                self.favVV.isHidden = true
+            }
+        }else{
+            self.favVV.isHidden = true
+        }
+
+        
         self.tableView.reloadData()
         self.collectionView.reloadData()
         self.collectionView2.reloadData()
+    }
+    
+    
+    func refreshImageFav(){
+        imgFav.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        
+        UIView.animate(withDuration: 2.0,
+                       delay: 0,
+                       usingSpringWithDamping: 0.2,
+                       initialSpringVelocity: 6.0,
+                       options: .allowUserInteraction,
+                       animations: { [weak self] in
+                        self?.imgFav.transform = .identity
+            }, completion: nil)
+        
+        self.imgFav.image = (self.ad.is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
+    }
+    
+    @objc func changeFav(){
+        
+        if self.ad.is_favorite.Boolean{
+            Communication.shared.remove_from_favorite(self.ad.ad_id.intValue, callback: { (res) in
+                self.ad.is_favorite = JSON(false)
+                self.refreshImageFav()
+            })
+            
+        }else{
+            Communication.shared.set_as_favorite(self.ad.ad_id.intValue, callback: { (res) in
+                self.ad.is_favorite = JSON(true)
+                self.refreshImageFav()
+            })
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppDelegate.setupViews()
         
+        
         return true
     }
     
@@ -56,10 +57,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let me = User.getCurrentUser()
-        
-        if Provider.getLocation() == 0 {
-            let vc = storyboard.instantiateViewController(withIdentifier: "SelectLocationVC") as! SelectLocationVC
-            appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
+        if Provider.getCity() == 0 {
+            /*let vc = storyboard.instantiateViewController(withIdentifier: "SelectLocationVC") as! SelectLocationVC
+            
+            appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)*/
         }
             
         else{

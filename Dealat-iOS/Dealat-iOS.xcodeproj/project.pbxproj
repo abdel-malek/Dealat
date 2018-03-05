@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		6EDC59CD649ACE509FA18C96 /* Pods_Dealat_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A80EAEF46234EA904EA977 /* Pods_Dealat_iOS.framework */; };
 		8208B31B2039B00B000817A4 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208B31A2039B00B000817A4 /* FilterVC.swift */; };
+		82105EEE204D3BA20050DDD8 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EED204D3BA20050DDD8 /* City.swift */; };
+		82105EF2204D5A410050DDD8 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EF1204D5A410050DDD8 /* MyProfileVC.swift */; };
+		82105EF6204D5ACE0050DDD8 /* MyAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EF5204D5ACE0050DDD8 /* MyAdsVC.swift */; };
+		82105EF8204D5BD60050DDD8 /* MyFavoritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EF7204D5BD60050DDD8 /* MyFavoritesVC.swift */; };
 		821CCC8D2031D28700DAC27B /* AdDetailsBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821CCC8C2031D28700DAC27B /* AdDetailsBaseVC.swift */; };
 		822516E92029DF4A009FF0DE /* ChooseCatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822516E82029DF4A009FF0DE /* ChooseCatVC.swift */; };
 		822516EB2029DFF3009FF0DE /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822516EA2029DFF3009FF0DE /* CategoryCell.swift */; };
@@ -119,6 +123,10 @@
 /* Begin PBXFileReference section */
 		379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8208B31A2039B00B000817A4 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
+		82105EED204D3BA20050DDD8 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		82105EF1204D5A410050DDD8 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
+		82105EF5204D5ACE0050DDD8 /* MyAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAdsVC.swift; sourceTree = "<group>"; };
+		82105EF7204D5BD60050DDD8 /* MyFavoritesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoritesVC.swift; sourceTree = "<group>"; };
 		821CCC8C2031D28700DAC27B /* AdDetailsBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdDetailsBaseVC.swift; sourceTree = "<group>"; };
 		822516E82029DF4A009FF0DE /* ChooseCatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCatVC.swift; sourceTree = "<group>"; };
 		822516EA2029DFF3009FF0DE /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
@@ -358,6 +366,9 @@
 				823547C72029C3D9003478F1 /* SideMenuVC.swift */,
 				823547BD2029AA72003478F1 /* HomeVC.swift */,
 				8267E27F20302D43007130A4 /* AdsListVC.swift */,
+				82105EF1204D5A410050DDD8 /* MyProfileVC.swift */,
+				82105EF5204D5ACE0050DDD8 /* MyAdsVC.swift */,
+				82105EF7204D5BD60050DDD8 /* MyFavoritesVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -427,6 +438,7 @@
 				8226F006202882F00077FA74 /* Cat.swift */,
 				82EF0C23202AFC8F00349107 /* AD.swift */,
 				82CEA2B62031C89800E5F017 /* IMG.swift */,
+				82105EED204D3BA20050DDD8 /* City.swift */,
 				82893DAF2032D6F5009151FC /* Location.swift */,
 				82893DB12032D742009151FC /* Type.swift */,
 				82893DB32032D7BE009151FC /* Model.swift */,
@@ -675,6 +687,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeBack/SwipeBack.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/YangMingShan/YangMingShan.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -703,6 +716,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeBack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YangMingShan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -728,10 +742,12 @@
 				8226F007202882F00077FA74 /* Cat.swift in Sources */,
 				82893DBC2032E480009151FC /* BaseTVC.swift in Sources */,
 				82893DB62032D9D8009151FC /* Education.swift in Sources */,
+				82105EF2204D5A410050DDD8 /* MyProfileVC.swift in Sources */,
 				8226F009202883390077FA74 /* BaseEntity.swift in Sources */,
 				82893DBE2032E710009151FC /* NewAddBaesVC.swift in Sources */,
 				822516E92029DF4A009FF0DE /* ChooseCatVC.swift in Sources */,
 				829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */,
+				82105EEE204D3BA20050DDD8 /* City.swift in Sources */,
 				82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */,
 				823547C42029B131003478F1 /* BaseCell.swift in Sources */,
 				823547C12029AB94003478F1 /* HomeCell.swift in Sources */,
@@ -741,6 +757,7 @@
 				82E8BD0F202B143800684368 /* CommericalCell.swift in Sources */,
 				82CEA2B52031C7D400E5F017 /* localizations.swift in Sources */,
 				82893DB82032DA13009151FC /* Schedule.swift in Sources */,
+				82105EF6204D5ACE0050DDD8 /* MyAdsVC.swift in Sources */,
 				82EF0C24202AFC8F00349107 /* AD.swift in Sources */,
 				82CEA2B72031C89800E5F017 /* IMG.swift in Sources */,
 				82F0C1E920286404008922A0 /* ViewController.swift in Sources */,
@@ -754,6 +771,7 @@
 				8226F00B202883670077FA74 /* extensions.swift in Sources */,
 				824663DC203084CE00F303EA /* CategoriesVC.swift in Sources */,
 				82EB4803204C134B00D25E1D /* SelectLocationVC.swift in Sources */,
+				82105EF8204D5BD60050DDD8 /* MyFavoritesVC.swift in Sources */,
 				82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */,
 				82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */,
 				8226F017202886D50077FA74 /* Theme.swift in Sources */,

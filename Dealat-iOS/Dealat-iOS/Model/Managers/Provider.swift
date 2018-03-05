@@ -41,13 +41,13 @@ class Provider : BaseManager {
         appDelegate.window?.rootViewController = nv
     }
     
-    static func setLocation(_ location_id : Int){
-        UserDefaults.standard.set(location_id, forKey: "location_id")
+    static func setCity(_ city_id : Int){
+        UserDefaults.standard.set(city_id, forKey: "city_id")
     }
     
-    static func getLocation() -> Int{
-        if let location_id = UserDefaults.standard.value(forKey: "location_id") as? Int{
-            return location_id
+    static func getCity() -> Int{
+        if let city_id = UserDefaults.standard.value(forKey: "city_id") as? Int{
+            return city_id
         }
         return 0
     }

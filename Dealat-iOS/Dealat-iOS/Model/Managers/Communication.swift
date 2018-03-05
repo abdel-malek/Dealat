@@ -37,12 +37,19 @@ class Communication: BaseManager {
     let get_nested_categoriesURL = "/categories_control/get_nested_categories/format/json"
     let searchURL = "/items_control/search/format/json"
     let get_data_listsURL = "/items_control/get_data_lists/format/json"
+    let get_countriesURL = "/users_control/get_countries/format/json"
     let post_new_itemURL = "/items_control/post_new_item/format/json"
     let get_commercial_itemsURL = "/commercial_items_control/get_commercial_items/format/json"
     
     let users_registerURL = "/users_control/register/format/json"
     let verifyURL = "/users_control/verify/format/json"
     let save_user_tokenURL = "/users_control/save_user_token/format/json"
+    
+    let set_as_favoriteURL = "/items_control/set_as_favorite/format/json"
+    let remove_from_favoriteURL = "/items_control/remove_from_favorite/format/json"
+    let get_my_favoritesURL = "/users_control/get_my_favorites/format/json"
+    let get_my_itemsURL = "/users_control/get_my_items/format/json"
+
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -206,6 +213,41 @@ class Communication: BaseManager {
         }
     }
     
+    
+    func get_countries(_ callback :  @escaping ( _ cities : [City]) -> Void){
+        let url = URL(string: baseURL + get_countriesURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var cities = [City]()
+                    
+                    for i in value.data.arrayValue{
+                        if let obj = i.dictionaryObject, let a = City(JSON: obj){
+                            cities.append(a)
+                        }
+                    }
+                    
+                    callback(cities)
+                    
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
     
     func search(query : String!,category : Cat!,location : Location!, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + searchURL)!
@@ -530,6 +572,130 @@ class Communication: BaseManager {
     
     
     
+    func set_as_favorite(_ ad_id : Int, callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + set_as_favoriteURL)!
+        
+        let params : [String : Any] = ["ad_id" : ad_id]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    func remove_from_favorite(_ ad_id : Int, callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + remove_from_favoriteURL)!
+        
+        let params : [String : Any] = ["ad_id" : ad_id]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func get_my_favorites(_ callback : @escaping ([AD]) -> Void){
+        let url = URL(string: baseURL + get_my_favoritesURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [AD]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
+    func get_my_items(_ callback : @escaping ([AD]) -> Void){
+        let url = URL(string: baseURL + get_my_itemsURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [AD]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
+    
     func output(_ res : DataResponse<CustomResponse>){
         if let urlString = res.request?.url?.absoluteString{
             print(urlString)
@@ -553,8 +719,9 @@ class Communication: BaseManager {
         
         var headers :  [String : String] = [:]
         headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
-        headers["location"] = "\(Provider.getLocation())"
-        
+        headers["city_id"] = "\(Provider.getCity())"
+        headers["Api-call"] = "1"
+
         
         if User.isRegistered(){
             let me = User.getCurrentUser()

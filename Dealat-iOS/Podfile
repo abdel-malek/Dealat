@@ -32,6 +32,7 @@ pod 'SkyFloatingLabelTextField'
 #pod 'TLPhotoPicker'
 pod 'YangMingShan'
 pod 'KMPlaceholderTextView'
+pod 'XLPagerTabStrip'
 
 
 pod 'IQDropDownTextField'
