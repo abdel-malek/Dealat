@@ -25,35 +25,45 @@
 
         <activity
             android:name=".View.LoginActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".View.HomeActivity"
             android:theme="@style/noTitleTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
 
         <activity android:name=".View.SubCategoriesActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
+            android:screenOrientation="portrait"
             />
 
         <activity android:name=".View.SelectImagesActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
 
         <activity android:name=".View.ItemInfoActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
 
         <activity android:name=".View.ViewAdsActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
 
         <activity android:name=".View.FilterActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
 
-        <activity android:name=".View.AdDetailsActivity" />
+        <activity android:name=".View.AdDetailsActivity"
+            android:screenOrientation="portrait"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

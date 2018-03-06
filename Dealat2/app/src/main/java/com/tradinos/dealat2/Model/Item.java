@@ -6,6 +6,7 @@ package com.tradinos.dealat2.Model;
 
 public class Item {
     protected String id, name;
+    protected boolean checked;
 
     public Item(){}
 
@@ -33,6 +34,22 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isNothing(){
+        return this.id.equals("-1");
+    }
+
+    public boolean isChecked(){
+        return this.checked;
+    }
+
+    public void check(){
+        this.checked = true;
+    }
+
+    public void unCheck(){
+        this.checked = false;
     }
 
     @Override

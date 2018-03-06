@@ -7,6 +7,18 @@ package com.tradinos.dealat2.Model;
 public class Location extends Item {
     private String cityName, cityId;
 
+    public Location(){
+    }
+
+    public static Location getNoLocation(String name){
+        Location location = new Location();
+
+        location.setId("-1");
+        location.setCityName("");
+        location.setName(name);
+        return location;
+    }
+
     public String getCityName() {
         return cityName;
     }
@@ -24,6 +36,8 @@ public class Location extends Item {
     }
 
     public String getFullName(){
+        if (this.isNothing())
+            return name;
         return this.cityName + " - "+ this.name;
     }
 }

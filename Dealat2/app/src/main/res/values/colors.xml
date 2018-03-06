@@ -2,12 +2,13 @@
 <resources>
     <color name="colorPrimary">@color/red</color>
     <color name="colorPrimaryDark">@color/grayDark</color>
-    <color name="colorAccent">@color/red</color>
-
+    <color name="colorAccent">@color/white</color>
 
     <color name="white">#F6F7F8</color>
     <color name="red">#C30A30</color>
     <color name="grayDark">#414141</color>
+
+    <color name="redLight">#ef9a9a</color>
     <color name="grayLight">#bfbfbf</color>
 
     <color name="whiteTransparent">#99F6F7F8</color>

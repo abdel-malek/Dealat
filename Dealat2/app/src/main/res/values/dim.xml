@@ -6,12 +6,13 @@
 
     <dimen name="imageXSmall">20dp</dimen>
     <dimen name="imageSmall">36dp</dimen>
-    <dimen name="imageViewMedium">56dp</dimen>
+    <dimen name="imageViewMedium">46dp</dimen>
     <dimen name="imageViewLarge">100dp</dimen>
 
 
     <dimen name="view1Height">@dimen/mediumHeight</dimen>
     <dimen name="view2Height">@dimen/largeHeight</dimen>
     <dimen name="view3Height">@dimen/largeHeight</dimen>
+    <dimen name="dropdownHeight">160dp</dimen>
 
 </resources>

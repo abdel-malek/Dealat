@@ -77,6 +77,11 @@ public class ViewAdsActivity extends DrawerActivity {
                 @Override
                 public void OnSuccess(List<Ad> result) {
 
+                    if (result.isEmpty())
+                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                    else
+                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+
                     ads = result;
                     gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
 
@@ -89,6 +94,11 @@ public class ViewAdsActivity extends DrawerActivity {
             AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
                 @Override
                 public void OnSuccess(List<Ad> result) {
+
+                    if (result.isEmpty())
+                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                    else
+                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
 
                     ads = result;
                     gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
@@ -154,6 +164,9 @@ public class ViewAdsActivity extends DrawerActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty())
+                    searchParameters.remove("query");
+
                 return false;
             }
         });
@@ -184,7 +197,7 @@ public class ViewAdsActivity extends DrawerActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 searchParameters = (HashMap<String, String>) data.getSerializableExtra("parameters");
 
-                if (currentTemplate != selectedCategory.getTemplateId()){
+                if (currentTemplate != selectedCategory.getTemplateId()) {
                     imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,
                             getTemplateDefaultImage(selectedCategory.getTemplateId())));
 

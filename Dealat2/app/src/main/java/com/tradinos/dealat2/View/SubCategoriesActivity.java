@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -154,5 +153,7 @@ public class SubCategoriesActivity extends MasterActivity {
             if (category.getId().equals("0"))
                 buttonBack.setVisibility(View.INVISIBLE);
         }
+        else if (view.getId() == R.id.container)
+            finish();
     }
 }

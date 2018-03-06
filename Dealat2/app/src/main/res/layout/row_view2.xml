@@ -34,6 +34,7 @@
                 android:scaleType="fitCenter"
                 android:background="@drawable/circel_white_transparent"
                 android:src="@drawable/star_gray"
+                android:visibility="invisible"
                 />
         </FrameLayout>
 
@@ -70,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/textViewDate"
+                android:visibility="invisible"
                 />
 
             <TextView

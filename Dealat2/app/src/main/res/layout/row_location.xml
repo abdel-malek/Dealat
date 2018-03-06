@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp"
-    android:background="@color/grayTransparent"
+    android:background="@color/whiteTransparent"
     >
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/grayDark"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         />
 
@@ -19,6 +19,7 @@
         android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/grayLight"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         />
 

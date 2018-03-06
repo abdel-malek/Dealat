@@ -29,6 +29,9 @@
     <string name="all">All</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="newU">New</string>
+    <string name="old">Old</string>
+    <string name="manual">Manual</string>
 
 
     <!-- Views -->
@@ -50,16 +53,18 @@
     <string name="labelTransmission">Transmission</string>
     <string name="labelFurnished">Furnished</string>
 
+    <string name="labelListEmpty">This list is empty!</string>
+
 
     <string name="hintEmailPhone">Email or Phone Number</string>
     <string name="hintPassword">Password</string>
     <string name="hintConfirmPassword">Confirm Password</string>
     <string name="hintSetLocation">Set Location</string>
-    <string name="hintChooseLocation">Choose Location</string>
+    <string name="hintChooseLocation">Choose a Location</string>
     <string name="hintSearch">Search</string>
     <string name="hintTitle">Title</string>
     <string name="hintDesc">Description...</string>
-    <string name="hintPrice">Price</string>
+    <string name="hintPrice">Price (SP)</string>
     <string name="hintExperience">Experience</string>
     <string name="hintSize">Size</string>
     <string name="hintKilometer">Kilometers</string>

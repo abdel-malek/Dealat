@@ -28,10 +28,8 @@ public class TemplatesDataParser implements TradinosParser<TemplatesData> {
         data.setBrands(new TypeMapParser().Parse(jsonObject.getString("types")));
 
         data.setEducations(new ItemListParser("education_id").Parse(jsonObject.getString("educations")));
-        data.getEducations().add(0, Item.getNoItem());
 
         data.setSchedules(new ItemListParser("schedule_id").Parse(jsonObject.getString("schedules")));
-        data.getSchedules().add(0, Item.getNoItem());
 
         return data;
     }

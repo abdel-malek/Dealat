@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Adapter.CheckableAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
 import com.tradinos.dealat2.Adapter.LocationAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
@@ -22,6 +23,8 @@ import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.R;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,11 +48,13 @@ public class FilterActivity extends MasterActivity {
     private HashMap<Integer, List<Type>> brands = new HashMap<>();
 
     //Views
-    private TextView textBrand, textModel, textTransmission, textKilo,
+    private TextView textPrice,
+            textBrand, textModel, textTransmission, textKilo,
             textDate,
             textEdu, textSch, textSalary,
             textFurn, textSpace, textRooms, textFloor,
-            textSize;
+            textSize,
+            textState;
 
     private EditText editQuery, editCategory, editPriceMin, editPriceMax,
             editKilometerMin, editKilometerMax,
@@ -61,10 +66,11 @@ public class FilterActivity extends MasterActivity {
 
     private AppCompatSpinner spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission,
             spinnerEdu, spinnerSch,
-            spinnerFurn;
+            spinnerFurn,
+            spinnerState;
 
     private LinearLayout containerKilometer, containerSize,
-            containerSalary, containerSpace, containerRooms, containerFloors;
+            containerSalary, containerSpace, containerRooms, containerFloors, containerPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,7 @@ public class FilterActivity extends MasterActivity {
             public void OnSuccess(TemplatesData result) {
                 HideProgressDialog();
 
+                result.getLocations().add(0, Location.getNoLocation(getString(R.string.all)));
                 autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
 
                 brands = result.getBrands();
@@ -90,9 +97,11 @@ public class FilterActivity extends MasterActivity {
                 if (templateBrands != null)
                     spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
 
-                spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
+                result.getEducations().add(0, new Item("-1", getString(R.string.all)));
+                spinnerEdu.setAdapter(new CheckableAdapter(mContext, result.getEducations()));
 
-                spinnerSch.setAdapter(new ItemAdapter(mContext, result.getSchedules()));
+                result.getSchedules().add(0, new Item("-1", getString(R.string.all)));
+                spinnerSch.setAdapter(new CheckableAdapter(mContext, result.getSchedules()));
             }
         });
     }
@@ -100,24 +109,47 @@ public class FilterActivity extends MasterActivity {
     @Override
     public void showData() {
 
-        if (!selectedCategory.isMain()){
+        if (!selectedCategory.isMain()) {
             editCategory.setText(selectedCategory.getFullName());
             setTemplateVisibility(View.VISIBLE);
         }
 
-        int startYear = 1980;
+        int startYear = 1970;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         List<Item> years = new ArrayList<>();
-        years.add(Item.getNoItem());
+        years.add(new Item("-1", getString(R.string.all)));
 
-        for (int i = startYear; i <= currentYear; i++)
+        for (int i = currentYear; i >= startYear; i--)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
 
-        spinnerYear.setAdapter(new ItemAdapter(mContext, years));
+        spinnerYear.setAdapter(new CheckableAdapter(mContext, years));
+
+
+        List<Item> furnOptions = new ArrayList<>();
+        furnOptions.add(new Item("-1", getString(R.string.all)));
+        furnOptions.add(new Item("1", getString(R.string.yes)));
+        furnOptions.add(new Item("0", getString(R.string.no)));
+
+        spinnerFurn.setAdapter(new ItemAdapter(mContext, furnOptions));
+
+        List<Item> usageOptions = new ArrayList<>();
+        usageOptions.add(new Item("-1", getString(R.string.all)));
+        usageOptions.add(new Item("1", getString(R.string.newU)));
+        usageOptions.add(new Item("0", getString(R.string.old)));
+
+        spinnerState.setAdapter(new ItemAdapter(mContext, usageOptions));
+
+        List<Item> transmissionOptions = new ArrayList<>();
+        transmissionOptions.add(new Item("-1", getString(R.string.all)));
+        transmissionOptions.add(new Item("1", getString(R.string.labelAutomatic)));
+        transmissionOptions.add(new Item("0", getString(R.string.manual)));
+
+        spinnerTransmission.setAdapter(new ItemAdapter(mContext, transmissionOptions));
     }
 
     @Override
     public void assignUIReferences() {
+        textPrice = (TextView) findViewById(R.id.textPrice);
         textBrand = (TextView) findViewById(R.id.textBrand);
         textModel = (TextView) findViewById(R.id.textModel);
         textDate = (TextView) findViewById(R.id.textDate);
@@ -135,6 +167,8 @@ public class FilterActivity extends MasterActivity {
         textSpace = (TextView) findViewById(R.id.textSpace);
 
         textSize = (TextView) findViewById(R.id.textSize);
+
+        textState = (TextView) findViewById(R.id.textState);
 
         editQuery = (EditText) findViewById(R.id.editQuery);
         editCategory = (EditText) findViewById(R.id.editCategory);
@@ -172,12 +206,15 @@ public class FilterActivity extends MasterActivity {
 
         spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
 
+        spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
+
         containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
         containerSize = (LinearLayout) findViewById(R.id.containerSize);
         containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
         containerSpace = (LinearLayout) findViewById(R.id.containerSpace);
         containerRooms = (LinearLayout) findViewById(R.id.containerRooms);
         containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
+        containerPrice = (LinearLayout) findViewById(R.id.containerPrice);
     }
 
     @Override
@@ -188,6 +225,9 @@ public class FilterActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getFullName());
+
+                if (selectedLocation.isNothing())
+                    selectedLocation = null;
             }
         });
 
@@ -217,12 +257,7 @@ public class FilterActivity extends MasterActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Type selectedType = ((TypeAdapter) spinnerBrand.getAdapter()).getItem(i);
 
-                if (selectedType.getId().equals("-1")) // --
-                    parameters.remove("type_id");
-                else
-                    parameters.put("type_id", selectedType.getId());
-
-                spinnerModel.setAdapter(new ItemAdapter(mContext, selectedType.getModels()));
+                spinnerModel.setAdapter(new CheckableAdapter(mContext, selectedType.getModels()));
             }
 
             @Override
@@ -254,25 +289,23 @@ public class FilterActivity extends MasterActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
 
-                if (!selectedCategory.isMain())
-                    parameters.put("category_id", selectedCategory.getId());
-
                 if (selectedCategory.getTemplateId() != currentTemplate) {
                     replaceTemplate();
 
                     List<Type> templateBrands = brands.get(currentTemplate);
                     if (templateBrands != null)
                         spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
-
-                    //  parameters.clear();
                 }
             }
         }
     }
 
-    private void getGeneralInput(){
+    private void getGeneralInput() {
         if (!inputIsEmpty(editQuery))
             parameters.put("query", stringInput(editQuery));
+
+        if (!selectedCategory.isMain())
+            parameters.put("category_id", selectedCategory.getId());
 
         if (selectedLocation != null)
             parameters.put("location_id", selectedLocation.getId());
@@ -284,7 +317,10 @@ public class FilterActivity extends MasterActivity {
             parameters.put("price_min", stringInput(editPriceMin));
     }
 
-    private void getTemplateInput(){
+    private void getTemplateInput() {
+        Item item;
+        JSONArray jsonArray;
+
         switch (currentTemplate) {
 
             case Category.PROPERTIES:
@@ -307,8 +343,9 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editFloorsMin))
                     parameters.put("floor_min", stringInput(editFloorsMin));
 
-               // if (checkboxFurn.isChecked())
-               //     parameters.put("with_furniture", "1");
+                item = ((Item) spinnerFurn.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("with_furniture", item.getId());
 
                 break;
 
@@ -317,6 +354,17 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editSalaryMax))
                     parameters.put("salary_max", stringInput(editSalaryMax));
 
+                if (!inputIsEmpty(editSalaryMin))
+                    parameters.put("salary_min", stringInput(editSalaryMin));
+
+                jsonArray = ((CheckableAdapter) spinnerEdu.getAdapter()).getSelectedItems();
+                if (jsonArray.length() > 0)
+                    parameters.put("education_id", jsonArray.toString());
+
+                jsonArray = ((CheckableAdapter) spinnerSch.getAdapter()).getSelectedItems();
+                if (jsonArray.length() > 0)
+                    parameters.put("schedule_id", jsonArray.toString());
+
                 break;
 
             case Category.VEHICLES:
@@ -324,12 +372,28 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editKilometerMax))
                     parameters.put("kilometer_max", stringInput(editKilometerMax));
 
+                if (!inputIsEmpty(editKilometerMin))
+                    parameters.put("kilometer_min", stringInput(editKilometerMin));
 
-              //  if (checkboxAutomatic.isChecked())
-                 //   parameters.put("is_automatic", "1");
+                item = ((Item) spinnerTransmission.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("is_automatic", item.getId());
 
-              //  if (!checkboxSecondhand.isChecked())
-                //    parameters.put("is_new", "1");
+                item = ((Item)spinnerBrand.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("type_id", item.getId());
+
+                jsonArray = ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedItems();
+                if (jsonArray.length() > 0)
+                    parameters.put("type_model_id", jsonArray.toString());
+
+                jsonArray = ((CheckableAdapter) spinnerYear.getAdapter()).getSelectedItems();
+                if (jsonArray.length() > 0)
+                    parameters.put("manufacture_date", jsonArray.toString());
+
+                item = ((Item) spinnerState.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("is_new", item.getId());
 
                 break;
 
@@ -338,15 +402,22 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editSizeMax))
                     parameters.put("size_max", stringInput(editSizeMax));
 
+                if (!inputIsEmpty(editSizeMin))
+                    parameters.put("size_min", stringInput(editSizeMin));
+
             case Category.MOBILES:
+                item = ((Item)spinnerBrand.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("type_id", item.getId());
 
             case Category.FASHION:
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
 
-              //  if (!checkboxSecondhand.isChecked())
-                //    parameters.put("is_new", "1");
+                item = ((Item) spinnerState.getSelectedItem());
+                if (!item.isNothing())
+                    parameters.put("is_new", item.getId());
         }
     }
 
@@ -386,6 +457,15 @@ public class FilterActivity extends MasterActivity {
                 textSalary.setVisibility(visibility);
                 containerSalary.setVisibility(visibility);
 
+                if (visibility == View.GONE){
+                    textPrice.setVisibility(View.VISIBLE);
+                    containerPrice.setVisibility(View.VISIBLE);
+                }
+                else {
+                    textPrice.setVisibility(View.GONE);
+                    containerPrice.setVisibility(View.GONE);
+                }
+
                 break;
 
             case Category.VEHICLES:
@@ -404,7 +484,8 @@ public class FilterActivity extends MasterActivity {
                 textTransmission.setVisibility(visibility);
                 spinnerTransmission.setVisibility(visibility);
 
-                //    checkboxSecondhand.setVisibility(visibility);
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
                 break;
 
             case Category.ELECTRONICS:
@@ -420,7 +501,8 @@ public class FilterActivity extends MasterActivity {
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
-                //    checkboxSecondhand.setVisibility(visibility);
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.tradinos.dealat2.View;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -66,6 +67,9 @@ public class HomeActivity extends DrawerActivity {
 
                         intent.putExtra("category", mainCategories.get(i));
                         intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
+
+                       // Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this).toBundle();
+                      //  startActivity(intent, bundle);
                         startActivity(intent);
                     }
                 });
@@ -125,8 +129,10 @@ public class HomeActivity extends DrawerActivity {
             Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
             intent.putExtra("category", mainCategory);
-
             intent.putExtra("action", SubCategoriesActivity.ACTION_SELL);
+
+           // Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this).toBundle();
+           // startActivity(intent, bundle);
             startActivity(intent);
         }
     }

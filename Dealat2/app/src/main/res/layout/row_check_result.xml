@@ -2,11 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textView"
     style="?attr/spinnerDropDownItemStyle"
-    android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
-    android:ellipsize="marquee"
-    android:padding="6dp"
-    android:textColor="@color/grayDark"
-    android:background="@color/whiteTransparent"
+    android:textColor="@color/white"
     />
