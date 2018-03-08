@@ -113,5 +113,9 @@ $lang['not_set']= 'Not set';
 $lang['accept_ad'] = 'Accept';
 $lang['hide_ad'] = 'Hide';
 $lang['reject_ad'] = 'Reject';
+$lang['show_ad'] = 'Show';
+
+
+$lang['log_out'] = 'Log Out';
 
 

@@ -105,9 +105,7 @@ var status_array;
  	  console.log(ad_id);
  	  console.log(tamplate_id);
  	  $('.ads_details  #post_id').val(ad_id);
- 	  $('.ads_details  .template_info').css('display', 'none');
- 	  //$('.images-slider').css('display', 'none');
- 	  $('.images-slider').empty();
+ 	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  var url =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
         url: url,
@@ -139,7 +137,15 @@ var status_array;
                //console.log(str);
                 $('.images-slider').append(str);
              }
-      
+             
+             $('.images-slider').slick({
+		        infinite: true,
+		        slidesToShow: 1,
+		        mobileFirst: true,
+		        swipeToSlide: true,
+		        touchThreshold: 20
+		      }); 
+             
             // fill deteilad basic info
             $('.ads_details  #ad_creation_date').html($item_info['created_at']);
             $('.ads_details  #ad_location').html($item_info['city_name']+' - '+$item_info['location_name']);
@@ -184,6 +190,20 @@ var status_array;
 			$('.ads_details  #ad_seller_phone').html($item_info['seller_phone']);
             
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
+            
+            //show hide btns
+            if($item_info['status'] ==  1){
+            	 $('.ads_details  #accept_btn').css('display', 'inline');
+            	 $('.ads_details  #reject_btn').css('display', 'inline');
+            }
+            if($item_info['status'] ==  2){
+            	 $('.ads_details  #hide_btn').css('display', 'inline');
+            }
+            if($item_info['status'] ==  4){
+            	 $('.ads_details  #show_btn').css('display', 'inline');
+            }
+            
+            
             $('.ads_details').modal('show');
             setTimeout(function () {
                 $(".images-slider").slick("refresh");
@@ -204,8 +224,8 @@ var status_array;
  
  $('.ads_details').on('hidden.bs.modal', function () {
       $('.ads_details  .template_info').css('display', 'none');
- 	  //$('.images-slider').css('display', 'none');
- 	  $('.images-slider').html(''); 
+      //$('.images-slider').slick(getSliderSettings());
+ 	  $('.images-slider').remove();
  });
  
  
@@ -293,14 +313,7 @@ var status_array;
  }
  
 
-$('.images-slider').slick({
-        infinite: true,
-        slidesToShow: 1,
-        mobileFirst: true,
-        swipeToSlide: true,
-        touchThreshold: 20
-        
-  }); 
+
   
   
   

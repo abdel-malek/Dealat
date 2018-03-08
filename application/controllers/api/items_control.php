@@ -26,9 +26,13 @@ class Items_control extends REST_Controller {
 	
 	public function get_item_details_get()
 	{
+		$user_id = null;
+		if($this->response->is_auth){
+			 $user_id = $this->response->is_auth;
+		}
 		$ad_id = $this->input->get('ad_id');
 		$tamplate_id = $this->input->get('template_id');
-		$deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id);
+		$deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
 		$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
 	}
 
@@ -45,8 +49,8 @@ class Items_control extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 		   $basic_data = array(
-		   //  'user_id' => $this->current_user->user_id,
-		     'user_id' => 1,  // temp
+		     'user_id' => $this->current_user->user_id,
+		   //  'user_id' => 1,  // temp
 		     'location_id' => $this->input->post('location_id'),
 		     'show_period' => $this->input->post('show_period'),
 		     'price' => $this->input->post('price'),
@@ -55,7 +59,7 @@ class Items_control extends REST_Controller {
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
 		     'is_negotiable' => $this->input->post('is_negotiable'),
-		     'status' => 2    // temp
+		    // 'status' => 2    // temp
 		   );
 		   $main_image = null;
 		   if ($this->input->post('main_image')) {
@@ -76,8 +80,8 @@ class Items_control extends REST_Controller {
 		}
     }
 
-    public function item_images_upload_post()
-	  {
+   public function item_images_upload_post()
+	 {
 	 //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
 	     $image_name = date('m-d-Y_hia').'-'.'1';
 	      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
@@ -87,7 +91,7 @@ class Items_control extends REST_Controller {
 	      }else{
 	           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 	      }
-	  }
+	 }
 	
 	public function delete_images_post()
 	{
@@ -161,11 +165,47 @@ class Items_control extends REST_Controller {
 			   $this->ads->save(array('status'=>STATUS::REJECTED ) , $ad_id);
 			}else if($action == 'hide'){
 			   $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
+			}else if($action == 'show'){
+			   $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
 			}else{
 			   throw Parent_Exception('No Such action'); 	
 			}
 		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
 	}
+
+   public function set_as_favorite_post()
+   {
+   	 if(!$this->input->post('ad_id')){
+   	 	throw new Parent_Exception('ad id is required');
+   	 }else{
+	   	 $ad_id = $this->input->post('ad_id');
+		 $user_id = $this->current_user->user_id;
+		 $this->load->model('data_sources/user_favorite_ads');
+		 $favorate_id = $this->user_favorite_ads->save(array('ad_id'=>$ad_id , 'user_id'=>$user_id));
+		 if($favorate_id){
+		 	$this -> response(array('status' => true, 'data' => $favorate_id, 'message' => $this->lang->line('sucess')));
+		 }else{
+		 	$this -> response(array('status' => true, 'data' => $favorate_id, 'message' => $this->lang->line('failed')));
+		 }
+	 }
+   }
+
+   public function remove_from_favorite_post()
+   {
+   	 if(!$this->input->post('ad_id')){
+   	 	throw new Parent_Exception('ad id is required');
+   	 }else{
+   	 	 $ad_id = $this->input->post('ad_id');
+		 $user_id = $this->current_user->user_id;
+		 $this->load->model('data_sources/user_favorite_ads');
+		 $deleted = $this->user_favorite_ads->delete_by_user($ad_id , $user_id);
+		 if($deleted){
+		 	$this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
+		 }else{
+		 	$this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('failed')));
+		 }
+   	  }
+   }
 
 }

@@ -39,6 +39,7 @@
 */
 
 $route['default_controller'] = "home_control";
+$route['admin'] = "items_manage";
 $route['404_override'] = '';
 
 

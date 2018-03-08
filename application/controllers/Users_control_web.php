@@ -7,6 +7,7 @@ class Users_control_web extends REST_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->model('data_sources/users');
 	}
 
 	public function index_get() {
@@ -45,6 +46,26 @@ class Users_control_web extends REST_Controller {
 			   $this->response(array('status' => false, 'data' => $user, "message" => $this->lang->line('failed')));
 			}
         }		
+	}
+
+   public function login_post() {
+		$this -> form_validation -> set_rules('phone', 'lang:phone', 'required');
+		$this -> form_validation -> set_rules('password', 'lang:password', 'required|max_length[32]');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+			$phone = $this -> input -> post('phone');
+			$password = $this -> input -> post('password');
+			$user = $this -> users -> login($phone, $password);
+			if ($user) {
+				dump($user);
+				//redirect('home_control');
+			} else {
+				dump(false);
+				//$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
+				//redirect('users');
+			}
+		}
 	}
 
 }

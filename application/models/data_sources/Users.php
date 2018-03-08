@@ -59,18 +59,42 @@ class Users extends MY_Model {
         }
 		
 		// send verification code to email.
-	    if($user_activation_id){
-			$email_sent = $this->user_activation_codes->send_code_to_email('olamahmalji@hotmail.com' , $code);
-			if($email_sent){
-				 $user = $this->get($new_user_id);
-                 return $user;
-			}else{
-				return false;
-			}
+	    // if($user_activation_id){
+			// $email_sent = $this->user_activation_codes->send_code_to_email('olamahmalji@hotmail.com' , $code);
+			// if($email_sent){
+				 // $user = $this->get($new_user_id);
+                 // return $user;
+			// }else{
+				// return false;
+			// }
+		// }else{
+			// return false;
+		// }
+		$user = $this->get($new_user_id);
+		if($user){
+			return $user;
 		}else{
 			return false;
 		}
     }
+
+   public function login($phone , $password)
+   {
+        $user = $this->check_authentication($phone, md5($password) , ACCOUNT_TYPE::WEB);
+        if ($user != NULL) {
+            $newdata = array(
+                'PHP_AUTH_USER' => $phone,
+                'LOGIN_USER_ID' => $user->user_id,
+                'USERNAME' => $user->name,
+                'PHP_AUTH_PW' => md5($password),
+                'IS_LOGGED_IN' => 1
+            );
+            $this->session->set_userdata($newdata);
+            return $user;
+        } else {
+            return false;
+        }
+   }
 
    public function verify($phone , $code)
    {

@@ -115,6 +115,10 @@ $lang['not_set']= 'غير محدد';
 $lang['accept_ad'] = 'قبول الأعلان';
 $lang['hide_ad'] = 'إخفاء الأعلان';
 $lang['reject_ad'] = 'رفض الأعلان';
+$lang['show_ad'] = 'إظهار الأعلان';
+
+
+$lang['log_out'] = 'تسجيل خروج';
 
 
 

@@ -286,6 +286,9 @@ abstract class REST_Controller extends CI_Controller {
         $this->response->lang = $this->_detect_lang();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
+        $this->response->is_auth = $this->_detect_auth();
+	    
+		
         $this->rest = new StdClass();
         // Load DB if its enabled
         if (config_item('rest_database_group') AND ( config_item('rest_enable_keys') OR config_item('rest_enable_logging'))) {
@@ -725,6 +728,20 @@ abstract class REST_Controller extends CI_Controller {
             return 'en';
         }
         return $this->session->userdata('language');
+    }
+	
+   protected function _detect_auth() {
+        $header = $this->input->request_headers();
+	    if (isset($header['Authorization'])) {
+		     $this->_prepare_basic_auth();
+	         if(isset($this->current_user) && isset($this->current_user)!= null){
+	           return $this->current_user->user_id;	
+	         }else{
+	         	return false;
+	         }
+		}else{
+			return false;
+		}
     }
 
     /**
@@ -1195,7 +1212,8 @@ abstract class REST_Controller extends CI_Controller {
             $user_type = ACCOUNT_TYPE::WEB;
         }
         $this->load->model($auth_library_class);
-	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type);	
+	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type);
+		//dump($this->current_user);
         $this->data['user'] = $this->current_user;
 		if ($this->current_user) {
             $this->load->model('data_sources/user_permission');

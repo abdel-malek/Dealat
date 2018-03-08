@@ -49,7 +49,7 @@ class Ads extends MY_Model {
 		return $q;
 	}
     
-	public function get_ad_details($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC)
+	public function get_ad_details($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC , $user_id = null)
 	{
 	    $this->db->select('ads.* ,
 		                   categories.'.$lang.'_name as category_name ,
@@ -79,6 +79,10 @@ class Ads extends MY_Model {
 		}
 		$q = parent::get($ad_id);
 		$q->images = $this->get_ad_images($ad_id);
+		if($user_id != null){
+			$this->load->model('data_sources/user_favorite_ads');
+			$q->is_favorite =  $this->user_favorite_ads->check_favorite($user_id , $ad_id);
+		}
 		return $q;
 	}
 	
@@ -211,7 +215,8 @@ class Ads extends MY_Model {
 		                       cites.'.$lang.'_name as  city_name,
 		                      ');
 		}
-		$this->db->where('ads.category_id' , $category_id);
+		//$this->db->where('ads.category_id' , $category_id);
+		$this->db->where("(c1.category_id = '$category_id' OR c1.parent_id = '$category_id' OR c.parent_id = '$category_id')");
 	 }else{
 		$this->db->select('ads.* ,
 		                   c1.'.$lang.'_name as category_name ,
@@ -231,9 +236,9 @@ class Ads extends MY_Model {
 		 	$this->db->where("MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
 		    $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
 		// }
-	     if($category_id != null){
-		 	$this->db->where('ads.category_id' , $category_id);
-        }
+	     // if($category_id != null){
+		 	// $this->db->where('ads.category_id' , $category_id);
+        // }
 	 }
 	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
@@ -243,6 +248,12 @@ class Ads extends MY_Model {
 	// users.name as seller_name
 	 if($this->input->get('location_id')){
 	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
+	 }
+	 if($this->input->get('price_max') && $this->input->get('price_max') != ''){
+	   	 $this->db->where('price <= ' , $this->input->get('price_max'));
+	 }
+	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){
+		$this->db->where('price >= ' , $this->input->get('price_min')); 
 	 }
 	 $this->db->where('status' , STATUS::ACCEPTED);
      return parent::get(); 
@@ -291,6 +302,34 @@ class Ads extends MY_Model {
 		}
 		return parent::get();
 	}
+	
+	public function get_user_ads($user_id , $lang)
+	{
+	  $this->db->select('ads.* ,
+	                  categories.'.$lang.'_name as category_name ,
+	                  c.'.$lang.'_name as parent_category_name ,
+	                  categories.tamplate_id,
+	                  locations.'.$lang.'_name as location_name ,
+	                  cites.'.$lang.'_name as  city_name,
+	                 ');
+	  $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+	  $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	  $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+	  $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	  $this->db->where('ads.user_id' , $user_id);
+	  return parent::get();
+	}
+
+    public function get_seller_id($ad_id)
+    {
+       $this->db->select('user_id');
+	   $q = parent::get($ad_id);
+	   if($q){
+	   	 return $q->user_id;
+	   }else{
+	   	 return null;
+	   }
+    }
 
 
 }

@@ -17,5 +17,6 @@ $lang['show_period'] = 'Ad show period';
 $lang['price'] = 'Ad Price';
 $lang['title'] = 'Ad Title';
 
+
 // sms validation msg 
 $lang['verification_msg'] = '<p> Welcome to Dealat! </p><p>Your activation code is </p>';
