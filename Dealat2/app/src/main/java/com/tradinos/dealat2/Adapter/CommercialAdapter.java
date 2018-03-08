@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.tradinos.dealat2.Fragment.CommercialAdFragment;
 import com.tradinos.dealat2.Model.CommercialAd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class CommercialAdapter extends FragmentPagerAdapter {
 
-    private List<CommercialAd> commercialAds;
+    private List<CommercialAd> commercialAds = new ArrayList<>();
 
     public CommercialAdapter(FragmentManager fm, List<CommercialAd> commercialAds) {
         super(fm);

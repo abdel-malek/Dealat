@@ -1,6 +1,7 @@
 package com.tradinos.dealat2.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.View.AdDetailsActivity;
 import com.tradinos.dealat2.View.MasterActivity;
 
 import java.util.List;
@@ -54,7 +56,7 @@ public class AdAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
         if (resourceLayout == R.layout.row_view2 && (i % 2 != 0))
             view = this.inflater.inflate(R.layout.row_view2_left, null);
@@ -64,6 +66,18 @@ public class AdAdapter extends BaseAdapter {
         view.setTag(new ViewHolder(view));
 
         initializeView(getItem(i), (ViewHolder) view.getTag());
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AdDetailsActivity.class);
+
+                intent.putExtra("ad", getItem(i));
+
+                context.startActivity(intent);
+            }
+        });
 
         return view;
     }

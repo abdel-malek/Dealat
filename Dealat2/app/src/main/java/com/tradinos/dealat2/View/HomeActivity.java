@@ -43,7 +43,7 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void getData() {
-        mainCategory = Category.getMain();
+        mainCategory = Category.getMain(getString(R.string.allCategories));
 
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();

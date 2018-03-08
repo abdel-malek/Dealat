@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/container"
         android:layout_above="@+id/container2"
-        android:layout_margin="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:numColumns="auto_fit"
         android:columnWidth="100dp"
         android:stretchMode="columnWidth"
@@ -49,9 +50,10 @@
     <LinearLayout
         android:id="@+id/container2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+       android:layout_height="@dimen/bottomBarHeight"
         android:layout_alignParentBottom="true"
         android:background="@color/red"
+        android:gravity="center"
         >
 
         <Button
@@ -68,8 +70,8 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/white"
             />
 

@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
+            android:focusableInTouchMode="true"
             >
 
             <android.support.design.widget.TextInputLayout
@@ -23,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:hint="@string/hintSearch"
+                android:textColorHint="@color/whiteTransparent"
                 >
                 <EditText
                     android:id="@+id/editQuery"
@@ -38,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/hintChooseLocation"
+                android:textColorHint="@color/whiteTransparent"
                 >
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteLocation"
@@ -56,6 +59,7 @@
                 android:layout_marginBottom="16dp"
                 android:focusableInTouchMode="true"
                 android:hint="@string/labelchooseCategory"
+                android:textColorHint="@color/whiteTransparent"
                 >
                 <EditText
                     android:id="@+id/editCategory"
@@ -89,6 +93,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editPriceMin"
@@ -105,6 +110,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
 
                     <EditText
@@ -248,6 +254,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editKilometerMin"
@@ -264,6 +271,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editKilometerMax"
@@ -301,6 +309,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editSizeMin"
@@ -317,6 +326,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
 
                     <EditText
@@ -397,6 +407,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editSalaryMin"
@@ -413,6 +424,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editSalaryMax"
@@ -452,6 +464,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editSpaceMin"
@@ -469,6 +482,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editSpaceMax"
@@ -506,6 +520,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editRoomsMin"
@@ -523,6 +538,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editRoomsMax"
@@ -561,6 +577,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editFloorsMin"
@@ -578,6 +595,7 @@
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
                     >
                     <EditText
                         android:id="@+id/editFloorsMax"
@@ -617,7 +635,7 @@
     <Button
         android:id="@+id/buttonTrue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/bottomBarHeight"
         android:layout_alignParentBottom="true"
         android:onClick="onClick"
         android:text="@string/buttonShow"

@@ -18,7 +18,7 @@ import com.tradinos.dealat2.R;
 
 public class SubCategoriesActivity extends MasterActivity {
 
-    public static final int ACTION_VIEW = 1, ACTION_SELL = 2, ACTION_SELECT_CAT = 3;
+    public static final int ACTION_VIEW = 1, ACTION_SELL = 2, ACTION_SELECT_CAT = 3, ACTION_FILTER_CAT = 4;
 
     public final int REQUEST_SELECT_IMG = 1;
 
@@ -49,22 +49,39 @@ public class SubCategoriesActivity extends MasterActivity {
 
     @Override
     public void showData() {
-        if (action == ACTION_VIEW) {
-            Category all = new Category();
-            all.setId(category.getId());
-            all.setTemplateId(category.getTemplateId());
-            all.setParentId(category.getParentId());
-            all.setName(getString(R.string.all));
 
+        if (action == ACTION_VIEW) {
+
+            Category all = Category.getAll(category, getString(R.string.all));
             category.setSubCategories(application.getSubCatsById(category.getId()));
             category.addSubCat(all);
+
         } else if (action == ACTION_SELECT_CAT) {
-            if (!category.getId().equals("0")){
-                buttonBack.setVisibility(View.VISIBLE);
+            if (!category.getId().equals("0")) {
+                if (!category.getParentId().equals("0"))
+                    buttonBack.setVisibility(View.VISIBLE);
+
                 category = MyApplication.getCategoryById(category.getParentId());
             }
 
             category.setSubCategories(application.getSubCatsById(category.getId()));
+
+        } else if (action == ACTION_FILTER_CAT) {
+            if (!category.getId().equals("0")) {
+                if (!category.getParentId().equals("0"))
+                    buttonBack.setVisibility(View.VISIBLE);
+
+                category = MyApplication.getCategoryById(category.getParentId());
+            }
+
+            Category all;
+            if (category.isMain())
+                all = Category.getAll(category, "");
+            else
+                all = Category.getAll(category, getString(R.string.all));
+
+            category.setSubCategories(application.getSubCatsById(category.getId()));
+            category.addSubCat(all);
         }
 
         adapter = new CategoryAdapter(mContext, category.getSubCategories());
@@ -88,12 +105,8 @@ public class SubCategoriesActivity extends MasterActivity {
 
                     category.setSubCategories(application.getSubCatsById(category.getId()));
 
-                    if (action == ACTION_VIEW) {
-                        Category all = new Category();
-                        all.setId(category.getId());
-                        all.setTemplateId(category.getTemplateId());
-                        all.setParentId(category.getParentId());
-                        all.setName(getString(R.string.all));
+                    if (action == ACTION_VIEW || action == ACTION_FILTER_CAT) {
+                        Category all = Category.getAll(category, getString(R.string.all));
                         category.addSubCat(all);
                     }
 
@@ -114,7 +127,7 @@ public class SubCategoriesActivity extends MasterActivity {
                         intent.putExtra("category", category);
                         startActivity(intent);
 
-                    } else if (action == ACTION_SELECT_CAT) {
+                    } else if (action == ACTION_SELECT_CAT || action == ACTION_FILTER_CAT) {
                         intent = new Intent();
                         intent.putExtra("category", category);
                         setResult(RESULT_OK, intent);
@@ -138,12 +151,13 @@ public class SubCategoriesActivity extends MasterActivity {
             category = MyApplication.getCategoryById(category.getParentId());
             category.setSubCategories(application.getSubCatsById(category.getId()));
 
-            if (action == ACTION_VIEW && !category.getId().equals("0")) {
-                Category all = new Category();
-                all.setId(category.getId());
-                all.setTemplateId(category.getTemplateId());
-                all.setParentId(category.getParentId());
-                all.setName(getString(R.string.all));
+            if ((action == ACTION_VIEW || action == ACTION_FILTER_CAT)) {
+                Category all;
+                if (category.isMain())
+                    all = Category.getAll(category, "");
+                else
+                    all = Category.getAll(category, getString(R.string.all));
+
                 category.addSubCat(all);
             }
 
@@ -152,8 +166,8 @@ public class SubCategoriesActivity extends MasterActivity {
 
             if (category.getId().equals("0"))
                 buttonBack.setVisibility(View.INVISIBLE);
-        }
-        else if (view.getId() == R.id.container)
+
+        } else if (view.getId() == R.id.container)
             finish();
     }
 }

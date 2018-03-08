@@ -50,7 +50,10 @@ public class CategoryAdapter extends BaseAdapter {
 
         ((TextView)view.findViewById(R.id.textView)).setText(getItem(i).getName());
 
-
+        if (getItem(i).hasSubCats())
+            view.findViewById(R.id.imageView).setVisibility(View.VISIBLE);
+        else
+            view.findViewById(R.id.imageView).setVisibility(View.INVISIBLE);
 
 
         return view;

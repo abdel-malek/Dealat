@@ -86,12 +86,12 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getAdDetails(String adId, String templateId, SuccessCallback<Ad> successCallback){
+    public void getAdDetails(String adId, int templateId, SuccessCallback<Ad> successCallback){
         String url = new URLBuilder(APIModel.ads, "get_item_details").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdDetailsParser(), successCallback,getmFaildCallback());
 
         request.addParameter("ad_id", adId);
-        request.addParameter("template_id", templateId);
+        request.addParameter("template_id", String.valueOf(templateId));
 
         request.Call();
     }
@@ -102,15 +102,6 @@ public class AdController extends ParentController {
 
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
-
-        request.Call();
-    }
-
-    public void test(SuccessCallback<String> successCallback){
-        String url = new URLBuilder(APIModel.ads, "test").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());
-
-        authenticationRequired(request);
 
         request.Call();
     }

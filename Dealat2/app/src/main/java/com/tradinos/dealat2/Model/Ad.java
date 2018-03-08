@@ -1,10 +1,14 @@
 package com.tradinos.dealat2.Model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by developer on 18.02.18.
  */
 
-public class Ad {
+public class Ad implements Serializable {
     // Ad status
     public final static int PENDING = 1, ACCEPTED = 2, EXPIRED = 3,
             HIDDEN = 4, REJECTED = 5, DELETED = 6;
@@ -16,6 +20,11 @@ public class Ad {
     private double price;
     private int template, status;
     private boolean negotiable, featured;
+    private List<String> imagesPaths;
+
+    public Ad(){
+        imagesPaths = new ArrayList<>();
+    }
 
 
     public String getId() {
@@ -129,4 +138,16 @@ public class Ad {
     public void setFeatured(boolean featured) {
         this.featured = featured;
     }
+
+    public List<String> getImagesPaths() {
+        return imagesPaths;
+    }
+
+   public void addImagePath(String path){
+       this.imagesPaths.add(path);
+   }
+
+   public String getImagePath(int i){
+       return this.imagesPaths.get(i);
+   }
 }

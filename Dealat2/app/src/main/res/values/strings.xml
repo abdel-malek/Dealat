@@ -27,6 +27,7 @@
 
     <!-- Internal Strings -->
     <string name="all">All</string>
+    <string name="allCategories">All Categories</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="newU">New</string>

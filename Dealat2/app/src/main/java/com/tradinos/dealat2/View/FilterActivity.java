@@ -37,7 +37,7 @@ import java.util.List;
 
 public class FilterActivity extends MasterActivity {
 
-    private final int REQUEST_SELECT_CAT = 1;
+    private final int REQUEST_FILTER_CAT = 1;
 
     private int currentTemplate;
     private Category selectedCategory;
@@ -109,10 +109,9 @@ public class FilterActivity extends MasterActivity {
     @Override
     public void showData() {
 
-        if (!selectedCategory.isMain()) {
-            editCategory.setText(selectedCategory.getFullName());
-            setTemplateVisibility(View.VISIBLE);
-        }
+        editCategory.setText(selectedCategory.getFullName());
+        setTemplateVisibility(View.VISIBLE);
+
 
         int startYear = 1970;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -246,9 +245,9 @@ public class FilterActivity extends MasterActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-                intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
+                intent.putExtra("action", SubCategoriesActivity.ACTION_FILTER_CAT);
                 intent.putExtra("category", selectedCategory);
-                startActivityForResult(intent, REQUEST_SELECT_CAT);
+                startActivityForResult(intent, REQUEST_FILTER_CAT);
             }
         });
 
@@ -285,7 +284,7 @@ public class FilterActivity extends MasterActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SELECT_CAT) {
+            if (requestCode == REQUEST_FILTER_CAT) {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
 
@@ -379,7 +378,7 @@ public class FilterActivity extends MasterActivity {
                 if (!item.isNothing())
                     parameters.put("is_automatic", item.getId());
 
-                item = ((Item)spinnerBrand.getSelectedItem());
+                item = ((Item) spinnerBrand.getSelectedItem());
                 if (!item.isNothing())
                     parameters.put("type_id", item.getId());
 
@@ -406,7 +405,7 @@ public class FilterActivity extends MasterActivity {
                     parameters.put("size_min", stringInput(editSizeMin));
 
             case Category.MOBILES:
-                item = ((Item)spinnerBrand.getSelectedItem());
+                item = ((Item) spinnerBrand.getSelectedItem());
                 if (!item.isNothing())
                     parameters.put("type_id", item.getId());
 
@@ -457,11 +456,10 @@ public class FilterActivity extends MasterActivity {
                 textSalary.setVisibility(visibility);
                 containerSalary.setVisibility(visibility);
 
-                if (visibility == View.GONE){
+                if (visibility == View.GONE) {
                     textPrice.setVisibility(View.VISIBLE);
                     containerPrice.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     textPrice.setVisibility(View.GONE);
                     containerPrice.setVisibility(View.GONE);
                 }

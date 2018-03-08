@@ -24,13 +24,24 @@ public class Category implements Serializable {
         this.subCategories = new ArrayList<>();
     }
 
-    public static Category getMain() {
+    public static Category getMain(String name) {
         Category category = new Category();
 
         category.setId("0");
         category.setParentId("-1");
         category.setTemplateId(BASIC);
-        category.setName("");
+        category.setName(name);
+
+        return category;
+    }
+
+    public static Category getAll(Category parent, String name){ // to add "All" option with other subcategories
+        Category category = new Category();
+
+        category.setId(parent.getId());
+        category.setParentId(parent.getParentId());
+        category.setTemplateId(parent.getTemplateId());
+        category.setName(name + " "+ parent.getName());
 
         return category;
     }

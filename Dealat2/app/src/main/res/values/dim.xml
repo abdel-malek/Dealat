@@ -15,4 +15,7 @@
     <dimen name="view3Height">@dimen/largeHeight</dimen>
     <dimen name="dropdownHeight">160dp</dimen>
 
+    <dimen name="bottomBarPadding">4dp</dimen>
+    <dimen name="bottomBarHeight">44dp</dimen>
+
 </resources>
