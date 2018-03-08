@@ -36,6 +36,8 @@ pod 'XLPagerTabStrip'
 
 
 pod 'IQDropDownTextField'
+pod 'GrowingTextView', '~> 0.5.5'
+
 
 
 #pod 'FacebookCore'

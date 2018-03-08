@@ -49,6 +49,7 @@ class Communication: BaseManager {
     let remove_from_favoriteURL = "/items_control/remove_from_favorite/format/json"
     let get_my_favoritesURL = "/users_control/get_my_favorites/format/json"
     let get_my_itemsURL = "/users_control/get_my_items/format/json"
+    let get_my_chat_sessionsURL = "/users_control/get_my_chat_sessions/format/json"
 
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
@@ -678,6 +679,40 @@ class Communication: BaseManager {
                     
                     for i in value.data.arrayValue{
                         let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
+    
+    func get_my_chat_sessions(_ callback : @escaping ([Chat]) -> Void){
+        let url = URL(string: baseURL + get_my_chat_sessionsURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [Chat]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = Chat(JSON: i.dictionaryObject!)!
                         res.append(a)
                     }
                     

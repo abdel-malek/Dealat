@@ -43,7 +43,7 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = self.storyboard?.instantiateViewController(withIdentifier: "MyAdsVC") as! MyAdsVC
         let child_2 = self.storyboard?.instantiateViewController(withIdentifier: "MyFavoritesVC") as! MyFavoritesVC
-        let child_3 = self.storyboard?.instantiateViewController(withIdentifier: "MyFavoritesVC") as! MyFavoritesVC
+        let child_3 = self.storyboard?.instantiateViewController(withIdentifier: "MyChatsVC") as! MyChatsVC
         
         return [child_1, child_2,child_3]
     }

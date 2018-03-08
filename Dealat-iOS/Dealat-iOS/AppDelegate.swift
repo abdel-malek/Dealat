@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     static func setupViews(){
         
-        
         if let arr =  UserDefaults.standard.value(forKey: "AppleLanguages") as? [String]{
             if let lang = arr.first{
                 if lang.contains("ar"){
