@@ -18,4 +18,6 @@
     <dimen name="bottomBarPadding">4dp</dimen>
     <dimen name="bottomBarHeight">44dp</dimen>
 
+    <dimen name="containerPadding">8dp</dimen>
+
 </resources>

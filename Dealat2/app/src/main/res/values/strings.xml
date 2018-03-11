@@ -33,6 +33,7 @@
     <string name="newU">New</string>
     <string name="old">Old</string>
     <string name="manual">Manual</string>
+    <string name="sp">SP</string>
 
 
     <!-- Views -->
@@ -47,12 +48,33 @@
     <string name="labelSelectModel">Select Model</string>
     <string name="labelSelectEdu">Select Education</string>
     <string name="labelSelectSch">Select Schedule</string>
-    <string name="labelManufactureYear">Manufacturing Year</string>
+    <string name="labelSelectManufactureYear">Select Manufacturing Year</string>
     <string name="labelShowPeriod">Show Period</string>
     <string name="labelTo">To</string>
     <string name="labelFrom">From</string>
-    <string name="labelTransmission">Transmission</string>
+    <string name="labelSelectTransmission">Select Transmission Type</string>
     <string name="labelFurnished">Furnished</string>
+
+    <!-- AdDetails   -->
+    <string name="labelAdNumber">Ad Number</string>
+    <string name="labelLocation">Location</string>
+    <string name="labelTitle">Title</string>
+    <string name="labelBrand">Brand</string>
+    <string name="labelModel">Model</string>
+    <string name="labelKilo">Kilometer</string>
+    <string name="labelManufactureYear">Manufacturing Year</string>
+    <string name="labelTransmission">Transmission Type</string>
+    <string name="labelState">State</string>
+
+    <string name="labelSpace">Space</string>
+    <string name="labelRoom">Number of Rooms</string>
+    <string name="labelFloor">Number of Floors</string>
+
+    <string name="labelEdu">Education</string>
+    <string name="labelSchedule">Schedule</string>
+    <string name="labelExperience">Experience</string>
+    <string name="labelSalary">Salary</string>
+    <string name="labelSize">Size</string>
 
     <string name="labelListEmpty">This list is empty!</string>
 

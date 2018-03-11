@@ -2,7 +2,14 @@ package com.tradinos.dealat2.Parser.Parser.Ad;
 
 import com.tradinos.core.network.TradinosParser;
 import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.Model.AdElectronic;
+import com.tradinos.dealat2.Model.AdFashion;
+import com.tradinos.dealat2.Model.AdIndustry;
+import com.tradinos.dealat2.Model.AdJob;
+import com.tradinos.dealat2.Model.AdKid;
+import com.tradinos.dealat2.Model.AdMobile;
 import com.tradinos.dealat2.Model.AdProperty;
+import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
 
@@ -27,6 +34,31 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             case Category.VEHICLES:
                 ad = new AdVehicle();
 
+                if (validData(jsonObject.getString("type_id"))){
+                    ((AdVehicle)ad).setTypeId(jsonObject.getString("type_id"));
+                    ((AdVehicle)ad).setTypeName(jsonObject.getString("type_name"));
+                }
+
+                if (validData(jsonObject.getString("type_model_id"))){
+                    ((AdVehicle)ad).setModelId(jsonObject.getString("type_model_id"));
+                    ((AdVehicle)ad).setModelName(jsonObject.getString("type_model_name"));
+                }
+
+                if (validData(jsonObject.getString("manufacture_date")))
+                    ((AdVehicle)ad).setManufactureYear(jsonObject.getString("manufacture_date"));
+
+                if (validData(jsonObject.getString("kilometer")))
+                    ((AdVehicle)ad).setKilometer(jsonObject.getDouble("kilometer"));
+
+                if (jsonObject.getInt("is_automatic") == 0)
+                    ((AdVehicle) ad).setAutomatic(false);
+                else
+                    ((AdVehicle) ad).setAutomatic(true);
+
+                if (jsonObject.getInt("is_new") == 0)
+                    ((AdVehicle) ad).setSecondhand(false);
+                else
+                    ((AdVehicle) ad).setSecondhand(true);
 
                 break;
 
@@ -52,37 +84,101 @@ public class AdDetailsParser implements TradinosParser<Ad> {
 
                 break;
 
-         /*   case Category.MOBILES:
+            case Category.JOBS:
+                ad = new AdJob();
+
+                if (validData(jsonObject.getString("education_id"))){
+                    ((AdJob)ad).setEducationId(jsonObject.getString("education_id"));
+                    ((AdJob)ad).setEducationName(jsonObject.getString("education_name"));
+                }
+
+                if (validData(jsonObject.getString("schedule_id"))){
+                    ((AdJob)ad).setScheduleId(jsonObject.getString("schedule_id"));
+                    ((AdJob)ad).setScheduleName(jsonObject.getString("schedule_name"));
+                }
+
+                if (validData(jsonObject.getString("experience")))
+                    ((AdJob)ad).setExperience(jsonObject.getString("experience"));
+
+                if (validData(jsonObject.getString("salary")))
+                    ((AdJob)ad).setSalary(jsonObject.getDouble("salary"));
 
                 break;
 
-            case Category.ELECTRONICS:
+           case Category.MOBILES:
+               ad = new AdMobile();
+
+               if (validData(jsonObject.getString("type_id"))){
+                   ((AdMobile)ad).setTypeId(jsonObject.getString("type_id"));
+                   ((AdMobile)ad).setTypeName(jsonObject.getString("type_name"));
+               }
+
+               if (jsonObject.getInt("is_new") == 0)
+                   ((AdMobile) ad).setSecondhand(false);
+               else
+                   ((AdMobile) ad).setSecondhand(true);
+
+                break;
+
+           case Category.ELECTRONICS:
+               ad = new AdElectronic();
+
+               if (validData(jsonObject.getString("type_id"))){
+                   ((AdElectronic)ad).setTypeId(jsonObject.getString("type_id"));
+                   ((AdElectronic)ad).setTypeName(jsonObject.getString("type_name"));
+               }
+
+               if (validData(jsonObject.getString("size")))
+                   ((AdElectronic)ad).setSize(jsonObject.getDouble("size"));
+
+               if (jsonObject.getInt("is_new") == 0)
+                   ((AdElectronic) ad).setSecondhand(false);
+               else
+                   ((AdElectronic) ad).setSecondhand(true);
 
                 break;
 
             case Category.FASHION:
+                ad = new AdFashion();
+
+                if (jsonObject.getInt("is_new") == 0)
+                    ((AdFashion) ad).setSecondhand(false);
+                else
+                    ((AdFashion) ad).setSecondhand(true);
 
                 break;
 
             case Category.KIDS:
+                ad = new AdKid();
+
+                if (jsonObject.getInt("is_new") == 0)
+                    ((AdKid) ad).setSecondhand(false);
+                else
+                    ((AdKid) ad).setSecondhand(true);
 
                 break;
 
             case Category.SPORTS:
+                ad = new AdSport();
 
-                break;
-
-            case Category.JOBS:
+                if (jsonObject.getInt("is_new") == 0)
+                    ((AdSport) ad).setSecondhand(false);
+                else
+                    ((AdSport) ad).setSecondhand(true);
 
                 break;
 
             case Category.INDUSTRIES:
+                ad = new AdIndustry();
+
+                if (jsonObject.getInt("is_new") == 0)
+                    ((AdIndustry) ad).setSecondhand(false);
+                else
+                    ((AdIndustry) ad).setSecondhand(true);
 
                 break;
 
-            case Category.SERVICES:
-
-                break;*/
+            //case Category.SERVICES:
 
             default:
                 ad = new Ad();
@@ -91,9 +187,14 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setId(jsonObject.getString("ad_id"));
         ad.setCategoryId(jsonObject.getString("category_id"));
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
+        ad.setLocationId(jsonObject.getString("location_id"));
+        ad.setLocationName(jsonObject.getString("city_name") + " - " +jsonObject.getString("location_name"));
 
         ad.setTitle(jsonObject.getString("title"));
-        ad.setDescription(jsonObject.getString("description"));
+
+        if (validData(jsonObject.getString("description")))
+            ad.setDescription(jsonObject.getString("description"));
+
         ad.setPrice(jsonObject.getDouble("price"));
         ad.setStatus(jsonObject.getInt("status"));
 
@@ -123,11 +224,10 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             ad.addImagePath(imageObject.getString("image"));
         }
 
-
         return ad;
     }
 
     private boolean validData(String data) {
-        return !data.equals("null");
+        return !data.equals("null") && !data.equals("0");
     }
 }

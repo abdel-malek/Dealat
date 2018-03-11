@@ -10,6 +10,10 @@ public class AdProperty extends Ad {
     private boolean furnished;
     private String state;
 
+    public AdProperty(){
+        state = "";
+    }
+
     public int getRoomNum() {
         return roomNum;
     }

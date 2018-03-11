@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:text="@string/labelManufactureYear"
+                android:text="@string/labelSelectManufactureYear"
                 style="@style/textNormal"
                 android:textColor="@color/whiteTransparent"
                 />

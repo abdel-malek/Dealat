@@ -23,6 +23,7 @@ public class Ad implements Serializable {
     private List<String> imagesPaths;
 
     public Ad(){
+        description = "";
         imagesPaths = new ArrayList<>();
     }
 
