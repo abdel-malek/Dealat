@@ -17,7 +17,14 @@ class ChatCell: UICollectionViewCell {
     
     var chat : Chat!{
         didSet{
-            self.sellerLbl.text = chat.seller_name
+            let me = User.getCurrentUser()
+            
+            if let id = me.user_id, id == self.chat.seller_id.intValue{
+                self.sellerLbl.text = chat.user_name
+            }else{
+                self.sellerLbl.text = chat.seller_name
+            }
+            
             self.adLbl.text = chat.ad_title
         }
     }

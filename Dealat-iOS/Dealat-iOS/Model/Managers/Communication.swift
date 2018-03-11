@@ -48,9 +48,17 @@ class Communication: BaseManager {
     let set_as_favoriteURL = "/items_control/set_as_favorite/format/json"
     let remove_from_favoriteURL = "/items_control/remove_from_favorite/format/json"
     let get_my_favoritesURL = "/users_control/get_my_favorites/format/json"
+    
     let get_my_itemsURL = "/users_control/get_my_items/format/json"
+    let get_my_infoURL = "/users_control/get_my_info/format/json"
+    let edit_user_infoURL = "/users_control/edit_user_info/format/json"
+    
     let get_my_chat_sessionsURL = "/users_control/get_my_chat_sessions/format/json"
-
+    let get_chat_messagesURL = "/users_control/get_chat_messages/format/json"
+    let send_msgURL = "/users_control/send_msg/format/json"
+    
+    
+    
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -474,11 +482,11 @@ class Communication: BaseManager {
     }
     
     
-    func users_register(phone : String,name : String,location_id : Int, callback : @escaping (Bool) -> Void){
+    func users_register(phone : String,name : String, callback : @escaping (Bool) -> Void){
         
         let url = URL(string: baseURL + users_registerURL)!
         
-        let params : [String : Any] = ["phone" : phone,"name" : name,"location_id" : location_id]
+        let params : [String : Any] = ["phone" : phone,"name" : name]
         
         
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -728,6 +736,148 @@ class Communication: BaseManager {
             }
         }
     }
+    
+    
+    
+    func get_chat_messages( chat : Chat, callback : @escaping ([Message]) -> Void){
+        let url = URL(string: baseURL + get_chat_messagesURL)!
+        
+        var params : [String : Any] = [:]
+        
+        if let chat_session_id = chat.chat_session_id{
+            params["chat_session_id"] = chat_session_id.intValue
+        }else{
+            params["ad_id"] = chat.ad_id.intValue
+        }
+        
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [Message]()
+                    let me = User.getCurrentUser()
+                    
+                    for i in value.data.arrayValue{
+                        let a = Message(JSON: i.dictionaryObject!)!
+                        
+                        
+                        if let id = me.user_id, chat.seller_id.intValue == id{
+                            a.to_seller = JSON(!a.to_seller.boolValue)
+                        }
+                        
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
+    func send_msg( ad_id : Int,msg : String, callback : @escaping (Bool) -> Void){
+        let url = URL(string: baseURL + send_msgURL)!
+        
+        let params : [String : Any] = ["ad_id" : ad_id,"msg" : msg]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func get_my_info(_ callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + get_my_infoURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    if let i = value.data, let obj = i.dictionaryObject{
+                        let newUser = User.getObject(obj)
+                        User.saveMe(me: newUser)
+                        callback(true)
+                    }
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func edit_user_info(name : String,city_id : Int,email : String,phone : String,  callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + edit_user_infoURL)!
+        let params  : [String : Any] = ["name" : name, "city_id" : city_id, "email" : email, "phone" :phone]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    if let i = value.data, let obj = i.dictionaryObject{
+                        let newUser = User.getObject(obj)
+                        User.saveMe(me: newUser)
+                        callback(true)
+                    }
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
 
     
     

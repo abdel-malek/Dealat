@@ -44,7 +44,14 @@ class AdDetailsBaseVC: UIViewController {
         }
     }
     
-    
+    @IBAction func openChat(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailsVC") as! ChatDetailsVC
+        let chat = Chat()
+        chat.ad_title = self.ad.title
+        chat.ad_id = self.ad.ad_id
+        vc.chat = chat
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
 
 }

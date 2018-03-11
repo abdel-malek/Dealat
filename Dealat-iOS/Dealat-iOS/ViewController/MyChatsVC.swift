@@ -55,10 +55,9 @@ class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,Indi
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
-//        vc.tamplateId = self.ads[indexPath.row].tamplate_id.intValue
-//        vc.ad = self.ads[indexPath.row]
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailsVC") as! ChatDetailsVC
+        vc.chat = self.chats[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -71,6 +71,13 @@ class SideMenuVC: BaseVC {
             }
             
             
+            if i.tag == 5{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
+                vc.homeVC = self.homeVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+
+            }
+            
             // CHANGE LANGUAGE
             if i.tag == 6{
                 /*if AppDelegate.isArabic(){

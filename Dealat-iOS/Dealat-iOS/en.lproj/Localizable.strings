@@ -11,7 +11,7 @@
 "Register" = "Register";
 "Name" = "Name";
 "PhoneNumber" = "Phone Number";
-"EmailOrPhone" = "Email or Phone number";
+"Email" = "Email address";
 "Password" = "Password";
 "ConfirmPassword" = "Confirm password";
 "SetLocation" = "Set location";
@@ -84,7 +84,7 @@
 "Schedule" = "Schedule";
 "Experience" = "Experience";
 
-
+"Save" = "Save";
 "Submit" = "Submit";
 "Search" = "Search";
 "OK" = "OK";

@@ -88,7 +88,7 @@ class RegisterVC: BaseVC {
         }else{
             
             self.showLoading()
-            Communication.shared.users_register(phone: Provider.getEnglishNumber(phone), name: name, location_id: Provider.getCity(), callback: { (res) in
+            Communication.shared.users_register(phone: Provider.getEnglishNumber(phone), name: name, callback: { (res) in
                 self.hideLoading()
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC

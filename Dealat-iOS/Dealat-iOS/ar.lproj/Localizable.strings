@@ -10,7 +10,7 @@
 "Register" = "تسجيل";
 "Name" = "الاسم";
 "PhoneNumber" = "رقم الهاتف";
-"EmailOrPhone" = "الإيميل أو رقم الهاتف";
+"Email" = "الإيميل";
 "Password" = "كلمة المرور";
 "ConfirmPassword" = "تأكيد كلمة المرور";
 "SetLocation" = "اختيار موقع";
@@ -84,7 +84,7 @@
 "Schedule" = "نوع العمل";
 "Experience" = "مستوى الخبرة";
 
-
+"Save" = "حفظ";
 "Submit" = "أضف إعلان";
 "Search" = "بحث";
 "OK" = "موافق";

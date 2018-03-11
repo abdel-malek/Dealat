@@ -36,6 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.setupViews()
         
         
+        Communication.shared.get_my_info { (res) in
+            
+        }
+        
         return true
     }
     
