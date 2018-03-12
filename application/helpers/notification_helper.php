@@ -6,19 +6,23 @@
  * @author Amal Abdulraouf
  */
 class NotificationHelper {
+	
+	const MSG = 1; 
+	const ACTION = 2;
 
     function __construct() {
         
     }
+	
     public function send_notification_to_device($registatoin_ids, $message, $data, $os, $title , $type) {
         $message_object = array(
-            'title' => $title, 
+            'ntf_title' => $title, 
             "ntf_text" => $message,
             "ntf_body" => $data,
             'ntf_type'=>$type
         );
         $url = 'https://fcm.googleapis.com/fcm/send';
-        if (strtolower($os) == "ios")
+        if ($os == OS::IOS)
             $fields = array(
                 'registration_ids' => $registatoin_ids,
                 'data' => $message_object,
@@ -33,7 +37,7 @@ class NotificationHelper {
             );
 
         $headers = array(
-            'Authorization: key=' . "AAAA0utiXdM:APA91bE7DOPC2Nq8D7Hs5HoM5i3MRrpnO37jPxCgbMiiwcUqsGBYZMQxAd6ElQ4ee_NSqrnSUToxLp5Bq5I_BiIRdgeo7hE3v-138SkhQgKTWm77a2EgTd3Hlg-Spia6e-heVjxMOclz",
+            'Authorization: key=' . "AIzaSyB7we9TafewpSlpHHhrJHDO62bXQpDm7ro",
             'Content-Type: application/json'
         );
         $ch = curl_init();

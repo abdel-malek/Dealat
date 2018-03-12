@@ -8,7 +8,24 @@ class Users_control extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->data['lang']=  $this->response->lang;
+		$this->data['city'] = $this->response->city;
 		$this->load->model('data_sources/users');
+	}
+	
+	
+	public function test_get()
+	{
+		header('Content-type: application/json');
+		dump($this->input->get());
+		$json = json_encode($this->input->get());
+		dump($json);
+		$data_array = json_decode($json , true);
+		foreach ($data_array as $key => $value) {
+			$_GET[$key.'4'] = $value;
+		}
+		dump($_GET);
+		$new_param = $this->input->get('chat_session_id4');
+		dump($new_param);
 	}
 
 	public function index_get() {
@@ -20,7 +37,6 @@ class Users_control extends REST_Controller {
         $this->form_validation->set_rules('phone', 'lang:phone', 'required|numeric|exact_length[9]');
         $this->form_validation->set_rules('name', 'lang:name', 'required');
        // $this->form_validation->set_rules('lang', 'lang:lang', 'required');
-        $this->form_validation->set_rules('location_id', 'lang:country', 'required');
         if (!$this->form_validation->run()) {
             throw new Validation_Exception(validation_errors());
         } else {
@@ -28,7 +44,7 @@ class Users_control extends REST_Controller {
         	  'phone' => $this->input->post('phone'),
         	  'name' => $this->input->post('name'),
         	  'lang' => $this->input->post('lang') != "" ? strtolower($this->input->post('lang')) : $this->data['lang'],
-        	  'location_id' => $this->input->post('location_id')
+        	  'city_id' => $this->data['city']
 			);
             $user = $this->users->register($data ,ACCOUNT_TYPE::MOBILE);
 			if($user != null){
@@ -42,13 +58,13 @@ class Users_control extends REST_Controller {
     public function verify_post() {
         $this->form_validation->set_rules('phone', 'Phone', 'required|numeric|exact_length[9]');
         $this->form_validation->set_rules('verification_code', 'Verification code', 'required');
-
         if (!$this->form_validation->run()) {
             throw new Validation_Exception(validation_errors());
         } else {
             $phone = $this->input->post('phone');
             $code = $this->input->post('verification_code');
-			$user = $this->users->verify($phone , $code);
+			$is_multi = $this->input->post('is_multi');
+			$user = $this->users->verify($phone , $code , $is_multi);
 			if($user){
 				$this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('account_confirmed')));
 			}else{
@@ -106,7 +122,7 @@ class Users_control extends REST_Controller {
 	
 	public function get_my_info_get()
 	{
-	   $user_info = $this->users->get($this->current_user->user_id); 
+	   $user_info = $this->users->get_user_info($this->data['lang'] , $this->current_user->user_id); 
 	   if($user_info){
 	   	  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
 	   }else{
@@ -124,18 +140,31 @@ class Users_control extends REST_Controller {
 	
 	public function get_chat_messages_get()
 	{
-		if(!$this->input->get('chat_session_id')){
-			 throw new Parent_Exception('chat_session_id is requierd');
-		}else{
+		$this->load->model('data_sources/messages');
+		$this->load->model('data_sources/chat_sessions');
+		if($this->input->get('chat_session_id')){
 			$chat_id = $this->input->get('chat_session_id');
-			// user permiisoon check 
-			$this->load->model('data_sources/messages');
-			$this->load->model('data_sources/chat_sessions');
 			$chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
 			if($chat_messages){ // set chat session to seen
 			    $changed_session = $this->chat_sessions->change_seen_status($chat_id , $this->current_user->user_id);
 			}
 			$this->response(array('status' => true, 'data' => $chat_messages, "message" => $this->lang->line('sucess')));
+		}else if($this->input->get('ad_id')){
+		   $ad_id = $this->input->get('ad_id');
+		   $user_id = $this->current_user->user_id;
+		   $chat_session_info = $this->chat_sessions->get_by(array('ad_id' => $ad_id , 'user_id' =>$user_id ) , true , 1);
+		   if($chat_session_info){
+		   	   $chat_id = $chat_session_info->chat_session_id;
+			   $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
+			   if($chat_messages){ // set chat session to seen
+				    $changed_session = $this->chat_sessions->change_seen_status($chat_id , $this->current_user->user_id);
+			   }
+			   $this->response(array('status' => true, 'data' => $chat_messages, "message" => $this->lang->line('sucess')));
+		   }else{
+		   	   $this->response(array('status' => true, 'data' => array(), "message" => 'No chat session for this user')); 
+		   }
+		}else{
+		  throw new Parent_Exception('chat_session_id or ad_id is requierd');
 		}
 	}
 	
@@ -158,5 +187,76 @@ class Users_control extends REST_Controller {
 			}
 		}
 	}
+	
+	public function edit_user_info_post()
+	{
+	   	 $user_id = $this->current_user->user_id;
+		 $data = array();
+		 if($this->input->post('name')){
+		 	$data['name'] = $this->input->post('name');
+		 }
+		 if($this->input->post('email')){
+		 	$data['email'] = $this->input->post('email');
+		 }
+		 if($this->input->post('phone')){
+		 	$data['phone'] = $this->input->post('phone');
+		 }
+		 if($this->input->post('city_id')){
+		 	$data['city_id'] = $this->input->post('city_id');
+		 }
+		  $image_name = date('m-d-Y_hia').'-'.'1';
+	      $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
+	      if (isset($image['personal_image'])) {
+	          $data['personal_image'] =  PERSONAL_IMAGES_PATH.$image['personal_image']['upload_data']['file_name'];
+		  }
+		  $user_id = $this->users->save($data , $user_id);
+		  $user_info = $this->users->get($user_id , true);
+		  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
+	}
+	
+	public function mark_search_post()
+	{
+		$this->load->model('data_sources/user_search_bookmarks');
+		$user_id = $this->current_user->user_id;
+		$data_json = json_encode($this->input->post());
+		$data = array(
+		  'user_id' => $user_id , 
+		  'query' => $data_json
+		);
+		$bookmark = $this->user_search_bookmarks->save($data); 
+		$this->response(array('status' => true, 'data' => $bookmark, "message" => $this->lang->line('sucess')));
+	}
+	
+	public function get_my_bookmarks_get()
+	{
+		$this->load->model('data_sources/user_search_bookmarks');
+		$user_id = $this->current_user->user_id;
+		$bookmarks = $this->user_search_bookmarks->get_by(array('user_id' => $user_id));
+		$this->response(array('status' => true, 'data' => $bookmarks, "message" => $this->lang->line('sucess')));
+	}
+	
+	public function rate_seller_post()
+	{
+	   $this->load->model('data_sources/user_ratings');
+	   $user_id = $this->current_user->user_id;
+	   if(!$this->input->post('seller_id')){
+	   	  throw new Parent_Exception('seller_id is requierd');
+	   }else{
+	   	 $seller_id = $this->input->post('seller_id');
+		 if(!$this->input->post('rate')){
+		 	throw new Parent_Exception('rate is requierd');
+		 }else{
+		     $rate = $this->input->post('rate');
+			 $data = array(
+			  'rated_user_id' => $seller_id , 
+			  'rated_by_user_id' => $user_id, 
+			  'rate' => $rate
+			 );
+			 $user_rate_id = $this->user_ratings->save_rate($data);
+			 $this->response(array('status' => true, 'data' => $user_rate_id, "message" => $this->lang->line('sucess')));	
+		 }
+	   }
+	}
+	
 
 }

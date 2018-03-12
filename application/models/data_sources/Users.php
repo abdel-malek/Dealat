@@ -45,13 +45,6 @@ class Users extends MY_Model {
             //$this->send_sms->send_sms($phone, $this->lang->line('verification_sms') . $code);
         } else {
 			$data['account_type'] = $account_type;
-			if($account_type == ACCOUNT_TYPE::MOBILE){
-			    $server_key = uniqid();
-		        while ($this->get_by(array('server_key'=>$server_key))) {
-		            $server_key = uniqid();
-		        }
-				$data['server_key'] =  md5($server_key);
-		    }
             $new_user_id = $this->save($data);
 		    $code = $this->user_activation_codes->generate_activation_code();
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
@@ -96,18 +89,30 @@ class Users extends MY_Model {
         }
    }
 
-   public function verify($phone , $code)
+   public function verify($phone , $code , $is_multi = 0)
    {
    	  $this->load->model('data_sources/user_activation_codes');
    	  // get the user by phone
    	  $user = $this->get_by(array('phone'=>$phone) , true);
 	  if($user){
 	  	$user_id =  $user->user_id;
+		$account_type = $user->account_type;
+		$data = array();
+		if($account_type == ACCOUNT_TYPE::MOBILE){
+		  if($is_multi == 0){ // for the fisrt time and when the user don't want to enter from deffrent devices. 
+		  	    $server_key = uniqid();
+		        while ($this->get_by(array('server_key'=>$server_key))) {
+		            $server_key = uniqid();
+		        }
+				$data['server_key'] =  md5($server_key);
+		  }
+	    }
 	    // checking the user code ,update the state of this code to active code 
 	    $activatin_code = $this->user_activation_codes->activate_user_code($user_id , $code);
 		if($activatin_code){
 		   // update the state of the user to active user 
-			$saved_user  = parent::save(array('is_active' => 1) , $user_id);
+		    $data['is_active'] = 1;
+			$saved_user  = parent::save($data , $user_id);
 			 // return the user  
 			return parent::get($saved_user , true , 1);
 		}else{
@@ -117,6 +122,13 @@ class Users extends MY_Model {
 	  	return false; 
 	  }
    }
+
+  public function get_user_info($lang , $user_id)
+  {
+      $this->db->select('users.* , cites.'.$lang.'_name as city_name');
+	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
+	  return parent::get($user_id);
+  }
 	
 	
 

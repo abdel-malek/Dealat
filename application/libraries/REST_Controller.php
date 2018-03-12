@@ -284,6 +284,7 @@ abstract class REST_Controller extends CI_Controller {
         }
 
         $this->response->lang = $this->_detect_lang();
+		$this->response->city = $this->_detect_city();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
         $this->response->is_auth = $this->_detect_auth();
@@ -728,7 +729,20 @@ abstract class REST_Controller extends CI_Controller {
             return 'en';
         }
         return $this->session->userdata('language');
-    }
+   }
+	
+  protected function _detect_city() {
+        $header = $this->input->request_headers();
+        if (isset($header['city'])) {
+            $this->session->set_userdata(array('city' => $header['city']));
+            return $header['city'];
+        }
+        if (!$this->session->userdata('city')) {
+            $this->session->set_userdata(array('city' => 1));
+            return 1;
+        }
+        return $this->session->userdata('city');
+   }
 	
    protected function _detect_auth() {
         $header = $this->input->request_headers();

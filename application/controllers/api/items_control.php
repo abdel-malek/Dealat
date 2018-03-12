@@ -104,7 +104,7 @@ class Items_control extends REST_Controller {
 		if($deleted){
 		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
 		}else{
-		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('failed')));
+		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
 	}
 
@@ -114,7 +114,7 @@ class Items_control extends REST_Controller {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$resuts = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
-		$this->response(array('status' => true, 'data' =>$resuts, 'message' => ''));
+		$this->response(array('status' => true, 'data' =>$resuts, 'message' => $this->lang->line('sucess')));
 	}
 	
 	public function get_data_lists_get()
@@ -186,7 +186,7 @@ class Items_control extends REST_Controller {
 		 if($favorate_id){
 		 	$this -> response(array('status' => true, 'data' => $favorate_id, 'message' => $this->lang->line('sucess')));
 		 }else{
-		 	$this -> response(array('status' => true, 'data' => $favorate_id, 'message' => $this->lang->line('failed')));
+		 	$this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		 }
 	 }
    }
@@ -203,9 +203,45 @@ class Items_control extends REST_Controller {
 		 if($deleted){
 		 	$this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		 }else{
-		 	$this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('failed')));
+		 	$this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		 }
    	  }
    }
+   
+   public function edit_post()
+    {
+      if(!$this->input->post('ad_id')){
+      	 throw new Parent_Exception('ad id is required');
+      }else{
+      	$ad_id = $this->input->post('ad_id');
+		$ad_info = $this->ads->get($ad_id);
+		if($ad_info->user_id != $this->current_user->user_id){
+			 throw new Parent_Exception('you do not have the permission to edit this ad');
+		}else{
+		   $category_id  = $ad_info->category_id;
+		   $edit_result = $this->ads->edit($ad_id , $category_id);
+		   if($edit_result){
+		   	  $this -> response(array('status' => true, 'data' => $edit_result, 'message' => $this->lang->line('sucess')));
+		   }else{
+		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		   }
+		}
+      } 
+    }
+
+  	public function get_bookmark_search_get()
+	{
+		$this->load->model('data_sources/user_search_bookmarks');
+		$bookmark_id = $this->input->get('user_bookmark_id');
+		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id);
+		$filter_data = $bookmark_info->query;
+		$filter_data_array = json_decode($filter_data , true);
+		foreach ($filter_data_array as $key => $value) {
+			$_GET[$key] = $value;
+		}
+		$this->search_get();
+	}
+	
+	
 
 }

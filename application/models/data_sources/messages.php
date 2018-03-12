@@ -17,7 +17,7 @@ class Messages extends MY_Model {
 		$msg_id = null;
 		if($check_exist_result){ // there is already chat session
 		    $data['chat_session_id'] = $check_exist_result[0]->chat_session_id;
-			if($check_exist_result[0]->user_id == $user_id){
+			if($check_exist_result[0]->seller_id == $user_id){
 				$data['to_seller'] = 0;
 			}
 	        $msg_id = parent::save($data);

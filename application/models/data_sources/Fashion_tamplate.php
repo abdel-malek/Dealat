@@ -13,7 +13,9 @@ class Fashion_tamplate extends MY_Model {
 		  //	dump($attribute)
 		  	if(TAMPLATES::get_filter_type($attribute) == 'array'){ // array
 		  	   if(($this->input->get($attribute) && $this->input->get($attribute) != '')){
-		  	   	  $attribute_array = json_decode($this->input->get($attribute), true);
+		  	   	  if(! is_array($attribute_array)){
+		  	   	  	  $attribute_array = json_decode($this->input->get($attribute), true);
+		  	   	  }
 		  		  $this->db->where_in($attribute , $attribute_array);
 		  	   }
 		    }else if(TAMPLATES::get_filter_type($attribute) == 'range'){ // ranges
@@ -32,4 +34,23 @@ class Fashion_tamplate extends MY_Model {
 		  	}
 	  }
 	}
+
+   public function edit($ad_id)
+   {
+   	 $tamplate_data = array();
+     $attributes = TAMPLATES::get_tamplate_attributes(TAMPLATES::FASHION);
+	 foreach ($attributes as $attribute) {
+ 	   if(($this->input->post($attribute) && $this->input->post($attribute) != '')){
+	  	   $tamplate_data[$attribute] = $this->input->post($attribute);
+	   } 
+	 }
+ 	 $this->db->set($tamplate_data);
+	  $this->db->where('ad_id', $ad_id);
+	  if(!$this->db->update($this->_table_name)){
+		   throw new Database_Exception();
+		   return false;
+	  }else{
+	  	 return true;
+	  }
+   }
 }

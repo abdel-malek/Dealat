@@ -17,7 +17,7 @@ class Locations extends MY_Model {
 	
 	public function get_cities($lang)
 	{
-	    $this->db->select('cites.'.$lang.'_name as city_name , city_id');
+	    $this->db->select('cites.'.$lang.'_name as name , city_id');
 		$this->db->where('is_active' , 1);
 		return $this->db->get('cites')->result_array();
 	}

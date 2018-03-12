@@ -25,6 +25,7 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
+       // $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
 		return $q; 
 	}
@@ -43,6 +44,7 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
+	//	$this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		//$this->db->where("(categories.parent_id = '$main_category_id')");
 		$q = parent::get();
@@ -114,10 +116,6 @@ class Ads extends MY_Model {
 		    // save tamplate info
 			$this->$model->save($tamplate_date);
 		}
-		// else if($tamplate_id == TAMPLATES::SERVICES){
-			// $this->load->model('data_sources/services_tamplate');
-			// $this->services_tamplate->save($tamplate_date);
-		// }
 	    // save ad main image according to tamplate
 	    $ad_main_image = null;
 	    if($main_image != null){
@@ -150,7 +148,62 @@ class Ads extends MY_Model {
 			$this -> db -> trans_commit();
 			return $new_ad_id;
 		}
-   }
+  }
+
+ 
+ 
+  public function edit($ad_id , $category_id)
+  {
+  	   $this->load->model('data_sources/categories');
+  	   $this -> db -> trans_start();
+	   $data = array();
+	   if($this->input->post('location_id')){
+	   	  $data['location_id'] = $this->input->post('location_id');
+	   }
+	   if($this->input->post('price')){
+	   	  $data['location_id'] = $this->input->post('location_id');
+	   }
+	   if($this->input->post('is_negotiable')){
+	   	  $data['is_negotiable'] = $this->input->post('is_negotiable');
+	   }
+	   if($this->input->post('is_featured')){
+	   	  $data['is_featured'] = $this->input->post('is_featured');
+	   }
+	   if($this->input->post('title')){
+	   	  $data['title'] = $this->input->post('title');
+	   }
+	   if($this->input->post('description')){
+	   	  $data['description'] = $this->input->post('description');
+	   }
+	   
+	   $data['status'] = STATUS::PENDING;
+	   
+	   
+	   $edited_ad_id = parent::save($data  , $ad_id);
+	   
+	   //save tamplate edits
+	   $category_info = $this->categories->get($category_id);
+	   $tamplate_id = $category_info->tamplate_id;
+	   $tamplate_name = 'basic';
+	   if($tamplate_id !=  TAMPLATES::BASIC){
+			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
+			$model = $tamplate_name.'_tamplate';
+			$this->load->model('data_sources/'.$model);
+			$edit_result = $this->$model->edit($ad_id);
+			if(!$edit_result){
+			   $this -> db -> trans_rollback();
+			   return false;
+			}
+	   }
+	   $this -> db -> trans_complete();
+	   if ($this -> db -> trans_status() === FALSE) {
+			$this -> db -> trans_rollback();
+			return false;
+	   } else {
+			$this -> db -> trans_commit();
+			return $edited_ad_id;
+	   }
+  }
 
   public function delete_images($images_array)
   {

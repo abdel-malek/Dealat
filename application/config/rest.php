@@ -211,7 +211,6 @@ $config['auth_override_class_method']['categories_manage']['index'] = 'none';
 $config['auth_override_class_method']['items_manage']['index'] = 'none';
 $config['auth_override_class_method']['items_manage']['all'] = 'none';
 
-
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';
 
