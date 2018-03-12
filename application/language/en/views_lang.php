@@ -32,6 +32,7 @@ $lang['state'] = "State";
 $lang['with_furniture'] = "With furniture";
 $lang['size'] = "Size";
 $lang['schedule'] = "Schedule";
+$lang['experience'] = "Experience";
 $lang['education'] = "Education";
 $lang['salary'] = "Salary";
 $lang['set_as_featured'] = "Set as featured advertisement";
@@ -46,6 +47,9 @@ $lang['negotiable'] = "Negotiable price";
 $lang['week'] = "Week";
 $lang['10_days'] = "10 days";
 $lang['month'] = "Month";
+//filter modal
+$lang['old'] = "Old";
+$lang['select_status'] = "Select status";
 //register/login modal
 $lang['username'] = "User Name";
 $lang['password'] = "Password";

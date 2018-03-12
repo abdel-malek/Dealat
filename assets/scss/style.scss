@@ -682,6 +682,11 @@ summary:focus {
 	left: 0
 }
 
+@media(max-width: 576px){
+	.social-fixed{
+		display: none;
+	}
+}
 //header
 header.home {
 	background-color: $main;
@@ -928,9 +933,15 @@ header.home {
 			}
 			.right-col {
 				padding-right: 20px;
+//				padding-top: 70px;//padding top equal to post ad btn height
 				text-align: center;
+				position: relative;
 				.place-ad {
-					width: 100%
+//					width: calc(100% - 20px);
+//					width: 190.5px;
+					position: absolute;
+					right: 20px;
+					transition: .2s;
 				}
 				.banners {
 					margin-top: 50px
@@ -950,7 +961,7 @@ header.home {
 						margin-bottom: 10px
 					}
 					.place-ad {
-						width: 75%
+//						width: 75%
 					}
 					padding-left: 20px;
 				}
@@ -1236,7 +1247,11 @@ footer {
 	border: none;
 	justify-content: center;
 
-} //End global
+} 
+select option.placeholder{
+	color: #6c757d
+}
+//End global
 //card modal
 #card-modal {
 	.modal-header {
@@ -1399,7 +1414,6 @@ footer {
 	.ajax-file-upload input[type="file"]:hover {
 		cursor: auto !important
 	}
-
 }
 
 .ajax-file-upload-container {
@@ -1516,10 +1530,14 @@ footer {
 	font-style: normal
 }
 
+.SumoSelect.open>.CaptionCont, .SumoSelect:focus>.CaptionCont, .SumoSelect:hover>.CaptionCont{
+	border-color: #ced4da;
+    box-shadow: none;
+}
 //End sumo select
-//ad-modal
-#ad-modal {
 
+//ad-modal
+#ad-modal, #filter-modal {
 	.form-control {
 		width: 100%;
 		margin: auto;
@@ -1527,7 +1545,10 @@ footer {
 	nav.navbar {
 		padding: 0;
 	}
-
+	.nav-item.dropdown{
+		padding-top: 0;
+		padding-bottom: 0
+	}
 	.nav-item,
 	.dropdown-item {
 		font-size: .8rem;

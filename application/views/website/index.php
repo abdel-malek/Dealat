@@ -148,7 +148,7 @@
 				</div>
 
 				<div class="col-md-2 right-col order-first order-md-last">
-					<button class="btn button2 place-ad animated infinite pulse"><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
+					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
 						<div class="banner">
 							<button type="button" class="close">

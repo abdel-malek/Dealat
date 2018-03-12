@@ -61,7 +61,7 @@
 								<span class="icon"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
-<!--						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>-->
+						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
 					</div>
 					
 					<div class="controls">

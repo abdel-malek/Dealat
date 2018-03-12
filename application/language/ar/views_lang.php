@@ -32,6 +32,7 @@ $lang['state'] = "الحالة";
 $lang['with_furniture'] = "يحتوي مفروشات";
 $lang['size'] = "الحجم";
 $lang['schedule'] = "الدوام";
+$lang['experience'] = "الخبرة";
 $lang['education'] = "الدراسة";
 $lang['salary'] = "الراتب";
 $lang['set_as_featured'] = "إضافة كإعلان مميز";
@@ -46,6 +47,9 @@ $lang['negotiable'] = "السعر قابل للتفاوض";
 $lang['week'] = "أسبوع";
 $lang['10_days'] = "عشر أيام";
 $lang['month'] = "شهر";
+//filter modal
+$lang['old'] = "قديم";
+$lang['select_status'] = "اختر الحالة";
 //register/login modal
 $lang['username'] = "اسم المستخدم";
 $lang['password'] = "كلمة المرور";

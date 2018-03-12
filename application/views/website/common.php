@@ -30,6 +30,7 @@
 	</div>
 </section>
 <!--end loading-->
+
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
@@ -44,18 +45,31 @@
 <header class="home">
 	<div class="container">
 		<div class="row align-items-center">
-			<div class="col-6 col-sm-3 col-lg-2  offset-sm-0 offset-md-1">
+			<!--			<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1">-->
+			<!--
+		<div class="col-lg-1">
+			<span class="home-icon">
+				<a href="<?php echo base_url() ?>" style="color: #fff">Home</a>
+			</span>
+		</div>
+-->
+			<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1 offset-lg-0">
 				<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
 			</div>
-			<div class="col-5 col-sm-3 col-md-2 offset-1 offset-sm-0">
-				<div class="language-wrapper">
-					<div class="language-switch">
+			<div class="col-5 col-sm-3 col-md-2 col-lg-3 offset-1 offset-sm-0">
+				<span class="home-icon" style="padding-right: 10px">
+					<a href="<?php echo base_url() ?>" style="color: #fff">Home</a>
+				</span>
+
+				<span class="language-wrapper">
+					<span class="language-switch">
 						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
 						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
 						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=en')?>" data-locale="en">en</a>
 						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=ar') ?>" data-locale="ar">ar</a>
-					</div>
-				</div>
+					</span>
+				</span>
+
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
 				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
@@ -405,8 +419,8 @@
 							</script>
 
 							<div class="form-group">
-								<select name="show_period" class="period-select" placeholder="<?php echo $this->lang->line('show_period'); ?>" required>
-							<option disabled selected value="foo" >
+								<select name="show_period" class="period-select" required>
+							<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>
 							<option value="1"><?php echo $this->lang->line('week'); ?></option>
 							<option value="2"><?php echo $this->lang->line('10_days'); ?></option>
 							<option value="3"><?php echo $this->lang->line('month'); ?></option>
@@ -566,17 +580,21 @@
 							<!--schedule id/experience id/education id-->
 							<div class="template-job template d-none" data-template-id="8">
 								<div class="form-group">
-									<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>" required>
-								<option disabled selected value="foo" >
-							</select>
+									<select name="schedule_id" class="schedules-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>
+									</select>
 								</div>
 
 								<div class="form-group">
-									<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>" required>
-								<option disabled selected value="foo" >
-							</select>
+									<select name="education_id" class="educations-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>
+									</select>
 								</div>
-
+								
+								<div class="form-group">
+									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
+								</div>
+								
 								<div class="form-group">
 									<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
@@ -622,7 +640,7 @@
 
 <!--filter modal-->
 <div id="filter-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -630,40 +648,262 @@
         </button>
 			</div>
 			<div class="modal-body">
-				<form action="">
-					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="Search">
-					</div>
-					<div class="form-group">
-						<select name="" class="location-select" placeholder="Choose lacation">
-								<option disabled selected value="foo" >
-								<option value="1">lacation1</option>
-								<option value="2">lacation2</option>
-								<option value="3">lacation3</option>
+				<form id="filter-form">
+
+					<div class="row">
+						<div class="col-sm-6">
+							<input type="hidden" name="category_id" class="category-id">
+							<input type="hidden" name="location_id" class="location-id">
+
+							<div class="form-group">
+								<input type="text" class="search form-control" name="search" placeholder="<?php echo $this->lang->line('search'); ?>">
+							</div>
+
+							<div class="form-group">
+								<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
+									<ul class="navbar-nav">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
+											<ul class="dropdown-menu main-categories main-dropdown">
+											</ul>
+										</li>
+									</ul>
+								</nav>
+							</div>
+
+							<div class="form-group">
+								<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
+									<ul class="navbar-nav">
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
+											<ul class="dropdown-menu cities main-dropdown">
+
+											</ul>
+										</li>
+									</ul>
+								</nav>
+							</div>
+
+							<div class="form-group">
+								<!--todo display currency/ take only numbers-->
+								<label for="">Price:</label>
+								<div class="row">
+									<div class="col-sm-6">
+										<input type="number" class="form-control" name="price_min" placeholder="min" min="0">
+									</div>
+									<div class="col-sm-6">
+										<input type="number" class="form-control" name="price_max" placeholder="max" min="0">
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group d-none">
+								<select name="type_id" class="type-select">
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_type'); ?></option>
+								</select>
+							</div>
+
+							<div class="form-group d-none">
+								<select multiple name="" class="model-select" placeholder="select model">
+
+								</select>
+							</div>
+							<!--vehicles template-->
+							<div class="template-vehicles template d-none" data-template-id="1">
+
+								<div class="form-group">
+									<select multiple name="" class="manufacture-date-select" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>">
 							</select>
-					</div>
 
-					<div class="form-group">
-						<input type="range" class="form-control" min="1" max="10" value="5" name="user_name" placeholder="Search">
-					</div>
+								</div>
+								<div class="form-group">
+									<label for=""><?php echo $this->lang->line('kilometers'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="kilometers_min" placeholder="min" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="kilometers_max" placeholder="max" min="0">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<select name="is_automatic" class="automatic-select">
+										<option selected value="" class="placeholder d-none">select change</option>
+										<option value="">All</option>
+										<option value="1">Automatic</option>
+										<option value="0">Manual</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--properties template-->
+							<div class="template-properties template d-none" data-template-id="2">
+								<div class="form-group">
+									<label for=""><?php echo $this->lang->line('space'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="space_min" placeholder="min" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="space_max" placeholder="max" min="0">
+										</div>
+									</div>
+								</div>
 
-					<div class="form-group">
-						<select name="" class="category-select" placeholder="Select Category">
-								<option disabled selected value="foo" >
-								<option value="art-music">Art and music</option>
-								<option value="clothes">Clothes</option>
-								<option value="electronics">Electronics</option>
-								<option value="furniture">Furniture</option>
-								<option value="jobs">Jobs</option>
-								<option value="kids">Kids</option>
-								<option value="mobile">Mobile</option>
-								<option value="pets">Pets</option>
-								<option value="estate">Real Estate</option>
-								<option value="sports">Sports</option>
-								<option value="vehicles">Vehicles</option>
+								<div class="form-group">
+									<label for=""><?php echo $this->lang->line('rooms'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="rooms_num_min" placeholder="min" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="rooms_num_max" placeholder="max" min="0">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for=""><?php echo $this->lang->line('floor'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="floor_min" placeholder="min" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="floor_max" placeholder="max" min="0">
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<input type="text" class="form-control" name="state" placeholder="<?php echo $this->lang->line('state'); ?>">
+								</div>
+
+								<select name="with_furniture" class="status-select">
+									<option selected value="" class="placeholder d-none">select status</option>
+									<option value="">All</option>
+									<option value="1">With furniture</option>
+									<option value="0">Without furniture</option>
+								</select>
+							</div>
+							<!--mobiles template-->
+							<div class="template-mobiles template d-none" data-template-id="3">
+
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--electronics template-->
+							<div class="template-electronics template d-none" data-template-id="4">
+
+								<div class="form-group">
+									<input type="text" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+								</div>
+
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--fashion template-->
+							<div class="template-fashion template d-none" data-template-id="5">
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--kids template-->
+							<div class="template-kids template d-none" data-template-id="6">
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--sports template-->
+							<div class="template-sports template d-none" data-template-id="7">
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--job positions template-->
+							<!--schedule id/experience id/education id-->
+							<div class="template-job template d-none" data-template-id="8">
+								<div class="form-group">
+									<select multiple name="" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
 							</select>
+								</div>
+
+								<div class="form-group">
+									<select multiple name="" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
+							</select>
+								</div>
+
+								<div class="form-group">
+									<label for=""><?php echo $this->lang->line('salary'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="salary_min" placeholder="min" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="salary_max" placeholder="max" min="0">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!--industries template-->
+							<div class="template-industries template d-none" data-template-id="9">
+								<div class="form-group">
+									<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
+								</div>
+							</div>
+							<!--services template-->
+							<div class="template-services template d-none" data-template-id="10"></div>
+
+							<!--services template-->
+							<div class="template-services template d-none" data-template-id="11"></div>
+
+						</div>
 					</div>
 
+					<!--
 					<div class="status form-group">
 						<label class="text-center title">Status</label>
 						<label class="radio-inline new">
@@ -671,13 +911,14 @@
 						<label class="radio-inline old">
                             <input type="radio" name="status" id="status-old" value="female"> Old</label>
 					</div>
-
+-->
+					<div class="modal-footer">
+						<button type="submit" class="btn button2 submit">Filter</button>
+						<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
+					</div>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Done</button>
-				<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
-			</div>
+
 		</div>
 	</div>
 </div>
