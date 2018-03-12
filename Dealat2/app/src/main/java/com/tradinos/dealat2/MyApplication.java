@@ -26,6 +26,17 @@ public class MyApplication extends Application {
         sharedPreferences = getSharedPreferences("dealat", Context.MODE_PRIVATE);
     }
 
+    public static void saveUserState(int state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("userState", state);
+        editor.commit();
+    }
+
+    public static int getUserState(){
+        return sharedPreferences.getInt("userState", 1);
+    }
+
     public static List<Category> getAllCategories() {
         if (allCategories == null) {
             Gson gson = new Gson();

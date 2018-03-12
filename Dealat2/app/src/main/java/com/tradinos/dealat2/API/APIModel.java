@@ -14,7 +14,7 @@ public enum APIModel {
     public String toString () {
         switch (this){
             case users :
-                return "users" ;
+                return "users_control" ;
 
             case ads:
                 return "items_control";

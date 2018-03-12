@@ -42,7 +42,7 @@ public class AdDetailsActivity extends MasterActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textViewDesc,
+    private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textNegotiable, textViewDesc, textViewSeller,
             textViewViews, textViewPublishDate, textViewLocation,
             textViewEdu, textViewSch, textViewSalary, textViewEx,
             textViewSpace, textViewRooms, textViewFloors, textViewFurn, textViewState,
@@ -52,7 +52,7 @@ public class AdDetailsActivity extends MasterActivity {
     private ImageButton buttonFav;
 
     private LinearLayout containerJob, containerProperty, containerVehicle, containerBrand, containerUsage, containerSize;
-    private View line1, line2;
+    private View line1, line2, line3;
 
 
     @Override
@@ -103,12 +103,19 @@ public class AdDetailsActivity extends MasterActivity {
                 }
 
                 // filling data
-                textViewId.setText("#"+result.getId());
+                textViewId.setText(result.getFormattedId());
                 textViewTitle.setText(result.getTitle());
                 textViewTitle2.setText(result.getTitle());
                 textViewPublishDate.setText(formattedDate(result.getPublishDate()));
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
                 textViewLocation.setText(result.getLocationName());
+                textViewSeller.setText(result.getSellerName());
+
+                if (result.isNegotiable())
+                    textNegotiable.setText(getString(R.string.yes));
+                else
+                    textNegotiable.setText(getString(R.string.no));
+
                 textViewDesc.setText(result.getDescription());
 
                 HideProgressDialog();
@@ -135,7 +142,9 @@ public class AdDetailsActivity extends MasterActivity {
         textViewPublishDate = (TextView) findViewById(R.id.textViewDate);
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
         textViewLocation = (TextView) findViewById(R.id.textLocation);
+        textNegotiable = (TextView) findViewById(R.id.textNegotiable);
         textViewDesc = (TextView) findViewById(R.id.textDesc);
+        textViewSeller = (TextView) findViewById(R.id.textUser);
 
         textViewEdu = (TextView) findViewById(R.id.textEdu);
         textViewSch = (TextView) findViewById(R.id.textSch);
@@ -169,6 +178,7 @@ public class AdDetailsActivity extends MasterActivity {
 
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
+        line3 = findViewById(R.id.line3);
 
         buttonFav = (ImageButton) findViewById(R.id.buttonFav);
     }
@@ -308,6 +318,7 @@ public class AdDetailsActivity extends MasterActivity {
 
             case Category.VEHICLES:
                 containerVehicle.setVisibility(View.VISIBLE);
+                line3.setVisibility(View.VISIBLE);
                 containerBrand.setVisibility(View.VISIBLE);
                 line1.setVisibility(View.VISIBLE);
                 containerUsage.setVisibility(View.VISIBLE);
@@ -319,13 +330,14 @@ public class AdDetailsActivity extends MasterActivity {
                 containerSize.setVisibility(View.VISIBLE);
 
             case Category.MOBILES:
+                line3.setVisibility(View.VISIBLE);
                 containerBrand.setVisibility(View.VISIBLE);
-                line1.setVisibility(View.VISIBLE);
 
             case Category.FASHION:
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
+                line1.setVisibility(View.VISIBLE);
                 containerUsage.setVisibility(View.VISIBLE);
         }
     }

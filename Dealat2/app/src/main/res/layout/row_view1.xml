@@ -53,8 +53,6 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_toStartOf="@+id/textViewDate"
                 android:layout_below="@+id/textViewPrice"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -74,9 +72,7 @@
                 android:id="@+id/textViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/title"
                 style="@style/TextAppearance.AppCompat.Caption"
                 />
 

@@ -105,4 +105,25 @@ public class AdController extends ParentController {
 
         request.Call();
     }
+
+    public void setAsFavorite(String adId, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "set_as_favorite").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("ad_id", adId);
+        authenticationRequired(request);
+
+        request.Call();
+    }
+
+
+    public void removeFromFavorite(String adId, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "remove_from_favorite").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("ad_id", adId);
+        authenticationRequired(request);
+
+        request.Call();
+    }
 }

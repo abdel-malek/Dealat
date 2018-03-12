@@ -63,7 +63,7 @@
 
     <style name="textDetail" parent="textNormal">
         <item name="android:textColor">@color/grayDark</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">viewEnd</item>
     </style>
 
 </resources>

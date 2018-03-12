@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
@@ -101,6 +100,8 @@ public class ItemInfoActivity extends MasterActivity {
             containerSpace, containerRooms, containerFloors, containerState,
             containerEx, containerSalary;
 
+    private View line1, line2, line3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_item_info);
@@ -161,9 +162,11 @@ public class ItemInfoActivity extends MasterActivity {
 
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
+        if (images.isEmpty()) // HorizontalScrollView
+            findViewById(R.id.container).setVisibility(View.GONE);
+
         adapter = new HorizontalAdapter(mContext, linearLayout);
         adapter.setViews(images);
-
 
         // uploading images
         for (int i = 0; i < images.size(); i++)
@@ -226,6 +229,10 @@ public class ItemInfoActivity extends MasterActivity {
 
         containerEx = (TextInputLayout) findViewById(R.id.containerEx);
         containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
+
+        line1 = findViewById(R.id.line1);
+        line2 = findViewById(R.id.line2);
+        line3 = findViewById(R.id.line3);
     }
 
     @Override
@@ -246,16 +253,6 @@ public class ItemInfoActivity extends MasterActivity {
                 if (autoCompleteLocation.getText().toString().equals(""))
                     autoCompleteLocation.showDropDown();
                 return false;
-            }
-        });
-
-        editCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-                intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
-                intent.putExtra("category", selectedCategory);
-                startActivityForResult(intent, REQUEST_SELECT_CAT);
             }
         });
 
@@ -343,6 +340,13 @@ public class ItemInfoActivity extends MasterActivity {
         }
     }
 
+    public void selectCat(View view) {
+        Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+        intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
+        intent.putExtra("category", selectedCategory);
+        startActivityForResult(intent, REQUEST_SELECT_CAT);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -379,6 +383,7 @@ public class ItemInfoActivity extends MasterActivity {
                 containerFloors.setVisibility(visibility);
                 containerState.setVisibility(visibility);
                 switchFurn.setVisibility(visibility);
+                line3.setVisibility(visibility);
 
                 break;
 
@@ -412,8 +417,10 @@ public class ItemInfoActivity extends MasterActivity {
 
                 containerKilometer.setVisibility(visibility);
                 switchAutomatic.setVisibility(visibility);
+                line1.setVisibility(visibility);
 
                 switchSecondhand.setVisibility(visibility);
+                line2.setVisibility(visibility);
 
                 break;
 
@@ -428,6 +435,7 @@ public class ItemInfoActivity extends MasterActivity {
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
+                line2.setVisibility(visibility);
                 switchSecondhand.setVisibility(visibility);
         }
     }
@@ -628,7 +636,7 @@ public class ItemInfoActivity extends MasterActivity {
                 }
             };
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
             builder.setMessage(R.string.areYouSureDiscard).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
                     .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
         }

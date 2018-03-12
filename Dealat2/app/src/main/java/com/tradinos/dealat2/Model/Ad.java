@@ -3,6 +3,7 @@ package com.tradinos.dealat2.Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by developer on 18.02.18.
@@ -16,9 +17,10 @@ public class Ad implements Serializable {
 
     private String id, locationId, categoryId, publishDate;
     private String title, description, locationName, cityName;
-    private String mainImageUrl;
+    private String sellerId, sellerName, sellerPhone;
+    private String mainImageUrl, mainVedioUrl;
     private double price;
-    private int template, status;
+    private int template, status, showPeriod;
     private boolean negotiable, featured;
     private List<String> imagesPaths;
 
@@ -30,6 +32,10 @@ public class Ad implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getFormattedId(){
+        return "#"+String.format(Locale.ENGLISH,"%04d", Integer.valueOf(this.id));
     }
 
     public void setId(String id) {
@@ -92,12 +98,44 @@ public class Ad implements Serializable {
         this.cityName = cityName;
     }
 
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getSellerPhone() {
+        return sellerPhone;
+    }
+
+    public void setSellerPhone(String sellerPhone) {
+        this.sellerPhone = sellerPhone;
+    }
+
     public String getMainImageUrl() {
         return mainImageUrl;
     }
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getMainVedioUrl() {
+        return mainVedioUrl;
+    }
+
+    public void setMainVedioUrl(String mainVedioUrl) {
+        this.mainVedioUrl = mainVedioUrl;
     }
 
     public double getPrice() {
@@ -122,6 +160,14 @@ public class Ad implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getShowPeriod() {
+        return showPeriod;
+    }
+
+    public void setShowPeriod(int showPeriod) {
+        this.showPeriod = showPeriod;
     }
 
     public boolean isNegotiable() {

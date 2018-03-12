@@ -24,11 +24,11 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintEmailPhone"
+        android:hint="@string/hintPhone"
         android:textColorHint="@color/whiteTransparent"
         >
         <EditText
-            android:id="@+id/editEmail"
+            android:id="@+id/editPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -41,98 +41,29 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintPassword"
+        android:hint="@string/hintName"
         android:textColorHint="@color/whiteTransparent"
         >
         <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            style="@style/editTextWhite"
-            android:backgroundTint="@color/white"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintConfirmPassword"
-        android:textColorHint="@color/whiteTransparent"
-        >
-        <EditText
-            android:id="@+id/editPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            style="@style/editTextWhite"
-            android:backgroundTint="@color/white"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintSetLocation"
-        android:textColorHint="@color/whiteTransparent"
-        >
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteLocation"
+            android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/editTextWhite"
             android:backgroundTint="@color/white"
             />
         </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/buttonTrue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:onClick="onClick"
         android:textColor="@color/red"
         android:text="@string/buttonRegister"
         android:background="@drawable/rounded_corner_white"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelHaveAccoutn"
-            android:textColor="@color/white"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buttonSignIn"
-            android:textColor="@color/red"
-            android:background="@null"
-            />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonFalse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:textColor="@color/white"
-        android:text="@string/buttonSkip"
-        android:background="@drawable/rounded_corner_red"
         />
 
     <LinearLayout
@@ -161,6 +92,17 @@
             android:background="@drawable/facebook_button"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonFalse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="onClick"
+        android:textColor="@color/white"
+        android:text="@string/buttonSkip"
+        android:background="@drawable/rounded_corner_red"
+        />
 
 </LinearLayout>
 

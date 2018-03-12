@@ -3,6 +3,7 @@ package com.tradinos.dealat2.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Controller.AdController;
@@ -15,6 +16,9 @@ import com.tradinos.dealat2.R;
  */
 
 public class LoginActivity extends MasterActivity {
+
+
+    private EditText editTextPhone, editTextName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,8 @@ public class LoginActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-
+        editTextPhone = (EditText) findViewById(R.id.editPhone);
+        editTextName = (EditText) findViewById(R.id.editName);
     }
 
     @Override
@@ -63,6 +68,8 @@ public class LoginActivity extends MasterActivity {
         switch (view.getId()){
 
             case R.id.buttonTrue: //Register
+
+
                 break;
 
             case R.id.buttonFalse: //Skip

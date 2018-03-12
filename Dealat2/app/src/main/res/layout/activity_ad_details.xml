@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".View.AdDetailsActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textUser">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -38,6 +48,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_toStartOf="@+id/buttonFav"
                     android:layout_marginStart="108dp"
+                    android:textAlignment="viewStart"
                     android:textAppearance="@style/textHeadline"
                     android:textColor="@color/white" />
 
@@ -57,7 +68,7 @@
                     android:layout_alignStart="@+id/title"
                     android:layout_below="@+id/textView"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/whiteTransparent" />
+                    android:textColor="@color/white" />
 
                 <ImageButton
                     android:id="@+id/buttonFav"
@@ -98,18 +109,6 @@
             android:textColor="@color/white" />
     </FrameLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/container2"
-        android:layout_below="@+id/container">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="4dp"
-            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,10 +196,36 @@
                     style="@style/textDetail"
                     />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grayLight"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelNegotiable"
+                    />
+
+                <TextView
+                    android:id="@+id/textNegotiable"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
 
             <!-- ****  Jobs *********** -->
             <LinearLayout
@@ -210,6 +235,10 @@
                 android:orientation="vertical"
                 android:visibility="gone"
                 >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayLight"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -333,6 +362,10 @@
                 android:orientation="vertical"
                 android:visibility="gone"
                 >
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grayLight"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -477,6 +510,14 @@
             </LinearLayout>
 
             <!-- **** Vehicles *********** -->
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="@color/grayLight"
+                />
 
             <LinearLayout
                 android:id="@+id/containerBrand"
@@ -716,15 +757,29 @@
                 android:id="@+id/textDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:padding="8dp"
                 android:textAlignment="center"
                 android:textColor="@color/grayDark"
-                style="@style/textDetail"
+                android:textAppearance="@style/textNormal"
                 />
 
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/textUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/container2"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:textColor="@color/grayDark"
+        android:textStyle="bold"
+        android:textAppearance="@style/textNormal"
+        android:background="@color/grayLight"
+        />
     <LinearLayout
         android:id="@+id/container2"
         android:layout_width="match_parent"

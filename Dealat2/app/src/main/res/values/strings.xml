@@ -38,7 +38,6 @@
 
     <!-- Views -->
 
-    <string name="labelHaveAccoutn">Already have an account?</string>
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
@@ -78,11 +77,9 @@
 
     <string name="labelListEmpty">This list is empty!</string>
 
-
-    <string name="hintEmailPhone">Email or Phone Number</string>
-    <string name="hintPassword">Password</string>
-    <string name="hintConfirmPassword">Confirm Password</string>
-    <string name="hintSetLocation">Set Location</string>
+    <string name="hintPhone">Phone Number</string>
+    <string name="hintName">Name</string>
+    <string name="hintVerificationCode">Verification Code</string>
     <string name="hintChooseLocation">Choose a Location</string>
     <string name="hintSearch">Search</string>
     <string name="hintTitle">Title</string>
@@ -97,10 +94,9 @@
     <string name="hintState">State</string>
     <string name="hintSalary">Salary</string>
 
-
-    <string name="buttonSignIn">Sign In</string>
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
+    <string name="buttonVerify">Verify</string>
     <string name="buttonSell">Submit an Ad</string>
     <string name="buttonTakePhoto">Take a photo</string>
     <string name="buttonDone">Done</string>

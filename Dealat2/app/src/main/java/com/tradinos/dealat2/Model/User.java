@@ -6,11 +6,10 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    private String id;
-    private String name;
-    private String username;
-    private String password;
+    public static final int NOT_REGISTERED = 1, PENDING = 2, REGISTERED = 3;
 
+    private String id, name, phone;
+    private String serverKey;
 
     public String getId() {
         return id;
@@ -28,20 +27,20 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
+    public String getServerKey() {
+        return serverKey;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setServerKey(String serverKey) {
+        this.serverKey = serverKey;
     }
 
     @Override
