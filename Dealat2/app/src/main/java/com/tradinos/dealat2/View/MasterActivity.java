@@ -1,11 +1,10 @@
 package com.tradinos.dealat2.View;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Build;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,10 +22,12 @@ import android.widget.Toast;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.FaildCallback;
-import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.SplashActivity;
 import com.tradinos.dealat2.Utils.CustomProgressDialog;
 
 import java.text.DateFormat;
@@ -132,10 +133,25 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
                 if(findViewById(R.id.refreshLayout) != null)
                     ((SwipeRefreshLayout)findViewById(R.id.refreshLayout)).setRefreshing(false);
 
+
+                // if user was logged and then chose to register from ONE other device
+                // we need to log them out
+                if (Message.equals("Not authorized")){
+                    MyApplication.saveUserState(User.NOT_REGISTERED);
+                    new CurrentAndroidUser(mContext).clearUser();
+
+                    Intent intent = new Intent(mContext, SplashActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    Message = getString(R.string.toastRegister);
+                }
+                
                 if (findViewById(R.id.parentPanel) != null)
                     Snackbar.make(findViewById(R.id.parentPanel), Html.fromHtml(Message), Snackbar.LENGTH_LONG).show();
                 else
                     Toast.makeText(getApplicationContext(), Html.fromHtml(Message), Toast.LENGTH_LONG).show();
+
+
                 HideProgressDialog();
             }
         });
@@ -198,45 +214,22 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             Toast.makeText(getApplicationContext(), messageRes, Toast.LENGTH_SHORT).show();
     }
 
+    protected boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
+            return true;
+
+        showMessageInSnackbar(R.string.connection_problem);
+        return false;
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
-/*
-    protected void logout(){
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
-                        UserController.getInstance(mController).Logout(refreshedToken, new SuccessCallback<String>() {
-                            @Override
-                            public void OnSuccess(String result) {
-                                CurrentAndroidUser user=new CurrentAndroidUser(MasterActivity.this);
-                                user.SignOut();
-                                Intent intent=new Intent(MasterActivity.this,LoginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
-        builder.setMessage(getResources().getString(R.string.logout_messg)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
-    }*/
 
    /* public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -343,6 +336,19 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         // and dot is treated as decimal separator
 
         return NumberFormat.getInstance(Locale.US).parse(editText.getText().toString()).doubleValue();
+    }
+
+    protected boolean registered(){
+        switch (MyApplication.getUserState()){
+            case User.REGISTERED:
+                return true;
+            case User.PENDING:
+                showMessageInToast(getString(R.string.toastVerify));
+                break;
+            default:
+                showMessageInToast(getString(R.string.toastRegister));
+        }
+        return false;
     }
 
     public String formattedDate(String stringDate){

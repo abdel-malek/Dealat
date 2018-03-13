@@ -60,10 +60,10 @@
                 android:layout_width="@dimen/imageSmall"
                 android:layout_height="@dimen/imageSmall"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/circel_white_transparent"
+                android:background="@drawable/circel_gray_light_transparent"
                 android:padding="4dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/star_gray" />
+                android:src="@drawable/star_copy" />
         </RelativeLayout>
 
         <android.support.design.widget.TabLayout

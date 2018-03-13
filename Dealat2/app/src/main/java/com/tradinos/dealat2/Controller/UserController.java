@@ -10,10 +10,14 @@ import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
 import com.tradinos.dealat2.Model.Item;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.Parser.Parser.Item.ItemListParser;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
+import com.tradinos.dealat2.Parser.Parser.UserParser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -40,27 +44,33 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void registerUser(SuccessCallback<String> successCallback){
+    public void registerUser(HashMap<String, String> parameters, SuccessCallback<User> successCallback){
         String url = new URLBuilder(APIModel.users, "register").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new UserParser(), successCallback,getmFaildCallback());
 
-
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
 
         request.Call();
     }
 
-    public void verifyUser(SuccessCallback<String> successCallback){
+    public void verifyUser(HashMap<String, String> parameters, SuccessCallback<User> successCallback){
         String url = new URLBuilder(APIModel.users, "verify").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new UserParser(), successCallback,getmFaildCallback());
+
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
 
         request.Call();
     }
 
-    public void saveUserToken(SuccessCallback<String> successCallback){
+    public void saveUserToken(String token, SuccessCallback<String> successCallback){
         String url = new URLBuilder(APIModel.users, "save_user_token").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
 
-
+        request.addParameter("token", token);
+        request.addParameter("os", "1");
+        authenticationRequired(request);
 
         request.Call();
     }
@@ -68,7 +78,6 @@ public class UserController extends ParentController {
     public void getUserInfo(SuccessCallback<String> successCallback){
         String url = new URLBuilder(APIModel.users, "get_my_info").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());
-
 
 
         request.Call();

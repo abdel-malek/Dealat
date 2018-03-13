@@ -11,6 +11,8 @@ import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Item;
+import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.util.List;
@@ -20,7 +22,6 @@ import java.util.List;
  */
 
 public class CityActivity extends MasterActivity {
-
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
@@ -33,18 +34,20 @@ public class CityActivity extends MasterActivity {
 
     @Override
     public void getData() {
-        if (!swipeRefreshLayout.isRefreshing())
-            ShowProgressDialog();
+        if (isNetworkAvailable()){
+            if (!swipeRefreshLayout.isRefreshing())
+                ShowProgressDialog();
 
-        UserController.getInstance(mController).getCities(new SuccessCallback<List<Item>>() {
-            @Override
-            public void OnSuccess(List<Item> result) {
-                HideProgressDialog();
-                swipeRefreshLayout.setRefreshing(false);
+            UserController.getInstance(mController).getCities(new SuccessCallback<List<Item>>() {
+                @Override
+                public void OnSuccess(List<Item> result) {
+                    HideProgressDialog();
+                    swipeRefreshLayout.setRefreshing(false);
 
-                listView.setAdapter(new ItemAdapter(mContext, result));
-            }
-        });
+                    listView.setAdapter(new ItemAdapter(mContext, result));
+                }
+            });
+        }
     }
 
     @Override
@@ -71,7 +74,10 @@ public class CityActivity extends MasterActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent mainIntent = new Intent(mContext, LoginActivity.class);
+                Intent mainIntent = new Intent(mContext, RegisterActivity.class);
+
+                MyApplication.saveUserState(User.LOCATED);
+                MyApplication.saveCity(((ItemAdapter)listView.getAdapter()).getItem(i).getId());
 
                 startActivity(mainIntent);
                 finish();

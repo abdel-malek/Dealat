@@ -2,6 +2,8 @@
     <string name="app_name">Dealat</string>
 
     <string name="wait">Please wait..</string>
+    <string name="connection_problem">There seems a problem with your internet connection, please check your network and retry.</string>
+
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -37,7 +39,7 @@
 
 
     <!-- Views -->
-
+    <string name="labelSelectCity">Please, Select your city</string>
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
@@ -125,16 +127,23 @@
 
     <!-- Errors -->
     <string name="errorRequired">This field is required</string>
+    <string name="errorCodeLenght">Code must have 6 characters</string>
+    <string name="errorPhoneLength">Phone number must have 9 digits</string>
 
 
     <!-- Toasts -->
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
+    <string name="toastFavorite">Ad\'s added to your favorites</string>
+    <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
 
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
+    <string name="toastRegister">You need to register first!</string>
+    <string name="toastVerify">You need to verify your number first!</string>
 
 
     <!-- Alert Dialog -->
     <string name="areYouSureDiscard">Are you sure you want to discard this ad?</string>
+    <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
 
 </resources>

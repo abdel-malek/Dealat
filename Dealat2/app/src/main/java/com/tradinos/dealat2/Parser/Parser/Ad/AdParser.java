@@ -53,6 +53,13 @@ public class AdParser implements TradinosParser<Ad> {
         else
             ad.setFeatured(true);
 
+        if (jsonObject.has("is_favorite")){
+            if (jsonObject.getInt("is_favorite") == 0)
+                ad.setFavorite(false);
+            else
+                ad.setFavorite(true);
+        }
+
         return ad;
     }
 }

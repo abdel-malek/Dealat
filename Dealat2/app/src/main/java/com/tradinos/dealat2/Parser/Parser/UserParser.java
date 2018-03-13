@@ -22,7 +22,11 @@ public class UserParser implements TradinosParser<User> {
         user.setId(jsonObject.getString("user_id"));
         user.setName(jsonObject.getString("name"));
         user.setPhone(jsonObject.getString("phone"));
-        user.setServerKey(jsonObject.getString("server_key"));
+
+        if (!jsonObject.getString("server_key").equals("null"))
+            user.setServerKey(jsonObject.getString("server_key"));
+
+        user.setCityId(jsonObject.getString("city_id"));
 
         return user;
     }

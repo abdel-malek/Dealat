@@ -2,6 +2,7 @@ package com.tradinos.dealat2.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,9 @@ public class AdAdapter extends BaseAdapter {
 
         holder.textView.setText("500 Views");
         holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
+
+        if (item.isFavorite())
+            holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));
     }
 
     class ViewHolder {

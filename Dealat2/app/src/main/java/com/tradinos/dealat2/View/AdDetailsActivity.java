@@ -1,11 +1,22 @@
 package com.tradinos.dealat2.View;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +27,7 @@ import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdImagesAdapter;
 import com.tradinos.dealat2.Controller.AdController;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.AdElectronic;
 import com.tradinos.dealat2.Model.AdFashion;
@@ -27,6 +39,7 @@ import com.tradinos.dealat2.Model.AdProperty;
 import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
@@ -36,6 +49,9 @@ import com.tradinos.dealat2.R;
 
 public class AdDetailsActivity extends MasterActivity {
 
+    private final int REQUEST_CALL = 1;
+
+    private CurrentAndroidUser user;
     private Ad currentAd;
 
     // textViewViews
@@ -64,6 +80,7 @@ public class AdDetailsActivity extends MasterActivity {
     @Override
     public void getData() {
 
+        user = new CurrentAndroidUser(mContext);
         currentAd = (Ad) getIntent().getSerializableExtra("ad");
 
         getAd();
@@ -117,6 +134,9 @@ public class AdDetailsActivity extends MasterActivity {
                     textNegotiable.setText(getString(R.string.no));
 
                 textViewDesc.setText(result.getDescription());
+
+                if (MyApplication.getUserState() == User.REGISTERED && currentAd.isFavorite())
+                    buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
 
                 HideProgressDialog();
                 fillTemplate(result);
@@ -190,17 +210,79 @@ public class AdDetailsActivity extends MasterActivity {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.buttonCall:
-                break;
 
-            case R.id.buttonMessage:
-                break;
+        if (registered() && user.IsLogged()) {
 
-            case R.id.buttonReport:
-                break;
+            switch (view.getId()) {
+                case R.id.buttonFav:
+                    if (currentAd.isFavorite()){
+                        AdController.getInstance(mController).removeFromFavorite(currentAd.getId(), new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+
+                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star_copy));
+                                showMessageInToast(R.string.toastUnfavorite);
+                                currentAd.setFavorite(false);
+                            }
+                        });
+                    }
+                    else {
+                        AdController.getInstance(mController).setAsFavorite(currentAd.getId(), new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                Animation mAnimation = new AlphaAnimation(1, 0);
+                                mAnimation.setDuration(200);
+                                mAnimation.setInterpolator(new LinearInterpolator());
+                                mAnimation.setRepeatCount(2);
+                                mAnimation.setRepeatMode(Animation.REVERSE);
+                                buttonFav.startAnimation(mAnimation);
+
+                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
+                                showMessageInToast(R.string.toastFavorite);
+                                currentAd.setFavorite(true);
+                            }
+                        });
+                    }
+
+                    break;
+
+                case R.id.buttonCall:
+
+                    if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(mContext,
+                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(AdDetailsActivity.this,
+                                new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+                    } else {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + user.Get().getPhone()));
+                        startActivity(callIntent);
+                    }
+
+                    break;
+
+                case R.id.buttonMessage:
+                    Intent intent = new Intent(mContext, ChatActivity.class);
+                    startActivity(intent);
+
+                    break;
+
+                case R.id.buttonReport:
+                    break;
+            }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CALL) {
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + user.Get().getPhone()));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
+                startActivity(callIntent);
+        }
+    }
+
 
     private void fillTemplate(Ad result) {
         switch (result.getTemplate()) {

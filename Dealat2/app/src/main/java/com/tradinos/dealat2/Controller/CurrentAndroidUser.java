@@ -19,14 +19,15 @@ public class CurrentAndroidUser implements CurrentUser {
 	}
 	
 	@Override
-	public void Save( User customer) {
+	public void Save(User user) {
 		SharedPreferences preferences = context.getSharedPreferences("LoginUser", Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
-		if(customer.getId()!= null){
-			editor.putString("id", customer.getId());
-			editor.putString("name", customer.getName());
-			editor.putString("username", customer.getUsername());
-			editor.putString("password", customer.getPassword());
+		if(user.getId()!= null){
+			editor.putString("id", user.getId());
+			editor.putString("name", user.getName());
+			editor.putString("phone", user.getPhone());
+			editor.putString("serverKey", user.getServerKey());
+			editor.putString("cityId", user.getCityId());
 		}
 
 		editor.commit();
@@ -47,20 +48,18 @@ public class CurrentAndroidUser implements CurrentUser {
 			User user = new User();
 			user.setId(preferences.getString("id", ""));
 			user.setName(preferences.getString("name", ""));
-			user.setUsername(preferences.getString("username", ""));
-			user.setPassword(preferences.getString("password", ""));
+			user.setPhone(preferences.getString("phone", ""));
+			user.setServerKey(preferences.getString("serverKey", ""));
+			user.setCityId(preferences.getString("cityId", ""));
 
 			return user;
 		}
 	}
 
-	@Override
-	public void SignOut() {
-		SharedPreferences mSharedPreference = context.getSharedPreferences("LoginUser", Context.MODE_PRIVATE);
-		Editor editor = mSharedPreference.edit();
+	public void clearUser(){
+		SharedPreferences preferences = context.getSharedPreferences("LoginUser", Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
 		editor.clear();
 		editor.commit();
 	}
-
-	
 }

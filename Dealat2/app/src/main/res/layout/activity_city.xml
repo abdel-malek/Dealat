@@ -6,13 +6,24 @@
     android:background="@drawable/background_blur"
     android:gravity="center"
     >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/labelSelectCity"
+        android:textColor="@color/white"
+        android:textAppearance="@style/textHeadline"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         >
-
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
@@ -22,7 +33,5 @@
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
 
 </LinearLayout>

@@ -22,13 +22,13 @@ public class ParentController extends Controller {
     public void authenticationRequired (TradinosRequest request) {
         if(CurrentAndroidUser.getInstance(getmContext()).IsLogged()) {
             User user = CurrentAndroidUser.getInstance(getmContext()).Get();
-            request.turnOnAuthentication(user.getUsername(), user.getPassword());
+            request.turnOnAuthentication(user.getPhone(), user.getServerKey());
         }
     }
     public void authenticationRequired (MultiPartStringRequest request) {
         if(CurrentAndroidUser.getInstance(getmContext()).IsLogged()) {
             User user = CurrentAndroidUser.getInstance(getmContext()).Get();
-            request.turnOnAuthentication(user.getUsername(), user.getPassword());
+            request.turnOnAuthentication(user.getPhone(), user.getServerKey());
         }
     }
 }

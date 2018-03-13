@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by developer on 18.02.18.
@@ -26,15 +28,43 @@ public class MyApplication extends Application {
         sharedPreferences = getSharedPreferences("dealat", Context.MODE_PRIVATE);
     }
 
-    public static void saveUserState(int state){
+    public static Locale getLocale() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("locale", "en"); // English is default
+
+        return gson.fromJson(json, Locale.class);
+    }
+
+    public static void setLocale(Locale locale) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(locale);
+        editor.putString("locale", json);
+        editor.commit();
+    }
+
+
+    public static void saveUserState(int state) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt("userState", state);
         editor.commit();
     }
 
-    public static int getUserState(){
-        return sharedPreferences.getInt("userState", 1);
+    public static int getUserState() {
+        return sharedPreferences.getInt("userState", User.NOT_REGISTERED);
+    }
+
+    public static void saveCity(String cityId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("cityId", cityId);
+        editor.commit();
+    }
+
+    public static String getCity() {
+        return sharedPreferences.getString("cityId", "");
     }
 
     public static List<Category> getAllCategories() {
@@ -88,7 +118,7 @@ public class MyApplication extends Application {
 
         for (int i = 0; i < categories.size(); i++) {
             category = categories.get(i);
-            if (category.getParentId().equals(parentId)){
+            if (category.getParentId().equals(parentId)) {
                 result.add(category);
                 hasChildAtLeast(category);
             }
@@ -96,13 +126,13 @@ public class MyApplication extends Application {
         return result;
     }
 
-    private boolean hasChildAtLeast(Category parentCat){
+    private boolean hasChildAtLeast(Category parentCat) {
         List<Category> categories = getAllCategories();
         Category category;
 
         for (int i = 0; i < categories.size(); i++) {
             category = categories.get(i);
-            if (category.getParentId().equals(parentCat.getId())){
+            if (category.getParentId().equals(parentCat.getId())) {
                 parentCat.addSubCat(category);
                 return true;
             }
@@ -110,18 +140,18 @@ public class MyApplication extends Application {
         return false;
     }
 
-    public int getCurrentView(){
+    public int getCurrentView() {
         return sharedPreferences.getInt("view", 1);
     }
 
-    public void setCurrentView(int i){
+    public void setCurrentView(int i) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("view", i);
         editor.commit();
     }
 
-    public static String getBaseUrlForImages(){
-        return "http://dealat.tradinos.com/";
-        //return "http://192.168.9.53/Dealat/";
+    public static String getBaseUrlForImages() {
+     //   return "http://dealat.tradinos.com/";
+        return "http://192.168.9.53/Dealat/";
     }
 }

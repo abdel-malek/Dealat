@@ -8,5 +8,4 @@ public interface CurrentUser {
 	void Save(User customer) ;
 	Boolean IsLogged() ;
 	User Get();
-	void SignOut();
 }

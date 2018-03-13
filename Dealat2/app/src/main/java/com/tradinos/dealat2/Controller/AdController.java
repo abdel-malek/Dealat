@@ -66,7 +66,7 @@ public class AdController extends ParentController {
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
 
-       // authenticationRequired(request);
+        authenticationRequired(request);
         request.Call();
     }
 

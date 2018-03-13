@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:padding="24dp"
     android:focusableInTouchMode="true"
     >
@@ -24,23 +24,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintPhone"
-        android:textColorHint="@color/whiteTransparent"
-        >
-        <EditText
-            android:id="@+id/editPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            style="@style/editTextWhite"
-            android:backgroundTint="@color/white"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:hint="@string/hintName"
         android:textColorHint="@color/whiteTransparent"
         >
@@ -48,6 +32,24 @@
             android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/editTextWhite"
+            android:backgroundTint="@color/white"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintPhone"
+        android:textColorHint="@color/whiteTransparent"
+        >
+        <EditText
+            android:id="@+id/editPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:inputType="number"
             style="@style/editTextWhite"
             android:backgroundTint="@color/white"
             />

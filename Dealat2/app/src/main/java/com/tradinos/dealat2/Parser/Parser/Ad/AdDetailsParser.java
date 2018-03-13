@@ -215,6 +215,12 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         else
             ad.setFeatured(true);
 
+        if (jsonObject.has("is_favorite")){
+            if (jsonObject.getInt("is_favorite") == 0)
+                ad.setFavorite(false);
+            else
+                ad.setFavorite(true);
+        }
 
         String s = jsonObject.getString("main_image");
         if (!s.equals("null")) {
@@ -223,7 +229,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         }
 
         if (validData(jsonObject.getString("main_vedio")))
-            ad.setMainVedioUrl(jsonObject.getString("main_vedio"));
+            ad.setMainVideoUrl(jsonObject.getString("main_vedio"));
 
         JSONArray jsonArray = new JSONArray(jsonObject.getString("images"));
         JSONObject imageObject;

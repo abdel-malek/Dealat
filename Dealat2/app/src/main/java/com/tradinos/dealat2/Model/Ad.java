@@ -18,10 +18,10 @@ public class Ad implements Serializable {
     private String id, locationId, categoryId, publishDate;
     private String title, description, locationName, cityName;
     private String sellerId, sellerName, sellerPhone;
-    private String mainImageUrl, mainVedioUrl;
+    private String mainImageUrl, mainVideoUrl;
     private double price;
     private int template, status, showPeriod;
-    private boolean negotiable, featured;
+    private boolean negotiable, featured, favorite;
     private List<String> imagesPaths;
 
     public Ad(){
@@ -130,12 +130,12 @@ public class Ad implements Serializable {
         this.mainImageUrl = mainImageUrl;
     }
 
-    public String getMainVedioUrl() {
-        return mainVedioUrl;
+    public String getMainVideoUrl() {
+        return mainVideoUrl;
     }
 
-    public void setMainVedioUrl(String mainVedioUrl) {
-        this.mainVedioUrl = mainVedioUrl;
+    public void setMainVideoUrl(String mainVideoUrl) {
+        this.mainVideoUrl = mainVideoUrl;
     }
 
     public double getPrice() {
@@ -184,6 +184,14 @@ public class Ad implements Serializable {
 
     public void setFeatured(boolean featured) {
         this.featured = featured;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public List<String> getImagesPaths() {

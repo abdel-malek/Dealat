@@ -6,10 +6,10 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    public static final int NOT_REGISTERED = 1, PENDING = 2, REGISTERED = 3;
+    public static final int NOT_REGISTERED = 1, LOCATED = 2, PENDING = 3, REGISTERED = 4;
 
     private String id, name, phone;
-    private String serverKey;
+    private String serverKey, cityId;
 
     public String getId() {
         return id;
@@ -41,6 +41,14 @@ public class User implements Serializable {
 
     public void setServerKey(String serverKey) {
         this.serverKey = serverKey;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
     @Override
