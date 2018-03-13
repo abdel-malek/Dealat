@@ -36,7 +36,7 @@
 							<?php echo $this->lang->line('download_app'); ?>
 						</h2>
 					</div>
-					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
+					<div class="col-sm-6 col-md-3 col-lg-2">
 						<div class="download android text-center">
 							<a href="">
 								<?php if( $this->session->userdata("language")  == "en" ) { ?>
@@ -47,7 +47,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-6 col-sm-6 col-md-3 col-lg-2">
+					<div class="col-sm-6 col-md-3 col-lg-2">
 						<div class="download ios text-center">
 							<a href="">
 								<?php if( $this->session->userdata("language")  == "en" ) { ?>

@@ -39,31 +39,32 @@
 
 			</div>
 		</div>
-		
+
 		<div class="container-fluid main">
-<div class="sub-categories d-none">
+			<div class="sub-categories d-none">
 				<div class="container">
 					<div class="row">
-						
+
 					</div>
 				</div>
 			</div>
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-					<div class="row mb-4">
+					<div class="row mb-4 ml-0 mr-0">
 						<div class="col-md-2">
 							<div class="category-name">
-								<?php echo $category_name ?></div>
+								<?php echo $category_name ?>
+							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-sm-8 col-md-6">
 							<div class="search-wrapper">
 								<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
 								<span class="icon"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
-						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+						<div class="col-sm-4 col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
 					</div>
-					
+
 					<div class="controls">
 						<div class="nav-wrapper">
 							<button class="nav-scroller prev d-none">
@@ -87,7 +88,7 @@
 							</ul>
 						</div>
 					</div>
-					
+
 					<div class="row ">
 						<?php if($ads != null): foreach ($ads as $ad):?>
 						<div class="col-sm-6 col-lg-4 mix <?php echo $ad->category_name ?>">
@@ -104,19 +105,19 @@
 
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 								</div>
-								
+
 								<div class="card-body">
 									<div class="row">
-<!--										<div class="col-7 mt-2">-->
+										<!--										<div class="col-7 mt-2">-->
 										<div class="col-12 mt-2">
 											<div class="card-title">
 												<?php echo $ad->title ?>
 											</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
 										</div>
-<!--										<div class="col-5 mt-2">-->
+										<!--										<div class="col-5 mt-2">-->
 										<div class="col-12 mt-2">
-<!--											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
+											<!--											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
 											<div class="clearfix"></div>
 											<div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>

@@ -158,7 +158,7 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-//			console.log(typesData.types);
+			//			console.log(typesData.types);
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
@@ -188,10 +188,10 @@ $(function () {
 			$('#filter-modal select.type-select')[0].sumo.reload();
 
 			$('#filter-modal .type-select').change(function () {
-//				console.log(typesData.types);
+				//				console.log(typesData.types);
 				var typeId, i, j;
 				typeId = $(this).find('option:selected').val();
-//				console.log(typeId);
+				//				console.log(typeId);
 				$('#filter-modal .model-select option').remove();
 				//				$('select.model-select')[0].sumo.reload();
 				for (i in typesData.types) {
@@ -241,7 +241,7 @@ $(function () {
 
 			//change sumo select placeholder color
 			$('select').each(function () {
-				 if ($(this).attr("multiple") !== "multiple") {
+				if ($(this).attr("multiple") !== "multiple") {
 					var selected;
 					selected = $(this).find('option:selected');
 					if (selected.hasClass("placeholder")) {
@@ -251,7 +251,7 @@ $(function () {
 					}
 				}
 			});
-			
+
 			$('select').change(function () {
 				if ($(this).attr("multiple") !== "multiple") {
 					var selected;
@@ -264,7 +264,7 @@ $(function () {
 				}
 			});
 		}
-		
+
 	}).fail(function (response) {
 		alert("fail");
 	});
@@ -301,7 +301,7 @@ $(function () {
 				console.log(data);
 				alert("error status false");
 			} else {
-//				console.log(data);
+				//				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, i, template, rendered, templateId;
 				if (data.data.is_negotiable === "0") {
 					if (lang === "ar") {
@@ -676,10 +676,10 @@ $(function () {
 			name: "images",
 			value: secondary_imgs
 		});
-//		console.log($(this).serializeArray());
-//		console.log($(this).serialize());
-//		console.log(data);
-//		console.log($.param(data));
+		//		console.log($(this).serializeArray());
+		//		console.log($(this).serialize());
+		//		console.log(data);
+		//		console.log($.param(data));
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -706,7 +706,7 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-//				console.log(data);
+				//				console.log(data);
 				//				if ($("#ad-modal .featured input").is(':checked')) {
 				//					$("#ad-modal").modal("hide");
 				//					setTimeout(function () {
@@ -730,8 +730,8 @@ $(function () {
 		});
 	});
 
-	$(".place-ad").css("width", $(".right-col").width());
-	
+	//	$(".place-ad").css("width", $(".right-col").width());
+
 	$(window).scroll(function () {
 		//		if ($(this).scrollTop() > $(".products").offset().top && $(this).scrollTop() < ($(".products .row").offset().top + $(".products").innerHeight())) {
 		if ($(this).scrollTop() > $(".products").offset().top) {
@@ -765,18 +765,22 @@ $(function () {
 
 			$(".categories, .category-slider img, .category-slider h6").removeAttr("style");
 		}
-		if ($(this).scrollTop() > ($(".right-col").offset().top - $(".categories").height())) {
-			$(".place-ad").css({
-				//				width: $(".right-col").width(),
-				top: $(".categories").height(),
-				right: "20px",
-				"z-index": 11,
-				position: "fixed"
-				//				width: $(".right-col").width()
-			});
-		} else {
+		if ($(window).innerWidth() > 768) {
+			if ($(this).scrollTop() > ($(".right-col").offset().top - $(".categories").height())) {
+				$(".place-ad").css({
+					//				width: $(".right-col").width(),
+					top: $(".categories").height(),
+					right: "20px",
+					"z-index": 11,
+					position: "fixed"
+					//				width: $(".right-col").width()
+				});
+			} else {
+				$(".place-ad").removeAttr("style");
+				//			$(".place-ad").css("width", $(".right-col").width());
+			}
+		} else{
 			$(".place-ad").removeAttr("style");
-			$(".place-ad").css("width", $(".right-col").width());
 		}
 	});
 
@@ -937,10 +941,10 @@ $(function () {
 					$("html, body").animate({
 						scrollTop: $(".main").offset().top
 					}, 700);
-					$(".main .sub-categories").css("background-color", "lightyellow");
-					setTimeout(function () {
-						$(".main .sub-categories").removeAttr("style");
-					}, 1100);
+					//					$(".main .sub-categories").css("background-color", "lightyellow");
+					//					setTimeout(function () {
+					//						$(".main .sub-categories").removeAttr("style");
+					//					}, 1100);
 				} else {
 					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + category_id + "&category_name=" + category_name;
 				}
@@ -1003,7 +1007,7 @@ $(function () {
 	$('#filter-form').submit(function (e) {
 		e.preventDefault();
 		e.stopPropagation();
-		var data,data1, query = 0,
+		var data, data1, query = 0,
 			typeModelArr = [],
 			schedulesArr = [],
 			educationArr = [],
@@ -1058,22 +1062,22 @@ $(function () {
 			});
 		}
 
-//		console.log($(this).serialize());
-//		console.log($(this).serializeArray());
-//		//
-//		console.log(data);
-//		console.log($.param(data));
+		//		console.log($(this).serialize());
+		//		console.log($(this).serializeArray());
+		//		//
+		//		console.log(data);
+		//		console.log($.param(data));
 
 		query = $(this).find('input.search').val();
-		if(query !== ""){
+		if (query !== "") {
 			data.push({
 				name: "query",
 				value: query
 			});
 		}
 		data1 = $.param(data);
-//		console.log($.param(data));
-//		window.location = base_url + '/search_control?' + $.param(data);
+		//		console.log($.param(data));
+		//		window.location = base_url + '/search_control?' + $.param(data);
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/items_control/search',
@@ -1126,4 +1130,45 @@ $(function () {
 	//	});
 
 
+	//register
+//	$('#register-form').submit(function (e) {
+//		var pass1, pass2;
+//		pass1 = $(this).find("password").val();
+//		pass2 = $(this).find("confirm_password").val();
+//		if (pass1 !== pass2) {
+//			if (lang === "ar") {
+//				//			$('#registration-modal .error-message').text("الرجاء إدخال كلمة المرور بشكل صحيح");
+//				console.log("الرجاء إدخال كلمة المرور بشكل صحيح");
+//			} else {
+//				//			$('#registration-modal .error-message').text("Please retype password correctly");
+//				console.log("Please retype password correctly");
+//			}
+//			//		$('#registration-modal .error-message').removeClass("hide");
+//			return false;
+//		}
+//		evnt.preventDefault();
+//		evnt.stopImmediatePropagation();
+//		$.ajax({
+//			type: "post",
+//			url: 'http://192.168.9.53/Dealat/index.php/users_control_web/register',
+//			dataType: "json",
+//			data: {
+//				phone: $(this).find("phone").val(),
+//				name: $(this).find("user_name").val(),
+//				password: $(this).find("password").val(),
+//				email: $(this).find("email").val(),
+//				city_id: 1
+//			}
+//		}).done(function (data) {
+//			if (data.status === false) {
+//				console.log(data);
+//				alert("false");
+//			} else {
+//				console.log(data);
+//				alert("true");
+//			}
+//		}).fail(function (response) {
+//			alert("fail");
+//		});
+//	});
 });
