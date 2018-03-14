@@ -46,7 +46,10 @@ extension CategoriesVC2 : UITableViewDelegate, UITableViewDataSource{
         
         if c.children.isEmpty {
             self.dismiss(animated: true, completion: {
-                self.chooseCatVC.filterVC?.selectedCategory = c
+//                self.chooseCatVC.filterVC?.selectedCategory = c
+                self.chooseCatVC.filterVC?.filter.category = c
+                self.chooseCatVC.filterVC?.refreshData()
+                
                 self.chooseCatVC.newAdd?.selectedCategory = c
 
             })

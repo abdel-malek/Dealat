@@ -258,15 +258,24 @@ class Communication: BaseManager {
     }
 
     
-    func search(query : String!,category : Cat!,location : Location!, callback : @escaping ([AD]) -> Void){
+    func search(query : String!,filter : FilterParams, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + searchURL)!
         
         var params : [String : Any] = [:]
         
-        params["query"] = (query != nil && !query.isEmpty) ? query : nil
-        params["category_id"] = (category != nil) ? category.category_id.intValue : nil
-        params["location_id"] = (location != nil) ? location.location_id.intValue : nil
-        
+        if let q = query , !q.isEmpty{
+            params["query"] = q
+        }
+        if let x = filter.searchText{
+            params["query"] = x
+        }
+        if let x = filter.category{
+            params["category_id"] = x.category_id.intValue
+        }
+        if let x = filter.location{
+            params["location_id"] = x.location_id.intValue
+        }
+
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             

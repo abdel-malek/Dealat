@@ -25,10 +25,13 @@ class AdsListVC: BaseVC {
     var timer : Timer = Timer()
     var viewsType : Int = 1
     
-    var type : Int = 0 // 0 from category, 1 from search
+//    var type : Int = 0 // 0 from category, 1 from search
+    var fromFilter : Bool = false
+    var filter : FilterParams!
+    var query = String()
+
     
     //Search Fields
-//    var query : String!
 //    var selectedCategory : Cat!
 //    var selectedLocation : Location!
 
@@ -56,9 +59,8 @@ class AdsListVC: BaseVC {
     
     override func getRefreshing() {
         
-        
         var cat_id = 0
-        if (self.type == 0){
+        if !self.fromFilter && self.query.isEmpty{
             cat_id = self.cat.category_id.intValue
         }else if Provider.selectedCategory != nil{
             cat_id = Provider.selectedCategory.category_id.intValue
@@ -80,25 +82,23 @@ class AdsListVC: BaseVC {
                     im.contentMode = .scaleAspectFit
                     self.collectionView.backgroundView = im
                 }
-
             }
         }
 
-        if self.type == 0{
+        if !self.fromFilter && self.query.isEmpty{
             Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
                 self.hideLoading()
                 self.ads = res
                 self.collectionView2.reloadData()
             }
         }else{
-            Communication.shared.search(query: Provider.searchText, category: Provider.selectedCategory, location: Provider.selectedLocation, callback: { (res) in
+            Communication.shared.search(query: self.query, filter : Provider.filter, callback: { (res) in
                 self.hideLoading()
                 self.ads = res
                 self.collectionView2.reloadData()
                 
                 self.categoryNameLbl.title = nil
                 self.categoryImg.image = nil
-
             })
         }
     }
@@ -113,13 +113,14 @@ class AdsListVC: BaseVC {
         // Search bar
         self.setupSearchBar()
         
-        if type == 1{
-            self.searchBar.text = Provider.searchText
+        // TODO
+        if self.fromFilter || !self.query.isEmpty{
+            self.searchBar.text = self.query
         }else{
             self.categoryNameLbl.title = self.cat.category_name
             self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         }
-        
+    
     }
     
     
@@ -166,8 +167,8 @@ class AdsListVC: BaseVC {
         searchBar.resignFirstResponder()
         
         if let searchBarText = searchBar.text {
-            self.type = 1
-            Provider.searchText = searchBarText
+            self.query = searchBarText
+//            Provider.searchText = searchBarText
             self.getData()
         }
     }
@@ -202,7 +203,12 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
             return cell
         }else{
             
-            let identifier = "cell-\(self.viewsType)"
+            var identifier = "cell-\(self.viewsType)"
+            
+            if self.viewsType == 3{
+                identifier = "cell-\((indexPath.row % 2 == 0) ? 3 : 4)"
+            }
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! AdCell
             
             cell.ad = self.ads[indexPath.row]

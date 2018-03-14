@@ -20,7 +20,9 @@ class Provider : BaseManager {
     var catsFull = [Cat]()
 
     
-    static var searchText : String!
+//    static var searchText : String!
+    static var filter = FilterParams()
+    
     static var selectedCategory : Cat!
     static var selectedLocation : Location!
 

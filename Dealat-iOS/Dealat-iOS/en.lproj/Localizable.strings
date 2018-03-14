@@ -40,7 +40,7 @@
 
 
 //General
-"Sell" = "Sell your item";
+"Sell" = "Submit an Ad";//Sell your item
 "Category" = "Category";
 "Location" = "Location";
 "Seller" = "Seller name";
@@ -65,7 +65,7 @@
 "Year" = "Year";
 "IsAutomatic" = "Transmission";
 "Kilometer" = "Kilometer";
-"TypeName" = "Type";
+"TypeName" = "Brand";
 "TypeModelName" = "Model";
 "Automatic" = "Automatic";
 "Manual" = "Manual";

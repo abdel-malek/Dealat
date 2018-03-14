@@ -15,14 +15,11 @@ class ChooseCatVC: BaseVC {
 
     weak var filterVC : FilterVC?
     weak var newAdd : NewAddVC?
-
-
     
     var cat = Cat()
     
     private var embeddedViewController: CategoriesVC!
     private var embeddedViewController2: CategoriesVC2!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

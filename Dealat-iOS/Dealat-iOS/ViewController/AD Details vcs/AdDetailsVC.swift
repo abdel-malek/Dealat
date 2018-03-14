@@ -35,7 +35,6 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var imgFav : UIImageView!
 
 
-    
     // 1 Vehicle
     @IBOutlet weak var manufacture_dateLbl : UILabel!
     @IBOutlet weak var is_automaticLbl : UILabel!

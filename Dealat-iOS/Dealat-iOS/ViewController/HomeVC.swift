@@ -202,8 +202,9 @@ class HomeVC: BaseVC {
         searchBar.resignFirstResponder()
         if let searchBarText = searchBar.text{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
-            vc.type = 1
-            Provider.searchText = searchBarText
+//            vc.type = 1
+            vc.query = searchBarText
+//            Provider.searchText = searchBarText
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

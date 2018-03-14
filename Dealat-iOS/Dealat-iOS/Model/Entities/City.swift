@@ -14,12 +14,15 @@ class City : BaseEntity {
     
     var city_id : JSON!
     var city_name : String!
+    var name : String!
+
     
     
     // Mappable
     override func mapping(map: Map) {
         city_id <- map["city_id"]
         city_name <- map["city_name"]
+        name <- map["name"]
         
     }
     

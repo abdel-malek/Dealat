@@ -101,7 +101,9 @@ class EditProfileVC: BaseVC {
         self.tfEmail.text = me.email
         self.phoneLbl.text = me.phone
         
-        Provider.sd_setImage(self.imgProfile, urlString: me.personal_image)
+        if me.personal_image != nil && !me.personal_image.isEmpty{
+            Provider.sd_setImage(self.imgProfile, urlString: me.personal_image)
+        }
         
         self.pickerView.reloadAllComponents()
     }
@@ -131,7 +133,7 @@ class EditProfileVC: BaseVC {
             return
         }
         
-        guard (!email.isEmpty && Provider.isValidEmail(email)) else {
+        guard (!email.isEmpty && Provider.isValidEmail(email)) || email.isEmpty else {
             self.showErrorMessage(text: "Please enter a valid email")
             return
         }

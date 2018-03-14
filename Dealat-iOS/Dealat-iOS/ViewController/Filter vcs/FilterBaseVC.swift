@@ -31,12 +31,14 @@ class FilterBaseVC: BaseVC {
     
     
     @objc func resetFilters(){
-        Provider.selectedLocation = nil
-        Provider.selectedCategory = nil
+//        Provider.selectedLocation = nil
+//        Provider.selectedCategory = nil
         
-        self.embeddedViewController.selectedLocation = nil
-        self.embeddedViewController.selectedCategory = nil
+//        self.embeddedViewController.selectedLocation = nil
+//        self.embeddedViewController.selectedCategory = nil
 
+        self.embeddedViewController.filter = FilterParams()
+        
     }
 
     
@@ -52,9 +54,12 @@ class FilterBaseVC: BaseVC {
     @IBAction func showAction(){
         
         self.dismiss(animated: true) {
-            Provider.selectedCategory = self.embeddedViewController.selectedCategory
-            Provider.selectedLocation = self.embeddedViewController.selectedLocation
-            self.adsList.type = 1
+//            Provider.selectedCategory = self.embeddedViewController.selectedCategory
+//            Provider.selectedLocation = self.embeddedViewController.selectedLocation
+            
+            Provider.filter = self.embeddedViewController.filter
+            self.adsList.fromFilter = true
+//            self.adsList.type = 1
             
             self.adsList.getData()
         }

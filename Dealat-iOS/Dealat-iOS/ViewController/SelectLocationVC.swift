@@ -49,7 +49,7 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.selectionStyle = .none
-        cell.textLabel?.text = self.cities[indexPath.row].city_name
+        cell.textLabel?.text = self.cities[indexPath.row].name
         return cell
     }
     

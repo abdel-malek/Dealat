@@ -56,6 +56,8 @@
 		829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C214320345C3B00FFFC9B /* RegisterVC.swift */; };
 		82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A09E922042C4A8005E9E90 /* TypesVC.swift */; };
 		82A3A1F7204453CD00CA9135 /* Commecicial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3A1F6204453CD00CA9135 /* Commecicial.swift */; };
+		82AA9558205664A10048AC74 /* FilterParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA9557205664A10048AC74 /* FilterParams.swift */; };
+		82AA955F2056B8520048AC74 /* CategoriesVC3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AA955E2056B8520048AC74 /* CategoriesVC3.swift */; };
 		82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ABA87B203AB6F3000627CB /* CategoriesVC2.swift */; };
 		82ABA87F203AC650000627CB /* FilterBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82ABA87E203AC650000627CB /* FilterBaseVC.swift */; };
 		82B97A662055148400ADF51B /* ChatDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B97A652055148400ADF51B /* ChatDetailsVC.swift */; };
@@ -184,6 +186,8 @@
 		829C214320345C3B00FFFC9B /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		82A09E922042C4A8005E9E90 /* TypesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesVC.swift; sourceTree = "<group>"; };
 		82A3A1F6204453CD00CA9135 /* Commecicial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commecicial.swift; sourceTree = "<group>"; };
+		82AA9557205664A10048AC74 /* FilterParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParams.swift; sourceTree = "<group>"; };
+		82AA955E2056B8520048AC74 /* CategoriesVC3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC3.swift; sourceTree = "<group>"; };
 		82ABA87B203AB6F3000627CB /* CategoriesVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC2.swift; sourceTree = "<group>"; };
 		82ABA87E203AC650000627CB /* FilterBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBaseVC.swift; sourceTree = "<group>"; };
 		82B97A652055148400ADF51B /* ChatDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailsVC.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				822516E82029DF4A009FF0DE /* ChooseCatVC.swift */,
 				824663DB203084CE00F303EA /* CategoriesVC.swift */,
 				82ABA87B203AB6F3000627CB /* CategoriesVC2.swift */,
+				82AA955E2056B8520048AC74 /* CategoriesVC3.swift */,
 				82A09E922042C4A8005E9E90 /* TypesVC.swift */,
 			);
 			path = Ctegories;
@@ -494,6 +499,7 @@
 				82A3A1F6204453CD00CA9135 /* Commecicial.swift */,
 				829146702051656A0014CFE2 /* Chat.swift */,
 				82914672205165730014CFE2 /* Message.swift */,
+				82AA9557205664A10048AC74 /* FilterParams.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -790,6 +796,7 @@
 				82893DB02032D6F5009151FC /* Location.swift in Sources */,
 				82B97A7C205550C300ADF51B /* EditProfileVC.swift in Sources */,
 				822516EB2029DFF3009FF0DE /* CategoryCell.swift in Sources */,
+				82AA955F2056B8520048AC74 /* CategoriesVC3.swift in Sources */,
 				823547BE2029AA72003478F1 /* HomeVC.swift in Sources */,
 				82893DB22032D742009151FC /* Type.swift in Sources */,
 				8226F007202882F00077FA74 /* Cat.swift in Sources */,
@@ -839,6 +846,7 @@
 				82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */,
 				82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */,
 				8226F017202886D50077FA74 /* Theme.swift in Sources */,
+				82AA9558205664A10048AC74 /* FilterParams.swift in Sources */,
 				82EB4805204C215600D25E1D /* VerificationVC.swift in Sources */,
 				82893DB42032D7BE009151FC /* Model.swift in Sources */,
 				82E8BD13202B285100684368 /* AdCell.swift in Sources */,
