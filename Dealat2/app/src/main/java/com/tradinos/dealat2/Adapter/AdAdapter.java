@@ -68,7 +68,6 @@ public class AdAdapter extends BaseAdapter {
 
         initializeView(getItem(i), (ViewHolder) view.getTag());
 
-
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,13 +84,16 @@ public class AdAdapter extends BaseAdapter {
 
     private void initializeView(Ad item, ViewHolder holder) {
         if (item.getMainImageUrl() != null) {
+            int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(item.getTemplate());
+
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
             mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageView,
-                            R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
+                           defaultDrawable, defaultDrawable));
         }
 
-        holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice()));
+        holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice())+
+                " "+context.getString(R.string.sp));
         holder.textViewTitle.setText(item.getTitle());
 
         holder.textView.setText("500 Views");

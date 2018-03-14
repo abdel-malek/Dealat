@@ -103,12 +103,19 @@ public abstract class DrawerActivity extends MasterActivity
 
         switch (id) {
             case R.id.nav_home:
+                if (!(mContext instanceof HomeActivity)){
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+
                 break;
 
             case R.id.nav_MyProfile:
-                break;
-
             case R.id.nav_MyAds:
+                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.nav_categories:

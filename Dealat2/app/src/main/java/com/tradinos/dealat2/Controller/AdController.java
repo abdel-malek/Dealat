@@ -47,6 +47,7 @@ public class AdController extends ParentController {
 
         request.addFileUpload(image);
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -56,6 +57,7 @@ public class AdController extends ParentController {
 
         request.addParameter("images", jsonArray.toString());
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -67,6 +69,7 @@ public class AdController extends ParentController {
             request.addParameter(entry.getKey(), entry.getValue());
 
         authenticationRequired(request);
+        addToHeader(request);
         request.Call();
     }
 
@@ -74,6 +77,7 @@ public class AdController extends ParentController {
         String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -83,6 +87,8 @@ public class AdController extends ParentController {
 
         request.addParameter("category_id", categoryId);
 
+        authenticationRequired(request);
+        addToHeader(request);
         request.Call();
     }
 
@@ -93,6 +99,8 @@ public class AdController extends ParentController {
         request.addParameter("ad_id", adId);
         request.addParameter("template_id", String.valueOf(templateId));
 
+        authenticationRequired(request);
+        addToHeader(request);
         request.Call();
     }
 
@@ -103,6 +111,7 @@ public class AdController extends ParentController {
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -113,6 +122,7 @@ public class AdController extends ParentController {
         request.addParameter("ad_id", adId);
         authenticationRequired(request);
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -124,6 +134,7 @@ public class AdController extends ParentController {
         request.addParameter("ad_id", adId);
         authenticationRequired(request);
 
+        addToHeader(request);
         request.Call();
     }
 }

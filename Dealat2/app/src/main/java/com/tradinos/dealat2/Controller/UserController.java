@@ -9,8 +9,10 @@ import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
+import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.Parser.Parser.Ad.AdListParser;
 import com.tradinos.dealat2.Parser.Parser.Item.ItemListParser;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
 import com.tradinos.dealat2.Parser.Parser.UserParser;
@@ -83,12 +85,22 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void getMyAds(){
+    public void getMyAds(SuccessCallback<List<Ad>> successCallback){
+        String url = new URLBuilder(APIModel.users, "get_my_items").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
 
+        addToHeader(request);
+        authenticationRequired(request);
+        request.Call();
     }
 
-    public void getMyFavorites(){
+    public void getMyFavorites(SuccessCallback<List<Ad>> successCallback){
+        String url = new URLBuilder(APIModel.users, "get_my_favorites").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
 
+        addToHeader(request);
+        authenticationRequired(request);
+        request.Call();
     }
 
 }

@@ -1,0 +1,130 @@
+package com.tradinos.dealat2.View;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+
+import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.UserController;
+import com.tradinos.dealat2.Fragment.ChatsFragment;
+import com.tradinos.dealat2.Fragment.FavoritesFragment;
+import com.tradinos.dealat2.Fragment.MyAdsFragment;
+import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyProfileActivity extends MasterActivity {
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private ViewPager mViewPager;
+
+    private List<Ad> myAdsList, myFavsList;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_my_profile);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void getData() {
+        ShowProgressDialog();
+        UserController.getInstance(mController).getMyAds(new SuccessCallback<List<Ad>>() {
+            @Override
+            public void OnSuccess(List<Ad> result) {
+                myAdsList = result;
+
+                UserController.getInstance(mController).getMyFavorites(new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
+
+                        myFavsList = result;
+
+                        HideProgressDialog();
+
+                        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+                        // Set up the ViewPager with the sections adapter.
+                        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+                        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+                        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+                        tabLayout.setupWithViewPager(mViewPager);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void showData() {
+
+    }
+
+    @Override
+    public void assignUIReferences() {
+
+    }
+
+    @Override
+    public void assignActions() {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.buttonTrue){
+            Intent intent = new Intent(mContext, EditProfileActivity.class);
+            startActivity(intent);
+        }
+    }
+
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+           switch (position){
+               case 0:
+                   return MyAdsFragment.newInstance(myAdsList);
+               case 1:
+                   return FavoritesFragment.newInstance(myFavsList);
+               case 2:
+                   return ChatsFragment.newInstance();
+           }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.tabMyAds);
+                case 1:
+                    return getString(R.string.tabFav);
+                case 2:
+                    return getString(R.string.tabChats);
+            }
+            return null;
+        }
+    }
+}

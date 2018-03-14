@@ -130,34 +130,33 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         mController = new Controller(this, new FaildCallback() {
             @Override
             public void OnFaild(Code errorCode, String Message, String data) {
-                if(findViewById(R.id.refreshLayout) != null)
-                    ((SwipeRefreshLayout)findViewById(R.id.refreshLayout)).setRefreshing(false);
+                if (findViewById(R.id.refreshLayout) != null)
+                    ((SwipeRefreshLayout) findViewById(R.id.refreshLayout)).setRefreshing(false);
 
+                HideProgressDialog();
 
                 // if user was logged and then chose to register from ONE other device
                 // we need to log them out
-                if (Message.equals("Not authorized")){
+                if (errorCode == Code.AuthenticationError) {
+                    showMessageInToast(getString(R.string.toastRegister));
+
                     MyApplication.saveUserState(User.NOT_REGISTERED);
                     new CurrentAndroidUser(mContext).clearUser();
 
                     Intent intent = new Intent(mContext, SplashActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    Message = getString(R.string.toastRegister);
+                } else {
+                    if (findViewById(R.id.parentPanel) != null)
+                        Snackbar.make(findViewById(R.id.parentPanel), Html.fromHtml(Message), Snackbar.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(getApplicationContext(), Html.fromHtml(Message), Toast.LENGTH_LONG).show();
                 }
-                
-                if (findViewById(R.id.parentPanel) != null)
-                    Snackbar.make(findViewById(R.id.parentPanel), Html.fromHtml(Message), Snackbar.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getApplicationContext(), Html.fromHtml(Message), Toast.LENGTH_LONG).show();
-
-
-                HideProgressDialog();
             }
         });
     }
 
-    public Controller getController(){
+    public Controller getController() {
         return mController;
     }
 
@@ -177,10 +176,10 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     }
 
     public void HideProgressDialog() {
-        if (progressDialog!=null) {
+        if (progressDialog != null) {
             try {
                 progressDialog.cancel();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
@@ -274,11 +273,11 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         listView.setLayoutParams(params);
     }
 
-    public int getTemplateDefaultImage(int template){
+    public int getTemplateDefaultImage(int template) {
 
         switch (template) {
             case Category.VEHICLES:
-                 return R.drawable.car_copy;
+                return R.drawable.car_copy;
 
             case Category.PROPERTIES:
                 return R.drawable.home;
@@ -312,11 +311,11 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         }
     }
 
-    public String formattedNumber(int number){
+    public String formattedNumber(int number) {
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
-    public String formattedNumber(double number){
+    public String formattedNumber(double number) {
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
@@ -338,8 +337,8 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return NumberFormat.getInstance(Locale.US).parse(editText.getText().toString()).doubleValue();
     }
 
-    protected boolean registered(){
-        switch (MyApplication.getUserState()){
+    protected boolean registered() {
+        switch (MyApplication.getUserState()) {
             case User.REGISTERED:
                 return true;
             case User.PENDING:
@@ -351,7 +350,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return false;
     }
 
-    public String formattedDate(String stringDate){
+    public String formattedDate(String stringDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM");
@@ -388,9 +387,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             Date currentDate = calendar.getTime();
 
             if (currentDate.equals(today))
-                return getString(R.string.today)+" "+timeInstance.format(dateFormat.parse(stringDate));
+                return getString(R.string.today) + " " + timeInstance.format(dateFormat.parse(stringDate));
             else if (currentDate.equals(yesterday))
-                return getString(R.string.yesterday)+" "+timeInstance.format(dateFormat.parse(stringDate));
+                return getString(R.string.yesterday) + " " + timeInstance.format(dateFormat.parse(stringDate));
             else
                 return dateWithoutYearFormat.format(currentDate);
 

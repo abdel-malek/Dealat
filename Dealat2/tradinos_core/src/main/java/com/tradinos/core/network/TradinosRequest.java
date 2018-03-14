@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Created by Farah on 4/22/16.
  */
-public class TradinosRequest<T>  extends Request<JSONObject> {
+public class TradinosRequest<T> extends Request<JSONObject> {
 
     private SuccessCallback<T> successCallback;
     FaildCallback faildCallback;
@@ -36,6 +36,9 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
     private Context context;
     private TradinosParser<T> parser;
     private boolean authenticationRequired = false;
+
+    // ====
+    private int responseCode;
 
     String url = "";
 
@@ -55,7 +58,7 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
                     faildCallback.OnFaild(Code.ParsingError, "Parsing Error !", "");
                 } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     faildCallback.OnFaild(Code.TimeOutError, "Timeout Error !", "");
-                }else {
+                } else {
                     faildCallback.OnFaild(Code.TimeOutError, "Unknown Server Error !", "");
                 }
             }
@@ -65,25 +68,25 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
         this.context = context;
         parameters = new HashMap<>();
         headers = new HashMap<>();
-        //String lang = Locale.getDefault().getLanguage() ;
-        headers.put("Lang","en");
+
         this.successCallback = successCallback;
         this.faildCallback = faildCallback;
         this.parser = parser;
 
-        this.parser = parser;this.setRetryPolicy(new DefaultRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        this.parser = parser;
+        this.setRetryPolicy(new DefaultRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     @Override
-    protected VolleyError parseNetworkError(VolleyError volleyError){
+    protected VolleyError parseNetworkError(VolleyError volleyError) {
         if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
-           if(volleyError.networkResponse.statusCode == 401){
-               return new AuthFailureError() ;
-               }
-            VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
-           volleyError = error;
+            if (volleyError.networkResponse.statusCode == 401) {
+                return new AuthFailureError();
             }
-       return volleyError;
+            VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+            volleyError = error;
+        }
+        return volleyError;
     }
 
 
@@ -121,15 +124,18 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
 
-            //JSONObject json = new JSONObject(data); // just for now
-            JSONObject json = new JSONObject(data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1));
+            responseCode = response.statusCode;
+
+            JSONObject json = new JSONObject(data); // just for now
+            // JSONObject json = new JSONObject(data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1));
             return Response.success(
                     json,
                     HttpHeaderParser.parseCacheHeaders(response));
+
         } catch (JSONException e) {
             return Response.error(new ParseError(e));
         } catch (UnsupportedEncodingException e) {
-            Log.e("EncodingException",e.getMessage());
+            Log.e("EncodingException", e.getMessage());
             return Response.error(new ParseError(e));
         }
     }
@@ -140,11 +146,11 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
 
         if (getMethod() == Method.GET) {
             if (parameters.size() == 0)
-                url += "?"  ;
+                url += "?";
             else
                 url += "&";
 
-            url+= key + "=" + value ;
+            url += key + "=" + value;
 
         }
     }
@@ -170,11 +176,10 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
             boolean status = jsonObject.getBoolean("status");
             if (status) {
                 String data = jsonObject.optString("data", "");
-                if(!data.equals("null") && parser!=null)
-                {
+                if (!data.equals("null") && parser != null) {
                     T result = (T) parser.Parse(data);
                     successCallback.OnSuccess(result);
-                }else {
+                } else {
                     String message = jsonObject.optString("message", "");
                     successCallback.OnSuccess((T) message);
                 }
@@ -182,7 +187,10 @@ public class TradinosRequest<T>  extends Request<JSONObject> {
                 String message = jsonObject.getString("message");
                 String data = jsonObject.optString("data", "");
 
-                faildCallback.OnFaild(Code.ServerError, message, data);
+                if (responseCode == 403)
+                    faildCallback.OnFaild(Code.AuthenticationError, message, data);
+                else
+                    faildCallback.OnFaild(Code.ServerError, message, data);
             }
         } catch (JSONException e) {
             faildCallback.OnFaild(Code.ParsingError, "Parsing Error", "");

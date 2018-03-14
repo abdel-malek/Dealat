@@ -109,8 +109,11 @@
     <string name="buttonBack">Back</string>
     <string name="buttonFilter">Filter</string>
     <string name="buttonShow">Show</string>
+    <string name="buttonSave">Save</string>
 
-    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="tabMyAds">My Ads</string>
+    <string name="tabFav">Favorites</string>
+    <string name="tabChats">Chats</string>
 
 
     <!-- Drawer -->
@@ -122,7 +125,6 @@
     <string name="navLanguage">Language</string>
     <string name="navSettings">Settings</string>
     <string name="navHelp">Help</string>
-    <string name="title_activity_main">MainActivity</string>
 
 
     <!-- Errors -->
@@ -145,5 +147,6 @@
     <!-- Alert Dialog -->
     <string name="areYouSureDiscard">Are you sure you want to discard this ad?</string>
     <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
+    <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
 
 </resources>

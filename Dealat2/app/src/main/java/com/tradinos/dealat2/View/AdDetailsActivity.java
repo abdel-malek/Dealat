@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -135,6 +134,7 @@ public class AdDetailsActivity extends MasterActivity {
 
                 textViewDesc.setText(result.getDescription());
 
+                currentAd.setFavorite(result.isFavorite());
                 if (MyApplication.getUserState() == User.REGISTERED && currentAd.isFavorite())
                     buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
 
@@ -215,26 +215,27 @@ public class AdDetailsActivity extends MasterActivity {
 
             switch (view.getId()) {
                 case R.id.buttonFav:
-                    if (currentAd.isFavorite()){
+                    if (currentAd.isFavorite()) {
                         AdController.getInstance(mController).removeFromFavorite(currentAd.getId(), new SuccessCallback<String>() {
                             @Override
                             public void OnSuccess(String result) {
+
+                                Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+                                mAnimation.setDuration(800);
+                                buttonFav.startAnimation(mAnimation);
 
                                 buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star_copy));
                                 showMessageInToast(R.string.toastUnfavorite);
                                 currentAd.setFavorite(false);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         AdController.getInstance(mController).setAsFavorite(currentAd.getId(), new SuccessCallback<String>() {
                             @Override
                             public void OnSuccess(String result) {
-                                Animation mAnimation = new AlphaAnimation(1, 0);
-                                mAnimation.setDuration(200);
-                                mAnimation.setInterpolator(new LinearInterpolator());
-                                mAnimation.setRepeatCount(2);
-                                mAnimation.setRepeatMode(Animation.REVERSE);
+
+                                Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+                                mAnimation.setDuration(800);
                                 buttonFav.startAnimation(mAnimation);
 
                                 buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
