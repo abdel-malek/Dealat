@@ -73,6 +73,18 @@ public class AdController extends ParentController {
         request.Call();
     }
 
+    public void editAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "edit").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
+
+        authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
+
     public void getTemplatesData(SuccessCallback<TemplatesData> successCallback){
         String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());

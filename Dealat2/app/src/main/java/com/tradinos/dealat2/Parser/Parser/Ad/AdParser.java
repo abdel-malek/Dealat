@@ -25,6 +25,7 @@ public class AdParser implements TradinosParser<Ad> {
         ad.setLocationId(jsonObject.getString("location_id"));
         ad.setPublishDate(jsonObject.getString("publish_date"));
         ad.setTitle(jsonObject.getString("title"));
+        ad.setShowPeriod(jsonObject.getInt("show_period"));
 
         if (!jsonObject.getString("description").equals("null"))
             ad.setDescription(jsonObject.getString("description"));

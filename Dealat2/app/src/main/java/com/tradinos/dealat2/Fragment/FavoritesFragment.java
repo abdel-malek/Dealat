@@ -61,29 +61,26 @@ public class FavoritesFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                getData();
+
+                MasterActivity activity = (MasterActivity) getActivity();
+
+                UserController.getInstance(activity.getController()).getMyFavorites(new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
+                        refreshLayout.setRefreshing(false);
+
+                        if (result.isEmpty())
+                            layoutEmpty.setVisibility(View.VISIBLE);
+                        else
+                            layoutEmpty.setVisibility(View.GONE);
+
+                        setFavs(result);
+                        listView.setAdapter(new AdAdapter(getContext(), result, R.layout.row_view1));
+                    }
+                });
             }
         });
 
         return rootView;
-    }
-
-    private void getData(){
-        final MasterActivity activity = (MasterActivity) getActivity();
-
-        UserController.getInstance(activity.getController()).getMyFavorites(new SuccessCallback<List<Ad>>() {
-            @Override
-            public void OnSuccess(List<Ad> result) {
-                refreshLayout.setRefreshing(false);
-
-                if (result.isEmpty())
-                    layoutEmpty.setVisibility(View.VISIBLE);
-                else
-                    layoutEmpty.setVisibility(View.GONE);
-
-                setFavs(result);
-                listView.setAdapter(new AdAdapter(activity.getmContext(), result, R.layout.row_view1));
-            }
-        });
     }
 }

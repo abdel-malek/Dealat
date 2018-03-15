@@ -32,6 +32,7 @@
     <string name="allCategories">All Categories</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="expires">Expires on</string>
     <string name="newU">New</string>
     <string name="old">Old</string>
     <string name="manual">Manual</string>
@@ -95,6 +96,7 @@
     <string name="hintFloors">Number of Floors</string>
     <string name="hintState">State</string>
     <string name="hintSalary">Salary</string>
+    <string name="hintWriteMsg">Write your message...</string>
 
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
@@ -131,14 +133,16 @@
     <string name="errorRequired">This field is required</string>
     <string name="errorCodeLenght">Code must have 6 characters</string>
     <string name="errorPhoneLength">Phone number must have 9 digits</string>
+    <string name="errorCategory">Category can\'t be changed!</string>
 
 
     <!-- Toasts -->
-    <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
     <string name="toastFavorite">Ad\'s added to your favorites</string>
     <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
+    <string name="toastSaved">Changes Saved</string>
 
+    <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
     <string name="toastRegister">You need to register first!</string>
     <string name="toastVerify">You need to verify your number first!</string>
@@ -148,5 +152,6 @@
     <string name="areYouSureDiscard">Are you sure you want to discard this ad?</string>
     <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
     <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
+    <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
 
 </resources>

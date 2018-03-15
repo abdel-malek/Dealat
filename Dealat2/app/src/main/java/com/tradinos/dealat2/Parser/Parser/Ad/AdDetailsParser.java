@@ -56,9 +56,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                     ((AdVehicle) ad).setAutomatic(true);
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdVehicle) ad).setSecondhand(false);
-                else
                     ((AdVehicle) ad).setSecondhand(true);
+                else
+                    ((AdVehicle) ad).setSecondhand(false);
 
                 break;
 

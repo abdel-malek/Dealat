@@ -329,12 +329,17 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return String.valueOf(editText.getText());
     }
 
-    protected double doubleEditText(EditText editText) throws ParseException {
+    protected double doubleEditText(EditText editText) {
         // need to assign Local
         // so in US, comma is treated as grouping (thousand) separator
         // and dot is treated as decimal separator
 
-        return NumberFormat.getInstance(Locale.US).parse(editText.getText().toString()).doubleValue();
+        try {
+            return NumberFormat.getInstance(Locale.US).parse(editText.getText().toString()).doubleValue();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     protected boolean registered() {
@@ -397,6 +402,30 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             e.printStackTrace();
         }
 
+        return "";
+    }
+
+    public String getExpiryTime(String stringDate, int period) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM");
+
+        int[] periods = {7, 10, 30};
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateFormat.parse(stringDate));
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + periods[period-1]);
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Date expiryDate = calendar.getTime();
+
+            return getString(R.string.expires) + " " + dateWithoutYearFormat.format(expiryDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return "";
     }
 }

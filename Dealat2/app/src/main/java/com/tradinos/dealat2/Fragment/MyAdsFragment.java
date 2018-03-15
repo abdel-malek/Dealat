@@ -72,30 +72,26 @@ public class MyAdsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                getData();
+
+                MasterActivity activity = (MasterActivity) getActivity();
+
+                UserController.getInstance(activity.getController()).getMyAds(new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
+                        refreshLayout.setRefreshing(false);
+
+                        if (result.isEmpty())
+                            layoutEmpty.setVisibility(View.VISIBLE);
+                        else
+                            layoutEmpty.setVisibility(View.GONE);
+
+                        setAds(result);
+                        listView.setAdapter(new MyAdAdapter(getContext(), result));
+                    }
+                });
             }
         });
 
         return rootView;
-    }
-
-    private void getData(){
-        final MasterActivity activity = (MasterActivity) getActivity();
-
-        UserController.getInstance(activity.getController()).getMyAds(new SuccessCallback<List<Ad>>() {
-            @Override
-            public void OnSuccess(List<Ad> result) {
-                refreshLayout.setRefreshing(false);
-
-                if (result.isEmpty())
-                    layoutEmpty.setVisibility(View.VISIBLE);
-                else
-                    layoutEmpty.setVisibility(View.GONE);
-
-                setAds(result);
-                listView.setAdapter(new MyAdAdapter(getContext(), result));
-            }
-        });
-
     }
 }

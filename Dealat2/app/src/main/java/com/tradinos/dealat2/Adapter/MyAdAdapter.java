@@ -74,6 +74,7 @@ public class MyAdAdapter extends BaseAdapter {
 
         holder.textViewTitle.setText(item.getTitle());
         holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
+        holder.textViewExpires.setText(((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
 
 
         int statusRsc = R.drawable.dealat_logo_red;
@@ -105,10 +106,6 @@ public class MyAdAdapter extends BaseAdapter {
                 statusString = context.getString(R.string.statusRejected);
                 break;
 
-            case Ad.DELETED:
-                // statusRsc;
-                statusString = context.getString(R.string.statusDeleted);
-                break;
             default:
                 statusRsc = R.drawable.dealat_logo_red;
                 statusString = "";
@@ -121,7 +118,7 @@ public class MyAdAdapter extends BaseAdapter {
 
     class ViewHolder {
         private ImageView imageViewStatus, imageViewMain;
-        private TextView textViewStatus, textViewTitle, textViewDate;
+        private TextView textViewStatus, textViewTitle, textViewDate, textViewExpires;
 
         ViewHolder(View rootView) {
             imageViewMain = rootView.findViewById(R.id.imageView);
@@ -129,6 +126,7 @@ public class MyAdAdapter extends BaseAdapter {
             textViewStatus = rootView.findViewById(R.id.textView);
             textViewTitle = rootView.findViewById(R.id.title);
             textViewDate = rootView.findViewById(R.id.textViewDate);
+            textViewExpires = rootView.findViewById(R.id.textDate);
         }
     }
 }
