@@ -15,7 +15,7 @@ class AdsListVC: BaseVC {
     @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var pageControl : CHIPageControlAji!
     
-    
+    @IBOutlet weak var markImg: UIBarButtonItem!
     @IBOutlet weak var categoryImg: UIBarButtonItem!
     @IBOutlet weak var categoryNameLbl: UIBarButtonItem!
     
@@ -99,7 +99,19 @@ class AdsListVC: BaseVC {
                 
                 self.categoryNameLbl.title = nil
                 self.categoryImg.image = nil
+                self.markImg.image = #imageLiteral(resourceName: "star_copy")
+                self.markImg.target = self
+                self.markImg.action = #selector(self.markAction)
             })
+        }
+    }
+    
+    @objc func markAction(){
+        self.showLoading()
+        Communication.shared.mark_search { (true) in
+            self.hideLoading()
+            self.markImg.image = nil
+            
         }
     }
     
@@ -116,6 +128,7 @@ class AdsListVC: BaseVC {
         // TODO
         if self.fromFilter || !self.query.isEmpty{
             self.searchBar.text = self.query
+            self.markImg.image = nil
         }else{
             self.categoryNameLbl.title = self.cat.category_name
             self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)

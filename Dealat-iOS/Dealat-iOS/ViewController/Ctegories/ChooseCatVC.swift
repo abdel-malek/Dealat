@@ -20,6 +20,8 @@ class ChooseCatVC: BaseVC {
     
     private var embeddedViewController: CategoriesVC!
     private var embeddedViewController2: CategoriesVC2!
+    private var embeddedViewController3: CategoriesVC3!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,20 @@ class ChooseCatVC: BaseVC {
                 }
             }
         }
+        
+        if segue.identifier == "choose3"{
+            if let nv = segue.destination as? UINavigationController{
+                for i in nv.viewControllers{
+                    if i.isKind(of: CategoriesVC3.self){
+                        self.embeddedViewController3 = i as! CategoriesVC3
+                        self.embeddedViewController3.cat = self.cat
+                        self.embeddedViewController3.chooseCatVC = self
+                    }
+                }
+            }
+        }
+
+        
     }
     
     

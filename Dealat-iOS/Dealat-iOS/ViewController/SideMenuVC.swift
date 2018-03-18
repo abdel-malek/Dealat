@@ -70,12 +70,17 @@ class SideMenuVC: BaseVC {
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
             
+            if i.tag == 4{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "SavedSearchesVC") as! SavedSearchesVC
+                vc.homeVC = self.homeVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+
             
             if i.tag == 5{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
                 vc.homeVC = self.homeVC
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
-
             }
             
             // CHANGE LANGUAGE

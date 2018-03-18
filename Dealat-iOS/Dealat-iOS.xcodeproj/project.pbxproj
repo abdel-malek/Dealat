@@ -72,6 +72,9 @@
 		82CEA2B52031C7D400E5F017 /* localizations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CEA2B42031C7D400E5F017 /* localizations.swift */; };
 		82CEA2B72031C89800E5F017 /* IMG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CEA2B62031C89800E5F017 /* IMG.swift */; };
 		82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E2CC5F203C34C600A375E9 /* LocationsVC.swift */; };
+		82E56E55205E5CBC00938CD7 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E56E54205E5CBC00938CD7 /* PopupVC.swift */; };
+		82E56E58205EBDF600938CD7 /* SavedSearchesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */; };
+		82E56E5A205EC2B400938CD7 /* UserBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E56E59205EC2B400938CD7 /* UserBookmark.swift */; };
 		82E8BD0D202B139000684368 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82E8BD0C202B139000684368 /* Media.xcassets */; };
 		82E8BD0F202B143800684368 /* CommericalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD0E202B143800684368 /* CommericalCell.swift */; };
 		82E8BD13202B285100684368 /* AdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E8BD12202B285100684368 /* AdCell.swift */; };
@@ -205,6 +208,9 @@
 		82CEA2B42031C7D400E5F017 /* localizations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = localizations.swift; sourceTree = "<group>"; };
 		82CEA2B62031C89800E5F017 /* IMG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMG.swift; sourceTree = "<group>"; };
 		82E2CC5F203C34C600A375E9 /* LocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsVC.swift; sourceTree = "<group>"; };
+		82E56E54205E5CBC00938CD7 /* PopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVC.swift; sourceTree = "<group>"; };
+		82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedSearchesVC.swift; sourceTree = "<group>"; };
+		82E56E59205EC2B400938CD7 /* UserBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookmark.swift; sourceTree = "<group>"; };
 		82E8BD0C202B139000684368 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		82E8BD0E202B143800684368 /* CommericalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommericalCell.swift; sourceTree = "<group>"; };
 		82E8BD12202B285100684368 /* AdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCell.swift; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 				82ABA87E203AC650000627CB /* FilterBaseVC.swift */,
 				8208B31A2039B00B000817A4 /* FilterVC.swift */,
 				82E2CC5F203C34C600A375E9 /* LocationsVC.swift */,
+				82E56E54205E5CBC00938CD7 /* PopupVC.swift */,
 			);
 			path = "Filter vcs";
 			sourceTree = "<group>";
@@ -417,6 +424,7 @@
 				829146742051670D0014CFE2 /* MyChatsVC.swift */,
 				82B97A652055148400ADF51B /* ChatDetailsVC.swift */,
 				82B97A7B205550C300ADF51B /* EditProfileVC.swift */,
+				82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -500,6 +508,7 @@
 				829146702051656A0014CFE2 /* Chat.swift */,
 				82914672205165730014CFE2 /* Message.swift */,
 				82AA9557205664A10048AC74 /* FilterParams.swift */,
+				82E56E59205EC2B400938CD7 /* UserBookmark.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -799,6 +808,7 @@
 				82AA955F2056B8520048AC74 /* CategoriesVC3.swift in Sources */,
 				823547BE2029AA72003478F1 /* HomeVC.swift in Sources */,
 				82893DB22032D742009151FC /* Type.swift in Sources */,
+				82E56E55205E5CBC00938CD7 /* PopupVC.swift in Sources */,
 				8226F007202882F00077FA74 /* Cat.swift in Sources */,
 				82B97A7420551F4200ADF51B /* ActiveLabel.swift in Sources */,
 				82893DBC2032E480009151FC /* BaseTVC.swift in Sources */,
@@ -815,9 +825,11 @@
 				829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */,
 				82105EEE204D3BA20050DDD8 /* City.swift in Sources */,
 				82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */,
+				82E56E58205EBDF600938CD7 /* SavedSearchesVC.swift in Sources */,
 				823547C42029B131003478F1 /* BaseCell.swift in Sources */,
 				823547C12029AB94003478F1 /* HomeCell.swift in Sources */,
 				82A3A1F7204453CD00CA9135 /* Commecicial.swift in Sources */,
+				82E56E5A205EC2B400938CD7 /* UserBookmark.swift in Sources */,
 				82B97A7620551F4200ADF51B /* StringTrimExtension.swift in Sources */,
 				82914673205165730014CFE2 /* Message.swift in Sources */,
 				82E8BD15202B3DB600684368 /* AdDetailsVC.swift in Sources */,

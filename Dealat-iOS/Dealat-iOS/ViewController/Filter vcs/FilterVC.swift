@@ -53,9 +53,22 @@ class FilterVC: BaseTVC {
     @IBOutlet weak var tfSalary1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSalary2 : SkyFloatingLabelTextField!
 
+    //11
+    @IBOutlet weak var tfStatus : SkyFloatingLabelTextField!
+
     
     var locationDropDown = DropDown()
     var locations = [Location]()
+    var typesBase = [Type]()
+    var schedules = [Schedule]()
+    var educations = [Education]()
+
+//    var selectedCategory : Cat!{
+//        didSet{
+//            self.filter.category = selectedCategory
+//            self.tfCategory.text = (selectedCategory == nil) ? nil : selectedCategory.category_name
+//        }
+//    }
     
     weak var filterBaseVC : FilterBaseVC!
     
@@ -111,18 +124,81 @@ class FilterVC: BaseTVC {
     
     func refreshData(){
         
+        let allString = "All".localized
+        
         if filter.location != nil{
             self.tfLocation.text = filter.location.location_name
         }else{
-            self.tfLocation.text = "-"
+            self.tfLocation.text = allString
         }
         
         if filter.category != nil{
             self.tfCategory.text = filter.category.category_name
         }else{
-            self.tfCategory.text = "-"
+            self.tfCategory.text = allString
         }
+        
+        
+        if filter.type_id != nil{
+            self.tfType1.text = filter.type_id.name
+            self.tfType3.text = filter.type_id.name
+            self.tfType4.text = filter.type_id.name
+        }else{
+            self.tfType1.text = allString
+            self.tfType3.text = allString
+            self.tfType4.text = allString
+        }
+        
+        
+        if filter.type_model_id != nil{
+            self.tfModel.text = filter.type_model_id!.flatMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfModel.text = allString
+        }
+        
+        if filter.is_automatic != nil{
+            self.tfTrans.text = (filter.is_automatic == 0) ? "Manual".localized : "Automatic".localized
+        }else{
+            self.tfTrans.text = allString
+        }
+        
+        if filter.is_new != nil{
+            self.tfStatus.text = (filter.is_automatic == 0) ? "old".localized : "new".localized
+        }else{
+            self.tfStatus.text = allString
+        }
+        
+        if filter.manufacture_date != nil{
+            self.tfYear.text = filter.manufacture_date!.flatMap({$0}).joined(separator: ",")
+        }else{
+            self.tfYear.text = allString
+        }
+
+        
+        
+        self.filter.price.min = self.tfPrice1.text
+        self.filter.price.max = self.tfPrice2.text
+        
+        self.filter.kilometer.min = self.tfKilometers1.text
+        self.filter.kilometer.max = self.tfKilometers2.text
+
+        self.filter.rooms_num.min = self.tfRooms_num1.text
+        self.filter.rooms_num.max = self.tfRooms_num2.text
+
+        self.filter.space.min = self.tfSpace1.text
+        self.filter.space.max = self.tfSpace2.text
+
+        self.filter.floor.min = self.tfFloor1.text
+        self.filter.floor.max = self.tfFloor2.text
+
+        self.filter.salary.min = self.tfSalary1.text
+        self.filter.salary.max = self.tfSalary2.text
+
+        
+        self.tableView.reloadData()
+        
     }
+    
     
     override func getRefreshing() {
         Communication.shared.get_data_lists { (locations, types, educations, schedules) in
@@ -134,6 +210,7 @@ class FilterVC: BaseTVC {
             self.schedules = schedules
         }
     }
+    
     
     
 //    func setupLocations(){
@@ -161,19 +238,58 @@ class FilterVC: BaseTVC {
 //            self.locationDropDown.show()
 //        }
         
-        if indexPath.section == 0, indexPath.row == 1{
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC2") as! ChooseCatVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PopupVC") as! PopupVC
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        vc.parentVC = self
+        
+        switch indexPath.section {
+        case 0:
+            switch  indexPath.row{
+            case 1:
+                let vc2 = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC3") as! ChooseCatVC
+                
+                let c = Cat()
+                c.category_name = "ChooseCategory".localized
+                c.children = Provider.shared.cats
+                
+                vc2.cat = c
+                vc2.filterVC = self
+                vc2.modalPresentationStyle = .overCurrentContext
+                vc2.modalTransitionStyle = .crossDissolve
+                self.present(vc2, animated: true, completion: nil)
+            case 2:
+                vc.type = 1
+                self.present(vc, animated: true, completion: nil)
+
+            default: break
+            }
             
-            let c = Cat()
-            c.category_name = "ChooseCategory".localized
-            c.children = Provider.shared.cats
+        case 1:
+            switch indexPath.row{
+            case 0:
+                vc.type = 2
+                self.present(vc, animated: true, completion: nil)
+            case 1:
+                vc.type = 3
+                self.present(vc, animated: true, completion: nil)
+            case 2:
+                vc.type = 7
+                self.present(vc, animated: true, completion: nil)
+            case 3:
+                vc.type = 6
+                self.present(vc, animated: true, completion: nil)
+                
+            default: break
+            }
             
-            vc.cat = c
-            vc.filterVC = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true, completion: nil)
+            
+            
+        default: break
+            
         }
+        
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -183,10 +299,11 @@ class FilterVC: BaseTVC {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let h : CGFloat = 54.0
+        let h2 : CGFloat = 75
         
         switch indexPath.section {
         case 0:
-            return h
+            return indexPath.row != 3 ?  h : h2
         case 11:
             if [1,2,3,4,5,6,7,9].contains(indexPath.section){
                 return UITableViewAutomaticDimension
@@ -195,11 +312,22 @@ class FilterVC: BaseTVC {
             }
         default:
             if self.filter.category != nil{
-                return (self.filter.category.tamplate_id.intValue == indexPath.section) ? h : 0
+                if self.filter.category.tamplate_id.intValue == indexPath.section{
+                    if [(0,3),(1,4),(2,0),(2,1),(2,2),(8,2)].contains(where: ({$0.0 == indexPath.section && $0.1 == indexPath.row})){
+                        return h2
+                    }else{
+                        return h
+                    }
+                }else{
+                    return 0
+                }
+//                return (self.filter.category.tamplate_id.intValue == indexPath.section) ? h : 0
             }else{
                 return 0
             }
         }
     }
+    
+    
     
 }

@@ -14,7 +14,6 @@ import ObjectMapper
 import Firebase
 import FirebaseMessaging
 
-
 typealias ServiceResponse = (JSON?, NSError?) -> Void
 
 class Communication: BaseManager {
@@ -57,8 +56,9 @@ class Communication: BaseManager {
     let get_chat_messagesURL = "/users_control/get_chat_messages/format/json"
     let send_msgURL = "/users_control/send_msg/format/json"
     
-    
-    
+    let mark_searchURL = "/users_control/mark_search/format/json"
+    let get_my_bookmarksURL = "/users_control/get_my_bookmarks/format/json"
+    let get_bookmark_searchURL = "/items_control/get_bookmark_search/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -256,7 +256,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func search(query : String!,filter : FilterParams, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + searchURL)!
@@ -266,16 +266,12 @@ class Communication: BaseManager {
         if let q = query , !q.isEmpty{
             params["query"] = q
         }
-        if let x = filter.searchText{
-            params["query"] = x
+        
+        for i in FilterParams.getParams(filter){
+            params[i.key] = i.value
         }
-        if let x = filter.category{
-            params["category_id"] = x.category_id.intValue
-        }
-        if let x = filter.location{
-            params["location_id"] = x.location_id.intValue
-        }
-
+        
+        FilterParams.shared = filter
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -678,7 +674,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func get_my_items(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_my_itemsURL)!
@@ -711,7 +707,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     
     func get_my_chat_sessions(_ callback : @escaping ([Chat]) -> Void){
@@ -794,7 +790,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func send_msg( ad_id : Int,msg : String, callback : @escaping (Bool) -> Void){
         let url = URL(string: baseURL + send_msgURL)!
@@ -861,7 +857,7 @@ class Communication: BaseManager {
         let url = URL(string: baseURL + edit_user_infoURL)!
         let params  : [String : Any] = ["name" : name, "city_id" : city_id, "email" : email, "phone" :phone]
         
-        Alamofire.request(url, method: .post, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
             self.output(response)
             
@@ -886,6 +882,109 @@ class Communication: BaseManager {
             }
         }
     }
+    
+    
+    
+    func mark_search(_ callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + mark_searchURL)!
+        var params : [String : Any] = [:]
+        
+        for i in FilterParams.getParams(FilterParams.shared){
+            params[i.key] = i.value
+        }
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func get_my_bookmarks(_ callback : @escaping ([UserBookmark]) -> Void){
+        
+        let url = URL(string: baseURL + get_my_bookmarksURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [UserBookmark]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = UserBookmark(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func get_bookmark_search( user_bookmark_id : Int, callback : @escaping ([AD]) -> Void){
+        
+        let url = URL(string: baseURL + get_bookmark_searchURL)!
+        let params = ["user_bookmark_id" : user_bookmark_id]
+        
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var res = [AD]()
+                    
+                    for i in value.data.arrayValue{
+                        let a = AD(JSON: i.dictionaryObject!)!
+                        res.append(a)
+                    }
+                    
+                    callback(res)
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
 
 
     
@@ -915,7 +1014,7 @@ class Communication: BaseManager {
         headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
-
+        
         
         if User.isRegistered(){
             let me = User.getCurrentUser()
