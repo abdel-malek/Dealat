@@ -35,6 +35,7 @@ class AD : BaseEntity {
     var city_name : String!
     var parent_location: String!
     var seller_name : String!
+    var seller_id : JSON! = 1
     var seller_phone : String!
     var images = [IMG]()
     var is_favorite : JSON!
@@ -138,6 +139,7 @@ class AD : BaseEntity {
         city_name <- map["city_name"]
         parent_location <- map["parent_location"]
         seller_name <- map["seller_name"]
+        seller_id <- map["seller_id"]
         seller_phone <- map["seller_phone"]
         images <- map["images"]
         is_favorite <- map["is_favorite"]

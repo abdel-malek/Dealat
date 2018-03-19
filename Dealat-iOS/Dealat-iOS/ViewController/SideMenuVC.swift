@@ -16,13 +16,19 @@ class SideMenuVC: BaseVC {
 
     var homeVC : HomeVC!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        refreshImg()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let me = User.getCurrentUser()
 
-        if me.statues_key == User.USER_STATUES.USER_REGISTERED.rawValue{
+        if User.isRegistered(){
             self.regVV.isHidden = true
+            
         }else{
             for i in btns{
                 
@@ -120,6 +126,14 @@ class SideMenuVC: BaseVC {
                 
                 self.homeVC.present(alert, animated: true, completion: nil)
             }
+        }
+    }
+    
+    func refreshImg(){
+        let me = User.getCurrentUser()
+        
+        if let path = me.personal_image{
+            Provider.sd_setImage(self.img, urlString: path)
         }
     }
     

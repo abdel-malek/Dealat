@@ -33,13 +33,28 @@ class VerificationVC: BaseVC {
             self.showErrorMessage(text: "Please enter code")
         }else{
             
-            self.showLoading()
-            Communication.shared.verify(Provider.getEnglishNumber(code), callback: { (res) in
-                self.hideLoading()
-                Provider.goToHome()
-            })
+            if User.getCurrentUser().server_key != nil{
+                let alert = UIAlertController.init(title: "Alert!".localized, message: "previousRegister".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "yes".localized, style: .default, handler: { (ac) in
+                    self.sendVerificationCode(code: code, is_multi: 1)
+                }))
+                alert.addAction(UIAlertAction.init(title: "no".localized, style: .default, handler: { (ac) in
+                    self.sendVerificationCode(code: code, is_multi: 0)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }else{
+                self.sendVerificationCode(code: code, is_multi: 0)
+            }
         }
         
+    }
+    
+    func sendVerificationCode(code : String,is_multi : Int){
+        self.showLoading()
+        Communication.shared.verify(code : Provider.getEnglishNumber(code),is_multi : is_multi, callback: { (res) in
+            self.hideLoading()
+            Provider.goToHome()
+        })
     }
     
     @IBAction func skipAction(){

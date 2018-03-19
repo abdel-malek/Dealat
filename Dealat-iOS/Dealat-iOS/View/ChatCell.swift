@@ -10,6 +10,7 @@ import UIKit
 
 class ChatCell: UICollectionViewCell {
   
+    @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var adLbl : UILabel!
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
@@ -21,8 +22,15 @@ class ChatCell: UICollectionViewCell {
             
             if let id = me.user_id, id == self.chat.seller_id.intValue{
                 self.sellerLbl.text = chat.user_name
+                if let i = self.chat.user_pic{
+                    Provider.sd_setImage(self.img, urlString: i)
+                }
+                
             }else{
                 self.sellerLbl.text = chat.seller_name
+                if let i = self.chat.seller_pic{
+                    Provider.sd_setImage(self.img, urlString: i)
+                }
             }
             
             self.adLbl.text = chat.ad_title

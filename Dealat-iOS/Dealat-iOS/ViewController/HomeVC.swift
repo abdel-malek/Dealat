@@ -126,9 +126,16 @@ class HomeVC: BaseVC {
         //TODO
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
         //        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if User.isRegistered(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddVC") as! NewAddVC
         vc.homeVC = self
         self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            self.showErrorMessage(text: "need_register".localized)
+        }
+        
+        
         
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC
         //        vc.homeVC = self

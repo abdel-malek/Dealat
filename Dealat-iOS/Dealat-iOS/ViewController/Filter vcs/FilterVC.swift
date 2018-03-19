@@ -299,17 +299,26 @@ class FilterVC: BaseTVC {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let h : CGFloat = 54.0
-        let h2 : CGFloat = 75
+        let h2 : CGFloat = 80
         
         switch indexPath.section {
         case 0:
             return indexPath.row != 3 ?  h : h2
         case 11:
-            if [1,2,3,4,5,6,7,9].contains(indexPath.section){
+            
+            if self.filter.category != nil{
+                if [1,2,3,4,5,6,7,9].contains(self.filter.category.tamplate_id.intValue){
+                    return UITableViewAutomaticDimension
+                }
+            }
+            
+            return 0
+            
+            /*if [1,2,3,4,5,6,7,9].contains(indexPath.section){
                 return UITableViewAutomaticDimension
             }else{
                 return 0
-            }
+            }*/
         default:
             if self.filter.category != nil{
                 if self.filter.category.tamplate_id.intValue == indexPath.section{

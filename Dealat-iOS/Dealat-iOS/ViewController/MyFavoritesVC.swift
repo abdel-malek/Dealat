@@ -15,6 +15,9 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
     var ads = [AD]()
     var itemInfo = IndicatorInfo(title: "Favorites".localized)
     
+    var type = 0 // 0 for favorites, 1 for saved searches
+    var bookmark : UserBookmark!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,10 +30,19 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
     }
     
     override func getRefreshing() {
-        Communication.shared.get_my_favorites { (res) in
-            self.hideLoading()
-            self.ads = res
-            self.collectionView.reloadData()
+        if type == 0{
+            Communication.shared.get_my_favorites { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView.reloadData()
+            }
+        }else{
+            self.title = self.bookmark.getName()
+            Communication.shared.get_bookmark_search(user_bookmark_id: bookmark.user_bookmark_id.intValue, callback: { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView.reloadData()
+            })
         }
     }
 

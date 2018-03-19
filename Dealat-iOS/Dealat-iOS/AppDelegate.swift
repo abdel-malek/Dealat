@@ -8,11 +8,17 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Firebase
+import FirebaseMessaging
+import UserNotifications
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let gcmMessageIDKey = "gcm.message_id"
+
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -34,15 +40,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Provider.isArabic = AppDelegate.isArabic()
         
         AppDelegate.setupViews()
-        
-        
-        Communication.shared.get_my_info { (res) in
-            
-        }
+        setupNotification(application)
         
         return true
     }
     
+    
+    func setupNotification(_ application : UIApplication){
+        
+        //push notification
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
+        
+        // [END register_for_notifications]
+        
+        FirebaseApp.configure()
+        
+        // [START set_messaging_delegate]
+        Messaging.messaging().delegate = self
+        // [END set_messaging_delegate]
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.tokenRefreshNotification),
+                                               name: .InstanceIDTokenRefresh,
+                                               object: nil)
+    }
+
     
     
     static func setupViews(){
@@ -95,28 +131,145 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
         
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        print(userInfo)
+        
+        //notific.post(name: _refreshChats.not, object: nil,userInfo : userInfo)
+        
+        if #available(iOS 10, *){
+            
+        }
+        else{
+            
+            if application.applicationState == .active{
+                PushManager.handleForegroundNotification(data: userInfo)
+                completionHandler(.newData)
+            }else if application.applicationState != .background{
+                PushManager.handleNotificationTapping(data: userInfo)
+                completionHandler(.newData)
+            }else{
+                completionHandler(.noData)
+            }
+        }
+        
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        if #available(iOS 10, *) {
+            
+        }else
+        {
+            if application.applicationState != UIApplicationState.active{
+                PushManager.handleNotificationTapping(data: notification.userInfo)
+            }
+        }
     }
     
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    
+    // [START refresh_token]
+    @objc func tokenRefreshNotification(_ notification: Notification) {
+        print("TOKENTOKEN")
+        
+        self.refreshToken()
     }
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Unable to register for remote notifications: \(error.localizedDescription)")
     }
     
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        // With swizzling disabled you must set the APNs token here.
+        Messaging.messaging().setAPNSToken(deviceToken, type: MessagingAPNSTokenType.prod)
+        
+        Messaging.messaging().apnsToken = deviceToken
+        
+        self.refreshToken()
     }
     
+    func refreshToken(){
+        
+        if let refreshedToken = Messaging.messaging().fcmToken {
+            
+//            Messaging.messaging().subscribe(toTopic: "/topics/test")
+            
+            if User.isRegistered(){
+                if !refreshedToken.isEmpty{
+                    Communication.shared.save_user_token(refreshedToken, callback: { (res) in
+                        
+                    })
+                }
+            }
+        }
+    }
     
 }
+
+@available(iOS 10, *)
+extension AppDelegate : UNUserNotificationCenterDelegate {
+    
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("willPresent")
+        let userInfo = notification.request.content.userInfo
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID userNotificationCenter willPresent: \(messageID)")
+        }
+        
+        print(userInfo)
+        
+        completionHandler([.alert, .sound,.badge])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        print("didReceive")
+        
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID userNotificationCenter didReceive: \(messageID)")
+        }
+        
+        //TODO
+        //        PushManager.handleNotificationTapping2(userInfo)
+        PushManager.handleNotificationTapping(data: userInfo)
+        
+        print(userInfo)
+        
+        completionHandler()
+    }
+}
+
+
+// [START ios_10_data_message_handling]
+extension AppDelegate : MessagingDelegate {
+    
+    // [START refresh_token]
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        
+        self.refreshToken()
+    }
+    // [END refresh_token]
+    
+    
+    // Receive data message on iOS 10 devices while app is in the foreground.
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("applicationReceivedRemoteMessage10")
+        print(remoteMessage.appData)
+    }
+}
+// [END ios_10_data_message_handling]
+
 

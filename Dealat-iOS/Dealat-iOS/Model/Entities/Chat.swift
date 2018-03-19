@@ -23,6 +23,8 @@ class Chat : BaseEntity {
     var seller_name : String!
     var created_at : String!
     var modified_at : String!
+    var user_pic : String!
+    var seller_pic : String!
     
     // Mappable
     override func mapping(map: Map) {
@@ -37,6 +39,9 @@ class Chat : BaseEntity {
         seller_name <- map["seller_name"]
         created_at <- map["created_at"]
         modified_at <- map["modified_at"]
+        user_pic <- map["user_pic"]
+        seller_pic <- map["seller_pic"]
+
     }
 }
 

@@ -27,7 +27,6 @@ class User : NSObject, NSCoding{
     var account_type : Int!
     var personal_image : String!
     
-    
     //MARK: Local data
     var statues_key: String? = USER_STATUES.NEW_USER.rawValue
     
@@ -114,21 +113,37 @@ class User : NSObject, NSCoding{
     
     static func getObject(_ dic : [String : Any]) -> User{
         let me = User.getCurrentUser()
-        me.user_id = dic["user_id"] as? Int
+        
+        if let x = dic["user_id"] as? String, let i = Int(x){
+            me.user_id = i
+        }
         me.email =  dic["email"] as? String
         me.password =  dic["password"] as? String
         me.name =  dic["name"] as? String
         me.phone =  dic["phone"] as? String
-        me.city_id =  dic["city_id"] as? Int
-        me.is_active =  dic["is_active"] as? Int
+        if let x = dic["city_id"] as? String, let i = Int(x){
+            me.city_id = i
+        }
+        if let x = dic["is_active"] as? String, let i = Int(x){
+            me.is_active = i
+        }
         me.lang =  dic["lang"] as? String
         me.username =  dic["username"] as? String
         me.server_key =  dic["server_key"] as? String
-        me.os =  dic["os"] as? Int
-        me.account_type =  dic["account_type"] as? Int
+        if let x = dic["os"] as? String, let i = Int(x){
+            me.os = i
+        }
+        if let x = dic["account_type"] as? String, let i = Int(x){
+            me.account_type = i
+        }
+
         me.personal_image = dic["personal_image"] as? String
         
         return me
+    }
+    
+    static func getID() -> Int{
+        return User.getCurrentUser().user_id
     }
     
 }

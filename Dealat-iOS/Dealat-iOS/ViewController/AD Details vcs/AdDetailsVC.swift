@@ -97,12 +97,14 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.ad = res
             self.parentBase?.ad = res
             
+            
 //            if !res.images.isEmpty{
                 let im = IMG()
                 im.image = self.ad.main_image
                 self.ad.images.insert(im, at: 0)
 //            }
             
+            self.parentBase?.refreshBar()
             self.refreshData()
         }
     }
@@ -240,7 +242,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.collectionView.backgroundColor = .white
         }
         
-        if User.isRegistered(){
+        if User.isRegistered(),self.ad.seller_id.intValue != User.getID() {
             self.favVV.isHidden = false
             let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.changeFav))
             self.imgFav.addGestureRecognizer(tap)

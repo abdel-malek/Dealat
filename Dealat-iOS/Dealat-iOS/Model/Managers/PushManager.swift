@@ -9,9 +9,9 @@
 import Foundation
 import AVFoundation
 import LNNotificationsUI
-//import SwiftyJSON
+import SwiftyJSON
 
-/*class PushManager{
+class PushManager{
     
     static let LN_KEY = "mobifone"
     
@@ -79,17 +79,17 @@ import LNNotificationsUI
                 if type == 1{
                     print("BODY : \(notification["ntf_body"])")
                     let id = JSON(notification["ntf_body"]).intValue
-                    self.OpenRequest(id: id)
+//                    self.OpenRequest(id: id)
                     
                 }else if type == 2{
                     let id = JSON(notification["ntf_body"]).intValue
-                    self.OpenOrder(id: id)
+//                    self.OpenOrder(id: id)
                 }
             }catch let err{ print("ERROR: \(err.localizedDescription)")}
         }
     }
     
-    static func OpenOrder(id : Int)
+    /*static func OpenOrder(id : Int)
     {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -121,6 +121,6 @@ import LNNotificationsUI
             
             navigationController.pushViewController(vc, animated: true)
         }
-    }
+    }*/
     
-}*/
+}

@@ -20,6 +20,9 @@
 "Verification" =  "تفعيل الحساب";
 "VerificationCode" = "كود التحقق";
 "Activate" = "تفعيل";
+"need_register" = "يجب تسجيل الدخول";
+"Alert!" = "تأكيد";
+"previousRegister" = "أنت مسجل بالفعل من جهاز آخر، هل تريد الاحتفاظ بالتسجيل من كلا الجهازين؟";
 
 
 
@@ -28,7 +31,7 @@
 "My Profile" = "ملفي الشخصي";
 "My Ads" = "إعلاناتي";
 "Categories" = "المجموعات";
-"Saved searches" = "الأرشيف";
+"Saved searches" = "محفوظات البحث";
 "Edit Profile" = "تعديل ملفي";
 "Change Language" = "تغيير اللغة";
 "Settings" = "الإعدادات";
@@ -37,6 +40,7 @@
 //My Profile
 "My Ads" = "إعلاناتي";
 "Favorites" = "مفضلتي";
+"My Chats" = "الرسائل";
 
 
 //General

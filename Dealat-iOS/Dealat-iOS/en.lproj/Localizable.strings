@@ -21,6 +21,9 @@
 "Verification" =  "Verification";
 "VerificationCode" = "Verification Code";
 "Activate" = "activate";
+"need_register" = "You must login";
+"Alert!" = "Alert!";
+//"previousRegister" = "You have registered from a different device previously, Do you want to keep registration from both devices?";
 
 
 //SIDE MENU
@@ -37,6 +40,8 @@
 //My Profile
 "My Ads" = "My Ads";
 "Favorites" = "Favorites";
+"My Chats" = "My Chats";
+
 
 
 //General
@@ -97,4 +102,6 @@
 
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";
+
+
 

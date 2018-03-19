@@ -12,6 +12,13 @@ class AdDetailsBaseVC: UIViewController {
 
     var ad : AD!
     var tamplateId : Int = -1
+    
+    // BottomBar
+    @IBOutlet weak var callBtn : UIButton!
+    @IBOutlet weak var messageBtn : UIButton!
+    @IBOutlet weak var reportBtn : UIButton!
+    @IBOutlet weak var editBtn : UIButton!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +56,25 @@ class AdDetailsBaseVC: UIViewController {
         let chat = Chat()
         chat.ad_title = self.ad.title
         chat.ad_id = self.ad.ad_id
+        chat.seller_id = self.ad.seller_id
         vc.chat = chat
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func editAction(){
+
+    }
+
+    
+    func refreshBar(){
+        if User.isRegistered(){
+            let same = self.ad.seller_id.intValue == User.getID()
+            
+            self.editBtn.isHidden = !same
+            self.callBtn.isHidden = same
+            self.messageBtn.isHidden = same
+            //        self.reportBtn.isHidden = same
+        }
+    }
 
 }

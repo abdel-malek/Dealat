@@ -53,6 +53,7 @@
 		82914673205165730014CFE2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82914672205165730014CFE2 /* Message.swift */; };
 		829146752051670D0014CFE2 /* MyChatsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829146742051670D0014CFE2 /* MyChatsVC.swift */; };
 		829146772051690C0014CFE2 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829146762051690C0014CFE2 /* ChatCell.swift */; };
+		829247B0205FDAD20093A226 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 829247AF205FDAD10093A226 /* GoogleService-Info.plist */; };
 		829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C214320345C3B00FFFC9B /* RegisterVC.swift */; };
 		82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A09E922042C4A8005E9E90 /* TypesVC.swift */; };
 		82A3A1F7204453CD00CA9135 /* Commecicial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A3A1F6204453CD00CA9135 /* Commecicial.swift */; };
@@ -186,6 +187,8 @@
 		82914672205165730014CFE2 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		829146742051670D0014CFE2 /* MyChatsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatsVC.swift; sourceTree = "<group>"; };
 		829146762051690C0014CFE2 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		829247AE205FDA930093A226 /* Dealat-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dealat-iOS.entitlements"; sourceTree = "<group>"; };
+		829247AF205FDAD10093A226 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		829C214320345C3B00FFFC9B /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		82A09E922042C4A8005E9E90 /* TypesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesVC.swift; sourceTree = "<group>"; };
 		82A3A1F6204453CD00CA9135 /* Commecicial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commecicial.swift; sourceTree = "<group>"; };
@@ -371,6 +374,7 @@
 		82F0C1E520286404008922A0 /* Dealat-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				829247AE205FDA930093A226 /* Dealat-iOS.entitlements */,
 				82F0C1E620286404008922A0 /* AppDelegate.swift */,
 				82F0C1E820286404008922A0 /* ViewController.swift */,
 				82F0C1EA20286404008922A0 /* Main.storyboard */,
@@ -378,6 +382,7 @@
 				82E8BD0C202B139000684368 /* Media.xcassets */,
 				82F0C1EF20286407008922A0 /* LaunchScreen.storyboard */,
 				82F0C1F220286407008922A0 /* Info.plist */,
+				829247AF205FDAD10093A226 /* GoogleService-Info.plist */,
 				8226F02520289C7B0077FA74 /* background2.png */,
 				823547C52029C27E003478F1 /* pic.png */,
 				82F0C21520286430008922A0 /* External */,
@@ -604,6 +609,14 @@
 					82F0C1E220286404008922A0 = {
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					82F0C1F620286407008922A0 = {
 						CreatedOnToolsVersion = 9.3;
@@ -663,6 +676,7 @@
 				82F0C1EE20286407008922A0 /* Assets.xcassets in Resources */,
 				82F0C21C2028648A008922A0 /* Podfile in Resources */,
 				82B97A6C20551D0F00ADF51B /* MessageCell.xib in Resources */,
+				829247B0205FDAD20093A226 /* GoogleService-Info.plist in Resources */,
 				8226F02620289C7C0077FA74 /* background2.png in Resources */,
 				82893DE12033237C009151FC /* Localizable.strings in Resources */,
 				8226F02920289D240077FA74 /* CenturyGothicRegular.ttf in Resources */,
@@ -1061,6 +1075,7 @@
 			baseConfigurationReference = 379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
 				ENABLE_BITCODE = NO;
@@ -1080,6 +1095,7 @@
 			baseConfigurationReference = BDD28EAD72431D331D5A7292 /* Pods-Dealat-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
 				ENABLE_BITCODE = NO;

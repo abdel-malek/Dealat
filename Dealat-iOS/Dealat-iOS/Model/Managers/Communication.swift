@@ -521,12 +521,12 @@ class Communication: BaseManager {
         }
     }
     
-    func verify(_ code : String, callback : @escaping (Bool) -> Void){
+    func verify( code : String,is_multi : Int, callback : @escaping (Bool) -> Void){
         
         let url = URL(string: baseURL + verifyURL)!
         
         let phone : String = User.getCurrentUser().phone!
-        let params : [String : Any] = ["phone" : phone,"verification_code" : code]
+        let params : [String : Any] = ["phone" : phone,"verification_code" : code,"is_multi" : is_multi]
         
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -1015,6 +1015,7 @@ class Communication: BaseManager {
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
         
+//        headers["Authorization"] = "Basic OTk0NzI5NDU4Ojg5ZjI1NThiZDRiM2RmMDBiN2Y5YThlZTllOWRmNjc5"
         
         if User.isRegistered(){
             let me = User.getCurrentUser()

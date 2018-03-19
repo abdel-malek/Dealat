@@ -28,5 +28,11 @@ class UserBookmark : BaseEntity {
         created_at <- map["created_at"]
         modified_at <- map["modified_at"]
     }
+    
+    
+    func getName() -> String{
+        return "Bookmark #\(self.user_bookmark_id.stringValue)"
+    }
+    
 }
 

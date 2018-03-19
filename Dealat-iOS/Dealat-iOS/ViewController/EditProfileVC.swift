@@ -28,7 +28,7 @@ class EditProfileVC: BaseVC {
     var cities = [City]()
     var selectedCity : City!{
         didSet{
-            self.tfCity.text = (selectedCity != nil) ? selectedCity.city_name : nil
+            self.tfCity.text = (selectedCity != nil) ? selectedCity.name : nil
         }
     }
     
@@ -237,7 +237,7 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
         }
         
         let c = self.cities[row - 1]
-        return c.city_name
+        return c.name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
