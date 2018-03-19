@@ -24,7 +24,7 @@ public class ChatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_my_profile, null);
+        View rootView = inflater.inflate(R.layout.content_building, null);
 
 
         return rootView;

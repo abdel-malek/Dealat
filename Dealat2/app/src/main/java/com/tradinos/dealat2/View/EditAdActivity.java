@@ -1,18 +1,30 @@
 package com.tradinos.dealat2.View;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
@@ -30,23 +42,32 @@ import com.tradinos.dealat2.Model.AdProperty;
 import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.ImageDecoder;
 
+import org.json.JSONArray;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by developer on 14.03.18.
  */
 
 public class EditAdActivity extends MasterActivity {
+
+    private final int REQUEST_SELECT = 1;
 
     private final String NULL = "-1";
     private Ad currentAd;
@@ -58,8 +79,14 @@ public class EditAdActivity extends MasterActivity {
     private HashMap<String, String> parameters = new HashMap<>();
 
     private HorizontalAdapter adapter;
+    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray();
 
-    // Views
+    private Bitmap popupBitmap;
+
+    //views
+    private LinearLayout linearLayout;
+    private PopupWindow popupWindow;
+
     private TextView textBrand, textModel,
             textDate,
             textEdu, textSch;
@@ -119,6 +146,22 @@ public class EditAdActivity extends MasterActivity {
             public void OnSuccess(Ad result) {
                 currentAd = result;
 
+                adapter = new HorizontalAdapter(mContext, linearLayout);
+                List<Image> images = new ArrayList<>();
+                Image image;
+                for (int i = 0; i < currentAd.getImagesPaths().size(); i++) {
+
+                    image = new Image();
+                    image.setServerPath(currentAd.getImagePath(i));
+
+                    if (i == 0)
+                        image.markAsMain();
+
+                    images.add(image);
+                }
+
+                adapter.loadViews(images);
+
                 AdController.getInstance(mController).getTemplatesData(new SuccessCallback<TemplatesData>() {
                     @Override
                     public void OnSuccess(TemplatesData result) {
@@ -151,6 +194,8 @@ public class EditAdActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
+        linearLayout = (LinearLayout) findViewById(R.id.layout);
+
         textBrand = (TextView) findViewById(R.id.textBrand);
         textModel = (TextView) findViewById(R.id.textModel);
         textDate = (TextView) findViewById(R.id.textDate);
@@ -235,6 +280,11 @@ public class EditAdActivity extends MasterActivity {
                 Type selectedType = ((TypeAdapter) spinnerBrand.getAdapter()).getItem(i);
 
                 spinnerModel.setAdapter(new ItemAdapter(mContext, selectedType.getModels()));
+
+                if (currentAd.getTemplate() == Category.VEHICLES) //it means there're models with brands
+                    // and to ensure casting to AdVehicle
+                    if (((AdVehicle) currentAd).getTypeId().equals(selectedType.getId()))
+                        spinnerModel.setSelection(getItemIndex(selectedType.getModels(), ((AdVehicle) currentAd).getModelId()));
             }
 
             @Override
@@ -243,11 +293,14 @@ public class EditAdActivity extends MasterActivity {
             }
         });
 
-        editCategory.setOnClickListener(new View.OnClickListener() {
+        editCategory.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                editCategory.setError(getString(R.string.errorCategory));
-                editCategory.requestFocus();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    editCategory.setError(getString(R.string.errorCategory));
+                    editCategory.requestFocus();
+                }
+                return false;
             }
         });
     }
@@ -256,7 +309,7 @@ public class EditAdActivity extends MasterActivity {
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.buttonTrue:
+            case R.id.buttonTrue: // Save
                 parameters.clear();
 
                 if (checkGeneralInput()) {
@@ -285,7 +338,100 @@ public class EditAdActivity extends MasterActivity {
                     builder.setMessage(R.string.areYouSureEdit).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
                             .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
                 }
+                break;
+
+            case R.id.buttonEdit: // Select Images
+                if (adapter.getCount() >= Image.MAX_IMAGES)
+                    showMessageInToast(getString(R.string.toastMaxImages));
+                else {
+                    Intent intent = new Intent(mContext, SelectImagesActivity.class);
+                    intent.putExtra("counter", adapter.getCount());
+                    startActivityForResult(intent, REQUEST_SELECT);
+                }
+
+                break;
+
+            case R.id.layoutHorizontal:
+                final int position = Integer.parseInt(view.getTag().toString());
+                final Image clickedImage = adapter.getItem(position);
+
+                if (!clickedImage.isLoading()) {
+                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    //Inflate the view from a predefined XML layout
+                    View layout = inflater.inflate(R.layout.popup_layout,
+                            (ViewGroup) findViewById(R.id.popupLayout));
+
+                    ImageView imageView = layout.findViewById(R.id.imageView);
+
+                    if (!clickedImage.isPreviouslyLoaded()) {
+                        popupBitmap = new ImageDecoder().decodeLargeImage(clickedImage.getPath());
+                        imageView.setImageBitmap(popupBitmap);
+                    } else {
+                        ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+                        mImageLoader.get(MyApplication.getBaseUrlForImages() + clickedImage.getServerPath(),
+                                ImageLoader.getImageListener(imageView,
+                                        R.drawable.others, R.drawable.others));
+                    }
+
+                    popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
+
+                    layout.findViewById(R.id.buttonTrue).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            adapter.replaceMain(position);
+
+                            if (popupBitmap != null)
+                                popupBitmap.recycle();
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                            popupBitmap = null;
+                        }
+                    });
+
+                    layout.findViewById(R.id.buttonFalse).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            adapter.deleteImage(position);
+                            deletedImgsJsonArray.put(clickedImage.getServerPath());
+
+                            if (popupBitmap != null)
+                                popupBitmap.recycle();
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                            popupBitmap = null;
+                        }
+                    });
+
+                    popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
+                }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_SELECT) {
+            List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
+
+            int base = adapter.getCount();
+            adapter.setViews(newImages);
+
+            // uploading images
+            for (int i = 0; i < newImages.size(); i++)
+                new UploadImage(i + base).execute(newImages.get(i));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            if (popupBitmap != null)
+                popupBitmap.recycle();
+            popupWindow.dismiss();
+            popupWindow = null;
+            popupBitmap = null;
+        } else
+            super.onBackPressed();
     }
 
     private boolean checkGeneralInput() {
@@ -297,7 +443,9 @@ public class EditAdActivity extends MasterActivity {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
 
-        } else {
+        } else if (adapter.isLoading())
+            showMessageInToast(getString(R.string.toastWaitTillUploading));
+        else {
 
             parameters.put("ad_id", currentAd.getId());
 
@@ -318,6 +466,23 @@ public class EditAdActivity extends MasterActivity {
             else
                 parameters.put("is_negotiable", "0");
 
+
+            imagesJsonArray = new JSONArray();
+            Image image;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                image = adapter.getItem(i);
+                if (image.isMarkedAsMain())
+                    parameters.put("main_image", image.getServerPath());
+                else
+                    imagesJsonArray.put(image.getServerPath());
+            }
+
+            if (imagesJsonArray.length() > 0)
+                parameters.put("images", imagesJsonArray.toString());
+
+            if (deletedImgsJsonArray.length() > 0)
+                parameters.put("deleted_imags", deletedImgsJsonArray.toString());
+
             return true;
         }
 
@@ -325,6 +490,7 @@ public class EditAdActivity extends MasterActivity {
     }
 
     private void getTemplateInput() {
+
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
                 if (inputIsEmpty(editSpace))
@@ -463,8 +629,6 @@ public class EditAdActivity extends MasterActivity {
                 brand = getItemIndex(new ArrayList<Item>(templateBrands),
                         ((AdVehicle) currentAd).getTypeId());
                 spinnerBrand.setSelection(brand);
-                spinnerModel.setSelection(getItemIndex(new ArrayList<Item>(templateBrands.get(brand).getModels()),
-                        ((AdVehicle) currentAd).getModelId()));
 
                 spinnerYear.setSelection(getItemIndex(years, ((AdVehicle) currentAd).getManufactureYear()));
 
@@ -608,13 +772,28 @@ public class EditAdActivity extends MasterActivity {
     }
 
 
-    private int getItemIndex(List<Item> items, String id) {
-        if (items == null)
-            return 0;
+    class UploadImage extends AsyncTask<Image, Void, String> {
 
-        for (int i = 0; i < items.size(); i++)
-            if (items.get(i).getId().equals(id))
-                return i;
-        return 0;
+        int position;
+
+        public UploadImage(int position) {
+            this.position = position;
+        }
+
+        @Override
+        protected String doInBackground(Image... images) {
+
+            final Image image = images[0];
+            AdController.getInstance(mController).uploadImage(new File(image.getPath()), new SuccessCallback<String>() {
+                @Override
+                public void OnSuccess(String result) {
+                    image.setServerPath(result);
+
+                    image.setLoading(false);
+                    adapter.updateViews(position);
+                }
+            });
+            return null;
+        }
     }
 }

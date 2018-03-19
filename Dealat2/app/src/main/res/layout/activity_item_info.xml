@@ -74,24 +74,23 @@
                 android:backgroundTint="@color/white"
                 />
 
-            <android.support.design.widget.TextInputLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelchooseCategory"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <EditText
+                android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:onClick="selectCat"
-                android:hint="@string/labelchooseCategory"
-                android:textColorHint="@color/whiteTransparent"
-                >
-                <EditText
-                    android:id="@+id/editCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    android:onClick="selectCat"
-                    style="@style/editTextWhite"
-                    android:backgroundTint="@color/white"
-                    />
-                </android.support.design.widget.TextInputLayout>
+                android:textIsSelectable="true"
+                style="@style/editTextWhite"
+                android:backgroundTint="@color/white"
+                />
 
 
             <android.support.design.widget.TextInputLayout

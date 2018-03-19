@@ -19,11 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:padding="8dp"
+        android:gravity="bottom"
         android:background="@color/red"
         >
         <EditText
             android:id="@+id/edit_query"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

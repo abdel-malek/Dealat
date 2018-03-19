@@ -53,6 +53,7 @@ public class UserController extends ParentController {
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -63,6 +64,7 @@ public class UserController extends ParentController {
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
 
+        addToHeader(request);
         request.Call();
     }
 
@@ -81,7 +83,20 @@ public class UserController extends ParentController {
         String url = new URLBuilder(APIModel.users, "get_my_info").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());
 
+        authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
 
+    public void editUserInfo(HashMap<String, String> parameters, SuccessCallback<User> successCallback){
+        String url = new URLBuilder(APIModel.users, "edit_user_info").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new UserParser(), successCallback,getmFaildCallback());
+
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
+
+        authenticationRequired(request);
+        addToHeader(request);
         request.Call();
     }
 

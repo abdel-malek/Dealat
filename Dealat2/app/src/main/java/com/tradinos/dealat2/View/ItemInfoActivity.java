@@ -134,13 +134,13 @@ public class ItemInfoActivity extends MasterActivity {
                 result.getSchedules().add(Item.getNoItem());
                 spinnerSch.setAdapter(new ItemAdapter(mContext, result.getSchedules()));
 
+                setTemplateVisibility(View.VISIBLE);
             }
         });
     }
 
     @Override
     public void showData() {
-        setTemplateVisibility(View.VISIBLE);
 
         editCategory.setText(selectedCategory.getFullName());
 
@@ -269,6 +269,19 @@ public class ItemInfoActivity extends MasterActivity {
 
             }
         });
+
+        editCategory.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+                    intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
+                    intent.putExtra("category", selectedCategory);
+                    startActivityForResult(intent, REQUEST_SELECT_CAT);
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -338,13 +351,6 @@ public class ItemInfoActivity extends MasterActivity {
                 popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
             }
         }
-    }
-
-    public void selectCat(View view) {
-        Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-        intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
-        intent.putExtra("category", selectedCategory);
-        startActivityForResult(intent, REQUEST_SELECT_CAT);
     }
 
     @Override
@@ -486,7 +492,7 @@ public class ItemInfoActivity extends MasterActivity {
                 parameters.put("images", imagesJsonArray.toString());
 
             if (deletedImgsJsonArray.length() > 0)
-                parameters.put("deletedImages", deletedImgsJsonArray.toString());
+                parameters.put("deleted_imags", deletedImgsJsonArray.toString());
 
             return true;
         }

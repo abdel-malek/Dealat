@@ -87,7 +87,7 @@ public class ImageAdapter extends BaseAdapter {
                     selectedImages.remove(clickedImage);
                     imageViewCheck.setVisibility(View.INVISIBLE);
                 } else {
-                    if (Image.ImageCounter >= 6) {
+                    if (Image.ImageCounter >= Image.MAX_IMAGES) {
                         ((MasterActivity) context).showMessageInToast(R.string.toastMaxImages);
                         return;
                     }

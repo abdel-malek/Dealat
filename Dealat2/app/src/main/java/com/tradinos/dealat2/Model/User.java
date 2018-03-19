@@ -9,7 +9,7 @@ public class User implements Serializable {
     public static final int NOT_REGISTERED = 1, LOCATED = 2, PENDING = 3, REGISTERED = 4;
 
     private String id, name, phone;
-    private String serverKey, cityId;
+    private String serverKey, cityId, cityName;
 
     public String getId() {
         return id;
@@ -49,6 +49,14 @@ public class User implements Serializable {
 
     public void setCityId(String cityId) {
         this.cityId = cityId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     @Override

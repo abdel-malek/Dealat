@@ -83,14 +83,16 @@ public class AdAdapter extends BaseAdapter {
     }
 
     private void initializeView(Ad item, ViewHolder holder) {
+        int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(item.getTemplate());
         if (item.getMainImageUrl() != null) {
-            int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(item.getTemplate());
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
             mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageView,
                            defaultDrawable, defaultDrawable));
         }
+        else
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
         holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice())+
                 " "+context.getString(R.string.sp));

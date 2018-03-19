@@ -63,18 +63,21 @@ public class MyAdAdapter extends BaseAdapter {
     }
 
     private void initializeView(Ad item, ViewHolder holder) {
+        int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(item.getTemplate());
         if (item.getMainImageUrl() != null) {
-            int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(item.getTemplate());
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
             mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageViewMain,
                             defaultDrawable, defaultDrawable));
         }
+        else
+            holder.imageViewMain.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
         holder.textViewTitle.setText(item.getTitle());
         holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
-        holder.textViewExpires.setText(((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
+        holder.textViewExpires.setText(context.getString(R.string.expires)
+                +" "+((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
 
 
         int statusRsc = R.drawable.dealat_logo_red;

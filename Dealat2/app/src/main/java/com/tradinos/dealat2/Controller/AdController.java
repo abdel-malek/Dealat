@@ -85,6 +85,18 @@ public class AdController extends ParentController {
         request.Call();
     }
 
+    public void changeStatus(String adId, int status, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "change_status").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("ad_id", adId);
+        request.addParameter("status", String.valueOf(status));
+
+        authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
+
     public void getTemplatesData(SuccessCallback<TemplatesData> successCallback){
         String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());

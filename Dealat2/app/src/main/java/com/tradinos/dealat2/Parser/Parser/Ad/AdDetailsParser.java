@@ -186,6 +186,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
 
         ad.setId(jsonObject.getString("ad_id"));
         ad.setSellerId(jsonObject.getString("user_id"));
+        ad.setSellerId(jsonObject.getString("seller_id"));
         ad.setSellerName(jsonObject.getString("seller_name"));
         ad.setSellerPhone(jsonObject.getString("seller_phone"));
         ad.setCategoryId(jsonObject.getString("category_id"));
@@ -223,7 +224,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         }
 
         String s = jsonObject.getString("main_image");
-        if (!s.equals("null")) {
+        if (!s.equals("null")) { // main images always first in list
             ad.setMainImageUrl(s);
             ad.addImagePath(s);
         }

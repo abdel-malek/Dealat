@@ -16,7 +16,9 @@
         android:roundIcon="@drawable/dealat_logo_white_background"
         android:supportsRtl="true"
         android:theme="@style/noTitleTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,7 +71,9 @@
             android:screenOrientation="portrait"
             />
 
-        <activity android:name=".View.EditProfileActivity" />
+        <activity android:name=".View.EditProfileActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity android:name=".View.EditAdActivity"
             android:screenOrientation="portrait"

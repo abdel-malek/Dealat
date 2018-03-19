@@ -3,6 +3,7 @@ package com.tradinos.dealat2.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ public class AdImageFragment extends Fragment {
             mImageLoader.get(MyApplication.getBaseUrlForImages() + this.path, ImageLoader.getImageListener(imageView,
                     defaultDrawable, defaultDrawable));
         }
+        else
+            imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), defaultDrawable));
 
         return rootView;
     }

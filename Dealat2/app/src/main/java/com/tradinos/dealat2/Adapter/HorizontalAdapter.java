@@ -8,7 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Image;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 
@@ -21,6 +24,7 @@ import java.util.List;
 
 public class HorizontalAdapter {
 
+    private Context context;
     private LayoutInflater inflater;
     private List<Image> images;
     private LinearLayout linearLayout;
@@ -28,8 +32,11 @@ public class HorizontalAdapter {
 
 
     public HorizontalAdapter(Context context, LinearLayout linearLayout) {
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.linearLayout = linearLayout;
+        this.views = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     public Image getItem(int i) {
@@ -40,10 +47,10 @@ public class HorizontalAdapter {
         return this.images.size();
     }
 
-    public void setViews(final List<Image> images) {
-        this.images = images;
+    public void setViews(List<Image> images) {
+        int base = this.getCount();
 
-        this.views = new ArrayList<>();
+        this.images.addAll(images);
 
         View view;
         ImageView imageView;
@@ -52,12 +59,12 @@ public class HorizontalAdapter {
 
             // first image is Main by default
             if (i == 0)
-                images.get(0).markAsMain();
+                this.images.get(0).markAsMain();
 
             view = this.inflater.inflate(R.layout.row_image_horizontal, null);
             // view.setLayoutParams(new FrameLayout.LayoutParams(260, 260));
             view.setPadding(4, 4, 4, 4);
-            view.setTag(i);
+            view.setTag(i + base);
 
             imageView = view.findViewById(R.id.imageView);
 
@@ -65,6 +72,30 @@ public class HorizontalAdapter {
 
             this.linearLayout.addView(view);
             this.views.add(view);
+        }
+    }
+
+    public void loadViews(List<Image> images) {
+        this.images.addAll(images);
+
+        View view;
+        ImageView imageView;
+        for (int i = 0; i < images.size(); i++) {
+            view = this.inflater.inflate(R.layout.row_image_horizontal, null);
+            // view.setLayoutParams(new FrameLayout.LayoutParams(260, 260));
+            view.setPadding(4, 4, 4, 4);
+            view.setTag(i);
+
+            imageView = view.findViewById(R.id.imageView);
+
+            ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
+            mImageLoader.get(MyApplication.getBaseUrlForImages() + images.get(i).getServerPath(),
+                    ImageLoader.getImageListener(imageView,
+                            R.drawable.others, R.drawable.others));
+
+            this.linearLayout.addView(view);
+            this.views.add(view);
+            updateViews(i);
         }
     }
 
@@ -97,8 +128,8 @@ public class HorizontalAdapter {
 
         linearLayout.removeView(removedView);
 
-        if (position == 0){ // if first and main image is deleted
-            if (images.size() >0) // mark the current first image
+        if (position == 0) { // if first and main image is deleted
+            if (images.size() > 0) // mark the current first image
                 images.get(0).markAsMain();
         }
 
@@ -116,7 +147,7 @@ public class HorizontalAdapter {
 
         images.add(0, mainImage);
         views.add(0, mainView);
-        linearLayout.addView(mainView, 0);
+        linearLayout.addView(mainView, 0); //should add button and make it 1 !!
 
         enumerate();
     }

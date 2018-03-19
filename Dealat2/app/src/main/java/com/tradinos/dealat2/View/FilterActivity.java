@@ -102,6 +102,8 @@ public class FilterActivity extends MasterActivity {
 
                 result.getSchedules().add(0, new Item("-1", getString(R.string.all)));
                 spinnerSch.setAdapter(new CheckableAdapter(mContext, result.getSchedules()));
+
+                setTemplateVisibility(View.VISIBLE);
             }
         });
     }
@@ -110,7 +112,6 @@ public class FilterActivity extends MasterActivity {
     public void showData() {
 
         editCategory.setText(selectedCategory.getFullName());
-        setTemplateVisibility(View.VISIBLE);
 
 
         int startYear = 1970;
@@ -240,14 +241,16 @@ public class FilterActivity extends MasterActivity {
             }
         });
 
-
-        editCategory.setOnClickListener(new View.OnClickListener() {
+        editCategory.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-                intent.putExtra("action", SubCategoriesActivity.ACTION_FILTER_CAT);
-                intent.putExtra("category", selectedCategory);
-                startActivityForResult(intent, REQUEST_FILTER_CAT);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+                    intent.putExtra("action", SubCategoriesActivity.ACTION_FILTER_CAT);
+                    intent.putExtra("category", selectedCategory);
+                    startActivityForResult(intent, REQUEST_FILTER_CAT);
+                }
+                return false;
             }
         });
 

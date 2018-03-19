@@ -24,6 +24,7 @@ import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
@@ -36,6 +37,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -355,6 +357,16 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return false;
     }
 
+    protected int getItemIndex(List<Item> items, String id) {
+        if (items == null)
+            return 0;
+
+        for (int i = 0; i < items.size(); i++)
+            if (items.get(i).getId().equals(id))
+                return i;
+        return 0;
+    }
+
     public String formattedDate(String stringDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -414,14 +426,11 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dateFormat.parse(stringDate));
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + periods[period-1]);
-            calendar.set(Calendar.HOUR, 0);
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             Date expiryDate = calendar.getTime();
 
-            return getString(R.string.expires) + " " + dateWithoutYearFormat.format(expiryDate);
+            return dateWithoutYearFormat.format(expiryDate);
 
         } catch (ParseException e) {
             e.printStackTrace();

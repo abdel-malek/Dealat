@@ -11,6 +11,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +59,9 @@ public class AdDetailsActivity extends MasterActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textNegotiable, textViewDesc, textViewSeller,
-            textViewViews, textViewPublishDate, textViewLocation,
+    private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textNegotiable, textViewDesc,
+            textViewSeller, textViewPhone,
+            textViewViews, textViewPublishDate, textViewLocation, textViewExpires,
             textViewEdu, textViewSch, textViewSalary, textViewEx,
             textViewSpace, textViewRooms, textViewFloors, textViewFurn, textViewState,
             textViewBrand, textViewModel, textViewKilo, textViewTransmission, textViewManufactureYear,
@@ -90,6 +93,10 @@ public class AdDetailsActivity extends MasterActivity {
         AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
+
+                currentAd.setSellerId(result.getSellerId());
+                currentAd.setSellerPhone(result.getSellerPhone());
+                currentAd.setSellerName(result.getSellerName());
 
                 viewPager.setAdapter(new AdImagesAdapter(getSupportFragmentManager(), result.getImagesPaths(), currentAd.getTemplate()));
 
@@ -125,7 +132,12 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewPublishDate.setText(formattedDate(result.getPublishDate()));
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
                 textViewLocation.setText(result.getLocationName());
+                textViewExpires.setText(getExpiryTime(result.getPublishDate(), result.getShowPeriod()));
                 textViewSeller.setText(result.getSellerName());
+
+                // SpannableString content = new SpannableString(result.getSellerPhone());
+                // content.setSpan(new UnderlineSpan(), 0, result.getSellerPhone().length(), 0);
+                textViewPhone.setText(result.getSellerPhone());
 
                 if (result.isNegotiable())
                     textNegotiable.setText(getString(R.string.yes));
@@ -135,12 +147,24 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewDesc.setText(result.getDescription());
 
                 currentAd.setFavorite(result.isFavorite());
-                if (MyApplication.getUserState() == User.REGISTERED && currentAd.isFavorite())
-                    buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
+                if (MyApplication.getUserState() == User.REGISTERED) {
+
+                    textViewPhone.setVisibility(View.VISIBLE);
+
+                    if (currentAd.isFavorite())
+                        buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
+                }
 
                 HideProgressDialog();
                 fillTemplate(result);
                 showTemplate();
+
+                if (user.IsLogged())
+                    if (currentAd.getSellerId().equals(user.Get().getId())){
+                        buttonFav.setVisibility(View.INVISIBLE);
+                       // findViewById(R.id.container3).setVisibility(View.GONE);
+                        findViewById(R.id.container2).setVisibility(View.INVISIBLE);
+                    }
             }
         });
     }
@@ -162,9 +186,11 @@ public class AdDetailsActivity extends MasterActivity {
         textViewPublishDate = (TextView) findViewById(R.id.textViewDate);
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
         textViewLocation = (TextView) findViewById(R.id.textLocation);
+        textViewExpires = (TextView) findViewById(R.id.textViewExpires);
         textNegotiable = (TextView) findViewById(R.id.textNegotiable);
         textViewDesc = (TextView) findViewById(R.id.textDesc);
         textViewSeller = (TextView) findViewById(R.id.textUser);
+        textViewPhone = (TextView) findViewById(R.id.textViewPhone);
 
         textViewEdu = (TextView) findViewById(R.id.textEdu);
         textViewSch = (TextView) findViewById(R.id.textSch);
@@ -255,7 +281,7 @@ public class AdDetailsActivity extends MasterActivity {
                                 new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
                     } else {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:" + user.Get().getPhone()));
+                        callIntent.setData(Uri.parse("tel:" + currentAd.getSellerPhone()));
                         startActivity(callIntent);
                     }
 
@@ -278,7 +304,7 @@ public class AdDetailsActivity extends MasterActivity {
         if (requestCode == REQUEST_CALL) {
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + user.Get().getPhone()));
+            callIntent.setData(Uri.parse("tel:" + currentAd.getSellerPhone()));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
                 startActivity(callIntent);
         }

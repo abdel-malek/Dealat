@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
+    android:id="@+id/container2"
     >
 
     <ScrollView
@@ -73,23 +74,22 @@
                 android:backgroundTint="@color/white"
                 />
 
-            <android.support.design.widget.TextInputLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelchooseCategory"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+            <EditText
+                android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:onClick="selectCat"
-                android:hint="@string/labelchooseCategory"
-                android:textColorHint="@color/whiteTransparent"
-                >
-                <EditText
-                    android:id="@+id/editCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="true"
-                    style="@style/editTextWhite"
-                    android:backgroundTint="@color/white"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                android:textIsSelectable="true"
+                style="@style/editTextWhite"
+                android:backgroundTint="@color/white"
+                />
 
 
             <android.support.design.widget.TextInputLayout
@@ -478,8 +478,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
-            />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:onClick="onClick"
+                android:text="+"
+                />
+        </LinearLayout>
     </HorizontalScrollView>
 
     <Button

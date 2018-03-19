@@ -40,7 +40,8 @@
 
 
     <!-- Views -->
-    <string name="labelSelectCity">Please, Select your city</string>
+    <string name="labelPleaseSelectCity">Please, Select your city</string>
+    <string name="labelSelectCity">Select a city</string>
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
@@ -56,6 +57,12 @@
     <string name="labelFrom">From</string>
     <string name="labelSelectTransmission">Select Transmission Type</string>
     <string name="labelFurnished">Furnished</string>
+    <string name="labelAdSettings">Ad\'s Settings</string>
+    <string name="labelViewDetails">View Details</string>
+    <string name="labelEditAd">Edit Ad</string>
+    <string name="labelDeleteAd">Delete Ad</string>
+
+    <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">Ad Number</string>
@@ -141,6 +148,7 @@
     <string name="toastFavorite">Ad\'s added to your favorites</string>
     <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
     <string name="toastSaved">Changes Saved</string>
+    <string name="toastAdDeleted">Ad\'s Deleted</string>
 
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>

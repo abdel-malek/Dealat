@@ -34,6 +34,8 @@ import java.util.Date;
 
 public class SelectImagesActivity extends MasterActivity {
 
+    private int action = 0;
+
     private final int REQUEST_SUBMIT = 1, REQUEST_CAMERA = 2,
             REQUEST_PERMISSION_READ = 3, REQUEST_PERMISSION_WRITE = 4;
 
@@ -52,13 +54,18 @@ public class SelectImagesActivity extends MasterActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_select_images);
         super.onCreate(savedInstanceState);
-
-        Image.ImageCounter = 0;
     }
 
     @Override
     public void getData() {
-        selectedCategory = (Category) getIntent().getSerializableExtra("category");
+        if (getIntent().hasExtra("counter")){ // when EditAd
+            action = 1;
+            Image.ImageCounter = getIntent().getIntExtra("counter", 0);
+        }
+        else {// when Submit an Ad
+            selectedCategory = (Category) getIntent().getSerializableExtra("category");
+            Image.ImageCounter = 0;
+        }
     }
 
     @Override
@@ -89,7 +96,7 @@ public class SelectImagesActivity extends MasterActivity {
         switch (view.getId()) {
             case R.id.container: // camera
 
-                if (Image.ImageCounter >= 6)
+                if (Image.ImageCounter >= Image.MAX_IMAGES)
                     showMessageInToast(getString(R.string.toastMaxImages));
 
                 else if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
@@ -111,7 +118,7 @@ public class SelectImagesActivity extends MasterActivity {
                         // Continue only if the File was successfully created
                         if (photoFile != null) {
                             //Uri photoUri = Uri.fromFile(photoFile);
-                             photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
+                            photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
                                     + ".provider", photoFile);
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                             startActivityForResult(takePictureIntent, REQUEST_CAMERA);
@@ -122,11 +129,20 @@ public class SelectImagesActivity extends MasterActivity {
                 break;
 
             case R.id.buttonTrue: //done
-                Intent intent = new Intent(mContext, ItemInfoActivity.class);
+                if (action == 0){
+                    Intent intent = new Intent(mContext, ItemInfoActivity.class);
 
-                intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
-                intent.putExtra("category", selectedCategory);
-                startActivityForResult(intent, REQUEST_SUBMIT);
+                    intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
+                    intent.putExtra("category", selectedCategory);
+                    startActivityForResult(intent, REQUEST_SUBMIT);
+                }
+                else {
+                    Intent intent = new Intent();
+                    intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
                 break;
 
             case R.id.buttonFalse: //cancel
@@ -142,15 +158,14 @@ public class SelectImagesActivity extends MasterActivity {
             if (requestCode == REQUEST_SUBMIT) {
                 setResult(RESULT_OK);
                 finish();
-            }
-            else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == REQUEST_CAMERA) {
 
                 adapter.addCapturedImage(new Image(mCurrentPhotoPath));
                 adapter.notifyDataSetChanged();
             }
         } else if (resultCode == RESULT_CANCELED) {
-          //  File file = new File(photoUri.getPath());
-           // file.delete();
+            //  File file = new File(photoUri.getPath());
+            // file.delete();
         }
     }
 
@@ -160,8 +175,7 @@ public class SelectImagesActivity extends MasterActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 adapter = new ImageAdapter(mContext, getAllShownImagesPath());
                 gridView.setAdapter(adapter);
-            }
-            else { // to avoid NullPointerException in case Done is clicked
+            } else { // to avoid NullPointerException in case Done is clicked
                 adapter = new ImageAdapter(mContext, new ArrayList<Image>());
             }
         }

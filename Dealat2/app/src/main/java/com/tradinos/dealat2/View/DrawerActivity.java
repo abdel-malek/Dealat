@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.CommercialAdapter;
@@ -52,6 +54,8 @@ public abstract class DrawerActivity extends MasterActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Button buttonRegister = navigationView.getHeaderView(0).findViewById(R.id.buttonRegister);
+        TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
+        TextView textViewCity = navigationView.getHeaderView(0).findViewById(R.id.textCity);
         Menu menu = navigationView.getMenu();
 
         switch (MyApplication.getUserState()) {
@@ -71,7 +75,15 @@ public abstract class DrawerActivity extends MasterActivity
                 menu.findItem(R.id.nav_MyAds).setVisible(true);
                 menu.findItem(R.id.nav_MyProfile).setVisible(true);
                 menu.findItem(R.id.nav_savedSearches).setVisible(true);
-                buttonRegister.setVisibility(View.INVISIBLE);
+                buttonRegister.setVisibility(View.GONE);
+
+                User user = new CurrentAndroidUser(this).Get();
+                if (user != null){
+                    navigationView.getHeaderView(0).findViewById(R.id.containerUser).setVisibility(View.VISIBLE);
+                    textViewName.setText(user.getName());
+                 //   textViewCity.setText(user.getCityName());
+                }
+
                 break;
 
             default:
