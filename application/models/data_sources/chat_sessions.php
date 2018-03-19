@@ -9,7 +9,7 @@ class Chat_sessions extends MY_Model {
 	
 	public function get_user_chat_sessions($user_id)
 	{
-		$this->db->select('chat_sessions.* , u.name as user_name  , s.name as seller_name , ads.title as ad_title');
+		$this->db->select('chat_sessions.* , u.name as user_name , u.personal_image as user_pic  , s.name as seller_name, s.personal_image as seller_pic , ads.title as ad_title');
 		$this->db->join('users as u' , 'u.user_id = chat_sessions.user_id' , 'left');
 		$this->db->join('users as s' , 's.user_id = chat_sessions.seller_id' , 'left');
 		$this->db->join('ads' , 'chat_sessions.ad_id = ads.ad_id' , 'left');

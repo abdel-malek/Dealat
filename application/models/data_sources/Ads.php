@@ -57,6 +57,7 @@ class Ads extends MY_Model {
 		                   categories.'.$lang.'_name as category_name ,
 		                   c.'.$lang.'_name as parent_category_name ,
 		                   categories.tamplate_id,
+		                   users.user_id as seller_id,
 		                   users.name as seller_name,
 		                   users.phone as seller_phone,
 		                   locations.'.$lang.'_name as location_name ,
@@ -161,7 +162,7 @@ class Ads extends MY_Model {
 	   	  $data['location_id'] = $this->input->post('location_id');
 	   }
 	   if($this->input->post('price')){
-	   	  $data['location_id'] = $this->input->post('location_id');
+	   	  $data['price'] = $this->input->post('price');
 	   }
 	   if($this->input->post('is_negotiable')){
 	   	  $data['is_negotiable'] = $this->input->post('is_negotiable');
@@ -188,7 +189,11 @@ class Ads extends MY_Model {
 		  $this->db->where_in('image'  , $deleted_images);
 		  $this->db->where('ad_id'  , $ad_id);
 		  $this->db->delete('ad_images');
-		  $this->delete_images($deleted_images);
+		  if(isset($data['main_image'] )){
+		  	 $this->delete_images($deleted_images , $data['main_image']);
+		  }else{
+		  	 $this->delete_images($deleted_images);
+		  }
 	   }
 	   
 	   //add new second images
@@ -229,11 +234,13 @@ class Ads extends MY_Model {
 	   }
   }
 
-  public function delete_images($images_array)
+  public function delete_images($images_array , $main_image = null)
   {
   	  $ok = true;
       foreach ($images_array as $image_path) {
-        $ok = unlink(PUBPATH.$image_path); 
+      	if($main_image != null &&  $main_image != $image_path){
+      	  $ok = unlink(PUBPATH.$image_path);	
+      	}
       }
 	  return $ok;
   }
