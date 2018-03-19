@@ -20,7 +20,24 @@ class Commercial_ads extends MY_Model {
 	   }
 	   if($for_mobile == 1){
 	   	 $this->db->where('position' , POSITION::MOBILE);
+	   }else{
+	   	 $this->db->where('position !=' , POSITION::MOBILE);
 	   }
 	   return parent::get();
 	}
+	
+   public function get_all($lang)
+	{
+	   $this->db->select('commercial_ads.* ,
+		                 categories.'.$lang.'_name as category_name ');
+	   $this->db->join('categories' , 'commercial_ads.category_id = categories.category_id' , 'left'); 
+	   return parent::get();
+    }
+	
+   public function delete_image($image)
+    {
+      $ok = unlink(PUBPATH.$image);
+	  return $ok;
+	}
+	
 }

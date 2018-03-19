@@ -748,7 +748,7 @@ abstract class REST_Controller extends CI_Controller {
         $header = $this->input->request_headers();
 	    if (isset($header['Authorization'])) {
 		     $this->_prepare_basic_auth();
-	         if(isset($this->current_user) && isset($this->current_user)!= null){
+	         if(isset($this->current_user) && $this->current_user != null){
 	           return $this->current_user->user_id;	
 	         }else{
 	         	return false;
@@ -1397,7 +1397,7 @@ abstract class REST_Controller extends CI_Controller {
             if ($this->response->format == "html")
                 redirect(site_url('home_control'));
             else {
-                $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));
+                $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page') , 403);
             }
         }
     }

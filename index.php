@@ -161,6 +161,7 @@ if (defined('ENVIRONMENT'))
  */
 	// The name of THIS file
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+	
 
 	// The PHP file extension
 	// this global constant is deprecated.
@@ -175,6 +176,7 @@ if (defined('ENVIRONMENT'))
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
+    define('PUBPATH',str_replace(SELF,'',FCPATH)); // added by ola
 
 	// The path to the "application" folder
 	if (is_dir($application_folder))

@@ -129,6 +129,13 @@ class Users extends MY_Model {
 	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
 	  return parent::get($user_id);
   }
+
+  public function get_all($lang)
+  {
+      $this->db->select('users.* , cites.'.$lang.'_name as city_name');
+	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
+	  return parent::get();
+  }
 	
 	
 

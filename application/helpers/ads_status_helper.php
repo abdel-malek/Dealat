@@ -39,7 +39,7 @@ class STATUS{
 		return array(
 		   1 => 'pending',
 		   2 => 'Accepted',
-		   3 => 'Expired',
+		   //3 => 'Expired',
 		   4 => 'Hidden',
 		   5 => 'Rejected',
 		   6 => 'Deleted'

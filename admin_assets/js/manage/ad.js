@@ -224,8 +224,11 @@ var status_array;
  
  $('.ads_details').on('hidden.bs.modal', function () {
       $('.ads_details  .template_info').css('display', 'none');
-      //$('.images-slider').slick(getSliderSettings());
  	  $('.images-slider').remove();
+ 	  $('.ads_details  #accept_btn').css('display', 'none');
+      $('.ads_details  #reject_btn').css('display', 'none');
+      $('.ads_details  #hide_btn').css('display', 'none');
+      $('.ads_details  #show_btn').css('display', 'none');
  });
  
  

@@ -51,18 +51,18 @@
 			</div>
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-					<div class="row mb-4">
+					<div class="row mb-4 ml-0 mr-0">
 						<div class="col-md-2">
 							<div class="category-name">
 								<?php echo $category_name; echo " ". $parent_name ?></div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-sm-8 col-md-6">
 							<div class="search-wrapper">
 								<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
 								<span class="icon"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
-						<div class="col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+						<div class="col-sm-4 col-md-3 offset-md-1"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
 					</div>
 					<div class="row ">
 						<?php if($ads != null): foreach ($ads as $ad):?>

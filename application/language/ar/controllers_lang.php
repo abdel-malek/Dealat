@@ -21,5 +21,10 @@ $lang['title'] = 'العنوان';
 // sms validation msg 
 $lang['verification_msg'] = '<p> مرحبًا بك في ديلات.</p><p> رمز التفعيل الخاص بك هو</p>';
 
+//new
+$lang['image_is_requierd'] = "يجب إرفاق صورة للإعلان";
+$lang['change_status_warning'] = "يمكنك فقط ان تحذف الإعلان أو أن تجعله مخفيّاً";
+
+
 
 

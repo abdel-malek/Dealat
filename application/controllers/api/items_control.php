@@ -80,6 +80,27 @@ class Items_control extends REST_Controller {
 		}
     }
 
+   public function edit_post()
+    {
+      if(!$this->input->post('ad_id')){
+      	 throw new Parent_Exception('ad id is required');
+      }else{
+      	$ad_id = $this->input->post('ad_id');
+		$ad_info = $this->ads->get($ad_id);
+		if($ad_info->user_id != $this->current_user->user_id){
+			 throw new Parent_Exception('you do not have the permission to edit this ad');
+		}else{
+		   $category_id  = $ad_info->category_id;
+		   $edit_result = $this->ads->edit($ad_id , $category_id );
+		   if($edit_result){
+		   	  $this -> response(array('status' => true, 'data' => $edit_result, 'message' => $this->lang->line('sucess')));
+		   }else{
+		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		   }
+		}
+      } 
+    }
+
    public function item_images_upload_post()
 	 {
 	 //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
@@ -95,7 +116,7 @@ class Items_control extends REST_Controller {
 	
 	public function delete_images_post()
 	{
-		$images = json_decode($this -> input -> post('images'), true);
+		$images = $this -> input -> post('images');
 		if(!$images){
 			throw new Parent_Exception('You have to provide images array');
 		}
@@ -208,26 +229,7 @@ class Items_control extends REST_Controller {
    	  }
    }
    
-   public function edit_post()
-    {
-      if(!$this->input->post('ad_id')){
-      	 throw new Parent_Exception('ad id is required');
-      }else{
-      	$ad_id = $this->input->post('ad_id');
-		$ad_info = $this->ads->get($ad_id);
-		if($ad_info->user_id != $this->current_user->user_id){
-			 throw new Parent_Exception('you do not have the permission to edit this ad');
-		}else{
-		   $category_id  = $ad_info->category_id;
-		   $edit_result = $this->ads->edit($ad_id , $category_id);
-		   if($edit_result){
-		   	  $this -> response(array('status' => true, 'data' => $edit_result, 'message' => $this->lang->line('sucess')));
-		   }else{
-		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
-		   }
-		}
-      } 
-    }
+
 
   	public function get_bookmark_search_get()
 	{
@@ -240,6 +242,20 @@ class Items_control extends REST_Controller {
 			$_GET[$key] = $value;
 		}
 		$this->search_get();
+	}
+	
+	public function change_status_post()
+	{
+	  if(!($this->input->post('status') == STATUS::HIDDEN || $this->input->post('status') == STATUS::DELETED )){
+	  	  throw new Parent_Exception($this->lang->line('change_status_warning'));
+	  }else{
+	   	 if(!$this->input->post('ad_id')){
+	   	 	throw new Parent_Exception('ad_id is requierd');
+	   	 }else{
+	   	 	$ad_id = $this->ads->save(array('status'=>$this->input->post('status')) , $this->input->post('ad_id'));
+	   	 	$this -> response(array('status' => true, 'data' => $ad_id, 'message' => $this->lang->line('sucess')));
+	   	 }
+ 	  }
 	}
 	
 	

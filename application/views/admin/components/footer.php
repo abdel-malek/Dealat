@@ -78,10 +78,14 @@
    <!--  slick slider  -->
    <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
    
+    <!-- jquery uploader -->
+    <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
     
     <!-- my js -->
     <script src="<?php echo base_url() ?>admin_assets/js/general.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/ad.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/commercial_ads.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/users.js"></script>
    
   </body>
 </html>

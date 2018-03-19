@@ -173,12 +173,36 @@ class Ads extends MY_Model {
 	   	  $data['title'] = $this->input->post('title');
 	   }
 	   if($this->input->post('description')){
-	   	  $data['description'] = $this->input->post('description');
+	   	 if(trim($this->input->post('description')) == "" || trim($this->input->post('description')) == -1){
+	   	 	 $data['description'] = Null;
+	   	 }else{
+	   	 	 $data['description'] = $this->input->post('description');
+	   	 }
+	   }
+	   if ($this->input->post('main_image')) {
+		  $data['main_image'] = $this->input->post('main_image');
 	   }
 	   
+	   if($this->input->post('deleted_images')){
+	   	  $deleted_images =  json_decode($this -> input -> post('deleted_images'), true);
+		  $this->db->where_in('image'  , $deleted_images);
+		  $this->db->where('ad_id'  , $ad_id);
+		  $this->db->delete('ad_images');
+		  $this->delete_images($deleted_images);
+	   }
+	   
+	   //add new second images
+	   if($this->input->post('images')){
+	   	   $ads_images_paths = json_decode($this -> input -> post('images'), true);
+		   if($ads_images_paths!= null && is_array($ads_images_paths)){
+        	$this->load->model('data_sources/ad_images');
+        	foreach ($ads_images_paths as $image) {
+				$data_images = array('ad_id'=>$ad_id , 'image'=>$image);
+				$this->ad_images->save($data_images);
+			}
+          }
+	   }
 	   $data['status'] = STATUS::PENDING;
-	   
-	   
 	   $edited_ad_id = parent::save($data  , $ad_id);
 	   
 	   //save tamplate edits
@@ -209,7 +233,7 @@ class Ads extends MY_Model {
   {
   	  $ok = true;
       foreach ($images_array as $image_path) {
-        $ok = unlink($image_path); 
+        $ok = unlink(PUBPATH.$image_path); 
       }
 	  return $ok;
   }
@@ -280,15 +304,16 @@ class Ads extends MY_Model {
 		                   cites.'.$lang.'_name as  city_name,
                           ');
 	 }
+	 $this->db->where('status' , STATUS::ACCEPTED );
 	//serach
 	 if($query_string != null){
-	     // if(strlen($query_string) < 3){
-		 	// $this->db->like('ads.title', $query_string); 
-			// $this->db->or_like('ads.description', $query_string); 
-		// }else{
+	     if(strlen($query_string) < 3){
+		 	$this->db->like('ads.title', $query_string); 
+			$this->db->or_like('ads.description', $query_string); 
+	   	}else{
 		 	$this->db->where("MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
 		    $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
-		// }
+		}
 	     // if($category_id != null){
 		 	// $this->db->where('ads.category_id' , $category_id);
         // }
@@ -305,16 +330,15 @@ class Ads extends MY_Model {
 	 if($this->input->get('price_max') && $this->input->get('price_max') != ''){
 	   	 $this->db->where('price <= ' , $this->input->get('price_max'));
 	 }
-	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){
+	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){	
 		$this->db->where('price >= ' , $this->input->get('price_min')); 
 	 }
-	 $this->db->where('status' , STATUS::ACCEPTED);
      return parent::get(); 
   }
 
  
   public function get_lists($lang)
-  {
+   {
 	 $this->load->model('data_sources/types');
 	 $this->load->model('data_sources/educations');
 	 $this->load->model('data_sources/schedules');
@@ -325,7 +349,7 @@ class Ads extends MY_Model {
 	 $schedules = $this->schedules->get_all($lang);
 	 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 	 return $data;
-   }
+    }
 
    public function check_category_ads_existence($category_id)
 	{
@@ -364,12 +388,16 @@ class Ads extends MY_Model {
 	                  categories.tamplate_id,
 	                  locations.'.$lang.'_name as location_name ,
 	                  cites.'.$lang.'_name as  city_name,
-	                 ');
+	                  DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
+	                  timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
+	                 ' , false);
 	  $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 	  $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	  $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left');
 	  $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 	  $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 	  $this->db->where('ads.user_id' , $user_id);
+	  $this->db->where('ads.status != ' , STATUS::DELETED);
 	  return parent::get();
 	}
 

@@ -2,10 +2,10 @@
 	border-color: #a94442 ;
 	border-width : medium;
 }
-/*.customer_select_div .select2  {
-	width:400px !important
+.fit_select_div .select2  {
+	width:100% !important
 }
- .my_order_select_div .select2  {
+/* .my_order_select_div .select2  {
 	width:409px  !important
 }*/
 
@@ -106,6 +106,12 @@ text-align:right;
     height: fit-content;
 }
 
+input[type=checkbox], input[type=radio] {
+	 margin-right: -182px;
+    margin-bottom: -2px;
+    margin-left: -182px;
+}
+
 
 
 .slick-slider {
@@ -172,9 +178,96 @@ body{
 	background-color: #eee;
 	cursor: default
 }
+.table-striped>tbody>tr{
+	cursor: default
+	font-weight: bold;
+}
+
 .left_col{
-/*	background: #c30a30*/
+	background: #8e0f0f
 }
+.body{
+	background: #8e0f0f;
+	color: #39546f;
+	
+}
+.nav.side-menu>li.current-page{
+	border-left: 5px solid  #2a3f54;
+}
+
+.btn-primary {
+    /*background-color: #b31717;
+    border-color: #650a0a;*/
+    background-color: #2a3f54;
+    border-color: #223140;
+}
+thead{
+   color: #8e0f0f;
+}
+.nav-tabs>li >a{
+	 color: #8e0f0f;
+     font-weight: bold;
+}
+
+
+/*.nav-tabs>li.active>a:hover {
+    color: #8e0f0f;
+    font-weight: bold;
+}*/
 .nav_title{
-/*	background: #c30a30*/
+	background: #28313
 }
+
+
+/*fileuploader*/
+#fileuploader-comm_ad .ajax-upload-dragdrop{
+ padding: 10px;
+ border: 1px solid #ced4da;
+ border-radius: 13px; }
+ #fileuploader-comm_ad .ajax-upload-dragdrop b{
+   color: #6c757d;
+   opacity: 1;
+   font-weight: inherit;
+   font-size: inherit;
+   font-family: inherit;
+   padding-left: 10px; }
+#fileuploader-comm_ad .ajax-file-upload{
+ padding: 0;
+ margin: 0;
+ line-height: 25px;
+ border-radius: 2rem;
+ height: auto;
+ min-height: 35px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+ font-size: .8rem;
+ font-weight: bold;
+ border: none;
+ box-shadow: 0px 1px 10px 0px #a8a8a8;
+ background-color: #fff;
+ color: #c30a30;
+ width: 40%;
+ text-align: center;
+ cursor: grab !important; }
+#fileuploader-comm_ad .ajax-file-upload input[type="file"]{
+ cursor: auto; }
+#fileuploader-comm_ad.ajax-file-upload:hover{
+ cursor: auto !important; }
+#fileuploader-comm_ad .ajax-file-upload input[type="file"]:hover{
+ cursor: auto !important; }
+
+.ajax-file-upload-container .ajax-file-upload-statusbar {
+ border: 1px solid #6c757d;
+ width: 40% !important;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: inline-block;
+ min-height: 180px; }
+.ajax-file-upload-container .ajax-file-upload-filename {
+ text-overflow: ellipsis;
+ max-width: 100%;
+ overflow: hidden;
+ width: 100%;
+ white-space: nowrap; }
+.ajax-file-upload-container .ajax-file-upload-progress {
+ max-width: 100%; }

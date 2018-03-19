@@ -72,14 +72,11 @@ body {
 }
 
 .spinner {
-	margin: auto;
-	//	width: 60px;
+	margin: auto; //	width: 60px;
 	//	height: 60px;
 	position: relative;
-	top: 25%;
-	//	top: 40%;
-	text-align: center;
-	//	-webkit-animation: sk-rotate 2.0s infinite linear;
+	top: 25%; //	top: 40%;
+	text-align: center; //	-webkit-animation: sk-rotate 2.0s infinite linear;
 	//	animation: sk-rotate 2.0s infinite linear;
 }
 
@@ -682,11 +679,12 @@ summary:focus {
 	left: 0
 }
 
-@media(max-width: 576px){
-	.social-fixed{
+@media(max-width: 576px) {
+	.social-fixed {
 		display: none;
 	}
 }
+
 //header
 header.home {
 	background-color: $main;
@@ -724,6 +722,16 @@ header.home {
 		}
 		.language-switch a:last-of-type {
 			border: none;
+		}
+	}
+	@media(max-width: 768px){
+		.language-wrapper .language-switch a, .home-icon{
+			font-size: .7rem
+		}
+	}
+	@media(max-width: 480px){
+		.home-icon{
+			display: none
 		}
 	}
 	.title {
@@ -901,21 +909,37 @@ header.home {
 		}
 		.main {
 			padding-top: 150px;
+
 			.sub-categories {
 				margin-bottom: 20px;
 				padding-top: 5px;
 				padding-bottom: 5px;
 				transition: .5s;
 				font-size: .9rem;
-				color: #666; //				.link{
-				//					text-decoration: none;
-				//					color: #666;
-				//					display: inline;
-				//					cursor: default
-				//				}
-				//				.link:hover{
-				//					cursor: default;
-				//				}
+				color: #666;
+
+				.container {
+					color: #fff;
+					background-color: #aaa;
+					padding: 8px;
+					border-radius: 13px;
+					position: relative;
+					.row{
+						margin-left: 0;
+						margin-right: 0
+					}
+				}
+//				.container::before {
+//					position: absolute;
+//					content: "";
+//					height: 0;
+//					width: 0;
+//					border-bottom: 16px solid #aaa;
+//					top: -25px;
+//					left: 55px;
+//					margin-left: -15px;
+//					margin-bottom: 15px;
+//				}
 				.name {
 					cursor: pointer;
 					text-decoration: underline;
@@ -925,6 +949,7 @@ header.home {
 					color: $main;
 				}
 			}
+
 			.left-col {
 				padding-right: 45px;
 				padding-left: 45px;
@@ -932,13 +957,12 @@ header.home {
 				margin-right: auto
 			}
 			.right-col {
-				padding-right: 20px;
-//				padding-top: 70px;//padding top equal to post ad btn height
+				padding-right: 20px; //				padding-top: 70px;//padding top equal to post ad btn height
 				text-align: center;
 				position: relative;
 				.place-ad {
-//					width: calc(100% - 20px);
-//					width: 190.5px;
+					//					width: calc(100% - 20px);
+										width: 190.5px;
 					position: absolute;
 					right: 20px;
 					transition: .2s;
@@ -957,27 +981,39 @@ header.home {
 			}
 			@media (max-width: 768px) {
 				.right-col {
+//					padding-left: 20px;
+					padding-right: 45px;
+					padding-left: 45px;
+					text-align: left;
 					.place-ad {
-						margin-bottom: 10px
+						margin-bottom: 10px;
+						position: relative;
+						right: auto;
+							//						width: 75%
 					}
-					.place-ad {
-//						width: 75%
-					}
-					padding-left: 20px;
 				}
 				.banners {
 					display: none
 				}
 			}
+//			@media (max-width: 480px){
+//				.right-col {
+//					.place-ad {
+//						position: relative
+//					}
+//				}
+//			}
 		}
 		.category-name {
 			//			padding-left: 15px;
+//			margin-left: 7px;
 			padding-top: 3px;
 			color: $main;
 			font-weight: bold;
-			font-size: 1.1rem;
+			font-size: 1rem;
 			text-transform: capitalize
 		}
+//		@media (max-width: 768px)
 		.controls {
 			margin-top: 10px;
 			position: relative;
@@ -1247,10 +1283,12 @@ footer {
 	border: none;
 	justify-content: center;
 
-} 
-select option.placeholder{
+}
+
+select option.placeholder {
 	color: #6c757d
 }
+
 //End global
 //card modal
 #card-modal {
@@ -1530,14 +1568,17 @@ select option.placeholder{
 	font-style: normal
 }
 
-.SumoSelect.open>.CaptionCont, .SumoSelect:focus>.CaptionCont, .SumoSelect:hover>.CaptionCont{
+.SumoSelect.open > .CaptionCont,
+.SumoSelect:focus > .CaptionCont,
+.SumoSelect:hover > .CaptionCont {
 	border-color: #ced4da;
-    box-shadow: none;
+	box-shadow: none;
 }
-//End sumo select
 
+//End sumo select
 //ad-modal
-#ad-modal, #filter-modal {
+#ad-modal,
+#filter-modal {
 	.form-control {
 		width: 100%;
 		margin: auto;
@@ -1545,7 +1586,7 @@ select option.placeholder{
 	nav.navbar {
 		padding: 0;
 	}
-	.nav-item.dropdown{
+	.nav-item.dropdown {
 		padding-top: 0;
 		padding-bottom: 0
 	}
@@ -1565,40 +1606,37 @@ select option.placeholder{
 	}
 	a.select:hover {
 		border-color: $main
-	}
-	//	.dropdown-menu{
+	} //	.dropdown-menu{
 	//		direction: rtl;
 	//	}
 	.dropdown-toggle::after {
-		color: #000;
-//		display: none;
+		color: #000; //		display: none;
 		//		margin-right: .255em;
 		//		margin-left: 0
-	}
-//	.arrow {
-//		position: absolute;
-//		top: 0;
-//		right: 0;
-//		bottom: 0;
-//		width: 30px;
-//		margin: 0;
-//		padding: 0;
-//		i {
-//			background-image: url(arrow.png);
-//			background-position: center center;
-//			width: 16px;
-//			height: 16px;
-//			display: block;
-//			position: absolute;
-//			top: 0;
-//			left: 0;
-//			right: 0;
-//			bottom: 0;
-//			margin: auto;
-//			background-repeat: no-repeat;
-//			opacity: .8;
-//		}
-//	}
+	} //	.arrow {
+	//		position: absolute;
+	//		top: 0;
+	//		right: 0;
+	//		bottom: 0;
+	//		width: 30px;
+	//		margin: 0;
+	//		padding: 0;
+	//		i {
+	//			background-image: url(arrow.png);
+	//			background-position: center center;
+	//			width: 16px;
+	//			height: 16px;
+	//			display: block;
+	//			position: absolute;
+	//			top: 0;
+	//			left: 0;
+	//			right: 0;
+	//			bottom: 0;
+	//			margin: auto;
+	//			background-repeat: no-repeat;
+	//			opacity: .8;
+	//		}
+	//	}
 }
 
 ////////////////////

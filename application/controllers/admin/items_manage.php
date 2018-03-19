@@ -34,7 +34,7 @@ class Items_manage extends REST_Controller {
 			if($row -> publish_date != null){
 				$recorde[] = $row -> publish_date;
 			}else{
-				$recorde[] = $this->lang->line('not_set_yet'); 
+				$recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = $row -> price;
 			$recorde[] = $row -> city_name. ' - '.$row->location_name;

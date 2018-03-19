@@ -20,7 +20,7 @@
     <link href="<?php echo base_url() ?>admin_assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <?php if($this->session->userdata('language') == "ar"):?>
-    	 <link href="<?php echo base_url() ?>admin_assets/css/rtl.css" rel="stylesheet"> 
+    	<link href="<?php echo base_url() ?>admin_assets/css/rtl.css" rel="stylesheet"> 
     <?php endif; ?>
     
     <!-- Font Awesome -->
@@ -46,6 +46,8 @@
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
     
+    <!--  file upload  -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/uploadfile.css'); ?>" />
     <!--  slick slider  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick.css'); ?>" />
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick-theme.css'); ?>" />
@@ -99,7 +101,9 @@
                 <h3><?php echo $this->lang->line('management') ?></h3>
  				 <ul class="nav side-menu">
                   <!-- <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('categories_management') ?></a></li> -->
-                  <li><a href="<?php echo base_url('index.php/admin/ads_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('ads_management') ?></a></li>
+                  <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('ads_management') ?></a></li>
+                  <li><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('commercial_ads_manage') ?></a></li>
+                  <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('users_manage') ?></a></li>
                   <!-- <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">Tables</a></li>

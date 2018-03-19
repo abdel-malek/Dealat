@@ -34,7 +34,7 @@
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
-		<span class="icon facebook"><a href=""><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
+		<span class="icon facebook"><a href="<?php echo $authUrl ?>"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
 		<span class="icon youtube"><a href=""><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>
 		<span class="icon twitter"><a href=""><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>
 		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>
@@ -271,28 +271,36 @@
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('create_account2'); ?></span>
 				</div>
-				<form action="">
+				<form id="register-form">
 					<div id="fileuploader-register">Upload</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?>">
+						<input type="text" class="user_name form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?> required">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
+						<input type="email" class="email form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>">
+						<input type="text" class="phone form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>">
+						<input type="password" class="password form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
+						<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
+					</div>
+<!--
+					<div class="form-group">
+						<select name="city_id" class="city-select">
+							<option value="placeholder d-none" selected>select location</option>
+						</select>
+					</div>
+-->
+					<div class="modal-footer">
+						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
 					</div>
 				</form>
 			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -590,11 +598,11 @@
 										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>
 									</select>
 								</div>
-								
+
 								<div class="form-group">
 									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
 								</div>
-								
+
 								<div class="form-group">
 									<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
