@@ -225,6 +225,15 @@
 	});
 
 </script>
+<!--easy tabs-->
+<script src="<?php echo base_url('assets/js/jquery.easytabs.min.js'); ?>"></script>
+	<script>
+		$(function() {
+			$('#profile-tabs').easytabs({
+				//				tabs: "> ul li"
+			});
+		});
+	</script>
 <!-- WOW -->
 <script src="<?php echo base_url('assets/js/wow.min.js'); ?>"></script>
 <script>
@@ -233,6 +242,7 @@
 </script>
 <!-- main js file -->
 <script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>
 </body>
 
 </html>

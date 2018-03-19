@@ -60,6 +60,14 @@ $lang['create_account1'] = "Create an account using";
 $lang['create_account2'] = "or create a new one here";
 $lang['log_into_account'] = "Log Into Your Account";
 $lang['signin_with'] = "or sign in with";
+//verify sms modal
+$lang['verification'] = "Verification";
+$lang['verify'] = "Verify";
+$lang['verification_text'] = "We need to verify your mobile phone number. <br>A text message with your code has been sent to your phone.";
+$lang['verification_error'] = "If you haven't received any text message, please contact our customer support.";
+$lang['enter_code'] = "Please enter your code";
+$lang['no_message'] = "No text message received?";
+$lang['resend_code'] = "Resend code";
 //footer
 $lang['about'] = "About";
 $lang['reviews'] = "Client Reviews";
@@ -69,6 +77,7 @@ $lang['yes'] = "Yes";
 $lang['no'] = "No";
 $lang['send'] = "Send";
 $lang['all'] = "All";
+$lang['sp'] = "SP";
 
 //admin
 $lang['welcome'] = "Welcome";

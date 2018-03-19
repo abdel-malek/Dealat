@@ -59,7 +59,14 @@ $lang['phone'] = "هاتف";
 $lang['create_account1'] = "أنشئ حساب باستخدام";
 $lang['create_account2'] = "أو أدخل بياناتك هنا";
 $lang['signin_with'] = "ادخل إلى حسابك باستخدام";
-
+//verify sms modal
+$lang['verification'] = "تحقق من الرمز";
+$lang['verify'] = "تحقق";
+$lang['verification_text'] = "سنقوم بالتحقق من رقم هاتفك.<br> تم إرسال رسالة تحوي رمز التأكيد إلى هاتفك.";
+$lang['verification_error'] = "في حال لم تصلك رسالة بالرمز الرجاء الاتصال بخدمة الزبائن";
+$lang['enter_code'] = "الرجاء إدخال الرمز";
+$lang['no_message'] = "لم تصلك رسالة؟";
+$lang['resend_code'] = "إعادة الإرسال";
 //footer
 $lang['about'] = "حول ديلات";
 $lang['reviews'] = "آراء الزبائن";
@@ -69,6 +76,7 @@ $lang['yes'] = "نعم";
 $lang['no'] = "لا";
 $lang['send'] = "إرسال";
 $lang['all'] = "الكل";
+$lang['sp'] = "ل.س";
 
 //admin
 $lang['welcome'] = "مرحبًا";

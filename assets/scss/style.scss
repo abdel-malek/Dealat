@@ -480,7 +480,7 @@ summary:focus {
 			text-align: center;
 			z-index: 1;
 			color: #fff;
-			font-size: .9rem;
+			font-size: .85rem;
 			box-shadow: 2px 1px 10px 0px #a8a8a8;
 
 		}
@@ -749,6 +749,19 @@ header.home {
 	}
 	.button2:hover {
 		border: 2px solid #fff;
+	}
+	.header-account-logged  ul{
+		padding: 5px 0;
+		margin: 0.2rem 0 0;
+	}
+	.header-account-logged li a{
+		text-decoration: none;
+		color: #333;
+		padding-left: 10px;
+		font-size: .85rem
+	}
+	.header-account-logged li a:hover{
+		color: $main
 	}
 }
 
@@ -1134,7 +1147,7 @@ header.home {
 			}
 		}
 	}
-	.my-ads {
+	.user-ads {
 		.status {
 			position: absolute;
 			bottom: 0;
@@ -1327,7 +1340,7 @@ select option.placeholder {
 				left: -30px;
 				z-index: 1;
 				color: #fff;
-				font-size: .9rem;
+				font-size: .85rem;
 				box-shadow: 2px 1px 10px 0px #a8a8a8;
 
 			}
@@ -1481,6 +1494,9 @@ select option.placeholder {
 #register-modal,
 #login-modal {
 	.modal-body {
+//		text-align: center
+	}
+	.social,#fileuploader-register{
 		text-align: center
 	}
 	.modal-title {
@@ -1545,7 +1561,11 @@ select option.placeholder {
 
 	}
 }
-
+#login-modal {
+	.modal-body {
+		text-align: center
+	}
+}
 #register-modal {
 	.lines:first-child {
 		margin-top: 0px;
@@ -1556,11 +1576,6 @@ select option.placeholder {
 .SumoSelect > .CaptionCont {
 	border-radius: 13px;
 	border-color: #ced4da
-}
-
-.SumoSelect > .CaptionCont:hover {
-	border-color: $main;
-	box-shadow: 0 0 0 0 #000;
 }
 
 .SumoSelect > .CaptionCont > span.placeholder {
@@ -1575,9 +1590,19 @@ select option.placeholder {
 	box-shadow: none;
 }
 
+.SumoSelect > .CaptionCont:hover {
+	border-color: $main;
+	box-shadow: 0 0 0 0 #000;
+	cursor: pointer
+}
+.SumoSelect>.CaptionCont>span{
+	cursor: pointer
+}
+
 //End sumo select
 //ad-modal
 #ad-modal,
+#edit-ad-modal,
 #filter-modal {
 	.form-control {
 		width: 100%;
@@ -1597,6 +1622,9 @@ select option.placeholder {
 	}
 	li.dropdown {
 		padding-left: 0
+	}
+	.dropdown-item:hover{
+		background-color: #eee
 	}
 	a.select {
 		border: 1px solid #ced4da;

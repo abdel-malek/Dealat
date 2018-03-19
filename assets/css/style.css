@@ -351,7 +351,7 @@ summary:focus {
     text-align: center;
     z-index: 1;
     color: #fff;
-    font-size: .9rem;
+    font-size: .85rem;
     box-shadow: 2px 1px 10px 0px #a8a8a8; }
   .search-page .products .card .price-val,
   .profile-page .products .card .price-val, .home-page .products .card .price-val,
@@ -554,6 +554,16 @@ header.home {
     border: 2px solid #fff; }
   header.home .button2:hover {
     border: 2px solid #fff; }
+  header.home .header-account-logged ul {
+    padding: 5px 0;
+    margin: 0.2rem 0 0; }
+  header.home .header-account-logged li a {
+    text-decoration: none;
+    color: #333;
+    padding-left: 10px;
+    font-size: 0.85rem; }
+  header.home .header-account-logged li a:hover {
+    color: #c30a30; }
 
 .ads-slider {
   height: 300px; }
@@ -801,15 +811,15 @@ header.home {
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat; }
-.profile-page .my-ads .status {
+.profile-page .user-ads .status {
   position: absolute;
   bottom: 0;
   right: 0;
   color: #c30a30;
   font-size: 1rem; }
-.profile-page .my-ads .card:hover .overlay {
+.profile-page .user-ads .card:hover .overlay {
   height: 0; }
-.profile-page .my-ads .card:hover .card-img-top {
+.profile-page .user-ads .card:hover .card-img-top {
   cursor: auto; }
 .profile-page #profile-tabs .tab {
   padding-right: 10%; }
@@ -939,7 +949,7 @@ select option.placeholder {
         left: -30px;
         z-index: 1;
         color: #fff;
-        font-size: .9rem;
+        font-size: .85rem;
         box-shadow: 2px 1px 10px 0px #a8a8a8; }
       #card-modal .card .card-body .price-val {
         margin-top: 35%; }
@@ -1042,8 +1052,9 @@ select option.placeholder {
 .ajax-file-upload-container .ajax-file-upload-progress {
   max-width: 100%; }
 
-#register-modal .modal-body,
-#login-modal .modal-body {
+#register-modal .social, #register-modal #fileuploader-register,
+#login-modal .social,
+#login-modal #fileuploader-register {
   text-align: center; }
 #register-modal .modal-title,
 #login-modal .modal-title {
@@ -1106,16 +1117,15 @@ select option.placeholder {
   content: '';
   z-index: 5; }
 
+#login-modal .modal-body {
+  text-align: center; }
+
 #register-modal .lines:first-child {
   margin-top: 0px; }
 
 .SumoSelect > .CaptionCont {
   border-radius: 13px;
   border-color: #ced4da; }
-
-.SumoSelect > .CaptionCont:hover {
-  border-color: #c30a30;
-  box-shadow: 0 0 0 0 #000; }
 
 .SumoSelect > .CaptionCont > span.placeholder {
   color: #6c757d;
@@ -1127,36 +1137,57 @@ select option.placeholder {
   border-color: #ced4da;
   box-shadow: none; }
 
+.SumoSelect > .CaptionCont:hover {
+  border-color: #c30a30;
+  box-shadow: 0 0 0 0 #000;
+  cursor: pointer; }
+
+.SumoSelect > .CaptionCont > span {
+  cursor: pointer; }
+
 #ad-modal .form-control,
+#edit-ad-modal .form-control,
 #filter-modal .form-control {
   width: 100%;
   margin: auto; }
 #ad-modal nav.navbar,
+#edit-ad-modal nav.navbar,
 #filter-modal nav.navbar {
   padding: 0; }
 #ad-modal .nav-item.dropdown,
+#edit-ad-modal .nav-item.dropdown,
 #filter-modal .nav-item.dropdown {
   padding-top: 0;
   padding-bottom: 0; }
 #ad-modal .nav-item,
 #ad-modal .dropdown-item,
+#edit-ad-modal .nav-item,
+#edit-ad-modal .dropdown-item,
 #filter-modal .nav-item,
 #filter-modal .dropdown-item {
   font-size: .8rem;
   padding: 4px 10px; }
 #ad-modal li.dropdown,
+#edit-ad-modal li.dropdown,
 #filter-modal li.dropdown {
   padding-left: 0; }
+#ad-modal .dropdown-item:hover,
+#edit-ad-modal .dropdown-item:hover,
+#filter-modal .dropdown-item:hover {
+  background-color: #eee; }
 #ad-modal a.select,
+#edit-ad-modal a.select,
 #filter-modal a.select {
   border: 1px solid #ced4da;
   border-radius: 13px;
   padding: 5px 9px;
   color: #6c757d; }
 #ad-modal a.select:hover,
+#edit-ad-modal a.select:hover,
 #filter-modal a.select:hover {
   border-color: #c30a30; }
 #ad-modal .dropdown-toggle::after,
+#edit-ad-modal .dropdown-toggle::after,
 #filter-modal .dropdown-toggle::after {
   color: #000; }
 

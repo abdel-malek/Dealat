@@ -34,7 +34,7 @@
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
-		<span class="icon facebook"><a href="<?php echo $authUrl ?>"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
+		<span class="icon facebook"><a href=""><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
 		<span class="icon youtube"><a href=""><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>
 		<span class="icon twitter"><a href=""><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>
 		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>
@@ -71,12 +71,68 @@
 				</span>
 
 			</div>
-			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+			<?php if( !($this->session->userdata('PHP_AUTH_USER'))){ ?>
+				<!--if not logged-->
+               		<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
 				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
 				<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
 			</div>
+                <?php  }else{?>
+				<!--if logged-->
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+				
+			</div>
+			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
+<!--				<button class="btn button2 logged"><?php echo $this->session->userdata('USERNAME'); ?></button>-->
+				<div class="header-account-logged">
+					<div class="header-account-dropdown dropdown">
+						<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn button2 logged">
+							<span class="login-label"><?php echo $this->session->userdata('USERNAME'); ?></span></button>
+						</a>
+						<ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">
+							<li>
+								<a href="<?php echo base_url("index.php/users_control_web/load_profile") ?>" class="link">Profile</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url("index.php/users_control_web/logout") ?>" data-no-turbolink="true" class="link logout-link">Logout</a>
+							</li>
+							</ul>
+					</div>			
+				</div>
+			</div>
+			<?php } ?>
+<!--
+		<div class="col-12">
+		<div class="user-wrapper">
+			<div class="account header__account">
+		<?php if( !($this->session->userdata('PHP_AUTH_USER'))){ ?>
+				
+               		<div>not logged in</div>
+                <?php  }else{?>
+				<div class="header-account-logged">
+					<div class="header-account-dropdown dropdown">
+						<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="login-label"><?php echo $this->session->userdata('USERNAME'); ?></span>
+						</a>
+						<ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">
+							<li>
+								<a href="<?php echo base_url("index.php/users_control_web/load_profile") ?>" class="link">Profile</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url("index.php/users_control_web/logout") ?>" data-no-turbolink="true" class="link logout-link">Logout</a>
+							</li>
+						</ul>
+					</div>			
+				</div>
+                <?php } ?>
+			</div>
+		</div>
+		</div>
+-->
+		
+		
 		</div>
 	</div>
 </header>
@@ -232,13 +288,13 @@
 					<!--services template-->
 					<div class="template-services template d-none" data-template-id="10"></div>
 
-					<!--services template-->
-					<div class="template-services template d-none" data-template-id="11"></div>
+					<!--basic template-->
+					<div class="template-basic template d-none" data-template-id="11"></div>
 				</div>
 
 			</div>
 			<div class="price">
-				<div class="price-val">{{ad.price}}</div>
+				<div class="price-val">{{ad.price}}<?php echo $this->lang->line('sp'); ?></div>
 			</div>
 		</div>
 	</div>
@@ -255,6 +311,7 @@
         </button>
 			</div>
 			<div class="modal-body">
+				<div class="error-message full d-none"></div>
 				<!--
 					<button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Sign up with Facebook</button>
 					<button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Sign up with Google</button>
@@ -262,7 +319,7 @@
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('create_account1'); ?></span>
 				</div>
-				<div class="container">
+				<div class="container social">
 					<div class="row">
 						<div class="col-sm-6"><button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Facebook</button></div>
 						<div class="col-sm-6"><button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Google</button></div>
@@ -273,8 +330,9 @@
 				</div>
 				<form id="register-form">
 					<div id="fileuploader-register">Upload</div>
+					<input type="hidden" name="lang" class="lang">
 					<div class="form-group">
-						<input type="text" class="user_name form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?> required">
+						<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
 					</div>
 					<div class="form-group">
 						<input type="email" class="email form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
@@ -288,13 +346,11 @@
 					<div class="form-group">
 						<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
 					</div>
-<!--
 					<div class="form-group">
 						<select name="city_id" class="city-select">
-							<option value="placeholder d-none" selected>select location</option>
+							<option value="" class="placeholder d-none" selected>select location</option>
 						</select>
 					</div>
--->
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
 					</div>
@@ -327,15 +383,16 @@
 						<span class="text">Sign in with:</span>
 					</div>
 -->
-				<form action="">
+				<form id="login-form">
 					<div class="form-group">
-						<input type="text" class="form-control" name="user_name" placeholder="<?php echo $this->lang->line('username'); ?>">
+						<input type="text" class="form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>">
+						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
 					</div>
+					<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 				</form>
-				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
+				
 
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('signin_with'); ?></span>
@@ -363,7 +420,7 @@
 					</button>
 			</div>
 			<div class="modal-body">
-				<div class="error-message full modal-error-message d-none"></div>
+				<div class="error-message full d-none"></div>
 				<form id="place-ad-form">
 					<div class="row">
 						<div class="col-sm-6">
@@ -619,8 +676,8 @@
 							<!--services template-->
 							<div class="template-services template d-none" data-template-id="10"></div>
 
-							<!--services template-->
-							<div class="template-services template d-none" data-template-id="11"></div>
+							<!--basic template-->
+							<div class="template-basic template d-none" data-template-id="11"></div>
 
 							<div id="fileuploader-ad">Upload</div>
 							<label class="featured">
@@ -905,8 +962,8 @@
 							<!--services template-->
 							<div class="template-services template d-none" data-template-id="10"></div>
 
-							<!--services template-->
-							<div class="template-services template d-none" data-template-id="11"></div>
+							<!--basic template-->
+							<div class="template-basic template d-none" data-template-id="11"></div>
 
 						</div>
 					</div>
@@ -993,6 +1050,25 @@
 	</div>
 </div>
 
+<!--notification modal-->
+<div id="notification-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<h6 class="text"></h6>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn button2 submit">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--chat modal-->
 <div id="chat-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -1023,8 +1099,38 @@
 	</div>
 </div>
 
-<script id="sub-categories-template" type="text/template">
+<!--verify registration modal-->
+<div class="modal fade" id="verify-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<div class="modal-verify-sms__text">
+					<?php echo $this->lang->line('verification_text'); ?>
+					<div class="phone-num-sec"></div>
+				</div>
 
+				<div class="error-message full d-none">
+					<?php echo $this->lang->line('verification_error'); ?>
+				</div>
+				<form id="verify-form">
+					<input type="hidden" class="phone" name="phone" />
+						<input type="text" class="" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
+					<div class="modal-footer">
+						<button class="btn button2 submit" type="submit"><?php echo $this->lang->line('verify'); ?></button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script id="sub-categories-template" type="text/template">
 	<div class="col-sm-3">
 		<div class="sub">
 			<li><span class="name all" data-id={{catId}}><?php echo $this->lang->line('all'); ?></span></li>

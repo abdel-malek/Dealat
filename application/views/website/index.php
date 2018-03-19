@@ -129,7 +129,7 @@
 									<?php if($ad->price != 0): ?>
 									<div class="price">
 										<div class="price-val">
-											<?php echo $ad->price; ?>
+											<?php echo $ad->price; ?><?php echo $this->lang->line('sp'); ?>
 										</div>
 									</div>
 									<?php endif; ?>
