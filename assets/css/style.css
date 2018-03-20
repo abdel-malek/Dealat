@@ -561,9 +561,11 @@ header.home {
     text-decoration: none;
     color: #333;
     padding-left: 10px;
-    font-size: 0.85rem; }
+    font-size: .85rem;
+    display: block; }
   header.home .header-account-logged li a:hover {
-    color: #c30a30; }
+    color: #c30a30;
+    background-color: #eee; }
 
 .ads-slider {
   height: 300px; }
@@ -956,6 +958,20 @@ select option.placeholder {
       #card-modal .card .card-body .views-lbl,
       #card-modal .card .card-body .likes-lbl {
         padding-right: 20px; }
+      #card-modal .card .card-body .fav {
+        position: absolute;
+        text-align: center;
+        top: 0px;
+        right: 10px;
+        z-index: 3;
+        color: #999;
+        font-size: .9rem; }
+        #card-modal .card .card-body .fav .icon {
+          transition: 0.1s; }
+        #card-modal .card .card-body .fav .icon:hover {
+          font-size: .95rem;
+          color: orange;
+          cursor: pointer; }
     #card-modal .card .card-title {
       font-weight: bold;
       margin-bottom: 0;

@@ -758,10 +758,12 @@ header.home {
 		text-decoration: none;
 		color: #333;
 		padding-left: 10px;
-		font-size: .85rem
+		font-size: .85rem;
+		display: block
 	}
 	.header-account-logged li a:hover{
-		color: $main
+		color: $main;
+		background-color: #eee;
 	}
 }
 
@@ -1351,6 +1353,24 @@ select option.placeholder {
 			.likes-lbl {
 				padding-right: 20px
 			}
+			//temp fav
+			.fav {
+			position: absolute;
+			text-align: center;
+			top: 0px;
+			right: 10px;
+			z-index: 3;
+			color: #999;
+			font-size: .9rem;
+			.icon {
+				transition: .1s
+			}
+			.icon:hover {
+				font-size: .95rem;
+				color: orange;
+				cursor: pointer
+			}
+		}
 		}
 		.card-title {
 			font-weight: bold;

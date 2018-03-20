@@ -3,7 +3,7 @@
 
 $(function () {
 	if ($(".profile-page").length > 0) {
-//		mixer.destroy();
+		//		mixer.destroy();
 		var userRateValue = 2;
 		//get my ads
 		$.ajax({
@@ -14,7 +14,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-								console.log(data);
+//				console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -144,7 +144,7 @@ $(function () {
 		});
 
 		//get user info
-		var userInfo
+		var userInfo;
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/users_control/get_my_info',
@@ -153,7 +153,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-								console.log(data);
+//				console.log(data);
 				var i, template, rendered;
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
@@ -172,7 +172,7 @@ $(function () {
 						$(this).children("label").css("color", "#ddd");
 					}
 				});
-				
+
 				//fill edit user info modal with data
 				$("#edit-user-info-form input[name='name']").val(data.data.name);
 				$("#edit-user-info-form input[name='location_id']").val(data.data.city_id);
@@ -192,43 +192,103 @@ $(function () {
 		});
 
 		$("#edit-user-info-form").submit(function (e) {
-//			var data = $(this).serializeArray();
-//			console.log(data);
-////			data = JSON.stringify(data);
-//			var keyNames = Object.keys(data);
-//			console.log(keyNames);
-//			console.log(userInfo);
-//			return false;
-			
-//			if(userInfo.phone !== data.data.phone){
-						
-//			}
+			var newData, i, newPhone;
+			newData = $(this).serializeArray();
+
 			e.preventDefault();
 			e.stopPropagation();
 
-//			$.ajax({
-//				type: "post",
-//				url: base_url + '/api/users_control/edit_user_info',
-//				dataType: "json",
-//				data: $(this).serialize()
-//			}).done(function (data) {
-//				if (data.status === false) {
-//					console.log(data);
-//				} else {
-//					console.log(data);
-//					
-//					//				window.location();
-//				}
-//			}).fail(function (response) {
-//				alert("fail");
-//			});
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/users_control/edit_user_info',
+				dataType: "json",
+				data: $(this).serialize()
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					console.log(data);
+					//					for (i in newData) {
+					//						if (newData[i].name === "phone") {
+					//							if (newData[i].value !== userInfo.phone) {
+					//								newPhone = newData[i].value;
+					//								console.log("changed");
+					//								$("#verify-modal").find(".phone").val(newPhone);
+					//								$("#edit-user-info-modal").modal("hide");
+					//								setTimeout(function () {
+					//									$("#verify-modal").modal("show");
+					//								}, 500);
+					//							} else{
+					//								$("#edit-user-info-modal").modal("hide");
+					//								setTimeout(function () {
+					//									$("#success-modal .text").html("Data Updated successfully")
+					//									$("#success-modal").modal("show");
+					//								}, 500);
+					//								setTimeout(function () {
+					//									$("#success-modal").modal("hide");
+					//									location.reload();
+					//								}, 3000);
+					//							}
+					//						}
+					//					}
+
+					$("#edit-user-info-modal").modal("hide");
+					setTimeout(function () {
+						$("#success-modal .text").html("Data Updated successfully")
+						$("#success-modal").modal("show");
+					}, 500);
+					setTimeout(function () {
+						$("#success-modal").modal("hide");
+						location.reload();
+					}, 3000);
+				}
+			}).fail(function (response) {
+				alert("fail");
+			});
 		});
 
+		//delete ad
 		$(".profile-page .user-ads").on("click", ".delete-ad", function () {
+			var adId, adStatus;
+			adId = $(this).parents(".card").data("adId");
+//			adStatus = $(this).parents(".card").data("adStatus");
+			$("#delete-modal .ad-id").val(adId);
+//			$("#delete-modal .status-id").val(adStatus);
 			$("#delete-modal").modal("show");
 		});
 
-		//edit user ad
+		$("#delete-ad-form").submit(function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/items_control/change_status',
+				dataType: "json",
+				data: {
+					ad_id: $(this).find(".ad-id").val(),
+					status: 6//for delete
+				}
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					console.log(data);
+					$("#delete-modal").modal("hide");
+					setTimeout(function () {
+						$("#success-modal .text").html("Advertisement deleted successfully")
+						$("#success-modal").modal("show");
+					}, 500);
+					setTimeout(function () {
+						$("#success-modal").modal("hide");
+						location.reload();
+					}, 3000);
+				}
+			}).fail(function (response) {
+				alert("fail");
+			});
+		});
+
+		//open edit user ad modal
 		$(".profile-page .user-ads").on("click", ".edit-ad", function () {
 			var templateId, adId;
 			adId = $(this).parents(".card").data("adId");
@@ -359,15 +419,16 @@ $(function () {
 			$("#edit-ad-modal").modal("show");
 		});
 
-		//edit my ad
+		//submit edit user ad
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
-//						console.log($(this).serializeArray());
+			//						console.log($(this).serializeArray());
 			var data, i;
 			data = $(this).serializeArray();
 			console.log(data);
 			for (i in data) {
+				//send -1 for empty values
 				if (data[i].value === "") {
 					data[i].value = "-1";
 				}
@@ -378,7 +439,7 @@ $(function () {
 				url: base_url + '/api/items_control/edit',
 				dataType: "json",
 				data: $.param(data)
-//				data: $(this).serialize()
+				//				data: $(this).serialize()
 			}).done(function (data) {
 				if (data.status === false) {
 					console.log(data);

@@ -150,14 +150,14 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
+<!--				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>-->
 			</div>
 		</div>
 	</div>
 </div>
 
 <script id="ad-details-template" type="text/template">
-	<div class="card">
+	<div class="card" data-ad-id="{{ad.ad_id}}">
 		<div class="card-img-slider slick-slider">
 			<div class="card-img-top" style="background-image: url('<?php echo base_url('{{ad.main_image}}'); ?>')"></div>
 			{{#ad.images}}
@@ -165,6 +165,9 @@
 			{{/ad.images}}
 		</div>
 		<div class="card-body">
+		<div class="fav">
+			<span class="icon" data-added="{{ad.is_favorite}}" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
+		</div>
 			<div class="row">
 				<div class="col-12 mb-4 text-center">
 					<div class="card-title">{{ad.title}}</div>
@@ -173,7 +176,7 @@
 
 				<div class="col-4 info-col">
 					<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
-					<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
+					<!--<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
 						<span class="rating-val">
 							<fieldset class="rating">
 								<span class="rate-group" data-value="5">
@@ -203,7 +206,7 @@
 						</fieldset>
 						<div class="clearfix"></div>
 						</span>
-					</div>
+					</div>-->
 					<details open>
 						<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
 						<div class="phone"><span class="phone-lbl"><i class="fas fa-home fa-fw"></i></span> <span class="phone-val">{{ad.seller_phone}}</span></div>
@@ -335,6 +338,11 @@
 						<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
 					</div>
 					<div class="form-group">
+						<select name="city_id" class="city-select" required>
+							<option value="" class="placeholder d-none" selected>select location</option>
+						</select>
+					</div>
+					<div class="form-group">
 						<input type="email" class="email form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
 					</div>
 					<div class="form-group">
@@ -346,11 +354,7 @@
 					<div class="form-group">
 						<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
 					</div>
-					<div class="form-group">
-						<select name="city_id" class="city-select">
-							<option value="" class="placeholder d-none" selected>select location</option>
-						</select>
-					</div>
+					
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
 					</div>
@@ -435,7 +439,7 @@
 							</div>
 
 							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
+								<nav class="navbar navbar-expand-md navbar-light categories-nav">
 									<ul class="navbar-nav">
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
@@ -459,7 +463,7 @@
 							</script>
 
 							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
+								<nav class="navbar navbar-expand-md navbar-light locations-nav">
 									<ul class="navbar-nav">
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
@@ -523,7 +527,7 @@
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group d-none">
-								<nav class="navbar navbar-expand-md navbar-light bg-light types-nav">
+								<nav class="navbar navbar-expand-md navbar-light types-nav">
 									<ul class="navbar-nav">
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_type'); ?></a>
@@ -725,7 +729,7 @@
 							</div>
 
 							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light bg-light categories-nav">
+								<nav class="navbar navbar-expand-md navbar-light categories-nav">
 									<ul class="navbar-nav">
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
@@ -737,7 +741,7 @@
 							</div>
 
 							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
+								<nav class="navbar navbar-expand-md navbar-light locations-nav">
 									<ul class="navbar-nav">
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
@@ -1031,25 +1035,6 @@
 	</div>
 </div>
 
-<!--delete modal-->
-<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-			</div>
-			<div class="modal-body text-center">
-				<h6>Are you sure you want to delete this ad?</h6>
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Yes</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <!--notification modal-->
 <div id="notification-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -1093,7 +1078,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-sm">
 		<div class="modal-content">
 			<div class="modal-body text-center">
-				<p>Advertisement Added Successfully</p>
+				<p class="text">Advertisement Added Successfully</p>
 			</div>
 		</div>
 	</div>
@@ -1119,7 +1104,7 @@
 				</div>
 				<form id="verify-form">
 					<input type="hidden" class="phone" name="phone" />
-						<input type="text" class="" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
+						<input type="text" class="form-control" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
 					<div class="modal-footer">
 						<button class="btn button2 submit" type="submit"><?php echo $this->lang->line('verify'); ?></button>
 					</div>
@@ -1144,3 +1129,24 @@
 	</div>
 	{{ /sub }}
 </script>
+
+<script id="main-commercial-ads-template" type="text/template">
+		{{#.}}
+		<div class="slide">
+			<a href="{{ad_url}}">
+				<div class="ad-image" title="{{title}}" data-commercial_ad_id="{{commercial_ad_id}}" style="background-image: url('<?php echo base_url("{{image}}"); ?>')"></div>
+			</a>
+		</div>
+		{{/.}}
+	</script>
+
+<script id="side-commercial-ads-template" type="text/template">
+		{{#.}}
+		<div class="banner">
+			<button type="button" class="close">
+			  <span>&times;</span>
+			</button>
+			<a href="{{ad_url}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}} title={{title}}"></a>
+		</div>
+		{{/.}}
+	</script>

@@ -9,6 +9,7 @@
 		var base_url = "<?php echo base_url() . 'index.php'; ?>";
 		var site_url = "<?php echo base_url() ; ?>";
 		var lang = "<?php echo $this->session->userdata('language') ?>";
+		var logged = "<?php echo $this->session->userdata('PHP_AUTH_USER')?>";
 	</script>
 	<title>
 		Dealat

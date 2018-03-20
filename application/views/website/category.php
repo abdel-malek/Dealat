@@ -4,6 +4,7 @@
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
+<!--
 				<div class="slide">
 					<a href="">
 						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/slider1.png"); ?>')"></div>
@@ -19,6 +20,7 @@
 						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/slider1.png"); ?>')"></div>
 					</a>
 				</div>
+-->
 			</div>
 		</div>
 	</section>
@@ -127,11 +129,13 @@
 											<?php echo $ad->price; ?><?php echo $this->lang->line('sp'); ?>
 										</div>
 									</div>
-									<div class="fav">
+<!--									<div class="fav">-->
 										<!--										<span class="text">Add to favorites</span>-->
 										<!--								<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
+<!--
 										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
 									</div>
+-->
 								</div>
 							</div>
 						</div>
@@ -142,6 +146,7 @@
 				<div class="col-md-2 right-col order-first order-md-last">
 					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
+<!--
 						<div class="banner">
 							<button type="button" class="close">
 							  <span>&times;</span>
@@ -155,6 +160,7 @@
 							</button>
 							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
 						</div>
+-->
 					</aside>
 				</div>
 			</div>

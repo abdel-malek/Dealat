@@ -14,7 +14,7 @@
 					</div>
 					<div class="col-md-2 text-center mt-2">
 						<div class="name">{{name}}</div>
-						<fieldset class="rating">
+						<!--<fieldset class="rating">
 							<span class="rate-group" data-value="5">
 							<input type="radio" id="star5" name="rating" value="5" />
 							<label class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -40,7 +40,7 @@
 							</div>
 
 						</fieldset>
-						<div class="clearfix"></div>
+						<div class="clearfix"></div>-->
 					</div>
 					<div class="col-md-5 offset-md-1 mt-2">
 						<div class="location"><span class="location-lbl">Location: </span><span class="location-val">{{city_name}}</span></div>
@@ -446,14 +446,40 @@
 						<div class="form-group">
 							<input type="email" class="form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
 						</div>
+						<!--
 						<div class="form-group">
-							<input type="text" class="form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>">
+							<input type="text" class="form-control" name="phone" placeholder="<?php //echo $this->lang->line('phone'); ?>">
 						</div>
+-->
 						<div class="modal-footer">
 							<button type="submit" class="btn button2 submit">Update</button>
 						</div>
 					</form>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--delete modal-->
+	<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<h6>Are you sure you want to delete this ad?</h6>
+					<form id="delete-ad-form">
+						<input type="hidden" class="ad-id" name="ad_id">
+						<input type="hidden" class="status-id" name="status">
+						<div class="modal-footer">
+							<button type="submit" class="btn button2 submit">Yes</button>
+						</div>
+					</form>
+				</div>
+
 			</div>
 		</div>
 	</div>
