@@ -2,6 +2,7 @@ package com.tradinos.dealat2.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -88,5 +89,21 @@ public class CityActivity extends MasterActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parentPanel), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        snackbar.show();
     }
 }

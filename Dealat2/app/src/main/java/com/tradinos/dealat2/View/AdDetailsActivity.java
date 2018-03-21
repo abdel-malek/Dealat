@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -50,7 +51,9 @@ import com.tradinos.dealat2.R;
 
 public class AdDetailsActivity extends MasterActivity {
 
-    private final int REQUEST_CALL = 1;
+    private final int REQUEST_CALL = 6;
+
+    private boolean enabled = false;
 
     private CurrentAndroidUser user;
     private Ad currentAd;
@@ -93,10 +96,12 @@ public class AdDetailsActivity extends MasterActivity {
         AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
+                enabled = true;
 
                 currentAd.setSellerId(result.getSellerId());
                 currentAd.setSellerPhone(result.getSellerPhone());
                 currentAd.setSellerName(result.getSellerName());
+                currentAd.setFavorite(result.isFavorite());
 
                 viewPager.setAdapter(new AdImagesAdapter(getSupportFragmentManager(), result.getImagesPaths(), currentAd.getTemplate()));
 
@@ -146,7 +151,6 @@ public class AdDetailsActivity extends MasterActivity {
 
                 textViewDesc.setText(result.getDescription());
 
-                currentAd.setFavorite(result.isFavorite());
                 if (MyApplication.getUserState() == User.REGISTERED) {
 
                     textViewPhone.setVisibility(View.VISIBLE);
@@ -160,10 +164,11 @@ public class AdDetailsActivity extends MasterActivity {
                 showTemplate();
 
                 if (user.IsLogged())
-                    if (currentAd.getSellerId().equals(user.Get().getId())){
+                    if (currentAd.getSellerId().equals(user.Get().getId())) { // user cannot contact themselves
                         buttonFav.setVisibility(View.INVISIBLE);
-                       // findViewById(R.id.container3).setVisibility(View.GONE);
-                        findViewById(R.id.container2).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.buttonCall).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.line4).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.buttonMessage).setVisibility(View.INVISIBLE);
                     }
             }
         });
@@ -300,6 +305,24 @@ public class AdDetailsActivity extends MasterActivity {
     }
 
     @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parentPanel), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        if (enabled)
+            showMessageInToast(message);
+        else
+            snackbar.show();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CALL) {
 
@@ -332,8 +355,7 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewEdu.setText(((AdJob) result).getEducationName());
                 textViewSch.setText(((AdJob) result).getScheduleName());
                 textViewEx.setText(((AdJob) result).getExperience());
-                textViewSalary.setText(formattedNumber(((AdJob) result).getSalary()));
-                textViewPrice.setText(formattedNumber(((AdJob) result).getSalary()));
+                textViewSalary.setText(formattedNumber(((AdJob) result).getSalary()) + " " + getString(R.string.sp));
 
                 break;
 
@@ -422,6 +444,7 @@ public class AdDetailsActivity extends MasterActivity {
 
             case Category.JOBS:
                 containerJob.setVisibility(View.VISIBLE);
+                textViewPrice.setVisibility(View.INVISIBLE);
 
                 break;
 

@@ -481,7 +481,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal"
-            />
+            >
+            <ImageButton
+                android:id="@+id/buttonEdit"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/ic_add_a_photo_white_36dp"
+                android:background="@color/grayLightTransparent"
+                />
+        </LinearLayout>
     </HorizontalScrollView>
 
     <Button

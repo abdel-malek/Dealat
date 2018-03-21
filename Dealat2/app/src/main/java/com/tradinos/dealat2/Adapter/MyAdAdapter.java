@@ -70,22 +70,24 @@ public class MyAdAdapter extends BaseAdapter {
             mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageViewMain,
                             defaultDrawable, defaultDrawable));
-        }
-        else
+        } else
             holder.imageViewMain.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
         holder.textViewTitle.setText(item.getTitle());
         holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
         holder.textViewExpires.setText(context.getString(R.string.expires)
-                +" "+((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
+                + " " + ((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
 
 
-        int statusRsc = R.drawable.dealat_logo_red;
+        if (item.getExpiresAfter() <= 0)
+            item.setStatus(Ad.EXPIRED);
+
+        int statusRsc;
         String statusString;
 
         switch (item.getStatus()) {
             case Ad.PENDING:
-                // statusRsc;
+                statusRsc = R.drawable.bending;
                 statusString = context.getString(R.string.statusPending);
                 break;
 
@@ -100,7 +102,7 @@ public class MyAdAdapter extends BaseAdapter {
                 break;
 
             case Ad.HIDDEN:
-                //statusRsc;
+                statusRsc = R.drawable.hidden;
                 statusString = context.getString(R.string.statusHidden);
                 break;
 

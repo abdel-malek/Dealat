@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
     android:gravity="center"
+    android:id="@+id/parentPanel"
     >
     <TextView
         android:layout_width="wrap_content"

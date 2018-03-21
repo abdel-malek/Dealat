@@ -59,7 +59,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
                 } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     faildCallback.OnFaild(Code.TimeOutError, "Timeout Error !", "");
                 } else {
-                    faildCallback.OnFaild(Code.TimeOutError, "Unknown Server Error !", "");
+                    faildCallback.OnFaild(Code.ServerError, "Server Error !", "");
                 }
             }
         });
@@ -80,7 +80,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
     @Override
     protected VolleyError parseNetworkError(VolleyError volleyError) {
         if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
-            if (volleyError.networkResponse.statusCode == 401) {
+            if (volleyError.networkResponse.statusCode == 403) {
                 return new AuthFailureError();
             }
             VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));

@@ -63,10 +63,14 @@ public class MyAdsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_my_profile, null);
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
+
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
         listView = rootView.findViewById(R.id.listView);
 
-        listView.setAdapter(new MyAdAdapter(getContext(), ads));
+        if (ads.isEmpty())
+            layoutEmpty.setVisibility(View.VISIBLE);
+        else
+            listView.setAdapter(new MyAdAdapter(getContext(), ads));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

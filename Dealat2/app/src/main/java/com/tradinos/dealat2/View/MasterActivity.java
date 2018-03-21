@@ -148,7 +148,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
                     Intent intent = new Intent(mContext, SplashActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                } else {
+                } else if (errorCode == Code.NetworkError || errorCode == Code.TimeOutError)
+                    showSnackBar(Message);
+                else {
                     if (findViewById(R.id.parentPanel) != null)
                         Snackbar.make(findViewById(R.id.parentPanel), Html.fromHtml(Message), Snackbar.LENGTH_LONG).show();
                     else
@@ -156,6 +158,10 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
                 }
             }
         });
+    }
+
+    protected void showSnackBar(String message){
+        showMessageInToast(message);
     }
 
     public Controller getController() {
@@ -222,7 +228,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
             return true;
 
-        showMessageInSnackbar(R.string.connection_problem);
+        showSnackBar(getString(R.string.connection_problem));
         return false;
     }
 

@@ -20,7 +20,7 @@ public class Ad implements Serializable {
     private String sellerId, sellerName, sellerPhone;
     private String mainImageUrl, mainVideoUrl;
     private double price;
-    private int template, status, showPeriod;
+    private int template, status, showPeriod, expiresAfter;
     private boolean negotiable, featured, favorite;
     private List<String> imagesPaths;
 
@@ -168,6 +168,14 @@ public class Ad implements Serializable {
 
     public void setShowPeriod(int showPeriod) {
         this.showPeriod = showPeriod;
+    }
+
+    public int getExpiresAfter() {
+        return expiresAfter;
+    }
+
+    public void setExpiresAfter(int expiresAfter) {
+        this.expiresAfter = expiresAfter;
     }
 
     public boolean isNegotiable() {

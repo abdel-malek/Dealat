@@ -103,7 +103,7 @@ public class MyApplication extends Application {
         List<Category> categories = getAllCategories();
 
         for (int i = 0; i < categories.size(); i++) {
-            category = categories.get(i);
+            category = new Category(categories.get(i)); // so a copied object is returned // and not the original static one
             if (category.getId().equals(id))
                 return category;
         }
@@ -151,7 +151,7 @@ public class MyApplication extends Application {
     }
 
     public static String getBaseUrlForImages() {
-     //   return "http://dealat.tradinos.com/";
-        return "http://192.168.9.53/Dealat/";
+        return "http://dealat.tradinos.com/";
+     //   return "http://192.168.9.53/Dealat/";
     }
 }

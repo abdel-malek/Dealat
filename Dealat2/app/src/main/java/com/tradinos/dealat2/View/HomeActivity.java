@@ -31,7 +31,6 @@ import java.util.List;
 public class HomeActivity extends DrawerActivity {
 
     private Category mainCategory;
-    private List<Category> mainCategories = new ArrayList<>();
 
     //views
     private ListView listView;
@@ -48,10 +47,10 @@ public class HomeActivity extends DrawerActivity {
     @Override
     public void getData() {
 
+        mainCategory = Category.getMain(getString(R.string.allCategories));
+
         if (!isNetworkAvailable())
             return;
-
-        mainCategory = Category.getMain(getString(R.string.allCategories));
 
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();
@@ -63,17 +62,16 @@ public class HomeActivity extends DrawerActivity {
                 result.add(mainCategory);
                 ((MyApplication) getApplication()).setAllCategories(result);
 
-                mainCategories = ((MyApplication) getApplication()).getSubCatsById("0");
-                mainCategory.setSubCategories(mainCategories);
+                mainCategory.setSubCategories(((MyApplication) getApplication()).getSubCatsById("0"));
 
-                listView.setAdapter(new MainCatAdapter(mContext, mainCategories));
+                listView.setAdapter(new MainCatAdapter(mContext, mainCategory.getSubCategories()));
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
-                        intent.putExtra("category", mainCategories.get(i));
+                        intent.putExtra("category", mainCategory.getSubCategories().get(i));
                         intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
 
                        // Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this).toBundle();

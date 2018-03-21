@@ -17,7 +17,9 @@
             />
         <item
             android:id="@+id/nav_categories"
-            android:title="@string/navCategories" />
+            android:title="@string/navCategories"
+            android:visible="false"
+            />
 
         <item
             android:id="@+id/nav_savedSearches"

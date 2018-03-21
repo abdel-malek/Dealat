@@ -2,6 +2,7 @@ package com.tradinos.dealat2.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,7 +38,7 @@ import java.util.List;
 
 public class FilterActivity extends MasterActivity {
 
-    private final int REQUEST_FILTER_CAT = 1;
+    private final int REQUEST_FILTER_CAT = 8;
 
     private int currentTemplate;
     private Category selectedCategory;
@@ -282,6 +283,21 @@ public class FilterActivity extends MasterActivity {
             setResult(RESULT_OK, intent);
             finish();
         }
+    }
+
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.container2), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        snackbar.show();
     }
 
     @Override

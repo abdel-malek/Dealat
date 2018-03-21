@@ -37,6 +37,7 @@
     <string name="old">Old</string>
     <string name="manual">Manual</string>
     <string name="sp">SP</string>
+    <string name="refresh">Refresh</string>
 
 
     <!-- Views -->
@@ -74,6 +75,7 @@
     <string name="labelManufactureYear">Manufacturing Year</string>
     <string name="labelTransmission">Transmission Type</string>
     <string name="labelState">State</string>
+    <string name="labelPropertyState">Property State</string>
 
     <string name="labelSpace">Space</string>
     <string name="labelRoom">Number of Rooms</string>

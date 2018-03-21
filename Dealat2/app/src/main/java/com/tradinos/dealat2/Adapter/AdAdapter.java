@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.View.AdDetailsActivity;
@@ -83,19 +84,22 @@ public class AdAdapter extends BaseAdapter {
     }
 
     private void initializeView(Ad item, ViewHolder holder) {
-        int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(item.getTemplate());
+        int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(item.getTemplate());
         if (item.getMainImageUrl() != null) {
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
             mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageView,
-                           defaultDrawable, defaultDrawable));
-        }
-        else
+                            defaultDrawable, defaultDrawable));
+        } else
             holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
-        holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice())+
-                " "+context.getString(R.string.sp));
+        if (item.getTemplate() == Category.JOBS)
+            holder.textViewPrice.setVisibility(View.INVISIBLE);
+        else
+            holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice()) +
+                    " " + context.getString(R.string.sp));
+
         holder.textViewTitle.setText(item.getTitle());
 
         holder.textView.setText("500 Views");

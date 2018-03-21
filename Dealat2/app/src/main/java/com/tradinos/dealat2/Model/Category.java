@@ -24,6 +24,15 @@ public class Category implements Serializable {
         this.subCategories = new ArrayList<>();
     }
 
+    public Category(Category category){
+        this.setId(category.getId());
+        this.setParentId(category.getParentId());
+        this.setTemplateId(category.getTemplateId());
+        this.setImageUrl(category.getImageUrl());
+        this.setName(category.getName());
+        this.setSubCategories(category.getSubCategories());
+    }
+
     public static Category getMain(String name) {
         Category category = new Category();
 
@@ -35,18 +44,18 @@ public class Category implements Serializable {
         return category;
     }
 
-    public static Category getAll(Category parent, String name){ // to add "All" option with other subcategories
+    public static Category getAll(Category parent, String name) { // to add "All" option with other subcategories
         Category category = new Category();
 
         category.setId(parent.getId());
         category.setParentId(parent.getParentId());
         category.setTemplateId(parent.getTemplateId());
-        category.setName(name + " "+ parent.getName());
+        category.setName(name + " " + parent.getName());
 
         return category;
     }
 
-    public boolean isMain(){
+    public boolean isMain() {
         return this.id.equals("0");
     }
 
@@ -101,7 +110,13 @@ public class Category implements Serializable {
     }
 
     public void setSubCategories(List<Category> subCategories) {
-        this.subCategories = subCategories;
+        if (this.subCategories == null)
+            this.subCategories = new ArrayList<>();
+
+        else if (!this.subCategories.isEmpty())
+            this.subCategories.clear();
+
+        this.subCategories.addAll(subCategories);
     }
 
     public void addSubCat(Category category) {

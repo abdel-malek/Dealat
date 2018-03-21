@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
@@ -55,7 +56,9 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ItemInfoActivity extends MasterActivity {
 
-    private final int REQUEST_SELECT_CAT = 1;
+    private boolean enabled = false;
+
+    private final int REQUEST_SELECT_CAT = 9;
 
     private Category selectedCategory;
     private Location selectedLocation;
@@ -120,6 +123,8 @@ public class ItemInfoActivity extends MasterActivity {
             @Override
             public void OnSuccess(TemplatesData result) {
                 HideProgressDialog();
+
+                enabled = true;
 
                 autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
 
@@ -369,6 +374,24 @@ public class ItemInfoActivity extends MasterActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.container2), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        if (enabled)
+            showMessageInToast(message);
+        else
+            snackbar.show();
     }
 
     private void replaceTemplate() {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
@@ -67,7 +68,9 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class EditAdActivity extends MasterActivity {
 
-    private final int REQUEST_SELECT = 1;
+    private final int REQUEST_SELECT = 7;
+
+    private boolean enabled = false;
 
     private final String NULL = "-1";
     private Ad currentAd;
@@ -165,6 +168,8 @@ public class EditAdActivity extends MasterActivity {
                 AdController.getInstance(mController).getTemplatesData(new SuccessCallback<TemplatesData>() {
                     @Override
                     public void OnSuccess(TemplatesData result) {
+                        enabled = true;
+
                         autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
 
                         templateBrands = result.getBrands().get(currentAd.getTemplate());
@@ -283,7 +288,8 @@ public class EditAdActivity extends MasterActivity {
 
                 if (currentAd.getTemplate() == Category.VEHICLES) //it means there're models with brands
                     // and to ensure casting to AdVehicle
-                    if (((AdVehicle) currentAd).getTypeId().equals(selectedType.getId()))
+                    if (((AdVehicle) currentAd).getTypeId()!= null &&
+                            ((AdVehicle) currentAd).getTypeId().equals(selectedType.getId()))
                         spinnerModel.setSelection(getItemIndex(selectedType.getModels(), ((AdVehicle) currentAd).getModelId()));
             }
 
@@ -409,6 +415,24 @@ public class EditAdActivity extends MasterActivity {
     }
 
     @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.container2), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        if (enabled)
+            showMessageInToast(message);
+        else
+            snackbar.show();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_SELECT) {
             List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
@@ -527,7 +551,7 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("experience", stringInput(editEx));
 
-                parameters.put("price", "0"); // make it = salary
+                parameters.put("price", "0");
                 parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
 
                 parameters.put("education_id", ((Item) spinnerEdu.getSelectedItem()).getId());

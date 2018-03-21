@@ -20,7 +20,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
     public static final int ACTION_VIEW = 1, ACTION_SELL = 2, ACTION_SELECT_CAT = 3, ACTION_FILTER_CAT = 4;
 
-    public final int REQUEST_SELECT_IMG = 1;
+    public final int REQUEST_SELECT_IMG = 5;
 
     private MyApplication application;
 

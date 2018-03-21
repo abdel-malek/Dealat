@@ -30,7 +30,7 @@ import java.util.List;
 
 public class ViewAdsActivity extends DrawerActivity {
 
-    public static final int ACTION_SEARCH = 1, ACTION_VIEW = 2;
+    public static final int ACTION_SEARCH = 15, ACTION_VIEW = 16;
 
     private int currentView, action;
 
@@ -202,8 +202,9 @@ public class ViewAdsActivity extends DrawerActivity {
                     imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,
                             getTemplateDefaultImage(selectedCategory.getTemplateId())));
 
-                    textViewCategory.setText(selectedCategory.getFullName());
+                    currentTemplate = selectedCategory.getTemplateId();
                 }
+                textViewCategory.setText(selectedCategory.getFullName());
 
                 action = ACTION_SEARCH;
                 getAds();

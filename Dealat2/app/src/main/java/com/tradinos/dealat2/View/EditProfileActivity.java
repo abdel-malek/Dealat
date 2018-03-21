@@ -1,6 +1,7 @@
 package com.tradinos.dealat2.View;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import java.util.List;
 
 public class EditProfileActivity extends MasterActivity {
 
+    private boolean enabled = false;
     private CurrentAndroidUser user;
 
     private EditText editTextName;
@@ -45,6 +47,8 @@ public class EditProfileActivity extends MasterActivity {
             @Override
             public void OnSuccess(List<Item> result) {
                 HideProgressDialog();
+                enabled = true;
+
                 spinnerCity.setAdapter(new ItemAdapter(mContext, result));
 
                 if (user.IsLogged())
@@ -108,5 +112,23 @@ public class EditProfileActivity extends MasterActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.container3), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        if (enabled)
+            showMessageInToast(message);
+        else
+            snackbar.show();
     }
 }

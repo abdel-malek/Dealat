@@ -36,8 +36,8 @@ public class SelectImagesActivity extends MasterActivity {
 
     private int action = 0;
 
-    private final int REQUEST_SUBMIT = 1, REQUEST_CAMERA = 2,
-            REQUEST_PERMISSION_READ = 3, REQUEST_PERMISSION_WRITE = 4;
+    private final int REQUEST_SUBMIT = 11, REQUEST_CAMERA = 12,
+            REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14;
 
     private Category selectedCategory;
     private String mCurrentPhotoPath;

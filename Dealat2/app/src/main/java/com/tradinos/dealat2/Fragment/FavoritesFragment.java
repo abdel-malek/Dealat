@@ -33,7 +33,7 @@ public class FavoritesFragment extends Fragment {
     TextView layoutEmpty;
     ListView listView;
 
-    public static FavoritesFragment newInstance(List<Ad> favs){
+    public static FavoritesFragment newInstance(List<Ad> favs) {
         FavoritesFragment fragment = new FavoritesFragment();
 
         fragment.setFavs(favs);
@@ -54,8 +54,11 @@ public class FavoritesFragment extends Fragment {
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
         listView = rootView.findViewById(R.id.listView);
 
-        listView.setAdapter(new AdAdapter(getContext(), favs, R.layout.row_view1));
-       // startActivityForResult(); to refresh if ad was unfavorited
+        if (favs.isEmpty())
+            layoutEmpty.setVisibility(View.VISIBLE);
+        else
+            listView.setAdapter(new AdAdapter(getContext(), favs, R.layout.row_view1));
+        // startActivityForResult(); to refresh if ad was unfavorited
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
