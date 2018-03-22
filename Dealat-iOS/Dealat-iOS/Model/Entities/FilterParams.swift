@@ -74,6 +74,11 @@ class FilterParams{
             params["manufacture_date"] = JSON(x).rawString()
         }
         
+        if let x = filter.searchText{
+            params["query"] = x
+        }
+
+        
         if let x = filter.is_new{
             params["is_new"] = x
         }

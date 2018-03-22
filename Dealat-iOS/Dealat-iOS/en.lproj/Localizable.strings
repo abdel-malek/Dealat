@@ -20,10 +20,12 @@
 "Skip" = "Skip";
 "Verification" =  "Verification";
 "VerificationCode" = "Verification Code";
-"Activate" = "activate";
+"Activate" = "Activate";
 "need_register" = "You must login";
 "Alert!" = "Alert!";
-//"previousRegister" = "You have registered from a different device previously, Do you want to keep registration from both devices?";
+"previousRegister" = "You have registered from a different device previously, Do you want to keep registration from both devices?";
+"removeAdd" = "Would you like to remove your Add?";
+
 
 
 //SIDE MENU

@@ -100,6 +100,11 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         
         //        self.view.makeToast(text, duration: 1, position: CGPoint.init(x: self.view.center.x, y: self.view.frame.height - 40), style: nil)
         
+        if text == "Not authorized"{
+            User.clearMe()
+            AppDelegate.setupViews()
+        }
+        
     }
     
     func setupViews(){

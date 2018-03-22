@@ -715,7 +715,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bf-8U-bza">
                                 <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HfQ-x2-CMj">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HfQ-x2-CMj">
                                         <rect key="frame" x="47" y="0.0" width="281" height="50"/>
                                         <subviews>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76Z-f8-uU7">
@@ -733,7 +733,7 @@
                                                 </constraints>
                                             </view>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKw-xb-nN1">
-                                                <rect key="frame" x="-47" y="14" width="0.0" height="22"/>
+                                                <rect key="frame" x="-47" y="14" width="0.5" height="22"/>
                                                 <state key="normal" image="chat"/>
                                                 <connections>
                                                     <action selector="openChat" destination="nai-0P-J83" eventType="touchUpInside" id="YDO-Rz-euF"/>
@@ -753,9 +753,25 @@
                                             <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x63-nq-vi9" userLabel="edit">
                                                 <rect key="frame" x="-47" y="10" width="0.0" height="30"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" image="edit"/>
+                                                <state key="normal" image="edit2"/>
                                                 <connections>
                                                     <action selector="editAction" destination="nai-0P-J83" eventType="touchUpInside" id="SmQ-m0-aeh"/>
+                                                </connections>
+                                            </button>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VIu-eQ-iqa">
+                                                <rect key="frame" x="-47" y="0.0" width="1" height="50"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="1" id="qXM-eE-fO4"/>
+                                                </constraints>
+                                            </view>
+                                            <button hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efw-VX-Se9" userLabel="remove">
+                                                <rect key="frame" x="-47" y="10" width="0.0" height="30"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="remove"/>
+                                                <connections>
+                                                    <action selector="editAction" destination="nai-0P-J83" eventType="touchUpInside" id="XHG-lL-L8i"/>
+                                                    <action selector="removeAction" destination="nai-0P-J83" eventType="touchUpInside" id="dN7-s2-72b"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -792,6 +808,7 @@
                     </view>
                     <connections>
                         <outlet property="callBtn" destination="76Z-f8-uU7" id="N0i-cm-mIK"/>
+                        <outlet property="deleteBtn" destination="efw-VX-Se9" id="dz0-jK-Nd7"/>
                         <outlet property="editBtn" destination="x63-nq-vi9" id="alo-vv-T6f"/>
                         <outlet property="messageBtn" destination="NKw-xb-nN1" id="H3d-rb-v79"/>
                         <outlet property="reportBtn" destination="BAW-67-wwd" id="eR5-PW-hJY"/>
@@ -977,7 +994,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NjJ-mX-KnH">
-                                                    <rect key="frame" x="15" y="14" width="57" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="61.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -987,7 +1004,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RER-Iq-bUY">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1004,7 +1021,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KAf-4f-EXY">
-                                                    <rect key="frame" x="15" y="14" width="30.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="32" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1014,7 +1031,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c73-3J-6WT">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1031,7 +1048,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lpG-UK-p1I">
-                                                    <rect key="frame" x="15" y="14" width="32.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="36" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1041,7 +1058,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LeO-8j-woY">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1058,7 +1075,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hSG-LW-fHF">
-                                                    <rect key="frame" x="15" y="14" width="62" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="70" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1068,7 +1085,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Yy-vs-Gmb">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1085,7 +1102,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wn3-yL-NMe">
-                                                    <rect key="frame" x="15" y="14" width="59" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="66" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1095,7 +1112,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EWF-ox-Pgv">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1112,7 +1129,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Seller name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i9j-gj-Yjs">
-                                                    <rect key="frame" x="15" y="14" width="81.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="89.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1122,7 +1139,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xlG-5r-TcG">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1139,7 +1156,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Negotiable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OLn-SO-nXf">
-                                                    <rect key="frame" x="15" y="14" width="75.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="82.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1149,7 +1166,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Srp-ZK-ahy">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1170,7 +1187,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="TypeName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gtM-mQ-f4F">
-                                                    <rect key="frame" x="15" y="14" width="74" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="81" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1180,7 +1197,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AJb-s0-7Ql">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1336,7 +1353,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Space" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i3g-ct-VWr">
-                                                    <rect key="frame" x="15" y="14" width="41" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="48.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1346,7 +1363,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gca-lc-Ecy">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1363,7 +1380,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Rooms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RZq-3Z-Mho">
-                                                    <rect key="frame" x="15" y="14" width="47.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="54.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1373,7 +1390,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7UI-wJ-NVx">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1390,7 +1407,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Floor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xJf-mX-CFE">
-                                                    <rect key="frame" x="15" y="14" width="36" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="39" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1400,7 +1417,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6MR-wl-i9O">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1417,7 +1434,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="State" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hZ5-sm-7V2">
-                                                    <rect key="frame" x="15" y="14" width="35.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="40" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1427,7 +1444,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FZ3-Ne-uWK">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1444,7 +1461,7 @@ $</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Furniture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pbh-sz-aCD">
-                                                    <rect key="frame" x="15" y="14" width="64.5" height="17"/>
+                                                    <rect key="frame" x="15" y="12" width="68" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1454,7 +1471,7 @@ $</string>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9f6-Y0-JWb">
-                                                    <rect key="frame" x="318.5" y="14" width="40.5" height="17"/>
+                                                    <rect key="frame" x="315.5" y="12" width="43.5" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -4438,7 +4455,7 @@ $</string>
                                             <view tag="-2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o1J-Fd-oFd">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
                                                 <subviews>
-                                                    <button opaque="NO" tag="-1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csh-NZ-XYB" userLabel="SKIP">
+                                                    <button opaque="NO" tag="-1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Csh-NZ-XYB" userLabel="SKIP">
                                                         <rect key="frame" x="62.5" y="0.0" width="249" height="40"/>
                                                         <color key="backgroundColor" red="0.76470588240000004" green="0.039215686270000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -5712,7 +5729,7 @@ $</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" tag="13" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6yo-P0-FgF" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <textField opaque="NO" userInteractionEnabled="NO" tag="13" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6yo-P0-FgF" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                     <rect key="frame" x="8" y="8" width="323" height="71"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5756,7 +5773,7 @@ $</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" tag="13" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jMK-R9-hY3" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <textField opaque="NO" userInteractionEnabled="NO" tag="13" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jMK-R9-hY3" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                     <rect key="frame" x="8" y="8" width="323" height="71"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5809,7 +5826,7 @@ $</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" tag="21" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Schedule*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hhe-6i-ACi" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <textField opaque="NO" userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Schedule*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hhe-6i-ACi" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                     <rect key="frame" x="8" y="8" width="323" height="71"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5849,7 +5866,7 @@ $</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" tag="22" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Education*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dnk-j6-DcW" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <textField opaque="NO" userInteractionEnabled="NO" tag="22" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Education*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dnk-j6-DcW" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                     <rect key="frame" x="8" y="8" width="323" height="71"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -5967,7 +5984,7 @@ $</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" tag="6" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="if0-b6-nPh" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <textField opaque="NO" userInteractionEnabled="NO" tag="6" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="if0-b6-nPh" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                                     <rect key="frame" x="8" y="8" width="323" height="71"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6598,97 +6615,94 @@ $</string>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="itQ-Er-qyk" userLabel="cell" customClass="AdCell" customModule="Dealat_iOS" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="OiB-vA-pyI" customClass="AdCell" customModule="Dealat_iOS" customModuleProvider="target">
                                         <rect key="frame" x="25" y="0.0" width="325" height="253"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="325" height="253"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4uM-aN-Wku">
-                                                    <rect key="frame" x="0.0" y="8" width="325" height="237"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3e-a5-VSf" customClass="CardView" customModule="Dealat_iOS" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="4" width="309" height="245"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBj-JH-6kW">
-                                                            <rect key="frame" x="170" y="210" width="0.0" height="0.0"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="13l-t5-Qof">
+                                                            <rect key="frame" x="192.5" y="218" width="0.0" height="0.0"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="qkV-iX-Azh">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="o0O-2Y-kt3">
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="qkV-iX-Azh" secondAttribute="height" id="IEL-Sp-z2x"/>
+                                                                        <constraint firstAttribute="width" secondItem="o0O-2Y-kt3" secondAttribute="height" id="JAs-45-DpP"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="5TQ-vy-eGx">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="u4n-bj-eK8">
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="5TQ-vy-eGx" secondAttribute="height" id="uA0-Kb-Y4c"/>
+                                                                        <constraint firstAttribute="width" secondItem="u4n-bj-eK8" secondAttribute="height" id="GeK-Ca-M7R"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="hKl-l6-Nc2">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="gRK-pa-qKL">
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="hKl-l6-Nc2" secondAttribute="height" id="t5c-Yh-Os1"/>
+                                                                        <constraint firstAttribute="width" secondItem="gRK-pa-qKL" secondAttribute="height" id="Cdj-LI-Uv9"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="AXN-Yc-Pcr">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="akV-zM-Rky">
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="AXN-Yc-Pcr" secondAttribute="height" id="8Z6-ok-plf"/>
+                                                                        <constraint firstAttribute="width" secondItem="akV-zM-Rky" secondAttribute="height" id="aSX-7c-15v"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="half_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="xcJ-7x-MaI">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="half_star_gray" translatesAutoresizingMaskIntoConstraints="NO" id="42Q-R5-icO">
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" secondItem="xcJ-7x-MaI" secondAttribute="height" id="Rvw-hk-8B4"/>
+                                                                        <constraint firstAttribute="width" secondItem="42Q-R5-icO" secondAttribute="height" id="Ich-YP-Mx4"/>
                                                                     </constraints>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="hKl-l6-Nc2" firstAttribute="width" secondItem="hKl-l6-Nc2" secondAttribute="height" id="1jh-xb-ntA"/>
-                                                                <constraint firstItem="5TQ-vy-eGx" firstAttribute="width" secondItem="5TQ-vy-eGx" secondAttribute="height" id="G3W-Vp-2sN"/>
-                                                                <constraint firstItem="AXN-Yc-Pcr" firstAttribute="width" secondItem="AXN-Yc-Pcr" secondAttribute="height" id="bGV-U4-rjh"/>
-                                                                <constraint firstAttribute="height" id="hMn-iv-Zvv"/>
-                                                                <constraint firstItem="xcJ-7x-MaI" firstAttribute="width" secondItem="xcJ-7x-MaI" secondAttribute="height" id="kik-GS-Nec"/>
+                                                                <constraint firstItem="42Q-R5-icO" firstAttribute="width" secondItem="42Q-R5-icO" secondAttribute="height" id="3wo-tz-Z8b"/>
+                                                                <constraint firstItem="gRK-pa-qKL" firstAttribute="width" secondItem="gRK-pa-qKL" secondAttribute="height" id="PnZ-Sg-qbG"/>
+                                                                <constraint firstAttribute="height" id="RYe-JQ-WvD"/>
+                                                                <constraint firstItem="u4n-bj-eK8" firstAttribute="width" secondItem="u4n-bj-eK8" secondAttribute="height" id="tz1-67-SOi"/>
+                                                                <constraint firstItem="akV-zM-Rky" firstAttribute="width" secondItem="akV-zM-Rky" secondAttribute="height" id="zDA-Ur-rit"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZ4-9c-tBg">
-                                                            <rect key="frame" x="170.5" y="24" width="116.5" height="0.5"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yFp-sF-1Jt">
+                                                            <rect key="frame" x="192.5" y="34" width="74.5" height="0.5"/>
                                                             <color key="backgroundColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="0.5" id="5Sx-Dt-bAN"/>
+                                                                <constraint firstAttribute="height" constant="0.5" id="Ohv-m8-Df0"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80.000 $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQX-CS-U9J">
-                                                            <rect key="frame" x="170.5" y="4" width="116.5" height="20"/>
-                                                            <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
-                                                            <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicle" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GZ-lD-k9g">
-                                                            <rect key="frame" x="170.5" y="29" width="116.5" height="20"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clothes" translatesAutoresizingMaskIntoConstraints="NO" id="Kyk-6Y-Fxe">
+                                                            <rect key="frame" x="0.0" y="0.0" width="185" height="245"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                    <real key="value" value="0.0"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80.000 $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XxD-Wr-bJk">
+                                                            <rect key="frame" x="192.5" y="4" width="74.5" height="30"/>
                                                             <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                             <color key="textColor" red="0.76470588240000004" green="0.039215686270000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clothes" translatesAutoresizingMaskIntoConstraints="NO" id="hFu-gu-efJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="162.5" height="237"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <real key="value" value="1"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                    <color key="value" red="0.76470588240000004" green="0.039215686270000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked_copy" translatesAutoresizingMaskIntoConstraints="NO" id="vRj-bP-OK6">
+                                                            <rect key="frame" x="275" y="4" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="kr2-g6-JaZ"/>
+                                                            </constraints>
                                                         </imageView>
-                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maK-gR-6B9">
-                                                            <rect key="frame" x="114" y="188.5" width="40" height="40"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrO-Xb-GFB">
+                                                            <rect key="frame" x="136.5" y="196.5" width="40" height="40"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_copy" translatesAutoresizingMaskIntoConstraints="NO" id="n9M-tG-eTm">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_copy" translatesAutoresizingMaskIntoConstraints="NO" id="MfW-Go-fbd">
                                                                     <rect key="frame" x="8" y="8" width="24" height="24"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="5WG-6a-F5e"/>
-                                                                <constraint firstItem="n9M-tG-eTm" firstAttribute="leading" secondItem="maK-gR-6B9" secondAttribute="leading" constant="8" id="C9M-Qd-gry"/>
-                                                                <constraint firstAttribute="trailing" secondItem="n9M-tG-eTm" secondAttribute="trailing" constant="8" id="DJ0-S7-X3W"/>
-                                                                <constraint firstItem="n9M-tG-eTm" firstAttribute="top" secondItem="maK-gR-6B9" secondAttribute="top" constant="8" id="Ncq-zT-eXb"/>
-                                                                <constraint firstAttribute="bottom" secondItem="n9M-tG-eTm" secondAttribute="bottom" constant="8" id="Yil-GI-Cpw"/>
+                                                                <constraint firstAttribute="trailing" secondItem="MfW-Go-fbd" secondAttribute="trailing" constant="8" id="AFF-1m-KqG"/>
+                                                                <constraint firstItem="MfW-Go-fbd" firstAttribute="leading" secondItem="FrO-Xb-GFB" secondAttribute="leading" constant="8" id="FkB-0g-iA6"/>
+                                                                <constraint firstAttribute="bottom" secondItem="MfW-Go-fbd" secondAttribute="bottom" constant="8" id="PAu-Kx-P5n"/>
+                                                                <constraint firstItem="MfW-Go-fbd" firstAttribute="top" secondItem="FrO-Xb-GFB" secondAttribute="top" constant="8" id="TRh-GU-Zy9"/>
+                                                                <constraint firstAttribute="width" constant="40" id="Wqx-2x-k4s"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -6696,82 +6710,99 @@ $</string>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/2/2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5h-VM-y6j">
-                                                            <rect key="frame" x="170" y="214" width="147" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/2/2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odP-2V-o5g">
+                                                            <rect key="frame" x="192.5" y="222" width="108.5" height="15"/>
                                                             <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="15"/>
                                                             <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1450 views" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aF-RN-C6g">
-                                                            <rect key="frame" x="170" y="186" width="147" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1450 views" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16M-mg-yOq">
+                                                            <rect key="frame" x="192.5" y="194" width="108.5" height="20"/>
                                                             <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                             <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checked_copy" translatesAutoresizingMaskIntoConstraints="NO" id="Emp-yY-SHH">
-                                                            <rect key="frame" x="291" y="4" width="30" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="30" id="5F6-Sk-3Cs"/>
-                                                                <constraint firstAttribute="width" secondItem="Emp-yY-SHH" secondAttribute="height" id="9qT-Ri-e6C"/>
-                                                            </constraints>
-                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicle" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6Q-g4-vdv">
+                                                            <rect key="frame" x="192.5" y="39" width="112.5" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
+                                                            <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicle" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGe-Hi-DD9">
+                                                            <rect key="frame" x="193" y="67" width="108" height="16"/>
+                                                            <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="16"/>
+                                                            <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstItem="Emp-yY-SHH" firstAttribute="leading" secondItem="DZ4-9c-tBg" secondAttribute="trailing" constant="4" id="3wr-r2-oT2"/>
-                                                        <constraint firstAttribute="bottom" secondItem="hFu-gu-efJ" secondAttribute="bottom" id="7us-rT-vaJ"/>
-                                                        <constraint firstItem="fBj-JH-6kW" firstAttribute="top" secondItem="2aF-RN-C6g" secondAttribute="bottom" constant="4" id="AF9-Dy-YPJ"/>
-                                                        <constraint firstItem="8GZ-lD-k9g" firstAttribute="leading" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="8" id="AyI-7F-QFp"/>
-                                                        <constraint firstItem="h5h-VM-y6j" firstAttribute="leading" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="8" id="BdE-Ve-TUk"/>
-                                                        <constraint firstItem="fBj-JH-6kW" firstAttribute="leading" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="8" id="CpS-94-hjD"/>
-                                                        <constraint firstItem="2aF-RN-C6g" firstAttribute="top" relation="greaterThanOrEqual" secondItem="8GZ-lD-k9g" secondAttribute="bottom" constant="8" id="Ctq-a8-rXu"/>
-                                                        <constraint firstAttribute="bottom" secondItem="h5h-VM-y6j" secondAttribute="bottom" constant="8" id="DXi-9V-3bm"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Emp-yY-SHH" secondAttribute="trailing" constant="4" id="DiE-Ra-Hf1"/>
-                                                        <constraint firstAttribute="trailing" secondItem="h5h-VM-y6j" secondAttribute="trailing" constant="8" id="EQF-u4-sS7"/>
-                                                        <constraint firstItem="DZ4-9c-tBg" firstAttribute="width" secondItem="WQX-CS-U9J" secondAttribute="width" id="Fj0-7D-cpY"/>
-                                                        <constraint firstItem="maK-gR-6B9" firstAttribute="bottom" secondItem="hFu-gu-efJ" secondAttribute="bottom" constant="-8" id="GLt-hm-dYk"/>
-                                                        <constraint firstItem="maK-gR-6B9" firstAttribute="trailing" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="-8" id="GqA-l3-ZNI"/>
-                                                        <constraint firstItem="Emp-yY-SHH" firstAttribute="top" secondItem="WQX-CS-U9J" secondAttribute="top" id="HcS-Wl-TOd"/>
-                                                        <constraint firstItem="DZ4-9c-tBg" firstAttribute="top" secondItem="WQX-CS-U9J" secondAttribute="bottom" id="IWL-f9-KdS"/>
-                                                        <constraint firstAttribute="trailing" secondItem="2aF-RN-C6g" secondAttribute="trailing" constant="8" id="KOg-gf-vj2"/>
-                                                        <constraint firstItem="h5h-VM-y6j" firstAttribute="top" secondItem="fBj-JH-6kW" secondAttribute="bottom" constant="4" id="PjB-pL-a3R"/>
-                                                        <constraint firstItem="hFu-gu-efJ" firstAttribute="width" secondItem="4uM-aN-Wku" secondAttribute="width" multiplier="1:2" id="SWB-aN-Q0P"/>
-                                                        <constraint firstItem="WQX-CS-U9J" firstAttribute="leading" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="8" id="U2q-Nl-tvK"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fBj-JH-6kW" secondAttribute="trailing" constant="8" id="UeK-ye-Gxd"/>
-                                                        <constraint firstItem="2aF-RN-C6g" firstAttribute="leading" secondItem="hFu-gu-efJ" secondAttribute="trailing" constant="8" id="VlW-io-ypi"/>
-                                                        <constraint firstItem="WQX-CS-U9J" firstAttribute="top" secondItem="4uM-aN-Wku" secondAttribute="top" constant="4" id="XC4-zI-CxT"/>
-                                                        <constraint firstItem="8GZ-lD-k9g" firstAttribute="top" secondItem="DZ4-9c-tBg" secondAttribute="bottom" constant="4" id="gak-AZ-TUi"/>
-                                                        <constraint firstItem="hFu-gu-efJ" firstAttribute="leading" secondItem="4uM-aN-Wku" secondAttribute="leading" id="glX-d0-00d"/>
-                                                        <constraint firstItem="DZ4-9c-tBg" firstAttribute="centerX" secondItem="WQX-CS-U9J" secondAttribute="centerX" id="lzi-l5-FUX"/>
-                                                        <constraint firstItem="hFu-gu-efJ" firstAttribute="top" secondItem="4uM-aN-Wku" secondAttribute="top" id="pb5-JV-ii8"/>
-                                                        <constraint firstItem="Emp-yY-SHH" firstAttribute="leading" secondItem="8GZ-lD-k9g" secondAttribute="trailing" constant="4" id="rne-vg-alt"/>
-                                                        <constraint firstItem="maK-gR-6B9" firstAttribute="width" secondItem="maK-gR-6B9" secondAttribute="height" id="ux3-SD-ES9"/>
-                                                        <constraint firstItem="Emp-yY-SHH" firstAttribute="leading" secondItem="WQX-CS-U9J" secondAttribute="trailing" constant="4" id="xGQ-ol-BG3"/>
+                                                        <constraint firstItem="Kyk-6Y-Fxe" firstAttribute="width" secondItem="h3e-a5-VSf" secondAttribute="width" multiplier="3:5" id="4l2-NW-81j"/>
+                                                        <constraint firstItem="q6Q-g4-vdv" firstAttribute="top" secondItem="yFp-sF-1Jt" secondAttribute="bottom" constant="4" id="5Pc-9y-lcB"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="top" secondItem="XxD-Wr-bJk" secondAttribute="top" id="5xt-kf-lcl"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Kyk-6Y-Fxe" secondAttribute="bottom" id="6W8-8f-xRN"/>
+                                                        <constraint firstItem="FrO-Xb-GFB" firstAttribute="trailing" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="-8" id="B3f-Su-6dj"/>
+                                                        <constraint firstItem="WGe-Hi-DD9" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="B63-Cf-QM8"/>
+                                                        <constraint firstItem="WGe-Hi-DD9" firstAttribute="top" secondItem="q6Q-g4-vdv" secondAttribute="bottom" constant="8" id="Brm-1X-VWG"/>
+                                                        <constraint firstItem="XxD-Wr-bJk" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="C9f-aU-QBv"/>
+                                                        <constraint firstItem="Kyk-6Y-Fxe" firstAttribute="top" secondItem="h3e-a5-VSf" secondAttribute="top" id="Ci9-w0-o3D"/>
+                                                        <constraint firstItem="odP-2V-o5g" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="FiT-Ml-qaa"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="leading" secondItem="yFp-sF-1Jt" secondAttribute="trailing" constant="8" id="I7l-CP-gT2"/>
+                                                        <constraint firstItem="16M-mg-yOq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WGe-Hi-DD9" secondAttribute="bottom" constant="8" id="JqG-Ai-czy"/>
+                                                        <constraint firstItem="q6Q-g4-vdv" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="LAO-5d-CKz"/>
+                                                        <constraint firstItem="Kyk-6Y-Fxe" firstAttribute="leading" secondItem="h3e-a5-VSf" secondAttribute="leading" id="LWQ-CA-qiA"/>
+                                                        <constraint firstAttribute="trailing" secondItem="WGe-Hi-DD9" secondAttribute="trailing" constant="8" id="U74-Zc-NlH"/>
+                                                        <constraint firstItem="13l-t5-Qof" firstAttribute="top" secondItem="16M-mg-yOq" secondAttribute="bottom" constant="4" id="UFg-95-Yyq"/>
+                                                        <constraint firstItem="16M-mg-yOq" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="UJ5-wg-j9R"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="width" secondItem="vRj-bP-OK6" secondAttribute="height" id="Wav-dz-QdL"/>
+                                                        <constraint firstItem="yFp-sF-1Jt" firstAttribute="width" secondItem="XxD-Wr-bJk" secondAttribute="width" id="cGj-ld-2oV"/>
+                                                        <constraint firstItem="13l-t5-Qof" firstAttribute="leading" secondItem="Kyk-6Y-Fxe" secondAttribute="trailing" constant="8" id="d2F-8P-5gd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="vRj-bP-OK6" secondAttribute="trailing" constant="4" id="diD-Gw-gWs"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="leading" secondItem="XxD-Wr-bJk" secondAttribute="trailing" constant="8" id="dvH-hR-huu"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="top" secondItem="h3e-a5-VSf" secondAttribute="top" constant="4" id="f4g-rs-2KX"/>
+                                                        <constraint firstItem="odP-2V-o5g" firstAttribute="top" secondItem="13l-t5-Qof" secondAttribute="bottom" constant="4" id="m0r-fE-7OG"/>
+                                                        <constraint firstItem="vRj-bP-OK6" firstAttribute="centerY" secondItem="XxD-Wr-bJk" secondAttribute="centerY" id="mU2-4I-USd"/>
+                                                        <constraint firstItem="FrO-Xb-GFB" firstAttribute="width" secondItem="FrO-Xb-GFB" secondAttribute="height" id="oiR-H2-VOY"/>
+                                                        <constraint firstAttribute="trailing" secondItem="16M-mg-yOq" secondAttribute="trailing" constant="8" id="pyw-jq-yKS"/>
+                                                        <constraint firstAttribute="bottom" secondItem="odP-2V-o5g" secondAttribute="bottom" constant="8" id="r3d-5Y-n7P"/>
+                                                        <constraint firstItem="yFp-sF-1Jt" firstAttribute="top" secondItem="XxD-Wr-bJk" secondAttribute="bottom" id="rng-e3-KO7"/>
+                                                        <constraint firstAttribute="trailing" secondItem="q6Q-g4-vdv" secondAttribute="trailing" constant="4" id="tEU-Wc-3yE"/>
+                                                        <constraint firstItem="yFp-sF-1Jt" firstAttribute="centerX" secondItem="XxD-Wr-bJk" secondAttribute="centerX" id="vvf-US-ZMF"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="13l-t5-Qof" secondAttribute="trailing" constant="8" id="wHL-Zx-Y0B"/>
+                                                        <constraint firstItem="FrO-Xb-GFB" firstAttribute="bottom" secondItem="Kyk-6Y-Fxe" secondAttribute="bottom" constant="-8" id="xaA-bA-p8C"/>
+                                                        <constraint firstAttribute="trailing" secondItem="odP-2V-o5g" secondAttribute="trailing" constant="8" id="zOc-RQ-Fya"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="1"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetWidth">
+                                                            <integer key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.83921568629999999" green="0.50588235290000005" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetHeight">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                            <color key="value" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="4uM-aN-Wku" secondAttribute="bottom" constant="8" id="5LS-yl-90Z"/>
-                                            <constraint firstItem="4uM-aN-Wku" firstAttribute="top" secondItem="itQ-Er-qyk" secondAttribute="top" constant="8" id="Dk2-5T-wm1"/>
-                                            <constraint firstItem="4uM-aN-Wku" firstAttribute="leading" secondItem="itQ-Er-qyk" secondAttribute="leading" id="GfC-MP-zxi"/>
-                                            <constraint firstAttribute="trailing" secondItem="4uM-aN-Wku" secondAttribute="trailing" id="Nwz-Vt-AxS"/>
+                                            <constraint firstAttribute="bottom" secondItem="h3e-a5-VSf" secondAttribute="bottom" constant="4" id="Fmh-Rm-pUW"/>
+                                            <constraint firstItem="h3e-a5-VSf" firstAttribute="top" secondItem="OiB-vA-pyI" secondAttribute="top" constant="4" id="RXt-e5-5f7"/>
+                                            <constraint firstItem="h3e-a5-VSf" firstAttribute="leading" secondItem="OiB-vA-pyI" secondAttribute="leading" constant="8" id="gR4-gF-ejn"/>
+                                            <constraint firstAttribute="trailing" secondItem="h3e-a5-VSf" secondAttribute="trailing" constant="8" id="qeb-H2-rsb"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="dateLbl" destination="h5h-VM-y6j" id="bys-WC-vEU"/>
-                                            <outlet property="img" destination="hFu-gu-efJ" id="fRU-Vh-Dn7"/>
-                                            <outlet property="imgStatus" destination="Emp-yY-SHH" id="IyK-ZF-zKb"/>
-                                            <outlet property="nameLbl" destination="8GZ-lD-k9g" id="Dtk-tT-FMF"/>
-                                            <outlet property="priceLbl" destination="WQX-CS-U9J" id="Vdl-wU-7gb"/>
-                                            <outlet property="viewsLbl" destination="2aF-RN-C6g" id="D7d-gr-l10"/>
+                                            <outlet property="dateLbl" destination="odP-2V-o5g" id="lOG-1B-pIO"/>
+                                            <outlet property="expiry_date" destination="WGe-Hi-DD9" id="3hE-5k-cO7"/>
+                                            <outlet property="img" destination="Kyk-6Y-Fxe" id="eqL-Jm-knd"/>
+                                            <outlet property="imgStatus" destination="vRj-bP-OK6" id="PjB-9y-mPT"/>
+                                            <outlet property="nameLbl" destination="q6Q-g4-vdv" id="LOl-f9-TQl"/>
+                                            <outlet property="priceLbl" destination="XxD-Wr-bJk" id="YDb-dK-aJH"/>
+                                            <outlet property="viewsLbl" destination="16M-mg-yOq" id="cBk-F2-jmP"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -6869,6 +6900,9 @@ $</string>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                             <color key="value" red="0.83921568629999999" green="0.50588235290000005" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
@@ -6917,7 +6951,7 @@ $</string>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background-blur" translatesAutoresizingMaskIntoConstraints="NO" id="Tlg-4h-bij">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0cJ-Vl-pXB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0cJ-Vl-pXB">
                                 <rect key="frame" x="-0.5" y="20" width="375" height="581"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -6994,7 +7028,7 @@ $</string>
                     <connections>
                         <outlet property="tableView" destination="0cJ-Vl-pXB" id="bgk-dh-ZQB"/>
                         <outlet property="textView" destination="2rt-G4-cUG" id="5lY-jn-CS1"/>
-                        <outlet property="textViewBottomConstraint" destination="oMl-Eo-uNl" id="hoe-Db-PJj"/>
+                        <outlet property="textViewBottomConstraint" destination="aLv-o5-60Z" id="HIp-z4-tan"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RZY-p7-6iU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -7224,13 +7258,14 @@ $</string>
         <image name="ad5" width="350" height="220"/>
         <image name="arrow_down" width="32" height="32"/>
         <image name="chat" width="22" height="22"/>
-        <image name="checked_copy" width="155" height="155"/>
+        <image name="checked_copy" width="30" height="30"/>
         <image name="clothes" width="376" height="159"/>
-        <image name="edit" width="30" height="30"/>
+        <image name="edit2" width="30" height="30"/>
         <image name="gmail_copy" width="155" height="155"/>
         <image name="half_star_gray" width="155" height="155"/>
         <image name="menu-vertical-filled" width="19" height="15"/>
         <image name="pic.png" width="1024" height="1024"/>
+        <image name="remove" width="30" height="30"/>
         <image name="report" width="23" height="23"/>
         <image name="send-button_copy" width="30" height="30"/>
         <image name="social-facebook-circular-button" width="155" height="155"/>

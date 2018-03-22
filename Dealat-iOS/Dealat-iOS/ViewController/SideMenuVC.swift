@@ -140,7 +140,7 @@ class SideMenuVC: BaseVC {
     func restartHome(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
-        vc.isChangeLanguage = true
+//        vc.isChangeLanguage = true
         let nv = UINavigationController.init(rootViewController: vc)
         appDelegate.window?.rootViewController = nv
     }

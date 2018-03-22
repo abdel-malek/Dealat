@@ -780,12 +780,8 @@ extension NewAddVC{
             alert.addAction(UIAlertAction.init(title: "Delete Photo", style: .destructive, handler: { (ac) in
                 
                 self.deletePhotoImage(indexPath.row)
-                
-                
                 self.collectionView.reloadData()
             }))
-            
-            
             
             alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
             

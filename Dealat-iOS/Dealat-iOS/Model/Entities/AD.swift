@@ -39,6 +39,8 @@ class AD : BaseEntity {
     var seller_phone : String!
     var images = [IMG]()
     var is_favorite : JSON!
+    var expiry_date : String!
+    var expired_after : JSON!
     
     var vehicle = Vehicle()
     var property = Property()
@@ -143,6 +145,9 @@ class AD : BaseEntity {
         seller_phone <- map["seller_phone"]
         images <- map["images"]
         is_favorite <- map["is_favorite"]
+        expiry_date <- map["expiry_date"]
+        expired_after <- map["expired_after"]
+
         
         // 1 Vehicle
         vehicle.manufacture_date <- map["manufacture_date"]
@@ -190,13 +195,13 @@ class AD : BaseEntity {
     func getStatus() -> (String,UIImage?) {
         switch self.status.intValue {
         case 1:
-            return ("Pending".localized, nil)
+            return ("Pending".localized, #imageLiteral(resourceName: "pending"))
         case 2:
             return ("Accepted".localized,#imageLiteral(resourceName: "checked_copy"))
         case 3:
             return ("Expired".localized,#imageLiteral(resourceName: "expired_copy"))
         case 4:
-            return ("Hidden".localized,nil)
+            return ("Hidden".localized,#imageLiteral(resourceName: "hidden"))
         case 5:
             return ("Rejected".localized,#imageLiteral(resourceName: "exclamation-mark_copy"))
         case 6:

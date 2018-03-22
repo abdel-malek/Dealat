@@ -33,6 +33,7 @@ class ChatDetailsVC: BaseVC {
     override func setupViews() {
         // *** Customize GrowingTextView ***
         textView.layer.cornerRadius = 4.0
+        textView.delegate = self
         
         // *** Listen to keyboard show / hide ***
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -66,15 +67,45 @@ class ChatDetailsVC: BaseVC {
     }
     
     @objc private func keyboardWillChangeFrame(_ notification: Notification) {
+        
         if let endFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             var keyboardHeight = view.bounds.height - endFrame.origin.y
+            
+            print(keyboardHeight)
+            
             if #available(iOS 11, *) {
                 if keyboardHeight > 0 {
                     keyboardHeight = keyboardHeight - view.safeAreaInsets.bottom
                 }
             }
-            textViewBottomConstraint.constant = keyboardHeight + 8
+            
+            textViewBottomConstraint.constant = keyboardHeight
             view.layoutIfNeeded()
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print(scrollView.bounds.origin.y)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tableView{
+//        let scrollViewHeight = scrollView.frame.size.height;
+//        let scrollContentSizeHeight = scrollView.contentSize.height;
+        let scrollOffset = scrollView.contentOffset.y;
+        
+        if scrollOffset < -80{
+            self.textView.resignFirstResponder()
+        }
+
+//        if (scrollOffset == 0)
+//        {
+//            // then we are at the top
+//        }
+//        else if (scrollOffset + scrollViewHeight == scrollContentSizeHeight)
+//        {
+//            print("true")
+//        }
         }
     }
     
@@ -122,5 +153,14 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
         UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: [.curveLinear], animations: { () -> Void in
             self.view.layoutIfNeeded()
         }, completion: nil)
+    }
+    
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print("textViewDidBeginEditing")
+        
+        if !self.messages.isEmpty{
+            self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        }
     }
 }

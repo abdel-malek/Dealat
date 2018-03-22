@@ -149,6 +149,12 @@ class FilterVC: BaseTVC {
             self.tfType4.text = allString
         }
         
+        if filter.category != nil{
+            self.tfCategory.text = filter.category.category_name
+        }else{
+            self.tfCategory.text = allString
+        }
+
         
         if filter.type_model_id != nil{
             self.tfModel.text = filter.type_model_id!.flatMap({$0.name}).joined(separator: ",")
@@ -163,7 +169,7 @@ class FilterVC: BaseTVC {
         }
         
         if filter.is_new != nil{
-            self.tfStatus.text = (filter.is_automatic == 0) ? "old".localized : "new".localized
+            self.tfStatus.text = (filter.is_new == 0) ? "old".localized : "new".localized
         }else{
             self.tfStatus.text = allString
         }
@@ -174,7 +180,7 @@ class FilterVC: BaseTVC {
             self.tfYear.text = allString
         }
 
-        
+        self.filter.searchText = self.tfSearch.text
         
         self.filter.price.min = self.tfPrice1.text
         self.filter.price.max = self.tfPrice2.text
@@ -194,7 +200,6 @@ class FilterVC: BaseTVC {
         self.filter.salary.min = self.tfSalary1.text
         self.filter.salary.max = self.tfSalary2.text
 
-        
         self.tableView.reloadData()
         
     }
@@ -283,6 +288,24 @@ class FilterVC: BaseTVC {
             default: break
             }
             
+        case 3,4:
+            vc.type = 2
+            self.present(vc, animated: true, completion: nil)
+            
+        case 8:
+            if indexPath.row == 0{
+                vc.type = 4
+                self.present(vc, animated: true, completion: nil)
+            }else if indexPath.row == 1{
+                vc.type = 5
+                self.present(vc, animated: true, completion: nil)
+            }
+
+            
+        case 11:
+            vc.type = 8
+            self.present(vc, animated: true, completion: nil)
+
             
             
         default: break
@@ -304,6 +327,7 @@ class FilterVC: BaseTVC {
         switch indexPath.section {
         case 0:
             return indexPath.row != 3 ?  h : h2
+            
         case 11:
             
             if self.filter.category != nil{
@@ -320,6 +344,11 @@ class FilterVC: BaseTVC {
                 return 0
             }*/
         default:
+            
+            if indexPath.section == 2,indexPath.row == 3{
+                return 0
+            }
+            
             if self.filter.category != nil{
                 if self.filter.category.tamplate_id.intValue == indexPath.section{
                     if [(0,3),(1,4),(2,0),(2,1),(2,2),(8,2)].contains(where: ({$0.0 == indexPath.section && $0.1 == indexPath.row})){

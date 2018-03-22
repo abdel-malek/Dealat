@@ -16,6 +16,8 @@ class AdCell : UICollectionViewCell{
     @IBOutlet weak var priceLbl : UILabel!
     @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
+    @IBOutlet weak var expiry_date : UILabel!
+
     
     @IBOutlet weak var imgStatus : UIImageView!
 
@@ -53,6 +55,15 @@ class AdCell : UICollectionViewCell{
         didSet{
             self.imgStatus.image = self.ad.getStatus().1
             self.priceLbl.text = self.ad.getStatus().0
+            
+            self.expiry_date.text = nil
+            
+            if let date = self.ad.expiry_date, !date.isEmpty{
+                if let d = Date.init(fromString: date, format: .custom("yyyy-MM-dd hh:mm:ss")){
+                    self.expiry_date.text = "expires on \(d.toString(format: DateFormatType.isoDate))"
+                }
+            }
+            
         }
     }
     

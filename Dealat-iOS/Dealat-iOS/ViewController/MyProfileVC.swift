@@ -13,7 +13,8 @@ import XLPagerTabStrip
 class MyProfileVC: ButtonBarPagerTabStripViewController {
 
 //    @IBOutlet weak var shadowView: UIView!
-    let blueInstagramColor = UIColor(red: 37/255.0, green: 111/255.0, blue: 206/255.0, alpha: 1.0)
+    let blueInstagramColor = Theme.Color.red
+//    UIColor(red: 37/255.0, green: 111/255.0, blue: 206/255.0, alpha: 1.0)
     
     override func viewDidLoad() {
         // change selected bar color
@@ -23,7 +24,7 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 14)
         settings.style.selectedBarHeight = 2.0
         settings.style.buttonBarMinimumLineSpacing = 0
-        settings.style.buttonBarItemTitleColor = .black
+        settings.style.buttonBarItemTitleColor = Theme.Color.darkGrey
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0

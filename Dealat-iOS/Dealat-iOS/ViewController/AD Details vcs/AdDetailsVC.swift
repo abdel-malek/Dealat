@@ -249,6 +249,10 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.imgFav.isUserInteractionEnabled = true
             if let is_favorite = self.ad.is_favorite{
                 self.imgFav.image = (is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
+                self.favVV.backgroundColor = (is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
+                self.favVV.borderColor = Theme.Color.red
+                self.favVV.borderWidth = 1
+
             }else{
                 self.favVV.isHidden = true
             }
@@ -276,6 +280,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             }, completion: nil)
         
         self.imgFav.image = (self.ad.is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
+        self.favVV.backgroundColor = (self.ad.is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
+        self.favVV.borderColor = Theme.Color.red
+        self.favVV.borderWidth = 1
     }
     
     @objc func changeFav(){
