@@ -58,7 +58,8 @@ class FilterBaseVC: BaseVC {
 //            Provider.selectedCategory = self.embeddedViewController.selectedCategory
 //            Provider.selectedLocation = self.embeddedViewController.selectedLocation
             
-            self.embeddedViewController.getRefreshing()
+            // IMP
+            self.embeddedViewController.refreshData()//getRefreshing()
             Provider.filter = self.embeddedViewController.filter
             self.adsList.fromFilter = true
             

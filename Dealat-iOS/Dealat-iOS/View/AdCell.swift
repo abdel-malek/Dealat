@@ -17,6 +17,7 @@ class AdCell : UICollectionViewCell{
     @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
     @IBOutlet weak var expiry_date : UILabel!
+    @IBOutlet weak var featuredImg : UIImageView!
 
     
     @IBOutlet weak var imgStatus : UIImageView!
@@ -26,6 +27,14 @@ class AdCell : UICollectionViewCell{
         didSet{
             //self.img.image = UIImage.init(named: ad.main_image)
             
+            if featuredImg != nil{
+                if let feature = ad.is_featured,feature.Boolean{
+                    self.featuredImg.isHidden = false
+                }else{
+                    self.featuredImg.isHidden = true
+                }
+            }
+                
             Provider.sd_setImage(self.img, urlString: ad.main_image)
             self.nameLbl.text = ad.title
             

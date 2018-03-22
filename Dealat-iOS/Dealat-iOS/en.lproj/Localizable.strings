@@ -64,9 +64,12 @@
 "ChooseCategory" = "Choose Category";
 "Price" = "Price";
 "Price SP" = "Price (S.P)";
+"Filter" = "Filter";
 "AdNumber" = "Number";
 "AdDate" = "Date";
-
+"From" = "From";
+"To" = "To";
+"Show" = "Show";
 
 //
 "Year" = "Year";
