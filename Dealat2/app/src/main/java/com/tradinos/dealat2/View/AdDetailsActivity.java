@@ -41,6 +41,7 @@ import com.tradinos.dealat2.Model.AdProperty;
 import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
@@ -164,11 +165,11 @@ public class AdDetailsActivity extends MasterActivity {
                 showTemplate();
 
                 if (user.IsLogged())
-                    if (currentAd.getSellerId().equals(user.Get().getId())) { // user cannot contact themselves
-                        buttonFav.setVisibility(View.INVISIBLE);
-                        findViewById(R.id.buttonCall).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.line4).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.buttonMessage).setVisibility(View.INVISIBLE);
+                    if (!currentAd.getSellerId().equals(user.Get().getId())) { // user cannot contact themselves
+                        buttonFav.setVisibility(View.VISIBLE);
+                        findViewById(R.id.buttonCall).setVisibility(View.VISIBLE);
+                        findViewById(R.id.line4).setVisibility(View.VISIBLE);
+                        findViewById(R.id.buttonMessage).setVisibility(View.VISIBLE);
                     }
             }
         });
@@ -294,6 +295,14 @@ public class AdDetailsActivity extends MasterActivity {
 
                 case R.id.buttonMessage:
                     Intent intent = new Intent(mContext, ChatActivity.class);
+                    Chat chat = new Chat();
+                    chat.setAdId(currentAd.getId());
+                    chat.setSellerId(currentAd.getSellerId());
+                    chat.setSellerName(currentAd.getSellerName());
+                    chat.setUserId(user.Get().getId());
+                    chat.setUserName(user.Get().getName());
+
+                    intent.putExtra("chat" , chat);
                     startActivity(intent);
 
                     break;

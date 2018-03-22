@@ -107,15 +107,19 @@ public class AdAdapter extends BaseAdapter {
 
         if (item.isFavorite())
             holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));
+
+        if (item.isFeatured())
+            holder.imageViewFeatured.setVisibility(View.VISIBLE);
     }
 
     class ViewHolder {
-        ImageView imageView;
+        ImageView imageView, imageViewFeatured;
         TextView textViewPrice, textViewTitle, textView, textViewDate;
         ImageButton buttonFav;
 
         ViewHolder(View view) {
             imageView = view.findViewById(R.id.imageView);
+            imageViewFeatured = view.findViewById(R.id.imageViewFeatured);
             textViewPrice = view.findViewById(R.id.textViewPrice);
             textViewTitle = view.findViewById(R.id.title);
             textView = view.findViewById(R.id.textView);

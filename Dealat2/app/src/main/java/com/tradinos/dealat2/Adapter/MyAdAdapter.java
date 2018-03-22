@@ -118,11 +118,15 @@ public class MyAdAdapter extends BaseAdapter {
 
         holder.textViewStatus.setText(statusString);
         holder.imageViewStatus.setImageDrawable(ContextCompat.getDrawable(context, statusRsc));
+
+
+        if (item.isFeatured())
+            holder.imageViewFeatured.setVisibility(View.VISIBLE);
     }
 
 
     class ViewHolder {
-        private ImageView imageViewStatus, imageViewMain;
+        private ImageView imageViewStatus, imageViewMain, imageViewFeatured;
         private TextView textViewStatus, textViewTitle, textViewDate, textViewExpires;
 
         ViewHolder(View rootView) {

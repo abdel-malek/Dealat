@@ -95,7 +95,7 @@ public class ItemInfoActivity extends MasterActivity {
             spinnerBrand, spinnerModel, spinnerYear,
             spinnerEdu, spinnerSch;
 
-    private SwitchCompat switchNegotiable, switchSecondhand,
+    private SwitchCompat switchNegotiable, switchSecondhand, switchFeatured,
             switchAutomatic,
             switchFurn;
 
@@ -217,6 +217,7 @@ public class ItemInfoActivity extends MasterActivity {
         spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
+        switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
         switchSecondhand = (SwitchCompat) findViewById(R.id.switchSecondhand);
         switchAutomatic = (SwitchCompat) findViewById(R.id.switchAutomatic);
         switchFurn = (SwitchCompat) findViewById(R.id.switchFurn);
@@ -494,6 +495,9 @@ public class ItemInfoActivity extends MasterActivity {
 
             if (switchNegotiable.isChecked())
                 parameters.put("is_negotiable", "1");
+
+            if (switchFeatured.isChecked())
+                parameters.put("is_featured", "1");
 
             parameters.put("title", stringInput(editTitle));
             parameters.put("category_id", selectedCategory.getId());

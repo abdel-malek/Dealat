@@ -63,7 +63,6 @@ public class MyAdsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_my_profile, null);
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
-
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
         listView = rootView.findViewById(R.id.listView);
 

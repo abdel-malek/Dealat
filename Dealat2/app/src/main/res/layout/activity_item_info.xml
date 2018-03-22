@@ -126,6 +126,21 @@
                 android:layout_marginBottom="16dp"
                 android:background="@color/white"/>
 
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchFeatured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/labelFeatured"
+                android:textColor="@color/white"
+                android:theme="@style/switchStyle"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/white"/>
+
             <!-- Templates -->
 
             <TextView

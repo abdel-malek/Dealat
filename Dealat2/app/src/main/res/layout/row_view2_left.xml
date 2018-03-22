@@ -71,6 +71,14 @@
                 android:scaleType="centerCrop"
                 />
 
+            <ImageView
+                android:id="@+id/imageViewFeatured"
+                android:layout_width="@dimen/imageViewMedium"
+                android:layout_height="@dimen/imageViewMedium"
+                android:visibility="invisible"
+                android:src="@drawable/featured_ads"
+                />
+
             <ImageButton
                 android:id="@+id/buttonFav"
                 android:layout_width="@dimen/imageSmall"

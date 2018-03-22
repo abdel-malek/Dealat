@@ -2,6 +2,7 @@
 <TextView android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
     android:padding="16dp"
     android:textAppearance="@style/textNormal"
     android:textColor="@color/grayDark"

@@ -106,7 +106,7 @@ public class EditAdActivity extends MasterActivity {
             spinnerBrand, spinnerModel, spinnerYear,
             spinnerEdu, spinnerSch;
 
-    private SwitchCompat switchNegotiable, switchSecondhand,
+    private SwitchCompat switchNegotiable, switchSecondhand, switchFeatured,
             switchAutomatic,
             switchFurn;
 
@@ -236,6 +236,7 @@ public class EditAdActivity extends MasterActivity {
         spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
+        switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
         switchSecondhand = (SwitchCompat) findViewById(R.id.switchSecondhand);
         switchAutomatic = (SwitchCompat) findViewById(R.id.switchAutomatic);
         switchFurn = (SwitchCompat) findViewById(R.id.switchFurn);
@@ -490,6 +491,10 @@ public class EditAdActivity extends MasterActivity {
             else
                 parameters.put("is_negotiable", "0");
 
+            if (switchFeatured.isChecked())
+                parameters.put("is_featured", "1");
+            else
+                parameters.put("is_featured", "0");
 
             imagesJsonArray = new JSONArray();
             Image image;
@@ -614,6 +619,11 @@ public class EditAdActivity extends MasterActivity {
             switchNegotiable.setChecked(true);
         else
             switchNegotiable.setChecked(false);
+
+        if (currentAd.isFeatured())
+            switchFeatured.setChecked(true);
+        else
+            switchFeatured.setChecked(false);
 
         editDesc.setText(currentAd.getDescription());
 

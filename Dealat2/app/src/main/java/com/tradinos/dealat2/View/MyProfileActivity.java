@@ -10,11 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.ChatController;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Fragment.ChatsFragment;
 import com.tradinos.dealat2.Fragment.FavoritesFragment;
 import com.tradinos.dealat2.Fragment.MyAdsFragment;
 import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.R;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MyProfileActivity extends MasterActivity {
     private ViewPager mViewPager;
 
     private List<Ad> myAdsList, myFavsList;
+    private List<Chat> chats;
 
 
     @Override
@@ -49,16 +52,23 @@ public class MyProfileActivity extends MasterActivity {
 
                         myFavsList = result;
 
-                        HideProgressDialog();
+                        ChatController.getInstance(mController).getChats(new SuccessCallback<List<Chat>>() {
+                            @Override
+                            public void OnSuccess(List<Chat> result) {
+                                chats = result;
 
-                        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+                                HideProgressDialog();
 
-                        // Set up the ViewPager with the sections adapter.
-                        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-                        mViewPager.setAdapter(mSectionsPagerAdapter);
+                                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-                        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-                        tabLayout.setupWithViewPager(mViewPager);
+                                // Set up the ViewPager with the sections adapter.
+                                mViewPager = (ViewPager) findViewById(R.id.viewpager);
+                                mViewPager.setAdapter(mSectionsPagerAdapter);
+
+                                TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+                                tabLayout.setupWithViewPager(mViewPager);
+                            }
+                        });
                     }
                 });
             }
@@ -103,7 +113,7 @@ public class MyProfileActivity extends MasterActivity {
                case 1:
                    return FavoritesFragment.newInstance(myFavsList);
                case 2:
-                   return ChatsFragment.newInstance();
+                   return ChatsFragment.newInstance(chats);
            }
             return null;
         }

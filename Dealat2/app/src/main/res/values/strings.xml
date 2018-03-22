@@ -46,6 +46,7 @@
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
+    <string name="labelFeatured">Featured</string>
     <string name="labelAutomatic">Automatic</string>
     <string name="labelWithFurn">With Furniture</string>
     <string name="labelSelectBrand">Select Brand</string>
@@ -121,6 +122,7 @@
     <string name="buttonFilter">Filter</string>
     <string name="buttonShow">Show</string>
     <string name="buttonSave">Save</string>
+    <string name="buttonSend">Send</string>
 
     <string name="tabMyAds">My Ads</string>
     <string name="tabFav">Favorites</string>
