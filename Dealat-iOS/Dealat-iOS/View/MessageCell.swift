@@ -12,9 +12,12 @@ class MessageCell: BaseCell {
     
     @IBOutlet weak var vv1 : UIView!
     @IBOutlet weak var text1Lbl : ActiveLabel!
+    @IBOutlet weak var date1Lbl : ActiveLabel!
+    
     
     @IBOutlet weak var vv2 : UIView!
     @IBOutlet weak var text2Lbl : ActiveLabel!
+    @IBOutlet weak var date2Lbl : ActiveLabel!
     
     
     var message : Message!{
@@ -25,19 +28,25 @@ class MessageCell: BaseCell {
                     self.vv1.isHidden = false
                     self.vv2.isHidden = true
                     self.text1Lbl.text = m.text
+                    self.date1Lbl.text = m.created_at
+                    
                 }else{
                     self.vv2.isHidden = false
                     self.vv1.isHidden = true
                     self.text2Lbl.text = m.text
+                    self.date2Lbl.text = m.created_at
                 }
             }
             
+            self.text1Lbl.decideTextDirection()
+            self.text2Lbl.decideTextDirection()
+
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         self.text1Lbl.enabledTypes = [.url]
         self.text2Lbl.enabledTypes = [.url]
         
@@ -60,3 +69,23 @@ class MessageCell: BaseCell {
     }
     
 }
+
+extension UILabel {
+    func decideTextDirection () {
+        let tagScheme = [NSLinguisticTagScheme.language]
+        let tagger    = NSLinguisticTagger(tagSchemes: tagScheme, options: 0)
+        tagger.string = self.text
+        let lang = tagger.tag(at: 0, scheme: NSLinguisticTagScheme.language,
+                              tokenRange: nil, sentenceRange: nil)
+
+        if let kk = lang{
+            print("KKKKKK \(kk._rawValue)")
+            if kk._rawValue.contains("ar") {
+                self.textAlignment = NSTextAlignment.right
+            } else {
+                self.textAlignment = NSTextAlignment.left
+            }
+        }
+    }
+}
+

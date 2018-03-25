@@ -186,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
         // With swizzling disabled you must set the APNs token here.
-        Messaging.messaging().setAPNSToken(deviceToken, type: MessagingAPNSTokenType.prod)
+        Messaging.messaging().setAPNSToken(deviceToken, type: MessagingAPNSTokenType.sandbox)
         
         Messaging.messaging().apnsToken = deviceToken
         

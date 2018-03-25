@@ -88,7 +88,7 @@ class Provider : BaseManager {
         let us = u.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
         let url = URL.init(string: Communication.shared.baseImgsURL + us){
             
-            print("------\n" + url.absoluteString + "\n------")
+//            print("------\n" + url.absoluteString + "\n------")
             
             img.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: nil)
             

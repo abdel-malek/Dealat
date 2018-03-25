@@ -118,7 +118,13 @@ class ChatDetailsVC: BaseVC {
             self.showErrorMessage(text: "Please type a message")
         }else{
             self.showLoading()
-            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue, msg: message, callback: { (res) in
+            
+            var chat_session_id : Int!
+            if self.chat.chat_session_id != nil {
+                chat_session_id = self.chat.chat_session_id.intValue
+            }
+            
+            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message, callback: { (res) in
                 
                 self.getRefreshing()
             })

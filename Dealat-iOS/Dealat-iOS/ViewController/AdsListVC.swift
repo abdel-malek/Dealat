@@ -190,6 +190,18 @@ class AdsListVC: BaseVC {
     @IBAction func openFilter(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterBaseVC") as! FilterBaseVC
         vc.adsList = self
+        
+        var c : Cat! = nil
+        if self.cat.tamplate_id != nil{
+            c = self.cat
+        }
+        if Provider.filter.category != nil{
+            c = Provider.filter.category
+        }
+        
+        Provider.filter = FilterParams()
+        Provider.filter.category = c
+        
         let nv = UINavigationController.init(rootViewController: vc)
         self.present(nv, animated: true, completion: nil)
     }

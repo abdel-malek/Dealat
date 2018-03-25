@@ -23,11 +23,11 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-//    let baseImgsURL = "http://192.168.9.53/Dealat/"
+    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.53/Dealat/"
     
-    let baseURL = "http://dealat.tradinos.com/index.php/api"
-    let baseImgsURL = "http://dealat.tradinos.com/"
+//    let baseURL = "http://dealat.tradinos.com/index.php/api"
+//    let baseImgsURL = "http://dealat.tradinos.com/"
     
     let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
@@ -266,13 +266,14 @@ class Communication: BaseManager {
         
         if let q = query , !q.isEmpty{
             params["query"] = q
+        }else{
+            for i in FilterParams.getParams(filter){
+                params[i.key] = i.value
+            }
+            
+            FilterParams.shared = filter
         }
-        
-        for i in FilterParams.getParams(filter){
-            params[i.key] = i.value
-        }
-        
-        FilterParams.shared = filter
+            
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -793,10 +794,10 @@ class Communication: BaseManager {
     }
     
     
-    func send_msg( ad_id : Int,msg : String, callback : @escaping (Bool) -> Void){
+    func send_msg( ad_id : Int,chat_session_id : Int!, msg : String, callback : @escaping (Bool) -> Void){
         let url = URL(string: baseURL + send_msgURL)!
         
-        let params : [String : Any] = ["ad_id" : ad_id,"msg" : msg]
+        let params : [String : Any] = ["ad_id" : ad_id,"msg" : msg,"chat_session_id" : chat_session_id]
         
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             

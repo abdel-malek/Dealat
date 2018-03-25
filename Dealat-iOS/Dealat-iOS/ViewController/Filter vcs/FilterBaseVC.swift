@@ -18,7 +18,6 @@ class FilterBaseVC: BaseVC {
         super.viewDidLoad()
         
         self.title = "Filter".localized
-        Provider.filter = FilterParams()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .stop, target: self, action: #selector(self.dis))
         
