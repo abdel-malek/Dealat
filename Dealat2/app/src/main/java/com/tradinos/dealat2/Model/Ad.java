@@ -18,6 +18,7 @@ public class Ad implements Serializable {
     private String id, locationId, categoryId, publishDate;
     private String title, description, locationName, cityName;
     private String sellerId, sellerName, sellerPhone;
+    private String rejectNote;
     private String mainImageUrl, mainVideoUrl;
     private double price;
     private int template, status, showPeriod, expiresAfter;
@@ -120,6 +121,14 @@ public class Ad implements Serializable {
 
     public void setSellerPhone(String sellerPhone) {
         this.sellerPhone = sellerPhone;
+    }
+
+    public String getRejectNote() {
+        return rejectNote;
+    }
+
+    public void setRejectNote(String rejectNote) {
+        this.rejectNote = rejectNote;
     }
 
     public String getMainImageUrl() {

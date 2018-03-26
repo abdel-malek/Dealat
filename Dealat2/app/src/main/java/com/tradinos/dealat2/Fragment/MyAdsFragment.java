@@ -135,8 +135,8 @@ public class MyAdsFragment extends Fragment {
                         };
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                        builder.setMessage(R.string.areYouSureDeleteAd).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+                        builder.setMessage(R.string.areYouSureDeleteAd).setPositiveButton(getString(R.string.yes), dialogClickListener)
+                                .setNegativeButton(getString(R.string.no), dialogClickListener).show();
                     }
                 });
 

@@ -301,8 +301,9 @@ public class AdDetailsActivity extends MasterActivity {
                     chat.setSellerName(currentAd.getSellerName());
                     chat.setUserId(user.Get().getId());
                     chat.setUserName(user.Get().getName());
+                    chat.setAdTitle(currentAd.getTitle());
 
-                    intent.putExtra("chat" , chat);
+                    intent.putExtra("chat", chat);
                     startActivity(intent);
 
                     break;

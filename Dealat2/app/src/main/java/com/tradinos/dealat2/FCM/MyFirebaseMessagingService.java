@@ -11,8 +11,14 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.tradinos.dealat2.Parser.Parser.StringParser;
+import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.Model.Chat;
+import com.tradinos.dealat2.Parser.Parser.Ad.AdParser;
+import com.tradinos.dealat2.Parser.Parser.Chat.ChatParser;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.View.AdDetailsActivity;
+import com.tradinos.dealat2.View.ChatActivity;
+import com.tradinos.dealat2.View.HomeActivity;
 
 import org.json.JSONException;
 
@@ -40,11 +46,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
             try {
-                sendNotification(new StringParser().Parse(remoteMessage.getData().get("ntf_body")),remoteMessage.getData().get("ntf_text"), remoteMessage.getData().get("title"),
+                sendNotification(remoteMessage.getData().get("ntf_body"),
+                        remoteMessage.getData().get("ntf_text"), remoteMessage.getData().get("ntf_title"),
                         remoteMessage.getData().get("ntf_type"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
 
         // Check if message contains a notification payload.
@@ -58,29 +66,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [END receive_message]
 
 
-    private void sendNotification(String orderId, String txt, String title, String type) {
+    private void sendNotification(String body, String txt, String title, String type) throws JSONException {
 
         Intent intent;
 
-     /*   switch (type){
-            case "action":
-                intent = new Intent(this, ActionActivity.class);
+        switch (type) {
+            case "2":
+                Ad ad = new AdParser().Parse(body);
+                intent = new Intent(this, AdDetailsActivity.class);
+                intent.putExtra("ad", ad);
                 break;
 
-            default: //just in case
-                intent = new Intent(this, OrderDetailsActivity.class);
-                intent.putExtra("myOrder", true); //boolean to hide Reorder button
-                intent.putExtra("withLog", true);
-        }*/
+            case "1":
+                Intent intent2 = new Intent("com.dealat.MSG");
+                intent2.putExtra("msg", txt);
+                sendBroadcast(intent2);
 
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    /*    intent.putExtra("order_id", orderId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt()  , intent,
+                Chat chat = new ChatParser().Parse(body);
+                chat.setAdTitle(title);
+                intent = new Intent(this, ChatActivity.class);
+                intent.putExtra("chat", chat);
+                break;
+
+            default://just in case
+                intent = new Intent(this, HomeActivity.class);
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt(), intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.dealat_logo_white_background)
                 .setContentTitle(title)
                 .setContentText(txt)
                 .setAutoCancel(true)
@@ -90,6 +108,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(new Random().nextInt() , notificationBuilder.build());*/
+        notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
     }
 }

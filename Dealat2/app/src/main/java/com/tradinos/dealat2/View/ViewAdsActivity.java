@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,8 +14,10 @@ import android.widget.TextView;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdAdapter;
 import com.tradinos.dealat2.Controller.AdController;
+import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class ViewAdsActivity extends DrawerActivity {
 
-    public static final int ACTION_SEARCH = 15, ACTION_VIEW = 16;
+    public static final int ACTION_SEARCH = 15, ACTION_VIEW = 16, ACTION_BOOKMARK = 17;
 
     private int currentView, action;
 
@@ -41,7 +42,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
     // views
     private GridView gridView;
-    private ImageButton buttonViews;
+    private ImageButton buttonViews, buttonFav;
     private ImageView imageViewCategory;
     private TextView textViewCategory;
     private SwipeRefreshLayout refreshLayout;
@@ -107,6 +108,21 @@ public class ViewAdsActivity extends DrawerActivity {
                     getCommercialAds(selectedCategory.getId());
                 }
             });
+        } else if (action == ACTION_BOOKMARK) {
+            UserController.getInstance(mController).getBookmarkAds(getIntent().getStringExtra("bookmarkId"), new SuccessCallback<List<Ad>>() {
+                @Override
+                public void OnSuccess(List<Ad> result) {
+                    if (result.isEmpty())
+                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                    else
+                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+
+                    ads = result;
+                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+
+                    getCommercialAds(selectedCategory.getId());
+                }
+            });
         }
     }
 
@@ -119,12 +135,16 @@ public class ViewAdsActivity extends DrawerActivity {
         textViewCategory.setText(selectedCategory.getFullName());
 
         buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
+
+        if (MyApplication.getUserState() == User.REGISTERED)
+            buttonFav.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void assignUIReferences() {
         gridView = (GridView) findViewById(R.id.gridView);
         buttonViews = (ImageButton) findViewById(R.id.buttonViews);
+        buttonFav = (ImageButton) findViewById(R.id.buttonFav);
         imageViewCategory = (ImageView) findViewById(R.id.imageView);
         textViewCategory = (TextView) findViewById(R.id.textView);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
@@ -177,6 +197,21 @@ public class ViewAdsActivity extends DrawerActivity {
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
                 getAds();
+            }
+        });
+
+        buttonFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!searchParameters.isEmpty()) {
+                    UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
+                        @Override
+                        public void OnSuccess(String result) {
+                            showMessageInToast(getString(R.string.toastSaved));
+                        }
+                    });
+                }
             }
         });
     }

@@ -54,9 +54,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public int getItemViewType(int position) {
         boolean toSeller = messages.get(position).isToSeller();
         if ((toSeller && iAmSeller) || (!toSeller && !iAmSeller))
-            return ME;
-        else
             return OTHER;
+        else
+            return ME;
     }
 
     public void addMessage(Message message){

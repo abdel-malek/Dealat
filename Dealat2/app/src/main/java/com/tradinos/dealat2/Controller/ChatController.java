@@ -13,9 +13,11 @@ import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.Model.Message;
 import com.tradinos.dealat2.Parser.Parser.Chat.ChatListParser;
 import com.tradinos.dealat2.Parser.Parser.Chat.MessageListParser;
-import com.tradinos.dealat2.Parser.Parser.StringParser;
+import com.tradinos.dealat2.Parser.Parser.Chat.MessagePaser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by developer on 12.03.18.
@@ -54,12 +56,12 @@ public class ChatController extends ParentController{
         request.Call();
     }
 
-    public void sendMessage(String adId, String message, SuccessCallback<String> successCallback){
+    public void sendMessage(HashMap<String, String> parameters, SuccessCallback<Message> successCallback){
         String url = new URLBuilder(APIModel.users, "send_msg").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new MessagePaser(), successCallback,getmFaildCallback());
 
-        request.addParameter("ad_id", adId);
-        request.addParameter("msg", message);
+        for (Map.Entry<String, String> entry : parameters.entrySet())
+            request.addParameter(entry.getKey(), entry.getValue());
 
         authenticationRequired(request);
         addToHeader(request);

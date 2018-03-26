@@ -204,6 +204,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setStatus(jsonObject.getInt("status"));
         ad.setShowPeriod(jsonObject.getInt("show_period"));
 
+        if (validData(jsonObject.getString("reject_note")))
+            ad.setRejectNote(jsonObject.getString("reject_note"));
+
         ad.setPublishDate(jsonObject.getString("publish_date"));
 
         if (jsonObject.getInt("is_negotiable") == 0)
@@ -216,7 +219,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         else
             ad.setFeatured(true);
 
-        if (jsonObject.has("is_favorite")){
+        if (jsonObject.has("is_favorite")) {
             if (jsonObject.getInt("is_favorite") == 0)
                 ad.setFavorite(false);
             else

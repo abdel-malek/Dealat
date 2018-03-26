@@ -27,11 +27,14 @@ public class AdParser implements TradinosParser<Ad> {
         ad.setTitle(jsonObject.getString("title"));
         ad.setShowPeriod(jsonObject.getInt("show_period"));
 
-        if (!jsonObject.getString("description").equals("null"))
+        if (validData(jsonObject.getString("reject_note")))
+            ad.setRejectNote(jsonObject.getString("reject_note"));
+
+        if (validData(jsonObject.getString("description")))
             ad.setDescription(jsonObject.getString("description"));
 
 
-        if (!jsonObject.getString("main_image").equals("null"))
+        if (validData(jsonObject.getString("main_image")))
             ad.setMainImageUrl(jsonObject.getString("main_image"));
 
 
@@ -54,17 +57,20 @@ public class AdParser implements TradinosParser<Ad> {
         else
             ad.setFeatured(true);
 
-        if (jsonObject.has("is_favorite")){
+        if (jsonObject.has("is_favorite")) {
             if (jsonObject.getInt("is_favorite") == 0)
                 ad.setFavorite(false);
             else
                 ad.setFavorite(true);
         }
 
-
         if (jsonObject.has("expired_after"))
             ad.setExpiresAfter(jsonObject.getInt("expired_after"));
 
         return ad;
+    }
+
+    private boolean validData(String data) {
+        return !data.equals("null");
     }
 }

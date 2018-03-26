@@ -123,6 +123,7 @@
     <string name="buttonShow">Show</string>
     <string name="buttonSave">Save</string>
     <string name="buttonSend">Send</string>
+    <string name="buttonShowAds">Show Ads</string>
 
     <string name="tabMyAds">My Ads</string>
     <string name="tabFav">Favorites</string>
@@ -165,5 +166,6 @@
     <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
     <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
     <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
+    <string name="areYouSureDeleteBookmark">Are you sure you want to delete this bookmark?</string>
 
 </resources>

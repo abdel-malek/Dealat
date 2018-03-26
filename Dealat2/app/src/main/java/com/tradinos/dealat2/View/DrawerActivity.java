@@ -134,6 +134,8 @@ public abstract class DrawerActivity extends MasterActivity
                 break;
 
             case R.id.nav_savedSearches:
+                Intent intent1 = new Intent(mContext, BookmarksActivity.class);
+                startActivity(intent1);
                 break;
 
             case R.id.navLang:
