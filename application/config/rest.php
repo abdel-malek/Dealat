@@ -192,6 +192,9 @@ $config['auth_override_class_method']['items_control']['get_data_lists'] = 'none
 $config['auth_override_class_method']['items_control']['delete_images'] = 'none';
 $config['auth_override_class_method']['items_control']['item_images_upload'] = 'none';
 $config['auth_override_class_method']['items_control']['delete_images'] = 'none';
+
+$config['auth_override_class_method']['items_control']['test'] = 'none';
+
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';
@@ -227,6 +230,7 @@ $config['auth_override_class_method']['commercial_items_control']['save'] = 'non
 $config['auth_override_class_method']['commercial_items_control']['delete'] = 'none';
 $config['auth_override_class_method']['users_manage']['get_all'] = 'none';
 $config['auth_override_class_method']['users_manage']['index'] = 'none';
+$config['auth_override_class_method']['users_manage']['change_language'] = 'none';
 
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';

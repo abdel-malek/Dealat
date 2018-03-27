@@ -48,6 +48,7 @@
 	                          <th><?php echo $this->lang->line('phone') ?></th>
 	                          <th><?php echo $this->lang->line('email') ?></th>
 	                          <th><?php echo $this->lang->line('city') ?></th>
+	                          <th><?php echo $this->lang->line('ads_num') ?></th>
 	                          <th><?php echo $this->lang->line('user_status') ?></th>
 	                        </tr>
 	                      </thead>

@@ -7,20 +7,20 @@
  	var comm_TableButtons = function() {
            comm_ads_table = $("#commercial_ads_table").DataTable({
              "oLanguage": {
-				  	"sProcessing":   "جارٍ التحميل...",
-					"sLengthMenu":   "أظهر _MENU_ مدخلات",
-					"sZeroRecords":  "لم يعثر على أية سجلات",
-					"sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-					"sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
-					"sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
 					"sInfoPostFix":  "",
-					"sSearch":       "ابحث:",
+					"sSearch":       lang_array['sSearch'],
 					"sUrl":          "",
 					"oPaginate": {
-						"sFirst":    "الأول",
-						"sPrevious": "السابق",
-						"sNext":     "التالي",
-						"sLast":     "الأخير"
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
 				   }
 			 },
              "bServerSide": false,
@@ -136,14 +136,14 @@ function show_comm_ad_modal (id) {
         //   console.log(response);
         },error: function(xhr, status, error){
         	new PNotify({
-                  title: 'الرجاء الانتباه!',
-                  text: 'حدث خطأ ما الرجاء تحديث الصفحة!',
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
                   type: 'error',
                   styling: 'bootstrap3',
                   buttons: {
 				        sticker: false
 				}
-          });
+            });
         }
       });
    }
@@ -183,7 +183,7 @@ function save_comm() {
 	 	data['category_id'] = cat_id;
 	 }
   	 var url = base_url + '/api/commercial_items_control/save';
-  	 //console.log(data);
+  	 console.log(data);
      $.ajax({
 	        url: url,
 	        type: "post",
@@ -192,7 +192,7 @@ function save_comm() {
 	        success: function(response) {
 	            if(response.status == false){
 	           	  new PNotify({
-		                  title: 'الرجاء الانتباه!',
+		                  title: lang_array['attention'],
 		                  text: response.message,
 		                  type: 'error',
 		                  styling: 'bootstrap3',
@@ -202,8 +202,8 @@ function save_comm() {
 		          });
 	            }else{
 	                new PNotify({
-	                  title: 'نجاح',
-	                  text: 'تم حفظ الإعلان',
+	                  title:  lang_array['success'],
+	                  text: lang_array['ad_saved'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -216,21 +216,20 @@ function save_comm() {
 	             }
 	        },error: function(xhr, status, error){
 	        	new PNotify({
-	                  title: 'الرجاء الانتباه!',
-	                  text: 'حدث خطأ ما الرجاء تحديث الصفحة!',
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
 	                  type: 'error',
 	                  styling: 'bootstrap3',
 	                  buttons: {
 					        sticker: false
 					}
-	          });
+	             });
 	        }
 	     });
   //}
 }
 
 function delete_comm() {
-	
     data = {
     	'comm_ad_id' : current_comm_id 
     };
@@ -244,7 +243,7 @@ function delete_comm() {
 	        success: function(response) {
 	            if(response.status == false){
 	           	  new PNotify({
-		                  title: 'الرجاء الانتباه!',
+		                  title: lang_array['attention'],
 		                  text: response.message,
 		                  type: 'error',
 		                  styling: 'bootstrap3',
@@ -254,8 +253,8 @@ function delete_comm() {
 		          });
 	            }else{
 	                new PNotify({
-	                  title: 'نجاح',
-	                  text: 'تم حذف الإعلان',
+	                  title:  lang_array['success'],
+	                  text: lang_array['ad_deleted'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -268,14 +267,14 @@ function delete_comm() {
 	             }
 	        },error: function(xhr, status, error){
 	        	new PNotify({
-	                  title: 'الرجاء الانتباه!',
-	                  text: 'حدث خطأ ما الرجاء تحديث الصفحة!',
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
 	                  type: 'error',
 	                  styling: 'bootstrap3',
 	                  buttons: {
 					        sticker: false
 					}
-	          });
+	            });
 	        }
 	     });
 }

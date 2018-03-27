@@ -26,8 +26,7 @@ class Users extends MY_Model {
 				   -> row();
 	   }
     }
-	 
-	 
+
    public function register($data , $account_type = ACCOUNT_TYPE::MOBILE) {
    	    $this->load->model('data_sources/user_activation_codes');
         $user = $this->get_by(array('phone'=>$data['phone']) , true);
@@ -52,17 +51,11 @@ class Users extends MY_Model {
         }
 		
 		// send verification code to email.
-	    // if($user_activation_id){
-			// $email_sent = $this->user_activation_codes->send_code_to_email('olamahmalji@hotmail.com' , $code);
-			// if($email_sent){
-				 // $user = $this->get($new_user_id);
-                 // return $user;
-			// }else{
-				// return false;
-			// }
-		// }else{
-			// return false;
-		// }
+		// $to      = 'dealat.co@gmail.com';
+        // $subject = 'Message from Dealat';
+        // $message = 'Your Verification Code: '.$code;
+// 
+        // mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;
@@ -134,6 +127,15 @@ class Users extends MY_Model {
   {
       $this->db->select('users.* , cites.'.$lang.'_name as city_name');
 	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
+	  return parent::get();
+  }
+  
+  public function get_with_ads_info($lang)
+  {
+      $this->db->select('users.* , cites.'.$lang.'_name as city_name , COUNT(ad_id) ads_num');
+	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
+	  $this->db->join('ads', 'users.user_id = ads.user_id', 'left outer');
+	  $this->db->group_by('users.user_id' );
 	  return parent::get();
   }
 	

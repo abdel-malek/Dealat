@@ -4,21 +4,21 @@ var users_table;
 
  	var users_TableButtons = function() {
            users_table = $("#users_table").DataTable({
-             "oLanguage": {
-				  	"sProcessing":   "جارٍ التحميل...",
-					"sLengthMenu":   "أظهر _MENU_ مدخلات",
-					"sZeroRecords":  "لم يعثر على أية سجلات",
-					"sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-					"sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
-					"sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "oLanguage": {
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
 					"sInfoPostFix":  "",
-					"sSearch":       "ابحث:",
+					"sSearch":       lang_array['sSearch'],
 					"sUrl":          "",
 					"oPaginate": {
-						"sFirst":    "الأول",
-						"sPrevious": "السابق",
-						"sNext":     "التالي",
-						"sLast":     "الأخير"
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
 				   }
 			 },
              "bServerSide": false,

@@ -1425,7 +1425,7 @@ abstract class REST_Controller extends CI_Controller {
                 redirect(site_url('home_control')); //login	
             }
             else {
-                $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page'));
+                $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page') , 403);
             }
         }
     }

@@ -28,12 +28,12 @@ class Electronics_tamplate  extends MY_Model {
 				 $this->db->where($attribute. '<=' , $attribute_max , false);
                }
 		  	}else{
-		  	   if(($this->input->get($attribute) && $this->input->get($attribute) != '')){
+		  	   if(($this->input->get($attribute)!= null && $this->input->get($attribute) != '')){
 		  	     $this->db->where($attribute, $this->input->get($attribute));
 		  	   }
 		  	}
 	  }
-	}
+   }
 
    
    public function edit($ad_id)
@@ -41,9 +41,13 @@ class Electronics_tamplate  extends MY_Model {
    	 $tamplate_data = array();
      $attributes = TAMPLATES::get_tamplate_attributes(TAMPLATES::ELECTRONICS);
 	 foreach ($attributes as $attribute) {
- 	   if(($this->input->post($attribute) && $this->input->post($attribute) != '')){
-	  	   $tamplate_data[$attribute] = $this->input->post($attribute);
-	   } 
+ 	    if(($this->input->post($attribute)) != null){
+ 	       if(trim($this->input->post($attribute)) == -1 ){
+ 	       	  $tamplate_data[$attribute] = Null;
+ 	       }else{
+ 	       	  $tamplate_data[$attribute] = $this->input->post($attribute);
+ 	       }
+	    } 
 	 }
  	 $this->db->set($tamplate_data);
 	  $this->db->where('ad_id', $ad_id);

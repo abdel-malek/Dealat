@@ -25,16 +25,19 @@ class Items_control extends REST_Controller {
 	}
 	
 	public function get_item_details_get()
-	{
-		$user_id = null;
-		if($this->response->is_auth){
-			 $user_id = $this->response->is_auth;
-		}
-		$ad_id = $this->input->get('ad_id');
-		$tamplate_id = $this->input->get('template_id');
-		$deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
-		$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
-	}
+    {
+        $user_id = null;
+        if($this->session->userdata('PHP_AUTH_USER')){
+            $user_id = $this->session->userdata('LOGIN_USER_ID');
+        }
+        else if($this->response->is_auth){
+            $user_id = $this->response->is_auth;
+        }
+        $ad_id = $this->input->get('ad_id');
+        $tamplate_id = $this->input->get('template_id');
+        $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
+        $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
+    }
 
     public function post_new_item_post()
     {
@@ -138,6 +141,19 @@ class Items_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$resuts, 'message' => $this->lang->line('sucess')));
 	}
 	
+	public function get_bookmark_search_get()
+	{
+		$this->load->model('data_sources/user_search_bookmarks');
+		$bookmark_id = $this->input->get('user_bookmark_id');
+		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id);
+		$filter_data = $bookmark_info->query;
+		$filter_data_array = json_decode($filter_data , true);
+		foreach ($filter_data_array as $key => $value) {
+			$_GET[$key] = $value;
+		}
+		$this->search_get();
+	}
+	
 	public function get_data_lists_get()
 	{
 	     $this->load->model('data_sources/types');
@@ -164,6 +180,8 @@ class Items_control extends REST_Controller {
 	
 	public function action_post()
 	{
+		$this->load->model('notification');
+		$this->load->helper('notification');
 		if(!$this->input->post('ad_id')){
 		  	throw Parent_Exception('you have to provide an id');
 		}
@@ -172,22 +190,33 @@ class Items_control extends REST_Controller {
 		}else{
 			$ad_id = $this->input->post('ad_id');
 			$action = $this->input->post('action');
+			//$ad_info = $this->ads->get($ad_id);
 			if($action == 'accept'){
 				if(!$this->input->post('publish_date')){
-				  throw Parent_Exception('you have to provide a publish date');	
+				  throw new Parent_Exception('you have to provide a publish date');	
 				}else{
 				   $data = array(
 				     'publish_date'=>$this->input->post('publish_date'),
+				     'is_featured' => $this->input->post('is_featured'),
 				     'status' => STATUS::ACCEPTED 
 				   );
-				   $this->ads->save($data , $ad_id);
+				   $ad_id = $this->ads->save($data , $ad_id);
+				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
+				   $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_accepted') , $ad_info ,$this->lang->line('accepted_title')  , NotificationHelper::ACTION);
 				}
 			}else if($action == 'reject'){
-			   $this->ads->save(array('status'=>STATUS::REJECTED ) , $ad_id);
+			    $note = $this->input->post('reject_note');
+			    $this->ads->save(array('status'=>STATUS::REJECTED , 'reject_note' => $note ) , $ad_id);
+				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
+				$this->notification->send_notification($ad_info->user_id , $this->lang->line('ad_rejected') , $ad_info , $this->lang->line('rejected_title') , NotificationHelper::ACTION);
 			}else if($action == 'hide'){
-			   $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
+			    $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
+				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
+			    $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_hidden'), $ad_info , $this->lang->line('hidden_title') , NotificationHelper::ACTION);
 			}else if($action == 'show'){
-			   $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
+			    $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
+				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
+			    $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_shown') , $ad_info , $this->lang->line('shown_title')  , NotificationHelper::ACTION);
 			}else{
 			   throw Parent_Exception('No Such action'); 	
 			}
@@ -229,21 +258,15 @@ class Items_control extends REST_Controller {
    	  }
    }
    
+   
+    public function test_post()
+    {
+     $this->load->model('notification');
+	 $this->load->helper('notification');
+     $this->notification->send_notification(6 , 'Your ad is accepted' , null , 'Ad Accepted' , NotificationHelper::ACTION);
+    }
+   
 
-
-  	public function get_bookmark_search_get()
-	{
-		$this->load->model('data_sources/user_search_bookmarks');
-		$bookmark_id = $this->input->get('user_bookmark_id');
-		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id);
-		$filter_data = $bookmark_info->query;
-		$filter_data_array = json_decode($filter_data , true);
-		foreach ($filter_data_array as $key => $value) {
-			$_GET[$key] = $value;
-		}
-		$this->search_get();
-	}
-	
 	public function change_status_post()
 	{
 	  if(!($this->input->post('status') == STATUS::HIDDEN || $this->input->post('status') == STATUS::DELETED )){

@@ -67,6 +67,7 @@
   </head>
 
   <body class="nav-md">
+  	     <!-- <?php dump($this->session->userdata) ?> -->
   <div class="dim-overlay"></div>
   	<div class="loader" id="loading-image"></div>
     <div class="container body">
@@ -96,7 +97,6 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             	
               <!-- general menu -->
-               
               <div class="menu_section">
                 <h3><?php echo $this->lang->line('management') ?></h3>
  				 <ul class="nav side-menu">
@@ -125,7 +125,7 @@
               </div>
 
              <ul class="nav navbar-nav navbar-right">
-                <li class="">
+                <!-- <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class=" fa fa-angle-down"></span>
                   </a>
@@ -134,7 +134,7 @@
                   </ul>
                 </li>
                 
-                <!-- pending orders -->
+                <!-- pending ads --
                 <li role="presentation" class="dropdown pending_orders_dropdown" > 
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                   	<b></b>
@@ -145,7 +145,20 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu" style="width:400px !important; overflow-y:scroll; max-height: 400px;">
 
                   </ul>
+                </li> -->
+                 
+                <!-- language switch -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false"><?php echo $current_lang; ?><span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                       <li><a href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=ar') ?>">Arabic</a></li>
+                       <li><a href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=en') ?>">English</a></li>
+                    </ul>
                 </li>
+                
+                
               </ul> 
             </nav>
           </div>

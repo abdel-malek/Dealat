@@ -9,4 +9,10 @@ class Ad_images extends MY_Model {
     function __construct() {
 		parent::__construct();
 	}
+	
+	public function delete_ad_images($ad_id)
+	{
+		$this->db->where('ad_id' , $ad_id);
+		$this->db->delete($this->_table_name);
+	}
 }

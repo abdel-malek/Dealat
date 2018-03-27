@@ -83,7 +83,9 @@ $lang['sp'] = "SP";
 $lang['welcome'] = "Welcome";
 $lang['management'] = "Management";
 $lang['categories_management'] = "Categories Management";
-$lang['ads_management'] = "Ads Management";
+
+$lang['ads_management'] = "Users Ads Management";
+$lang['commercial_ads_manage'] = "Commercial Ads Management";
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -127,6 +129,40 @@ $lang['accept_ad'] = 'Accept';
 $lang['hide_ad'] = 'Hide';
 $lang['reject_ad'] = 'Reject';
 $lang['show_ad'] = 'Show';
+$lang['set_reject_note'] = 'Reject Note';
+$lang['write_reject_note'] = 'Write the reject reason';
+$lang['cont'] = 'Continue';
+$lang['cancel'] = 'Cancel';
+
+
+// new
+//commercial ads manage 
+$lang['commercial_ads_list'] = "Commercial Ads";
+$lang['commercial_ads_by_category'] = "Commercial Ads list by category";
+$lang['category'] = "Category";
+$lang['position'] = "Show position";
+$lang['is_main_ad'] = "Is Main ad?";
+$lang['add_new_commercial'] = "Add commercial ad to catgory";
+$lang['url'] = "URL";
+$lang['comm_image'] = "Current image";
+$lang['upload_image'] = "Upload image";
+$lang['save'] = "Save";
+$lang['delete'] = "Delete";
+$lang['is_main_note'] = "The main ad shows at the starting of the app regardless of category.";
+
+
+//users manage
+$lang['users_manage'] = "Users Management"; 
+$lang['users_list'] = "Users List";
+$lang['active'] = "Active";
+$lang['inactive'] = "Inactive";
+$lang['name'] = "Name";
+$lang['phone'] = "Phone";
+$lang['email'] = "Email";
+$lang['city'] = "City";
+$lang['user_status'] = "Status";
+$lang['none'] = "None";
+$lang['ads_num'] = "Ads Number";
 
 
 $lang['log_out'] = 'Log Out';

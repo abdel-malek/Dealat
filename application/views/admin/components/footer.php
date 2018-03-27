@@ -81,6 +81,57 @@
     <!-- jquery uploader -->
     <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
     
+    <script>
+       var lang_array=[];
+       if(lang == 'en'){
+       	 lang_array['attention'] = 'Oh no..' ;
+       	 lang_array['something_wrong'] = 'Some thing went wrong , please refresh.';
+       	 lang_array['view'] = 'View' ;
+       	 lang_array['success'] = 'Success' ;
+       	 lang_array['ad_accepted'] = 'Ad is Accepted' ;
+       	 lang_array['ad_rejected'] = 'Ad is Rejected' ;
+       	 lang_array['ad_hidden'] = 'Ad is Hidden' ;
+       	 lang_array['ad_show'] = 'Ad is Shown' ;
+       	 lang_array['ad_deleted'] = 'Ad is Deleted' ;
+       	 lang_array['ad_saved'] = 'Ad is saved' ;
+       	 //datatable
+       	 lang_array['sProcessing'] = 'Processing...' ;
+       	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
+       	 lang_array['sZeroRecords'] = 'No matching records found' ;
+       	 lang_array['sInfo'] = 'Showing _START_ to _END_ of _TOTAL_ entries' ;
+       	 lang_array['sInfoEmpty'] = 'Showing 0 to 0 of 0 entries' ;
+       	 lang_array['sInfoFiltered'] = '(filtered from _MAX_ total entries)' ;
+       	 lang_array['sSearch'] = 'Search:' ;
+       	 lang_array['sFirst'] = 'First' ;
+       	 lang_array['sPrevious'] = 'Last' ;
+       	 lang_array['sNext'] = "Next" ;
+       	 lang_array['sLast'] = 'Previous' ;
+       }else if (lang == 'ar'){
+       	 lang_array['attention'] = 'الرجاء الانتباه' ;
+       	 lang_array['something_wrong'] = 'حدث خطأ ما، الرجاء تحديث الصفحة';
+       	 lang_array['view'] = 'عرض' ;
+       	 lang_array['success'] = 'نجاح' ;
+       	 lang_array['ad_accepted'] = 'تم قبول الإعلان ' ;
+       	 lang_array['ad_rejected'] = 'تم رفض الإعلان' ;
+       	 lang_array['ad_hidden'] = 'تم إخفاء الإعلان' ;
+       	 lang_array['ad_show'] = 'تم إظهار الإعلان' ;
+       	 lang_array['ad_deleted'] = 'تم حذف الإعلان' ;
+       	 lang_array['ad_saved'] = 'تم حفظ الإعلان' ;
+       	 //datatable
+       	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
+       	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
+       	 lang_array['sZeroRecords'] = "لم يعثر على أية سجلات" ;
+       	 lang_array['sInfo'] = "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل" ;
+       	 lang_array['sInfoEmpty'] = "يعرض 0 إلى 0 من أصل 0 سجل" ;
+       	 lang_array['sInfoFiltered'] = "(منتقاة من مجموع _MAX_ مُدخل)";
+       	 lang_array['sSearch'] = "ابحث:" ;
+       	 lang_array['sFirst'] =  "الأول" ;
+       	 lang_array['sPrevious'] = "السابق" ;
+       	 lang_array['sNext'] = "التالي" ;
+       	 lang_array['sLast'] = "الأخير" ;
+       }
+    </script>
+    
     <!-- my js -->
     <script src="<?php echo base_url() ?>admin_assets/js/general.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/ad.js"></script>

@@ -3,7 +3,11 @@ var status_val = $("#status_select").val();
 var status_name = $("#status_select").find("option:selected").text();
 var templates_attrs;
 var status_array;
+var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
+
  $(document).ready(function() {
+   
+    console.log(lang_array);
  	
  	// get templates attrbutes. 
  	 $.ajax({
@@ -15,14 +19,14 @@ var status_array;
             status_array =  response.data.status;
         },error: function(xhr, status, error){
         	new PNotify({
-                  title: 'الرجاء الانتباه!',
-                  text: 'حدث خطأ ما الرجاء تحديث الصفحة!',
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
                   type: 'error',
                   styling: 'bootstrap3',
                   buttons: {
 				        sticker: false
 				}
-          });
+            });
         }
       });
  	
@@ -30,20 +34,20 @@ var status_array;
  	var ads_TableButtons = function() {
            ads_table = $("#ads_table").DataTable({
              "oLanguage": {
-				  	"sProcessing":   "جارٍ التحميل...",
-					"sLengthMenu":   "أظهر _MENU_ مدخلات",
-					"sZeroRecords":  "لم يعثر على أية سجلات",
-					"sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-					"sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
-					"sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
 					"sInfoPostFix":  "",
-					"sSearch":       "ابحث:",
+					"sSearch":       lang_array['sSearch'],
 					"sUrl":          "",
 					"oPaginate": {
-						"sFirst":    "الأول",
-						"sPrevious": "السابق",
-						"sNext":     "التالي",
-						"sLast":     "الأخير"
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
 				   }
 			 },
              "bServerSide": false,
@@ -54,7 +58,7 @@ var status_array;
                     "targets": -1, // details
                     "data": null,
                     "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[8] + '\');" type="button" class="btn btn-primary" >View</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[8] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         } 
 	          ],
@@ -102,17 +106,18 @@ var status_array;
  });
  
  function show_ad_details (ad_id , tamplate_id) {
- 	  console.log(ad_id);
- 	  console.log(tamplate_id);
+ 	 // console.log(ad_id);
+ 	//  console.log(tamplate_id);
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
+ 	  $('.ads_details  .template_info').css('display', 'none');
  	  var url =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
         url: url,
         type: "get",
         dataType: "json",
         success: function(response) {
-            console.log(response.data);   
+           // console.log(response.data);   
             $item_info = response.data;
             //fill basic info
             $('.ads_details  #ad_title').html($item_info['title']);
@@ -157,6 +162,7 @@ var status_array;
             if($item_info['is_featured'] == 1){
             	$('.ads_details  #ad_featured').html('Yes');
             }
+            $('.ads_details  #select_featured').val($item_info['is_featured']);
             
             // fill temaplet info
             var template_attr = templates_attrs[tamplate_id];
@@ -192,14 +198,16 @@ var status_array;
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             
             //show hide btns
-            if($item_info['status'] ==  1){
+            if($item_info['status'] ==  PENDING){
             	 $('.ads_details  #accept_btn').css('display', 'inline');
             	 $('.ads_details  #reject_btn').css('display', 'inline');
+            	 $('.ads_details  .featured_div').css('display', 'none');
+            	 $('.ads_details  .featured_select_div').css('display', 'inline');
             }
-            if($item_info['status'] ==  2){
+            if($item_info['status'] ==  ACCEPTED){
             	 $('.ads_details  #hide_btn').css('display', 'inline');
             }
-            if($item_info['status'] ==  4){
+            if($item_info['status'] ==  HIDDEN){
             	 $('.ads_details  #show_btn').css('display', 'inline');
             }
             
@@ -210,14 +218,14 @@ var status_array;
             }, 200);
         },error: function(xhr, status, error){
         	new PNotify({
-                  title: 'Oh no, Error',
-                  text: 'Some thing went wrong.',
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
                   type: 'error',
                   styling: 'bootstrap3',
                   buttons: {
 				        sticker: false
 				}
-          });
+            });
         }
       });
  }
@@ -234,12 +242,6 @@ var status_array;
  
  function perform_action (action) {
  	 var can_proceed = true; 
- 	 // if(action = 'reject'){
- 	 	// if (confirm("Are you sure you want to reject this ad?") == true){
- 	 		// can_proceed = false;
- 	 	// }
- 	 // }
- 	// console.log(can_proceed);
  	 if(can_proceed == true){
  	    var data = {
 	     	action : action,
@@ -247,8 +249,11 @@ var status_array;
 	     };
 	     if(action == 'accept'){
 	     	data['publish_date'] = moment().format('YYYY-MM-DD HH:mm:ss');
+	     	data['is_featured'] =  $('.ads_details  #select_featured').val();
+	     }else if(action == 'reject'){
+	     	data['reject_note'] = $('.reject_model  #reject_note').val();
 	     }
-	     
+	     console.log(data);
 	     $.ajax({
 	        url: base_url + '/api/items_control/action/format/json',
 	        type: "post",
@@ -257,7 +262,7 @@ var status_array;
 	        success: function(response) {
 	            if(response.status == false){
 	               new PNotify({
-	                  title: 'Oh no, Error',
+	                  title: lang_array['attention'],
 	                  text:  response.message,
 	                  type: 'error',
 	                  styling: 'bootstrap3',
@@ -268,8 +273,8 @@ var status_array;
 	            }else{
 	              if(action == 'accept'){
 	                new PNotify({
-	                  title: 'Success',
-	                  text: 'Ad is Accepted.',
+	                  title: lang_array['success'] ,
+	                  text: lang_array['ad_accepted'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -278,18 +283,29 @@ var status_array;
 	               });
 	              }else if (action == 'reject'){
 	              	 new PNotify({
-	                  title: 'Success',
-	                  text: 'Ad is Rejected.',
+	                  title: lang_array['success'],
+	                  text: lang_array['ad_rejected'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
 					        sticker: false
 					 }
 	               });
+	                $('.reject_model').modal('hide');
 	              }else if(action == 'hide' ){
 	                new PNotify({
-	                  title: 'Success',
-	                  text: 'Ad is Hidden.',
+	                  title: lang_array['success'],
+	                  text: lang_array['ad_hidden'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	              }else if(action == 'show' ){
+	                new PNotify({
+	                  title: lang_array['success'],
+	                  text: lang_array['ad_show'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -302,8 +318,8 @@ var status_array;
 	         $('.ads_details').modal('hide');
 	        },error: function(xhr, status, error){
 	        	new PNotify({
-	                  title: 'الرجاء الانتباه!',
-	                  text: 'حدث خطأ ما الرجاء تحديث الصفحة!',
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
 	                  type: 'error',
 	                  styling: 'bootstrap3',
 	                  buttons: {

@@ -82,7 +82,8 @@ $lang['sp'] = "ل.س";
 $lang['welcome'] = "مرحبًا";
 $lang['management'] = "الإدارة";
 $lang['categories_management'] = "إدارة الأصناف";
-$lang['ads_management'] = "إدارة الإعلانات";
+$lang['ads_management'] = "إدارة إعلانات المستخدمين";
+$lang['commercial_ads_manage'] = "إدارة الإعلانات التجارية";
 
 
 //ads manage
@@ -91,6 +92,7 @@ $lang['status'] = "حالة الإعلان";
 $lang['all'] = "الكل";
 $lang['created_at'] = "تاريخ الإنشاء";
 $lang['tamplate_name'] = 'من نوع';
+$lang['publish_date'] = 'تاريخ النشر';
 $lang['title'] = 'العنوان';
 $lang['price'] = 'السعر';
 $lang['location'] = 'الموقع';
@@ -128,6 +130,39 @@ $lang['accept_ad'] = 'قبول الأعلان';
 $lang['hide_ad'] = 'إخفاء الأعلان';
 $lang['reject_ad'] = 'رفض الأعلان';
 $lang['show_ad'] = 'إظهار الأعلان';
+//new
+$lang['set_reject_note'] = 'ملاحظة الرفض';
+$lang['write_reject_note'] = 'اكتب اسباب الرفض هنا';
+$lang['cont'] = 'اكمل';
+$lang['cancel'] = 'تراجع';
+
+//commercial ads manage 
+$lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
+$lang['commercial_ads_by_category'] = "قائمة الإعلانات التجارية حسب الصنف";
+$lang['category'] = "الصنف";
+$lang['position'] = "مكان العرض";
+$lang['is_main_ad'] = "إعلان رئيسي؟";
+$lang['add_new_commercial'] = "إضافة إعلان تجاري إلى الصنف";
+$lang['url'] = "الرابط";
+$lang['comm_image'] = "صورة الإعلان الحالية";
+$lang['upload_image'] = "تحميل صورة  ";
+$lang['save'] = "حفظ";
+$lang['delete'] = "حذف";
+$lang['is_main_note'] = "الإعلان الرئيسي يظهرعند بداية فتح التطبيق بغض النظر عن التنصيف المختار";
+
+
+//users manage
+$lang['users_manage'] = "إدارة المستخدمين"; 
+$lang['users_list'] = "قائمة المستخدمين";
+$lang['active'] = "فعّال";
+$lang['inactive'] = "غير فعّال";
+$lang['name'] = "الاسم";
+$lang['phone'] = "الهاتف";
+$lang['email'] = "البريد الالكتروني";
+$lang['city'] = "المدينة";
+$lang['user_status'] = "الحالة";
+$lang['none'] = "لا يوجد";
+$lang['ads_num'] = "عدد إعلاناته";
 
 
 $lang['log_out'] = 'تسجيل خروج';

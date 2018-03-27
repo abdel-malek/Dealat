@@ -88,6 +88,22 @@ class Ads extends MY_Model {
 		}
 		return $q;
 	}
+
+    public function get_info($ad_id ,$lang)
+    {
+        $this->db->select('ads.* ,
+		                  categories.'.$lang.'_name as category_name ,
+		                  c.'.$lang.'_name as parent_category_name ,
+		                  categories.tamplate_id,
+		                  locations.'.$lang.'_name as location_name ,
+		                  cites.'.$lang.'_name as  city_name,
+		                 ');
+		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+		return parent::get($ad_id , true);
+    }
 	
 	public function get_ad_images($ad_id)
 	{
@@ -133,6 +149,14 @@ class Ads extends MY_Model {
 				$this->ad_images->save($data);
 			}
         }
+        
+		//delete unwanted images 
+		if($this->input->post('deleted_images')){
+	   	  $deleted_images =  json_decode($this -> input -> post('deleted_images'), true);
+		  $this->delete_images($deleted_images);
+	    }
+        
+		
 		$this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
 			if($main_image != null){
@@ -174,7 +198,7 @@ class Ads extends MY_Model {
 	   	  $data['title'] = $this->input->post('title');
 	   }
 	   if($this->input->post('description')){
-	   	 if(trim($this->input->post('description')) == "" || trim($this->input->post('description')) == -1){
+	   	 if(trim($this->input->post('description')) == -1){
 	   	 	 $data['description'] = Null;
 	   	 }else{
 	   	 	 $data['description'] = $this->input->post('description');
@@ -189,18 +213,17 @@ class Ads extends MY_Model {
 		  $this->db->where_in('image'  , $deleted_images);
 		  $this->db->where('ad_id'  , $ad_id);
 		  $this->db->delete('ad_images');
-		  if(isset($data['main_image'] )){
-		  	 $this->delete_images($deleted_images , $data['main_image']);
-		  }else{
-		  	 $this->delete_images($deleted_images);
-		  }
+		  $this->delete_images($deleted_images);
 	   }
 	   
 	   //add new second images
 	   if($this->input->post('images')){
+	   	  $this->load->model('data_sources/ad_images');
 	   	   $ads_images_paths = json_decode($this -> input -> post('images'), true);
 		   if($ads_images_paths!= null && is_array($ads_images_paths)){
         	$this->load->model('data_sources/ad_images');
+			// delete all ad's images. 
+			$this->ad_images->delete_ad_images($ad_id);
         	foreach ($ads_images_paths as $image) {
 				$data_images = array('ad_id'=>$ad_id , 'image'=>$image);
 				$this->ad_images->save($data_images);
@@ -238,35 +261,33 @@ class Ads extends MY_Model {
   {
   	  $ok = true;
       foreach ($images_array as $image_path) {
-      	if($main_image != null &&  $main_image != $image_path){
       	  $ok = unlink(PUBPATH.$image_path);	
-      	}
       }
 	  return $ok;
   }
 
-  public function serach_ads($query_string ,$lang , $category_id = null)
-  {
- 	 $this->db->select('ads.* ,
-	                   categories.'.$lang.'_name as category_name ,
-	                   c.'.$lang.'_name as parent_category_name ,
-	                  ');
-     $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
-	 $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	 // if(strlen($query_string) <  3){
-	 	// $this->db->like('ads.title', $query_string); 
-		// $this->db->or_like('ads.description', $query_string); 
+  // public function serach_ads($query_string ,$lang , $category_id = null)
+  // {
+ 	 // $this->db->select('ads.* ,
+	                   // categories.'.$lang.'_name as category_name ,
+	                   // c.'.$lang.'_name as parent_category_name ,
+	                  // ');
+     // $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+	 // $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	 // // if(strlen($query_string) <  3){
+	 	// // $this->db->like('ads.title', $query_string); 
+		// // $this->db->or_like('ads.description', $query_string); 
+	 // // }
+	// // else{
+	 	// $this->db->where('MATCH(ads.title) AGAINST (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
+	    // $this->db->or_where('MATCH(ads.description) AGAINST  (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
+	 // //}
+     // $this->db->where('status' , STATUS::ACCEPTED);
+	 // if($category_id){
+	    // $this->db->where("(categories.category_id = '$category_id' OR categories.parent_id = '$category_id' OR c.parent_id = '$category_id')");
 	 // }
-	// else{
-	 	$this->db->where('MATCH(ads.title) AGAINST (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
-	    $this->db->or_where('MATCH(ads.description) AGAINST  (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
-	 //}
-     $this->db->where('status' , STATUS::ACCEPTED);
-	 if($category_id){
-	    $this->db->where("(categories.category_id = '$category_id' OR categories.parent_id = '$category_id' OR c.parent_id = '$category_id')");
-	 }
-	 return parent::get();
-  }
+	 // return parent::get();
+  // }
  
   public function serach_with_filter($lang , $query_string = null , $category_id = null)
   {
@@ -318,8 +339,9 @@ class Ads extends MY_Model {
 		 	$this->db->like('ads.title', $query_string); 
 			$this->db->or_like('ads.description', $query_string); 
 	   	}else{
-		 	$this->db->where("MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
-		    $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
+		 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
+		 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
+		  //  $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
 		}
 	     // if($category_id != null){
 		 	// $this->db->where('ads.category_id' , $category_id);

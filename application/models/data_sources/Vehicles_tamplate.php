@@ -11,7 +11,6 @@ class Vehicles_tamplate extends MY_Model {
 	{
 	  $attributes = TAMPLATES::get_tamplate_attributes(TAMPLATES::VEHICLES);
 	  foreach ($attributes as $attribute) {
-		  //	dump($attribute)
 		  	if(TAMPLATES::get_filter_type($attribute) == 'array'){ // array
 		  	   if(($this->input->get($attribute) && $this->input->get($attribute) != '')){
 		  	   	  $attr_value = $this->input->get($attribute);
@@ -30,7 +29,7 @@ class Vehicles_tamplate extends MY_Model {
 				 $this->db->where($attribute. '<=' , $attribute_max , false);
                }
 		  	}else{
-		  	   if(($this->input->get($attribute) && $this->input->get($attribute) != '')){
+		  	   if(($this->input->get($attribute)!= null && $this->input->get($attribute) != '')){
 		  	     $this->db->where($attribute, $this->input->get($attribute));
 		  	   }
 		  	}
@@ -43,13 +42,13 @@ class Vehicles_tamplate extends MY_Model {
    	 $tamplate_data = array();
      $attributes = TAMPLATES::get_tamplate_attributes(TAMPLATES::VEHICLES);
 	 foreach ($attributes as $attribute) {
- 	    if(($this->input->post($attribute))){
+ 	   if(($this->input->post($attribute)) != null){
  	       if(trim($this->input->post($attribute)) == -1 ){
  	       	  $tamplate_data[$attribute] = Null;
  	       }else{
  	       	  $tamplate_data[$attribute] = $this->input->post($attribute);
  	       }
-	    }    
+	    }     
 	 }
  	  if($tamplate_data){
 	  	  $this->db->set($tamplate_data);

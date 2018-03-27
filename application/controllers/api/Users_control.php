@@ -11,22 +11,6 @@ class Users_control extends REST_Controller {
 		$this->data['city'] = $this->response->city;
 		$this->load->model('data_sources/users');
 	}
-	
-	
-	public function test_get()
-	{
-		header('Content-type: application/json');
-		dump($this->input->get());
-		$json = json_encode($this->input->get());
-		dump($json);
-		$data_array = json_decode($json , true);
-		foreach ($data_array as $key => $value) {
-			$_GET[$key.'4'] = $value;
-		}
-		dump($_GET);
-		$new_param = $this->input->get('chat_session_id4');
-		dump($new_param);
-	}
 
 	public function index_get() {
 	}
@@ -86,7 +70,8 @@ class Users_control extends REST_Controller {
         	 'os'=> $this->input->post('os'),
         	 'user_id'=> $this->current_user->user_id
 			);
-			$saved_token = $this->user_tokens->save($data);
+			$check = $this->user_tokens->check($data['user_id']  , $data['token']);
+			$saved_token = $this->user_tokens->save($data  , $check);
 			if($saved_token){
 				$this->response(array('status' => true, 'data' => $saved_token, "message" => $this->lang->line('sucess')));
 			}else{
@@ -152,7 +137,8 @@ class Users_control extends REST_Controller {
 		}else if($this->input->get('ad_id')){
 		   $ad_id = $this->input->get('ad_id');
 		   $user_id = $this->current_user->user_id;
-		   $chat_session_info = $this->chat_sessions->get_by(array('ad_id' => $ad_id , 'user_id' =>$user_id ) , true , 1);
+		   $chat_session_info = $this->chat_sessions->check_by_seller_or_user($ad_id , $user_id);
+		  // dump($chat_session_info);
 		   if($chat_session_info){
 		   	   $chat_id = $chat_session_info->chat_session_id;
 			   $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
@@ -171,21 +157,35 @@ class Users_control extends REST_Controller {
 	public function send_msg_post()
 	{
 	    $this->form_validation->set_rules('msg', 'msg', 'required');  
-	    $this->form_validation->set_rules('ad_id', 'ad_id', 'required');  
+		$this->form_validation->set_rules('ad_id', 'ad_id', 'required');  
 	    if (!$this->form_validation->run()) {
 	       throw new Validation_Exception(validation_errors());
-		}else{
+		}else{	
 			$this->load->model('data_sources/messages');
 			$ad_id = $this->input->post('ad_id');
+			$chat_session_id = $this->input->post('chat_session_id');
 			$msg = $this->input->post('msg');
 		    $user_id = $this->current_user->user_id;
-		    $msg_id = $this->messages->send_msg($ad_id , $msg , $user_id);
+		    $msg_id = $this->messages->send_msg($ad_id ,$chat_session_id ,  $msg , $user_id);
 			if($msg_id){
-				$this->response(array('status' => true, 'data' => $msg_id, "message" => $this->lang->line('sucess')));
+				$msg_info = $this->messages->get($msg_id);
+				$this->response(array('status' => true, 'data' => $msg_info, "message" => $this->lang->line('sucess')));
 			}else{
 				$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed')));
 			}
 		}
+	}
+	
+	public function upload_image_post()
+	{
+	  $image_name = date('m-d-Y_hia').'-'.'1';
+      $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
+      if (isset($image['image'])) {
+          $image_path =  PERSONAL_IMAGES_PATH.$image['image']['upload_data']['file_name'];
+          $this -> response(array('status' => true, 'data' => $image_path, 'message' => $this->lang->line('sucess')));
+      }else{
+           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+      }
 	}
 	
 	public function edit_user_info_post()
@@ -204,6 +204,9 @@ class Users_control extends REST_Controller {
 		 if($this->input->post('city_id')){
 		 	$data['city_id'] = $this->input->post('city_id');
 		 }
+	     if($this->input->post('image')){
+	  	   $data['personal_image'] = $this->input->post('image');
+	     }
 		  $image_name = date('m-d-Y_hia').'-'.'1';
 	      $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
 	      if (isset($image['personal_image'])) {
@@ -231,8 +234,20 @@ class Users_control extends REST_Controller {
 	{
 		$this->load->model('data_sources/user_search_bookmarks');
 		$user_id = $this->current_user->user_id;
-		$bookmarks = $this->user_search_bookmarks->get_by(array('user_id' => $user_id));
+		$bookmarks = $this->user_search_bookmarks->get_by(array('user_id' => $user_id , 'deleted' => 0));
 		$this->response(array('status' => true, 'data' => $bookmarks, "message" => $this->lang->line('sucess')));
+	}
+	
+	public function delete_bookmark_post()
+	{
+		if(!$this->input->post('user_bookmark_id')){
+		   throw new Parent_Exception('user_bookmark_id is requierd');
+		}else{
+		    $mark_id = $this->input->post('user_bookmark_id');
+			$this->load->model('data_sources/user_search_bookmarks');
+			$deletd_mark_id = $this->user_search_bookmarks->save(array('deleted' => 1) , $mark_id);
+			$this->response(array('status' => true, 'data' => $deletd_mark_id, "message" => $this->lang->line('sucess')));
+		}
 	}
 	
 	public function rate_seller_post()
@@ -257,6 +272,4 @@ class Users_control extends REST_Controller {
 		 }
 	   }
 	}
-	
-
 }

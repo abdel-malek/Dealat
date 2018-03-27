@@ -8,9 +8,10 @@ class STATUS{
 	const REJECTED = 5;
 	const DELETED = 6;
 	
-    public static function get_name($id)
+    public static function get_name($id , $lang)
 	{
-			switch($id) {
+		if($lang == 'en'){
+		  switch($id) {
 			case 1 :
 				return 'pending';
 				break;
@@ -31,7 +32,31 @@ class STATUS{
 				break;
 			default :
 				return 'no net';
+			}	
+		}else{
+		  switch($id) {
+			case 1 :
+				return 'قيد الانتظار';
+				break;
+			case 2 :
+				return 'مقبول';
+				break;
+			case 3 :
+				return 'منتهي';
+				break;
+			case 4 :
+				return 'مخفي';
+				break;
+			case 5 :
+				return 'مرفوض';
+				break;
+			case 6 :
+				return 'محذوف';
+				break;
+			default :
+				return 'غير محدد';
 			}
+		}
 	}
 	
 	public static function get_list()

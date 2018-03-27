@@ -88,7 +88,25 @@
         <input type="hidden"  id="post_id"/>
         <div class="modal-footer">
           <button   onclick="save_comm()"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="delete_comm()"  id="reject_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button   onclick="delete_comm()" id="reject_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
+          	 data-toggle="modal" data-target=".delete_modal"
+		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         <span aria-hidden="true">&times;</span>
+		       </button>
+		            </div>
+		            <div class="modal-body text-center">
+		                <h6>Are you sure you want to delete this ad?</h6>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="submit" class="btn button2 submit"  onclick="delete_comm()">Yes</button>
+		            </div>
+		        </div>
+		    </div>
+         </div> -->
         </div>
       </div>
     </div>

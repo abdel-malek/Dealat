@@ -74,10 +74,20 @@
 		      	         </div>
 		             </div>
 		             
-		             <div class="form-group">
+		             <div class="form-group featured_div">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_featured') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_featured'>No</label>
+		      	         </div>
+		             </div>
+		             
+		             <div class="form-group featured_select_div" style="display: none">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_featured') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <select id="select_featured" class='form-control' style="margin-bottom: 10px;">
+		      	           	  <option value="1">Yes</option>
+		      	           	  <option value="0">No</option>
+		      	           </select>
 		      	         </div>
 		             </div>
 		             
@@ -143,7 +153,7 @@
 		      	         </div>
 		             </div>
 		             
-		             <div class="form-group template_info properties_info">
+		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('rooms_num') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_rooms_num'><?php echo $this->lang->line('not_set') ?></label>
@@ -232,10 +242,10 @@
           </div>
           <button style="display: none" onclick="perform_action('hide')" id="hide_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('hide_ad') ?></button>
           <button style="display: none" onclick="perform_action('show')" id="show_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('show_ad') ?></button>
-          <button style="display: none"  onclick="perform_action('reject')"  id="reject_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('reject_ad') ?></button>
+          <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
           <button style="display: none"  onclick="perform_action('accept')"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('accept_ad') ?></button>
         </div>
-
+        <?php $this->load->view('admin/ads/reject_ad_modal') ?>
       </div>
     </div>
   </div>

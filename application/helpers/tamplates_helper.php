@@ -106,9 +106,9 @@ class TAMPLATES {
 		
 	}
 
-	public static function get_tamplate_name($id) {
-
-		switch($id) {
+	public static function get_tamplate_name($id , $lang) {
+      if($lang == 'en'){
+      	 switch($id) {
 			case 1 :
 				return 'vehicles';
 				break;
@@ -145,6 +145,45 @@ class TAMPLATES {
 			default :
 				return 'basic';
 		}
+      }else {
+      	 switch($id) {
+			case 1 :
+				return 'مركبات';
+				break;
+			case 2 :
+				return 'عقارات';
+				break;
+			case 3 :
+				return 'موبايلات واكسسواراتها';
+				break;
+			case 4 :
+				return 'الكترونيات';
+				break;
+			case 5 :
+				return 'موضة وجمال';
+				break;
+			case 6 :
+				return 'مستلزمات أطفال';
+				break;
+			case 7 :
+				return 'معدّات رياضية';
+				break;
+			case 8 :
+				return 'وظائف';
+				break;
+			case 9 :
+				return 'تجارة وصناعة';
+				break;
+			case 10 :
+				return 'خدمات';
+				break;
+			case 11 :
+				return 'أساسي';
+				break;
+			default :
+				return 'أساسي';
+		}
+      }
 	}
 
 }

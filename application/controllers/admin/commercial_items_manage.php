@@ -15,6 +15,11 @@ class Commercial_items_manage extends REST_Controller {
 	public function index_get()
 	{
 		$this->load->model('data_sources/categories');
+	    if($this->data['lang'] == 'en'){
+			$this -> data['current_lang'] = 'English';
+		}else{
+		   $this -> data['current_lang'] = 'Arabic';
+		}
 		$this->data['main_categories'] = $this->categories->get_main_categories($this->data['lang']);
 	    $this -> data['subview'] = 'admin/commercial_ads/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);

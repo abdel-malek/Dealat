@@ -18,7 +18,6 @@ class Users_control_web extends REST_Controller {
 	  $current_lang = $this->input->get('language');
 	  $this->session->set_userdata(array('language' => $current_lang));
 	  redirect('home_control');
-	 // $this->response(array('status' => true, 'data' =>'', 'message' => ''));
 	}
 	
     public function register_post()
@@ -76,9 +75,6 @@ class Users_control_web extends REST_Controller {
 	
 	public function logout_get()
     {
-        // Remove local Facebook session
-      // $this->facebook->destroy_session();
-
        // Remove user data from session
        $this->session->unset_userdata('PHP_AUTH_USER');
 

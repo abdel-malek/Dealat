@@ -12,20 +12,21 @@ class Commercial_items_control extends REST_Controller {
 	}
 	
 	public function get_commercial_items_get()
-	{
-		if($this->input->get('category_id') == null){
-			throw new Parent_Exception('category id is required');
-		}else{
-			$category_id = $this->input->get('category_id');
-			$ads = null;
-			if ($this->response->format == "json"){ // for mobile
-				$ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 1);
-			}else{ // for website
-			    $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 0);
-			}
-		  $this->response(array('status' => true, 'data' =>$ads, 'message' => ''));
-		}
-	}
+    {
+        if($this->input->get('category_id') == null){
+            throw new Parent_Exception('category id is required');
+        }else{
+            $category_id = $this->input->get('category_id');
+            $ads = null;
+            
+            if ($this->input->get('from_web')){ // for web
+                $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 0);
+            }else{ // for mobile
+                $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 1);
+            }
+          $this->response(array('status' => true, 'data' =>$ads, 'message' => ''));
+        }
+    }
 	
 	public function get_info_get()
 	{
@@ -88,7 +89,7 @@ class Commercial_items_control extends REST_Controller {
       if($this->input->post('position')){
 	  	 $data['position'] = $this->input->post('position');
 	  }
-	  if($this->input->post('is_main')){
+	  if($this->input->post('is_main')!= null){
 	  	 $data['is_main'] = $this->input->post('is_main');
 	  }
       if($this->input->post('image')){
