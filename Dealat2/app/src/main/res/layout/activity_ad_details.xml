@@ -92,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="bottom"
+            android:layoutDirection="ltr"
             app:tabBackground="@drawable/tab_style"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"

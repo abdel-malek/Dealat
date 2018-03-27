@@ -45,6 +45,7 @@ public class UserController extends ParentController {
         String url = new URLBuilder(APIModel.users, "get_countries").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new ItemListParser("city_id"), successCallback,getmFaildCallback());
 
+        //addToHeader(request);
         request.Call();
     }
 
@@ -153,7 +154,7 @@ public class UserController extends ParentController {
     }
 
     public void getBookmarkAds(String id, SuccessCallback<List<Ad>> successCallback){
-        String url = new URLBuilder(APIModel.users, "get_bookmark_search").getURL(getmContext());
+        String url = new URLBuilder(APIModel.ads, "get_bookmark_search").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
 
         request.addParameter("user_bookmark_id", id);

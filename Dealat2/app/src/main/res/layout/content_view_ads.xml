@@ -109,9 +109,8 @@
             android:layout_height="@dimen/imageXSmall"
             android:layout_margin="4dp"
             android:visibility="invisible"
-            android:scaleType="fitCenter"
             android:background="@null"
-            android:src="@drawable/star_copy"
+            android:src="@drawable/ic_star_border_white_24dp"
             />
     </LinearLayout>
 

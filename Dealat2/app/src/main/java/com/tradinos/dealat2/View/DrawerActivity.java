@@ -1,6 +1,8 @@
 package com.tradinos.dealat2.View;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -28,6 +30,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -78,10 +81,10 @@ public abstract class DrawerActivity extends MasterActivity
                 buttonRegister.setVisibility(View.GONE);
 
                 User user = new CurrentAndroidUser(this).Get();
-                if (user != null){
+                if (user != null) {
                     navigationView.getHeaderView(0).findViewById(R.id.containerUser).setVisibility(View.VISIBLE);
                     textViewName.setText(user.getName());
-                 //   textViewCity.setText(user.getCityName());
+                    //   textViewCity.setText(user.getCityName());
                 }
 
                 break;
@@ -115,7 +118,7 @@ public abstract class DrawerActivity extends MasterActivity
 
         switch (id) {
             case R.id.nav_home:
-                if (!(mContext instanceof HomeActivity)){
+                if (!(mContext instanceof HomeActivity)) {
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -138,7 +141,12 @@ public abstract class DrawerActivity extends MasterActivity
                 startActivity(intent1);
                 break;
 
-            case R.id.navLang:
+            case R.id.navAr:
+                setLocale("ar");
+                break;
+
+            case R.id.navEn:
+                setLocale("en");
                 break;
 
             case R.id.navSettings:
@@ -188,5 +196,25 @@ public abstract class DrawerActivity extends MasterActivity
                 }, 100, 5000);
             }
         });
+    }
+
+    private void setLocale(String lang) {
+
+        Locale myLocale = new Locale(lang);
+        Configuration conf = getResources().getConfiguration();
+        conf.setLocale(myLocale);
+        MyApplication.setLocale(myLocale);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            Locale.setDefault(conf.getLocales().get(0));
+        else
+            Locale.setDefault(conf.locale);
+
+        mContext.getResources().updateConfiguration(conf,
+                getResources().getDisplayMetrics());
+
+        Intent refresh = new Intent(this, HomeActivity.class);
+        startActivity(refresh);
+        finish();
     }
 }

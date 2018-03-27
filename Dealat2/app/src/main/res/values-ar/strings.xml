@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ديلات</string>
+    <string name="app_name">Dealat</string>
 
     <string name="wait">يرجى الانتظار..</string>
     <string name="connection_problem">يوجد مشكلة باتصال الانترنت لديك، تحقق من الشبكة ثم أعد المحاولة</string>
 
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+
+    <string name="arabic">عربي</string>
+    <string name="english">English</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,20 +18,20 @@
     <!-- Ad Status -->
     <string name="statusPending">قيد الانتظار</string>
     <string name="statusAccepted">مقبول</string>
-    <string name="statusExpired">Expired</string>
+    <string name="statusExpired">منتهي الصلاحية</string>
     <string name="statusDeleted">محذوف</string>
     <string name="statusHidden">مخفي</string>
     <string name="statusRejected">مرفوض</string>
 
     <!-- Show Periods -->
     <string name="periodWeek">أسبوع</string>
-    <string name="periodTenDays">عشر أيام</string>
+    <string name="periodTenDays">عشرة أيام</string>
     <string name="periodMonth">شهر</string>
 
 
     <!-- Internal Strings -->
     <string name="all">الكل</string>
-    <string name="allCategories">All Categories</string>
+    <string name="allCategories">كل الأصناف</string>
     <string name="today">اليوم</string>
     <string name="yesterday">الأمس</string>
     <string name="expires">ينتهي بـ</string>
@@ -42,21 +45,21 @@
     <!-- Views -->
     <string name="labelPleaseSelectCity">من فضلك، اختر محافظتك</string>
     <string name="labelSelectCity">اختر محافظة</string>
-    <string name="labelchooseCategory">Choose a Category</string>
-    <string name="labelNegotiable">Negotiable</string>
+    <string name="labelchooseCategory">اختر صنفاً</string>
+    <string name="labelNegotiable">قابل للتفاوض</string>
     <string name="labelSecondhand">مستعمل</string>
-    <string name="labelFeatured">Featured</string>
-    <string name="labelAutomatic">Automatic</string>
+    <string name="labelFeatured">متميّز</string>
+    <string name="labelAutomatic">أوتوماتيك</string>
     <string name="labelWithFurn">مفروش</string>
-    <string name="labelSelectBrand">اختر ماركة</string>
+    <string name="labelSelectBrand">اختر نوع</string>
     <string name="labelSelectModel">اختر موديل</string>
     <string name="labelSelectEdu">اختر نوع التعليم</string>
-    <string name="labelSelectSch">اختر نوع الدوام</string>
+    <string name="labelSelectSch">اختر نوع العمل</string>
     <string name="labelSelectManufactureYear">اختر سنة التصنيع</string>
     <string name="labelShowPeriod">فترة عرض الإعلان</string>
     <string name="labelTo">من</string>
     <string name="labelFrom">إلى</string>
-    <string name="labelSelectTransmission">اختر نوع التنقيل</string>
+    <string name="labelSelectTransmission">اختر نوع ناقل الحركة</string>
     <string name="labelFurnished">مفروش</string>
     <string name="labelAdSettings">إعدادات الإعلان</string>
     <string name="labelViewDetails">عرض تفاصيل الأعلان</string>
@@ -68,21 +71,21 @@
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
     <string name="labelLocation">الموقع</string>
-    <string name="labelTitle">العنوان</string>
-    <string name="labelBrand">الماركة</string>
+    <string name="labelTitle">عنوان الإعلان</string>
+    <string name="labelBrand">النوع</string>
     <string name="labelModel">الموديل</string>
     <string name="labelKilo">كيلومتراج</string>
     <string name="labelManufactureYear">سنة التصنيع</string>
-    <string name="labelTransmission">نوع التنقيل</string>
+    <string name="labelTransmission">ناقل الحركة</string>
     <string name="labelState">الحالة</string>
     <string name="labelPropertyState">حالة العقار</string>
 
     <string name="labelSpace">المساحة</string>
     <string name="labelRoom">عدد الغرف</string>
-    <string name="labelFloor">عدد الطوابق</string>
+    <string name="labelFloor">الطابق</string>
 
-    <string name="labelEdu">التعليم</string>
-    <string name="labelSchedule">الدوام</string>
+    <string name="labelEdu">نوع التعليم</string>
+    <string name="labelSchedule">نوع العمل</string>
     <string name="labelExperience">الخبرة</string>
     <string name="labelSalary">الراتب</string>
     <string name="labelSize">الحجم</string>
@@ -92,9 +95,9 @@
     <string name="hintPhone">رقم الموبايل</string>
     <string name="hintName">الاسم</string>
     <string name="hintVerificationCode">رمز التحقق</string>
-    <string name="hintChooseLocation">اختر الموقع</string>
+    <string name="hintChooseLocation">اختر موقع</string>
     <string name="hintSearch">ابحث</string>
-    <string name="hintTitle">العنوان</string>
+    <string name="hintTitle">عنوان الإعلان</string>
     <string name="hintDesc">الوصف...</string>
     <string name="hintPrice">السعر (ل.س)</string>
     <string name="hintExperience">الخبرة</string>
@@ -102,14 +105,14 @@
     <string name="hintKilometer">كيلومتراج</string>
     <string name="hintSpace">المساحة</string>
     <string name="hintRooms">عدد الغرف</string>
-    <string name="hintFloors">عدد الطوابق</string>
+    <string name="hintFloors">الطابق</string>
     <string name="hintState">الحالة</string>
     <string name="hintSalary">الراتب</string>
     <string name="hintWriteMsg">اكتب رسالتك...</string>
 
     <string name="buttonRegister">تسجيل</string>
     <string name="buttonSkip">تخطّي</string>
-    <string name="buttonVerify">تحقق</string>
+    <string name="buttonVerify">تفعيل الحساب</string>
     <string name="buttonSell">إضافة عرض</string>
     <string name="buttonTakePhoto">التقط صورة</string>
     <string name="buttonDone">تم</string>
@@ -118,7 +121,7 @@
     <string name="buttonMarkAsMain">تحديد كصورة رئيسية</string>
     <string name="buttonDelete">حذف</string>
     <string name="buttonBack">رجوع</string>
-    <string name="buttonFilter">Filter</string>
+    <string name="buttonFilter">بحث</string>
     <string name="buttonShow">عرض</string>
     <string name="buttonSave">حفظ</string>
     <string name="buttonSend">إرسال</string>
@@ -129,21 +132,21 @@
 
 
     <!-- Drawer -->
-    <string name="navHome">الصفحة الرئيسية</string>
-    <string name="navMyProfile">صفحتي الشخصية</string>
+    <string name="navHome">الرئيسية</string>
+    <string name="navMyProfile">ملفي الشخصي</string>
     <string name="navMyAds">إعلاناتي</string>
-    <string name="navCategories">Categories</string>
-    <string name="navSavedSearches">Saved Searches</string>
-    <string name="navLanguage">لغة التطبيق</string>
+    <string name="navCategories">المجموعات</string>
+    <string name="navSavedSearches">عمليات البحث المحفوظة</string>
+    <string name="navLanguage">تغيير اللغة</string>
     <string name="navSettings">الإعدادات</string>
     <string name="navHelp">مساعدة</string>
 
 
     <!-- Errors -->
     <string name="errorRequired">هذا الحقل مطلوب</string>
-    <string name="errorCodeLenght">Code must have 6 characters</string>
-    <string name="errorPhoneLength">Phone number must have 9 digits</string>
-    <string name="errorCategory">Category can\'t be changed!</string>
+    <string name="errorCodeLenght">رمز التحقق يحب أن يحوي ٦ خانات!</string>
+    <string name="errorPhoneLength">رقم الموبايل يحب أن يحوي ٩ خانات!</string>
+    <string name="errorCategory">لايمكن تغيير صنف الإعلان</string>
 
 
     <!-- Toasts -->
@@ -152,18 +155,21 @@
     <string name="toastUnfavorite">تمت إزالة الإعلان من المفضلة</string>
     <string name="toastSaved">تم حفظ التعديلات</string>
     <string name="toastAdDeleted">تم حذف الإعلان</string>
+    <string name="toastBookmark">تم حفظ البحث</string>
+    <string name="toastUnBookmark">تمت إزالة البحث</string>
 
     <string name="toastMaxImages">لايمكنك اختيار صور أكثر</string>
-    <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
-    <string name="toastRegister">You need to register first!</string>
-    <string name="toastVerify">You need to verify your number first!</string>
+    <string name="toastWaitTillUploading">يرجى الانتظار حتى يتم تحميل الصور!</string>
+    <string name="toastRegister">يجب تسجيل الدخول أولاً!</string>
+    <string name="toastVerify">يجب أن تفعّل حسابك أولاً!</string>
 
 
     <!-- Alert Dialog -->
     <string name="areYouSureDiscard">هل أنت متأكد أنك تريد تجاهل هذا الإعلان؟</string>
-    <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
-    <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
+    <string name="areYouSureRegister">لقد تمّ تسجيل دخولك من جهاز آخر سابقاً، هل تريد الاحتفاظ بالتسجيل من كلا الجهازين؟</string>
+    <string name="areYouSureEdit">هذا الإعلان سيكون قيد الانتظار حتى يوافق المدير على التعديلات، هل أنت متأكد أنك تريد تعديله؟</string>
     <string name="areYouSureDeleteAd">هل أنت متأكد أنك تريد حذف هذا الإعلان؟</string>
+    <string name="areYouSureDeleteSearch">هل أنت متأكد أنك تريد حذف هذا البحث؟</string>
 
 
 </resources>

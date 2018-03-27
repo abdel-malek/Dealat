@@ -59,6 +59,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layoutDirection="ltr"
             app:tabTextColor="@color/white"
             app:tabSelectedTextColor="@color/red"
             app:tabBackground="@drawable/tab_myprofile"

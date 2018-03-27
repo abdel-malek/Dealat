@@ -100,6 +100,11 @@ public class ChatActivity extends MasterActivity {
     @Override
     public void showData() {
         ((TextView) findViewById(R.id.title)).setText(currentChat.getAdTitle());
+
+        if (amISeller())
+            ((TextView) findViewById(R.id.textName)).setText(currentChat.getUserName());
+        else
+            ((TextView) findViewById(R.id.textName)).setText(currentChat.getSellerName());
     }
 
     @Override

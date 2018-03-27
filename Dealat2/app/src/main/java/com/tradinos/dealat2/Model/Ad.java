@@ -36,7 +36,7 @@ public class Ad implements Serializable {
     }
 
     public String getFormattedId(){
-        return "#"+String.format(Locale.ENGLISH,"%04d", Integer.valueOf(this.id));
+        return String.format(Locale.ENGLISH,"%04d", Integer.valueOf(this.id));
     }
 
     public void setId(String id) {

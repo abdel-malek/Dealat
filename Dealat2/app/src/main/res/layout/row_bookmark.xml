@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:onClick="onClick"
-            android:text="@string/buttonShowAds"
+            android:text="@string/buttonShow"
             android:textColor="@color/white"
             android:textAppearance="@style/textNormal"
             android:background="@drawable/rounded_corner_red"

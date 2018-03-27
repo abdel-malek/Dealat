@@ -4,23 +4,41 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
     >
-    <TextView
-        android:id="@+id/title"
+
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="16dp"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:gravity="center"
         android:padding="16dp"
-        android:textColor="@color/white"
-        android:textAppearance="@style/textHeadline"
         android:background="@color/red"
-        />
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/white"
+            android:textAppearance="@style/textHeadline"
+            />
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grayLight"
+            android:textAppearance="@style/textNormal"
+            />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/container2"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/container"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:scrollbars="none"

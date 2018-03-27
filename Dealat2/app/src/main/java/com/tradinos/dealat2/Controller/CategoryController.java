@@ -35,6 +35,7 @@ public class CategoryController extends ParentController {
         String url = new URLBuilder(APIModel.categories, "get_all").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new CategoryListParser(), successCallback,getmFaildCallback());
 
+        addToHeader(request);
         request.Call();
     }
 }

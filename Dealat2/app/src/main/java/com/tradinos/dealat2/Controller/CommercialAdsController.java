@@ -37,6 +37,7 @@ public class CommercialAdsController extends ParentController {
 
         request.addParameter("category_id", categoryId);
 
+        addToHeader(request);
         request.Call();
     }
 }

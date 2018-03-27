@@ -6,10 +6,23 @@
     <include layout="@layout/layout_list_empty"
         />
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:padding="16dp"
+        android:text="@string/navSavedSearches"
+        android:textAppearance="@style/textHeadline"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"

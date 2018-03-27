@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ public class ViewAdsActivity extends DrawerActivity {
     public static final int ACTION_SEARCH = 15, ACTION_VIEW = 16, ACTION_BOOKMARK = 17;
 
     private int currentView, action;
+    private String bookmarkId;
 
     private Category selectedCategory;
     private int currentTemplate;
@@ -73,6 +76,9 @@ public class ViewAdsActivity extends DrawerActivity {
     private void getAds() {
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();
+
+        if (bookmarkId == null)
+            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
 
         if (action == ACTION_SEARCH) {
             AdController.getInstance(mController).search(searchParameters, new SuccessCallback<List<Ad>>() {
@@ -177,6 +183,12 @@ public class ViewAdsActivity extends DrawerActivity {
                 if (!selectedCategory.isMain())
                     searchParameters.put("category_id", selectedCategory.getId());
 
+                bookmarkId = null;
+                Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+                mAnimation.setDuration(800);
+                buttonFav.startAnimation(mAnimation);
+                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
+
                 action = ACTION_SEARCH;
 
                 getAds();
@@ -185,8 +197,11 @@ public class ViewAdsActivity extends DrawerActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty())
+                if (newText.isEmpty()){
+                    searchView.setIconified(true);
                     searchParameters.remove("query");
+                    bookmarkId = null;
+                }
 
                 return false;
             }
@@ -203,12 +218,33 @@ public class ViewAdsActivity extends DrawerActivity {
         buttonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (bookmarkId == null){
+                    if (!searchParameters.isEmpty()) {
+                        UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                showMessageInToast(getString(R.string.toastBookmark));
+                                bookmarkId = result;
 
-                if (!searchParameters.isEmpty()) {
-                    UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
+                                Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+                                mAnimation.setDuration(800);
+                                buttonFav.startAnimation(mAnimation);
+                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_white_24dp));
+                            }
+                        });
+                    }
+                }
+                else {
+                    UserController.getInstance(mController).deleteBookmark(bookmarkId, new SuccessCallback<String>() {
                         @Override
                         public void OnSuccess(String result) {
-                            showMessageInToast(getString(R.string.toastSaved));
+                            showMessageInToast(R.string.toastUnBookmark);
+                            bookmarkId = null;
+
+                            Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+                            mAnimation.setDuration(800);
+                            buttonFav.startAnimation(mAnimation);
+                            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
                         }
                     });
                 }
@@ -232,6 +268,10 @@ public class ViewAdsActivity extends DrawerActivity {
             if (requestCode == ACTION_SEARCH) {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 searchParameters = (HashMap<String, String>) data.getSerializableExtra("parameters");
+                bookmarkId = null;
+                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
+                searchView.setQuery("", false);
+                searchView.setIconified(true);
 
                 if (currentTemplate != selectedCategory.getTemplateId()) {
                     imageViewCategory.setImageDrawable(ContextCompat.getDrawable(mContext,

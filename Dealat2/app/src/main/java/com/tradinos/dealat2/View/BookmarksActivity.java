@@ -95,7 +95,6 @@ public class BookmarksActivity extends MasterActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
-                                ShowProgressDialog();
                                 UserController.getInstance(mController).deleteBookmark(bookmarks.get(position).getId(), new SuccessCallback<String>() {
                                     @Override
                                     public void OnSuccess(String result) {
@@ -105,8 +104,7 @@ public class BookmarksActivity extends MasterActivity {
                                         if (bookmarks.isEmpty())
                                             layoutEmpty.setVisibility(View.VISIBLE);
 
-                                        HideProgressDialog();
-                                        showMessageInToast("deleted");
+                                        showMessageInToast(R.string.toastUnBookmark);
                                     }
                                 });
                         }
@@ -114,7 +112,7 @@ public class BookmarksActivity extends MasterActivity {
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
-                builder.setMessage(R.string.areYouSureDeleteBookmark).setPositiveButton(getString(R.string.yes), dialogClickListener)
+                builder.setMessage(R.string.areYouSureDeleteSearch).setPositiveButton(getString(R.string.yes), dialogClickListener)
                         .setNegativeButton(getString(R.string.no), dialogClickListener).show();
                 break;
 

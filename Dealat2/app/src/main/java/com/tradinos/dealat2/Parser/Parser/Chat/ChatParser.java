@@ -24,18 +24,18 @@ public class ChatParser implements TradinosParser<Chat> {
         chat.setSellerId(jsonObject.getString("seller_id"));
         chat.setChatId(jsonObject.getString("chat_session_id"));
 
-        if (jsonObject.has("ad_title")){ // these don't exist in Chat notification
-            chat.setUserName(jsonObject.getString("user_name"));
-            chat.setSellerName(jsonObject.getString("seller_name"));
+        chat.setUserName(jsonObject.getString("user_name"));
+        chat.setSellerName(jsonObject.getString("seller_name"));
 
-            if (validData(jsonObject.getString("user_pic")))
-                chat.setUserPic(jsonObject.getString("user_pic"));
+        if (validData(jsonObject.getString("user_pic")))
+            chat.setUserPic(jsonObject.getString("user_pic"));
 
-            if (validData(jsonObject.getString("seller_pic")))
-                chat.setSellerPic(jsonObject.getString("seller_pic"));
+        if (validData(jsonObject.getString("seller_pic")))
+            chat.setSellerPic(jsonObject.getString("seller_pic"));
 
+        if (jsonObject.has("ad_title")) // these don't exist in Chat notification
             chat.setAdTitle(jsonObject.getString("ad_title"));
-        }
+
 
         if (jsonObject.getInt("user_seen") == 1)
             chat.setUserSeen(true);

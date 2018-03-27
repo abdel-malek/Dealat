@@ -3,8 +3,10 @@ package com.tradinos.dealat2.View;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -70,9 +72,17 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     @Override
     public void setContentView(int viewRes) {
         mContext = this;
-      /*  Locale myLocale = new Locale("ar");
+
         Configuration conf = getResources().getConfiguration();
-        conf.setLocale(myLocale);
+
+        if (MyApplication.getLocale() == null) { // if there's a language assigned before take it// or take device language
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                MyApplication.setLocale(conf.getLocales().get(0));
+            else
+                MyApplication.setLocale(conf.locale);
+        }
+
+        conf.setLocale(MyApplication.getLocale());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             Locale.setDefault(conf.getLocales().get(0));
@@ -80,27 +90,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             Locale.setDefault(conf.locale);
 
         mContext.getResources().updateConfiguration(conf,
-                getResources().getDisplayMetrics());*/
-        // Configuration conf = getResources().getConfiguration();
-
-   /*    if(MyApplication.getLocale() == null) { // if there's a language assigned before take it// or take device language
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                MyApplication.setLocale(conf.getLocales().get(0));
-            else
-                MyApplication.setLocale(conf.locale);
-        }
-        else{
-            Locale.setDefault(MyApplication.getLocale());
-            conf.setLocale(MyApplication.getLocale());
-
-          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                mContext.createConfigurationContext(conf);
-            else{*/
-   /*    conf.locale = MyApplication.getLocale();
-        mContext.getResources().updateConfiguration(conf,
                 getResources().getDisplayMetrics());
-        // }
-    }*/
 
         this.contentViewRes = viewRes;
     }
@@ -160,7 +150,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         });
     }
 
-    protected void showSnackBar(String message){
+    protected void showSnackBar(String message) {
         showMessageInToast(message);
     }
 
@@ -431,7 +421,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dateFormat.parse(stringDate));
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + periods[period-1]);
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + periods[period - 1]);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             Date expiryDate = calendar.getTime();
