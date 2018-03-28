@@ -1,12 +1,9 @@
 package com.tradinos.dealat2.View;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,13 +11,10 @@ import android.widget.ListView;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.MainCatAdapter;
 import com.tradinos.dealat2.Controller.CategoryController;
-import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Category;
-import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,8 +68,6 @@ public class HomeActivity extends DrawerActivity {
                         intent.putExtra("category", mainCategory.getSubCategories().get(i));
                         intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
 
-                       // Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this).toBundle();
-                      //  startActivity(intent, bundle);
                         startActivity(intent);
                     }
                 });
@@ -139,8 +131,6 @@ public class HomeActivity extends DrawerActivity {
                 intent.putExtra("category", mainCategory);
                 intent.putExtra("action", SubCategoriesActivity.ACTION_SELL);
 
-                // Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this).toBundle();
-                // startActivity(intent, bundle);
                 startActivity(intent);
             }
         }

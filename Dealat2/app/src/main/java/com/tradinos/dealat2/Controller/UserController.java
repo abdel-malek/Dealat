@@ -82,6 +82,17 @@ public class UserController extends ParentController {
         request.Call();
     }
 
+    public void logOut(String token, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.users, "logout").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("token", token);
+
+        authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
+
     public void getUserInfo(SuccessCallback<String> successCallback){
         String url = new URLBuilder(APIModel.users, "get_my_info").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());

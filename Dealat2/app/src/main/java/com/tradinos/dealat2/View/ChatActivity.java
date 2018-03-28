@@ -1,5 +1,6 @@
 package com.tradinos.dealat2.View;
 
+import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -172,7 +175,7 @@ public class ChatActivity extends MasterActivity {
 
     }
 
-    public class ChatReceiver extends BroadcastReceiver{
+    public class ChatReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -208,9 +211,25 @@ public class ChatActivity extends MasterActivity {
                 TransitionManager.beginDelayedTransition(viewGroup, slide);
                 buttonSend.setVisibility(View.VISIBLE);
             } else { // Hide
-                slide = new Slide(Gravity.LEFT);
-                TransitionManager.beginDelayedTransition(viewGroup, slide);
-                buttonSend.setVisibility(View.GONE);
+                TranslateAnimation animation = new TranslateAnimation(0, buttonSend.getWidth(), 0, 0);
+                animation.setDuration(200);
+                buttonSend.startAnimation(animation);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        buttonSend.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
         } else {
             if (visibility == SHOW)

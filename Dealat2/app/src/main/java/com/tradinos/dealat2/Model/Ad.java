@@ -222,4 +222,8 @@ public class Ad implements Serializable {
    public String getImagePath(int i){
        return this.imagesPaths.get(i);
    }
+
+   public boolean isRejected(){
+       return this.status == REJECTED;
+   }
 }

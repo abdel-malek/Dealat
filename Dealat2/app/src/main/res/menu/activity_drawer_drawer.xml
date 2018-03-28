@@ -7,15 +7,21 @@
             android:id="@+id/nav_home"
             android:title="@string/navHome" />
         <item
-            android:id="@+id/nav_MyProfile"
-            android:title="@string/navMyProfile"
+            android:id="@+id/nav_MyAds"
+            android:title="@string/tabMyAds"
             android:visible="false"
             />
         <item
-            android:id="@+id/nav_MyAds"
-            android:title="@string/navMyAds"
+            android:id="@+id/nav_Fav"
+            android:title="@string/tabFav"
             android:visible="false"
             />
+        <item
+            android:id="@+id/nav_Chats"
+            android:title="@string/tabChats"
+            android:visible="false"
+            />
+
         <item
             android:id="@+id/nav_categories"
             android:title="@string/navCategories"
@@ -49,6 +55,10 @@
             android:id="@+id/navSettings"
             android:title="@string/navSettings"
             />
+
+        <item
+            android:id="@+id/navLogout"
+            android:title="@string/navLogout" />
 
         <item
             android:id="@+id/navHelp"

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="arrow_back" type="drawable">@drawable/ic_arrow_forward_white_36dp</item>
+    <item name="arrowNext" type="drawable">@drawable/ic_keyboard_arrow_left_red_24dp</item>
+</resources>

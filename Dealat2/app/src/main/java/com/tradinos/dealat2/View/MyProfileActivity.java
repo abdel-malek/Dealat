@@ -40,6 +40,8 @@ public class MyProfileActivity extends MasterActivity {
 
     @Override
     public void getData() {
+        final int page = getIntent().getIntExtra("page", 0);
+
         ShowProgressDialog();
         UserController.getInstance(mController).getMyAds(new SuccessCallback<List<Ad>>() {
             @Override
@@ -67,6 +69,8 @@ public class MyProfileActivity extends MasterActivity {
 
                                 TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
                                 tabLayout.setupWithViewPager(mViewPager);
+
+                                mViewPager.setCurrentItem(page);
                             }
                         });
                     }

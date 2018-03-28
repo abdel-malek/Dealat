@@ -23,6 +23,9 @@
     <string name="statusHidden">مخفي</string>
     <string name="statusRejected">مرفوض</string>
 
+    <string name="labelAdStatus">حالة الإعلان:</string>
+    <string name="labelRejectReason">سبب الرفض:</string>
+
     <!-- Show Periods -->
     <string name="periodWeek">أسبوع</string>
     <string name="periodTenDays">عشرة أيام</string>
@@ -62,11 +65,11 @@
     <string name="labelSelectTransmission">اختر نوع ناقل الحركة</string>
     <string name="labelFurnished">مفروش</string>
     <string name="labelAdSettings">إعدادات الإعلان</string>
-    <string name="labelViewDetails">عرض تفاصيل الأعلان</string>
+    <string name="labelViewDetails">عرض تفاصيل الإعلان</string>
     <string name="labelEditAd">تعديل الإعلان</string>
     <string name="labelDeleteAd">حذف الإعلان</string>
 
-    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي ستستقبله عن طريق رسائل SMS، أو اضغط تخطى.</string>
+    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطى.</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
@@ -133,13 +136,12 @@
 
     <!-- Drawer -->
     <string name="navHome">الرئيسية</string>
-    <string name="navMyProfile">ملفي الشخصي</string>
-    <string name="navMyAds">إعلاناتي</string>
-    <string name="navCategories">المجموعات</string>
+    <string name="navCategories">الأصناف</string>
     <string name="navSavedSearches">عمليات البحث المحفوظة</string>
     <string name="navLanguage">تغيير اللغة</string>
     <string name="navSettings">الإعدادات</string>
     <string name="navHelp">مساعدة</string>
+    <string name="navLogout">تسجيل الخروج</string>
 
 
     <!-- Errors -->
@@ -170,6 +172,7 @@
     <string name="areYouSureEdit">هذا الإعلان سيكون قيد الانتظار حتى يوافق المدير على التعديلات، هل أنت متأكد أنك تريد تعديله؟</string>
     <string name="areYouSureDeleteAd">هل أنت متأكد أنك تريد حذف هذا الإعلان؟</string>
     <string name="areYouSureDeleteSearch">هل أنت متأكد أنك تريد حذف هذا البحث؟</string>
+    <string name="logout_messg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
 
 
 </resources>

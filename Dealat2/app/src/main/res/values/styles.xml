@@ -37,19 +37,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
-
-        <item name="android:windowEnterTransition">
-            @transition/slide_ordering
-        </item>
-
-        <item name="android:windowExitTransition">
-            @transition/slide_ordering
-        </item>
-
-        <item name="android:windowReenterTransition">
-            @transition/slide_ordering
-        </item>
-        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
     <style name="noTitleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

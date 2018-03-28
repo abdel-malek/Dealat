@@ -23,6 +23,7 @@
             app:tabBackground="@drawable/tab_selector"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"
+            android:layoutDirection="ltr"
             />
     </FrameLayout>
 </merge>

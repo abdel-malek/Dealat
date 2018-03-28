@@ -152,25 +152,36 @@ public class AdDetailsActivity extends MasterActivity {
 
                 textViewDesc.setText(result.getDescription());
 
-                if (MyApplication.getUserState() == User.REGISTERED) {
-
-                    textViewPhone.setVisibility(View.VISIBLE);
-
-                    if (currentAd.isFavorite())
-                        buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
-                }
-
                 HideProgressDialog();
                 fillTemplate(result);
                 showTemplate();
 
-                if (user.IsLogged())
-                    if (!currentAd.getSellerId().equals(user.Get().getId())) { // user cannot contact themselves
+                if (user.IsLogged()) {
+                    textViewPhone.setVisibility(View.VISIBLE);
+
+                    if (currentAd.getSellerId().equals(user.Get().getId())) { // view info for Seller
+
+                        ((TextView) findViewById(R.id.textViewStatus)).setText(getStringStatus(currentAd.getStatus()));
+                        findViewById(R.id.container4).setVisibility(View.VISIBLE);
+
+                        if (currentAd.isRejected()){
+                            ((TextView)findViewById(R.id.textViewNote)).setText(currentAd.getRejectNote());
+                            findViewById(R.id.container5).setVisibility(View.VISIBLE);
+                        }
+
+                    } else { // user cannot contact themselves
+                        if (currentAd.isFavorite())
+                            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
+
                         buttonFav.setVisibility(View.VISIBLE);
+
                         findViewById(R.id.buttonCall).setVisibility(View.VISIBLE);
                         findViewById(R.id.line4).setVisibility(View.VISIBLE);
                         findViewById(R.id.buttonMessage).setVisibility(View.VISIBLE);
+                        findViewById(R.id.line5).setVisibility(View.VISIBLE);
+                        findViewById(R.id.buttonReport).setVisibility(View.VISIBLE);
                     }
+                }
             }
         });
     }
@@ -481,6 +492,28 @@ public class AdDetailsActivity extends MasterActivity {
             case Category.INDUSTRIES:
                 line1.setVisibility(View.VISIBLE);
                 containerUsage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private String getStringStatus(int status) {
+        switch (status) {
+            case Ad.PENDING:
+                return getString(R.string.statusPending);
+
+            case Ad.ACCEPTED:
+                return getString(R.string.statusAccepted);
+
+            case Ad.EXPIRED:
+                return getString(R.string.statusExpired);
+
+            case Ad.HIDDEN:
+                return getString(R.string.statusHidden);
+
+            case Ad.REJECTED:
+                return getString(R.string.statusRejected);
+
+            default:
+                return "";
         }
     }
 }

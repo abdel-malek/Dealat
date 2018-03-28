@@ -18,10 +18,63 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+
+            <LinearLayout
+                android:id="@+id/container4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/labelAdStatus"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    />
+                <TextView
+                    android:id="@+id/textViewStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grayDark"
+                    android:textAppearance="@style/textNormal"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/labelRejectReason"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grayDark"
+                    android:textAppearance="@style/textNormal"
+                    />
+            </LinearLayout>
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="348dp">
+        android:layout_height="348dp"
+        android:layoutDirection="ltr"
+        >
 
         <RelativeLayout
             android:id="@+id/containerPager"
@@ -154,7 +207,7 @@
                 >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/textNormal"
@@ -841,7 +894,9 @@
         android:layout_alignParentBottom="true"
         android:background="@color/red"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+        >
 
         <ImageButton
             android:id="@+id/buttonCall"
@@ -874,11 +929,12 @@
             android:src="@drawable/ic_textsms_white_24dp" />
 
         <View
+            android:id="@+id/line5"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:background="@color/white" />
 
         <ImageButton
@@ -886,7 +942,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:onClick="onClick"
             android:background="@null"
             android:src="@drawable/ic_flag_white_24dp" />

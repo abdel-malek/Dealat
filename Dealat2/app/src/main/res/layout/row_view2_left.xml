@@ -62,6 +62,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="@dimen/view2Height"
+            android:layoutDirection="ltr"
             >
 
             <ImageView

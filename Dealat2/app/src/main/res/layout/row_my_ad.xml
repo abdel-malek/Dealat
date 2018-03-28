@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layoutDirection="ltr"
         >
 
         <FrameLayout
@@ -45,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/imageViewCheck"
                 android:textAppearance="@style/textNormal"
+                android:textAlignment="viewStart"
                 />
 
             <ImageView
@@ -60,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageViewCheck"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textAlignment="viewStart"
@@ -70,7 +72,7 @@
 
             <TextView
                 android:id="@+id/textDate"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_below="@+id/title"

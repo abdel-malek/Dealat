@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:ems="6"
             android:inputType="number"
+            android:textDirection="anyRtl"
             style="@style/editTextWhite"
             android:backgroundTint="@color/white"
             />

@@ -1,5 +1,7 @@
 package com.tradinos.dealat2.View;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,17 +20,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.CommercialAdapter;
 import com.tradinos.dealat2.Controller.CommercialAdsController;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
+import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.CommercialAd;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.SplashActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +62,7 @@ public abstract class DrawerActivity extends MasterActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView1);
         Button buttonRegister = navigationView.getHeaderView(0).findViewById(R.id.buttonRegister);
         TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
         TextView textViewCity = navigationView.getHeaderView(0).findViewById(R.id.textCity);
@@ -76,15 +83,27 @@ public abstract class DrawerActivity extends MasterActivity
 
             case User.REGISTERED:
                 menu.findItem(R.id.nav_MyAds).setVisible(true);
-                menu.findItem(R.id.nav_MyProfile).setVisible(true);
+                menu.findItem(R.id.nav_Fav).setVisible(true);
+                menu.findItem(R.id.nav_Chats).setVisible(true);
                 menu.findItem(R.id.nav_savedSearches).setVisible(true);
                 buttonRegister.setVisibility(View.GONE);
+                imageViewUser.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_person_48dp));
+
 
                 User user = new CurrentAndroidUser(this).Get();
                 if (user != null) {
                     navigationView.getHeaderView(0).findViewById(R.id.containerUser).setVisibility(View.VISIBLE);
                     textViewName.setText(user.getName());
                     //   textViewCity.setText(user.getCityName());
+
+                    imageViewUser.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext, MyProfileActivity.class);
+                            intent.putExtra("page", 0);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 break;
@@ -116,10 +135,11 @@ public abstract class DrawerActivity extends MasterActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Intent intent;
         switch (id) {
             case R.id.nav_home:
                 if (!(mContext instanceof HomeActivity)) {
-                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    intent = new Intent(mContext, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
@@ -127,9 +147,21 @@ public abstract class DrawerActivity extends MasterActivity
 
                 break;
 
-            case R.id.nav_MyProfile:
             case R.id.nav_MyAds:
-                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                intent = new Intent(mContext, MyProfileActivity.class);
+                intent.putExtra("page", 0);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_Fav:
+                intent = new Intent(mContext, MyProfileActivity.class);
+                intent.putExtra("page", 1);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_Chats:
+                intent = new Intent(mContext, MyProfileActivity.class);
+                intent.putExtra("page", 2);
                 startActivity(intent);
                 break;
 
@@ -137,8 +169,8 @@ public abstract class DrawerActivity extends MasterActivity
                 break;
 
             case R.id.nav_savedSearches:
-                Intent intent1 = new Intent(mContext, BookmarksActivity.class);
-                startActivity(intent1);
+                intent = new Intent(mContext, BookmarksActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.navAr:
@@ -150,6 +182,10 @@ public abstract class DrawerActivity extends MasterActivity
                 break;
 
             case R.id.navSettings:
+                break;
+
+            case R.id.navLogout:
+                logout();
                 break;
 
             case R.id.navHelp:
@@ -216,5 +252,35 @@ public abstract class DrawerActivity extends MasterActivity
         Intent refresh = new Intent(this, HomeActivity.class);
         startActivity(refresh);
         finish();
+    }
+
+    protected void logout() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                        UserController.getInstance(mController).logOut(refreshedToken, new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                MyApplication.saveUserState(User.NOT_REGISTERED);
+                                new CurrentAndroidUser(mContext).clearUser();
+
+                                Intent intent = new Intent(mContext, SplashActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        });
+
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+        builder.setMessage(getResources().getString(R.string.logout_messg)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
     }
 }
