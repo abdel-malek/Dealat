@@ -26,6 +26,10 @@ class User : NSObject, NSCoding{
     var os : Int!
     var account_type : Int!
     var personal_image : String!
+    var token : String!
+    var whatsup_number : String!
+    var birthday : String!
+    var gender : Int!
     
     //MARK: Local data
     var statues_key: String? = USER_STATUES.NEW_USER.rawValue
@@ -33,6 +37,7 @@ class User : NSObject, NSCoding{
     enum USER_STATUES : String {
         case NEW_USER = "new"
         case PENDING_CODE = "pending_code"
+        case PENDING_PROFILE = "pending_profile"
         case USER_REGISTERED = "registered"
     }
     
@@ -84,6 +89,10 @@ class User : NSObject, NSCoding{
         self.os = decoder.decodeObject(forKey: "os") as? Int
         self.account_type = decoder.decodeObject(forKey: "account_type") as? Int
         self.personal_image = decoder.decodeObject(forKey: "personal_image") as? String
+        self.token = decoder.decodeObject(forKey: "token") as? String
+        self.whatsup_number = decoder.decodeObject(forKey: "whatsup_number") as? String
+        self.birthday = decoder.decodeObject(forKey: "birthday") as? String
+        self.gender = decoder.decodeObject(forKey: "gender") as? Int
     }
     
     
@@ -103,6 +112,10 @@ class User : NSObject, NSCoding{
         coder.encode(os, forKey: "os")
         coder.encode(account_type, forKey: "account_type")
         coder.encode(personal_image, forKey: "personal_image")
+        coder.encode(token, forKey: "token")
+        coder.encode(whatsup_number, forKey: "whatsup_number")
+        coder.encode(birthday, forKey: "birthday")
+        coder.encode(gender, forKey: "gender")
     }
     
     
@@ -138,7 +151,16 @@ class User : NSObject, NSCoding{
         }
 
         me.personal_image = dic["personal_image"] as? String
+        me.token = dic["token"] as? String
+
+        me.whatsup_number = dic["whatsup_number"] as? String
+        me.birthday = dic["birthday"] as? String
+
         
+        if let x = dic["gender"] as? String, let i = Int(x){
+            me.gender = i
+        }
+
         return me
     }
     

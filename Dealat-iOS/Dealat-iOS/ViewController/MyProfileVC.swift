@@ -15,6 +15,8 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
 //    @IBOutlet weak var shadowView: UIView!
     let blueInstagramColor = Theme.Color.red
 //    UIColor(red: 37/255.0, green: 111/255.0, blue: 206/255.0, alpha: 1.0)
+    var currentPage : Int = 0
+    var firstTime : Bool = true
     
     override func viewDidLoad() {
         // change selected bar color
@@ -37,6 +39,15 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.title = "My Profile".localized
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if firstTime{
+            self.firstTime = false
+            self.moveToViewController(at: currentPage, animated: false)
+        }
     }
     
     // MARK: - PagerTabStripDataSource

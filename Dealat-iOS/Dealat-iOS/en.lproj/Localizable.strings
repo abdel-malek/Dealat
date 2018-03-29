@@ -31,13 +31,13 @@
 //SIDE MENU
 "Home" = "Home";
 "My Profile" = "My Profile";
-"My Ads" = "My Ads";
 "Categories" = "Categories";
 "Saved searches" = "Saved searches";
 "Edit Profile" = "Edit Profile";
 "Change Language" = "Change Language";
 "Settings" = "Settings";
 "Help" = "Help";
+"Logout" = "Log out";
 
 //My Profile
 "My Ads" = "My Ads";
@@ -108,5 +108,10 @@
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";
 
-
+//Add status
+"Pending" = "Pending";
+"Accepted" = "Accepted";
+"Hidden" = "Hidden";
+"Rejected" = "Rejected";
+"Deleted" = "Deleted";
 

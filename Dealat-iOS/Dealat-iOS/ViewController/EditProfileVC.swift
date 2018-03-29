@@ -10,6 +10,8 @@ import UIKit
 import SkyFloatingLabelTextField
 import SwiftyJSON
 import Alamofire
+import DatePickerDialog
+import AFDateHelper
 
 class EditProfileVC: BaseVC {
     
@@ -21,14 +23,24 @@ class EditProfileVC: BaseVC {
     @IBOutlet weak var tfName: SkyFloatingLabelTextField!
     @IBOutlet weak var tfCity: SkyFloatingLabelTextField!
     @IBOutlet weak var tfEmail: SkyFloatingLabelTextField!
+    @IBOutlet weak var tfWhatsapp: SkyFloatingLabelTextField!
+    @IBOutlet weak var tfBirthday: SkyFloatingLabelTextField!
+    @IBOutlet weak var tfGender: SkyFloatingLabelTextField!
+
+    var genders = [("Male".localized, 1),("Famale".localized,2)]
     
     var image_updated : Bool = false
-
+    var fromRegister : Bool = false
     
     var cities = [City]()
     var selectedCity : City!{
         didSet{
             self.tfCity.text = (selectedCity != nil) ? selectedCity.name : nil
+        }
+    }
+    var selectedGenderIndex : Int! {
+        didSet{
+            self.tfGender.text = (selectedGenderIndex != nil) ? genders[selectedGenderIndex].0 : nil
         }
     }
     
@@ -55,11 +67,17 @@ class EditProfileVC: BaseVC {
                 if let f = res.filter({$0.city_id.intValue == Provider.getCity()}).first{
                     self.selectedCity = f
                 }
+                if let f = self.genders.index(where: {res2.gender == $0.1}){
+                    self.selectedGenderIndex = f
+                }
+
+                
             })
         }
     }
     
     override func setupViews(){
+        
         
         self.title = "Edit Profile".localized
         
@@ -71,6 +89,9 @@ class EditProfileVC: BaseVC {
         
         
         setPickerViewOn(self.tfCity)
+        setPickerViewOn(self.tfGender)
+
+        
         
         for i in tfields{
             i.lineColor = .clear
@@ -94,12 +115,25 @@ class EditProfileVC: BaseVC {
         self.refreshData()
     }
     
+    
+   @IBAction func openDate(){
+        DatePickerDialog().show("Select date".localized, doneButtonTitle: "OK".localized, cancelButtonTitle: "Cancel".localized, defaultDate: Date(timeIntervalSince1970: 0), minimumDate: nil, maximumDate: Date(), datePickerMode: UIDatePickerMode.date) { (res) in
+            
+            if let d = res {
+                self.tfBirthday.text = d.toString(format: DateFormatType.isoDate)
+            }
+        }
+    }
+    
     func refreshData(){
         let me = User.getCurrentUser()
         
         self.tfName.text = me.name
         self.tfEmail.text = me.email
         self.phoneLbl.text = me.phone
+        self.tfWhatsapp.text = me.whatsup_number
+        self.tfBirthday.text = me.birthday
+
         
         if me.personal_image != nil && !me.personal_image.isEmpty{
             Provider.sd_setImage(self.imgProfile, urlString: me.personal_image)
@@ -127,6 +161,9 @@ class EditProfileVC: BaseVC {
 //        let me = User.getCurrentUser()
         let name = tfName.text!
         let email = tfEmail.text!
+        let whatsapp = tfWhatsapp.text!
+        let birthday = self.tfBirthday.text!
+
         
         guard !name.isEmpty else {
             self.showErrorMessage(text: "Please enter name")
@@ -135,6 +172,11 @@ class EditProfileVC: BaseVC {
         
         guard (!email.isEmpty && Provider.isValidEmail(email)) || email.isEmpty else {
             self.showErrorMessage(text: "Please enter a valid email")
+            return
+        }
+        
+        guard !whatsapp.isEmpty else {
+            self.showErrorMessage(text: "Please enter a valid whatsapp number")
             return
         }
         
@@ -163,6 +205,13 @@ class EditProfileVC: BaseVC {
                 multipartFormData.append(name.getData, withName: "name")
                 multipartFormData.append(email.getData, withName: "email")
                 multipartFormData.append(self.selectedCity.city_id.stringValue.getData, withName: "city_id")
+                multipartFormData.append(whatsapp.getData, withName: "whatsup_number")
+
+                multipartFormData.append(birthday.getData, withName: "birthday")
+                
+                if let g = self.selectedGenderIndex{
+                    multipartFormData.append("\(self.genders[g].1)".getData, withName: "gender")
+                }
                 
         },
             to: "\(Communication.shared.baseURL + Communication.shared.edit_user_infoURL)" ,headers : Communication.shared.getHearders(),
@@ -188,14 +237,22 @@ class EditProfileVC: BaseVC {
                             
                             if value.status{
                                 
+                                if !self.fromRegister{
                                 if let i = value.data, let obj = i.dictionaryObject{
                                     let newUser = User.getObject(obj)
                                     User.saveMe(me: newUser)
                                 }
                                 
                                 self.navigationController?.popViewController(animated: true)
-                                self.homeVC.showErrorMessage(text: value.message)
-                                
+                                    self.homeVC.showErrorMessage(text: value.message)
+                                }else{
+                                    let me = User.getCurrentUser()
+                                    me.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
+                                    User.saveMe(me: me)
+                                    AppDelegate.setupViews()
+                                }
+                                    
+                                    
                             }else{
                                 notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                             }
@@ -227,7 +284,7 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return self.cities.count + 1
+        return (pickerView.tag == 1)  ? self.cities.count + 1 : genders.count + 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -236,17 +293,33 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
             return "select one"
         }
         
+        if pickerView.tag == 1{
         let c = self.cities[row - 1]
         return c.name
+        }else{
+            return self.genders[row - 1].0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+        
         if row == 0{
-            self.selectedCity = nil
+            if pickerView.tag == 1{
+                self.selectedCity = nil
+            }else{
+                self.selectedGenderIndex = nil
+            }
+            
+            
             return
         }
-        self.selectedCity = self.cities[row - 1]
+        
+        if pickerView.tag == 1{
+            self.selectedCity = self.cities[row - 1]
+        }else{
+            self.selectedGenderIndex = row - 1
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {

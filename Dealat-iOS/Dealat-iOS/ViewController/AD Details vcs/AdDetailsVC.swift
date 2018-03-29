@@ -9,6 +9,7 @@
 import UIKit
 import AFDateHelper
 import SwiftyJSON
+import Lightbox
 
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -16,6 +17,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var collectionView2 : UICollectionView!
     @IBOutlet weak var collectionViewHeight : NSLayoutConstraint!
     var parentBase: AdDetailsBaseVC?
+    var imagesController = LightboxController.init()
+
     
     //General
     @IBOutlet weak var img : UIImageView!
@@ -355,13 +358,70 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if collectionView.tag != 2{
+        if collectionView.tag == 2{
+            
+            var images  = [LightboxImage]()
+            
+            for i in self.ad.images{
+                if let urlString = i.image, let url = URL.init(string: Communication.shared.baseImgsURL + urlString){
+                    let im = LightboxImage.init(imageURL: url)
+                    images.append(im)
+                }
+            }
+            
+            /*for i in 0..<self.ad.images.count{
+                if let j =  collectionView.cellForItem(at: IndexPath.init(item: i, section: 0)){
+                    if let cc = j as? CommericalCell{
+                        if let m = cc.img.image{
+                            let im = LightboxImage.init(image: m)
+                            images.append(im)
+                        }
+                    }
+                }
+            }*/
+
+            
+            self.imagesController = LightboxController(images: images)
+            self.imagesController.dynamicBackground = true
+            
+            self.imagesController.headerView.deleteButton.isHidden = false
+            self.imagesController.headerView.deleteButton.isEnabled = true
+            self.imagesController.headerView.deleteButton.setImage(#imageLiteral(resourceName: "share"), for: .normal)
+
+            self.imagesController.headerView.deleteButton.addTarget(self, action: #selector(shareImage), for: .touchUpInside)
+            
+            present(self.imagesController, animated: true, completion: nil)
+            if indexPath.row < images.count{
+                self.imagesController.goTo(indexPath.item)
+            }
+            
+        }else {
             self.collectionView2.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             self.selectedIndex = indexPath.row
             self.collectionView.reloadSections(IndexSet.init(integer: IndexSet.Element.init(0)))
             //            self.collectionView.reloadData()
         }
         //        Provider.sd_setImage(self.img, urlString: self.ad.images[indexPath.row].image)
+    }
+    
+    @objc func shareImage(){
+        
+        let imgV = UIImageView()
+        
+        Provider.sd_setImage(imgV, urlString: self.ad.images[self.imagesController.currentPage].image)
+        
+            // set up activity view controller
+            let imageToShare = [ imgV.image! ]
+            let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            
+            // exclude some activity types from the list (optional)
+            activityViewController.excludedActivityTypes = [  ]
+        //UIActivityType.airDrop, UIActivityType.postToFacebook
+            
+            // present the view controller
+            self.imagesController.present(activityViewController, animated: true, completion: nil)
+        
     }
     
     

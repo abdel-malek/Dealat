@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.setupViews()
         setupNotification(application)
         
+        
+//        Communication.shared.get_my_info { (res) in
+//            
+//        }
+        
         return true
     }
     
@@ -103,7 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
             
         else{
-            
             if me.statues_key == User.USER_STATUES.NEW_USER.rawValue{
                 let vc = storyboard.instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
                 appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
@@ -112,6 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let vc = storyboard.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
                 appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
 
+            }else if me.statues_key == User.USER_STATUES.PENDING_PROFILE.rawValue{
+                let vc = storyboard.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
+                vc.fromRegister = true
+                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)
             }else if me.statues_key == User.USER_STATUES.USER_REGISTERED.rawValue{
                 let vc = storyboard.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
                 appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)

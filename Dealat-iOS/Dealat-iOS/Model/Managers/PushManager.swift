@@ -78,49 +78,55 @@ class PushManager{
                 
                 if type == 1{
                     print("BODY : \(notification["ntf_body"])")
-                    let id = JSON(notification["ntf_body"]).intValue
-//                    self.OpenRequest(id: id)
                     
+                    if let obj = JSON(notification["ntf_body"]).dictionaryObject{
+                        if let chat = Chat(JSON: obj){
+                            self.OpenChat(chat: chat)
+                        }
+                    }
+                
                 }else if type == 2{
-                    let id = JSON(notification["ntf_body"]).intValue
+//                    let id = JSON(notification["ntf_body"]).intValue
 //                    self.OpenOrder(id: id)
+                    
+                    if let obj = JSON(notification["ntf_body"]).dictionaryObject{
+                        if let ad = AD(JSON: obj){
+                            self.OpenADD(ad: ad)
+                        }
+                    }
+
+                    
                 }
             }catch let err{ print("ERROR: \(err.localizedDescription)")}
         }
     }
     
-    /*static func OpenOrder(id : Int)
+    static func OpenADD(ad : AD)
     {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let order = Order()
-        order.id = JSON(id)
         
         if let navigationController = appDelegate.window?.rootViewController as?  UINavigationController
         {
-            let vc = self.storyBoard.instantiateViewController(withIdentifier: "OrderDetailsVC") as! OrderDetailsVC
-            vc.type = 1
-            vc.order = order
+            let vc = self.storyBoard.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
+            vc.tamplateId = ad.tamplate_id.intValue
+            vc.ad = ad
             
             navigationController.pushViewController(vc, animated: true)
         }
     }
     
-    static func OpenRequest(id : Int)
+    static func OpenChat(chat : Chat)
     {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let req = Req()
-        req.id = JSON(id)
-        
         if let navigationController = appDelegate.window?.rootViewController as?  UINavigationController
         {
-            let vc = self.storyBoard.instantiateViewController(withIdentifier: "RequestDetailsVC") as! RequestDetailsVC
-            vc.type = 1
-            vc.req = req
+            let vc = self.storyBoard.instantiateViewController(withIdentifier: "ChatDetailsVC") as! ChatDetailsVC
+            vc.chat = chat
             
             navigationController.pushViewController(vc, animated: true)
         }
-    }*/
+    }
     
 }

@@ -23,8 +23,8 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    let baseURL = "http://192.168.9.53/Dealat/index.php/api"
-    let baseImgsURL = "http://192.168.9.53/Dealat/"
+    let baseURL = "http://192.168.9.15/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.15/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
@@ -60,6 +60,7 @@ class Communication: BaseManager {
     let get_my_bookmarksURL = "/users_control/get_my_bookmarks/format/json"
     let get_bookmark_searchURL = "/items_control/get_bookmark_search/format/json"
     let change_statusURL = "/items_control/change_status/format/json"
+    let logoutURL = "/users_control/logout/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -541,7 +542,7 @@ class Communication: BaseManager {
                     
                     if let i = value.data, let obj = i.dictionaryObject{
                         let newUser = User.getObject(obj)
-                        newUser.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
+                        newUser.statues_key = User.USER_STATUES.PENDING_PROFILE.rawValue
                         User.saveMe(me: newUser)
                         callback(true)
                     }
@@ -573,6 +574,10 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
+                   let me = User.getCurrentUser()
+                    me.token = token
+                    User.saveMe(me: me)
+                    
                     callback(true)
                     
                 }else{
@@ -587,6 +592,37 @@ class Communication: BaseManager {
     }
     
     
+    func logout(_ callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + logoutURL)!
+        
+        let me = User.getCurrentUser()
+        let token : String! = me.token
+        
+        let params : [String : Any] = ["token" : token]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
     
     func set_as_favorite(_ ad_id : Int, callback : @escaping (Bool) -> Void){
         
@@ -823,7 +859,7 @@ class Communication: BaseManager {
     }
     
     
-    func get_my_info(_ callback : @escaping (Bool) -> Void){
+    func get_my_info(_ callback : @escaping (User) -> Void){
         
         let url = URL(string: baseURL + get_my_infoURL)!
         
@@ -839,7 +875,7 @@ class Communication: BaseManager {
                     if let i = value.data, let obj = i.dictionaryObject{
                         let newUser = User.getObject(obj)
                         User.saveMe(me: newUser)
-                        callback(true)
+                        callback(newUser)
                     }
                     
                 }else{
@@ -1044,9 +1080,17 @@ class Communication: BaseManager {
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
         
+        
+        
+//            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString
+//            let plainData = plainString.data(using: String.Encoding.utf8.rawValue)
+//            let base64String = plainData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//            headers["Authorization"] = "Basic \(base64String!)"
+
+        
 //        headers["Authorization"] = "Basic OTk0NzI5NDU4Ojg5ZjI1NThiZDRiM2RmMDBiN2Y5YThlZTllOWRmNjc5"
         
-        if User.isRegistered(){
+        if User.isRegistered() || User.getCurrentUser().statues_key == User.USER_STATUES.PENDING_PROFILE.rawValue{
             let me = User.getCurrentUser()
             if let username = me.phone, let password = me.server_key{
                 let plainString = "\(username):\(password)" as NSString

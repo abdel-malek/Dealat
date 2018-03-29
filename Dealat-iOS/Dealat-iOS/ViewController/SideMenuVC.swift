@@ -19,22 +19,35 @@ class SideMenuVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        
         refreshImg()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        if let i = self.btns.first(where: {$0.tag == -1}){
+            print("TAGGGGGGG")
+            let tit = User.isRegistered() ? "Logout".localized : "Register".localized
+            i.setTitle(tit, for: UIControlState.normal)
+        }
+
+        
 
         if User.isRegistered(){
-            self.regVV.isHidden = true
-            
+//            self.regVV.isHidden = true
+//
         }else{
             for i in btns{
                 
-                if i.tag > 0 && i.tag < 6{
+                if i.tag > 0  && i.tag < 7 {
                     i.isHidden = true
                 }
+                
+//                if i.tag > 0 && i.tag < 6{
+//                    i.isHidden = true
+//                }
             }
         }
         
@@ -53,22 +66,44 @@ class SideMenuVC: BaseVC {
     @objc @IBAction func didSelect(_ i : UIButton){
 //        refreshBtns()
         
-        UIView.animate(withDuration: 0.2) {
-            i.backgroundColor = Theme.Color.red
-            i.setTitleColor(Theme.Color.White, for: .normal)
-        }
-        
-        UIView.animate(withDuration: 0.2) {
-            i.backgroundColor = .clear
-            i.setTitleColor(Theme.Color.darkGrey, for: .normal)
+        if i.tag != -1{
+            UIView.animate(withDuration: 0.2) {
+                i.backgroundColor = Theme.Color.red
+                i.setTitleColor(Theme.Color.White, for: .normal)
+            }
+            UIView.animate(withDuration: 0.2) {
+                i.backgroundColor = .clear
+                i.setTitleColor(Theme.Color.darkGrey, for: .normal)
+            }
         }
 
         
         self.dismiss(animated: true) {
             
-            
             if i.tag == -1{
-                AppDelegate.setupViews()
+                if User.isRegistered(){
+                
+                    let alert = UIAlertController.init(title: "Alert!".localized, message: "Are you sure you want to logout?", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
+                        
+                        self.homeVC.showLoading()
+                        Communication.shared.logout({ (res) in
+                            self.homeVC.hideLoading()
+                            
+                            User.clearMe()
+                            AppDelegate.setupViews()
+                            
+                        })
+                        
+                    }))
+                    alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+                    
+                    self.homeVC.present(alert, animated: true, completion: nil)
+                    
+                }else{
+                    AppDelegate.setupViews()
+                }
             }
             
             if i.tag == 1{
@@ -76,21 +111,38 @@ class SideMenuVC: BaseVC {
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
             
+            if i.tag == 2{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
+                vc.currentPage = 0
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+            if i.tag == 3{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
+                vc.currentPage = 1
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
             if i.tag == 4{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
+                vc.currentPage = 2
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+            if i.tag == 5{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
+                vc.homeVC = self.homeVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+
+            
+            if i.tag == 6{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "SavedSearchesVC") as! SavedSearchesVC
                 vc.homeVC = self.homeVC
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
 
             
-            if i.tag == 5{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
-                vc.homeVC = self.homeVC
-                self.homeVC.navigationController?.pushViewController(vc, animated: true)
-            }
             
             // CHANGE LANGUAGE
-            if i.tag == 6{
+            if i.tag == 7{
                 /*if AppDelegate.isArabic(){
                  UserDefaults.standard.setValue(["en"], forKey: "AppleLanguages")
                  }else{

@@ -46,8 +46,8 @@ class RegisterVC: BaseVC {
     
     override func setupViews() {
         
-        self.tfName.placeholder = self.tfName.placeholder! + "*"
-        self.tfPhone.placeholder = self.tfPhone.placeholder! + "*"
+        self.tfName.placeholder = self.tfName.placeholder!
+        self.tfPhone.placeholder = self.tfPhone.placeholder!
 //        self.tfLocation.placeholder = self.tfLocation.placeholder! + "*"
         
         self.tfName.placeHolderColor = Theme.Color.White
@@ -79,13 +79,14 @@ class RegisterVC: BaseVC {
     @IBAction func registerAction(){
      
         let name = tfName.text!
-        let phone = tfPhone.text!
+        var phone = tfPhone.text!
         
         if name.isEmpty{
             self.showErrorMessage(text: "Please enter name")
-        }else if phone.isEmpty {
+        }else if phone.count != 10 {
             self.showErrorMessage(text: "Please enter valid phone number")
         }else{
+            phone.removeFirst()
             
             self.showLoading()
             Communication.shared.users_register(phone: Provider.getEnglishNumber(phone), name: name, callback: { (res) in
@@ -93,7 +94,6 @@ class RegisterVC: BaseVC {
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
                 self.navigationController?.pushViewController(vc, animated: true)
-                
             })
             
         }
@@ -105,6 +105,19 @@ class RegisterVC: BaseVC {
     }
 
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == tfPhone{
+            if (textField.text!.count < 3 && string == "") ||
+                (textField.text!.count == 10  && string != ""){
+                return false
+            }
+        }
+        
+        
+        return true
+    }
+
     
 }
 

@@ -29,18 +29,19 @@
 //SIDE MENU
 "Home" = "الرئيسية";
 "My Profile" = "ملفي الشخصي";
-"My Ads" = "إعلاناتي";
 "Categories" = "المجموعات";
-"Saved searches" = "محفوظات البحث";
+"Saved searches" = "عمليات البحث المحفوظة";
 "Edit Profile" = "تعديل ملفي";
 "Change Language" = "تغيير اللغة";
 "Settings" = "الإعدادات";
 "Help" = "مساعدة";
+"Logout" = "تسجيل خروج";
+
 
 //My Profile
 "My Ads" = "إعلاناتي";
-"Favorites" = "مفضلتي";
-"My Chats" = "الرسائل";
+"Favorites" = "المفضلة";
+"My Chats" = "المحادثات";
 
 
 //General
@@ -103,7 +104,13 @@
 "ChangeLangMessage" = "يجب إعادة تشغيل التطبيق ليتم تطبيق الإعدادات الجديدة";
 "AddImages" = "إضافة صور";
 
-
 "ChangeLangTitle2" = "هل يبدو التطبيق غريباً؟";
 "ChangeLangMessage2" = "لا تقلق، كل ما عليك فعله هو إعادة تشغيل التطبيق من جديد";
+
+//Add status
+"Pending" = "قيد الانتظار";
+"Accepted" = "مقبول";
+"Hidden" = "محفي";
+"Rejected" = "مرفوض";
+"Deleted" = "محذوف";
 
