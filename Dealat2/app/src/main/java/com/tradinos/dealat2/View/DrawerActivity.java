@@ -86,6 +86,7 @@ public abstract class DrawerActivity extends MasterActivity
                 menu.findItem(R.id.nav_Fav).setVisible(true);
                 menu.findItem(R.id.nav_Chats).setVisible(true);
                 menu.findItem(R.id.nav_savedSearches).setVisible(true);
+                menu.findItem(R.id.navLogout).setVisible(true);
                 buttonRegister.setVisibility(View.GONE);
                 imageViewUser.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_person_48dp));
 

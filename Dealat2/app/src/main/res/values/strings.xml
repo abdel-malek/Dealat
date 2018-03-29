@@ -23,8 +23,8 @@
     <string name="statusHidden">Hidden</string>
     <string name="statusRejected">Rejected</string>
 
-    <string name="labelAdStatus">Ad Status:</string>
-    <string name="labelRejectReason">Rejection Reason:</string>
+    <string name="labelAdStatus">Ad Status</string>
+    <string name="labelRejectReason">Rejection Reason</string>
 
     <!-- Show Periods -->
     <string name="periodWeek">Week</string>
@@ -159,6 +159,7 @@
     <string name="toastUnBookmark">Search\'s Removed</string>
     <string name="toastSaved">Changes Saved</string>
     <string name="toastAdDeleted">Ad\'s Deleted</string>
+    <string name="toastImageSave">Image\'s saved to gallery</string>
 
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>

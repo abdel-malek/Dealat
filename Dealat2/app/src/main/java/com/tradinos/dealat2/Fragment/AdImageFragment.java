@@ -24,7 +24,7 @@ public class AdImageFragment extends Fragment {
     private String path;
     private int templateId;
 
-    public static AdImageFragment newInstance(String path, int templateId){
+    public static AdImageFragment newInstance(String path, int templateId) {
         AdImageFragment fragment = new AdImageFragment();
         fragment.setPath(path);
         fragment.setTemplateId(templateId);
@@ -47,16 +47,18 @@ public class AdImageFragment extends Fragment {
 
         ImageView imageView = rootView.findViewById(R.id.imageView);
 
-        int defaultDrawable = ((MasterActivity)getContext()).getTemplateDefaultImage(templateId);
+        int defaultDrawable = ((MasterActivity) getContext()).getTemplateDefaultImage(templateId);
 
-        if (path != null){
+        if (path != null) {
+
             ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
             mImageLoader.get(MyApplication.getBaseUrlForImages() + this.path, ImageLoader.getImageListener(imageView,
                     defaultDrawable, defaultDrawable));
-        }
-        else
+        } else
             imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), defaultDrawable));
 
         return rootView;
     }
+
+
 }

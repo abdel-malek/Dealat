@@ -23,8 +23,8 @@
     <string name="statusHidden">مخفي</string>
     <string name="statusRejected">مرفوض</string>
 
-    <string name="labelAdStatus">حالة الإعلان:</string>
-    <string name="labelRejectReason">سبب الرفض:</string>
+    <string name="labelAdStatus">حالة الإعلان</string>
+    <string name="labelRejectReason">سبب الرفض</string>
 
     <!-- Show Periods -->
     <string name="periodWeek">أسبوع</string>
@@ -138,7 +138,7 @@
     <string name="navHome">الرئيسية</string>
     <string name="navCategories">الأصناف</string>
     <string name="navSavedSearches">عمليات البحث المحفوظة</string>
-    <string name="navLanguage">تغيير اللغة</string>
+    <string name="navLanguage">اللغة</string>
     <string name="navSettings">الإعدادات</string>
     <string name="navHelp">مساعدة</string>
     <string name="navLogout">تسجيل الخروج</string>
@@ -159,6 +159,7 @@
     <string name="toastAdDeleted">تم حذف الإعلان</string>
     <string name="toastBookmark">تم حفظ البحث</string>
     <string name="toastUnBookmark">تمت إزالة البحث</string>
+    <string name="toastImageSave">تم حفظ الصورة في الاستديو</string>
 
     <string name="toastMaxImages">لايمكنك اختيار صور أكثر</string>
     <string name="toastWaitTillUploading">يرجى الانتظار حتى يتم تحميل الصور!</string>

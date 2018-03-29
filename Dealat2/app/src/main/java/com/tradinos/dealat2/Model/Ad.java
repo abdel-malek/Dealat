@@ -215,7 +215,11 @@ public class Ad implements Serializable {
         return imagesPaths;
     }
 
-   public void addImagePath(String path){
+    public void setImagesPaths(List<String> imagesPaths) {
+        this.imagesPaths = imagesPaths;
+    }
+
+    public void addImagePath(String path){
        this.imagesPaths.add(path);
    }
 

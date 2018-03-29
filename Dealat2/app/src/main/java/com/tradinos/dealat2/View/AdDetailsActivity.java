@@ -1,8 +1,10 @@
 package com.tradinos.dealat2.View;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +25,14 @@ import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdImagesAdapter;
+import com.tradinos.dealat2.Adapter.ImageDetailsAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Ad;
@@ -45,6 +50,10 @@ import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.ImageSaver;
+import com.tradinos.dealat2.Utils.ScalableImageView;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by developer on 01.03.18.
@@ -58,6 +67,9 @@ public class AdDetailsActivity extends MasterActivity {
 
     private CurrentAndroidUser user;
     private Ad currentAd;
+
+    private Bitmap popupBitmap;
+    private PopupWindow popupWindow;
 
     // textViewViews
     private ViewPager viewPager;
@@ -103,6 +115,7 @@ public class AdDetailsActivity extends MasterActivity {
                 currentAd.setSellerPhone(result.getSellerPhone());
                 currentAd.setSellerName(result.getSellerName());
                 currentAd.setFavorite(result.isFavorite());
+                currentAd.setImagesPaths(result.getImagesPaths());
 
                 viewPager.setAdapter(new AdImagesAdapter(getSupportFragmentManager(), result.getImagesPaths(), currentAd.getTemplate()));
 
@@ -164,8 +177,8 @@ public class AdDetailsActivity extends MasterActivity {
                         ((TextView) findViewById(R.id.textViewStatus)).setText(getStringStatus(currentAd.getStatus()));
                         findViewById(R.id.container4).setVisibility(View.VISIBLE);
 
-                        if (currentAd.isRejected()){
-                            ((TextView)findViewById(R.id.textViewNote)).setText(currentAd.getRejectNote());
+                        if (currentAd.isRejected()) {
+                            ((TextView) findViewById(R.id.textViewNote)).setText(currentAd.getRejectNote());
                             findViewById(R.id.container5).setVisibility(View.VISIBLE);
                         }
 
@@ -323,6 +336,37 @@ public class AdDetailsActivity extends MasterActivity {
                     break;
             }
         }
+    }
+
+    public void onImageClicked(View view) {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View layout = inflater.inflate(R.layout.popup_image_details,
+                (ViewGroup) findViewById(R.id.popupLayout));
+
+        ViewPager pager = layout.findViewById(R.id.viewpager);
+        pager.setAdapter(new ImageDetailsAdapter(getSupportFragmentManager(), currentAd.getImagesPaths(), currentAd.getTemplate()));
+
+        //view.setDrawingCacheEnabled(true);
+        //popupBitmap = view.getDrawingCache();
+
+       // final ScalableImageView imageView = layout.findViewById(R.id.imageView);
+       // imageView.setImageBitmap(popupBitmap);
+
+        popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
+        popupWindow.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            //  if (popupBitmap != null)
+            //  popupBitmap.recycle();
+            popupWindow.dismiss();
+            popupWindow = null;
+            popupBitmap = null;
+        } else
+            super.onBackPressed();
     }
 
     @Override

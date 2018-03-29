@@ -37,12 +37,16 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
     <style name="noTitleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="noTitleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:queryHint">@string/hintSearch</item>
+       <item name="android:background">@drawable/outline_white</item>
+    </style>
 
     <style name="switchStyle" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/red</item>
