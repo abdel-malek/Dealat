@@ -38,7 +38,19 @@ class ChatDetailsVC: BaseVC {
         // *** Listen to keyboard show / hide ***
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
-        self.title = self.chat.ad_title
+//        self.title = self.chat.ad_title
+        
+        let titleLbl = UILabel(frame: CGRect(x: 0, y: 8, width: 200, height: 200))
+        titleLbl.text = self.chat.ad_title + "\n" + self.chat.seller_name
+        titleLbl.textColor = UIColor.white
+        titleLbl.numberOfLines = 0
+//        titleLbl.font = Theme.Font.CenturyGothic
+        titleLbl.textAlignment = .center
+        titleLbl.minimumScaleFactor = 0.5
+        self.navigationItem.titleView = titleLbl
+
+        
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -111,7 +123,7 @@ class ChatDetailsVC: BaseVC {
     
     
     @IBAction func sendAction(){
-        self.textView.resignFirstResponder()
+//        self.textView.resignFirstResponder()
         let message = self.textView.text!
         
         if message.isEmpty{
@@ -166,7 +178,7 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
         print("textViewDidBeginEditing")
         
         if !self.messages.isEmpty{
-            self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+            self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
         }
     }
 }

@@ -28,8 +28,16 @@ class AdDetailsBaseVC: UIViewController {
         super.viewDidLoad()
         
         self.title = self.ad.title
-        
+        configureNavigationBar()
     }
+    
+    func configureNavigationBar() {
+        //setup back button
+        self.navigationItem.hidesBackButton = false
+        let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
+        self.navigationItem.backBarButtonItem = rr
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let i = segue.destination as? AdDetailsVC{
@@ -68,6 +76,7 @@ class AdDetailsBaseVC: UIViewController {
             chat.ad_title = self.ad.title
             chat.ad_id = self.ad.ad_id
             chat.seller_id = self.ad.seller_id
+            chat.seller_name = self.ad.seller_name
             vc.chat = chat
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
@@ -76,7 +85,9 @@ class AdDetailsBaseVC: UIViewController {
     }
     
     @IBAction func editAction(){
-        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+        vc.ad = self.ad
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func removeAction(){

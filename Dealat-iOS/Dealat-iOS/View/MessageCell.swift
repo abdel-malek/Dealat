@@ -79,8 +79,8 @@ extension UILabel {
                               tokenRange: nil, sentenceRange: nil)
 
         if let kk = lang{
-            print("KKKKKK \(kk._rawValue)")
-            if kk._rawValue.contains("ar") {
+            print("KKKKKK \(kk.rawValue)")
+            if kk.rawValue.contains("ar") {
                 self.textAlignment = NSTextAlignment.right
             } else {
                 self.textAlignment = NSTextAlignment.left

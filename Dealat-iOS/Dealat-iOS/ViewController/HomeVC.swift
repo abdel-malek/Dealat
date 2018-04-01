@@ -128,7 +128,7 @@ class HomeVC: BaseVC {
         //        self.navigationController?.pushViewController(vc, animated: true)
         
         if User.isRegistered(){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddVC") as! NewAddVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
         vc.homeVC = self
         self.navigationController?.pushViewController(vc, animated: true)
         }else{

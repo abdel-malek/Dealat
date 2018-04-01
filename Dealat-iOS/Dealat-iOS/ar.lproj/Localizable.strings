@@ -29,7 +29,7 @@
 //SIDE MENU
 "Home" = "الرئيسية";
 "My Profile" = "ملفي الشخصي";
-"Categories" = "المجموعات";
+"Categories" = "الأصناف";
 "Saved searches" = "عمليات البحث المحفوظة";
 "Edit Profile" = "تعديل ملفي";
 "Change Language" = "تغيير اللغة";
@@ -59,12 +59,12 @@
 "Free" = "مجاناً";
 "All" = "الكل";
 "Title" = "عنوان الإعلان";
-"ChooseCategory" = "اختر الفئة";
+"ChooseCategory" = "اختر الصنف";
 "Price" = "السعر";
 "Price SP" = "السعر (ل.س)";
 "Filter" = "بحث";
 "AdNumber" = "رقم الإعلان";
-"AdDate" = "التاريخ";
+"AdDate" = "تاريخ الإعلان";
 "From" = "من";
 "To" = "إلى";
 "Show" = "عرض";
@@ -92,6 +92,8 @@
 "Education" = "المستوى التعليمي";
 "Schedule" = "نوع العمل";
 "Experience" = "مستوى الخبرة";
+"Salary" = "الراتب";
+
 
 "Save" = "حفظ";
 "Submit" = "أضف إعلان";
@@ -113,4 +115,9 @@
 "Hidden" = "محفي";
 "Rejected" = "مرفوض";
 "Deleted" = "محذوف";
+
+"Please enter" = "يرجى إدخال ";
+"Please add images" = "يرجى إضافة صور";
+"required" = "مطلوب";
+
 

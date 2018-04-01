@@ -16,11 +16,11 @@ import SkyFloatingLabelTextField
 import SwiftyJSON
 //import IQDropDownTextField
 
-class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,YMSPhotoPickerViewControllerDelegate {
+class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,UITextFieldDelegate,YMSPhotoPickerViewControllerDelegate {
     
     @IBOutlet weak var collectionView : UICollectionView!
     var homeVC : HomeVC!
-    
+    var ad : AD!
     
     let cellIdentifier = "imageCellIdentifier"
     var images: NSArray! = []
@@ -106,12 +106,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedCategory : Cat!{
         didSet{
             if self.tfCategory != nil{
-                let nn = Cat.getName(selectedCategory.category_id.intValue)
                 
-                //                var arr = nn.components(separatedBy: "-")
-                //                arr = arr.reversed()
-                //                print(arr)
-                //                let t = arr.joined(separator: "-")
+                self.resetFields()
+
+                let nn = Cat.getName(selectedCategory.category_id.intValue)
                 
                 self.tfCategory.text = nn//selectedCategory.category_name
                 self.tfCategory.adjustsFontSizeToFitWidth = true
@@ -122,6 +120,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
     }
+    
+    
     
     var selectedLocation : Location!{
         didSet{
@@ -191,23 +191,43 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     //    }
     
     
+    var editMode : Bool{
+        return self.ad != nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getData()
         setupViews()
+        
     }
     
     
     override func getRefreshing() {
         Communication.shared.get_data_lists { (locations, types, educations, schedules) in
-            self.hideLoading()
             
             self.typesBase = types
             self.locations = locations
             self.educations = educations
             self.schedules = schedules
-            //            self.setupLocations()
+            
+            if self.editMode{
+                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue, callback: { (res) in
+                    
+                    self.hideLoading()
+                    self.ad = res
+                    self.refreshData()
+                    self.setDataForEdit()
+                    
+                })
+                
+                
+            }else{
+                self.hideLoading()
+            }
+            
+            
         }
     }
     
@@ -269,6 +289,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         // IQDropDownTextField
         for i in tfields{
+            i.delegate = self
             i.lineColor = .clear
             i.lineHeight = 0
             i.selectedLineColor = .clear
@@ -387,9 +408,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfSalary.isEnabled = false
         tfStatus9.isEnabled = false
         
+        let tamplate_id = (self.editMode) ? self.ad.tamplate_id.intValue : self.selectedCategory.tamplate_id.intValue
         
-        
-        switch self.selectedCategory.tamplate_id.intValue {
+        switch tamplate_id {
         case 1:
             tfType.isEnabled = true
             tfModel.isEnabled = true
@@ -436,6 +457,83 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.tableView.reloadData()
     }
     
+    func setDataForEdit(){
+        if self.editMode{
+            
+            self.tfTitle.text = ad.title
+            if let categoty_id = self.ad.category_id{
+                if let cat = Provider.shared.catsFull.first(where: {$0.category_id.intValue == categoty_id.intValue}){
+                    self.selectedCategory = cat
+                }
+            }
+            
+            if let location_id = self.ad.location_id{
+                if let loc = self.locations.first(where: {$0.location_id.intValue == location_id.intValue}){
+                    self.selectedLocation = loc
+                }
+            }
+            self.tfPrice.text = ad.price.stringValue
+            self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
+            self.tfDescription.text = ad.description
+
+            
+            let mutableImages: NSMutableArray! = []
+
+            self.imagesPaths.append(self.ad.main_image)
+            mutableImages.add(self.ad.main_image)
+            
+            for i in self.ad.images{
+                self.imagesPaths.append(i.image)
+                mutableImages.add(i)
+            }
+            
+//            let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.images)
+//            self.images = NSArray.init(array: mutableImages)
+            
+            
+            self.images = mutableImages.copy() as? NSArray
+
+
+            print("COUNT imagesPaths : \(imagesPaths.count)")
+            self.collectionView.reloadData()
+            
+            switch self.ad.tamplate_id.intValue{
+            case 1:
+                self.selectedYear =  self.years.index(where: {$0 == self.ad.vehicle.manufacture_date})
+                
+                self.selectedTransmission = self.ad.vehicle.is_automatic.intValue
+                
+                self.selectedStatus = self.ad.vehicle.is_new.intValue
+
+                self.tfKilometers.text = self.ad.vehicle.kilometer.stringValue
+                
+                if let type_id = self.ad.vehicle.type_id{
+                    if let type = self.typesBase.first(where: {$0.type_id.intValue == type_id.intValue}){
+                        self.selectedType = type
+                    }
+                }
+                
+                if let model_id = self.ad.vehicle.type_model_id{
+                    if let model = self.self.selectedType.models.first(where: {$0.type_model_id.intValue == model_id.intValue}){
+                        self.selectedModel = model
+                    }
+                }
+
+
+                
+//                if let type = self.ad.vehicle.
+//
+//                self.type_nameLbl.text = ad.vehicle.type_name
+//                self.type_model_nameLbl.text = ad.vehicle.type_model_name
+
+                
+                break
+                
+            default:
+                break
+            }
+        }
+    }
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -451,6 +549,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 return 0
             }
         }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        self.resetFields()
+        
+        return true
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -515,6 +620,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0,indexPath.row == 2{
+            
+            guard !self.editMode else{
+                return
+            }
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC2") as! ChooseCatVC
             
             let c = Cat()
@@ -549,35 +659,50 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         return true
     }
     
-    func validMessage(_ message : String){
+    
+    func resetFields(){
+        for i in self.tfields{
+            i.errorMessage = nil
+        }
+    }
+    
+    func validMessage(tf : SkyFloatingLabelTextField! = nil, message : String){
+        
+        if tf != nil{
+            tf.errorMessage = "required".localized
+        }
+        
         self.showErrorMessage(text: message)
     }
+    
     
     @IBAction func submitAction(){
         var params : [String : Any] = [:]
         
+        resetFields()
+        
         guard let titleAd = self.tfTitle.text, !titleAd.isEmpty else {
-            self.validMessage("Please enter title")
+            self.validMessage(tf: tfTitle ,message : "Please enter".localized +  "Title".localized)
             return
         }
         guard let cat = self.selectedCategory, let category_id = cat.category_id else {
-            self.validMessage("Please select category")
+            self.validMessage(tf: tfCategory ,message : "Please enter".localized +  "Category".localized)
             return
         }
         guard let loc = self.selectedLocation, let location_id = loc.location_id else {
-            self.validMessage("Please select location")
+            self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Location".localized)
             return
         }
         guard let desAd = self.tfDescription.text, !desAd.isEmpty else {
-            self.validMessage("Please enter description")
+            self.validMessage(message : "Please enter".localized +  "Description".localized)
             return
         }
         guard let price = self.tfPrice.text, !price.isEmpty, (Int(price) != nil) else {
-            self.validMessage("Please enter price")
+            self.validMessage(tf : tfPrice, message : "Please enter".localized +  "Price".localized)
             return
         }
         guard  !self.imagesPaths.isEmpty else {
-            self.validMessage("Please add images")
+            self.validMessage( message : "Please add images".localized)
             return
         }
         
@@ -587,28 +712,28 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
             guard let type = self.selectedType, let type_id = type.type_id else {
-                self.validMessage("Please select Type")
+                self.validMessage(tf : self.tfType, message : "Please enter".localized + "TypeName".localized)
                 return
             }
             guard let model = self.selectedModel, let type_model_id = model.type_model_id else {
-                self.validMessage("Please select model")
+                self.validMessage(tf : self.tfModel, message : "Please enter".localized + "TypeModelName".localized)
                 return
             }
             guard let manufacture_date = self.selectedYear else {
-                self.validMessage("Please select year")
+                self.validMessage(tf : self.tfYear, message : "Please enter".localized + "Year".localized)
                 return
             }
             guard let is_automatic = self.selectedTransmission else {
-                self.validMessage("Please select Transmission")
+                self.validMessage(tf : self.tfTrans, message : "Please enter".localized + "IsAutomatic".localized)
                 return
             }
             guard let is_new = self.selectedStatus else {
-                self.validMessage("Please select state")
+                self.validMessage(tf : self.tfStatus, message : "Please enter".localized + "State".localized)
                 return
             }
             
             guard let kilometer = self.tfKilometers.text, !kilometer.isEmpty else {
-                self.validMessage("Please select Kilometers")
+                self.validMessage(tf : self.tfKilometers, message : "Please enter".localized + "Kilometer".localized)
                 return
             }
             
@@ -621,38 +746,38 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             
         case 2:
-            guard let is_new = self.selectedStatus else {
-                self.validMessage("Please select state")
+            guard let status = self.tfStatus2.text, !status.isEmpty else {
+                self.validMessage(tf : self.tfStatus2, message : "Please enter".localized + "State".localized)
                 return
             }
             
             guard let rooms = self.tfRooms_num.text, !rooms.isEmpty else {
-                self.validMessage("Please select rooms")
+                self.validMessage(tf : self.tfRooms_num, message : "Please enter".localized + "Rooms".localized)
                 return
             }
             guard let floor = self.tfFloor.text, !floor.isEmpty else {
-                self.validMessage("Please select floor")
+                self.validMessage(tf : self.tfFloor, message : "Please enter".localized + "Floor".localized)
                 return
             }
             guard let space = self.tfSpace.text, !space.isEmpty else {
-                self.validMessage("Please select space")
+                self.validMessage(tf : self.tfSpace, message : "Please enter".localized + "Space".localized)
                 return
             }
             
-            params["state"] = is_new
+            params["state"] = status
             params["rooms_num"] = rooms
             params["floor"] = floor
             params["space"] = space
-            params["is_new"] = is_new
+//            params["is_new"] = is_new
             params["with_furniture"] = tfWith_furniture.isOn ? 1 : 0
             
         case 3:
             guard let is_new = self.selectedStatus else {
-                self.validMessage("Please select state")
+                self.validMessage(tf : self.tfStatus3, message : "Please enter".localized + "State".localized)
                 return
             }
             guard let type = self.selectedType, let type_id = type.type_id else {
-                self.validMessage("Please select Type")
+                self.validMessage(tf : self.tfType3, message : "Please enter".localized + "TypeName".localized)
                 return
             }
             
@@ -661,7 +786,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
         case 5,6,7,9:
             guard let is_new = self.selectedStatus else {
-                self.validMessage("Please select state")
+                self.validMessage(message : "Please enter".localized + "State".localized)
                 return
             }
             
@@ -670,25 +795,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
         case 8:
             guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedual_id else {
-                self.validMessage("Please select schedule")
+                self.validMessage(tf : self.tfSchedule, message : "Please enter".localized + "Schedule".localized)
                 return
             }
             
             guard let education = self.selectedEducation, let education_id = education.education_id else {
-                self.validMessage("Please select education")
+                self.validMessage(tf : self.tfEducation, message : "Please enter".localized + "Education".localized)
                 return
             }
             
             guard let experience = self.tfExperince.text, !experience.isEmpty else {
-                self.validMessage("Please enter experince")
+                self.validMessage(tf : self.tfExperince, message : "Please enter".localized + "Experience".localized)
                 return
             }
             
             guard let salary = self.tfSalary.text, !salary.isEmpty else {
-                self.validMessage("Please enter salary")
+                self.validMessage(tf : self.tfSalary, message : "Please enter".localized + "Salary".localized)
                 return
             }
-            
             
             params["schedule_id"] = schedule_id.intValue
             params["education_id"] = education_id.intValue
@@ -1106,6 +1230,11 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        
+        if row != 0 {
+            self.resetFields()
+        }
         
         switch pickerView.tag {
         case 1: // Locations

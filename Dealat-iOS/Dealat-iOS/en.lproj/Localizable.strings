@@ -93,6 +93,7 @@
 "Education" = "Education";
 "Schedule" = "Schedule";
 "Experience" = "Experience";
+"Salary" = "Salary";
 
 "Save" = "Save";
 "Submit" = "Submit";
@@ -115,3 +116,6 @@
 "Rejected" = "Rejected";
 "Deleted" = "Deleted";
 
+"Please enter" = "Please enter ";
+"Please add images" = "Please add images";
+"required" = "Required";

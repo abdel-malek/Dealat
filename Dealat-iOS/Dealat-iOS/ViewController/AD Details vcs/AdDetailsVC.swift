@@ -77,6 +77,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var education_nameLbl : UILabel!
     @IBOutlet weak var schedule_nameLbl : UILabel!
     @IBOutlet weak var experienceLbl : UILabel!
+    @IBOutlet weak var salaryLbl : UILabel!
+
     
     // 9 Industry
     @IBOutlet weak var is_new9 : UILabel!
@@ -116,7 +118,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.title = ad.title
         Provider.sd_setImage(self.img, urlString: ad.main_image)
         
-        var number = "#"
+        var number = ""
         let n = 5 - self.ad.ad_id.stringValue.count
         for _ in 0..<n{
             number += "0"
@@ -137,7 +139,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.dateLbl.text = nil
         }
         var cat = ""
-        cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!)-" : ""
+        cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!) --- " : ""
         cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""
         self.catLbl.text = "\(cat)"
         var loc = ""
@@ -227,6 +229,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.schedule_nameLbl.text = ad.job.schedule_name
             self.education_nameLbl.text = ad.job.education_name
             self.experienceLbl.text = ad.job.experience
+            self.salaryLbl.text = ad.job.salary
             self.vvPrice.isHidden = true
         }
         
@@ -411,7 +414,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         Provider.sd_setImage(imgV, urlString: self.ad.images[self.imagesController.currentPage].image)
         
             // set up activity view controller
-            let imageToShare = [ imgV.image! ]
+        
+        guard let imgg = imgV.image else {
+            return
+        }
+        
+            let imageToShare = [ imgg ]
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             

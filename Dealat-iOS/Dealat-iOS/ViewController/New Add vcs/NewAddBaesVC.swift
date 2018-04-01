@@ -10,12 +10,14 @@ import UIKit
 
 class NewAddBaesVC: UIViewController {
 
+    var homeVC : HomeVC!
     var embeddedViewController : NewAddVC!
+    var ad  : AD!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
 
         self.title = "Add new"
     }
@@ -23,6 +25,8 @@ class NewAddBaesVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let i = segue.destination as? NewAddVC{
             embeddedViewController = i
+            i.ad = self.ad
+            i.homeVC = self.homeVC
             self.addChildViewController(i)
         }
     }

@@ -39,7 +39,16 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.title = "My Profile".localized
+        configureNavigationBar()
     }
+    
+    func configureNavigationBar() {
+        //setup back button
+        self.navigationItem.hidesBackButton = false
+        let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
+        self.navigationItem.backBarButtonItem = rr
+    }
+
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

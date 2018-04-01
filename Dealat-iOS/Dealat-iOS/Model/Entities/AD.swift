@@ -60,6 +60,8 @@ class AD : BaseEntity {
         var kilometer : JSON!
         var type_name : String!
         var type_model_name : String!
+        var type_id : JSON!
+        var type_model_id : JSON!
     }
 
     
@@ -106,6 +108,7 @@ class AD : BaseEntity {
         var education_name : String!
         var schedule_name : String!
         var experience : String!
+        var salary : String!
     }
     
     // 9 Industry
@@ -156,6 +159,9 @@ class AD : BaseEntity {
         vehicle.kilometer <- map["kilometer"]
         vehicle.type_name <- map["type_name"]
         vehicle.type_model_name <- map["type_model_name"]
+        vehicle.type_id <- map["type_id"]
+        vehicle.type_model_id <- map["type_model_id"]
+
         
         // 2 property
         property.state <- map["state"]
@@ -185,6 +191,8 @@ class AD : BaseEntity {
         job.education_name <- map["education_name"]
         job.schedule_name <- map["schedule_name"]
         job.experience <- map["experience"]
+        job.salary <- map["salary"]
+
         
         // 6 industry
         industry.is_new <- map["is_new"]

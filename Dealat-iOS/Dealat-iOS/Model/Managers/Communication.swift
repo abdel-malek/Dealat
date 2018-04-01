@@ -404,6 +404,7 @@ class Communication: BaseManager {
         params["title"] = title
         params["description"] = description
         params["price"] = price
+        params["country"] = 1 // TO DO
         
         let images2 = images.filter({!$0.isEmpty})
         if !images2.isEmpty {
@@ -449,7 +450,6 @@ class Communication: BaseManager {
             }
         }
     }
-    
     
     
     func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]!) -> Void){
@@ -833,7 +833,11 @@ class Communication: BaseManager {
     func send_msg( ad_id : Int,chat_session_id : Int!, msg : String, callback : @escaping (Bool) -> Void){
         let url = URL(string: baseURL + send_msgURL)!
         
-        let params : [String : Any] = ["ad_id" : ad_id,"msg" : msg,"chat_session_id" : chat_session_id]
+        var params : [String : Any] = ["ad_id" : ad_id,"msg" : msg]
+        
+        if chat_session_id != nil {
+            params["chat_session_id"] = chat_session_id
+        }
         
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             

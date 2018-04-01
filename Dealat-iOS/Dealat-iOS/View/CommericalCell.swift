@@ -49,14 +49,19 @@ class CommericalCell: UICollectionViewCell {
             self.img.image = imageNew!.imag
             
             if imageNew!.index < newAddVC.imagesPaths.count{
+
                 if newAddVC.imagesPaths[imageNew!.index].isEmpty{
                     if let ii = imageNew!.imag{
                         self.uploadImage(ii)
                     }
                     else{
+
                         self.img.image = imageNew!.imag
                     }
                 }
+//                else{
+//                    Provider.sd_setImage(self.img, urlString: newAddVC.imagesPaths[imageNew!.index])
+//                }
             }else{
                 self.img.image = imageNew!.imag
             }
