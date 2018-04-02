@@ -7,16 +7,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Controller.ChatController;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Fragment.ChatsFragment;
 import com.tradinos.dealat2.Fragment.FavoritesFragment;
 import com.tradinos.dealat2.Fragment.MyAdsFragment;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.Chat;
+import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.util.ArrayList;
@@ -71,6 +78,15 @@ public class MyProfileActivity extends MasterActivity {
                                 tabLayout.setupWithViewPager(mViewPager);
 
                                 mViewPager.setCurrentItem(page);
+
+
+                                User user = new CurrentAndroidUser(mContext).Get();
+                                if (user != null && !TextUtils.isEmpty(user.getImageUrl())){
+                                    ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+                                    mImageLoader.get(MyApplication.getBaseUrlForImages() + user.getImageUrl(),
+                                            ImageLoader.getImageListener(((ImageView)findViewById(R.id.imageView)),
+                                            R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                                }
                             }
                         });
                     }

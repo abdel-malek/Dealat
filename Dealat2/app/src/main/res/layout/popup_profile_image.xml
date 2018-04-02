@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/labelProfileImage"
+        android:textAppearance="@style/textHeadline"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        />
+
+    <Button
+        android:id="@+id/buttonTrue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/labelSelectImage"
+        android:textAppearance="@style/textNormal"
+        android:textColor="@color/grayDark"
+        android:background="@null"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grayTransparent"/>
+
+    <Button
+        android:id="@+id/buttonFalse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/labelRemoveImage"
+        android:textAppearance="@style/textNormal"
+        android:textColor="@color/red"
+        android:background="@null"
+        />
+
+</LinearLayout>

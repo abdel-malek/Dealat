@@ -28,7 +28,7 @@ public class ImageDecoder {
         return decodeImage(path, this.smallFactor);
     }
 
-    public Bitmap decodeImage(String path, int factor) {
+    private Bitmap decodeImage(String path, int factor) {
         Bitmap bm = null;
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();

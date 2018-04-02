@@ -78,7 +78,7 @@ public class Category implements Serializable {
     public String getFullName() {
         if (parentId.equals("0") || parentId.equals("-1"))
             return this.name;
-        return MyApplication.getCategoryById(this.parentId).getFullName() + " - " + this.name;
+        return MyApplication.getCategoryById(this.parentId).getFullName() + " --- " + this.name;
     }
 
     public String getParentId() {

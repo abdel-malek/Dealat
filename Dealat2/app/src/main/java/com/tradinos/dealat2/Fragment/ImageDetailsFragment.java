@@ -1,20 +1,16 @@
 package com.tradinos.dealat2.Fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
-import com.tradinos.dealat2.Utils.ImageSaver;
 import com.tradinos.dealat2.Utils.ScalableImageView;
 import com.tradinos.dealat2.View.MasterActivity;
 
@@ -52,42 +48,11 @@ public class ImageDetailsFragment extends Fragment {
         int defaultDrawable = activity.getTemplateDefaultImage(templateId);
 
         if (path != null){
-            Picasso.with(getContext()).load(MyApplication.getBaseUrlForImages() + this.path).placeholder(defaultDrawable)
-                    .error(defaultDrawable).into(getTarget(rootView));
+            ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
+            mImageLoader.get(MyApplication.getBaseUrlForImages() + this.path, ImageLoader.getImageListener((ScalableImageView)rootView.findViewById(R.id.imageView),
+                    defaultDrawable, defaultDrawable));
         }
 
         return rootView;
-    }
-
-    //target to save
-    private Target getTarget(final View rootView){
-        Target target = new Target(){
-
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                Button buttonSave = rootView.findViewById(R.id.buttonTrue);
-                buttonSave.setVisibility(View.VISIBLE);
-                buttonSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (ImageSaver.insertImage(activity.getContentResolver(), bitmap) != null)
-                            activity.showMessageInToast(R.string.toastImageSave);
-                        }
-                });
-
-                ((ScalableImageView)rootView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-        return target;
     }
 }

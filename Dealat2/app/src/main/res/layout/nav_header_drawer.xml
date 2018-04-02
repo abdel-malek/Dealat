@@ -23,10 +23,11 @@
         android:shape="ring"
         android:thicknessRatio="1.9">
         <ImageView
-            android:id="@+id/imageView1"
-            android:layout_height="80dp"
+            android:id="@+id/imageView"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:src="@drawable/dealat_logo_white_background"
+            android:scaleType="centerCrop"
+            android:background="@drawable/dealat_logo_white_background"
             android:layout_gravity="center"
             >
         </ImageView>

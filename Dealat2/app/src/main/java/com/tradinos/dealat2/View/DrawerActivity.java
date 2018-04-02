@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.CommercialAdapter;
 import com.tradinos.dealat2.Controller.CommercialAdsController;
@@ -62,10 +65,10 @@ public abstract class DrawerActivity extends MasterActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView1);
+        ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
         Button buttonRegister = navigationView.getHeaderView(0).findViewById(R.id.buttonRegister);
         TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
-        TextView textViewCity = navigationView.getHeaderView(0).findViewById(R.id.textCity);
+        //TextView textViewCity = navigationView.getHeaderView(0).findViewById(R.id.textCity);
         Menu menu = navigationView.getMenu();
 
         switch (MyApplication.getUserState()) {
@@ -96,6 +99,12 @@ public abstract class DrawerActivity extends MasterActivity
                     navigationView.getHeaderView(0).findViewById(R.id.containerUser).setVisibility(View.VISIBLE);
                     textViewName.setText(user.getName());
                     //   textViewCity.setText(user.getCityName());
+
+                    if (!TextUtils.isEmpty(user.getImageUrl())){
+                        ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+                        mImageLoader.get(MyApplication.getBaseUrlForImages() + user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
+                                R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                    }
 
                     imageViewUser.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -11,6 +11,8 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,9 +29,10 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Adapter.CityAdapter;
 import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
-import com.tradinos.dealat2.Adapter.LocationAdapter;
+import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Ad;
@@ -43,9 +46,9 @@ import com.tradinos.dealat2.Model.AdProperty;
 import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.City;
 import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
-import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.MyApplication;
@@ -74,7 +77,7 @@ public class EditAdActivity extends MasterActivity {
 
     private final String NULL = "-1";
     private Ad currentAd;
-    private Location selectedLocation;
+    private Item selectedLocation;
     private List<Type> templateBrands = new ArrayList<>();
     private List<Item> years = new ArrayList<>();
     private List<Item> showPeriods = new ArrayList<>();
@@ -102,7 +105,7 @@ public class EditAdActivity extends MasterActivity {
 
     private AutoCompleteTextView autoCompleteLocation;
 
-    private AppCompatSpinner spinnerPeriod,
+    private AppCompatSpinner spinnerPeriod, spinnerCity,
             spinnerBrand, spinnerModel, spinnerYear,
             spinnerEdu, spinnerSch;
 
@@ -170,7 +173,7 @@ public class EditAdActivity extends MasterActivity {
                     public void OnSuccess(TemplatesData result) {
                         enabled = true;
 
-                        autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
+                        spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
                         templateBrands = result.getBrands().get(currentAd.getTemplate());
                         if (templateBrands != null)
@@ -226,6 +229,7 @@ public class EditAdActivity extends MasterActivity {
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
 
+        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
         spinnerPeriod = (AppCompatSpinner) findViewById(R.id.spinnerPeriod);
 
         spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
@@ -262,11 +266,29 @@ public class EditAdActivity extends MasterActivity {
 
     @Override
     public void assignActions() {
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                City city = ((CityAdapter) spinnerCity.getAdapter()).getItem(i);
+                autoCompleteLocation.setAdapter(new AutoCompleteAdapter(mContext, city.getLocations()));
+
+                if (currentAd.getCityId().equals(city.getId()))
+                    if (currentAd.getLocationId() != null) {
+                      //  autoCompleteLocation.setSelection(getItemIndex(city.getLocations(), currentAd.getLocationId()));
+                    }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
-                autoCompleteLocation.setText(selectedLocation.getFullName());
+                selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
+                autoCompleteLocation.setText(selectedLocation.getName());
             }
         });
 
@@ -280,6 +302,26 @@ public class EditAdActivity extends MasterActivity {
             }
         });
 
+
+        autoCompleteLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() != selectedLocation.getName().length()) {
+                    selectedLocation = null;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -289,7 +331,7 @@ public class EditAdActivity extends MasterActivity {
 
                 if (currentAd.getTemplate() == Category.VEHICLES) //it means there're models with brands
                     // and to ensure casting to AdVehicle
-                    if (((AdVehicle) currentAd).getTypeId()!= null &&
+                    if (((AdVehicle) currentAd).getTypeId() != null &&
                             ((AdVehicle) currentAd).getTypeId().equals(selectedType.getId()))
                         spinnerModel.setSelection(getItemIndex(selectedType.getModels(), ((AdVehicle) currentAd).getModelId()));
             }
@@ -464,9 +506,17 @@ public class EditAdActivity extends MasterActivity {
             editTitle.setError(getString(R.string.errorRequired));
             editTitle.requestFocus();
 
+        } else if (currentAd.getTemplate() == Category.PROPERTIES && selectedLocation == null) {
+            autoCompleteLocation.setError(getString(R.string.errorRequired));
+            autoCompleteLocation.requestFocus();
+
         } else if (currentAd.getTemplate() != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
+
+        } else if (currentAd.getTemplate() == Category.PROPERTIES && selectedLocation == null) {
+            autoCompleteLocation.setError(getString(R.string.errorRequired));
+            autoCompleteLocation.requestFocus();
 
         } else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
@@ -481,7 +531,10 @@ public class EditAdActivity extends MasterActivity {
 
             parameters.put("title", stringInput(editTitle));
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
-            parameters.put("location_id", selectedLocation.getId());
+            parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
+
+            if (selectedLocation != null)
+                parameters.put("location_id", selectedLocation.getId());
 
             if (currentAd.getTemplate() != Category.JOBS)
                 parameters.put("price", String.valueOf(doubleEditText(editPrice)));
@@ -627,9 +680,8 @@ public class EditAdActivity extends MasterActivity {
 
         editDesc.setText(currentAd.getDescription());
 
-        int loc = getItemIndex(new ArrayList<Item>(data.getLocations()), currentAd.getLocationId());
-        selectedLocation = data.getLocations().get(loc);
-        autoCompleteLocation.setText(selectedLocation.getFullName());
+        int loc = getItemIndex(new ArrayList<Item>(data.getCities()), currentAd.getCityId());
+        spinnerCity.setSelection(loc);
 
         spinnerPeriod.setSelection(getItemIndex(showPeriods, String.valueOf(currentAd.getShowPeriod())));
 

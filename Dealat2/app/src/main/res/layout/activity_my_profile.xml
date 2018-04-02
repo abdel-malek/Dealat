@@ -27,17 +27,6 @@
             android:layoutDirection="ltr"
             >
 
-            <ImageButton
-                android:id="@+id/buttonTrue"
-                android:layout_width="@dimen/imageSmall"
-                android:layout_height="@dimen/imageSmall"
-                android:layout_gravity="bottom|end"
-                android:elevation="8dp"
-                android:onClick="onClick"
-                android:scaleType="fitCenter"
-                android:background="@null"
-                android:src="@drawable/pencil_copy"
-                />
             <android.support.v7.widget.CardView
                 android:layout_width="@dimen/imageViewLarge"
                 android:layout_height="@dimen/imageViewLarge"
@@ -46,14 +35,27 @@
                 android:shape="ring"
                 android:thicknessRatio="1.9">
                 <ImageView
-                    android:layout_height="80dp"
+                    android:id="@+id/imageView"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:id="@+id/imageView1"
-                    app:srcCompat="@drawable/dealat_logo_red"
                     android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ic_person_48dp"
                     >
                 </ImageView>
             </android.support.v7.widget.CardView>
+
+            <ImageButton
+                android:id="@+id/buttonTrue"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_gravity="bottom|end"
+                android:elevation="4dp"
+                android:onClick="onClick"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:src="@drawable/pencil_copy"
+                />
         </FrameLayout>
 
         <android.support.design.widget.TabLayout

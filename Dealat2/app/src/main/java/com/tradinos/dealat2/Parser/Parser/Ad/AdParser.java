@@ -22,7 +22,14 @@ public class AdParser implements TradinosParser<Ad> {
 
         ad.setId(jsonObject.getString("ad_id"));
         ad.setCategoryId(jsonObject.getString("category_id"));
-        ad.setLocationId(jsonObject.getString("location_id"));
+        ad.setCityId(jsonObject.getString("city_id"));
+        ad.setCityName(jsonObject.getString("city_name"));
+
+        if (validData(jsonObject.getString("location_id"))) {
+            ad.setLocationId(jsonObject.getString("location_id"));
+            ad.setLocationName(jsonObject.getString("location_name"));
+        }
+
         ad.setPublishDate(jsonObject.getString("publish_date"));
         ad.setTitle(jsonObject.getString("title"));
         ad.setShowPeriod(jsonObject.getInt("show_period"));
@@ -36,10 +43,6 @@ public class AdParser implements TradinosParser<Ad> {
 
         if (validData(jsonObject.getString("main_image")))
             ad.setMainImageUrl(jsonObject.getString("main_image"));
-
-
-        ad.setLocationName(jsonObject.getString("location_name"));
-        ad.setCityName(jsonObject.getString("city_name"));
 
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
         ad.setStatus(jsonObject.getInt("status"));

@@ -22,12 +22,20 @@ public class CommercialAdParser implements TradinosParser<CommercialAd> {
         ad.setId(jsonObject.getString("commercial_ad_id"));
         ad.setCategoryId(jsonObject.getString("category_id"));
         ad.setTitle(jsonObject.getString("title"));
-        ad.setDescription(jsonObject.getString("description"));
-        ad.setImageUrl(jsonObject.getString("image"));
 
-        if (!jsonObject.getString("ad_url").equals("null"))
+        if (validData(jsonObject.getString("description")))
+            ad.setDescription(jsonObject.getString("description"));
+
+        if (validData(jsonObject.getString("image")))
+            ad.setImageUrl(jsonObject.getString("image"));
+
+        if (validData(jsonObject.getString("ad_url")))
             ad.setAdUrl(jsonObject.getString("ad_url"));
 
         return ad;
+    }
+
+    private boolean validData(String data) {
+        return !data.equals("null");
     }
 }

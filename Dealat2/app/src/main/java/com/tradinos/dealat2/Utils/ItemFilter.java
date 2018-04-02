@@ -3,7 +3,7 @@ package com.tradinos.dealat2.Utils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
-import com.tradinos.dealat2.Model.Location;
+import com.tradinos.dealat2.Model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
  * Created by developer on 26.09.17.
  */
 
-public class LocationFilter extends Filter {
+public class ItemFilter extends Filter {
     ArrayAdapter customAdapter;
-    List<Location> data = new ArrayList<>();
+    List<Item> data = new ArrayList<>();
 
-    public LocationFilter(ArrayAdapter adapter, List<Location> data) {
+    public ItemFilter(ArrayAdapter adapter, List<Item> data) {
         this.customAdapter = adapter;
         this.data = data;
     }
@@ -31,9 +31,9 @@ public class LocationFilter extends Filter {
         } else {
             String substr = constraint.toString().toLowerCase();
 
-            final ArrayList<Location> retList = new ArrayList<>();
-            for (Location o : data) {
-                if (o.toString().toLowerCase().contains(substr) || o.getCityName().toLowerCase().contains(substr)) {
+            final ArrayList<Item> retList = new ArrayList<>();
+            for (Item o : data) {
+                if (o.toString().toLowerCase().contains(substr)) {
                     retList.add(o);
                 }
             }
@@ -48,7 +48,7 @@ public class LocationFilter extends Filter {
         // we clear the adapter and then pupulate it with the new results
         customAdapter.clear();
         if (filterResults.count > 0) {
-            for (Location o : (ArrayList<Location>) filterResults.values) {
+            for (Item o : (ArrayList<Item>) filterResults.values) {
                 customAdapter.add(o);
             }
         }

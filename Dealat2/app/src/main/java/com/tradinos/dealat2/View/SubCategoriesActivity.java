@@ -122,7 +122,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
                     buttonBack.setVisibility(View.VISIBLE);
 
-                    animate(1);
+                    animate(-1);
 
                 } else {
                     Intent intent;
@@ -175,7 +175,7 @@ public class SubCategoriesActivity extends MasterActivity {
             adapter = new CategoryAdapter(mContext, category.getSubCategories());
             listView.setAdapter(adapter);
 
-            animate(-1);
+            animate(1);
             if (category.getId().equals("0"))
                 buttonBack.setVisibility(View.INVISIBLE);
 

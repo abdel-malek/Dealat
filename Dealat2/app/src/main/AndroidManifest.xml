@@ -86,6 +86,9 @@
         <activity android:name=".View.BookmarksActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".View.ImagesDetailsActivity"
+            android:screenOrientation="portrait"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

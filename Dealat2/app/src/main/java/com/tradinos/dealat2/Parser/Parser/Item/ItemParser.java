@@ -11,10 +11,11 @@ import org.json.JSONObject;
  */
 
 public class ItemParser implements TradinosParser<Item> {
-    private String idKey;
+    private String idKey, nameKey;
 
-    public ItemParser(String idKey){
+    public ItemParser(String idKey, String nameKey){
         this.idKey = idKey;
+        this.nameKey = nameKey;
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ItemParser implements TradinosParser<Item> {
     }
 
     public Item Parse(JSONObject jsonObject) throws JSONException {
-        return new Item(jsonObject.getString(idKey), jsonObject.getString("name"));
+        return new Item(jsonObject.getString(this.idKey), jsonObject.getString(this.nameKey));
     }
 }

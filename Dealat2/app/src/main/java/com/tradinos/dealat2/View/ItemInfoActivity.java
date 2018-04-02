@@ -11,6 +11,8 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,15 +27,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
+import com.tradinos.dealat2.Adapter.CityAdapter;
 import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
-import com.tradinos.dealat2.Adapter.LocationAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.City;
 import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
-import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.R;
@@ -61,7 +64,7 @@ public class ItemInfoActivity extends MasterActivity {
     private final int REQUEST_SELECT_CAT = 9;
 
     private Category selectedCategory;
-    private Location selectedLocation;
+    private Item selectedLocation;
     private List<Image> images;
     private int currentTemplate;
 
@@ -91,7 +94,7 @@ public class ItemInfoActivity extends MasterActivity {
 
     private AutoCompleteTextView autoCompleteLocation;
 
-    private AppCompatSpinner spinnerPeriod,
+    private AppCompatSpinner spinnerPeriod, spinnerCity,
             spinnerBrand, spinnerModel, spinnerYear,
             spinnerEdu, spinnerSch;
 
@@ -126,7 +129,7 @@ public class ItemInfoActivity extends MasterActivity {
 
                 enabled = true;
 
-                autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
+                spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
                 brands = result.getBrands();
                 List<Type> templateBrands = brands.get(currentTemplate);
@@ -207,6 +210,7 @@ public class ItemInfoActivity extends MasterActivity {
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
 
+        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
         spinnerPeriod = (AppCompatSpinner) findViewById(R.id.spinnerPeriod);
 
         spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
@@ -244,11 +248,24 @@ public class ItemInfoActivity extends MasterActivity {
     @Override
     public void assignActions() {
 
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                City city = ((CityAdapter) spinnerCity.getAdapter()).getItem(i);
+                autoCompleteLocation.setAdapter(new AutoCompleteAdapter(mContext, city.getLocations()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
-                autoCompleteLocation.setText(selectedLocation.getFullName());
+                selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
+                autoCompleteLocation.setText(selectedLocation.getName());
             }
         });
 
@@ -259,6 +276,25 @@ public class ItemInfoActivity extends MasterActivity {
                 if (autoCompleteLocation.getText().toString().equals(""))
                     autoCompleteLocation.showDropDown();
                 return false;
+            }
+        });
+
+        autoCompleteLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() != selectedLocation.getName().length()){
+                    selectedLocation = null;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
@@ -476,13 +512,13 @@ public class ItemInfoActivity extends MasterActivity {
             editTitle.setError(getString(R.string.errorRequired));
             editTitle.requestFocus();
 
+        } else if (currentTemplate == Category.PROPERTIES && selectedLocation == null) {
+            autoCompleteLocation.setError(getString(R.string.errorRequired));
+            autoCompleteLocation.requestFocus();
+
         } else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
-
-        } else if (selectedLocation == null) {
-            autoCompleteLocation.setError(getString(R.string.errorRequired));
-            autoCompleteLocation.requestFocus();
 
         } else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
@@ -502,8 +538,10 @@ public class ItemInfoActivity extends MasterActivity {
             parameters.put("title", stringInput(editTitle));
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
-            parameters.put("location_id", selectedLocation.getId());
+            parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
 
+            if (selectedLocation != null)
+                parameters.put("location_id", selectedLocation.getId());
 
             imagesJsonArray = new JSONArray();
             Image image;

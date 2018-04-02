@@ -33,27 +33,27 @@ public class AdController extends ParentController {
         super(context, faildCallback);
     }
 
-    public AdController(Controller controller){
+    public AdController(Controller controller) {
         super(controller.getmContext(), controller.getmFaildCallback());
     }
 
-    public static AdController getInstance(Controller controller){
+    public static AdController getInstance(Controller controller) {
         return new AdController(controller);
     }
 
-    public void uploadImage(File image, SuccessCallback<String> successCallback){
+    public void uploadImage(File image, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "item_images_upload").getURL(getmContext());
-        PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
-        request.addFileUpload(image);
+        request.addFileUpload("image", image);
 
         addToHeader(request);
         request.Call();
     }
 
-    public void deleteImage(JSONArray jsonArray, SuccessCallback<String> successCallback){
+    public void deleteImage(JSONArray jsonArray, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "delete_images").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("images", jsonArray.toString());
 
@@ -61,9 +61,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void submitAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback){
+    public void submitAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "post_new_item").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
@@ -73,9 +73,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void editAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback){
+    public void editAd(HashMap<String, String> parameters, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "edit").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
@@ -85,9 +85,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void changeStatus(String adId, int status, SuccessCallback<String> successCallback){
+    public void changeStatus(String adId, int status, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "change_status").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
         request.addParameter("status", String.valueOf(status));
@@ -97,17 +97,17 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getTemplatesData(SuccessCallback<TemplatesData> successCallback){
+    public void getTemplatesData(SuccessCallback<TemplatesData> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_data_lists").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new TemplatesDataParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new TemplatesDataParser(), successCallback, getmFaildCallback());
 
         addToHeader(request);
         request.Call();
     }
 
-    public void getCategoryAds(String categoryId, SuccessCallback<List<Ad>> successCallback){
+    public void getCategoryAds(String categoryId, SuccessCallback<List<Ad>> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_items_by_main_category").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
 
         request.addParameter("category_id", categoryId);
 
@@ -116,9 +116,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getAdDetails(String adId, int templateId, SuccessCallback<Ad> successCallback){
+    public void getAdDetails(String adId, int templateId, SuccessCallback<Ad> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_item_details").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdDetailsParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdDetailsParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
         request.addParameter("template_id", String.valueOf(templateId));
@@ -128,9 +128,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void search(HashMap<String, String> parameters, SuccessCallback<List<Ad>> successCallback){
+    public void search(HashMap<String, String> parameters, SuccessCallback<List<Ad>> successCallback) {
         String url = new URLBuilder(APIModel.ads, "search").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new AdListParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
 
         for (Map.Entry<String, String> entry : parameters.entrySet())
             request.addParameter(entry.getKey(), entry.getValue());
@@ -139,9 +139,9 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void setAsFavorite(String adId, SuccessCallback<String> successCallback){
+    public void setAsFavorite(String adId, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "set_as_favorite").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
         authenticationRequired(request);
@@ -151,9 +151,9 @@ public class AdController extends ParentController {
     }
 
 
-    public void removeFromFavorite(String adId, SuccessCallback<String> successCallback){
+    public void removeFromFavorite(String adId, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "remove_from_favorite").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Post, new StringParser(), successCallback,getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
         authenticationRequired(request);

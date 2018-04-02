@@ -1,4 +1,5 @@
 <resources>
     <item name="arrow_back" type="drawable">@drawable/ic_arrow_back_white_36dp</item>
     <item name="arrowNext" type="drawable">@drawable/ic_keyboard_arrow_right_red_24dp</item>
+    <item name="featured" type="drawable">@drawable/featured_ads</item>
 </resources>

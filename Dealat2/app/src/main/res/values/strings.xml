@@ -43,11 +43,14 @@
     <string name="manual">Manual</string>
     <string name="sp">SP</string>
     <string name="refresh">Refresh</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 
     <!-- Views -->
     <string name="labelPleaseSelectCity">Please, Select your city</string>
     <string name="labelSelectCity">Select a city</string>
+    <string name="labelGender">Gender</string>
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
@@ -68,6 +71,9 @@
     <string name="labelViewDetails">View Details</string>
     <string name="labelEditAd">Edit Ad</string>
     <string name="labelDeleteAd">Delete Ad</string>
+    <string name="labelProfileImage">Profile Image</string>
+    <string name="labelSelectImage">Select Image</string>
+    <string name="labelRemoveImage">Remove Image</string>
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
@@ -97,6 +103,9 @@
 
     <string name="hintPhone">Phone Number</string>
     <string name="hintName">Name</string>
+    <string name="hintEmail">Email address</string>
+    <string name="hintWhatsapp">WhatsApp Number</string>
+    <string name="hintBirthday">Birthday</string>
     <string name="hintVerificationCode">Verification Code</string>
     <string name="hintChooseLocation">Choose a Location</string>
     <string name="hintSearch">Search</string>
@@ -160,6 +169,7 @@
     <string name="toastSaved">Changes Saved</string>
     <string name="toastAdDeleted">Ad\'s Deleted</string>
     <string name="toastImageSave">Image\'s saved to gallery</string>
+    <string name="toastThnxRating">Thanx for rating</string>
 
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>

@@ -1,10 +1,9 @@
 package com.tradinos.dealat2.Parser.Parser;
 
 import com.tradinos.core.network.TradinosParser;
-import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.TemplatesData;
+import com.tradinos.dealat2.Parser.Parser.Item.CityListParser;
 import com.tradinos.dealat2.Parser.Parser.Item.ItemListParser;
-import com.tradinos.dealat2.Parser.Parser.Item.LocationListParser;
 import com.tradinos.dealat2.Parser.Parser.Item.TypeMapParser;
 
 import org.json.JSONException;
@@ -23,7 +22,7 @@ public class TemplatesDataParser implements TradinosParser<TemplatesData> {
     public TemplatesData Parse(JSONObject jsonObject) throws JSONException {
         TemplatesData data = new TemplatesData();
 
-        data.setLocations(new LocationListParser().Parse(jsonObject.getString("location")));
+        data.setCities(new CityListParser().Parse(jsonObject.getString("nested_locations")));
 
         data.setBrands(new TypeMapParser().Parse(jsonObject.getString("types")));
 

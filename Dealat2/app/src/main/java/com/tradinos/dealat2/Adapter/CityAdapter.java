@@ -1,57 +1,64 @@
 package com.tradinos.dealat2.Adapter;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
+import android.widget.TextView;
+
+import com.tradinos.dealat2.Model.City;
+import com.tradinos.dealat2.R;
+
+import java.util.List;
 
 /**
  * Created by developer on 12.03.18.
  */
 
 public class CityAdapter extends BaseAdapter {
-    Integer selected_position = -1;
+    private LayoutInflater inflater;
+    private List<City> items;
 
-    @Override
-    public int getCount() {
-        return 0;
+    public CityAdapter(Context context, List<City> items){
+        this.inflater = LayoutInflater.from(context);
+        this.items = items;
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public int getCount() {
+        return this.items.size();
+    }
+
+    @Override
+    public City getItem(int i) {
+        return this.items.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        if (view == null){
+            view = this.inflater.inflate(R.layout.row_item, null);
+        }
 
+        ((TextView) view.findViewById(R.id.textView)).setText(getItem(i).toString());
 
-        // Your Code
-/*
-        chkbox.setChecked(position == selected_position);
+        return view;
+    }
 
-        chkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    @Override
+    public View getDropDownView(int position, View view, ViewGroup parent) {
+        if (view == null){
+            view = this.inflater.inflate(R.layout.row_item_dropdown, null);
+        }
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selected_position = position;
-                } else {
-                    selected_position = -1;
-                }
-                notifyDataSetChanged();
-            }
-        });
-        return convertView;
+        ((TextView) view.findViewById(R.id.textView)).setText(getItem(position).toString());
 
-
-    }*/
-
-        return null;
+        return view;
     }
 }

@@ -58,7 +58,7 @@ public class SelectImagesActivity extends MasterActivity {
 
     @Override
     public void getData() {
-        if (getIntent().hasExtra("counter")){ // when EditAd
+        if (getIntent().hasExtra("counter")){ // when EditAd and edit profile
             action = 1;
             Image.ImageCounter = getIntent().getIntExtra("counter", 0);
         }

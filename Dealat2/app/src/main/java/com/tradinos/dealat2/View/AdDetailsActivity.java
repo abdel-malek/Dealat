@@ -1,10 +1,8 @@
 package com.tradinos.dealat2.View;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +12,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +20,16 @@ import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdImagesAdapter;
-import com.tradinos.dealat2.Adapter.ImageDetailsAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
+import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.AdElectronic;
 import com.tradinos.dealat2.Model.AdFashion;
@@ -47,13 +42,8 @@ import com.tradinos.dealat2.Model.AdSport;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.Chat;
-import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
-import com.tradinos.dealat2.Utils.ImageSaver;
-import com.tradinos.dealat2.Utils.ScalableImageView;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Created by developer on 01.03.18.
@@ -68,9 +58,6 @@ public class AdDetailsActivity extends MasterActivity {
     private CurrentAndroidUser user;
     private Ad currentAd;
 
-    private Bitmap popupBitmap;
-    private PopupWindow popupWindow;
-
     // textViewViews
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -84,6 +71,7 @@ public class AdDetailsActivity extends MasterActivity {
             textViewUsage, textViewSize;
 
     private ImageButton buttonFav;
+    private RatingBar ratingBar;
 
     private LinearLayout containerJob, containerProperty, containerVehicle, containerBrand, containerUsage, containerSize;
     private View line1, line2, line3;
@@ -257,6 +245,7 @@ public class AdDetailsActivity extends MasterActivity {
         line3 = findViewById(R.id.line3);
 
         buttonFav = (ImageButton) findViewById(R.id.buttonFav);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
     }
 
     @Override
@@ -334,39 +323,23 @@ public class AdDetailsActivity extends MasterActivity {
 
                 case R.id.buttonReport:
                     break;
+
+                case R.id.ratingBar:
+                    UserController.getInstance(mController).rateSeller(currentAd.getSellerId(), ratingBar.getRating(), new SuccessCallback<String>() {
+                        @Override
+                        public void OnSuccess(String result) {
+
+                        }
+                    });
             }
         }
     }
 
     public void onImageClicked(View view) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View layout = inflater.inflate(R.layout.popup_image_details,
-                (ViewGroup) findViewById(R.id.popupLayout));
-
-        ViewPager pager = layout.findViewById(R.id.viewpager);
-        pager.setAdapter(new ImageDetailsAdapter(getSupportFragmentManager(), currentAd.getImagesPaths(), currentAd.getTemplate()));
-
-        //view.setDrawingCacheEnabled(true);
-        //popupBitmap = view.getDrawingCache();
-
-       // final ScalableImageView imageView = layout.findViewById(R.id.imageView);
-       // imageView.setImageBitmap(popupBitmap);
-
-        popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
-        popupWindow.showAtLocation(findViewById(R.id.container), Gravity.CENTER, 0, 0);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            //  if (popupBitmap != null)
-            //  popupBitmap.recycle();
-            popupWindow.dismiss();
-            popupWindow = null;
-            popupBitmap = null;
-        } else
-            super.onBackPressed();
+        Intent intent = new Intent(mContext, ImagesDetailsActivity.class);
+        intent.putExtra("ad", currentAd);
+        intent.putExtra("page", viewPager.getCurrentItem());
+        startActivity(intent);
     }
 
     @Override

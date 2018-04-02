@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_blur"
+    >
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_blur"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="16dp"
     android:id="@+id/container3"
     >
 
     <FrameLayout
-        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_centerHorizontal="true"
         android:layoutDirection="ltr"
         >
-
-        <ImageButton
-            android:id="@+id/buttonEdit"
-            android:layout_width="@dimen/imageSmall"
-            android:layout_height="@dimen/imageSmall"
-            android:layout_gravity="bottom|end"
-            android:elevation="8dp"
-            android:onClick="onClick"
-            android:scaleType="fitCenter"
-            android:background="@null"
-            android:src="@drawable/pencil_copy"
-            android:visibility="invisible"
-            />
         <android.support.v7.widget.CardView
             android:layout_width="@dimen/imageViewLarge"
             android:layout_height="@dimen/imageViewLarge"
@@ -37,22 +30,42 @@
             android:shape="ring"
             android:thicknessRatio="1.9">
             <ImageView
-                android:layout_height="80dp"
+                android:id="@+id/imageView"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:id="@+id/imageView1"
-                app:srcCompat="@drawable/dealat_logo_red"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:background="@drawable/ic_person_48dp"
                 >
             </ImageView>
         </android.support.v7.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="@dimen/imageSmall"
+            android:layout_height="@dimen/imageSmall"
+            android:layout_gravity="bottom|end"
+            android:elevation="4dp"
+            android:onClick="onClick"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:src="@drawable/pencil_copy"
+            />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        />
+
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/container2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_below="@+id/container"
         android:hint="@string/hintName"
         android:textColorHint="@color/whiteTransparent"
         >
@@ -66,11 +79,9 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/textLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/container2"
         android:text="@string/labelSelectCity"
         style="@style/textNormal"
         android:textColor="@color/whiteTransparent"
@@ -80,7 +91,71 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textLocation"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        android:backgroundTint="@color/white"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/hintEmail"
+        android:textColorHint="@color/whiteTransparent"
+        >
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            style="@style/editTextWhite"
+            android:backgroundTint="@color/white"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintWhatsapp"
+        android:textColorHint="@color/whiteTransparent"
+        >
+        <EditText
+            android:id="@+id/editWhatsApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            style="@style/editTextWhite"
+            android:backgroundTint="@color/white"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hintBirthday"
+        android:textColorHint="@color/whiteTransparent"
+        >
+        <EditText
+            android:id="@+id/editBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/editTextWhite"
+            android:backgroundTint="@color/white"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/labelGender"
+        style="@style/textNormal"
+        android:textColor="@color/whiteTransparent"
+        />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         style="@style/Base.Widget.AppCompat.Spinner.Underlined"
         android:backgroundTint="@color/white"
         />
@@ -118,4 +193,5 @@
             android:background="@drawable/rounded_corner_white"
             />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

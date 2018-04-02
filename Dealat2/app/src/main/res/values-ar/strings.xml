@@ -43,11 +43,14 @@
     <string name="manual">عادي</string>
     <string name="sp">ل.س</string>
     <string name="refresh">تحديث</string>
+    <string name="male">ذكر</string>
+    <string name="female">أنثى</string>
 
 
     <!-- Views -->
     <string name="labelPleaseSelectCity">من فضلك، اختر محافظتك</string>
     <string name="labelSelectCity">اختر محافظة</string>
+    <string name="labelGender">الجنس</string>
     <string name="labelchooseCategory">اختر صنفاً</string>
     <string name="labelNegotiable">قابل للتفاوض</string>
     <string name="labelSecondhand">مستعمل</string>
@@ -68,8 +71,11 @@
     <string name="labelViewDetails">عرض تفاصيل الإعلان</string>
     <string name="labelEditAd">تعديل الإعلان</string>
     <string name="labelDeleteAd">حذف الإعلان</string>
+    <string name="labelProfileImage">الصورة الشخصية</string>
+    <string name="labelSelectImage">اختيار صورة</string>
+    <string name="labelRemoveImage">إزالة الصورة</string>
 
-    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطى.</string>
+    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
@@ -97,6 +103,9 @@
 
     <string name="hintPhone">رقم الموبايل</string>
     <string name="hintName">الاسم</string>
+    <string name="hintEmail">البريد الالكتروني</string>
+    <string name="hintWhatsapp">رقم الواتساب</string>
+    <string name="hintBirthday">تاريخ الميلاد</string>
     <string name="hintVerificationCode">رمز التحقق</string>
     <string name="hintChooseLocation">اختر موقع</string>
     <string name="hintSearch">ابحث</string>
@@ -165,6 +174,7 @@
     <string name="toastWaitTillUploading">يرجى الانتظار حتى يتم تحميل الصور!</string>
     <string name="toastRegister">يجب تسجيل الدخول أولاً!</string>
     <string name="toastVerify">يجب أن تفعّل حسابك أولاً!</string>
+    <string name="toastThnxRating">شكراً لتقييمك</string>
 
 
     <!-- Alert Dialog -->

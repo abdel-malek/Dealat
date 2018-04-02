@@ -8,8 +8,11 @@ public class User implements Serializable {
 
     public static final int NOT_REGISTERED = 1, LOCATED = 2, PENDING = 3, REGISTERED = 4;
 
-    private String id, name, phone;
+    private String id, name, phone, whatsAppNumber, email;
     private String serverKey, cityId, cityName;
+    private String imageUrl;
+    private String birthday;
+    private int gender;
 
     public String getId() {
         return id;
@@ -57,6 +60,46 @@ public class User implements Serializable {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getWhatsAppNumber() {
+        return whatsAppNumber;
+    }
+
+    public void setWhatsAppNumber(String whatsAppNumber) {
+        this.whatsAppNumber = whatsAppNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     @Override

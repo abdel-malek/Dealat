@@ -5,7 +5,6 @@ import android.content.Context;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,22 +12,14 @@ import java.util.Map;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MIME;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.StringBody;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Response;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 
 public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
 
-
-    private static final String FILE_PART_NAME = "image";
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
-
 
     /* To hold the parameter name and the File to upload */
     private Map<String, File> fileUploads = new HashMap<String, File>();
@@ -42,14 +33,14 @@ public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
 
     }
 
-    public void addFileUpload(File file) {
-        fileUploads.put(FILE_PART_NAME, file);
-        buildMultipartEntity();
+    public void addFileUpload(String key, File file) {
+        fileUploads.put(key, file);
+        buildMultipartEntity(key);
     }
 
     public void addStringUpload(String param, String content) {
         stringUploads.put(param, content);
-        buildMultipartEntity(param);
+        buildStringMultipartEntity(param);
     }
 
     /**
@@ -66,28 +57,13 @@ public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
         return stringUploads;
     }
 
-
-    @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String, String> headers = super.getHeaders();
-
-        if (headers == null
-                || headers.equals(Collections.emptyMap())) {
-            headers = new HashMap<String, String>();
-        }
-
-        headers.put("Accept", "application/json");
-
-        return headers;
-    }
-
-    private void buildMultipartEntity() {
-        mBuilder.addBinaryBody(FILE_PART_NAME, fileUploads.get(FILE_PART_NAME));
+    private void buildMultipartEntity(String key) {
+        mBuilder.addBinaryBody(key, fileUploads.get(key));
         mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         mBuilder.setLaxMode().setBoundary("xx").setCharset(Charset.forName("UTF-8"));
     }
 
-    private void buildMultipartEntity(String key) {
+    private void buildStringMultipartEntity(String key) {
         mBuilder.addTextBody(key, stringUploads.get(key), ContentType.APPLICATION_JSON);
         mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         mBuilder.setLaxMode().setBoundary("xx").setCharset(Charset.forName("UTF-8"));

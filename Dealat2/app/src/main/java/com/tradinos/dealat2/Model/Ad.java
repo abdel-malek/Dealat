@@ -15,7 +15,7 @@ public class Ad implements Serializable {
             HIDDEN = 4, REJECTED = 5, DELETED = 6;
 
 
-    private String id, locationId, categoryId, publishDate;
+    private String id, cityId, locationId, categoryId, publishDate;
     private String title, description, locationName, cityName;
     private String sellerId, sellerName, sellerPhone;
     private String rejectNote;
@@ -41,6 +41,14 @@ public class Ad implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
     public String getLocationId() {

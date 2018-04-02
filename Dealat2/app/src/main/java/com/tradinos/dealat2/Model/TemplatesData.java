@@ -11,7 +11,8 @@ public class TemplatesData {
 
     private List<Item> educations, schedules;
     private HashMap<Integer, List<Type>> brands;
-    private List<Location> locations;
+    //private List<Location> locations;
+    private List<City> cities;
 
     public List<Item> getEducations() {
         return educations;
@@ -37,11 +38,11 @@ public class TemplatesData {
         this.brands = brands;
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public List<City> getCities() {
+        return cities;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 }

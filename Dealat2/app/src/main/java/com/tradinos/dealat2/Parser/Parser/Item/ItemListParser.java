@@ -16,10 +16,16 @@ import java.util.List;
 
 public class ItemListParser implements TradinosParser<List<Item>> {
 
-    private String idKey;
+    private String idKey, nameKey;
 
     public ItemListParser(String idKey){
         this.idKey = idKey;
+        this.nameKey = "name";
+    }
+
+    public ItemListParser(String idKey, String nameKey){
+        this.idKey = idKey;
+        this.nameKey = nameKey;
     }
 
     @Override
@@ -31,7 +37,7 @@ public class ItemListParser implements TradinosParser<List<Item>> {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
-            items.add(new ItemParser(idKey).Parse(jsonObject));
+            items.add(new ItemParser(idKey, nameKey).Parse(jsonObject));
         }
 
         return items;

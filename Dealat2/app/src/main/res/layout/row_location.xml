@@ -15,12 +15,4 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         />
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/grayLight"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        />
-
 </LinearLayout>

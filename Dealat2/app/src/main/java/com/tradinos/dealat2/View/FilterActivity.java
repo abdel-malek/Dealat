@@ -14,13 +14,14 @@ import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.CheckableAdapter;
+import com.tradinos.dealat2.Adapter.CityAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
-import com.tradinos.dealat2.Adapter.LocationAdapter;
+import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Category;
+import com.tradinos.dealat2.Model.City;
 import com.tradinos.dealat2.Model.Item;
-import com.tradinos.dealat2.Model.Location;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.R;
@@ -42,7 +43,7 @@ public class FilterActivity extends MasterActivity {
 
     private int currentTemplate;
     private Category selectedCategory;
-    private Location selectedLocation;
+    private Item selectedLocation;
 
     private HashMap<String, String> parameters = new HashMap<>();
 
@@ -68,7 +69,8 @@ public class FilterActivity extends MasterActivity {
     private AppCompatSpinner spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission,
             spinnerEdu, spinnerSch,
             spinnerFurn,
-            spinnerState;
+            spinnerState,
+            spinnerCity;
 
     private LinearLayout containerKilometer, containerSize,
             containerSalary, containerSpace, containerRooms, containerFloors, containerPrice;
@@ -90,8 +92,8 @@ public class FilterActivity extends MasterActivity {
             public void OnSuccess(TemplatesData result) {
                 HideProgressDialog();
 
-                result.getLocations().add(0, Location.getNoLocation(getString(R.string.all)));
-                autoCompleteLocation.setAdapter(new LocationAdapter(mContext, result.getLocations()));
+                result.getCities().add(0, City.getNoCity());
+                spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
                 brands = result.getBrands();
                 List<Type> templateBrands = brands.get(currentTemplate);
@@ -209,6 +211,8 @@ public class FilterActivity extends MasterActivity {
 
         spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
 
+        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
+
         containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
         containerSize = (LinearLayout) findViewById(R.id.containerSize);
         containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
@@ -224,8 +228,8 @@ public class FilterActivity extends MasterActivity {
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedLocation = ((LocationAdapter) autoCompleteLocation.getAdapter()).getItem(i);
-                autoCompleteLocation.setText(selectedLocation.getFullName());
+                selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
+                autoCompleteLocation.setText(selectedLocation.getName());
 
                 if (selectedLocation.isNothing())
                     selectedLocation = null;

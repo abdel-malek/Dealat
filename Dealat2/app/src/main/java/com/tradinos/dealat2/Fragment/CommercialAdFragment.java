@@ -1,5 +1,7 @@
 package com.tradinos.dealat2.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,7 +24,7 @@ public class CommercialAdFragment extends Fragment {
 
     private CommercialAd commercialAd;
 
-    public CommercialAdFragment(){
+    public CommercialAdFragment() {
     }
 
     public static CommercialAdFragment newInstance(CommercialAd ad) {
@@ -44,10 +46,30 @@ public class CommercialAdFragment extends Fragment {
 
         ImageView imageView = rootView.findViewById(R.id.imageView);
 
-        if (commercialAd != null){
-            ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + this.commercialAd.getImageUrl(), ImageLoader.getImageListener(imageView,
-                    R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
+        if (commercialAd != null) {
+            if (commercialAd.getImageUrl() != null) {
+                ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
+                mImageLoader.get(MyApplication.getBaseUrlForImages() + this.commercialAd.getImageUrl(), ImageLoader.getImageListener(imageView,
+                        R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
+            }
+
+            rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (commercialAd.getAdUrl() != null) {
+                        Uri webpage = Uri.parse(commercialAd.getAdUrl());
+
+                        if (!commercialAd.getAdUrl().startsWith("http://") && !commercialAd.getAdUrl().startsWith("https://")) {
+                            webpage = Uri.parse("http://" + commercialAd.getAdUrl());
+                        }
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+                        if (intent.resolveActivity(getContext().getPackageManager()) != null)
+                            getContext().startActivity(intent);
+                    }
+                }
+            });
         }
 
         return rootView;

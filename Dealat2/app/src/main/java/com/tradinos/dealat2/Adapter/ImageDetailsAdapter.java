@@ -1,6 +1,5 @@
 package com.tradinos.dealat2.Adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -24,7 +23,7 @@ public class ImageDetailsAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public ImageDetailsFragment getItem(int position) {
         return ImageDetailsFragment.newInstance(paths.get(position), templateId);
     }
 
