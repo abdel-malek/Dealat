@@ -13,6 +13,7 @@
     android:gravity="center_horizontal"
     android:padding="16dp"
     android:id="@+id/container3"
+    android:focusableInTouchMode="true"
     >
 
     <FrameLayout
@@ -138,6 +139,7 @@
             android:id="@+id/editBirthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             style="@style/editTextWhite"
             android:backgroundTint="@color/white"
             />

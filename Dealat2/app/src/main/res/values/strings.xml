@@ -46,6 +46,9 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
 
+    <string name="selectImages">You can select</string>
+    <string name="images">images</string>
+
 
     <!-- Views -->
     <string name="labelPleaseSelectCity">Please, Select your city</string>
@@ -79,6 +82,7 @@
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">Ad Number</string>
+    <string name="labelCity">City</string>
     <string name="labelLocation">Location</string>
     <string name="labelTitle">Title</string>
     <string name="labelBrand">Brand</string>

@@ -366,7 +366,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     public String formattedDate(String stringDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
+        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH); //time without seconds
         //DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
 

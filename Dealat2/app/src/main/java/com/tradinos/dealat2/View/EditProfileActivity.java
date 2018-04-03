@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
+import com.tradinos.dealat2.Utils.SelectDateFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ import java.util.List;
  * Created by developer on 14.03.18.
  */
 
-public class EditProfileActivity extends MasterActivity {
+public class EditProfileActivity extends MasterActivity implements SelectDateFragment.OnDialogClosed {
 
     private final int REQUEST_SELECT_IMG = 1;
 
@@ -59,7 +62,7 @@ public class EditProfileActivity extends MasterActivity {
         currentAndroidUser = new CurrentAndroidUser(this);
 
         List<Item> genders = new ArrayList<>();
-        genders.add(Item.getNoItem());
+      //  genders.add(Item.getNoItem());
         genders.add(new Item("1", getString(R.string.male)));
         genders.add(new Item("2", getString(R.string.female)));
         spinnerGender.setAdapter(new ItemAdapter(mContext, genders));
@@ -78,13 +81,14 @@ public class EditProfileActivity extends MasterActivity {
                     @Override
                     public void OnSuccess(User result) {
                         currentAndroidUser.Save(result);
+                        MyApplication.saveCity(result.getCityId());
 
                         editTextName.setText(result.getName());
 
                         ((TextView) findViewById(R.id.textView)).setText(result.getPhone());
                         spinnerCity.setSelection(getItemIndex(cities, result.getCityId()));
 
-                        spinnerGender.setSelection(result.getGender());
+                        spinnerGender.setSelection(result.getGender()-1); //remove -1 when removing gender --
 
                         if (!TextUtils.isEmpty(result.getWhatsAppNumber()))
                             editWhatsApp.setText(result.getWhatsAppNumber());
@@ -124,6 +128,14 @@ public class EditProfileActivity extends MasterActivity {
     @Override
     public void assignActions() {
 
+        editBirthday.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    showDatePickerDialog(getSupportFragmentManager());
+                return false;
+            }
+        });
     }
 
     @Override
@@ -139,11 +151,19 @@ public class EditProfileActivity extends MasterActivity {
                     parameters.put("name", stringInput(editTextName));
 
                     if (spinnerCity.getSelectedItem() != null) //city_id
-                        parameters.put("location_id", ((Item) spinnerCity.getSelectedItem()).getId());
+                        parameters.put("city_id", ((Item) spinnerCity.getSelectedItem()).getId());
 
                     if (!inputIsEmpty(editEmail))
                         parameters.put("email", stringInput(editEmail));
 
+                    if (!inputIsEmpty(editWhatsApp))
+                        parameters.put("whatsup_number", stringInput(editWhatsApp));
+
+                    if (!inputIsEmpty(editBirthday))
+                        parameters.put("birthday", stringInput(editBirthday));
+
+                    Item item = (Item) spinnerGender.getSelectedItem();
+                    parameters.put("gender", item.getId()); // noItem!! remove gender
 
                   //  if (image == null)
                       //  parameters.put("personal_image", "null");
@@ -207,10 +227,7 @@ public class EditProfileActivity extends MasterActivity {
             if (newImages.size() > 0) {
                 imageViewPersonal.setImageBitmap(new ImageDecoder().decodeSmallImage(newImages.get(0).getPath()));
                 image = new File(newImages.get(0).getPath());
-            } /*else {
-                image = null;
-                //imageViewPersonal.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.dealat_logo_white_background));
-            }*/
+            }
         }
     }
 
@@ -230,5 +247,23 @@ public class EditProfileActivity extends MasterActivity {
             showMessageInToast(message);
         else
             snackbar.show();
+    }
+
+    private void showDatePickerDialog(FragmentManager supportFragmentManager) {
+        DialogFragment dateFragment = new SelectDateFragment();
+        Bundle arg = new Bundle();
+        dateFragment.setArguments(arg);
+        dateFragment.setCancelable(true);
+
+        dateFragment.show(supportFragmentManager, "datePicker");
+    }
+
+    @Override
+    public void OnDialogClosed(int year, int month, int day) {
+        if (year == 0 && month == 0 && day == 0) {
+        } else {
+            String mDate = year + "-" + ((month + 1) < 10 ? "0" + (month + 1) : (month + 1)) + "-" + (day < 10 ? "0" + day : day);
+            editBirthday.setText(mDate);
+        }
     }
 }

@@ -61,11 +61,10 @@ public class ItemInfoActivity extends MasterActivity {
 
     private boolean enabled = false;
 
-    private final int REQUEST_SELECT_CAT = 9;
+    private final int REQUEST_SELECT_CAT = 9, REQUEST_SELECT_IMG = 7;
 
     private Category selectedCategory;
     private Item selectedLocation;
-    private List<Image> images;
     private int currentTemplate;
 
     private HashMap<Integer, List<Type>> brands = new HashMap<>();
@@ -119,8 +118,6 @@ public class ItemInfoActivity extends MasterActivity {
         selectedCategory = (Category) getIntent().getSerializableExtra("category");
         currentTemplate = selectedCategory.getTemplateId();
 
-        images = (List<Image>) getIntent().getSerializableExtra("images");
-
         ShowProgressDialog();
         AdController.getInstance(mController).getTemplatesData(new SuccessCallback<TemplatesData>() {
             @Override
@@ -150,6 +147,8 @@ public class ItemInfoActivity extends MasterActivity {
     @Override
     public void showData() {
 
+        ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
+                " " + getString(R.string.images));
         editCategory.setText(selectedCategory.getFullName());
 
         List<Item> showPeriods = new ArrayList<>();
@@ -170,15 +169,7 @@ public class ItemInfoActivity extends MasterActivity {
 
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
-        if (images.isEmpty()) // HorizontalScrollView
-            findViewById(R.id.container).setVisibility(View.GONE);
-
         adapter = new HorizontalAdapter(mContext, linearLayout);
-        adapter.setViews(images);
-
-        // uploading images
-        for (int i = 0; i < images.size(); i++)
-            new UploadImage(i).execute(images.get(i));
     }
 
     @Override
@@ -253,6 +244,9 @@ public class ItemInfoActivity extends MasterActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 City city = ((CityAdapter) spinnerCity.getAdapter()).getItem(i);
                 autoCompleteLocation.setAdapter(new AutoCompleteAdapter(mContext, city.getLocations()));
+
+                autoCompleteLocation.setText("");
+                selectedLocation = null;
             }
 
             @Override
@@ -266,6 +260,9 @@ public class ItemInfoActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getName());
+
+                if (selectedLocation.isNothing())
+                    selectedLocation = null;
             }
         });
 
@@ -287,9 +284,10 @@ public class ItemInfoActivity extends MasterActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() != selectedLocation.getName().length()){
-                    selectedLocation = null;
-                }
+                if (selectedLocation != null)
+                    if (charSequence.length() != selectedLocation.getName().length()) {
+                        selectedLocation = null;
+                    }
             }
 
             @Override
@@ -348,6 +346,15 @@ public class ItemInfoActivity extends MasterActivity {
                     }
                 });
             }
+        } else if (view.getId() == R.id.buttonEdit) {
+            if (adapter.getCount() >= Image.MAX_IMAGES)
+                showMessageInToast(R.string.toastMaxImages);
+            else {
+                Intent intent = new Intent(mContext, SelectImagesActivity.class);
+                intent.putExtra("counter", adapter.getCount());
+                startActivityForResult(intent, REQUEST_SELECT_IMG);
+            }
+
         } else if (view.getId() == R.id.layoutHorizontal) {
             final int position = Integer.parseInt(view.getTag().toString());
             final Image clickedImage = adapter.getItem(position);
@@ -409,6 +416,15 @@ public class ItemInfoActivity extends MasterActivity {
                     if (templateBrands != null)
                         spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
                 }
+            } else if (requestCode == REQUEST_SELECT_IMG) {
+                List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
+
+                int base = adapter.getCount();
+                adapter.setViews(newImages);
+
+                // uploading images
+                for (int i = 0; i < newImages.size(); i++)
+                    new UploadImage(i + base).execute(newImages.get(i));
             }
         }
     }

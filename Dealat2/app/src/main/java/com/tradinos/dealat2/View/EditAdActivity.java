@@ -197,7 +197,8 @@ public class EditAdActivity extends MasterActivity {
 
     @Override
     public void showData() {
-
+        ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
+                " " + getString(R.string.images));
     }
 
     @Override
@@ -272,9 +273,17 @@ public class EditAdActivity extends MasterActivity {
                 City city = ((CityAdapter) spinnerCity.getAdapter()).getItem(i);
                 autoCompleteLocation.setAdapter(new AutoCompleteAdapter(mContext, city.getLocations()));
 
-                if (currentAd.getCityId().equals(city.getId()))
+                //in general case, clear autoCompleteLocation
+                autoCompleteLocation.setText("");
+                selectedLocation = null;
+
+                //now set previously selected location
+                //no need to check null getCityId because it's required
+                if (currentAd.getCityId() != null && currentAd.getCityId().equals(city.getId()))
                     if (currentAd.getLocationId() != null) {
-                      //  autoCompleteLocation.setSelection(getItemIndex(city.getLocations(), currentAd.getLocationId()));
+                        int loc = getItemIndex(city.getLocations(), currentAd.getLocationId());
+                        selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(loc);
+                        autoCompleteLocation.setText(selectedLocation.getName());
                     }
             }
 
@@ -289,6 +298,9 @@ public class EditAdActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getName());
+
+                if (selectedLocation.isNothing())
+                    selectedLocation = null;
             }
         });
 
@@ -311,9 +323,10 @@ public class EditAdActivity extends MasterActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() != selectedLocation.getName().length()) {
-                    selectedLocation = null;
-                }
+                if (selectedLocation != null)
+                    if (charSequence.length() != selectedLocation.getName().length()) {
+                        selectedLocation = null;
+                    }
             }
 
             @Override
@@ -513,10 +526,6 @@ public class EditAdActivity extends MasterActivity {
         } else if (currentAd.getTemplate() != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
-
-        } else if (currentAd.getTemplate() == Category.PROPERTIES && selectedLocation == null) {
-            autoCompleteLocation.setError(getString(R.string.errorRequired));
-            autoCompleteLocation.requestFocus();
 
         } else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));

@@ -64,7 +64,7 @@ public class AdDetailsActivity extends MasterActivity {
 
     private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textNegotiable, textViewDesc,
             textViewSeller, textViewPhone,
-            textViewViews, textViewPublishDate, textViewLocation, textViewExpires,
+            textViewViews, textViewPublishDate, textViewLocation, textViewCity, textViewExpires,
             textViewEdu, textViewSch, textViewSalary, textViewEx,
             textViewSpace, textViewRooms, textViewFloors, textViewFurn, textViewState,
             textViewBrand, textViewModel, textViewKilo, textViewTransmission, textViewManufactureYear,
@@ -138,7 +138,14 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewTitle2.setText(result.getTitle());
                 textViewPublishDate.setText(formattedDate(result.getPublishDate()));
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
-                textViewLocation.setText(result.getLocationName());
+                textViewCity.setText(result.getCityName());
+
+                if (result.getLocationId() != null){
+                    textViewLocation.setText(result.getLocationName());
+                    findViewById(R.id.line6).setVisibility(View.VISIBLE);
+                    findViewById(R.id.containerLocation).setVisibility(View.VISIBLE);
+                }
+
                 textViewExpires.setText(getExpiryTime(result.getPublishDate(), result.getShowPeriod()));
                 textViewSeller.setText(result.getSellerName());
 
@@ -203,6 +210,7 @@ public class AdDetailsActivity extends MasterActivity {
         textViewViews = (TextView) findViewById(R.id.textView);
         textViewPublishDate = (TextView) findViewById(R.id.textViewDate);
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
+        textViewCity = (TextView) findViewById(R.id.textViewCity);
         textViewLocation = (TextView) findViewById(R.id.textLocation);
         textViewExpires = (TextView) findViewById(R.id.textViewExpires);
         textNegotiable = (TextView) findViewById(R.id.textNegotiable);

@@ -25,31 +25,17 @@ public class SelectDateFragment extends DialogFragment implements
     int month;
     int day;
 
-    boolean minDate = true;
-
-    public void setMinDate(boolean minDate) {
-        this.minDate = minDate;
-    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //datePicker language
         Locale.setDefault(Locale.ENGLISH);
 
-        // Use the current date as the default date in the picker
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
         // Create a new instance of DatePickerDialog and return it
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datepicker, this, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datepicker, this, 1980, 0, 1);
 
         Calendar calendar = Calendar.getInstance();
-        if(minDate) // all input dates should be new
-            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-        else // but lastPayment date should be old
-            datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+       // it's used for selecting Birthday
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 
         return datePickerDialog;
     }
@@ -79,7 +65,7 @@ public class SelectDateFragment extends DialogFragment implements
 
         else {
             ((OnDialogClosed) getActivity()).OnDialogClosed(-1, -1, -1);
-         //   Toast.makeText(getActivity(), getResources().getString(R.string.invalid_date), Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(getActivity(), getResources().getString(R.string.invalid_date), Toast.LENGTH_SHORT).show();
         }
         super.onDismiss(dialog);
     }
@@ -97,8 +83,8 @@ public class SelectDateFragment extends DialogFragment implements
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (selectedDate.before(currentDate)) {
-            return true; //it was false
+        if (selectedDate.after(currentDate)) { // it was before
+            return false;
         } else
             return true;
     }

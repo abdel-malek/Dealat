@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="lineHight">0.5dp</dimen>
     <dimen name="mediumHeight">140dp</dimen>
     <dimen name="largeHeight">180dp</dimen>
 

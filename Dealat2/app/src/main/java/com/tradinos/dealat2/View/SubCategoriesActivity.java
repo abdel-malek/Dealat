@@ -21,9 +21,7 @@ import com.tradinos.dealat2.R;
 public class SubCategoriesActivity extends MasterActivity {
 
     private final int DURATION = 250;
-    public static final int ACTION_VIEW = 1, ACTION_SELL = 2, ACTION_SELECT_CAT = 3, ACTION_FILTER_CAT = 4;
-
-    public final int REQUEST_SELECT_IMG = 5;
+    public static final int ACTION_VIEW = 1, ACTION_SELECT_CAT = 3, ACTION_FILTER_CAT = 4;
 
     private MyApplication application;
 
@@ -126,12 +124,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
                 } else {
                     Intent intent;
-                    if (action == ACTION_SELL) {
-                        intent = new Intent(mContext, SelectImagesActivity.class);
-                        intent.putExtra("category", category);
-                        startActivityForResult(intent, REQUEST_SELECT_IMG);
-
-                    } else if (action == ACTION_VIEW) {
+                    if (action == ACTION_VIEW) {
                         intent = new Intent(mContext, ViewAdsActivity.class);
                         intent.putExtra("action", ViewAdsActivity.ACTION_VIEW);
                         intent.putExtra("category", category);
@@ -148,12 +141,6 @@ public class SubCategoriesActivity extends MasterActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SELECT_IMG)
-            if (resultCode == RESULT_OK)
-                finish();
-    }
 
     @Override
     public void onClick(View view) {

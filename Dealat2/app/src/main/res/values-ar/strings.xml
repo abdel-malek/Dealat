@@ -34,7 +34,7 @@
 
     <!-- Internal Strings -->
     <string name="all">الكل</string>
-    <string name="allCategories">كل الأصناف</string>
+    <string name="allCategories">كل التصنيفات</string>
     <string name="today">اليوم</string>
     <string name="yesterday">الأمس</string>
     <string name="expires">ينتهي بـ</string>
@@ -46,12 +46,14 @@
     <string name="male">ذكر</string>
     <string name="female">أنثى</string>
 
+    <string name="selectImages">يمكنك اختيار</string>
+    <string name="images">صور</string>
 
     <!-- Views -->
     <string name="labelPleaseSelectCity">من فضلك، اختر محافظتك</string>
     <string name="labelSelectCity">اختر محافظة</string>
     <string name="labelGender">الجنس</string>
-    <string name="labelchooseCategory">اختر صنفاً</string>
+    <string name="labelchooseCategory">اختر تصنيفاً</string>
     <string name="labelNegotiable">قابل للتفاوض</string>
     <string name="labelSecondhand">مستعمل</string>
     <string name="labelFeatured">متميّز</string>
@@ -79,6 +81,7 @@
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
+    <string name="labelCity">المحافظة</string>
     <string name="labelLocation">الموقع</string>
     <string name="labelTitle">عنوان الإعلان</string>
     <string name="labelBrand">النوع</string>
@@ -145,7 +148,7 @@
 
     <!-- Drawer -->
     <string name="navHome">الرئيسية</string>
-    <string name="navCategories">الأصناف</string>
+    <string name="navCategories">التصنيفات</string>
     <string name="navSavedSearches">عمليات البحث المحفوظة</string>
     <string name="navLanguage">اللغة</string>
     <string name="navSettings">الإعدادات</string>
@@ -157,7 +160,7 @@
     <string name="errorRequired">هذا الحقل مطلوب</string>
     <string name="errorCodeLenght">رمز التحقق يحب أن يحوي ٦ خانات!</string>
     <string name="errorPhoneLength">رقم الموبايل يحب أن يحوي ٩ خانات!</string>
-    <string name="errorCategory">لايمكن تغيير صنف الإعلان</string>
+    <string name="errorCategory">لايمكن تغيير تصنيف الإعلان</string>
 
 
     <!-- Toasts -->

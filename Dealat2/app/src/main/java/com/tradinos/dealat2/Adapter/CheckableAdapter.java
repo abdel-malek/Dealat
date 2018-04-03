@@ -26,7 +26,6 @@ public class CheckableAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Item> items, selectedItems = new ArrayList<>();
 
-
     public CheckableAdapter(Context context, List<Item> items) {
         this.inflater = LayoutInflater.from(context);
         this.items = items;

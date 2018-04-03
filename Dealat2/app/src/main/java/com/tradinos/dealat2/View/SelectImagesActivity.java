@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.GridView;
 
 import com.tradinos.dealat2.Adapter.ImageAdapter;
-import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.R;
 
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by developer on 20.02.18.
@@ -34,12 +34,9 @@ import java.util.Date;
 
 public class SelectImagesActivity extends MasterActivity {
 
-    private int action = 0;
-
-    private final int REQUEST_SUBMIT = 11, REQUEST_CAMERA = 12,
+    private final int REQUEST_CAMERA = 12,
             REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14;
 
-    private Category selectedCategory;
     private String mCurrentPhotoPath;
 
     private ImageAdapter adapter;
@@ -58,14 +55,7 @@ public class SelectImagesActivity extends MasterActivity {
 
     @Override
     public void getData() {
-        if (getIntent().hasExtra("counter")){ // when EditAd and edit profile
-            action = 1;
-            Image.ImageCounter = getIntent().getIntExtra("counter", 0);
-        }
-        else {// when Submit an Ad
-            selectedCategory = (Category) getIntent().getSerializableExtra("category");
-            Image.ImageCounter = 0;
-        }
+        Image.ImageCounter = getIntent().getIntExtra("counter", 0);
     }
 
     @Override
@@ -129,19 +119,11 @@ public class SelectImagesActivity extends MasterActivity {
                 break;
 
             case R.id.buttonTrue: //done
-                if (action == 0){
-                    Intent intent = new Intent(mContext, ItemInfoActivity.class);
 
-                    intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
-                    intent.putExtra("category", selectedCategory);
-                    startActivityForResult(intent, REQUEST_SUBMIT);
-                }
-                else {
-                    Intent intent = new Intent();
-                    intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+                Intent intent = new Intent();
+                intent.putExtra("images", (ArrayList) adapter.getSelectedImages());
+                setResult(RESULT_OK, intent);
+                finish();
 
                 break;
 
@@ -154,18 +136,19 @@ public class SelectImagesActivity extends MasterActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SUBMIT) {
-                setResult(RESULT_OK);
-                finish();
-            } else if (requestCode == REQUEST_CAMERA) {
-
+        if (requestCode == REQUEST_CAMERA) {
+            if (resultCode == RESULT_OK) {
                 adapter.addCapturedImage(new Image(mCurrentPhotoPath));
                 adapter.notifyDataSetChanged();
+
+            } else if (resultCode == RESULT_CANCELED) {
+
+                if (photoFile != null) {
+                    if (photoFile.delete()) { // to remove it from gallery
+                        MediaScannerConnection.scanFile(mContext, new String[]{photoFile.getPath()}, new String[]{"image/*"}, null);
+                    }
+                }
             }
-        } else if (resultCode == RESULT_CANCELED) {
-            //  File file = new File(photoUri.getPath());
-            // file.delete();
         }
     }
 
@@ -208,7 +191,7 @@ public class SelectImagesActivity extends MasterActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
 
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Dealat");

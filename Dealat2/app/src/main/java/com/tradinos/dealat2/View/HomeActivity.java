@@ -126,10 +126,8 @@ public class HomeActivity extends DrawerActivity {
         if (view.getId() == R.id.buttonTrue) {
 
             if (registered()){
-                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-
+                Intent intent = new Intent(mContext, ItemInfoActivity.class);
                 intent.putExtra("category", mainCategory);
-                intent.putExtra("action", SubCategoriesActivity.ACTION_SELL);
 
                 startActivity(intent);
             }

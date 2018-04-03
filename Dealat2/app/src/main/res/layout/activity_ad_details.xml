@@ -45,7 +45,7 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <LinearLayout
@@ -75,7 +75,7 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
     <FrameLayout
         android:id="@+id/container"
@@ -208,7 +208,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <LinearLayout
@@ -239,10 +239,42 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelCity"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewCity"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHight"
+                android:background="@color/grayLight"/>
+
+            <LinearLayout
+                android:id="@+id/containerLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/containerPadding"
@@ -269,7 +301,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <LinearLayout
@@ -299,7 +331,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <LinearLayout
@@ -337,7 +369,7 @@
                 >
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -366,7 +398,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -395,7 +427,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -424,7 +456,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -464,7 +496,7 @@
                 >
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -493,7 +525,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -522,7 +554,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -551,7 +583,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -580,7 +612,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -614,7 +646,7 @@
             <View
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:visibility="gone"
                 android:background="@color/grayLight"
                 />
@@ -656,7 +688,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -686,7 +718,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -716,7 +748,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
                 <LinearLayout
@@ -746,7 +778,7 @@
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/lineHight"
                     android:background="@color/grayLight"/>
 
 
@@ -782,7 +814,7 @@
             <View
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:visibility="gone"
                 android:background="@color/grayLight"/>
 
@@ -816,7 +848,7 @@
             <View
                 android:id="@+id/line1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:visibility="gone"
                 android:background="@color/grayLight"/>
 
@@ -850,7 +882,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/lineHight"
                 android:background="@color/grayLight"/>
 
             <TextView

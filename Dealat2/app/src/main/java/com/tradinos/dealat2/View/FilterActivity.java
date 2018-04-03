@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -225,6 +227,22 @@ public class FilterActivity extends MasterActivity {
     @Override
     public void assignActions() {
 
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                City city = ((CityAdapter) spinnerCity.getAdapter()).getItem(i);
+                autoCompleteLocation.setAdapter(new AutoCompleteAdapter(mContext, city.getLocations()));
+
+                autoCompleteLocation.setText("");
+                selectedLocation = null;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         autoCompleteLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -243,6 +261,26 @@ public class FilterActivity extends MasterActivity {
                 if (autoCompleteLocation.getText().toString().equals(""))
                     autoCompleteLocation.showDropDown();
                 return false;
+            }
+        });
+
+        autoCompleteLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (selectedLocation != null)
+                    if (charSequence.length() != selectedLocation.getName().length()) {
+                        selectedLocation = null;
+                    }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
@@ -328,6 +366,10 @@ public class FilterActivity extends MasterActivity {
 
         if (!selectedCategory.isMain())
             parameters.put("category_id", selectedCategory.getId());
+
+        City city = (City) spinnerCity.getSelectedItem();
+        if (!city.isNothing())
+            parameters.put("city_id", city.getId());
 
         if (selectedLocation != null)
             parameters.put("location_id", selectedLocation.getId());

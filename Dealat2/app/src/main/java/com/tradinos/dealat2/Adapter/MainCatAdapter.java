@@ -60,9 +60,9 @@ public class MainCatAdapter extends BaseAdapter {
 
         textView.setText(getItem(i).getName());
         if (i % 2 == 0)
-            textView.setGravity(View.TEXT_ALIGNMENT_VIEW_END);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
         else
-            textView.setGravity(View.TEXT_ALIGNMENT_VIEW_START);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
         int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(getItem(i).getTemplateId());
 
