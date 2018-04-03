@@ -11,6 +11,38 @@ class TAMPLATES {
 	      INDUSTRIES = 9, 
 	      SERVICES = 10, 
 	      BASIC = 11;
+		  
+		  
+      public function get_template_list($lang = 'en')
+	  {
+	      if($lang == 'en'){
+	      	 return array(
+	      	    TAMPLATES::VEHICLES => 'Vehicles',
+	      	    TAMPLATES::PROBERTIES => 'Properties' , 
+	      	    TAMPLATES::MOBILES => 'Mobiles' , 
+	      	    TAMPLATES::ELECTRONICS => 'Electronics' , 
+	      	    TAMPLATES::FASHION => 'Fashion' , 
+	      	    TAMPLATES::KIDS => 'Kids' , 
+	      	    TAMPLATES::SPORTS => 'Sposts' , 
+	      	    TAMPLATES::JOB_POSITIONS => 'Job Positions',
+	      	    TAMPLATES::INDUSTRIES => 'Industries' , 
+	      	    TAMPLATES::BASIC =>'Basic'
+			 );
+	      }else{
+	        return array(
+	      	    TAMPLATES::VEHICLES => 'مركبات',
+	      	    TAMPLATES::PROBERTIES => 'عقارات' , 
+	      	    TAMPLATES::MOBILES => 'موبايلات' , 
+	      	    TAMPLATES::ELECTRONICS => 'أجهزة الكترونية' , 
+	      	    TAMPLATES::FASHION => 'موضة' , 
+	      	    TAMPLATES::KIDS => 'مستلزمات أطفال' , 
+	      	    TAMPLATES::SPORTS => 'مستلزمات رياضية' , 
+	      	    TAMPLATES::JOB_POSITIONS => 'فرص عمل',
+	      	    TAMPLATES::INDUSTRIES => 'صناعة وتجارة' , 
+	      	    TAMPLATES::BASIC =>'أساسي'
+			 );
+	      }
+	  }		  
 
 	public static function get_tamplate_attributes($id) {
 		switch($id) {
@@ -106,7 +138,7 @@ class TAMPLATES {
 		
 	}
 
-	public static function get_tamplate_name($id , $lang) {
+	public static function get_tamplate_name($id , $lang = 'en') {
       if($lang == 'en'){
       	 switch($id) {
 			case 1 :
@@ -185,5 +217,7 @@ class TAMPLATES {
 		}
       }
 	}
+
+  
 
 }

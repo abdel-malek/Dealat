@@ -8,7 +8,7 @@
         <!-- /footer content -->
       </div>
     </div>
-
+    <?php $this->load->view('admin/commercial_ads/details_modal') ?>
     <!-- jQuery -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/jquery/dist/jquery.min.js"></script>
     <!-- <script src="<?php echo base_url() ?>Files/vendors/jquery/jquery_new.js"></script> -->
@@ -94,6 +94,7 @@
        	 lang_array['ad_show'] = 'Ad is Shown' ;
        	 lang_array['ad_deleted'] = 'Ad is Deleted' ;
        	 lang_array['ad_saved'] = 'Ad is saved' ;
+       	 lang_array['show_status_changed'] = 'Ad show status has been changed' ;
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -117,6 +118,7 @@
        	 lang_array['ad_show'] = 'تم إظهار الإعلان' ;
        	 lang_array['ad_deleted'] = 'تم حذف الإعلان' ;
        	 lang_array['ad_saved'] = 'تم حفظ الإعلان' ;
+         lang_array['show_status_changed'] = 'تم تغيير حالة ظهور الإعلان بنجاح' ;
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -137,6 +139,8 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/ad.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/commercial_ads.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/users.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/main_commercials.js"></script>
+     <script src="<?php echo base_url() ?>admin_assets/js/manage/category.js"></script>
    
   </body>
 </html>

@@ -143,12 +143,17 @@ $lang['category'] = "الصنف";
 $lang['position'] = "مكان العرض";
 $lang['is_main_ad'] = "إعلان رئيسي؟";
 $lang['add_new_commercial'] = "إضافة إعلان تجاري إلى الصنف";
+$lang['add_new_main_commercial'] = "إضافة إعلان رئيسي جديد";
 $lang['url'] = "الرابط";
 $lang['comm_image'] = "صورة الإعلان الحالية";
 $lang['upload_image'] = "تحميل صورة  ";
 $lang['save'] = "حفظ";
 $lang['delete'] = "حذف";
-$lang['is_main_note'] = "الإعلان الرئيسي يظهرعند بداية فتح التطبيق بغض النظر عن التنصيف المختار";
+$lang['is_main_note'] = "الإعلان الرئيسي يظهرعند بداية فتح التطبيق";
+$lang['main_ads'] = "الإعلانات الرئيسية";
+$lang['others'] = "الأخرى";
+$lang['main_commercials']= 'الإعلانات التجارية الرئيسية';
+$lang['show_status']= 'حالة الظهور';
 
 
 //users manage
@@ -163,6 +168,15 @@ $lang['city'] = "المدينة";
 $lang['user_status'] = "الحالة";
 $lang['none'] = "لا يوجد";
 $lang['ads_num'] = "عدد إعلاناته";
+
+//categories manages
+$lang['category_name'] = "اسم الصنف";
+$lang['parent_name'] = "اسم الصنف الأب";
+$lang['edit'] = "تعديل";
+$lang['empty_table'] = "لا يوجد ";
+$lang['add_main_category'] = " إضافة صنف رئيسي";
+$lang['add_subcategory_for'] = " إضافة صنف فرعي لـ";
+$lang['category_details'] = "تفاصيل الصنف";
 
 
 $lang['log_out'] = 'تسجيل خروج';

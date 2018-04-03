@@ -20,12 +20,12 @@ class Users_control extends REST_Controller {
 	{
         $this->form_validation->set_rules('phone', 'lang:phone', 'required|numeric|exact_length[9]');
         $this->form_validation->set_rules('name', 'lang:name', 'required');
-       // $this->form_validation->set_rules('lang', 'lang:lang', 'required');
         if (!$this->form_validation->run()) {
             throw new Validation_Exception(validation_errors());
         } else {
         	$data = array(
         	  'phone' => $this->input->post('phone'),
+        	  'whatsup_number' => $this->input->post('phone'), 
         	  'name' => $this->input->post('name'),
         	  'lang' => $this->input->post('lang') != "" ? strtolower($this->input->post('lang')) : $this->data['lang'],
         	  'city_id' => $this->data['city']
@@ -140,14 +140,14 @@ class Users_control extends REST_Controller {
 		   $chat_session_info = $this->chat_sessions->check_by_seller_or_user($ad_id , $user_id);
 		  // dump($chat_session_info);
 		   if($chat_session_info){
-		   	   $chat_id = $chat_session_info->chat_session_id;
-			   $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
-			   if($chat_messages){ // set chat session to seen
+		   	  $chat_id = $chat_session_info->chat_session_id;
+			  $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
+			  if($chat_messages){ // set chat session to seen
 				    $changed_session = $this->chat_sessions->change_seen_status($chat_id , $this->current_user->user_id);
-			   }
-			   $this->response(array('status' => true, 'data' => $chat_messages, "message" => $this->lang->line('sucess')));
+			  }
+			  $this->response(array('status' => true, 'data' => $chat_messages, "message" => $this->lang->line('sucess')));
 		   }else{
-		   	   $this->response(array('status' => true, 'data' => array(), "message" => 'No chat session for this user')); 
+		   	  $this->response(array('status' => true, 'data' => array(), "message" => 'No chat session for this user')); 
 		   }
 		}else{
 		  throw new Parent_Exception('chat_session_id or ad_id is requierd');
@@ -176,7 +176,7 @@ class Users_control extends REST_Controller {
 		}
 	}
 	
-	public function upload_image_post()
+    public function upload_personal_image_post()
 	{
 	  $image_name = date('m-d-Y_hia').'-'.'1';
       $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
@@ -186,7 +186,7 @@ class Users_control extends REST_Controller {
       }else{
            $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
       }
-	}
+    }
 	
 	public function edit_user_info_post()
 	{
@@ -207,14 +207,23 @@ class Users_control extends REST_Controller {
 	     if($this->input->post('image')){
 	  	   $data['personal_image'] = $this->input->post('image');
 	     }
-		  $image_name = date('m-d-Y_hia').'-'.'1';
-	      $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
-	      if (isset($image['personal_image'])) {
-	          $data['personal_image'] =  PERSONAL_IMAGES_PATH.$image['personal_image']['upload_data']['file_name'];
-		  }
-		  $user_id = $this->users->save($data , $user_id);
-		  $user_info = $this->users->get($user_id , true);
-		  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
+		 if($this->input->post('gender')){
+	  	   $data['gender'] = $this->input->post('gender');
+	     }
+         if($this->input->post('birthday')){
+	  	   $data['birthday'] = $this->input->post('birthday');
+	     }
+         if($this->input->post('whatsup_number')){
+	  	   $data['whatsup_number'] = $this->input->post('whatsup_number');
+	     }
+		 $image_name = date('m-d-Y_hia').'-'.'1';
+	     $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
+	     if (isset($image['personal_image'])) {
+	         $data['personal_image'] =  PERSONAL_IMAGES_PATH.$image['personal_image']['upload_data']['file_name'];
+	     }
+	    $user_id = $this->users->save($data , $user_id);
+	    $user_info = $this->users->get($user_id , true);
+	    $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
 	}
 	
 	public function mark_search_post()
@@ -271,5 +280,22 @@ class Users_control extends REST_Controller {
 			 $this->response(array('status' => true, 'data' => $user_rate_id, "message" => $this->lang->line('sucess')));	
 		 }
 	   }
-	}
+   }
+
+   public function logout_post()
+   {
+   	  if(!$this->input->post('token')){
+   	  	 throw new Parent_Exception('token is requierd');
+   	  }else{
+   	  	 $this->load->model('data_sources/user_tokens');
+   	     $user_id = $this->current_user->user_id;
+		 $token = $this->input->post('token');
+		 $deleted = $this->user_tokens->delete_by_token($user_id , $token);
+	     if($deleted){
+	     	 $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
+	     }else{
+	     	 $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed'))); 
+	     }
+   	  }
+   }
 }

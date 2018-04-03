@@ -1,8 +1,14 @@
  var comm_ads_table;
- var cat_id;
+ var cat_id = 0;
  var cat_name;
+ var position_val = $('#comm_position_filter_others').val();
+ var position_name; 
  var current_comm_id; 
  var comm_image_path='';
+ // const SIDE_MENU = 1 , SIDE_LIMIT = 2;
+ // const SLIDER = 2 , SLIDER_LIMIT = 3;
+ // const MOBILE = 3, MOBILE_LIMIT =3;
+ // var $activated_number = 0;
  $(document).ready(function() {
  	var comm_TableButtons = function() {
            comm_ads_table = $("#commercial_ads_table").DataTable({
@@ -25,7 +31,7 @@
 			 },
              "bServerSide": false,
              aaSorting : [[0, 'desc']],
-             "sAjaxSource": base_url + '/admin/commercial_items_manage/get_all/format/json',
+             "sAjaxSource": base_url + '/admin/commercial_items_manage/get_without_main/format/json',
              "columnDefs": [
                  {
                     "targets": -1, // details
@@ -38,6 +44,9 @@
               dom: "Bfrtip",
               buttons: [
               ],
+              initComplete: function(nRow, settings, json){
+	          	 activated_number =0;
+	           },
             });
         };
         comm_TableManageButtons = function() {
@@ -62,10 +71,33 @@
 			 .draw();
         }else{
         	$('#add_comm_btn').css('display' , 'inline');
-	    	comm_ads_table.search( cat_name ).draw();
+        	if(position_val != 0){
+        		comm_ads_table.search( cat_name+' '+position_name ).draw();
+        	}else{
+        		comm_ads_table.search( cat_name ).draw();
+        	}
         }
        // alert(cat_name);
    });
+   
+   
+          // filter by position
+	$('#comm_position_filter_others').change(function(event) {
+	    position_val = $("#comm_position_filter_others").val();
+	    if(position_val == 0){
+	    	comm_ads_table
+			 .search( '' )
+			 .columns().search( '' )
+			 .draw();
+	    }else{
+	        position_name = $(this).find("option:selected").text();
+	        if(cat_id != 0){
+	          comm_ads_table.search(cat_name+' '+position_name ).draw();	
+	        }else{
+	          comm_ads_table.search(position_name).draw();
+	        }
+	    }
+	});
    
    
    $("#fileuploader-comm_ad").uploadFile({
@@ -116,19 +148,8 @@ function show_comm_ad_modal (id) {
         	var info = response.data;
             $('#created_div').css('display', 'inline');
         	$('#comm_created_at').html(info['created_at']);
-        	if(info['title']!= null){
-        	  $('#comm_title').val(info['title']);	
-        	}
-            if(info['description']!= null){
-        	  $('#comm_description').val(info['description']);	
-        	}
         	if(info['ad_url']!= null){
         	  $('#comm_url').val(info['ad_url']);	
-        	}
-        	if(info['is_main']== 1){
-        	  $('#is_main').prop('checked' , true);	
-        	}else{
-        	  $('#is_main').prop('checked'  , false);	
         	}
         	$('#image_div').css('display', 'inline');
             $("#comm_image").attr("src",site_url + info['image']);
@@ -148,13 +169,11 @@ function show_comm_ad_modal (id) {
       });
    }
    $('.comm_ads_details').modal('show');
-}
+ }
 
  $('.comm_ads_details').on('hidden.bs.modal', function () {
       $('#image_div').css('display', 'none');
    	  $('#created_div').css('display', 'none');  
-   	  $('#comm_title').val('');
-   	  $('#comm_description').val('');
    	  $('#comm_url').val('');
    	  $(".comm_ads_details .ajax-file-upload-container").empty();
    	  comm_image_path = '';
@@ -165,22 +184,16 @@ function save_comm() {
   	//console.log(cat_id);
   	 var data = {
   	 	comm_id : current_comm_id,
-  	 	title : $('#comm_title').val(),
-  	 	description :  $('#comm_description').val(),
   	 	ad_url : $('#comm_url').val(),
-  	 //	category_id : cat_id,
   	 	position : $("#comm_position").val(),
   	 };
   	 if(comm_image_path != ''){
   	 	data['image'] =comm_image_path; 
   	 }
-  	 if($('#is_main'). prop("checked") == true){
-	  	data['is_main'] = 1; 
-	 }else{
-	 	data['is_main'] = 0; 
-	 }
 	 if(current_comm_id == 0){ // add
-	 	data['category_id'] = cat_id;
+	 	if(cat_id != 0){ // it this is not main ad
+	 		data['category_id'] = cat_id;
+	 	}
 	 }
   	 var url = base_url + '/api/commercial_items_control/save';
   	 console.log(data);
@@ -210,7 +223,8 @@ function save_comm() {
 					        sticker: false
 					 }
 	               });
-	                 comm_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_all/format/json').load();
+	                 comm_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_without_main/format/json').load();
+	                 main_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_main/format/json').load();
 			         $('#'.cat_id).click();
 			         $('.comm_ads_details').modal('hide');
 	             }
@@ -261,7 +275,8 @@ function delete_comm() {
 					        sticker: false
 					 }
 	               });
-	                 comm_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_all/format/json').load();
+	                 comm_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_without_main/format/json').load();
+	                 main_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_main/format/json').load();
 			         $('#'.cat_id).click();
 			         $('.comm_ads_details').modal('hide');
 	             }
@@ -278,3 +293,104 @@ function delete_comm() {
 	        }
 	     });
 }
+
+function change_status (id , category , position , to_active) {
+    data = {
+    	'comm_id' : id, 
+    	'category_id' :category , 
+    	'position' :position,
+    	'to_active' : to_active 
+    };
+     var url = base_url + '/api/commercial_items_control/change_status/format/json';
+     $.ajax({
+	        url: url,
+	        type: "post",
+	        dataType: "json",
+	        data: data,
+	        success: function(response) {
+	            if(response.status == false){
+	           	  new PNotify({
+		                  title: lang_array['attention'],
+		                  text: response.message,
+		                  type: 'error',
+		                  styling: 'bootstrap3',
+		                  buttons: {
+						        sticker: false
+						}
+		          });
+	            }else{
+	                new PNotify({
+	                  title:  lang_array['success'],
+	                  text: lang_array['show_status_changed'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	             }
+	             comm_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_without_main/format/json').load();
+	             main_ads_table.ajax.url(base_url + '/admin/commercial_items_manage/get_main/format/json').load();
+	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	            });
+	        }
+	     });
+}
+
+// function check_active_limit(category , position) {
+   // if(category == 0){ // main ads table
+   	 // $('#main_commercials_table > tbody > tr').each(function() {
+   	 	   // switch(position) {
+			    // case SIDE_MENU:
+			        // if($(this).find("#comm_status_check").is(':checked')){
+			        	// console.log('check '+$(this).find("#comm_status_check").is(':checked'));
+			          // if($(this).find("#comm_status_check").attr('position') == SIDE_MENU){
+			          	  // console.log('pos '+($(this).find("#comm_status_check").attr('position') == SIDE_MENU)); 
+			          	  // $activated_number++;
+			          	  // console.log('num : '+$activated_number);
+			          	  // console.log('limit : '+SIDE_LIMIT);
+			          	  // if($activated_number >= SIDE_LIMIT){
+					        	// return false;
+					      // }
+			           // }
+	  	            // }
+			        // break;
+			    // case SLIDER:
+			       // if($(this).find("#comm_status_check").is(':checked')){
+			          // if($(this).find("#comm_status_check").attr('position') == SLIDER){
+			          	  // $activated_number++;
+			          	  // if($activated_number >= SLIDER_LIMIT){
+					        	// return false;
+					      // }
+			           // }
+	  	            // }
+			        // break;
+			    // case MOBILE:
+			       // if($(this).find("#comm_status_check").is(':checked')){
+			          // if($(this).find("#comm_status_check").attr('position') == MOBILE){
+			          	  // $activated_number++;
+			          	  // if($activated_number >= MOBILE_LIMIT){
+					        	// return false;
+					      // }
+			           // }
+	  	            // }
+			        // break;
+			    // default:
+			      // //  code block
+		   // } 
+      // }); 
+   // //   console.log($activated_number);
+      // return true;
+   // }else{ //others table
+//    	 
+   // }
+// }
+

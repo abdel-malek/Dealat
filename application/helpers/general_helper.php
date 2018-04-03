@@ -26,3 +26,29 @@ if (!function_exists('dump')) {
         }
     }
 }
+
+function commercila_status_checkbox($is_active  , $id , $category_id , $position)
+{
+    if($is_active){
+      	$html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="comm_status_check" comm_id=' .$id. '  position=' .$position. '  onclick="change_status(' .$id. ',' .$category_id. ',' .$position. ',' . 0 . ');"  type="checkbox" class="js-switch" checked></input>';
+	    $html .=  ' </label>';
+	    $html .=  '</div>';	
+    }else{
+        $html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="comm_status_check" comm_id=' .$id. ' position=' .$position. ' onclick="change_status(' .$id. ',' .$category_id. ',' .$position. ',' . 1 . ');" type="checkbox" class="js-switch"></input>';
+	    $html .=  ' </label>';
+	    $html .=  '</div>';	
+    }   
+    return $html;
+}
+
+function get_sub_cats($cat_id , $lang)
+{
+   	$CI =& get_instance();
+	$CI->load->model('data_sources/categories');
+	$subcategoirs = $CI->categories->get_subcats_with_parents($cat_id, $lang);
+	return $subcategoirs;
+}

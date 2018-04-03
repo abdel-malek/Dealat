@@ -182,6 +182,9 @@ class Ads extends MY_Model {
   	   $this->load->model('data_sources/categories');
   	   $this -> db -> trans_start();
 	   $data = array();
+	   if($this->input->post('city_id')){
+	   	  $data['city_id'] = $this->input->post('city_id');
+	   }
 	   if($this->input->post('location_id')){
 	   	  $data['location_id'] = $this->input->post('location_id');
 	   }
@@ -341,11 +344,7 @@ class Ads extends MY_Model {
 	   	}else{
 		 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
 		 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
-		  //  $this->db->or_where("MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)", NULL, FALSE);
 		}
-	     // if($category_id != null){
-		 	// $this->db->where('ads.category_id' , $category_id);
-        // }
 	 }
 	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');

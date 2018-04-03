@@ -198,6 +198,7 @@ $config['auth_override_class_method']['items_control']['test'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';
+$config['auth_override_class_method']['categories_control']['get_info'] = 'none';
 $config['auth_override_class_method']['users_control_web']['index'] = 'none';
 $config['auth_override_class_method']['users_control_web']['change_language'] = 'none';
 $config['auth_override_class_method']['users_control_web']['login'] = 'none';
@@ -208,6 +209,8 @@ $config['auth_override_class_method']['users_control']['index'] = 'none';
 $config['auth_override_class_method']['users_control']['register'] = 'none';
 $config['auth_override_class_method']['users_control']['verify'] = 'none';
 $config['auth_override_class_method']['users_control']['get_countries'] = 'none';
+$config['auth_override_class_method']['users_control']['upload_personal_image'] = 'none';
+//$config['auth_override_class_method']['users_control']['edit_user_profile'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['get_commercial_items'] = 'none';
 
 //to be deleted 
@@ -219,15 +222,20 @@ $config['auth_override_class_method']['items_control']['action'] = 'none';
 
 //admin
 $config['auth_override_class_method']['categories_manage']['index'] = 'none';
+$config['auth_override_class_method']['categories_manage']['get_sub_cats'] = 'none';
+$config['auth_override_class_method']['categories_manage']['get_info'] = 'none';
 $config['auth_override_class_method']['items_manage']['index'] = 'none';
 $config['auth_override_class_method']['items_manage']['all'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['index'] = 'none';
-$config['auth_override_class_method']['commercial_items_manage']['get_all'] = 'none';
+$config['auth_override_class_method']['commercial_items_manage']['load_main_manage_page'] = 'none';
+$config['auth_override_class_method']['commercial_items_manage']['get_main'] = 'none';
+$config['auth_override_class_method']['commercial_items_manage']['get_without_main'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['get_info'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['item_images_upload'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['delete_image'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['save'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['delete'] = 'none';
+$config['auth_override_class_method']['commercial_items_control']['change_status'] = 'none';
 $config['auth_override_class_method']['users_manage']['get_all'] = 'none';
 $config['auth_override_class_method']['users_manage']['index'] = 'none';
 $config['auth_override_class_method']['users_manage']['change_language'] = 'none';

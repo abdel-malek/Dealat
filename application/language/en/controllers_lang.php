@@ -16,6 +16,7 @@ $lang['location_id'] ='Location';
 $lang['show_period'] = 'Ad show period';
 $lang['price'] = 'Ad Price';
 $lang['title'] = 'Ad Title';
+$lang['excced_limit'] = 'You have exceeded the limit of the ads that must appears in this category and position, you have to hide other ad to show this one. ';
 
 
 // sms validation msg 

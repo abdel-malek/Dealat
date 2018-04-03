@@ -2,10 +2,13 @@
 
 class POSITION{
 	const SIDE_MENU = 1;
+	const SIDE_MENU_LIMIT = 2;
 	const SLIDER = 2;
+	const SLIDER_LIMIT = 3;
 	const MOBILE = 3;
+	const MOBILE_LIMIT = 3;
 	
-	public static function get_position_name($id , $lang)
+	public static function get_position_name($id , $lang='en')
 	{
 		if($lang == 'en'){
 			switch ($id) {
@@ -54,6 +57,24 @@ class POSITION{
 	     	   POSITION::SLIDER => 'السلايدر الرئيسي' , 
 	     	   POSITION::MOBILE => 'الموبايل'
 			);
+		}
+	}
+	
+	public static function get_limit($id)
+	{
+	    switch ($id) {
+			case POSITION::SIDE_MENU:
+				return POSITION::SIDE_MENU_LIMIT;
+				break;
+		    case POSITION::SLIDER:
+				return POSITION::SLIDER_LIMIT;
+				break;
+			case POSITION::MOBILE:
+			    return POSITION::MOBILE_LIMIT;
+				break;
+			default:
+				return 2;
+				break;
 		}
 	}
 }

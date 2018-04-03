@@ -44,7 +44,7 @@ class Items_control extends REST_Controller {
         $this->load->model('data_sources/categories');
      // $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
 		$this -> form_validation -> set_rules('category_id', 'lang:category_id', 'required');
-		$this -> form_validation -> set_rules('location_id', 'lang:location_id', 'required');
+		$this -> form_validation -> set_rules('city_id', 'lang:country', 'required');
 		$this -> form_validation -> set_rules('show_period', 'lang:show_period', 'required');
 		$this -> form_validation -> set_rules('price', 'lang:price', 'required');
 		$this -> form_validation -> set_rules('title', 'lang:title', 'required');
@@ -53,8 +53,8 @@ class Items_control extends REST_Controller {
 		} else {
 		   $basic_data = array(
 		     'user_id' => $this->current_user->user_id,
-		   //  'user_id' => 1,  // temp
 		     'location_id' => $this->input->post('location_id'),
+		     'city_id' => $this->input->post('location_id'),
 		     'show_period' => $this->input->post('show_period'),
 		     'price' => $this->input->post('price'),
 		     'title' => $this->input->post('title'),
@@ -105,8 +105,8 @@ class Items_control extends REST_Controller {
     }
 
    public function item_images_upload_post()
-	 {
-	 //    $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+	{
+	 //  $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
 	     $image_name = date('m-d-Y_hia').'-'.'1';
 	      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
 	      if (isset($image['image'])) {
@@ -115,7 +115,7 @@ class Items_control extends REST_Controller {
 	      }else{
 	           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 	      }
-	 }
+	}
 	
 	public function delete_images_post()
 	{

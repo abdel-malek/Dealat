@@ -31,4 +31,15 @@ class Categories_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$subcategoirs, 'message' => ''));
 	}
 	
+	public function get_info_get()
+	{
+		if(!$this->input->get('category_id')){
+			throw new Parent_Exeption('category id is requierd');
+		}else{
+			$cat_id = $this->input->get('category_id');
+			$info = $this->categories->get($cat_id);
+			$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+		}
+	}
+	
 }

@@ -15,25 +15,11 @@
 	      	           <label class="form-control"  id='comm_created_at'>ad date</label>
 	      	         </div>
 	               </div> 
-               
-                   <div class="form-group">
-	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('title') ?></label>
-	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	           <input type='text' class="form-control"  id='comm_title' value='<?php echo $this->lang->line('not_set') ?>'></input>
-	      	         </div>
-	               </div> 
-	               
-	               <div class="form-group">
-	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('description') ?></label>
-	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <textarea  class="form-control col-md-7 col-xs-12" id="comm_description" value='<?php echo $this->lang->line('not_set') ?>'><?php echo $this->lang->line('not_set') ?></textarea>
-	      	         </div>
-	               </div> 
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('url') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <input  class="form-control col-md-7 col-xs-12" id="comm_url" value='<?php echo $this->lang->line('not_set') ?>''></input>
+	      	            <input  class="form-control col-md-7 col-xs-12" id="comm_url" value='<?php echo $this->lang->line('not_set') ?>'></input>
 	      	         </div>
 	               </div> 
 	                  
@@ -49,24 +35,6 @@
 		                   </select>
 	      	         </div>
 	               </div> 
-	               
-	               <div class="form-group">
-	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_main_ad') ?></label>
-	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <input id='is_main' class='form-control' type='checkbox' checked=""></input>
-	      	            <label><?php echo $this->lang->line('is_main_note') ?></label>
-	      	         </div>
-	               </div>
-	               
-	               <!-- <div class="form-group">
-	               	  <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('is_main_ad') ?></label>
-	                  <div class="checkbox">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="checkbox" class="flat form-control" checked="checked">
-                              <label><?php echo $this->lang->line('is_main_note') ?></label>
-                            </div>
-                      </div>
-	               </div> -->
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('upload_image') ?></label>
@@ -87,8 +55,8 @@
         <!-- </div> -->
         <input type="hidden"  id="post_id"/>
         <div class="modal-footer">
-          <button   onclick="save_comm()"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="delete_comm()" id="reject_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button   onclick="save_comm()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
+          <button   onclick="delete_comm()" id=""  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
           <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
           	 data-toggle="modal" data-target=".delete_modal"
 		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

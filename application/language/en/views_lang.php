@@ -82,10 +82,11 @@ $lang['sp'] = "SP";
 //admin
 $lang['welcome'] = "Welcome";
 $lang['management'] = "Management";
-$lang['categories_management'] = "Categories Management";
+$lang['categories_management'] = "Categories Manage";
 
-$lang['ads_management'] = "Users Ads Management";
-$lang['commercial_ads_manage'] = "Commercial Ads Management";
+$lang['ads_management'] = "Users Ads Manage";
+$lang['commercial_ads_manage'] = "Commercials Manage";
+$lang['users_manage'] = "Users Manage"; 
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -148,11 +149,15 @@ $lang['comm_image'] = "Current image";
 $lang['upload_image'] = "Upload image";
 $lang['save'] = "Save";
 $lang['delete'] = "Delete";
-$lang['is_main_note'] = "The main ad shows at the starting of the app regardless of category.";
+$lang['is_main_note'] = "The main ad shows at the starting of the app";
+$lang['main_ads'] = "Main ads";
+$lang['others'] = "Others";
+$lang['main_commercials']= 'Main Commercials';
+$lang['add_new_main_commercial'] = 'Add New Main Commercial';
+$lang['show_status']= 'Show status';
 
 
 //users manage
-$lang['users_manage'] = "Users Management"; 
 $lang['users_list'] = "Users List";
 $lang['active'] = "Active";
 $lang['inactive'] = "Inactive";
@@ -163,6 +168,21 @@ $lang['city'] = "City";
 $lang['user_status'] = "Status";
 $lang['none'] = "None";
 $lang['ads_num'] = "Ads Number";
+
+
+//categories manages
+$lang['category_name'] = "Category name";
+$lang['parent_name'] = "Parent category name";
+$lang['edit'] = "Edit";
+$lang['empty_table'] = "None";
+$lang['add_main_category'] = " Add Main Category";
+$lang['add_subcategory_for'] = " Add Subcategory for";
+$lang['category_details'] = "Category Details";
+//new
+$lang['arabic_name'] = "Arabic Name";
+$lang['english_name'] = "English Name";
+$lang['templates'] = 'Templates';
+$lang['fields_status'] = 'Fields status';
 
 
 $lang['log_out'] = 'Log Out';

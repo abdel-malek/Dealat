@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . '/libraries/REST_Controller.php';
 
@@ -118,6 +117,27 @@ class Commercial_items_control extends REST_Controller {
       	 $deleted = $this->commercial_ads->delete($this->input->post('comm_ad_id'));
 		 $this -> response(array('status' => true, 'data' => $deleted, 'message' => $this->lang->line('sucess')));
       }
+  }
+  
+  public function change_status_post()
+  {
+  	  // check activation number 
+  	  $category_id = $this->input->post('category_id');
+	  $position = $this->input->post('position');
+	  $to_active = $this->input->post('to_active');
+	  $is_ok = true;
+	  if($to_active == 1){
+	     $is_ok = $this->commercial_ads->check_active_number($category_id , $position);
+	  }
+	  if(!$is_ok){
+	  	  throw new Parent_Exception($this->lang->line('excced_limit')); 
+	  }else{
+	  	  $id = $this->input->post('comm_id');
+		  $current_comm = $this->commercial_ads->get($id);
+		  $active_status = $current_comm->is_active;
+		  $edited_id = $this->commercial_ads->save(array('is_active' => !$active_status),$id);
+		  $this -> response(array('status' => true, 'data' => $edited_id, 'message' => $this->lang->line('sucess')));
+	  }
   }
 	
 	

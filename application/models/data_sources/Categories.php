@@ -3,7 +3,7 @@
 class Categories extends MY_Model {
 	protected $_table_name = 'categories';
 	protected $_primary_key = 'categories.category_id';
-	protected $_order_by = 'parent_id ,is_other, category_id';
+	protected $_order_by = 'parent_id ,categories.is_other, category_id';
 	public $rules = array();
 
 	
@@ -75,11 +75,28 @@ class Categories extends MY_Model {
 		return $array;
 	}
 	
+    public function get_subcats_with_parents($category_id , $lang)
+	{
+		$this->db->select('categories.'.$lang.'_name as category_name ,
+		                  p.'.$lang.'_name as parent_name , 
+		                  categories.category_id , categories.parent_id , categories.web_image, categories.mobile_image ,
+		                  categories.tamplate_id , categories.description');
+		$this->db->join('categories as p' , 'categories.parent_id = p.category_id' , 'outer left');
+		$q = parent::get_by(array('categories.parent_id'=>$category_id));
+		$array = array();
+		if($q != null){
+			foreach ($q as $row) {
+				$array[] = $row;
+			}
+		}
+		return $array;
+	}
+	
 	public function create_category()
 	{
 	    $this -> db -> trans_start();
 		$this->load->model('data_sources/ads');
-		// scheck if it is main category
+		//check if it is main category
 	    $parent_id = $this->input->post('parent_id');
 		if($parent_id != 0){ // not main category
 		  	// then check if it's parent have any ads 

@@ -6,8 +6,6 @@ var status_array;
 var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 
  $(document).ready(function() {
-   
-    console.log(lang_array);
  	
  	// get templates attrbutes. 
  	 $.ajax({
@@ -28,7 +26,7 @@ var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 				}
             });
         }
-      });
+     });
  	
  	
  	var ads_TableButtons = function() {

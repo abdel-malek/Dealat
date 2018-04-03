@@ -16,4 +16,15 @@ class User_tokens extends MY_Model {
 			return null;
 		}
 	}
+	
+	public function delete_by_token($user , $token)
+	{
+		$this->db->where('token'  , $token);
+		$this->db->where('user_id' , $user);
+		if($this->db->delete($this->_table_name)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
