@@ -178,26 +178,33 @@
 
 			<div id="chats" class="chats">
 				<div class="container">
-					<ul>
-						<li>
-							<div class="row">
-								<div class="col-2">
-									<div class="chat-img">
-										<img src="<?php echo base_url('assets/images/Dealat%20logo%20white%20background.png'); ?>" width="50px" alt="">
+					<ul class="sessions">
+
+						<script id="chat-sessions-template" type="text/template">
+							{{#.}}
+							<li class="session" data-session-id="{{chat_session_id}}" data-ad-id="{{ad_id}}" data-seller-id="{{seller_id}}">
+								<div class="row">
+									<div class="col-2">
+										<div class="chat-img">
+											<img src="<?php echo base_url('{{user_pic}}'); ?>" width="50px" alt="">
+										</div>
+									</div>
+									<div class="col-8">
+										<div class="chat-name">{{user_name}}</div>
+									</div>
+									<div class="col-2">
+										<div class="chat-time">{{created_at}}</div>
 									</div>
 								</div>
-								<div class="col-8">
-									<div class="chat-name">John Doe</div>
-								</div>
-								<div class="col-2">
-									<div class="chat-time">08:30 pm</div>
-								</div>
-							</div>
-						</li>
-						<hr>
+							</li>
+							<hr> 
+							{{/.}}
+						</script>
+						
 					</ul>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
@@ -425,16 +432,17 @@
 
 	<!--edit user info modal-->
 	<div id="edit-user-info-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-dialog modal-dialog-centered " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					  <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body text-center">
 					<form id="edit-user-info-form">
 						<input type="hidden" name="location_id" class="location-id">
+						<div id="fileuploader-register">Upload</div>
 						<div class="form-group">
 							<select name="city_id" class="city-select">
 								<option value="" class="placeholder d-none" selected>select location</option>

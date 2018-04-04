@@ -1,4 +1,14 @@
 /*Main Rules*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; }
+
+input[type=number] {
+  -moz-appearance: textfield; }
+
 html,
 body {
   font-family: sans-serif;
@@ -539,7 +549,8 @@ header.home {
   header.home .language-wrapper .language-switch a:last-of-type {
     border: none; }
   @media (max-width: 768px) {
-    header.home .language-wrapper .language-switch a, header.home .home-icon {
+    header.home .language-wrapper .language-switch a,
+    header.home .home-icon {
       font-size: 0.7rem; } }
   @media (max-width: 480px) {
     header.home .home-icon {
@@ -1068,7 +1079,8 @@ select option.placeholder {
 .ajax-file-upload-container .ajax-file-upload-progress {
   max-width: 100%; }
 
-#register-modal .social, #register-modal #fileuploader-register,
+#register-modal .social,
+#register-modal #fileuploader-register,
 #login-modal .social,
 #login-modal #fileuploader-register {
   text-align: center; }
@@ -1240,5 +1252,56 @@ label {
   margin-bottom: 0;
   padding: 1rem 0;
   font-size: 1rem; }
+
+#chat-modal {
+  /* M E S S A G E S */ }
+  #chat-modal .chat {
+    list-style: none;
+    background: none;
+    margin: 0;
+    padding: 0 0 10px 0;
+    margin-bottom: 10px; }
+  #chat-modal .chat li {
+    padding: 0.5rem;
+    overflow: hidden;
+    display: flex; }
+  #chat-modal .other .msg {
+    order: 1;
+    box-shadow: -1px 2px 0px #D4D4D4;
+    background-color: #c30a30;
+    color: #fff; }
+  #chat-modal .self {
+    justify-content: flex-end;
+    align-items: flex-end; }
+  #chat-modal .self .msg {
+    order: 1;
+    box-shadow: 1px 2px 0px #D4D4D4;
+    background-color: #eee;
+    color: #333; }
+  #chat-modal .msg {
+    min-width: 50px;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.07);
+    border-radius: 10px; }
+  #chat-modal .msg p {
+    font-size: 0.8rem;
+    margin: 0 0 0.2rem 0; }
+  #chat-modal .msg time {
+    font-size: 0.7rem;
+    color: #ccc;
+    margin-top: 3px;
+    float: right;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; }
+  #chat-modal .msg time:before {
+    content: "\f017";
+    color: #ddd;
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-right: 4px; }
 
 /*# sourceMappingURL=style.css.map */

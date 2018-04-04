@@ -1,10 +1,11 @@
 /*jslint browser: true*/
-/*global $, alert,console,lang, Mustache, base_url*/
+/*global $, alert,console,lang, Mustache, base_url, user_id*/
 
 $(function () {
 	if ($(".profile-page").length > 0) {
 		//		mixer.destroy();
 		var userRateValue = 2;
+		var i, template, rendered;
 		//get my ads
 		$.ajax({
 			type: "get",
@@ -14,7 +15,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-//				console.log(data);
+				//				console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -153,8 +154,8 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-//				console.log(data);
-				var i, template, rendered;
+				//				console.log(data);
+				//				var i, template, rendered;
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -185,6 +186,44 @@ $(function () {
 			alert("fail");
 		});
 
+		var registerImg = [];
+		//upload register image
+		$("#fileuploader-register").uploadFile({
+			url: base_url + '/api/items_control/item_images_upload',
+			multiple: false,
+			dragDrop: false,
+			fileName: "image",
+			acceptFiles: "image/*",
+			maxFileSize: 10000 * 1024,
+			showDelete: true,
+			showPreview: true,
+			previewHeight: "100px",
+			previewWidth: "100px",
+			uploadStr: "Upload Image",
+			returnType: "json",
+			onSuccess: function (files, data, xhr, pd) {
+				console.log(data.data);
+				registerImg.push(data.data);
+				console.log("reg");
+				console.log(registerImg[0]);
+			},
+			onError: function (files, status, errMsg, pd) {
+				console.log("upload failed");
+			},
+			deleteCallback: function (data, pd) {
+				//			console.log(data.data);
+				var arr;
+				arr = [data.data];
+				$.post(base_url + '/api/items_control/delete_images', {
+						images: arr
+					},
+					function (resp, textStatus, jqXHR) {
+						alert("File Deleted");
+						deleted = data.data;
+						registerImg = [];
+					});
+			}
+		});
 		//edit user info
 		$(".profile-page").on("click", ".edit-user-info", function () {
 			$('#edit-user-info-modal .city-select')[0].sumo.reload();
@@ -192,17 +231,23 @@ $(function () {
 		});
 
 		$("#edit-user-info-form").submit(function (e) {
-			var newData, i, newPhone;
+			var newData, i, data, newPhone;
 			newData = $(this).serializeArray();
 
 			e.preventDefault();
 			e.stopPropagation();
 
+			data = $(this).serializeArray();
+			data.push({
+				name: "image",
+				value: registerImg[0]
+			})
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/users_control/edit_user_info',
 				dataType: "json",
-				data: $(this).serialize()
+				//				data: $(this).serialize()
+				data: $.param(data)
 			}).done(function (data) {
 				if (data.status === false) {
 					console.log(data);
@@ -251,9 +296,9 @@ $(function () {
 		$(".profile-page .user-ads").on("click", ".delete-ad", function () {
 			var adId, adStatus;
 			adId = $(this).parents(".card").data("adId");
-//			adStatus = $(this).parents(".card").data("adStatus");
+			//			adStatus = $(this).parents(".card").data("adStatus");
 			$("#delete-modal .ad-id").val(adId);
-//			$("#delete-modal .status-id").val(adStatus);
+			//			$("#delete-modal .status-id").val(adStatus);
 			$("#delete-modal").modal("show");
 		});
 
@@ -266,7 +311,7 @@ $(function () {
 				dataType: "json",
 				data: {
 					ad_id: $(this).find(".ad-id").val(),
-					status: 6//for delete
+					status: 6 //for delete
 				}
 			}).done(function (data) {
 				if (data.status === false) {
@@ -452,5 +497,111 @@ $(function () {
 			});
 		});
 
+		//get chat sessions
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/users_control/get_my_chat_sessions',
+			dataType: "json",
+			data: $(this).serialize()
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+			} else {
+				console.log(data);
+				template = $('#chat-sessions-template').html();
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data.data);
+				$(".profile-page .chats ul.sessions").append(rendered);
+			}
+		}).fail(function (response) {
+			alert("fail");
+		});
+
+		//open a chat session
+		$(".profile-page .chats").on("click", ".session", function () {
+			var adId, sessionId, sellerId;
+			adId = $(this).data("adId");
+			sessionId = $(this).data("sessionId");
+			sellerId = $(this).data("sellerId");
+
+			$("#chat-form .ad-id").val(adId);
+			$("#chat-form .chat-session-id").val(sessionId);
+
+			console.log($("#chat-form").serializeArray());
+			if (sellerId == user_id) {
+				//then I am the ad seller and a user chatted with me
+
+				//get chat message
+				$.ajax({
+					type: "get",
+					url: base_url + '/api/users_control/get_chat_messages',
+					dataType: "json",
+					data: {
+						ad_id: adId,
+						chat_session_id: sessionId
+					}
+				}).done(function (data) {
+					if (data.status === false) {
+						console.log(data);
+					} else {
+						console.log(data);
+						$("#chat-modal .chat").empty();
+						for (i in data.data) {
+							if (data.data[i].to_seller === "1") {
+								// message from other to me
+								template = $('#chat-other-template').html();
+								Mustache.parse(template);
+								rendered = Mustache.render(template, data.data[i]);
+								$("#chat-modal .chat").append(rendered);
+							} else {
+								template = $('#chat-self-template').html();
+								Mustache.parse(template);
+								rendered = Mustache.render(template, data.data[i]);
+								$("#chat-modal .chat").append(rendered);
+							}
+						}
+
+						$("#chat-modal").modal("show");
+					}
+				});
+			} else {
+				//then I chatted with ad seller(I started chat)
+
+				//get chat message
+				$.ajax({
+					type: "get",
+					url: base_url + '/api/users_control/get_chat_messages',
+					dataType: "json",
+					data: {
+						ad_id: adId,
+						chat_session_id: sessionId
+					}
+				}).done(function (data) {
+					if (data.status === false) {
+						console.log(data);
+					} else {
+						console.log(data);
+						$("#chat-modal .chat").empty();
+						for (i in data.data) {
+							if (data.data[i].to_seller === "1") {
+								// message from me to seller
+								template = $('#chat-self-template').html();
+								Mustache.parse(template);
+								rendered = Mustache.render(template, data.data[i]);
+								$("#chat-modal .chat").append(rendered);
+							} else {
+								template = $('#chat-other-template').html();
+								Mustache.parse(template);
+								rendered = Mustache.render(template, data.data[i]);
+								$("#chat-modal .chat").append(rendered);
+							}
+						}
+
+						$("#chat-modal").modal("show");
+					}
+				});
+
+			}
+		});
 	}
 });

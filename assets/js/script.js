@@ -153,8 +153,8 @@ $(function () {
 		if (data.status === false) {
 			console.log(data);
 		} else {
-			console.log(category_id);
-			console.log(data);
+			//			console.log(category_id);
+			//			console.log(data);
 			var i, template, rendered, adData, sliderDefaultImg, sliderImgCount = 0,
 				sideImgCount = 0,
 				sideDefaultImg;
@@ -187,7 +187,7 @@ $(function () {
 					}
 				}
 
-			} 
+			}
 			if (data.data.length === 0 || sliderImgCount === 0) {
 				//view default ads in slider
 				template = $('#main-commercial-ads-template').html();
@@ -195,7 +195,7 @@ $(function () {
 				rendered = Mustache.render(template, sliderDefaultImg);
 				$(".ads-slider").append(rendered);
 				$(".ads-slider").slick("refresh");
-			} 
+			}
 			if (data.data.length === 0 || sideImgCount === 0) {
 				//view default ads in and side
 				for (i = 0; i < 2; i += 1) {
@@ -736,44 +736,44 @@ $(function () {
 		}
 	});
 
-	var registerImg = [];
-	//upload register image
-	$("#fileuploader-register").uploadFile({
-		url: base_url + '/api/items_control/item_images_upload',
-		multiple: false,
-		dragDrop: false,
-		fileName: "image",
-		acceptFiles: "image/*",
-		maxFileSize: 10000 * 1024,
-		showDelete: true,
-		showPreview: true,
-		previewHeight: "100px",
-		previewWidth: "100px",
-		uploadStr: "Upload Image",
-		returnType: "json",
-		onSuccess: function (files, data, xhr, pd) {
-			console.log(data.data);
-			registerImg.push(data.data);
-			console.log("reg");
-			console.log(registerImg[0]);
-		},
-		onError: function (files, status, errMsg, pd) {
-			console.log("upload failed");
-		},
-		deleteCallback: function (data, pd) {
-			//			console.log(data.data);
-			var arr;
-			arr = [data.data];
-			$.post(base_url + '/api/items_control/delete_images', {
-					images: arr
-				},
-				function (resp, textStatus, jqXHR) {
-					alert("File Deleted");
-					deleted = data.data;
-					registerImg = [];
-				});
-		}
-	});
+	//	var registerImg = [];
+	//	//upload register image
+	//	$("#fileuploader-register").uploadFile({
+	//		url: base_url + '/api/items_control/item_images_upload',
+	//		multiple: false,
+	//		dragDrop: false,
+	//		fileName: "image",
+	//		acceptFiles: "image/*",
+	//		maxFileSize: 10000 * 1024,
+	//		showDelete: true,
+	//		showPreview: true,
+	//		previewHeight: "100px",
+	//		previewWidth: "100px",
+	//		uploadStr: "Upload Image",
+	//		returnType: "json",
+	//		onSuccess: function (files, data, xhr, pd) {
+	//			console.log(data.data);
+	//			registerImg.push(data.data);
+	//			console.log("reg");
+	//			console.log(registerImg[0]);
+	//		},
+	//		onError: function (files, status, errMsg, pd) {
+	//			console.log("upload failed");
+	//		},
+	//		deleteCallback: function (data, pd) {
+	//			//			console.log(data.data);
+	//			var arr;
+	//			arr = [data.data];
+	//			$.post(base_url + '/api/items_control/delete_images', {
+	//					images: arr
+	//				},
+	//				function (resp, textStatus, jqXHR) {
+	//					alert("File Deleted");
+	//					deleted = data.data;
+	//					registerImg = [];
+	//				});
+	//		}
+	//	});
 
 
 	//upload ad main image
@@ -1241,11 +1241,82 @@ $(function () {
 
 	//chat with seller
 	$("#card-modal button.chat").click(function () {
-		//		$("#card-modal").modal("hide");
-		//		setTimeout(function () {
-		//			$("#chat-modal").modal("show");
-		//		}, 500);
+		var adId;
+		//		adId = $(this).parents(".modal-content").find(".card").data("adId");
+		adId = $("#card-modal").find(".card").data("adId");
+		$("#chat-form .ad-id").val(adId);
+
+
+
+
+		//get chat message
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/users_control/get_chat_messages',
+			dataType: "json",
+			data: {
+				ad_id: adId
+			}
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+			} else {
+				console.log(data);
+				$("#chat-modal .chat").empty();
+				for (i in data.data) {
+					if (data.data[i].to_seller === "1") {
+						// message from me to seller
+						template = $('#chat-self-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data[i]);
+						$("#chat-modal .chat").append(rendered);
+					} else {
+						template = $('#chat-other-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data[i]);
+						$("#chat-modal .chat").append(rendered);
+					}
+				}
+				$("#card-modal").modal("hide");
+				setTimeout(function () {
+					$("#chat-modal").modal("show");
+				}, 500);
+			}
+		});
+
+
 	});
+
+	$("#chat-form").submit(function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		console.log($(this).serializeArray());
+
+		$.ajax({
+			type: "post",
+			url: base_url + '/api/users_control/send_msg',
+			dataType: "json",
+			data: $(this).serialize()
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+				alert("error status false");
+			} else {
+				console.log(data);
+				template = $('#chat-self-template').html();
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data.data);
+				$("#chat-modal .chat").append(rendered);
+
+				$("#chat-form input[name='msg']").val("");
+			}
+		}).fail(function (response) {
+			alert("fail");
+		});
+	});
+
+
 
 	//language
 	//	$(".language-switch span").click(function (e) {
@@ -1297,18 +1368,18 @@ $(function () {
 		$("#verify-modal").find(".phone").val($(this).find(".phone").val());
 		$(this).find(".lang").val(lang);
 
-		data = $(this).serializeArray();
-		data.push({
-			name: "image",
-			value: registerImg[0]
-		})
+		//		data = $(this).serializeArray();
+		//		data.push({
+		//			name: "image",
+		//			value: registerImg[0]
+		//		})
 		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/users_control_web/register',
 			dataType: "json",
-			//			data: $(this).serialize()
-			data: $.param(data)
+			data: $(this).serialize()
+			//			data: $.param(data)
 		}).done(function (data) {
 			if (data.status === false) {
 				console.log(data);
@@ -1525,4 +1596,5 @@ $(function () {
 	$("#notification-modal .submit").click(function () {
 		window.location = base_url;
 	});
+
 });

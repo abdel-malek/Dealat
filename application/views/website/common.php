@@ -72,20 +72,20 @@
 
 			</div>
 			<?php if( !($this->session->userdata('PHP_AUTH_USER'))){ ?>
-				<!--if not logged-->
-               		<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+			<!--if not logged-->
+			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
 				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
 				<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
 			</div>
-                <?php  }else{?>
-				<!--if logged-->
-				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
-				
+			<?php  }else{?>
+			<!--if logged-->
+			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
-<!--				<button class="btn button2 logged"><?php echo $this->session->userdata('USERNAME'); ?></button>-->
+				<!--				<button class="btn button2 logged"><?php echo $this->session->userdata('USERNAME'); ?></button>-->
 				<div class="header-account-logged">
 					<div class="header-account-dropdown dropdown">
 						<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn button2 logged">
@@ -93,17 +93,17 @@
 						</a>
 						<ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">
 							<li>
-								<a href="<?php echo base_url("index.php/users_control_web/load_profile") ?>" class="link">Profile</a>
+								<a href="<?php echo base_url('index.php/users_control_web/load_profile') ?>" class="link">Profile</a>
 							</li>
 							<li>
-								<a href="<?php echo base_url("index.php/users_control_web/logout") ?>" data-no-turbolink="true" class="link logout-link">Logout</a>
+								<a href="<?php echo base_url('index.php/users_control_web/logout') ?>" data-no-turbolink="true" class="link logout-link">Logout</a>
 							</li>
-							</ul>
-					</div>			
+						</ul>
+					</div>
 				</div>
 			</div>
 			<?php } ?>
-<!--
+			<!--
 		<div class="col-12">
 		<div class="user-wrapper">
 			<div class="account header__account">
@@ -131,8 +131,8 @@
 		</div>
 		</div>
 -->
-		
-		
+
+
 		</div>
 	</div>
 </header>
@@ -150,7 +150,7 @@
 
 			</div>
 			<div class="modal-footer">
-<!--				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>-->
+				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -165,9 +165,9 @@
 			{{/ad.images}}
 		</div>
 		<div class="card-body">
-		<div class="fav">
-			<span class="icon" data-added="{{ad.is_favorite}}" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
-		</div>
+			<div class="fav">
+				<span class="icon" data-added="{{ad.is_favorite}}" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
+			</div>
 			<div class="row">
 				<div class="col-12 mb-4 text-center">
 					<div class="card-title">{{ad.title}}</div>
@@ -297,7 +297,9 @@
 
 			</div>
 			<div class="price">
-				<div class="price-val">{{ad.price}}<?php echo $this->lang->line('sp'); ?></div>
+				<div class="price-val">{{ad.price}}
+					<?php echo $this->lang->line('sp'); ?>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -314,7 +316,7 @@
         </button>
 			</div>
 			<div class="modal-body">
-				<div class="error-message full d-none"></div>
+				<div class="error-message d-none"></div>
 				<!--
 					<button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Sign up with Facebook</button>
 					<button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Sign up with Google</button>
@@ -332,7 +334,7 @@
 					<span class="text"><?php echo $this->lang->line('create_account2'); ?></span>
 				</div>
 				<form id="register-form">
-					<div id="fileuploader-register">Upload</div>
+					<!--					<div id="fileuploader-register">Upload</div>-->
 					<input type="hidden" name="lang" class="lang">
 					<div class="form-group">
 						<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
@@ -354,7 +356,7 @@
 					<div class="form-group">
 						<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
 					</div>
-					
+
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
 					</div>
@@ -396,7 +398,7 @@
 					</div>
 					<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 				</form>
-				
+
 
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('signin_with'); ?></span>
@@ -1056,18 +1058,56 @@
 
 <!--chat modal-->
 <div id="chat-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
-			<div class="modal-body text-center">
-				<input type="text" class="form-control form-control-sm mt-2" placeholder="Send a message to the seller">
+			<div class="modal-body">
+
+				<!--
+			<div class="menu">
+            <div class="back"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+            <div class="name">Alex</div>
+            <div class="last">18:09</div>
+        </div>
+-->
+				<ol class="chat">
+
+
+
+					<!--        <div class="day">Hoy</div>-->
+				</ol>
+
+				<script id="chat-self-template" type="text/template">
+					<li class="self" data-msg-id="{{message_id}}">
+						<div class="msg">
+							<p>{{text}}</p>
+							<time>{{created_at}}</time>
+						</div>
+					</li>
+				</script>
+
+				<script id="chat-other-template" type="text/template">
+					<li class="other"  data-msg-id="{{message_id}}">
+						<div class="msg">
+							<p>{{text}}</p>
+							<time>{{created_at}}</time>
+						</div>
+					</li>
+				</script>
+
+
+				<form id="chat-form">
+					<input type="hidden" class="ad-id" name="ad_id">
+					<input type="hidden" class="chat-session-id" name="chat_session_id">
+					<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Send a message to the seller">
+				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Send</button>
+				<button type="submit" class="btn button2 submit" form="chat-form">Send</button>
 			</div>
 		</div>
 	</div>
@@ -1104,7 +1144,7 @@
 				</div>
 				<form id="verify-form">
 					<input type="hidden" class="phone" name="phone" />
-						<input type="text" class="form-control" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
+					<input type="text" class="form-control" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
 					<div class="modal-footer">
 						<button class="btn button2 submit" type="submit"><?php echo $this->lang->line('verify'); ?></button>
 					</div>
@@ -1131,22 +1171,22 @@
 </script>
 
 <script id="main-commercial-ads-template" type="text/template">
-		{{#.}}
-		<div class="slide">
-			<a href="{{ad_url}}">
+	{{#.}}
+	<div class="slide">
+		<a href="{{ad_url}}">
 				<div class="ad-image" title="{{title}}" data-commercial_ad_id="{{commercial_ad_id}}" style="background-image: url('<?php echo base_url("{{image}}"); ?>')"></div>
 			</a>
-		</div>
-		{{/.}}
-	</script>
+	</div>
+	{{/.}}
+</script>
 
 <script id="side-commercial-ads-template" type="text/template">
-		{{#.}}
-		<div class="banner">
-			<button type="button" class="close">
+	{{#.}}
+	<div class="banner">
+		<button type="button" class="close">
 			  <span>&times;</span>
 			</button>
-			<a href="{{ad_url}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}} title={{title}}"></a>
-		</div>
-		{{/.}}
-	</script>
+		<a href="{{ad_url}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}} title={{title}}"></a>
+	</div>
+	{{/.}}
+</script>
