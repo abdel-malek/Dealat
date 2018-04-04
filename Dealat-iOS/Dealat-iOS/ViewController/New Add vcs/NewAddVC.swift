@@ -205,7 +205,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (locations, types, educations, schedules) in
+        Communication.shared.get_data_lists { (locations, types, educations, schedules, _) in
             
             self.typesBase = types
             self.locations = locations

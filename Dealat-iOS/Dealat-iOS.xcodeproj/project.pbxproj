@@ -92,6 +92,8 @@
 		82F0C20720286407008922A0 /* Dealat_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C20620286407008922A0 /* Dealat_iOSUITests.swift */; };
 		82F0C21C2028648A008922A0 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 82F0C21B2028648A008922A0 /* Podfile */; };
 		82F0C21E20286525008922A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C21D20286525008922A0 /* User.swift */; };
+		82FEE63F2075068A00D9DB45 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE63E2075068A00D9DB45 /* Period.swift */; };
+		82FEE641207506ED00D9DB45 /* ReportMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE640207506ED00D9DB45 /* ReportMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +238,8 @@
 		82F0C20820286407008922A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82F0C21B2028648A008922A0 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		82F0C21D20286525008922A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		82FEE63E2075068A00D9DB45 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
+		82FEE640207506ED00D9DB45 /* ReportMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessage.swift; sourceTree = "<group>"; };
 		BDD28EAD72431D331D5A7292 /* Pods-Dealat-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		C8A80EAEF46234EA904EA977 /* Pods_Dealat_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dealat_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -514,6 +518,8 @@
 				82914672205165730014CFE2 /* Message.swift */,
 				82AA9557205664A10048AC74 /* FilterParams.swift */,
 				82E56E59205EC2B400938CD7 /* UserBookmark.swift */,
+				82FEE63E2075068A00D9DB45 /* Period.swift */,
+				82FEE640207506ED00D9DB45 /* ReportMessage.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -827,6 +833,7 @@
 				8226F015202886B90077FA74 /* PushManager.swift in Sources */,
 				824663DA203031E000F303EA /* CardView.swift in Sources */,
 				82893DB02032D6F5009151FC /* Location.swift in Sources */,
+				82FEE63F2075068A00D9DB45 /* Period.swift in Sources */,
 				82B97A7C205550C300ADF51B /* EditProfileVC.swift in Sources */,
 				822516EB2029DFF3009FF0DE /* CategoryCell.swift in Sources */,
 				82AA955F2056B8520048AC74 /* CategoriesVC3.swift in Sources */,
@@ -865,6 +872,7 @@
 				82B97A6B20551D0F00ADF51B /* MessageCell.swift in Sources */,
 				82B97A662055148400ADF51B /* ChatDetailsVC.swift in Sources */,
 				82105EF6204D5ACE0050DDD8 /* MyAdsVC.swift in Sources */,
+				82FEE641207506ED00D9DB45 /* ReportMessage.swift in Sources */,
 				82EF0C24202AFC8F00349107 /* AD.swift in Sources */,
 				82CEA2B72031C89800E5F017 /* IMG.swift in Sources */,
 				82F0C1E920286404008922A0 /* ViewController.swift in Sources */,

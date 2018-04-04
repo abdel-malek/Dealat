@@ -30,6 +30,7 @@ class AdCell : UICollectionViewCell{
             if featuredImg != nil{
                 if let feature = ad.is_featured,feature.Boolean{
                     self.featuredImg.isHidden = false
+                    self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "featured_ads_arabic") : #imageLiteral(resourceName: "featured_ads2")
                 }else{
                     self.featuredImg.isHidden = true
                 }

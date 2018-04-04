@@ -201,12 +201,11 @@ class FilterVC: BaseTVC {
         self.filter.salary.max = self.tfSalary2.text
 
         self.tableView.reloadData()
-        
     }
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (locations, types, educations, schedules) in
+        Communication.shared.get_data_lists { (locations, types, educations, schedules, _ ) in
             self.hideLoading()
             
             self.typesBase = types

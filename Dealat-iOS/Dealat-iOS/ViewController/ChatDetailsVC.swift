@@ -129,7 +129,7 @@ class ChatDetailsVC: BaseVC {
         if message.isEmpty{
             self.showErrorMessage(text: "Please type a message")
         }else{
-            self.showLoading()
+//            self.showLoading()
             
             var chat_session_id : Int!
             if self.chat.chat_session_id != nil {

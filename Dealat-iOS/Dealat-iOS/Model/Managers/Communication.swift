@@ -23,8 +23,8 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    let baseURL = "http://192.168.9.15/Dealat/index.php/api"
-    let baseImgsURL = "http://192.168.9.15/Dealat/"
+    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.17/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
@@ -39,6 +39,8 @@ class Communication: BaseManager {
     let get_countriesURL = "/users_control/get_countries/format/json"
     let post_new_itemURL = "/items_control/post_new_item/format/json"
     let get_commercial_itemsURL = "/commercial_items_control/get_commercial_items/format/json"
+    let get_report_messagesURL  = "/items_control/get_report_messages/format/json"
+    let report_itemURL  = "/items_control/report_item/format/json"
     
     let users_registerURL = "/users_control/register/format/json"
     let verifyURL = "/users_control/verify/format/json"
@@ -159,7 +161,7 @@ class Communication: BaseManager {
         }
     }
     
-    func get_data_lists(_ callback :  @escaping ( _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule]) -> Void){
+    func get_data_lists(_ callback :  @escaping ( _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule], _ periods : [Period]) -> Void){
         let url = URL(string: baseURL + get_data_listsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -175,18 +177,13 @@ class Communication: BaseManager {
                     var types = [Type]()
                     var educations = [Education]()
                     var schedules = [Schedule]()
+                    var periods = [Period]()
                     
                     for i in value.data["location"].arrayValue{
                         if let obj = i.dictionaryObject, let a = Location(JSON: obj){
                             locations.append(a)
                         }
                     }
-                    
-                    //                    for i in value.data["types"].arrayValue{
-                    //                        if let obj = i.dictionaryObject, let a = Type(JSON: obj){
-                    //                            types.append(a)
-                    //                        }
-                    //                    }
                     
                     let tys = value.data["types"]
                     for i in 0..<11{
@@ -210,8 +207,15 @@ class Communication: BaseManager {
                         }
                     }
                     
+                    for i in value.data["show_periods"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = Period(JSON: obj){
+                            periods.append(a)
+                        }
+                    }
+
                     
-                    callback(locations,types,educations,schedules)
+                    
+                    callback(locations,types,educations,schedules,periods)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -258,6 +262,69 @@ class Communication: BaseManager {
             }
         }
     }
+
+    
+    func get_report_messages(_ callback :  @escaping ( _ reports : [ReportMessage]) -> Void){
+        let url = URL(string: baseURL + get_report_messagesURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    var reports = [ReportMessage]()
+                    
+                    for i in value.data.arrayValue{
+                        if let obj = i.dictionaryObject, let a = ReportMessage(JSON: obj){
+                            reports.append(a)
+                        }
+                    }
+                    
+                    callback(reports)
+                    
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    func report_item(ad_id : Int,report_message_id : Int,  callback :  @escaping (Bool) -> Void){
+        let url = URL(string: baseURL + report_itemURL)!
+        
+        let params : [String : Any] = ["ad_id" : ad_id ,"report_message_id" : report_message_id ]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
     
     
     func search(query : String!,filter : FilterParams, callback : @escaping ([AD]) -> Void){
@@ -452,7 +519,7 @@ class Communication: BaseManager {
     }
     
     
-    func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]!) -> Void){
+    func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]?) -> Void){
         let url = URL(string: baseURL + get_commercial_itemsURL)!
         let params : [String : Any] = ["category_id" : category_id]
         
