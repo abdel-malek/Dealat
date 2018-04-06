@@ -543,6 +543,7 @@
         android:layout_height="@dimen/bottomBarHeight"
         android:layout_alignParentBottom="true"
         android:onClick="onClick"
+        android:enabled="false"
         android:text="@string/buttonSubmit"
         android:textColor="@color/white"
         android:background="@color/red"

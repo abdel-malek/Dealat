@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
-    android:gravity="center"
     android:id="@+id/parentPanel"
     >
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:layout_marginTop="36dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/labelPleaseSelectCity"
         android:textColor="@color/white"
         android:textAppearance="@style/textHeadline"
@@ -21,7 +20,9 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/buttonTrue"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         >
@@ -29,10 +30,23 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="1dp"
+            android:dividerHeight="@dimen/lineHight"
             android:divider="@color/white"
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/buttonTrue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="onClick"
+        android:enabled="false"
+        android:text="@string/buttonSave"
+        android:textAppearance="@style/textNormal"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        />
+
+</RelativeLayout>

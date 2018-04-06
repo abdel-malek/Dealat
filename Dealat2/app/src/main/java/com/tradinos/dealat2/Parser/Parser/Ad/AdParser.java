@@ -67,13 +67,13 @@ public class AdParser implements TradinosParser<Ad> {
                 ad.setFavorite(true);
         }
 
-        if (jsonObject.has("expired_after"))
+        if (jsonObject.has("expired_after")) // only with MyAds
             ad.setExpiresAfter(jsonObject.getInt("expired_after"));
 
         return ad;
     }
 
     private boolean validData(String data) {
-        return !data.equals("null");
+        return !data.equals("null") && !data.equals("0");
     }
 }

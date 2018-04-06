@@ -26,11 +26,6 @@
     <string name="labelAdStatus">حالة الإعلان</string>
     <string name="labelRejectReason">سبب الرفض</string>
 
-    <!-- Show Periods -->
-    <string name="periodWeek">أسبوع</string>
-    <string name="periodTenDays">عشرة أيام</string>
-    <string name="periodMonth">شهر</string>
-
 
     <!-- Internal Strings -->
     <string name="all">الكل</string>
@@ -56,7 +51,7 @@
     <string name="labelchooseCategory">اختر تصنيفاً</string>
     <string name="labelNegotiable">قابل للتفاوض</string>
     <string name="labelSecondhand">مستعمل</string>
-    <string name="labelFeatured">متميّز</string>
+    <string name="labelFeatured">مميّز</string>
     <string name="labelAutomatic">أوتوماتيك</string>
     <string name="labelWithFurn">مفروش</string>
     <string name="labelSelectBrand">اختر نوع</string>
@@ -76,6 +71,7 @@
     <string name="labelProfileImage">الصورة الشخصية</string>
     <string name="labelSelectImage">اختيار صورة</string>
     <string name="labelRemoveImage">إزالة الصورة</string>
+    <string name="labelReport">الإبلاغ عن الإعلان</string>
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
@@ -140,6 +136,7 @@
     <string name="buttonShow">عرض</string>
     <string name="buttonSave">حفظ</string>
     <string name="buttonSend">إرسال</string>
+    <string name="buttonReport">إبلاغ</string>
 
     <string name="tabMyAds">إعلاناتي</string>
     <string name="tabFav">المفضلة</string>
@@ -167,17 +164,19 @@
     <string name="toastAdSubmit">تمت إضافة الإعلان بنجاح</string>
     <string name="toastFavorite">تمت إضافة الإعلان للمفضلة</string>
     <string name="toastUnfavorite">تمت إزالة الإعلان من المفضلة</string>
-    <string name="toastSaved">تم حفظ التعديلات</string>
-    <string name="toastAdDeleted">تم حذف الإعلان</string>
+    <string name="toastAdReported">تم الإبلاغ عن الإعلان</string>
     <string name="toastBookmark">تم حفظ البحث</string>
     <string name="toastUnBookmark">تمت إزالة البحث</string>
+    <string name="toastSaved">تم حفظ التعديلات</string>
+    <string name="toastAdDeleted">تم حذف الإعلان</string>
     <string name="toastImageSave">تم حفظ الصورة في الاستديو</string>
+    <string name="toastThnxRating">شكراً لتقييمك</string>
 
     <string name="toastMaxImages">لايمكنك اختيار صور أكثر</string>
     <string name="toastWaitTillUploading">يرجى الانتظار حتى يتم تحميل الصور!</string>
     <string name="toastRegister">يجب تسجيل الدخول أولاً!</string>
     <string name="toastVerify">يجب أن تفعّل حسابك أولاً!</string>
-    <string name="toastThnxRating">شكراً لتقييمك</string>
+    <string name="toastSelectReport">من فضلك، اختر سبب الإبلاغ</string>
 
 
     <!-- Alert Dialog -->

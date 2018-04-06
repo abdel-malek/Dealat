@@ -17,14 +17,14 @@ public class CityParser implements TradinosParser<City> {
     }
 
     public City Parse(JSONObject jsonObject) throws JSONException {
-        City city = new City();
+        City city = new City(); //if city has no locations, it has the location --
 
         city.setId(jsonObject.getString("city_id"));
         city.setName(jsonObject.getString("city_name"));
 
         if (!jsonObject.getString("locations").equals("null")){
             city.setLocations(new ItemListParser("location_id", "location_name").Parse(jsonObject.getString("locations")));
-            city.addNoLocation();
+          //  city.addNoLocation();
         }
 
         return city;

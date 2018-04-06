@@ -151,7 +151,7 @@ public class MyApplication extends Application {
     }
 
     public static String getBaseUrlForImages() {
-      //  return "http://dealat.tradinos.com/";
-        return "http://192.168.9.17/Dealat/";
+        return "http://dealat.tradinos.com/";
+      //  return "http://192.168.9.17/Dealat/";
     }
 }

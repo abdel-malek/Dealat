@@ -158,7 +158,7 @@ public class SelectImagesActivity extends MasterActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 adapter = new ImageAdapter(mContext, getAllShownImagesPath());
                 gridView.setAdapter(adapter);
-            } else { // to avoid NullPointerException in case Done is clicked
+            } else { // to avoid NullPointerException in case Done or camera button is clicked
                 adapter = new ImageAdapter(mContext, new ArrayList<Image>());
             }
         }

@@ -119,7 +119,6 @@ public class MyAdAdapter extends BaseAdapter {
         holder.textViewStatus.setText(statusString);
         holder.imageViewStatus.setImageDrawable(ContextCompat.getDrawable(context, statusRsc));
 
-
         if (item.isFeatured())
             holder.imageViewFeatured.setVisibility(View.VISIBLE);
     }
@@ -136,6 +135,7 @@ public class MyAdAdapter extends BaseAdapter {
             textViewTitle = rootView.findViewById(R.id.title);
             textViewDate = rootView.findViewById(R.id.textViewDate);
             textViewExpires = rootView.findViewById(R.id.textDate);
+            imageViewFeatured = rootView.findViewById(R.id.imageViewFeatured);
         }
     }
 }

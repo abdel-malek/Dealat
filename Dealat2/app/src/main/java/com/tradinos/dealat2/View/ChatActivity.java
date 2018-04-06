@@ -1,6 +1,5 @@
 package com.tradinos.dealat2.View;
 
-import android.animation.Animator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +30,12 @@ import com.tradinos.dealat2.Model.Message;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by developer on 13.03.18.
@@ -144,7 +146,7 @@ public class ChatActivity extends MasterActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!editTextMsg.getText().toString().isEmpty()) {
+                if (!inputIsEmpty(editTextMsg)) {
 
                     parameters.put("ad_id", currentChat.getAdId());
                     parameters.put("msg", stringInput(editTextMsg));
@@ -181,6 +183,9 @@ public class ChatActivity extends MasterActivity {
         public void onReceive(Context context, Intent intent) {
             Message message = new Message();
             message.setText(intent.getStringExtra("msg"));
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+            message.setCreatedAt(dateFormat.format(new Date()));
 
             if (amISeller())
                 message.setToSeller(true);

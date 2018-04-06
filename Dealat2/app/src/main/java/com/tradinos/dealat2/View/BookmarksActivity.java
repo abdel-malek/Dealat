@@ -95,9 +95,12 @@ public class BookmarksActivity extends MasterActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
+                                ShowProgressDialog();
                                 UserController.getInstance(mController).deleteBookmark(bookmarks.get(position).getId(), new SuccessCallback<String>() {
                                     @Override
                                     public void OnSuccess(String result) {
+                                        HideProgressDialog();
+
                                         bookmarks.remove(position);
                                         ((BookmarkAdapter) listView.getAdapter()).notifyDataSetChanged();
 

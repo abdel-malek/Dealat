@@ -11,9 +11,11 @@ import com.tradinos.core.network.TradinosRequest;
 import com.tradinos.dealat2.API.APIModel;
 import com.tradinos.dealat2.API.URLBuilder;
 import com.tradinos.dealat2.Model.Ad;
+import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Parser.Parser.Ad.AdDetailsParser;
 import com.tradinos.dealat2.Parser.Parser.Ad.AdListParser;
+import com.tradinos.dealat2.Parser.Parser.Item.ItemListParser;
 import com.tradinos.dealat2.Parser.Parser.StringParser;
 import com.tradinos.dealat2.Parser.Parser.TemplatesDataParser;
 
@@ -111,7 +113,7 @@ public class AdController extends ParentController {
 
         request.addParameter("category_id", categoryId);
 
-        authenticationRequired(request);
+       // authenticationRequired(request);
         addToHeader(request);
         request.Call();
     }
@@ -144,8 +146,8 @@ public class AdController extends ParentController {
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
-        authenticationRequired(request);
 
+        authenticationRequired(request);
         addToHeader(request);
         request.Call();
     }
@@ -156,7 +158,28 @@ public class AdController extends ParentController {
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
+
         authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
+
+    public void getReportList(SuccessCallback<List<Item>> successCallback){
+        String url = new URLBuilder(APIModel.ads, "get_report_messages").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get,
+                new ItemListParser("report_message_id", "msg"), successCallback, getmFaildCallback());
+
+        addToHeader(request);
+        request.Call();
+    }
+
+    public void reportAd(String adId, String reportId, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "report_item").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post,
+                new StringParser(), successCallback, getmFaildCallback());
+
+        request.addParameter("ad_id", adId);
+        request.addParameter("report_message_id", reportId);
 
         addToHeader(request);
         request.Call();

@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -29,10 +28,10 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
 import com.tradinos.dealat2.Adapter.CityAdapter;
 import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
-import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Model.Ad;
@@ -54,6 +53,7 @@ import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
+import com.tradinos.dealat2.Utils.ScalableImageView;
 
 import org.json.JSONArray;
 
@@ -77,10 +77,10 @@ public class EditAdActivity extends MasterActivity {
 
     private final String NULL = "-1";
     private Ad currentAd;
+    private Category currentCategory;
     private Item selectedLocation;
     private List<Type> templateBrands = new ArrayList<>();
     private List<Item> years = new ArrayList<>();
-    private List<Item> showPeriods = new ArrayList<>();
 
     private HashMap<String, String> parameters = new HashMap<>();
 
@@ -129,21 +129,15 @@ public class EditAdActivity extends MasterActivity {
     public void getData() {
         currentAd = (Ad) getIntent().getSerializableExtra("ad");
 
-        int startYear = 1970;
+        int startYear = AdVehicle.START_YEAR;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         years.add(Item.getNoItem());
         for (int i = currentYear; i >= startYear; i--)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
-
-        editCategory.setText(MyApplication.getCategoryById(currentAd.getCategoryId()).getFullName());
-
-
-        showPeriods.add(new Item("1", getString(R.string.periodWeek)));
-        showPeriods.add(new Item("2", getString(R.string.periodTenDays)));
-        showPeriods.add(new Item("3", getString(R.string.periodMonth)));
-        spinnerPeriod.setAdapter(new ItemAdapter(mContext, showPeriods));
+        currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
+        editCategory.setText(currentCategory.getFullName());
 
 
         ShowProgressDialog();
@@ -172,6 +166,10 @@ public class EditAdActivity extends MasterActivity {
                     @Override
                     public void OnSuccess(TemplatesData result) {
                         enabled = true;
+                        findViewById(R.id.buttonTrue).setEnabled(true);
+                        findViewById(R.id.buttonEdit).setEnabled(true);
+
+                        spinnerPeriod.setAdapter(new ItemAdapter(mContext, result.getShowPeriods()));
 
                         spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
@@ -203,6 +201,8 @@ public class EditAdActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
+        findViewById(R.id.buttonEdit).setEnabled(false);
+
         linearLayout = (LinearLayout) findViewById(R.id.layout);
 
         textBrand = (TextView) findViewById(R.id.textBrand);
@@ -423,7 +423,7 @@ public class EditAdActivity extends MasterActivity {
                     View layout = inflater.inflate(R.layout.popup_layout,
                             (ViewGroup) findViewById(R.id.popupLayout));
 
-                    ImageView imageView = layout.findViewById(R.id.imageView);
+                    ScalableImageView imageView = layout.findViewById(R.id.imageView);
 
                     if (!clickedImage.isPreviouslyLoaded()) {
                         popupBitmap = new ImageDecoder().decodeLargeImage(clickedImage.getPath());
@@ -544,6 +544,8 @@ public class EditAdActivity extends MasterActivity {
 
             if (selectedLocation != null)
                 parameters.put("location_id", selectedLocation.getId());
+            else
+                parameters.put("location_id", NULL);
 
             if (currentAd.getTemplate() != Category.JOBS)
                 parameters.put("price", String.valueOf(doubleEditText(editPrice)));
@@ -572,7 +574,7 @@ public class EditAdActivity extends MasterActivity {
                 parameters.put("images", imagesJsonArray.toString());
 
             if (deletedImgsJsonArray.length() > 0)
-                parameters.put("deleted_imags", deletedImgsJsonArray.toString());
+                parameters.put("deleted_images", deletedImgsJsonArray.toString());
 
             return true;
         }
@@ -692,7 +694,7 @@ public class EditAdActivity extends MasterActivity {
         int loc = getItemIndex(new ArrayList<Item>(data.getCities()), currentAd.getCityId());
         spinnerCity.setSelection(loc);
 
-        spinnerPeriod.setSelection(getItemIndex(showPeriods, String.valueOf(currentAd.getShowPeriod())));
+        spinnerPeriod.setSelection(getItemIndex(data.getShowPeriods(), String.valueOf(currentAd.getShowPeriod())));
 
 
         int brand = 0;
@@ -807,62 +809,95 @@ public class EditAdActivity extends MasterActivity {
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
 
-                containerSpace.setVisibility(visibility);
-                containerRooms.setVisibility(visibility);
-                containerFloors.setVisibility(visibility);
-                containerState.setVisibility(visibility);
-                switchFurn.setVisibility(visibility);
-                line3.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSpace)))
+                    containerSpace.setVisibility(visibility);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideRoom)))
+                    containerRooms.setVisibility(visibility);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideFloor)))
+                    containerFloors.setVisibility(visibility);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideState)))
+                    containerState.setVisibility(visibility);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideFurn))) {
+                    switchFurn.setVisibility(visibility);
+                    line3.setVisibility(visibility);
+                }
 
                 break;
 
             case Category.JOBS:
-                textSch.setVisibility(visibility);
-                spinnerSch.setVisibility(visibility);
-
-                textEdu.setVisibility(visibility);
-                spinnerEdu.setVisibility(visibility);
-
-                containerEx.setVisibility(visibility);
-
-                containerSalary.setVisibility(visibility);
-
                 containerPrice.setVisibility(View.GONE);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSchedule))) {
+                    textSch.setVisibility(visibility);
+                    spinnerSch.setVisibility(visibility);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideEducation))) {
+                    textEdu.setVisibility(visibility);
+                    spinnerEdu.setVisibility(visibility);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideEx)))
+                    containerEx.setVisibility(visibility);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSalary)))
+                    containerSalary.setVisibility(visibility);
 
                 break;
 
             case Category.VEHICLES:
-                textBrand.setVisibility(visibility);
-                spinnerBrand.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    textBrand.setVisibility(visibility);
+                    spinnerBrand.setVisibility(visibility);
+                }
 
-                textModel.setVisibility(visibility);
-                spinnerModel.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideModel))) {
+                    textModel.setVisibility(visibility);
+                    spinnerModel.setVisibility(visibility);
+                }
 
-                textDate.setVisibility(visibility);
-                spinnerYear.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideYear))) {
+                    textDate.setVisibility(visibility);
+                    spinnerYear.setVisibility(visibility);
+                }
 
-                containerKilometer.setVisibility(visibility);
-                switchAutomatic.setVisibility(visibility);
-                line1.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideKilo)))
+                    containerKilometer.setVisibility(visibility);
 
-                switchSecondhand.setVisibility(visibility);
-                line2.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideAutomatic))) {
+                    switchAutomatic.setVisibility(visibility);
+                    line1.setVisibility(visibility);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
+                    switchSecondhand.setVisibility(visibility);
+                    line2.setVisibility(visibility);
+                }
 
                 break;
 
             case Category.ELECTRONICS:
-                containerSize.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSize)))
+                    containerSize.setVisibility(visibility);
 
             case Category.MOBILES:
-                textBrand.setVisibility(visibility);
-                spinnerBrand.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    textBrand.setVisibility(visibility);
+                    spinnerBrand.setVisibility(visibility);
+                }
 
             case Category.FASHION:
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
-                line2.setVisibility(visibility);
-                switchSecondhand.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
+                    line2.setVisibility(visibility);
+                    switchSecondhand.setVisibility(visibility);
+                }
         }
     }
 

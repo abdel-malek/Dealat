@@ -29,7 +29,6 @@ import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AdImagesAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
-import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.AdElectronic;
 import com.tradinos.dealat2.Model.AdFashion;
@@ -57,6 +56,7 @@ public class AdDetailsActivity extends MasterActivity {
 
     private CurrentAndroidUser user;
     private Ad currentAd;
+    private Category currentCategory;
 
     // textViewViews
     private ViewPager viewPager;
@@ -70,10 +70,13 @@ public class AdDetailsActivity extends MasterActivity {
             textViewBrand, textViewModel, textViewKilo, textViewTransmission, textViewManufactureYear,
             textViewUsage, textViewSize;
 
-    private ImageButton buttonFav;
+    private ImageButton buttonFav, buttonReport;
     private RatingBar ratingBar;
 
-    private LinearLayout containerJob, containerProperty, containerVehicle, containerBrand, containerUsage, containerSize;
+    private LinearLayout containerEdu, containerSchedule, containerEx, containerSalary,
+            containerSpace, containerRooms, containerFloors, containerPropertyState, containerFurn,
+            containerBrand, containerModel, containerKilometer, containerYear, containerTransmission,
+            containerUsage, containerSize;
     private View line1, line2, line3;
 
 
@@ -88,6 +91,7 @@ public class AdDetailsActivity extends MasterActivity {
 
         user = new CurrentAndroidUser(mContext);
         currentAd = (Ad) getIntent().getSerializableExtra("ad");
+        currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
 
         getAd();
     }
@@ -140,12 +144,13 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
                 textViewCity.setText(result.getCityName());
 
-                if (result.getLocationId() != null){
+                if (result.getLocationId() != null) {
                     textViewLocation.setText(result.getLocationName());
                     findViewById(R.id.line6).setVisibility(View.VISIBLE);
                     findViewById(R.id.containerLocation).setVisibility(View.VISIBLE);
                 }
 
+                //suppose to get expires after
                 textViewExpires.setText(getExpiryTime(result.getPublishDate(), result.getShowPeriod()));
                 textViewSeller.setText(result.getSellerName());
 
@@ -186,10 +191,10 @@ public class AdDetailsActivity extends MasterActivity {
                         findViewById(R.id.buttonCall).setVisibility(View.VISIBLE);
                         findViewById(R.id.line4).setVisibility(View.VISIBLE);
                         findViewById(R.id.buttonMessage).setVisibility(View.VISIBLE);
-                        findViewById(R.id.line5).setVisibility(View.VISIBLE);
-                        findViewById(R.id.buttonReport).setVisibility(View.VISIBLE);
+                        buttonReport.setVisibility(View.VISIBLE); // seller cannot report their ad
                     }
-                }
+                } else
+                    buttonReport.setVisibility(View.VISIBLE); // even unregistered users can report
             }
         });
     }
@@ -242,10 +247,24 @@ public class AdDetailsActivity extends MasterActivity {
         textViewUsage = (TextView) findViewById(R.id.textUsage);
 
         containerBrand = (LinearLayout) findViewById(R.id.containerBrand);
+        containerModel = (LinearLayout) findViewById(R.id.containerModel);
+        containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
+        containerYear = (LinearLayout) findViewById(R.id.containerYear);
+        containerTransmission = (LinearLayout) findViewById(R.id.containerTransmission);
+
         containerUsage = (LinearLayout) findViewById(R.id.containerUsage);
-        containerJob = (LinearLayout) findViewById(R.id.containerJob);
-        containerProperty = (LinearLayout) findViewById(R.id.containerProperty);
-        containerVehicle = (LinearLayout) findViewById(R.id.containerVehicle);
+
+        containerEdu = (LinearLayout) findViewById(R.id.containerEdu);
+        containerSchedule = (LinearLayout) findViewById(R.id.containerSchedule);
+        containerEx = (LinearLayout) findViewById(R.id.containerEx);
+        containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
+
+        containerSpace = (LinearLayout) findViewById(R.id.containerSpace);
+        containerRooms = (LinearLayout) findViewById(R.id.containerRooms);
+        containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
+        containerPropertyState = (LinearLayout) findViewById(R.id.containerPropertyState);
+        containerFurn = (LinearLayout) findViewById(R.id.containerFurn);
+
         containerSize = (LinearLayout) findViewById(R.id.containerSize);
 
         line1 = findViewById(R.id.line1);
@@ -253,12 +272,21 @@ public class AdDetailsActivity extends MasterActivity {
         line3 = findViewById(R.id.line3);
 
         buttonFav = (ImageButton) findViewById(R.id.buttonFav);
+        buttonReport = (ImageButton) findViewById(R.id.buttonReport);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
     }
 
     @Override
     public void assignActions() {
+        buttonReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(mContext, ReportActivity.class);
+                intent.putExtra("ad", currentAd);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -328,17 +356,6 @@ public class AdDetailsActivity extends MasterActivity {
                     startActivity(intent);
 
                     break;
-
-                case R.id.buttonReport:
-                    break;
-
-                case R.id.ratingBar:
-                    UserController.getInstance(mController).rateSeller(currentAd.getSellerId(), ratingBar.getRating(), new SuccessCallback<String>() {
-                        @Override
-                        public void OnSuccess(String result) {
-
-                        }
-                    });
             }
         }
     }
@@ -484,39 +501,114 @@ public class AdDetailsActivity extends MasterActivity {
 
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
-                containerProperty.setVisibility(View.VISIBLE);
+                findViewById(R.id.line17).setVisibility(View.VISIBLE);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSpace))) {
+                    findViewById(R.id.line9).setVisibility(View.VISIBLE);
+                    containerSpace.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideRoom))) {
+                    findViewById(R.id.line10).setVisibility(View.VISIBLE);
+                    containerRooms.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideFloor))) {
+                    containerFloors.setVisibility(View.VISIBLE);
+                    findViewById(R.id.line11).setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideState))) {
+                    findViewById(R.id.line12).setVisibility(View.VISIBLE);
+                    containerPropertyState.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideFurn))) {
+                    containerFurn.setVisibility(View.VISIBLE);
+                }
 
                 break;
 
             case Category.JOBS:
-                containerJob.setVisibility(View.VISIBLE);
+
                 textViewPrice.setVisibility(View.INVISIBLE);
+                findViewById(R.id.line16).setVisibility(View.VISIBLE);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideEducation))) {
+                    findViewById(R.id.line5).setVisibility(View.VISIBLE);
+                    containerEdu.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSchedule))) {
+                    containerSchedule.setVisibility(View.VISIBLE);
+                    findViewById(R.id.line7).setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideEx))) {
+                    findViewById(R.id.line8).setVisibility(View.VISIBLE);
+                    containerEx.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSalary)))
+                    containerSalary.setVisibility(View.VISIBLE);
 
                 break;
 
             case Category.VEHICLES:
-                containerVehicle.setVisibility(View.VISIBLE);
-                line3.setVisibility(View.VISIBLE);
-                containerBrand.setVisibility(View.VISIBLE);
-                line1.setVisibility(View.VISIBLE);
-                containerUsage.setVisibility(View.VISIBLE);
+
+                findViewById(R.id.line18).setVisibility(View.VISIBLE);
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    line3.setVisibility(View.VISIBLE);
+                    containerBrand.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideModel))) {
+                    findViewById(R.id.line13).setVisibility(View.VISIBLE);
+                    containerModel.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideKilo))){
+                    findViewById(R.id.line14).setVisibility(View.VISIBLE);
+                    containerKilometer.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideYear))) {
+                    findViewById(R.id.line15).setVisibility(View.VISIBLE);
+                    containerYear.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideAutomatic))) {
+                    containerTransmission.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
+                    line1.setVisibility(View.VISIBLE);
+                    containerUsage.setVisibility(View.VISIBLE);
+                }
 
                 break;
 
             case Category.ELECTRONICS:
-                line2.setVisibility(View.VISIBLE);
-                containerSize.setVisibility(View.VISIBLE);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSize))) {
+                    line2.setVisibility(View.VISIBLE);
+                    containerSize.setVisibility(View.VISIBLE);
+                }
 
             case Category.MOBILES:
-                line3.setVisibility(View.VISIBLE);
-                containerBrand.setVisibility(View.VISIBLE);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    line3.setVisibility(View.VISIBLE);
+                    containerBrand.setVisibility(View.VISIBLE);
+                }
 
             case Category.FASHION:
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
-                line1.setVisibility(View.VISIBLE);
-                containerUsage.setVisibility(View.VISIBLE);
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
+                    line1.setVisibility(View.VISIBLE);
+                    containerUsage.setVisibility(View.VISIBLE);
+                }
         }
     }
 

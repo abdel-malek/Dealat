@@ -2,6 +2,7 @@ package com.tradinos.dealat2.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -118,6 +119,20 @@ public class MyProfileActivity extends MasterActivity {
         }
     }
 
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.main_content), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        snackbar.show();
+    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
     private final int REQUEST_SELECT_IMG = 1;
 
+    private final String NULL = "-1";
+
     private boolean enabled = false;
     private CurrentAndroidUser currentAndroidUser;
     private File image;
@@ -50,6 +53,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
     private EditText editTextName, editWhatsApp, editEmail, editBirthday;
     private AppCompatSpinner spinnerCity, spinnerGender;
     private ImageView imageViewPersonal;
+    private Button buttonRemove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         currentAndroidUser = new CurrentAndroidUser(this);
 
         List<Item> genders = new ArrayList<>();
-      //  genders.add(Item.getNoItem());
+        genders.add(Item.getNoItem());
         genders.add(new Item("1", getString(R.string.male)));
         genders.add(new Item("2", getString(R.string.female)));
         spinnerGender.setAdapter(new ItemAdapter(mContext, genders));
@@ -80,6 +84,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                 UserController.getInstance(mController).getUserInfo(new SuccessCallback<User>() {
                     @Override
                     public void OnSuccess(User result) {
+                        findViewById(R.id.buttonTrue).setEnabled(true);
+                        findViewById(R.id.buttonEdit).setEnabled(true);
+
                         currentAndroidUser.Save(result);
                         MyApplication.saveCity(result.getCityId());
 
@@ -88,7 +95,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                         ((TextView) findViewById(R.id.textView)).setText(result.getPhone());
                         spinnerCity.setSelection(getItemIndex(cities, result.getCityId()));
 
-                        spinnerGender.setSelection(result.getGender()-1); //remove -1 when removing gender --
+                        spinnerGender.setSelection(result.getGender());
 
                         if (!TextUtils.isEmpty(result.getWhatsAppNumber()))
                             editWhatsApp.setText(result.getWhatsAppNumber());
@@ -96,8 +103,10 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                         if (!TextUtils.isEmpty(result.getEmail()))
                             editEmail.setText(result.getEmail());
 
-                        if (!TextUtils.isEmpty(result.getBirthday()))
+                        if (!TextUtils.isEmpty(result.getBirthday())){
                             editBirthday.setText(result.getBirthday()); //formattedDate
+                            buttonRemove.setVisibility(View.VISIBLE);
+                        }
 
                         if (!TextUtils.isEmpty(result.getImageUrl())) {
                             ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
@@ -123,6 +132,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         editBirthday = (EditText) findViewById(R.id.editBirthday);
         spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
         spinnerGender = (AppCompatSpinner) findViewById(R.id.spinnerGender);
+        buttonRemove = (Button) findViewById(R.id.buttonRemove);
+
+        findViewById(R.id.buttonEdit).setEnabled(false);
     }
 
     @Override
@@ -134,6 +146,14 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
                     showDatePickerDialog(getSupportFragmentManager());
                 return false;
+            }
+        });
+
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editBirthday.setText("");
+                buttonRemove.setVisibility(View.GONE);
             }
         });
     }
@@ -153,20 +173,29 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                     if (spinnerCity.getSelectedItem() != null) //city_id
                         parameters.put("city_id", ((Item) spinnerCity.getSelectedItem()).getId());
 
-                    if (!inputIsEmpty(editEmail))
+                    if (inputIsEmpty(editEmail))
+                        parameters.put("email", NULL);
+                    else
                         parameters.put("email", stringInput(editEmail));
 
-                    if (!inputIsEmpty(editWhatsApp))
+                    if (inputIsEmpty(editWhatsApp))
+                        parameters.put("whatsup_number", NULL);
+                    else
                         parameters.put("whatsup_number", stringInput(editWhatsApp));
 
-                    if (!inputIsEmpty(editBirthday))
+                    if (inputIsEmpty(editBirthday))
+                        parameters.put("birthday", NULL);
+                    else
                         parameters.put("birthday", stringInput(editBirthday));
 
                     Item item = (Item) spinnerGender.getSelectedItem();
-                    parameters.put("gender", item.getId()); // noItem!! remove gender
+                    if (item.isNothing())
+                        parameters.put("gender", NULL);
+                    else
+                        parameters.put("gender", item.getId());
 
-                  //  if (image == null)
-                      //  parameters.put("personal_image", "null");
+                    if (image == null)
+                        parameters.put("image", NULL);
 
                     ShowProgressDialog();
                     UserController.getInstance(mController).editUserInfo(image, parameters, new SuccessCallback<User>() {
@@ -264,6 +293,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         } else {
             String mDate = year + "-" + ((month + 1) < 10 ? "0" + (month + 1) : (month + 1)) + "-" + (day < 10 ? "0" + day : day);
             editBirthday.setText(mDate);
+            buttonRemove.setVisibility(View.VISIBLE);
         }
     }
 }

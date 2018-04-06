@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tradinos.core.network.SuccessCallback;
-import com.tradinos.dealat2.Adapter.ItemAdapter;
+import com.tradinos.dealat2.Adapter.RadioAdapter;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.User;
@@ -24,6 +23,9 @@ import java.util.List;
 
 public class CityActivity extends MasterActivity {
 
+    private RadioAdapter adapter;
+
+    // views
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
 
@@ -45,7 +47,10 @@ public class CityActivity extends MasterActivity {
                     HideProgressDialog();
                     swipeRefreshLayout.setRefreshing(false);
 
-                    listView.setAdapter(new ItemAdapter(mContext, result));
+                    adapter = new RadioAdapter(mContext, result);
+                    listView.setAdapter(adapter);
+
+                    findViewById(R.id.buttonTrue).setEnabled(true);
                 }
             });
         }
@@ -71,24 +76,23 @@ public class CityActivity extends MasterActivity {
                 getData();
             }
         });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent mainIntent = new Intent(mContext, RegisterActivity.class);
-
-                MyApplication.saveUserState(User.LOCATED);
-                MyApplication.saveCity(((ItemAdapter)listView.getAdapter()).getItem(i).getId());
-
-                startActivity(mainIntent);
-                finish();
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.buttonTrue){
+            if (adapter.getSelected() == null)
+                showMessageInToast(R.string.labelPleaseSelectCity);
+            else {
+                Intent mainIntent = new Intent(mContext, RegisterActivity.class);
 
+                MyApplication.saveUserState(User.LOCATED);
+                MyApplication.saveCity(adapter.getSelected().getId());
+
+                startActivity(mainIntent);
+                finish();
+            }
+        }
     }
 
 

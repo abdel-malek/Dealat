@@ -21,12 +21,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private final int ME = 0, OTHER = 1;
 
     private List<Message> messages;
-    private Context context;
+
     private LayoutInflater inflater;
     private boolean iAmSeller;
 
     public MessageAdapter(Context context, List<Message> messages, boolean iAmSeller) {
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.messages = messages;
         this.iAmSeller = iAmSeller;
@@ -43,6 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         holder.textViewText.setText(messages.get(position).getText());
+        holder.textViewDate.setText(messages.get(position).getCreatedAt());
     }
 
     @Override
@@ -66,12 +66,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewText;
+        TextView textViewText, textViewDate;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
 
             textViewText = itemView.findViewById(R.id.textView);
+            textViewDate = itemView.findViewById(R.id.textViewDate);
         }
     }
 }

@@ -26,11 +26,6 @@
     <string name="labelAdStatus">Ad Status</string>
     <string name="labelRejectReason">Rejection Reason</string>
 
-    <!-- Show Periods -->
-    <string name="periodWeek">Week</string>
-    <string name="periodTenDays">Ten Days</string>
-    <string name="periodMonth">Month</string>
-
 
     <!-- Internal Strings -->
     <string name="all">All</string>
@@ -77,6 +72,7 @@
     <string name="labelProfileImage">Profile Image</string>
     <string name="labelSelectImage">Select Image</string>
     <string name="labelRemoveImage">Remove Image</string>
+    <string name="labelReport">Report an ad</string>
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
@@ -141,6 +137,7 @@
     <string name="buttonShow">Show</string>
     <string name="buttonSave">Save</string>
     <string name="buttonSend">Send</string>
+    <string name="buttonReport">Report</string>
 
     <string name="tabMyAds">My Ads</string>
     <string name="tabFav">Favorites</string>
@@ -168,6 +165,7 @@
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
     <string name="toastFavorite">Ad\'s added to your favorites</string>
     <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
+    <string name="toastAdReported">Ad\'s reported</string>
     <string name="toastBookmark">Search\'s Saved</string>
     <string name="toastUnBookmark">Search\'s Removed</string>
     <string name="toastSaved">Changes Saved</string>
@@ -179,6 +177,7 @@
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
     <string name="toastRegister">You need to register first!</string>
     <string name="toastVerify">You need to verify your number first!</string>
+    <string name="toastSelectReport">Please, Select reporting reason</string>
 
 
     <!-- Alert Dialog -->
@@ -188,5 +187,31 @@
     <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
     <string name="areYouSureDeleteSearch">Are you sure you want to delete this search?</string>
     <string name="logout_messg">Are you sure you want to logout?</string>
+
+    <!-- hidden fields tags -->
+    <!-- Property -->
+    <string name="hideSpace">space</string>
+    <string name="hideRoom">rooms_num</string>
+    <string name="hideFloor">floor</string>
+    <string name="hideState">state</string>
+    <string name="hideFurn">with_furniture</string>
+
+    <!-- Jobs -->
+    <string name="hideSchedule">schedule_name</string>
+    <string name="hideEducation">education_name</string>
+    <string name="hideEx">experience</string>
+    <string name="hideSalary">salary</string>
+
+    <!-- Vehicles -->
+    <string name="hideBrand">type_name</string>
+    <string name="hideModel">type_model_name</string>
+    <string name="hideYear">manufacture_date</string>
+    <string name="hideKilo">kilometer</string>
+    <string name="hideAutomatic">is_automatic</string>
+
+    <!-- Electronics -->
+    <string name="hideSize">size</string>
+
+    <string name="hideSecondhand">is_new</string>
 
 </resources>

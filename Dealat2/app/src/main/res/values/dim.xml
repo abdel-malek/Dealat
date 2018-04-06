@@ -7,7 +7,7 @@
 
     <dimen name="imageXSmall">20dp</dimen>
     <dimen name="imageSmall">36dp</dimen>
-    <dimen name="imageViewMedium">46dp</dimen>
+    <dimen name="imageViewMedium">56dp</dimen>
     <dimen name="imageViewLarge">100dp</dimen>
 
 

@@ -17,20 +17,23 @@ public class Category implements Serializable {
             FASHION = 5, KIDS = 6, SPORTS = 7, JOBS = 8, INDUSTRIES = 9, SERVICES = 10, BASIC = 11;
 
     private String id, name, parentId, imageUrl;
+    private String hiddenFields;
     private int templateId;
     private List<Category> subCategories;
+
 
     public Category() {
         this.subCategories = new ArrayList<>();
     }
 
-    public Category(Category category){
+    public Category(Category category) {
         this.setId(category.getId());
         this.setParentId(category.getParentId());
         this.setTemplateId(category.getTemplateId());
         this.setImageUrl(category.getImageUrl());
         this.setName(category.getName());
         this.setSubCategories(category.getSubCategories());
+        this.setHiddenFields(category.getHiddenFields());
     }
 
     public static Category getMain(String name) {
@@ -105,6 +108,14 @@ public class Category implements Serializable {
         this.templateId = templateId;
     }
 
+    public String getHiddenFields() {
+        return hiddenFields;
+    }
+
+    public void setHiddenFields(String hiddenFields) {
+        this.hiddenFields = hiddenFields;
+    }
+
     public List<Category> getSubCategories() {
         return subCategories;
     }
@@ -126,6 +137,15 @@ public class Category implements Serializable {
     public boolean hasSubCats() {
         if (this.subCategories.size() > 0)
             return true;
+        return false;
+    }
+
+    public boolean shouldHideTag(String tag) {
+        if (this.hiddenFields != null) {
+            if (tag != null)
+                return this.hiddenFields.contains(tag);
+        }
+
         return false;
     }
 }

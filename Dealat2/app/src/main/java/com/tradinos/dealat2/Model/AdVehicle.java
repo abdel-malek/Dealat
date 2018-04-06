@@ -5,6 +5,8 @@ package com.tradinos.dealat2.Model;
  */
 
 public class AdVehicle extends Ad  {
+    public static final int START_YEAR = 1970;
+
     private String typeId, modelId;
     private String typeName, modelName, manufactureYear;
 

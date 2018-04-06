@@ -132,5 +132,11 @@ public class HomeActivity extends DrawerActivity {
                 startActivity(intent);
             }
         }
+        else if (view.getId() == R.id.buttonFilter){
+            Intent intent = new Intent(mContext, FilterActivity.class);
+            intent.putExtra("category", mainCategory);
+            intent.putExtra("action", 1);
+            startActivity(intent);
+        }
     }
 }

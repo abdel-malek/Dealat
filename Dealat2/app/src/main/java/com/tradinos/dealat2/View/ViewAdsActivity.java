@@ -254,7 +254,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonTrue) { //Filter
+        if (view.getId() == R.id.buttonFilter) { //Filter
             Intent intent = new Intent(mContext, FilterActivity.class);
             intent.putExtra("category", selectedCategory);
 

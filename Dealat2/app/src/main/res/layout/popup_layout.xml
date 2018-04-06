@@ -7,7 +7,7 @@
     android:id="@+id/popupLayout"
     >
 
-    <ImageView
+    <com.tradinos.dealat2.Utils.ScalableImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

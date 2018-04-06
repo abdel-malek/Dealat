@@ -366,9 +366,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     public String formattedDate(String stringDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat dateWithYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH); //time without seconds
-        //DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH);
+
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -405,7 +405,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             else if (currentDate.equals(yesterday))
                 return getString(R.string.yesterday) + " " + timeInstance.format(dateFormat.parse(stringDate));
             else
-                return dateWithoutYearFormat.format(currentDate);
+                return dateWithYearFormat.format(currentDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -416,7 +416,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
 
     public String getExpiryTime(String stringDate, int period) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat dateWithoutYearFormat = new SimpleDateFormat("dd-MM", Locale.ENGLISH);
+        SimpleDateFormat dateWithYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
         int[] periods = {7, 10, 30};
         try {
@@ -427,7 +427,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             calendar.set(Calendar.MILLISECOND, 0);
             Date expiryDate = calendar.getTime();
 
-            return dateWithoutYearFormat.format(expiryDate);
+            return dateWithYearFormat.format(expiryDate);
 
         } catch (ParseException e) {
             e.printStackTrace();

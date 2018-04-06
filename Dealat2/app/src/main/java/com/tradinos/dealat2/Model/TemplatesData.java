@@ -9,9 +9,8 @@ import java.util.List;
 
 public class TemplatesData {
 
-    private List<Item> educations, schedules;
+    private List<Item> educations, schedules, showPeriods;
     private HashMap<Integer, List<Type>> brands;
-    //private List<Location> locations;
     private List<City> cities;
 
     public List<Item> getEducations() {
@@ -28,6 +27,14 @@ public class TemplatesData {
 
     public void setSchedules(List<Item> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<Item> getShowPeriods() {
+        return showPeriods;
+    }
+
+    public void setShowPeriods(List<Item> showPeriods) {
+        this.showPeriods = showPeriods;
     }
 
     public HashMap<Integer, List<Type>> getBrands() {

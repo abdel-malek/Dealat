@@ -30,6 +30,8 @@ public class TemplatesDataParser implements TradinosParser<TemplatesData> {
 
         data.setSchedules(new ItemListParser("schedule_id").Parse(jsonObject.getString("schedules")));
 
+        data.setShowPeriods(new ItemListParser("show_period_id").Parse(jsonObject.getString("show_periods")));
+
         return data;
     }
 }
