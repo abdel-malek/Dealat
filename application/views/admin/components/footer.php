@@ -140,7 +140,8 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/commercial_ads.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/users.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/main_commercials.js"></script>
-     <script src="<?php echo base_url() ?>admin_assets/js/manage/category.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/category.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/types.js"></script>
    
   </body>
 </html>

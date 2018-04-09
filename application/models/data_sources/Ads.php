@@ -22,8 +22,8 @@ class Ads extends MY_Model {
 		                 ');
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
     	$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
        // $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
@@ -38,15 +38,16 @@ class Ads extends MY_Model {
 		                  categories.tamplate_id,
 		                  locations.'.$lang.'_name as location_name ,
 		                  cites.'.$lang.'_name as  city_name,
+		                  show_periods.days
 		                 ');
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		$this->db->where('status' , STATUS::ACCEPTED);
-	//	$this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
+    	//$this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
-		//$this->db->where("(categories.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
 	}
@@ -60,14 +61,15 @@ class Ads extends MY_Model {
 		                   users.user_id as seller_id,
 		                   users.name as seller_name,
 		                   users.phone as seller_phone,
+		                   users.whatsup_number,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
 		                  ');
        	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
-	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
@@ -100,8 +102,8 @@ class Ads extends MY_Model {
 		                 ');
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		return parent::get($ad_id , true);
     }
 	
@@ -185,22 +187,26 @@ class Ads extends MY_Model {
 	   if($this->input->post('city_id')){
 	   	  $data['city_id'] = $this->input->post('city_id');
 	   }
-	   if($this->input->post('location_id')){
-	   	  $data['location_id'] = $this->input->post('location_id');
+	   if($this->input->post('location_id') != null){
+	   	 if(trim($this->input->post('location_id')) == -1){
+	   	 	$data['location_id'] = NULL;
+	   	 }else{
+	   	 	$data['location_id'] = $this->input->post('location_id');
+	   	 } 
 	   }
 	   if($this->input->post('price')){
 	   	  $data['price'] = $this->input->post('price');
 	   }
-	   if($this->input->post('is_negotiable')){
+	   if($this->input->post('is_negotiable') != NULL){
 	   	  $data['is_negotiable'] = $this->input->post('is_negotiable');
 	   }
-	   if($this->input->post('is_featured')){
+	   if($this->input->post('is_featured') != NULL){
 	   	  $data['is_featured'] = $this->input->post('is_featured');
 	   }
-	   if($this->input->post('title')){
+	   if($this->input->post('title') != NULL){
 	   	  $data['title'] = $this->input->post('title');
 	   }
-	   if($this->input->post('description')){
+	   if($this->input->post('description')!= NULL){
 	   	 if(trim($this->input->post('description')) == -1){
 	   	 	 $data['description'] = Null;
 	   	 }else{
@@ -349,11 +355,14 @@ class Ads extends MY_Model {
 	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
 	 $this->db->join('users' , 'ads.user_id = users.user_id', 'left');
-	 $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-	 $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	 $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+	 $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 	// users.name as seller_name
 	 if($this->input->get('location_id')){
 	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
+	 }
+	 if($this->input->get('city_id')){
+	 	$this->db->where('ads.city_id' , $this->input->get('city_id'));
 	 }
 	 if($this->input->get('price_max') && $this->input->get('price_max') != ''){
 	   	 $this->db->where('price <= ' , $this->input->get('price_max'));
@@ -375,6 +384,7 @@ class Ads extends MY_Model {
 	 $types = $this->types->get_all($lang);
 	 $educations = $this->educations->get_all($lang);
 	 $schedules = $this->schedules->get_all($lang);
+	 
 	 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 	 return $data;
     }
@@ -401,7 +411,7 @@ class Ads extends MY_Model {
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
     	$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-		$this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		if($this->input->get('status')){
 			$this->db->where('status' , $this->input->get('status'));
 		}
@@ -423,7 +433,7 @@ class Ads extends MY_Model {
 	  $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 	  $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left');
 	  $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
-	  $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
+	  $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 	  $this->db->where('ads.user_id' , $user_id);
 	  $this->db->where('ads.status != ' , STATUS::DELETED);
 	  return parent::get();

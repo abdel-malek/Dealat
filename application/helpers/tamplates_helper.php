@@ -42,7 +42,24 @@ class TAMPLATES {
 	      	    TAMPLATES::BASIC =>'أساسي'
 			 );
 	      }
-	  }		  
+	  }
+
+   public function get_templates_with_types($lang = 'en')
+   {
+       if($lang == 'en'){
+      	 return array(
+      	    TAMPLATES::VEHICLES => 'Vehicles',
+      	    TAMPLATES::MOBILES => 'Mobiles' , 
+      	    TAMPLATES::ELECTRONICS => 'Electronics' , 
+		 );
+      }else{
+        return array(
+      	    TAMPLATES::VEHICLES => 'مركبات',
+      	    TAMPLATES::MOBILES => 'موبايلات' , 
+      	    TAMPLATES::ELECTRONICS => 'أجهزة الكترونية' , 
+		 );
+      }
+   }		  
 
 	public static function get_tamplate_attributes($id) {
 		switch($id) {
@@ -81,13 +98,30 @@ class TAMPLATES {
 		}
 	}
 	
-	public static function get_tamplate_attributes_array()
+	// public static function get_tamplate_attributes_array()
+	// {
+		// return array(
+		  // 1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer'),
+		  // 2 =>  array('space', 'rooms_num', 'floor', 'state', 'with_furniture'),
+		  // 3 =>  array('type_id', 'is_new'),
+		  // 4 =>  array('type_id', 'size', 'is_new'),
+		  // 5 =>  array('is_new'),
+		  // 6 =>  array('is_new'),
+		  // 7 =>  array('is_new'), 
+		  // 8 =>  array('schedule_name', 'education_name', 'experience', 'salary'),
+		  // 9 =>  array('is_new'),
+		  // 10 => array(),
+		  // 11 => array()
+		// );
+	// }
+	
+   public static function get_tamplate_attributes_array()
 	{
 		return array(
 		  1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer'),
 		  2 =>  array('space', 'rooms_num', 'floor', 'state', 'with_furniture'),
-		  3 =>  array('type_id', 'is_new'),
-		  4 =>  array('type_id', 'size', 'is_new'),
+		  3 =>  array('type_name', 'is_new'),
+		  4 =>  array('type_name', 'size', 'is_new'),
 		  5 =>  array('is_new'),
 		  6 =>  array('is_new'),
 		  7 =>  array('is_new'), 

@@ -81,7 +81,7 @@
    });
    
    
-          // filter by position
+    // filter by position
 	$('#comm_position_filter_others').change(function(event) {
 	    position_val = $("#comm_position_filter_others").val();
 	    if(position_val == 0){
@@ -98,6 +98,13 @@
 	        }
 	    }
 	});
+	
+	// show the write ration note
+   $('#comm_position').change(function(event) {
+        var position = $(this).val();
+        $('.image_ration_note').css('display', 'none');  
+        $('#label'+position).css('display' , 'inline');
+   });
    
    
    $("#fileuploader-comm_ad").uploadFile({
@@ -139,6 +146,9 @@
  
 function show_comm_ad_modal (id) {
    current_comm_id = id;
+   var current_postion = $('#comm_position').val();
+   // console.log(current_postion);
+   // console.log('label'+current_postion);
    if(id != 0){// edit 
    	   	$.ajax({
         url: base_url + '/api/commercial_items_control/get_info/format/json?comm_id='+id,
@@ -148,12 +158,19 @@ function show_comm_ad_modal (id) {
         	var info = response.data;
             $('#created_div').css('display', 'inline');
         	$('#comm_created_at').html(info['created_at']);
+            if(info['title']!= null){
+        	  $('#comm_title').val(info['title']);	
+        	}
+            if(info['description']!= null){
+        	  $('#comm_description').val(info['description']);	
+        	}
         	if(info['ad_url']!= null){
         	  $('#comm_url').val(info['ad_url']);	
         	}
         	$('#image_div').css('display', 'inline');
             $("#comm_image").attr("src",site_url + info['image']);
             $('#comm_position').val(info['position']).trigger('change');
+            $('#label'+info['position']).css('display' , 'inline');
         //   console.log(response);
         },error: function(xhr, status, error){
         	new PNotify({
@@ -167,13 +184,19 @@ function show_comm_ad_modal (id) {
             });
         }
       });
+   }else{  // add
+   	 var current_pos = $('#comm_position').val();
+   	 $('#label'+current_pos).css('display' , 'inline');
    }
    $('.comm_ads_details').modal('show');
  }
 
  $('.comm_ads_details').on('hidden.bs.modal', function () {
       $('#image_div').css('display', 'none');
-   	  $('#created_div').css('display', 'none');  
+   	  $('#created_div').css('display', 'none'); 
+   	  $('.image_ration_note').css('display', 'none'); 
+   	  $('#comm_title').val('');
+   	  $('#comm_description').val(''); 
    	  $('#comm_url').val('');
    	  $(".comm_ads_details .ajax-file-upload-container").empty();
    	  comm_image_path = '';
@@ -186,6 +209,8 @@ function save_comm() {
   	 	comm_id : current_comm_id,
   	 	ad_url : $('#comm_url').val(),
   	 	position : $("#comm_position").val(),
+  	    title : $('#comm_title').val(),
+  	 	description :  $('#comm_description').val(),
   	 };
   	 if(comm_image_path != ''){
   	 	data['image'] =comm_image_path; 

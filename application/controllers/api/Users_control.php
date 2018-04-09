@@ -52,7 +52,7 @@ class Users_control extends REST_Controller {
 			if($user){
 				$this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('account_confirmed')));
 			}else{
-				$this->response(array('status' => false, 'data' => $user, "message" => $this->lang->line('failed')));
+				$this->response(array('status' => false, 'data' => $user, "message" => $this->lang->line('incorrect_verfication')));
 			}
         }
     }
@@ -195,26 +195,43 @@ class Users_control extends REST_Controller {
 		 if($this->input->post('name')){
 		 	$data['name'] = $this->input->post('name');
 		 }
-		 if($this->input->post('email')){
-		 	$data['email'] = $this->input->post('email');
-		 }
-		 if($this->input->post('phone')){
-		 	$data['phone'] = $this->input->post('phone');
+		 if($this->input->post('email') != null){
+		   if(trim($this->input->post('email')) == -1){
+		   	  $data['email'] = NULL; 
+		   }else{
+		   	  $data['email'] = $this->input->post('email');
+		   }
 		 }
 		 if($this->input->post('city_id')){
 		 	$data['city_id'] = $this->input->post('city_id');
 		 }
-	     if($this->input->post('image')){
-	  	   $data['personal_image'] = $this->input->post('image');
+	     if($this->input->post('image') != null){
+	       if(trim($this->input->post('image')) == -1){
+		   	  $data['personal_image'] = NULL; 
+		   }else{
+		   	  $data['personal_image'] = $this->input->post('image');
+		   }
 	     }
-		 if($this->input->post('gender')){
-	  	   $data['gender'] = $this->input->post('gender');
+		 if($this->input->post('gender')!= null && $this->input->post('gender')!= ''){
+	  	    if(trim($this->input->post('gender')) == -1){
+		   	  $data['gender'] = NULL; 
+		   }else{
+		   	  $data['gender'] = $this->input->post('gender');
+		   }
 	     }
-         if($this->input->post('birthday')){
-	  	   $data['birthday'] = $this->input->post('birthday');
+         if($this->input->post('birthday')!= null && $this->input->post('birthday')!= ''){
+	  	   if(trim($this->input->post('birthday')) == -1){
+		   	  $data['birthday'] = NULL; 
+		   }else{
+		   	  $data['birthday'] = $this->input->post('birthday');
+		   }
 	     }
-         if($this->input->post('whatsup_number')){
-	  	   $data['whatsup_number'] = $this->input->post('whatsup_number');
+         if($this->input->post('whatsup_number')!= null){
+           if(trim($this->input->post('whatsup_number')) == -1){
+		   	  $data['whatsup_number'] = NULL; 
+		   }else{
+		   	  $data['whatsup_number'] = $this->input->post('whatsup_number');
+		   }
 	     }
 		 $image_name = date('m-d-Y_hia').'-'.'1';
 	     $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
@@ -297,5 +314,22 @@ class Users_control extends REST_Controller {
 	     	 $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed'))); 
 	     }
    	  }
+   }
+   
+   public function save_search_query_post()
+   {
+   	 $this->form_validation->set_rules('query', 'query', 'required');  
+	 if (!$this->form_validation->run()) {
+	 	 throw new Validation_Exception(validation_errors());
+	 }else{
+	 	 $this->load->model('data_sources/user_search_history');
+		 $data = array(
+		   'query' => $this->input->post('query'),
+		   'number_of_results' => $this->input->post('num_of_result'),
+		   'user_id' => $this->current_user->user_id
+		 );
+		 $search = $this->user_search_history->save($data);
+		 $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
+	 }
    }
 }

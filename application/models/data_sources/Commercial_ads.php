@@ -10,7 +10,7 @@ class Commercial_ads extends MY_Model {
 	public function get_commercial_ads($category_id, $lang , $for_mobile = 0 )
 	{
 	   if($category_id == 0){
-	   	 $this->db->where('is_main' ,1);
+	   	 $this->db->where('category_id' ,0);
 	   }else{
 	   	 $this->db->select('commercial_ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
@@ -24,6 +24,7 @@ class Commercial_ads extends MY_Model {
 	   }else{
 	   	 $this->db->where('position !=' , POSITION::MOBILE);
 	   }
+	   $this->db->where('is_active' , 1);
 	   return parent::get();
 	}
 	

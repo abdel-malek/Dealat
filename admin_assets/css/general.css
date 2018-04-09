@@ -263,6 +263,13 @@ thead{
     border-color: #eee;
 }
 
+.tabs-left>li.active.li-row{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    /*border-bottom-color: #F7F7F7;
+    border-right-color: transparent;*/
+}
+
 .nav>li .cat_tap {
     position: relative;
     padding: 13px 15px 12px;
@@ -339,5 +346,10 @@ thead{
     color: #2a3f54;
     border-color: white;
  }
+ 
+/*.template_info_cat{
+ 	position: relative;
+    top: 9px;
+ }*/
  
  

@@ -83,10 +83,11 @@ $lang['sp'] = "SP";
 $lang['welcome'] = "Welcome";
 $lang['management'] = "Management";
 $lang['categories_management'] = "Categories Manage";
-
 $lang['ads_management'] = "Users Ads Manage";
 $lang['commercial_ads_manage'] = "Commercials Manage";
 $lang['users_manage'] = "Users Manage"; 
+$lang['data_manage']= 'Data Manage';
+$lang['types']= 'Brands';
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -134,6 +135,7 @@ $lang['set_reject_note'] = 'Reject Note';
 $lang['write_reject_note'] = 'Write the reject reason';
 $lang['cont'] = 'Continue';
 $lang['cancel'] = 'Cancel';
+$lang['ad_number'] = 'Ad number';
 
 
 // new
@@ -155,6 +157,8 @@ $lang['others'] = "Others";
 $lang['main_commercials']= 'Main Commercials';
 $lang['add_new_main_commercial'] = 'Add New Main Commercial';
 $lang['show_status']= 'Show status';
+$lang['expected_ratio_side']= 'Expected image ration is 3:4';
+$lang['expected_ratio_slider']= 'Expected image ration is 3:1';
 
 
 //users manage
@@ -183,6 +187,12 @@ $lang['arabic_name'] = "Arabic Name";
 $lang['english_name'] = "English Name";
 $lang['templates'] = 'Templates';
 $lang['fields_status'] = 'Fields status';
+
+//types manage
+$lang['all_types_list'] = 'All Brands list';
+$lang['template'] = 'For Template';
+$lang['type_models'] = 'Models';
+$lang['models_list'] = 'Models List';
 
 
 $lang['log_out'] = 'Log Out';

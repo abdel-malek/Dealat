@@ -26,7 +26,6 @@ class Categories_manage extends REST_Controller {
 	
 	public function add_post()
 	{
-//      $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
 		$this -> form_validation -> set_rules('en_name', 'english name', 'required');
 		$this -> form_validation -> set_rules('ar_name', 'arabic name', 'required');
 		$this -> form_validation -> set_rules('parent_id', 'Parent', 'required');
@@ -39,6 +38,36 @@ class Categories_manage extends REST_Controller {
 		   	 $this->response(array('status' => true, 'data' =>$create_result, 'message' => $this->lang->line('sucess')));
 		   }else{
 		   	 $this->response(array('status' => false, 'data' =>$create_result, 'message' => $this->lang->line('failed'))); 
+		   }
+		}
+	}
+	
+	public function edit_post()
+	{
+		$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		}else{
+	       $cat_id = $this->input->post('category_id');
+		   $data = array();
+		   if($this->input->post('ar_name')){
+		   	  $data['ar_name'] = $this->input->post('ar_name');
+		   }
+           if($this->input->post('en_name')){
+		   	  $data['en_name'] = $this->input->post('en_name');
+		   }
+		   if($this->input->post('hidden_fields')){
+		   	if($this->input->post('hidden_fields') == -1 ){
+		   	   $data['hidden_fields'] = NULL;
+		   	}else{
+		   	   $data['hidden_fields'] = $this->input->post('hidden_fields');
+		   	}
+		   }
+		   $edit_cat_id = $this-> categories->save($data ,$cat_id );
+		   if($edit_cat_id ){
+		   	 $this->response(array('status' => true, 'data' =>$edit_cat_id, 'message' => $this->lang->line('sucess')));
+		   }else{
+		   	 $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('failed'))); 
 		   }
 		}
 	}
@@ -56,6 +85,14 @@ class Categories_manage extends REST_Controller {
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
+	}
+	
+	public function check_child_exsist_get()
+	{
+		$cat_id = $this->input->get('category_id');
+		$check_res = $this->categories->has_child($cat_id);
+		echo $check_res;
+		//$this->response(array('status' => true, 'data' =>$check_res, 'message' => $this->lang->line('sucess')));
 	}
 
    

@@ -10,7 +10,7 @@ class Social_users_control extends CI_Controller {
 		$this->load->model('data_sources/social_users');
 		$this->load->model('data_sources/ads');
 		$this->load->model('data_sources/categories');
-        $this->load->library('facebook');
+      //  $this->load->library('facebook');
 		$this->data['lang']=  $this->session->userdata('language');
 		$this->data['main_categories'] = $this->categories->get_main_categories($this->data['lang']);
 	}

@@ -150,6 +150,7 @@ var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 		      }); 
              
             // fill deteilad basic info
+            $('.ads_details  #ad_id').html($item_info['ad_id']);
             $('.ads_details  #ad_creation_date').html($item_info['created_at']);
             $('.ads_details  #ad_location').html($item_info['city_name']+' - '+$item_info['location_name']);
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
@@ -167,9 +168,9 @@ var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
             $.each( template_attr, function( key, value ) {
                if(value == 'is_automatic'){
             	   if($item_info[value] == 1){
-            	   	 $('.ads_details  #ad_with_furniture').html('Automatic'); 
+            	   	 $('.ads_details  #ad_is_automatic').html('Automatic'); 
             	   }else{
-            	   	 $('.ads_details  #ad_with_furniture').html('Manual'); 
+            	   	 $('.ads_details  #ad_is_automatic').html('Manual'); 
             	   }
             	}
                 else if(value == 'with_furniture'){

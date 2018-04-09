@@ -9,7 +9,7 @@ class Categories extends MY_Model {
 	
 	public function get_nested($lang)
 	{
-	    $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description');
+	    $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		$this -> db -> order_by($this -> _order_by);
 		$categories = $this -> db -> get('categories') -> result_array();
 	    // create an array to hold the references
@@ -32,6 +32,7 @@ class Categories extends MY_Model {
 		   $thisref['mobile_image']=$data['mobile_image'];
 		   $thisref['tamplate_id']= $data['tamplate_id'];
 		   $thisref['description']=$data['description'];
+		   $thisref['hidden_fields']=$data['hidden_fields'];
 	       // if there is no parent id
 	       if ($data['parent_id']== 0)
 	       {
@@ -52,19 +53,19 @@ class Categories extends MY_Model {
 
    public function get_all($lang)
     {
-       $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description');
+       $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
 	   return parent::get();
     }
 	
 	public function get_main_categories($lang)
 	{
-		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description');
+		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		return parent::get_by(array('parent_id'=>0));
 	}
 	
 	public function get_category_subcategories($category_id , $lang)
 	{
-		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description');
+		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		$q = parent::get_by(array('parent_id'=>$category_id));
 		$array = array();
 		if($q != null){
@@ -80,7 +81,7 @@ class Categories extends MY_Model {
 		$this->db->select('categories.'.$lang.'_name as category_name ,
 		                  p.'.$lang.'_name as parent_name , 
 		                  categories.category_id , categories.parent_id , categories.web_image, categories.mobile_image ,
-		                  categories.tamplate_id , categories.description');
+		                  categories.tamplate_id , categories.description , categories.hidden_fields');
 		$this->db->join('categories as p' , 'categories.parent_id = p.category_id' , 'outer left');
 		$q = parent::get_by(array('categories.parent_id'=>$category_id));
 		$array = array();
@@ -127,6 +128,7 @@ class Categories extends MY_Model {
 	    'tamplate_id' => $this->input->post('tamplate_id'),
 	    'tamplate_name' =>TAMPLATES::get_tamplate_name($this->input->post('tamplate_id')),
 	    'description'=>$this->input->post('description'),
+	    'hidden_fields' => $this->input->post('hidden_fields'),
 	    'parent_id' =>$parent_id
 	   );
 	   $new_subcategory = $this->save($category_data);
@@ -139,4 +141,15 @@ class Categories extends MY_Model {
 			return $new_subcategory;
 	    }
 	}
+
+
+   public function has_child($cat_id)
+   {
+      $res = $this->get_by(array('parent_id' => $cat_id) , true ,1);
+	  if($res != null){
+	  	 return 1;
+	  }else{
+	  	return 0;
+	  }
+   }
 }

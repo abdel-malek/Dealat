@@ -40,6 +40,12 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                    <form id="detailed_info_ad" acrion="post" data-parsley-validate class="form-horizontal form-label-left">
+                   	 <div class="form-group">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('ad_number') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_id'>1</label>
+		      	         </div>
+		             </div>
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('created_at') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -102,7 +108,7 @@
 		             
 		             <!-- vehicles -->
 		             
-		             <div class="form-group template_info 1_info">
+		             <div class="form-group template_info 1_info 3_info 4_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('type') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_type_name'><?php echo $this->lang->line('not_set') ?></label>

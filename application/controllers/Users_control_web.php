@@ -38,7 +38,7 @@ class Users_control_web extends REST_Controller {
         	  'lang' => $this->input->post('lang') != "" ? strtolower($this->input->post('lang')) : $this->data['lang'],
         	  'city_id' => $this->input->post('city_id'),
         	  'gender' => $this->input->post('gender'), 
-        	  'age' => $this->input->post('age'),
+        	  'birthday' => $this->input->post('birthday'),
         	  'personal_image' => $this->input->post('personal_image')
 			);
             $user = $this->users->register($data ,ACCOUNT_TYPE::WEB);
@@ -63,7 +63,7 @@ class Users_control_web extends REST_Controller {
 				 $this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('sucess')));	
 				//redirect('home_control');
 			} else {
-				 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed')));
+				 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
 				//$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
 				//redirect('users');
 			}

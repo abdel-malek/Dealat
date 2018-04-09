@@ -192,6 +192,8 @@ $config['auth_override_class_method']['items_control']['get_data_lists'] = 'none
 $config['auth_override_class_method']['items_control']['delete_images'] = 'none';
 $config['auth_override_class_method']['items_control']['item_images_upload'] = 'none';
 $config['auth_override_class_method']['items_control']['delete_images'] = 'none';
+$config['auth_override_class_method']['items_control']['get_report_messages'] = 'none';
+$config['auth_override_class_method']['items_control']['report_item'] = 'none';
 
 $config['auth_override_class_method']['items_control']['test'] = 'none';
 
@@ -223,7 +225,9 @@ $config['auth_override_class_method']['items_control']['action'] = 'none';
 //admin
 $config['auth_override_class_method']['categories_manage']['index'] = 'none';
 $config['auth_override_class_method']['categories_manage']['get_sub_cats'] = 'none';
-$config['auth_override_class_method']['categories_manage']['get_info'] = 'none';
+$config['auth_override_class_method']['categories_manage']['add'] = 'none';
+$config['auth_override_class_method']['categories_manage']['edit'] = 'none';
+$config['auth_override_class_method']['categories_manage']['check_child_exsist'] = 'none';
 $config['auth_override_class_method']['items_manage']['index'] = 'none';
 $config['auth_override_class_method']['items_manage']['all'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['index'] = 'none';
@@ -239,6 +243,8 @@ $config['auth_override_class_method']['commercial_items_control']['change_status
 $config['auth_override_class_method']['users_manage']['get_all'] = 'none';
 $config['auth_override_class_method']['users_manage']['index'] = 'none';
 $config['auth_override_class_method']['users_manage']['change_language'] = 'none';
+$config['auth_override_class_method']['data_manage']['load_types_page'] = 'none';
+$config['auth_override_class_method']['data_manage']['get_all_types'] = 'none';
 
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';

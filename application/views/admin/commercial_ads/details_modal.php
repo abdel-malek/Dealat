@@ -17,6 +17,20 @@
 	               </div> 
 	               
 	               <div class="form-group">
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('title') ?></label>
+	      	         <div class="col-md-6 col-sm-6 col-xs-12">
+	      	           <input type='text' class="form-control"  id='comm_title' value='<?php echo $this->lang->line('not_set') ?>'></input>
+	      	         </div>
+	               </div> 
+	               
+	               <div class="form-group">
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('description') ?></label>
+	      	         <div class="col-md-6 col-sm-6 col-xs-12">
+	      	            <textarea  class="form-control col-md-7 col-xs-12" id="comm_description" value='<?php echo $this->lang->line('not_set') ?>'><?php echo $this->lang->line('not_set') ?></textarea>
+	      	         </div>
+	               </div> 
+	               
+	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('url') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <input  class="form-control col-md-7 col-xs-12" id="comm_url" value='<?php echo $this->lang->line('not_set') ?>'></input>
@@ -34,6 +48,9 @@
 	                            <?php endif; ?> 
 		                   </select>
 	      	         </div>
+	      	         <label style="display: none" class='image_ration_note' id="label1"><?php echo $this->lang->line('expected_ratio_side') ?></label>
+	      	         <label style="display: none" class='image_ration_note'  id="label2"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
+	      	         <label style="display: none" class='image_ration_note'  id="label3"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
 	               </div> 
 	               
 	               <div class="form-group">

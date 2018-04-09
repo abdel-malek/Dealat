@@ -84,6 +84,8 @@ $lang['management'] = "الإدارة";
 $lang['categories_management'] = "إدارة الأصناف";
 $lang['ads_management'] = "إدارة إعلانات المستخدمين";
 $lang['commercial_ads_manage'] = "إدارة الإعلانات التجارية";
+$lang['data_manage']= 'إدارة البيانات';
+$lang['types']= 'الماركات';
 
 
 //ads manage
@@ -100,8 +102,8 @@ $lang['details'] = 'التفاصيل';
 $lang['is_negotiable']= 'قابل للنقاش';
 $lang['is_featured']= 'إعلان مميَز';
 $lang['is_new']= 'جديد';
-$lang['type'] = 'النوع';
-$lang['type_model'] = 'الطراز';
+$lang['type'] = 'الماركة';
+$lang['type_model'] = 'الموديل';
 $lang['manufacture_date'] = 'سنة الصنع';
 $lang['kilometrage'] = 'عدد الكيلوميترات';
 $lang['motion'] = 'ناقل الحركة';
@@ -130,11 +132,11 @@ $lang['accept_ad'] = 'قبول الأعلان';
 $lang['hide_ad'] = 'إخفاء الأعلان';
 $lang['reject_ad'] = 'رفض الأعلان';
 $lang['show_ad'] = 'إظهار الأعلان';
-//new
 $lang['set_reject_note'] = 'ملاحظة الرفض';
 $lang['write_reject_note'] = 'اكتب اسباب الرفض هنا';
 $lang['cont'] = 'اكمل';
 $lang['cancel'] = 'تراجع';
+$lang['ad_number'] = 'رقم الإعلان';
 
 //commercial ads manage 
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
@@ -154,6 +156,8 @@ $lang['main_ads'] = "الإعلانات الرئيسية";
 $lang['others'] = "الأخرى";
 $lang['main_commercials']= 'الإعلانات التجارية الرئيسية';
 $lang['show_status']= 'حالة الظهور';
+$lang['expected_ratio_side']= 'أبعاد الصورة المتوقعة من نسبة 3:4';
+$lang['expected_ratio_slider']= 'أبعاد الصورة المتوقعة من نسبة 3:1';
 
 
 //users manage
@@ -177,6 +181,13 @@ $lang['empty_table'] = "لا يوجد ";
 $lang['add_main_category'] = " إضافة صنف رئيسي";
 $lang['add_subcategory_for'] = " إضافة صنف فرعي لـ";
 $lang['category_details'] = "تفاصيل الصنف";
+
+//types manage
+$lang['types'] = 'الماركات';
+$lang['all_types_list'] = 'قائمة جميع الماركات';
+$lang['template'] = 'تابعة للقالب';
+$lang['type_models'] = 'موديلات';
+$lang['models_list'] = 'قائمة الموديلات';
 
 
 $lang['log_out'] = 'تسجيل خروج';

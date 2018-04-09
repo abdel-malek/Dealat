@@ -100,17 +100,30 @@
               <div class="menu_section">
                 <h3><?php echo $this->lang->line('management') ?></h3>
  				 <ul class="nav side-menu">
-                  <!-- <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-clock-o"></i><?php echo $this->lang->line('categories_management') ?></a></li> -->
+ 				 	
+ 				  <!-- ads manage -->
                   <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('ads_management') ?></a></li>
-                  <!-- <li><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><i class="fa fa-money"></i><?php echo $this->lang->line('commercial_ads_manage') ?></a></li> -->
+                  
+                  <!-- user manage  -->
                   <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
+                  
+                  <!-- commercial ads -->
                   <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('commercial_ads_manage') ?><span class="fa fa-chevron-down"></a>
                  	 <ul id="" class="nav child_menu">
                  	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage/load_main_manage_page'); ?>"><?php echo $this->lang->line('main_ads') ?></a></li>
                  	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><?php echo $this->lang->line('others') ?></a></li>
                  	 </ul>
                   </li>
-                  <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('categories_management') ?></a></li>
+                  
+                  <!-- categories manage -->
+                  <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-tags"></i><?php echo $this->lang->line('categories_management') ?></a></li>
+                  
+                  <!-- data manage -->
+                  <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('data_manage') ?><span class="fa fa-chevron-down"></a>
+                 	 <ul id="" class="nav child_menu">
+                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
+                 	 </ul>
+                  </li>
         
                 </ul>
               </div>

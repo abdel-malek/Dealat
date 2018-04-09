@@ -38,29 +38,78 @@
 	      	         </div>
 	               </div>
 	               
-	               <!-- <div class="form-group">
+	               <div style="display: none" class="form-group hidden_fields_manage_div">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('fields_status') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat is_new_cat" id="cat_is_new"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 1_info_cat" id="cat_type_id"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 1_info_cat" id="cat_type_modal_id"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 1_info_cat" id="cat_manufacture_date"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 1_info_cat" id="cat_kilometer"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 1_info_cat" id="cat_is_automatic'"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 2_info_cat" id="cat_with_furniture"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 2_info_cat" id="cat_space"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 2_info_cat" id="cat_rooms_num"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 2_info_cat" id="cat_floor"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 2_info_cat" id="cat_state"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 4_info_cat" id="cat_size"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 8_info_cat" id="cat_education_id"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 8_info_cat" id="cat_schedule_id"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 8_info_cat" id="cat_experience"></input>
-	      	            <input  type="checkbox" class="form-control col-md-7 col-xs-12 template_info_cat 8_info_cat" id="cat_salary"></input>
+	      	            <label style="display: none" for="cat_is_new" class='col-md-6 col-xs-12 template_info_cat is_new_cat'>
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_is_new"></input>
+	      	            	<?php echo $this->lang->line('is_new') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_type_name" class="col-md-6 col-xs-12 template_info_cat 1_info_cat 3_info_cat 4_info_cat">
+	      	            	<input checked="" type="checkbox" class="hide_check_box" id="cat_type_name"></input>
+	      	            	<?php echo $this->lang->line('type') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_type_model_name " class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
+	      	            	<input checked=""  type="checkbox" class="template_info_cat 1_info_cat" id="cat_type_model_name"></input>
+	      	                <?php echo $this->lang->line('type_model') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_manufacture_date" class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_manufacture_date"></input>
+	      	            	<?php echo $this->lang->line('manufacture_date') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_kilometer" class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_kilometer"></input>
+	      	            	<?php echo $this->lang->line('kilometrage') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_is_automatic" class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_is_automatic"></input>
+	      	            	<?php echo $this->lang->line('motion') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_with_furniture" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_with_furniture"></input>
+	      	                <?php echo $this->lang->line('with_furniture') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_space" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_space"></input>
+	      	            	<?php echo $this->lang->line('space') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_rooms_num" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_rooms_num"></input>
+	      	            	<?php echo $this->lang->line('rooms_num') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_floor" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_floor"></input>
+	      	            	<?php echo $this->lang->line('floor') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_state" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_state"></input>
+	      	            	<?php echo $this->lang->line('state') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_size" class="col-md-6 col-xs-12 template_info_cat 4_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_size"></input>
+	      	            	<?php echo $this->lang->line('size') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_education_name" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	                <input checked=""  type="checkbox" class="hide_check_box" id="cat_education_name"></input>
+	      	                <?php echo $this->lang->line('education') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_schedule_name" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_schedule_name"></input>
+	      	            	<?php echo $this->lang->line('schedule') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_experience" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_experience"></input>
+	      	            	<?php echo $this->lang->line('experience') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_salary" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_salary"></input>
+	      	            	<?php echo $this->lang->line('salary') ?>
+	      	            </label>
 	      	         </div>
-	               </div>  -->
+	               </div> 
 	               
                 </form>
+              <input type='hidden' id='cat_id_input' parent_id template_id />
           </div>
         <div class="modal-footer">
           <button   onclick="save_category()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>

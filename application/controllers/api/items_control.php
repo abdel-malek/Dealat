@@ -50,11 +50,11 @@ class Items_control extends REST_Controller {
 		$this -> form_validation -> set_rules('title', 'lang:title', 'required');
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
-		} else {
+		}else {
 		   $basic_data = array(
 		     'user_id' => $this->current_user->user_id,
 		     'location_id' => $this->input->post('location_id'),
-		     'city_id' => $this->input->post('location_id'),
+		     'city_id' => $this->input->post('city_id'),
 		     'show_period' => $this->input->post('show_period'),
 		     'price' => $this->input->post('price'),
 		     'title' => $this->input->post('title'),
@@ -160,13 +160,15 @@ class Items_control extends REST_Controller {
 		 $this->load->model('data_sources/educations');
 		 $this->load->model('data_sources/schedules');
 		 $this->load->model('data_sources/locations');
+		 $this->load->model('data_sources/show_periods');
 		 $locations = $this->locations->get_all($this->data['lang']);
 		 //$cities = $this->locations->get_cities($this->data['lang']);
 		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
 		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
-		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
+		 $show_periods = $this->show_periods->get_all($this->data['lang']);
+		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
@@ -280,6 +282,42 @@ class Items_control extends REST_Controller {
 	   	 }
  	  }
 	}
+	
+   public function get_report_messages_get()
+   {
+	    $this->load->model('data_sources/report_messages');
+	    $messages = $this->report_messages->get_all($this->data['lang']);
+	    $this -> response(array('status' => true, 'data' => $messages, 'message' => $this->lang->line('sucess'))); 
+   }
+   
+   public function report_item_post()
+   {
+		$this -> form_validation -> set_rules('ad_id', 'ad_id', 'required');
+		$this -> form_validation -> set_rules('report_message_id', 'report_message_id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+			$this->load->model('data_sources/reported_ads');
+			$ad_id = $this->input->post('ad_id');
+			$message = $this->input->post('report_message_id');
+		    $user_id = null;
+	        if($this->session->userdata('PHP_AUTH_USER')){
+	            $user_id = $this->session->userdata('LOGIN_USER_ID');
+	        }
+	        else if($this->response->is_auth){
+	            $user_id = $this->response->is_auth;
+	        }
+			$data = array('ad_id' => $ad_id , 'report_message_id' =>$message , 'user_id'=> $user_id );
+			$repored_ad_id = $this->reported_ads->save($data);
+			if($repored_ad_id){
+			   $this -> response(array('status' => true, 'data' => $repored_ad_id, 'message' => $this->lang->line('sucess')));	
+			}else{
+			   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+			}
+		}
+   	}
+       
+
 	
 	
 

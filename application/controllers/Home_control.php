@@ -11,8 +11,8 @@ class Home_control extends REST_Controller {
 		$this->load->model('data_sources/categories');
 		$this->data['lang']=  $this->response->lang;
 		$this->data['main_categories'] = $this->categories->get_main_categories($this->data['lang']);
-		$this->load->library('facebook');
-		$this->data['authUrl'] =  $this->facebook->login_url();
+		// $this->load->library('facebook');
+		// $this->data['authUrl'] =  $this->facebook->login_url();
 	}
 	
 	public function index_get()

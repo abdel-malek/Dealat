@@ -9,15 +9,15 @@ class Items_manage extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/ads');
 		$this->data['lang']=  $this->response->lang;
-	}
-	
-	public function index_get()
-	{
-		if($this->data['lang'] == 'en'){
+	    if($this->data['lang'] == 'en'){
 			$this -> data['current_lang'] = 'English';
 		}else{
 		   $this -> data['current_lang'] = 'Arabic';
 		}
+	}
+	
+	public function index_get()
+	{
 		$this -> data['subview'] = 'admin/ads/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}

@@ -50,11 +50,11 @@ class Users extends MY_Model {
             //$this->send_sms->send_sms($phone, $this->lang->line('verification_sms') . $code);
         }
 		
-		// send verification code to email.
+	//	send verification code to email.
+	//	$to      = 'dealat.co@gmail.com';
 		// $to      = 'dealat.co@gmail.com';
         // $subject = 'Message from Dealat';
         // $message = 'Your Verification Code: '.$code;
-// 
         // mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
