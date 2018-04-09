@@ -55,6 +55,9 @@ class AdsListVC: BaseVC {
         super.viewDidLoad()
         
         getData()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(openFilter))
+
     }
     
     override func getRefreshing() {
@@ -187,7 +190,7 @@ class AdsListVC: BaseVC {
     }
     
     
-    @IBAction func openFilter(_ sender: Any) {
+    @objc @IBAction func openFilter() {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterBaseVC") as! FilterBaseVC
         vc.adsList = self
         

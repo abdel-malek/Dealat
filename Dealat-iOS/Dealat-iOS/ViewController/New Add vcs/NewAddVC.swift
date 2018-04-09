@@ -34,6 +34,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice : SkyFloatingLabelTextField!
     @IBOutlet weak var negotiableSwitch : UISwitch!
+    @IBOutlet weak var featuredSwitch : UISwitch!
     @IBOutlet weak var tfDescription : UITextView!
     
     // 1
@@ -106,7 +107,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedCategory : Cat!{
         didSet{
             if self.tfCategory != nil{
-                
                 self.resetFields()
 
                 let nn = Cat.getName(selectedCategory.category_id.intValue)
@@ -474,6 +474,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
             self.tfPrice.text = ad.price.stringValue
             self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
+            self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
             self.tfDescription.text = ad.description
 
             
@@ -537,6 +538,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        
         switch indexPath.section {
         case 0:
             return (indexPath.row == 0) ? UITableViewAutomaticDimension : 54
@@ -707,8 +710,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         params["is_negotiable"] = self.negotiableSwitch.isOn ? 1 : 0
-        
-        
+        params["is_featured"] = self.featuredSwitch.isOn ? 1 : 0
+
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
             guard let type = self.selectedType, let type_id = type.type_id else {

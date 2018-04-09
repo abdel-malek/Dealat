@@ -50,6 +50,7 @@
 "Location" = "الموقع";
 "Seller" = "اسم البائع";
 "Negotiable" = "قابل للتفاوض";
+"Featured" = "مميز";
 "Description" = "الوصف";
 "old" = "مستعمل";
 "new" = "جديد";
@@ -120,4 +121,6 @@
 "Please add images" = "يرجى إضافة صور";
 "required" = "مطلوب";
 
-
+"TypeHere" = "أدخل الرسالة";
+"ChooseReport" = "اختر سبب حذف الإعلان";
+"ReportSuccessful" = "تم استلام التبليغ";

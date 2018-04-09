@@ -2,7 +2,7 @@
 //  ChatDetailsVC.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 3/11/18.
+//  Created by Yahya Tabba on 3/11/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 
@@ -15,6 +15,7 @@ class ChatDetailsVC: BaseVC {
     @IBOutlet weak var textView: GrowingTextView!
     @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView : UITableView!
+    @IBOutlet weak var sendBtn : UIButton!
     
     var chat = Chat()
     var messages = [Message]()
@@ -22,6 +23,12 @@ class ChatDetailsVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if Provider.isArabic{
+//            sendBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            sendBtn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            sendBtn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+        
         IQKeyboardManager.sharedManager().disabledToolbarClasses = [ChatDetailsVC.self]
         IQKeyboardManager.sharedManager().disabledTouchResignedClasses = [ChatDetailsVC.self]
         IQKeyboardManager.sharedManager().disabledDistanceHandlingClasses = [ChatDetailsVC.self]
@@ -34,6 +41,7 @@ class ChatDetailsVC: BaseVC {
         // *** Customize GrowingTextView ***
         textView.layer.cornerRadius = 4.0
         textView.delegate = self
+        textView.placeholder = "TypeHere".localized
         
         // *** Listen to keyboard show / hide ***
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -41,7 +49,17 @@ class ChatDetailsVC: BaseVC {
 //        self.title = self.chat.ad_title
         
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 8, width: 200, height: 200))
-        titleLbl.text = self.chat.ad_title + "\n" + self.chat.seller_name
+        var titleString = ""
+        titleString += (self.chat.ad_title != nil) ? self.chat.ad_title : ""
+        if let seller_id = self.chat.seller_id{
+            titleString += "\n"
+            if User.getCurrentUser().user_id == seller_id.intValue{
+                titleString += (self.chat.user_name)
+            }else{
+                titleString += (self.chat.seller_name)
+            }
+        }
+        titleLbl.text = titleString
         titleLbl.textColor = UIColor.white
         titleLbl.numberOfLines = 0
 //        titleLbl.font = Theme.Font.CenturyGothic
@@ -49,8 +67,6 @@ class ChatDetailsVC: BaseVC {
         titleLbl.minimumScaleFactor = 0.5
         self.navigationItem.titleView = titleLbl
 
-        
-        
         
         tableView.delegate = self
         tableView.dataSource = self

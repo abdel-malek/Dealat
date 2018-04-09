@@ -142,7 +142,7 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
 //        }
 //        self.extendedLayoutIncludesOpaqueBars = true
 
-        self.searchBar.placeholder = "Search".localized
+//        self.searchBar.placeholder = "Search".localized
         self.searchBar.change(Theme.Font.Calibri)
         self.searchBar.tintColor = Theme.Color.red
         self.searchBar.delegate = self

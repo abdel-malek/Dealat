@@ -122,8 +122,8 @@ class AdDetailsBaseVC: UIViewController {
         }
     }
     
-    func showErrorMessage(text: String) {
-        KSToastView.ks_showToast(text, duration: 3)
+    func showErrorMessage(text: String,duration : TimeInterval = 3) {
+        KSToastView.ks_showToast(text, duration: duration)
     }
     
 }

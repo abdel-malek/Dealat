@@ -12,6 +12,7 @@ class FilterBaseVC: BaseVC {
     
     weak var embeddedViewController : FilterVC!
     weak var adsList : AdsListVC!
+    weak var homeVC : HomeVC!
     
     
     override func viewDidLoad() {
@@ -22,7 +23,7 @@ class FilterBaseVC: BaseVC {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .stop, target: self, action: #selector(self.dis))
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetFilters))
-
+        
     }
     
     @objc func dis(){
@@ -31,16 +32,16 @@ class FilterBaseVC: BaseVC {
     
     
     @objc func resetFilters(){
-//        Provider.selectedLocation = nil
-//        Provider.selectedCategory = nil
+        //        Provider.selectedLocation = nil
+        //        Provider.selectedCategory = nil
         
-//        self.embeddedViewController.selectedLocation = nil
-//        self.embeddedViewController.selectedCategory = nil
-
+        //        self.embeddedViewController.selectedLocation = nil
+        //        self.embeddedViewController.selectedCategory = nil
+        
         self.embeddedViewController.filter = FilterParams()
         
     }
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "vc"{
@@ -54,18 +55,22 @@ class FilterBaseVC: BaseVC {
     @IBAction func showAction(){
         
         self.dismiss(animated: true) {
-//            Provider.selectedCategory = self.embeddedViewController.selectedCategory
-//            Provider.selectedLocation = self.embeddedViewController.selectedLocation
-            
+            Provider.filter = self.embeddedViewController.filter
             // IMP
             self.embeddedViewController.refreshData()//getRefreshing()
-            Provider.filter = self.embeddedViewController.filter
-            self.adsList.fromFilter = true
-            
-//            self.adsList.type = 1
-            
-            self.adsList.getData()
+
+            if self.adsList != nil{
+                self.adsList.fromFilter = true
+                self.adsList.getData()
+            }
+                
+            else if self.homeVC != nil{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
+                vc.fromFilter = true
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
         }
+        
     }
     
 }

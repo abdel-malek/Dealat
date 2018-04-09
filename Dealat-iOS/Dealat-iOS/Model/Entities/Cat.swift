@@ -21,6 +21,8 @@ class Cat : BaseEntity {
     var description : String!
     var tamplate_id : JSON!
     var children : [Cat] = [Cat]()
+    
+    var hidden_fields : String!
 
     
     // Mappable
@@ -34,6 +36,8 @@ class Cat : BaseEntity {
         description <- map["description"]
         tamplate_id <- map["tamplate_id"]
         children <- map["children"]
+        hidden_fields <- map["hidden_fields"]
+    
     }
     
     static func getName(_ category_id : Int) -> String{

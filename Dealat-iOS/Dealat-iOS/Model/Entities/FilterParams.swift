@@ -2,7 +2,7 @@
 //  FilterParams.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 3/12/18.
+//  Created by Yahya Tabba on 3/12/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 

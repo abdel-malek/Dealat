@@ -79,21 +79,50 @@ class PushManager{
                 if type == 1{
                     print("BODY : \(notification["ntf_body"])")
                     
-                    if let obj = JSON(notification["ntf_body"]).dictionaryObject{
-                        if let chat = Chat(JSON: obj){
-                            self.OpenChat(chat: chat)
+                    if let payload = notification["ntf_body"]
+                    {
+                        print("ntf_body: \(payload)")
+                        
+                        let bod = JSON(payload)
+                        do{
+                            let dd = bod.stringValue.data(using: String.Encoding.utf8)
+                            let ii = try JSONSerialization.jsonObject(with: dd!, options: JSONSerialization.ReadingOptions.mutableLeaves)
+                            let tt  = JSON(ii)
+                            
+                            if let obj = tt.dictionaryObject{
+                                if let chat = Chat(JSON: obj){
+                                    self.OpenChat(chat: chat)
+                                }
+                            }
+                        }catch let err{
+                            print("ERROR")
+                            print(err.localizedDescription)
                         }
                     }
-                
+        
                 }else if type == 2{
-//                    let id = JSON(notification["ntf_body"]).intValue
-//                    self.OpenOrder(id: id)
                     
-                    if let obj = JSON(notification["ntf_body"]).dictionaryObject{
-                        if let ad = AD(JSON: obj){
-                            self.OpenADD(ad: ad)
+                    if let payload = notification["ntf_body"]
+                    {
+                        print("ntf_body: \(payload)")
+                        
+                        let bod = JSON(payload)
+                        do{
+                            let dd = bod.stringValue.data(using: String.Encoding.utf8)
+                            let ii = try JSONSerialization.jsonObject(with: dd!, options: JSONSerialization.ReadingOptions.mutableLeaves)
+                            let tt  = JSON(ii)
+                            
+                            if let obj = tt.dictionaryObject{
+                                if let ad = AD(JSON: obj){
+                                    self.OpenADD(ad: ad)
+                                }
+                            }
+                        }catch let err{
+                            print("ERROR")
+                            print(err.localizedDescription)
                         }
                     }
+
 
                     
                 }
@@ -118,6 +147,7 @@ class PushManager{
     
     static func OpenChat(chat : Chat)
     {
+        print("OpenChat")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         if let navigationController = appDelegate.window?.rootViewController as?  UINavigationController

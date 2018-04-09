@@ -78,6 +78,17 @@ class HomeVC: BaseVC {
         collectionView.delegate = self
         
         self.setupSearchBar()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(goToFilter))
+    }
+    
+    @objc func goToFilter(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterBaseVC") as! FilterBaseVC
+        vc.homeVC = self        
+        Provider.filter = FilterParams()
+        
+        let nv = UINavigationController.init(rootViewController: vc)
+        self.present(nv, animated: true, completion: nil)
     }
     
     override func getRefreshing() {

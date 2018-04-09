@@ -52,6 +52,7 @@
 "Location" = "Location";
 "Seller" = "Seller name";
 "Negotiable" = "Negotiable";
+"Featured" = "Featured";
 "Description" = "Description";
 "old" = "Old";
 "new" = "New";
@@ -119,3 +120,7 @@
 "Please enter" = "Please enter ";
 "Please add images" = "Please add images";
 "required" = "Required";
+
+"TypeHere" = "Type here";
+"ChooseReport" = "Select reason";
+"ReportSuccessful" = "Done";

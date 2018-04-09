@@ -307,6 +307,24 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         }
     }
     
+    @IBAction func showReportMessages(){
+        self.showLoading()
+        Communication.shared.get_report_messages { (res) in
+            self.hideLoading()
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ReportMessagesVC") as! ReportMessagesVC
+            
+            vc.messages = res
+            vc.ad = self.ad
+            vc.adDetailsVC = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.modalTransitionStyle = .crossDissolve
+
+            
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

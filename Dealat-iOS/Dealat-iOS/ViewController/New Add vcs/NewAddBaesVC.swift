@@ -19,7 +19,7 @@ class NewAddBaesVC: UIViewController {
 
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
 
-        self.title = "Add new"
+        self.title = "Sell".localized
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

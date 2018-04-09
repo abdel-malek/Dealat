@@ -1151,8 +1151,6 @@ class Communication: BaseManager {
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
         
-        
-        
 //            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString
 //            let plainData = plainString.data(using: String.Encoding.utf8.rawValue)
 //            let base64String = plainData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))

@@ -92,6 +92,7 @@
 		82F0C20720286407008922A0 /* Dealat_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C20620286407008922A0 /* Dealat_iOSUITests.swift */; };
 		82F0C21C2028648A008922A0 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 82F0C21B2028648A008922A0 /* Podfile */; };
 		82F0C21E20286525008922A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C21D20286525008922A0 /* User.swift */; };
+		82FAFB2F2075F57D004EF09D /* ReportMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */; };
 		82FEE63F2075068A00D9DB45 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE63E2075068A00D9DB45 /* Period.swift */; };
 		82FEE641207506ED00D9DB45 /* ReportMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE640207506ED00D9DB45 /* ReportMessage.swift */; };
 /* End PBXBuildFile section */
@@ -238,6 +239,7 @@
 		82F0C20820286407008922A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82F0C21B2028648A008922A0 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		82F0C21D20286525008922A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessagesVC.swift; sourceTree = "<group>"; };
 		82FEE63E2075068A00D9DB45 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		82FEE640207506ED00D9DB45 /* ReportMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessage.swift; sourceTree = "<group>"; };
 		BDD28EAD72431D331D5A7292 /* Pods-Dealat-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				82B97A652055148400ADF51B /* ChatDetailsVC.swift */,
 				82B97A7B205550C300ADF51B /* EditProfileVC.swift */,
 				82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */,
+				82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -873,6 +876,7 @@
 				82B97A662055148400ADF51B /* ChatDetailsVC.swift in Sources */,
 				82105EF6204D5ACE0050DDD8 /* MyAdsVC.swift in Sources */,
 				82FEE641207506ED00D9DB45 /* ReportMessage.swift in Sources */,
+				82FAFB2F2075F57D004EF09D /* ReportMessagesVC.swift in Sources */,
 				82EF0C24202AFC8F00349107 /* AD.swift in Sources */,
 				82CEA2B72031C89800E5F017 /* IMG.swift in Sources */,
 				82F0C1E920286404008922A0 /* ViewController.swift in Sources */,

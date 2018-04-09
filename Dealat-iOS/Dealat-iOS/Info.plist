@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>7</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -31,10 +31,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to take a new photo</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>The photo library is used to select photos</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>The Photo Library is used to save photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The photo library is used to select photos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>calibri.ttf</string>
