@@ -21,4 +21,7 @@
 
     <dimen name="containerPadding">12dp</dimen>
 
+    <dimen name="textPadding">6dp</dimen>
+    <dimen name="marginEnd">8dp</dimen>
+
 </resources>

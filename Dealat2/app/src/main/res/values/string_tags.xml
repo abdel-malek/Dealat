@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Hidden fields tags -->
+    <!-- Property -->
+    <string name="hideSpace">space</string>
+    <string name="hideRoom">rooms_num</string>
+    <string name="hideFloor">floor</string>
+    <string name="hideState">state</string>
+    <string name="hideFurn">with_furniture</string>
+
+    <!-- Jobs -->
+    <string name="hideEducation">education_name</string>
+    <string name="hideSchedule">schedule_name</string>
+    <string name="hideEx">experience</string>
+    <string name="hideSalary">salary</string>
+
+    <!-- Vehicles -->
+    <string name="hideBrand">type_name</string>
+    <string name="hideModel">type_model_name</string>
+    <string name="hideYear">manufacture_date</string>
+    <string name="hideKilo">kilometer</string>
+    <string name="hideAutomatic">is_automatic</string>
+
+    <!-- Electronics -->
+    <string name="hideSize">size</string>
+
+    <string name="hideSecondhand">is_new</string>
+
+
+    <!-- Bookmark fields tags -->
+    <!-- General fields -->
+    <string name="query">query</string>
+    <string name="categoryName">category_name</string>
+    <string name="cityName">city_name</string>
+    <string name="locationName">location_name</string>
+    <string name="priceMax">price_max</string>
+    <string name="priceMin">price_min</string>
+
+    <!-- Property -->
+    <string name="spaceMax">space_max</string>
+    <string name="spaceMin">space_min</string>
+    <string name="roomsNumMax">rooms_num_max</string>
+    <string name="roomsNumMin">rooms_num_min</string>
+    <string name="floorMax">floor_max</string>
+    <string name="floorMin">floor_min</string>
+    <string name="furnitureName">furniture_name</string>
+
+    <!-- Jobs -->
+    <string name="educationName">education_name</string>
+    <string name="scheduleName">schedule_name</string>
+    <string name="salaryMax">salary_max</string>
+    <string name="salaryMin">salary_min</string>
+
+    <!-- Vehicles -->
+    <string name="typeName">type_name</string>
+    <string name="modelName">model_name</string>
+    <string name="kilometerMax">kilometer_max</string>
+    <string name="kilometerMin">kilometer_min</string>
+    <string name="automaticName">automatic_name</string>
+    <string name="yearsName">years_name</string>
+
+    <!-- Electronics -->
+    <string name="sizeMax">size_max</string>
+    <string name="sizeMin">size_min</string>
+
+    <string name="stateName">state_name</string>
+
+</resources>

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/textNormal"
         android:textColor="@color/white"
+        android:text="sghbfnhxnx"
         />
 
     <TextView
@@ -26,5 +27,6 @@
         android:layout_marginTop="4dp"
         android:textColor="@color/whiteTransparent"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:text=" sgbxnnmnk"
         />
 </LinearLayout>

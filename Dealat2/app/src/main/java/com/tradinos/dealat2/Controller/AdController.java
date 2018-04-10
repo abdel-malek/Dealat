@@ -50,6 +50,7 @@ public class AdController extends ParentController {
         request.addFileUpload("image", image);
 
         addToHeader(request);
+        authenticationRequired(request);
         request.Call();
     }
 
@@ -60,6 +61,18 @@ public class AdController extends ParentController {
         request.addParameter("images", jsonArray.toString());
 
         addToHeader(request);
+        authenticationRequired(request);
+        request.Call();
+    }
+
+    public void uploadVideo(File video, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.ads, "item_video_upload").getURL(getmContext());
+        PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+
+        request.addFileUpload("video", video);
+
+        addToHeader(request);
+        authenticationRequired(request);
         request.Call();
     }
 

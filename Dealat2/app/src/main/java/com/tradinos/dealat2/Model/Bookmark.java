@@ -1,13 +1,20 @@
 package com.tradinos.dealat2.Model;
 
+import java.util.HashMap;
+
 /**
  * Created by developer on 25.03.18.
  */
 
 public class Bookmark { // saved searches
-    private String id, title, query;
-    private String createdAt;
+    private String id, createdAt;
     private int resultNum;
+
+    private HashMap<String, String> fields;
+
+    public Bookmark(){
+        this.fields = new HashMap<>();
+    }
 
     public String getId() {
         return id;
@@ -17,20 +24,12 @@ public class Bookmark { // saved searches
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public HashMap<String, String> getFields() {
+        return fields;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
+    public void putField(String key, String value) {
+        this.fields.put(key, value);
     }
 
     public String getCreatedAt() {

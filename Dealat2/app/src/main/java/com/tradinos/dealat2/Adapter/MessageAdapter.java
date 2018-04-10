@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tradinos.dealat2.Model.Message;
@@ -41,13 +42,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
-        holder.textViewText.setText(messages.get(position).getText());
-        holder.textViewDate.setText(messages.get(position).getCreatedAt());
+        Message message = messages.get(position);
+        holder.textViewText.setText(message.getText());
+        holder.textViewDate.setText(message.getCreatedAt());
+
+        if (holder.imageViewCheck != null){ // it doesn't exist in row_chat_other
+            if (message.isSent())
+                holder.imageViewCheck.setVisibility(View.VISIBLE);
+            else
+                holder.imageViewCheck.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
     public int getItemCount() {
         return this.messages.size();
+    }
+
+    public Message getItem(int i) {
+        return this.messages.get(i);
     }
 
     @Override
@@ -59,20 +72,22 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             return ME;
     }
 
-    public void addMessage(Message message){
+    public void addMessage(Message message) {
         this.messages.add(message);
-        notifyItemInserted(messages.size() -1);
+        notifyItemInserted(messages.size() - 1);
     }
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewText, textViewDate;
+        ImageView imageViewCheck;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
 
             textViewText = itemView.findViewById(R.id.textView);
             textViewDate = itemView.findViewById(R.id.textViewDate);
+            imageViewCheck = itemView.findViewById(R.id.imageView);
         }
     }
 }

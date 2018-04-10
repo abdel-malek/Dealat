@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Dealat</string>
 
+    <string name="facebook_app_id">2030159240566942</string>
+    <string name="fb_login_protocol_scheme">fb2030159240566942</string>
+
     <string name="wait">Please wait..</string>
     <string name="connection_problem">There seems a problem with your internet connection, please check your network and retry.</string>
 
@@ -79,7 +82,7 @@
     <!-- AdDetails   -->
     <string name="labelAdNumber">Ad Number</string>
     <string name="labelCity">City</string>
-    <string name="labelLocation">Location</string>
+    <string name="labelLocation">Area</string>
     <string name="labelTitle">Title</string>
     <string name="labelBrand">Brand</string>
     <string name="labelModel">Model</string>
@@ -99,6 +102,34 @@
     <string name="labelSalary">Salary</string>
     <string name="labelSize">Size</string>
 
+
+    <!-- Bookmark row -->
+    <string name="labelSearchText">Search text</string>
+    <string name="labelCategory">Category</string>
+    <string name="labelPriceFrom">Price: From</string>
+    <string name="labelPriceTo">Price: To</string>
+
+    <!-- Property -->
+    <string name="labelSpaceFrom">Space: From</string>
+    <string name="labelSpaceTo">Space: To</string>
+    <string name="labelRoomFrom">Number of Rooms: From</string>
+    <string name="labelRoomTo">Number of Rooms: To</string>
+    <string name="labelFloorFrom">Floor: From</string>
+    <string name="labelFloorTo">Floor: To</string>
+
+    <!-- Jobs -->
+    <string name="labelSalaryFrom">Salary: From</string>
+    <string name="labelSalaryTo">Salary: To</string>
+
+    <!-- Vehicles -->
+    <string name="labelKiloFrom">Kilometer: From</string>
+    <string name="labelKiloTo">Kilometer: To</string>
+
+    <!-- Electronics -->
+    <string name="labelSizeFrom">Size: From</string>
+    <string name="labelSizeTo">Size: To</string>
+
+
     <string name="labelListEmpty">This list is empty!</string>
 
     <string name="hintPhone">Phone Number</string>
@@ -107,7 +138,7 @@
     <string name="hintWhatsapp">WhatsApp Number</string>
     <string name="hintBirthday">Birthday</string>
     <string name="hintVerificationCode">Verification Code</string>
-    <string name="hintChooseLocation">Choose a Location</string>
+    <string name="hintChooseLocation">Choose an Area</string>
     <string name="hintSearch">Search</string>
     <string name="hintTitle">Title</string>
     <string name="hintDesc">Description...</string>
@@ -187,31 +218,5 @@
     <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
     <string name="areYouSureDeleteSearch">Are you sure you want to delete this search?</string>
     <string name="logout_messg">Are you sure you want to logout?</string>
-
-    <!-- hidden fields tags -->
-    <!-- Property -->
-    <string name="hideSpace">space</string>
-    <string name="hideRoom">rooms_num</string>
-    <string name="hideFloor">floor</string>
-    <string name="hideState">state</string>
-    <string name="hideFurn">with_furniture</string>
-
-    <!-- Jobs -->
-    <string name="hideSchedule">schedule_name</string>
-    <string name="hideEducation">education_name</string>
-    <string name="hideEx">experience</string>
-    <string name="hideSalary">salary</string>
-
-    <!-- Vehicles -->
-    <string name="hideBrand">type_name</string>
-    <string name="hideModel">type_model_name</string>
-    <string name="hideYear">manufacture_date</string>
-    <string name="hideKilo">kilometer</string>
-    <string name="hideAutomatic">is_automatic</string>
-
-    <!-- Electronics -->
-    <string name="hideSize">size</string>
-
-    <string name="hideSecondhand">is_new</string>
 
 </resources>

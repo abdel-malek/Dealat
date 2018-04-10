@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatSpinner;
@@ -21,8 +25,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
@@ -51,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -62,11 +69,12 @@ public class ItemInfoActivity extends MasterActivity {
 
     private boolean enabled = false;
 
-    private final int REQUEST_SELECT_CAT = 9, REQUEST_SELECT_IMG = 7;
+    private final int REQUEST_SELECT_VIDEO = 8, REQUEST_SELECT_CAT = 9, REQUEST_SELECT_IMG = 7;
 
     private Category selectedCategory;
     private Item selectedLocation;
     private int currentTemplate;
+    private String videoUrl;
 
     private HashMap<Integer, List<Type>> brands = new HashMap<>();
 
@@ -107,6 +115,7 @@ public class ItemInfoActivity extends MasterActivity {
             containerEx, containerSalary;
 
     private View line1, line2, line3;
+   // private ProgressBar progressBarVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +238,8 @@ public class ItemInfoActivity extends MasterActivity {
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
+
+      //  progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     @Override
@@ -394,7 +405,13 @@ public class ItemInfoActivity extends MasterActivity {
 
                 popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
             }
-        }
+        } //else if (view.getId() == R.id.buttonVideo) {
+          //  Intent intent = new Intent(Intent.ACTION_PICK,  MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+          //  Intent intent = new Intent();
+          //  intent.setType("video/*");
+          //  intent.setAction(Intent.ACTION_GET_CONTENT);
+          //  startActivityForResult(Intent.createChooser(intent, "Select a Video "), REQUEST_SELECT_VIDEO);
+      //  }
     }
 
     @Override
@@ -420,8 +437,40 @@ public class ItemInfoActivity extends MasterActivity {
                 // uploading images
                 for (int i = 0; i < newImages.size(); i++)
                     new UploadImage(i + base).execute(newImages.get(i));
+
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+             /*   String path = getPath(data.getData());
+                Bitmap bm = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND);
+                ((ImageButton)findViewById(R.id.buttonVideo)).setImageBitmap(bm);
+                progressBarVideo.setVisibility(View.VISIBLE);
+                new uploadVideo().execute(path);*/
             }
         }
+    }
+
+    private String getPath(Uri uri) {
+      /*  String[] filePathColumn = {MediaStore.Video.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+
+        if (cursor.moveToFirst()){
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String path = cursor.getString(columnIndex);
+            cursor.close();
+            return path;
+        }
+        cursor.close();
+
+        return "";
+*/
+
+        String[] projection = {MediaStore.Video.Media.DATA, MediaStore.Video.Media.SIZE, MediaStore.Video.Media.DURATION};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+        int fileSize = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+        long duration = TimeUnit.MILLISECONDS.toSeconds(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)));
+
+        return filePath;
     }
 
     @Override
@@ -606,6 +655,9 @@ public class ItemInfoActivity extends MasterActivity {
             if (deletedImgsJsonArray.length() > 0)
                 parameters.put("deleted_images", deletedImgsJsonArray.toString());
 
+            if (videoUrl != null)
+                parameters.put("main_video", videoUrl);
+
             return true;
         }
 
@@ -784,4 +836,20 @@ public class ItemInfoActivity extends MasterActivity {
             return null;
         }
     }
+/*
+    class uploadVideo extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            AdController.getInstance(mController).uploadVideo(new File(strings[0]), new SuccessCallback<String>() {
+                @Override
+                public void OnSuccess(String result) {
+                    videoUrl = result;
+                    progressBarVideo.setVisibility(View.INVISIBLE);
+                    showMessageInToast(result);
+                }
+            });
+            return null;
+        }
+    }*/
 }

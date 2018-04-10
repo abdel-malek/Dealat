@@ -236,8 +236,8 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             ad.addImagePath(s);
         }
 
-        if (validData(jsonObject.getString("main_vedio")))
-            ad.setMainVideoUrl(jsonObject.getString("main_vedio"));
+        if (validData(jsonObject.getString("main_video")))
+            ad.setMainVideoUrl(jsonObject.getString("main_video"));
 
         JSONArray jsonArray = new JSONArray(jsonObject.getString("images"));
         JSONObject imageObject;

@@ -55,12 +55,16 @@ public class CheckableAdapter extends BaseAdapter {
         return jsonArray;
     }
 
+    //beside showing selecte items in spinner// this method is also to send names of selected items,
+    // and they we'll be stored when a Search is saved(we may call it bookmark)
+    // these labels will reduce join on database to get names of selected items by their Ids
+
     public String getSelectedNames() {
         String names = "";
 
         if (selectedItems.isEmpty())
             if (getItem(0) != null && getItem(0).isNothing())
-            names = getItem(0).getName();
+                names = getItem(0).getName();
 
         for (int i = 0; i < selectedItems.size(); i++) {
             if (i == 0)
@@ -90,7 +94,7 @@ public class CheckableAdapter extends BaseAdapter {
 
         view.setTag(i);
 
-       final CheckBox checkBox = view.findViewById(R.id.checkbox);
+        final CheckBox checkBox = view.findViewById(R.id.checkbox);
         checkBox.setText(getItem(i).getName());
 
         if (getItem(i).isChecked())

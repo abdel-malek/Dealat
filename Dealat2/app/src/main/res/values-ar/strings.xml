@@ -78,7 +78,7 @@
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
     <string name="labelCity">المحافظة</string>
-    <string name="labelLocation">الموقع</string>
+    <string name="labelLocation">المنطقة</string>
     <string name="labelTitle">عنوان الإعلان</string>
     <string name="labelBrand">النوع</string>
     <string name="labelModel">الموديل</string>
@@ -98,6 +98,34 @@
     <string name="labelSalary">الراتب</string>
     <string name="labelSize">الحجم</string>
 
+
+    <!-- Bookmark row -->
+    <string name="labelSearchText">نص البحث</string>
+    <string name="labelCategory">التصنيف</string>
+    <string name="labelPriceFrom">السعر: من</string>
+    <string name="labelPriceTo">السعر: إلى</string>
+
+    <!-- Property -->
+    <string name="labelSpaceFrom">المساحة: من</string>
+    <string name="labelSpaceTo">المساحة: إلى</string>
+    <string name="labelRoomFrom">عدد الغرف: من</string>
+    <string name="labelRoomTo">عدد الغرف: إلى</string>
+    <string name="labelFloorFrom">الطابق: من</string>
+    <string name="labelFloorTo">الطابق: إلى</string>
+
+    <!-- Jobs -->
+    <string name="labelSalaryFrom">الراتب: من</string>
+    <string name="labelSalaryTo">الراتب: إلى</string>
+
+    <!-- Vehicles -->
+    <string name="labelKiloFrom">كيلومتراج: من</string>
+    <string name="labelKiloTo">كيلومتراج: إلى</string>
+
+    <!-- Electronics -->
+    <string name="labelSizeFrom">الحجم: من</string>
+    <string name="labelSizeTo">الحجم: إلى</string>
+
+
     <string name="labelListEmpty">هذه القائمة فارغة!</string>
 
     <string name="hintPhone">رقم الموبايل</string>
@@ -106,7 +134,7 @@
     <string name="hintWhatsapp">رقم الواتساب</string>
     <string name="hintBirthday">تاريخ الميلاد</string>
     <string name="hintVerificationCode">رمز التحقق</string>
-    <string name="hintChooseLocation">اختر موقع</string>
+    <string name="hintChooseLocation">اختر منطقة</string>
     <string name="hintSearch">ابحث</string>
     <string name="hintTitle">عنوان الإعلان</string>
     <string name="hintDesc">الوصف...</string>

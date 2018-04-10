@@ -6,7 +6,7 @@ package com.tradinos.dealat2.Model;
 
 public class Message {
     private String id, text, createdAt;
-    private boolean toSeller;
+    private boolean toSeller, sent;
 
     public String getId() {
         return id;
@@ -38,5 +38,13 @@ public class Message {
 
     public void setToSeller(boolean toSeller) {
         this.toSeller = toSeller;
+    }
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 }

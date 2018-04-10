@@ -25,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
@@ -51,6 +53,7 @@ public abstract class DrawerActivity extends MasterActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+       // FacebookSdk.sdkInitialize(this);
         super.onCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,6 +105,11 @@ public abstract class DrawerActivity extends MasterActivity
 
                     if (!TextUtils.isEmpty(user.getImageUrl())){
                         ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+
+                        // you may comment FacebookSdk.sdkInitialize(this); in onCreate
+                     //   mImageLoader.get(user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
+                     //                   R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+
                         mImageLoader.get(MyApplication.getBaseUrlForImages() + user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
                                 R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
                     }
@@ -196,6 +204,11 @@ public abstract class DrawerActivity extends MasterActivity
 
             case R.id.navLogout:
                 logout();
+
+              /*  MyApplication.saveUserState(User.NOT_REGISTERED);
+                new CurrentAndroidUser(mContext).clearUser();
+                LoginManager.getInstance().logOut();*/
+
                 break;
 
             case R.id.navHelp:

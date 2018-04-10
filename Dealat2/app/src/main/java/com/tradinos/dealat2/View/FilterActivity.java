@@ -379,23 +379,29 @@ public class FilterActivity extends MasterActivity {
 
     private void getGeneralInput() {
         if (!inputIsEmpty(editQuery))
-            parameters.put("query", stringInput(editQuery));
+            parameters.put(getString(R.string.query), stringInput(editQuery));
 
-        if (!selectedCategory.isMain())
+        if (!selectedCategory.isMain()) {
             parameters.put("category_id", selectedCategory.getId());
+            parameters.put(getString(R.string.categoryName), selectedCategory.getFullName());
+        }
 
         City city = (City) spinnerCity.getSelectedItem();
-        if (!city.isNothing())
+        if (!city.isNothing()) {
             parameters.put("city_id", city.getId());
+            parameters.put(getString(R.string.cityName), city.getName());
+        }
 
-        if (selectedLocation != null)
+        if (selectedLocation != null) {
             parameters.put("location_id", selectedLocation.getId());
+            parameters.put(getString(R.string.locationName), selectedLocation.getName());
+        }
 
         if (!inputIsEmpty(editPriceMax))
-            parameters.put("price_max", stringInput(editPriceMax));
+            parameters.put(getString(R.string.priceMax), stringInput(editPriceMax));
 
         if (!inputIsEmpty(editPriceMin))
-            parameters.put("price_min", stringInput(editPriceMin));
+            parameters.put(getString(R.string.priceMin), stringInput(editPriceMin));
     }
 
     private void getTemplateInput() {
@@ -407,89 +413,107 @@ public class FilterActivity extends MasterActivity {
             case Category.PROPERTIES:
 
                 if (!inputIsEmpty(editSpaceMax))
-                    parameters.put("space_max", stringInput(editSpaceMax));
+                    parameters.put(getString(R.string.spaceMax), stringInput(editSpaceMax));
 
                 if (!inputIsEmpty(editSpaceMin))
-                    parameters.put("space_min", stringInput(editSpaceMin));
+                    parameters.put(getString(R.string.spaceMin), stringInput(editSpaceMin));
 
                 if (!inputIsEmpty(editRoomsMax))
-                    parameters.put("rooms_num_max", stringInput(editRoomsMax));
+                    parameters.put(getString(R.string.roomsNumMax), stringInput(editRoomsMax));
 
                 if (!inputIsEmpty(editRoomsMin))
-                    parameters.put("rooms_num_min", stringInput(editRoomsMin));
+                    parameters.put(getString(R.string.roomsNumMin), stringInput(editRoomsMin));
 
                 if (!inputIsEmpty(editFloorsMax))
-                    parameters.put("floor_max", stringInput(editFloorsMax));
+                    parameters.put(getString(R.string.floorMax), stringInput(editFloorsMax));
 
                 if (!inputIsEmpty(editFloorsMin))
-                    parameters.put("floor_min", stringInput(editFloorsMin));
+                    parameters.put(getString(R.string.floorMin), stringInput(editFloorsMin));
 
                 item = ((Item) spinnerFurn.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()) {
                     parameters.put("with_furniture", item.getId());
+                    parameters.put(getString(R.string.furnitureName), item.getName());
+                }
 
                 break;
 
             case Category.JOBS:
 
                 if (!inputIsEmpty(editSalaryMax))
-                    parameters.put("salary_max", stringInput(editSalaryMax));
+                    parameters.put(getString(R.string.salaryMax), stringInput(editSalaryMax));
 
                 if (!inputIsEmpty(editSalaryMin))
-                    parameters.put("salary_min", stringInput(editSalaryMin));
+                    parameters.put(getString(R.string.salaryMin), stringInput(editSalaryMin));
 
                 jsonArray = ((CheckableAdapter) spinnerEdu.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0)
+                if (jsonArray.length() > 0) {
                     parameters.put("education_id", jsonArray.toString());
+                    parameters.put(getString(R.string.educationName), ((CheckableAdapter) spinnerEdu.getAdapter()).getSelectedNames());
+                }
 
                 jsonArray = ((CheckableAdapter) spinnerSch.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0)
+                if (jsonArray.length() > 0) {
                     parameters.put("schedule_id", jsonArray.toString());
+                    parameters.put(getString(R.string.scheduleName), ((CheckableAdapter) spinnerSch.getAdapter()).getSelectedNames());
+                }
 
                 break;
 
             case Category.VEHICLES:
 
                 if (!inputIsEmpty(editKilometerMax))
-                    parameters.put("kilometer_max", stringInput(editKilometerMax));
+                    parameters.put(getString(R.string.kilometerMax), stringInput(editKilometerMax));
 
                 if (!inputIsEmpty(editKilometerMin))
-                    parameters.put("kilometer_min", stringInput(editKilometerMin));
+                    parameters.put(getString(R.string.kilometerMin), stringInput(editKilometerMin));
 
                 item = ((Item) spinnerTransmission.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()) {
                     parameters.put("is_automatic", item.getId());
+                    parameters.put(getString(R.string.automaticName), item.getName());
+                }
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()) {
                     parameters.put("type_id", item.getId());
+                    parameters.put(getString(R.string.typeName), item.getName());
+                }
 
                 jsonArray = ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0)
+                if (jsonArray.length() > 0) {
                     parameters.put("type_model_id", jsonArray.toString());
+                    parameters.put(getString(R.string.modelName), ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedNames());
+                }
 
                 jsonArray = ((CheckableAdapter) spinnerYear.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0)
+                if (jsonArray.length() > 0) {
                     parameters.put("manufacture_date", jsonArray.toString());
+                    parameters.put(getString(R.string.yearsName), ((CheckableAdapter) spinnerYear.getAdapter()).getSelectedNames());
+                }
 
                 item = ((Item) spinnerState.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()) {
                     parameters.put("is_new", item.getId());
+                    parameters.put(getString(R.string.stateName), item.getName());
+                }
 
                 break;
 
             case Category.ELECTRONICS:
 
                 if (!inputIsEmpty(editSizeMax))
-                    parameters.put("size_max", stringInput(editSizeMax));
+                    parameters.put(getString(R.string.sizeMax), stringInput(editSizeMax));
 
                 if (!inputIsEmpty(editSizeMin))
-                    parameters.put("size_min", stringInput(editSizeMin));
+                    parameters.put(getString(R.string.sizeMin), stringInput(editSizeMin));
 
             case Category.MOBILES:
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()) {
                     parameters.put("type_id", item.getId());
+                    parameters.put(getString(R.string.typeName), item.getName());
+                }
 
             case Category.FASHION:
             case Category.KIDS:
@@ -497,8 +521,10 @@ public class FilterActivity extends MasterActivity {
             case Category.INDUSTRIES:
 
                 item = ((Item) spinnerState.getSelectedItem());
-                if (!item.isNothing())
+                if (!item.isNothing()){
                     parameters.put("is_new", item.getId());
+                    parameters.put(getString(R.string.stateName), item.getName());
+                }
         }
     }
 

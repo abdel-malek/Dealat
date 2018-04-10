@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -148,25 +149,34 @@ public class ChatActivity extends MasterActivity {
             public void onClick(View view) {
                 if (!inputIsEmpty(editTextMsg)) {
 
-                    parameters.put("ad_id", currentChat.getAdId());
-                    parameters.put("msg", stringInput(editTextMsg));
+                    Message message = new Message();
+                    message.setText(stringInput(editTextMsg));
 
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+                    message.setCreatedAt(dateFormat.format(new Date()));
+
+                    if (amISeller())
+                        message.setToSeller(false);
+                    else
+                        message.setToSeller(true);
+
+                    if (adapter == null)
+                        adapter = new MessageAdapter(mContext, new ArrayList<Message>(), amISeller());
+
+                    adapter.addMessage(message);
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+
+
+                    parameters.put("ad_id", currentChat.getAdId());
+                    parameters.put("msg", message.getText());
                     if (amISeller())
                         parameters.put("chat_session_id", currentChat.getChatId());
 
-                    ChatController.getInstance(mController).sendMessage(parameters, new SuccessCallback<Message>() {
-                        @Override
-                        public void OnSuccess(Message result) {
-                            editTextMsg.setText("");
-                            showButton(HIDE);
 
-                            if (adapter == null)
-                                adapter = new MessageAdapter(mContext, new ArrayList<Message>(), amISeller());
+                    editTextMsg.setText("");
+                    showButton(HIDE);
 
-                            adapter.addMessage(result);
-                            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                        }
-                    });
+                    new SendMessage(adapter.getItemCount() - 1).execute(message.getText());
                 }
             }
         });
@@ -195,6 +205,28 @@ public class ChatActivity extends MasterActivity {
 
             adapter.addMessage(message);
             recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        }
+    }
+
+    class SendMessage extends AsyncTask<String, Void, Message>{
+
+        int position;
+        SendMessage(int position){
+            this.position = position;
+        }
+
+        @Override
+        protected Message doInBackground(String... strings) {
+
+            ChatController.getInstance(mController).sendMessage(parameters, new SuccessCallback<Message>() {
+                @Override
+                public void OnSuccess(Message result) {
+                    adapter.getItem(position).setSent(true);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            return null;
         }
     }
 

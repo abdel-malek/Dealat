@@ -27,12 +27,14 @@ public class ChatAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
+    private User user;
     private List<Chat> chats;
 
     public ChatAdapter(Context context, List<Chat> chats) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.chats = chats;
+        user = new CurrentAndroidUser(context).Get();
     }
 
     @Override
@@ -65,15 +67,14 @@ public class ChatAdapter extends BaseAdapter {
     private void initializeView(Chat item, ViewHolder holder) {
         holder.textViewTitle.setText(item.getAdTitle());
 
-        User user = new CurrentAndroidUser(context).Get();
         String url = null;
         if (user != null) {
-            if (user.getId().equals(item.getUserId())) {
-                holder.textViewName.setText(item.getSellerName());
-                url = item.getSellerPic();
-            } else {
+            if (user.getId().equals(item.getSellerId())) {
                 holder.textViewName.setText(item.getUserName());
                 url = item.getUserPic();
+            } else {
+                holder.textViewName.setText(item.getSellerName());
+                url = item.getSellerPic();
             }
         }
 
