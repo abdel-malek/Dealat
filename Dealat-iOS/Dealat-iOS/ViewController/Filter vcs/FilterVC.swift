@@ -20,6 +20,7 @@ class FilterVC: BaseTVC {
     // general
     @IBOutlet weak var tfSearch : SkyFloatingLabelTextField!
     @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCity: SkyFloatingLabelTextField!
     @IBOutlet weak var tfLocation : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice2 : SkyFloatingLabelTextField!
@@ -58,6 +59,8 @@ class FilterVC: BaseTVC {
 
     
     var locationDropDown = DropDown()
+    var cities = [City]()
+
     var locations = [Location]()
     var typesBase = [Type]()
     var schedules = [Schedule]()
@@ -126,6 +129,12 @@ class FilterVC: BaseTVC {
         
         let allString = "All".localized
         
+        if filter.city != nil{
+            self.tfCity.text = filter.city.city_name
+        }else{
+            self.tfCity.text = allString
+        }
+
         if filter.location != nil{
             self.tfLocation.text = filter.location.location_name
         }else{
@@ -205,9 +214,10 @@ class FilterVC: BaseTVC {
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (locations, types, educations, schedules, _ ) in
+        Communication.shared.get_data_lists { (cities,locations, types, educations, schedules, periods ) in
             self.hideLoading()
             
+            self.cities = cities
             self.typesBase = types
             self.locations = locations
             self.educations = educations
@@ -263,9 +273,11 @@ class FilterVC: BaseTVC {
                 vc2.modalTransitionStyle = .crossDissolve
                 self.present(vc2, animated: true, completion: nil)
             case 2:
+                vc.type = -1
+                self.present(vc, animated: true, completion: nil)
+            case 3:
                 vc.type = 1
                 self.present(vc, animated: true, completion: nil)
-
             default: break
             }
             
@@ -323,12 +335,21 @@ class FilterVC: BaseTVC {
         let h : CGFloat = 54.0
         let h2 : CGFloat = 80
         
+        
+        // when job hide price
+        if self.filter.category != nil{
+            if self.self.filter.category.tamplate_id.intValue == 8{
+                if indexPath == IndexPath(row: 4, section: 0){
+                    return 0
+                }
+            }
+        }
+        
         switch indexPath.section {
         case 0:
-            return indexPath.row != 3 ?  h : h2
+            return indexPath.row != 4 ?  h : h2
             
         case 11:
-            
             if self.filter.category != nil{
                 if [1,2,3,4,5,6,7,9].contains(self.filter.category.tamplate_id.intValue){
                     return UITableViewAutomaticDimension
@@ -336,12 +357,6 @@ class FilterVC: BaseTVC {
             }
             
             return 0
-            
-            /*if [1,2,3,4,5,6,7,9].contains(indexPath.section){
-                return UITableViewAutomaticDimension
-            }else{
-                return 0
-            }*/
         default:
             
             if indexPath.section == 2,indexPath.row == 3{
@@ -358,7 +373,6 @@ class FilterVC: BaseTVC {
                 }else{
                     return 0
                 }
-//                return (self.filter.category.tamplate_id.intValue == indexPath.section) ? h : 0
             }else{
                 return 0
             }

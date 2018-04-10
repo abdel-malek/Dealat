@@ -14,7 +14,7 @@
 "Email" = "Email address";
 "Password" = "Password";
 "ConfirmPassword" = "Confirm password";
-"SetLocation" = "Set location";
+"SetArea" = "Set Area";
 "SignIn" = "Sign in";
 "Already" = "Already have an account?";
 "Skip" = "Skip";
@@ -49,7 +49,8 @@
 //General
 "Sell" = "Submit an Ad";//Sell your item
 "Category" = "Category";
-"Location" = "Location";
+"City" = "City";
+"Area" = "Area";
 "Seller" = "Seller name";
 "Negotiable" = "Negotiable";
 "Featured" = "Featured";
@@ -71,6 +72,7 @@
 "From" = "From";
 "To" = "To";
 "Show" = "Show";
+"ShowPeriod" = "Period";
 
 //
 "Year" = "Year";
@@ -87,8 +89,12 @@
 "Space" = "Space";
 "Rooms" = "Rooms";
 "Floor" = "Floor";
+"PropertyState" = "Property state";
 "State" = "State";
-"Furniture" = "Furniture";
+"Furniture" = "Furnitured";
+
+//Electroiec
+"Size" = "Size";
 
 //Job
 "Education" = "Education";

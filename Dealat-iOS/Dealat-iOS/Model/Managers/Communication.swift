@@ -161,7 +161,7 @@ class Communication: BaseManager {
         }
     }
     
-    func get_data_lists(_ callback :  @escaping ( _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule], _ periods : [Period]) -> Void){
+    func get_data_lists(_ callback :  @escaping (_ cities : [City], _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule], _ periods : [Period]) -> Void){
         let url = URL(string: baseURL + get_data_listsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -173,17 +173,26 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
+                    var cities = [City]()
                     var locations = [Location]()
                     var types = [Type]()
                     var educations = [Education]()
                     var schedules = [Schedule]()
                     var periods = [Period]()
                     
-                    for i in value.data["location"].arrayValue{
+                    
+                    for i in value.data["nested_locations"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = City(JSON: obj){
+                            cities.append(a)
+                        }
+                    }
+
+                    for i in value.data["locations"].arrayValue{
                         if let obj = i.dictionaryObject, let a = Location(JSON: obj){
                             locations.append(a)
                         }
                     }
+
                     
                     let tys = value.data["types"]
                     for i in 0..<11{
@@ -215,7 +224,7 @@ class Communication: BaseManager {
 
                     
                     
-                    callback(locations,types,educations,schedules,periods)
+                    callback(cities,locations,types,educations,schedules,periods)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -457,7 +466,7 @@ class Communication: BaseManager {
     }
     
     
-    func post_new_ad(category_id : Int,location_id : Int,show_period : Int,title : String,description : String,price : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
+    func post_new_ad(category_id : Int,title : String,description : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
         
         let url = URL(string: baseURL + post_new_itemURL)!
         
@@ -466,11 +475,9 @@ class Communication: BaseManager {
             params[i.key] = i.value
         }
         params["category_id"] = category_id
-        params["location_id"] = location_id
-        params["show_period"] = show_period
+//        params["show_period"] = show_period
         params["title"] = title
         params["description"] = description
-        params["price"] = price
         params["country"] = 1 // TO DO
         
         let images2 = images.filter({!$0.isEmpty})

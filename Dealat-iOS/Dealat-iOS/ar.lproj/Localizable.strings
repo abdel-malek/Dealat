@@ -13,7 +13,7 @@
 "Email" = "الإيميل";
 "Password" = "كلمة المرور";
 "ConfirmPassword" = "تأكيد كلمة المرور";
-"SetLocation" = "اختيار موقع";
+"SetArea" = "اختيار منطقة";
 "SignIn" = "تسجيل الدخول";
 "Already" = "هل لديك حساب من قبل؟";
 "Skip" = "تخطي";
@@ -47,7 +47,8 @@
 //General
 "Sell" = "إضافة عرض";
 "Category" = "الصنف";
-"Location" = "الموقع";
+"City" = "المحافظة";
+"Area" = "المنطقة";
 "Seller" = "اسم البائع";
 "Negotiable" = "قابل للتفاوض";
 "Featured" = "مميز";
@@ -69,6 +70,7 @@
 "From" = "من";
 "To" = "إلى";
 "Show" = "عرض";
+"ShowPeriod" = "مدة العرض";
 
 
 
@@ -86,8 +88,12 @@
 "Space" = "المساحة";
 "Rooms" = "عدد الغرف";
 "Floor" = "الطابق";
+"PropertyState" = "حالة العقار";
 "State" = "الحالة";
 "Furniture" = "مفروش";
+
+//Electroiec
+"Size" = "الحجم";
 
 //Job
 "Education" = "المستوى التعليمي";

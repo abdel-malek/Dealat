@@ -14,6 +14,7 @@ class AD : BaseEntity {
     
     var ad_id : JSON!
     var user_id : JSON!
+    var city_id : JSON!
     var location_id : JSON!
     var category_id : JSON!
     var show_period : JSON!
@@ -84,6 +85,8 @@ class AD : BaseEntity {
     class Electronic : BaseEntity{
         var is_new : JSON!
         var type_name : String!
+        var size : String!
+
     }
     
     // 5 Fashion
@@ -123,6 +126,7 @@ class AD : BaseEntity {
         
         ad_id <- map["ad_id"]
         user_id <- map["user_id"]
+        city_id <- map["city_id"]
         location_id <- map["location_id"]
         category_id <- map["category_id"]
         show_period <- map["show_period"]
@@ -173,6 +177,7 @@ class AD : BaseEntity {
         // 3 Mobile
         mobile.is_new <- map["is_new"]
         mobile.type_name <- map["type_name"]
+        electronic.size <- map["size"]
 
         // 4 Electronic
         electronic.is_new <- map["is_new"]

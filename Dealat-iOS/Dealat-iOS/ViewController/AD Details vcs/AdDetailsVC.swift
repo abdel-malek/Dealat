@@ -31,6 +31,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var catLbl : UILabel!
     @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var negotiableLbl : UILabel!
+    @IBOutlet weak var cityLbl : UILabel!
     @IBOutlet weak var locationLbl : UILabel!
     @IBOutlet weak var desLbl : UILabel!
     
@@ -62,6 +63,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     // 4 Electronic
     @IBOutlet weak var is_new4 : UILabel!
     @IBOutlet weak var type_nameLbl4 : UILabel!
+    @IBOutlet weak var sizeLbl : UILabel!
+
     
     // 5 Fashion
     @IBOutlet weak var is_new5 : UILabel!
@@ -142,10 +145,16 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!) --- " : ""
         cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""
         self.catLbl.text = "\(cat)"
-        var loc = ""
-        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
-        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
-        self.locationLbl.text = "\(loc)"
+        
+//        var loc = ""
+//        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
+//        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
+        self.cityLbl.text = ad.city_name
+
+//        var loc = ""
+//        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
+//        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
+        self.locationLbl.text = ad.location_name
         
         self.sellerLbl.text = ad.seller_name
         self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
@@ -193,6 +202,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new3.text = ad.mobile.is_new.Boolean ? "new".localized : "old".localized
             }
             self.type_nameLbl3.text = ad.mobile.type_name
+
         }
         
         //4 Electronic
@@ -201,6 +211,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new4.text = ad.electronic.is_new.Boolean ? "new".localized : "old".localized
             }
             self.type_nameLbl4.text = ad.electronic.type_name
+            self.sizeLbl.text = ad.electronic.size
         }
         
         //5 Fashion

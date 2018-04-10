@@ -73,8 +73,12 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var cnt = 0
         switch type {
+        case -1:
+            cnt = parentVC.cities.count
         case 1:
-            cnt = parentVC.locations.count
+            if let c = parentVC.filter.city{
+                cnt = c.locations.count
+            }
         case 2:
             cnt = parentVC.typesBase.count
         case 3:
@@ -106,6 +110,8 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         
         if indexPath.row == 0{
             switch type {
+            case -1 :
+                cell.accessoryType = self.parentVC.filter.city == nil ? .checkmark : .none
             case 1:
                 cell.accessoryType = self.parentVC.filter.location == nil ? .checkmark : .none
             case 2:
@@ -131,15 +137,24 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             cell.accessoryType = .none
 
             switch type {
+            case -1:
+                if let l = self.parentVC.filter.city{
+                        if l.city_id == self.parentVC.cities[index].city_id{
+                            cell.accessoryType = .checkmark
+                        }else{
+                            cell.accessoryType = .none
+                        }
+                }
             case 1:
                 if let l = self.parentVC.filter.location{
-                    if l.location_id == self.parentVC.locations[index].location_id{
-                        cell.accessoryType = .checkmark
-                    }else{
-                        cell.accessoryType = .none
+                    if let c = self.parentVC.filter.city{
+                        if l.location_id == c.locations[index].location_id{
+                            cell.accessoryType = .checkmark
+                        }else{
+                            cell.accessoryType = .none
+                        }
                     }
                 }
-                
             case 2:
                 if let l = self.parentVC.filter.type_id{
                     if l.type_id == self.parentVC.typesBase[index].type_id{
@@ -229,8 +244,12 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             let index = indexPath.row - 1
             
             switch type {
+            case -1:
+                cell.textLabel?.text = self.parentVC.cities[index].city_name
             case 1:
-                cell.textLabel?.text = self.parentVC.locations[index].location_name
+                if let c = self.parentVC.filter.city{
+                    cell.textLabel?.text = c.locations[index].location_name
+                }
             case 2:
                 cell.textLabel?.text = self.parentVC.typesBase[index].name
             case 3:
@@ -264,6 +283,9 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0{
             
             switch type {
+            case -1:
+                self.parentVC.filter.location = nil
+                self.parentVC.filter.city = nil
             case 1:
                 self.parentVC.filter.location = nil
             case 2:
@@ -291,8 +313,13 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             let index = indexPath.row - 1
             
             switch type {
+            case -1:
+                self.parentVC.filter.location = nil
+                self.parentVC.filter.city = self.parentVC.cities[index]
             case 1:
-                self.parentVC.filter.location = self.parentVC.locations[index]
+                if let c = self.parentVC.filter.city{
+                    self.parentVC.filter.location = c.locations[index]
+                }
             case 2:
                 self.parentVC.filter.type_id = self.parentVC.typesBase[index]
                 self.parentVC.filter.type_model_id = nil

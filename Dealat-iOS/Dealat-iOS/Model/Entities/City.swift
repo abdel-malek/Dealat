@@ -15,7 +15,7 @@ class City : BaseEntity {
     var city_id : JSON!
     var city_name : String!
     var name : String!
-
+    var locations = [Location]()
     
     
     // Mappable
@@ -23,6 +23,7 @@ class City : BaseEntity {
         city_id <- map["city_id"]
         city_name <- map["city_name"]
         name <- map["name"]
+        locations <- map["locations"]
         
     }
     

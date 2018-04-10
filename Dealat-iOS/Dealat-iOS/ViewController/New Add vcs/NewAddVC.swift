@@ -30,8 +30,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
     
     @IBOutlet weak var tfTitle : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCity : SkyFloatingLabelTextField!
     @IBOutlet weak var tfLocation : SkyFloatingLabelTextField!
     @IBOutlet weak var tfCategory : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfPeriod : SkyFloatingLabelTextField!
     @IBOutlet weak var tfPrice : SkyFloatingLabelTextField!
     @IBOutlet weak var negotiableSwitch : UISwitch!
     @IBOutlet weak var featuredSwitch : UISwitch!
@@ -59,6 +61,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     //4
     @IBOutlet weak var tfStatus4 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfType4 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfSize : SkyFloatingLabelTextField!
     
     //5
     @IBOutlet weak var tfStatus5 : SkyFloatingLabelTextField!
@@ -79,12 +82,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet weak var tfStatus9 : SkyFloatingLabelTextField!
     
     
-    
+    var cities = [City]()
     var locations = [Location]()
     var typesBase = [Type]()
     var types = [Type]()
     var schedules = [Schedule]()
     var educations = [Education]()
+    var periods = [Period]()
     
     
     var years : [String] {
@@ -103,7 +107,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         return ["old".localized,"new".localized]
     }
     
-    
     var selectedCategory : Cat!{
         didSet{
             if self.tfCategory != nil{
@@ -121,20 +124,38 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
     }
     
-    
+    var selectedCity : City!{
+        didSet{
+            self.selectedLocation = nil
+            
+            if let city = selectedCity{
+                self.tfCity.text = city.city_name
+            }else{
+                self.tfCity.text = nil
+            }
+        }
+    }
     
     var selectedLocation : Location!{
         didSet{
             if let loc = selectedLocation{
-                var name = ""
-                name += loc.city_name != nil ? loc.city_name! + " - " : ""
-                name += loc.location_name != nil ? loc.location_name! : ""
-                self.tfLocation.text = name
+                self.tfLocation.text = loc.location_name
             }else{
                 self.tfLocation.text = nil
             }
         }
     }
+    
+    var selectedPeriod : Period!{
+        didSet{
+            if let period = selectedPeriod{
+                self.tfPeriod.text = period.name
+            }else{
+                self.tfPeriod.text = nil
+            }
+        }
+    }
+
     
     var selectedType : Type!{
         didSet{
@@ -184,12 +205,38 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     
-    //    var selectedKilometers : String!{
-    //        didSet{
-    //            self.tfKilometers.text = selectedKilometers
-    //        }
-    //    }
     
+    func ifHidden(index : IndexPath) -> Bool{
+        
+        if let cat = self.selectedCategory,cat.hidden_fields != nil {
+            
+            switch (index.section,index.row){
+                
+            case (1,0): return cat.hidden_fields.contains("type_name")
+            case (1,1): return cat.hidden_fields.contains("type_model_name")
+            case (1,2): return cat.hidden_fields.contains("manufacture_date")
+            case (1,3): return cat.hidden_fields.contains("is_automatic")
+            case (1,4): return cat.hidden_fields.contains("is_new")
+            case (1,5): return cat.hidden_fields.contains("kilometer")
+                
+            case (2,0): return cat.hidden_fields.contains("space")
+            case (2,1): return cat.hidden_fields.contains("rooms_num")
+            case (2,2): return cat.hidden_fields.contains("floor")
+            case (2,3): return cat.hidden_fields.contains("state")
+            case (2,4): return cat.hidden_fields.contains("furniture")
+
+                // HERE
+            case (3,4): return cat.hidden_fields.contains("furniture")
+
+                
+                
+            default:
+                break
+            }
+        }
+        
+        return false
+    }
     
     var editMode : Bool{
         return self.ad != nil
@@ -205,12 +252,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (locations, types, educations, schedules, _) in
+        Communication.shared.get_data_lists { (cities ,locations, types, educations, schedules, periods) in
             
+            self.cities = cities
             self.typesBase = types
             self.locations = locations
             self.educations = educations
             self.schedules = schedules
+            self.periods = periods
             
             if self.editMode{
                 Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue, callback: { (res) in
@@ -260,7 +309,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.title = "Sell".localized
         
         
+        self.setPickerViewOn(self.tfCity)
         self.setPickerViewOn(self.tfLocation)
+        self.setPickerViewOn(self.tfPeriod)
+
+
         //1
         self.setPickerViewOn(self.tfType)
         self.setPickerViewOn(self.tfModel)
@@ -376,6 +429,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfType3.text = nil
         tfStatus4.text = nil
         tfType4.text = nil
+        tfSize.text = nil
         tfStatus5.text = nil
         tfStatus6.text = nil
         tfStatus7.text = nil
@@ -398,6 +452,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfStatus3.isEnabled = false
         tfType3.isEnabled = false
         tfStatus4.isEnabled = false
+        tfSize.isEnabled = false
         tfType4.isEnabled = false
         tfStatus5.isEnabled = false
         tfStatus6.isEnabled = false
@@ -429,6 +484,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         case 4:
             tfStatus4.isEnabled = true
             tfType4.isEnabled = true
+            tfSize.isEnabled = true
         case 5:
             tfStatus5.isEnabled = true
         case 6:
@@ -467,11 +523,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 }
             }
             
+            if let city_id = self.ad.city_id{
+                if let city = self.cities.first(where: {$0.city_id.intValue == city_id.intValue}){
+                    self.selectedCity = city
+                }
+            }
+
             if let location_id = self.ad.location_id{
                 if let loc = self.locations.first(where: {$0.location_id.intValue == location_id.intValue}){
                     self.selectedLocation = loc
                 }
             }
+            
+            if let show_period_id = self.ad.show_period{
+                if let period = self.periods.first(where: {$0.show_period_id.intValue == show_period_id.intValue}){
+                    self.selectedPeriod = period
+                }
+            }
+
             self.tfPrice.text = ad.price.stringValue
             self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
             self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
@@ -538,6 +607,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if self.selectedCategory != nil{
+            if self.selectedCategory.tamplate_id.intValue == 8{
+                if indexPath == IndexPath(row: 6, section: 0){
+                    return 0
+                }
+            }
+        }
         
         
         switch indexPath.section {
@@ -692,26 +769,48 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.validMessage(tf: tfCategory ,message : "Please enter".localized +  "Category".localized)
             return
         }
-        guard let loc = self.selectedLocation, let location_id = loc.location_id else {
-            self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Location".localized)
+        guard let city = self.selectedCity, let city_id = city.city_id else {
+            self.validMessage(tf: tfCity ,message : "Please enter".localized +  "City".localized)
             return
         }
+
+        guard let loc = self.selectedLocation, let location_id = loc.location_id else {
+            self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Area".localized)
+            return
+        }
+        
+        guard let period = self.selectedPeriod, let show_period_id = period.show_period_id else {
+            self.validMessage(tf: tfPeriod ,message : "Please enter".localized +  "ShowPeriod".localized)
+            return
+        }
+
         guard let desAd = self.tfDescription.text, !desAd.isEmpty else {
             self.validMessage(message : "Please enter".localized +  "Description".localized)
             return
         }
-        guard let price = self.tfPrice.text, !price.isEmpty, (Int(price) != nil) else {
-            self.validMessage(tf : tfPrice, message : "Please enter".localized +  "Price".localized)
-            return
+        
+        
+        if self.selectedCategory.tamplate_id.intValue != 8{
+            guard let price = self.tfPrice.text, !price.isEmpty, (Int(price) != nil) else {
+                self.validMessage(tf : tfPrice, message : "Please enter".localized +  "Price".localized)
+                return
+            }
+            params["price"] = price
         }
+        
         guard  !self.imagesPaths.isEmpty else {
             self.validMessage( message : "Please add images".localized)
             return
         }
         
+        params["city_id"] = city_id.intValue
+        params["location_id"] = location_id.intValue
+        params["show_period"] = show_period_id.intValue
+
         params["is_negotiable"] = self.negotiableSwitch.isOn ? 1 : 0
         params["is_featured"] = self.featuredSwitch.isOn ? 1 : 0
-
+        
+        
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
             guard let type = self.selectedType, let type_id = type.type_id else {
@@ -739,6 +838,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.validMessage(tf : self.tfKilometers, message : "Please enter".localized + "Kilometer".localized)
                 return
             }
+            
             
             params["type_id"] = type_id.intValue
             params["type_model_id"] = type_model_id.intValue
@@ -787,6 +887,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             params["type_id"] = type_id.intValue
             params["is_new"] = is_new
             
+        case 4:
+            
+            params["is_new"] = self.tfSize.text!
         case 5,6,7,9:
             guard let is_new = self.selectedStatus else {
                 self.validMessage(message : "Please enter".localized + "State".localized)
@@ -828,7 +931,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         
         self.showLoading()
-        Communication.shared.post_new_ad(category_id: category_id.intValue, location_id: location_id.intValue, show_period: 1, title: titleAd, description: desAd, price: price, images: self.imagesPaths,paramsAdditional : params) { (res) in
+        Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional : params) { (res) in
             self.hideLoading()
             
             self.navigationController?.popViewController(animated: true)
@@ -1171,8 +1274,14 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         var cnt = 0
         
         switch pickerView.tag {
+        case -1: // Cites
+            cnt = self.cities.count
         case 1: // Locations
-            cnt = self.locations.count
+            if let c = self.selectedCity{
+                cnt = c.locations.count
+            }
+        case -2:
+            cnt = self.periods.count
         case 2,13,15: // Types
             cnt =  self.types.count
         case 3: // Models
@@ -1196,7 +1305,7 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         }
         
         
-        return (cnt == 0) ? 0 : cnt + 1
+        return (cnt == 0) ? 1 : cnt + 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -1206,12 +1315,15 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         }
         
         switch pickerView.tag {
+        case -1: // Cities
+            return self.cities[row - 1].city_name
         case 1: // Locations
-            let loc = self.locations[row - 1]
-            var name = ""
-            name += loc.city_name != nil ? loc.city_name! + " - " : ""
-            name += loc.location_name != nil ? loc.location_name! : ""
-            return name
+            if let c = self.selectedCity{
+                return c.locations[row - 1].location_name
+            }
+            return nil
+        case -2:
+            return self.periods[row - 1].name
         case 2,13,15: // Types
             return self.types[row - 1].name
         case 3: // Models
@@ -1240,12 +1352,28 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         }
         
         switch pickerView.tag {
-        case 1: // Locations
+        case -1: // Cities
             if row == 0{
-                self.selectedLocation = nil
+                self.selectedCity = nil
                 return
             }
-            self.selectedLocation = self.locations[row - 1]
+            self.selectedCity = self.cities[row - 1]
+        case 1: // Locations
+            if row == 0{
+                self.selectedCity = nil
+                return
+            }
+            
+            if let c = self.selectedCity{
+                self.selectedLocation =  c.locations[row - 1]
+            }
+        case -2:
+            if row == 0{
+                self.selectedPeriod = nil
+                return
+            }
+            
+            self.selectedPeriod =  self.periods[row - 1]
         case 2,13,15: // Types
             if row == 0{
                 self.selectedType = nil

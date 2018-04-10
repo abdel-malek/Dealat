@@ -14,6 +14,7 @@ class FilterParams{
     
     var searchText : String!
     var category : Cat!
+    var city : City!
     var location : Location!
     
     var type_id : Type!
