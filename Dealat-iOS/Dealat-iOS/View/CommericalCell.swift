@@ -84,7 +84,7 @@ class CommericalCell: UICollectionViewCell {
                 }
                 
         },
-            to: "\(Communication.shared.baseURL)/items_control/item_images_upload/format/json" ,headers : Communication.shared.getHearders(),
+            to: "\(Communication.shared.baseURL + Communication.shared.item_images_uploadURL)" ,headers : Communication.shared.getHearders(),
             encodingCompletion: { encodingResult in
                 
                 switch encodingResult {

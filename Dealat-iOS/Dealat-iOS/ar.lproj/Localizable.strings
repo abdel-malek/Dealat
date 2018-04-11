@@ -70,6 +70,7 @@
 "From" = "من";
 "To" = "إلى";
 "Show" = "عرض";
+"Delete" = "حذف";
 "ShowPeriod" = "مدة العرض";
 
 
@@ -130,3 +131,8 @@
 "TypeHere" = "أدخل الرسالة";
 "ChooseReport" = "اختر سبب حذف الإعلان";
 "ReportSuccessful" = "تم استلام التبليغ";
+
+"DeleteBookmark" = "هل أنت متأكد من حذف هذا البحث؟";
+
+"RejectionReason" = "سبب الرفض";
+"AdStatus" = "حالة الإعلان";

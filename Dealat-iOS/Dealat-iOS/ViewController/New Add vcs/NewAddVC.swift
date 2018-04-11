@@ -225,11 +225,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             case (2,3): return cat.hidden_fields.contains("state")
             case (2,4): return cat.hidden_fields.contains("furniture")
 
-                // HERE
-            case (3,4): return cat.hidden_fields.contains("furniture")
+            case (3,0): return cat.hidden_fields.contains("type_name")
+            case (3,1): return cat.hidden_fields.contains("state")
 
-                
-                
+            case (4,0): return cat.hidden_fields.contains("type_name")
+            case (4,1): return cat.hidden_fields.contains("state")
+            case (4,2): return cat.hidden_fields.contains("size")
+
+            case (5,0): return cat.hidden_fields.contains("state")
+            case (6,0): return cat.hidden_fields.contains("state")
+            case (7,0): return cat.hidden_fields.contains("state")
+
+            case (8,0): return cat.hidden_fields.contains("education")
+            case (8,1): return cat.hidden_fields.contains("schedule")
+            case (8,2): return cat.hidden_fields.contains("experience")
+            case (8,3): return cat.hidden_fields.contains("salary")
+
+            case (9,0): return cat.hidden_fields.contains("state")
+
             default:
                 break
             }
@@ -608,6 +621,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
+        if self.ifHidden(index: indexPath){
+            return 0
+        }
+        
         if self.selectedCategory != nil{
             if self.selectedCategory.tamplate_id.intValue == 8{
                 if indexPath == IndexPath(row: 6, section: 0){
@@ -930,14 +947,27 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
-        self.showLoading()
-        Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional : params) { (res) in
-            self.hideLoading()
+        if self.editMode{
             
-            self.navigationController?.popViewController(animated: true)
-            self.homeVC.showErrorMessage(text: res.message)
+            self.showLoading()
+//            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params) { (res) in
+//                self.hideLoading()
+//                self.navigationController?.popViewController(animated: true)
+//                self.homeVC.showErrorMessage(text: res.message)
+//            }
             
+            
+        }else{
+            self.showLoading()
+            Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional : params) { (res) in
+                self.hideLoading()
+                
+                self.navigationController?.popViewController(animated: true)
+                self.homeVC.showErrorMessage(text: res.message)
+            }
         }
+        
+        
         
     }
     

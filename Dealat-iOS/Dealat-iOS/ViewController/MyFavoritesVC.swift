@@ -37,7 +37,7 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
                 self.collectionView.reloadData()
             }
         }else{
-            self.title = self.bookmark.getName()
+//            self.title = self.bookmark.getName()
             Communication.shared.get_bookmark_search(user_bookmark_id: bookmark.user_bookmark_id.intValue, callback: { (res) in
                 self.hideLoading()
                 self.ads = res

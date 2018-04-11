@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6EDC59CD649ACE509FA18C96 /* Pods_Dealat_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A80EAEF46234EA904EA977 /* Pods_Dealat_iOS.framework */; };
+		82049450207E080700E57CF9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8204944F207E080700E57CF9 /* BookmarkCell.swift */; };
+		82049452207E0CC100E57CF9 /* BookmarkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82049451207E0CC100E57CF9 /* BookmarkQuery.swift */; };
 		8208B31B2039B00B000817A4 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208B31A2039B00B000817A4 /* FilterVC.swift */; };
 		82105EEE204D3BA20050DDD8 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EED204D3BA20050DDD8 /* City.swift */; };
 		82105EF2204D5A410050DDD8 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EF1204D5A410050DDD8 /* MyProfileVC.swift */; };
@@ -144,6 +146,8 @@
 
 /* Begin PBXFileReference section */
 		379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		8204944F207E080700E57CF9 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		82049451207E0CC100E57CF9 /* BookmarkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkQuery.swift; sourceTree = "<group>"; };
 		8208B31A2039B00B000817A4 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		82105EED204D3BA20050DDD8 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		82105EF1204D5A410050DDD8 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
@@ -466,6 +470,7 @@
 				829146762051690C0014CFE2 /* ChatCell.swift */,
 				82B97A6920551D0F00ADF51B /* MessageCell.swift */,
 				82B97A6A20551D0F00ADF51B /* MessageCell.xib */,
+				8204944F207E080700E57CF9 /* BookmarkCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,6 +528,7 @@
 				82E56E59205EC2B400938CD7 /* UserBookmark.swift */,
 				82FEE63E2075068A00D9DB45 /* Period.swift */,
 				82FEE640207506ED00D9DB45 /* ReportMessage.swift */,
+				82049451207E0CC100E57CF9 /* BookmarkQuery.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -857,6 +863,7 @@
 				829146712051656A0014CFE2 /* Chat.swift in Sources */,
 				822516E92029DF4A009FF0DE /* ChooseCatVC.swift in Sources */,
 				829C214420345C3B00FFFC9B /* RegisterVC.swift in Sources */,
+				82049452207E0CC100E57CF9 /* BookmarkQuery.swift in Sources */,
 				82105EEE204D3BA20050DDD8 /* City.swift in Sources */,
 				82E2CC60203C34C600A375E9 /* LocationsVC.swift in Sources */,
 				82E56E58205EBDF600938CD7 /* SavedSearchesVC.swift in Sources */,
@@ -867,6 +874,7 @@
 				82B97A7620551F4200ADF51B /* StringTrimExtension.swift in Sources */,
 				82914673205165730014CFE2 /* Message.swift in Sources */,
 				82E8BD15202B3DB600684368 /* AdDetailsVC.swift in Sources */,
+				82049450207E080700E57CF9 /* BookmarkCell.swift in Sources */,
 				82ABA87F203AC650000627CB /* FilterBaseVC.swift in Sources */,
 				82E8BD0F202B143800684368 /* CommericalCell.swift in Sources */,
 				82CEA2B52031C7D400E5F017 /* localizations.swift in Sources */,

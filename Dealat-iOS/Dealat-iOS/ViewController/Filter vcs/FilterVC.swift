@@ -66,12 +66,6 @@ class FilterVC: BaseTVC {
     var schedules = [Schedule]()
     var educations = [Education]()
 
-//    var selectedCategory : Cat!{
-//        didSet{
-//            self.filter.category = selectedCategory
-//            self.tfCategory.text = (selectedCategory == nil) ? nil : selectedCategory.category_name
-//        }
-//    }
     
     weak var filterBaseVC : FilterBaseVC!
     
@@ -80,6 +74,40 @@ class FilterVC: BaseTVC {
             self.refreshData()
         }
     }
+    
+    func ifHidden(index : IndexPath) -> Bool{
+        
+        if let cat = self.filter.category,cat.hidden_fields != nil {
+            
+            switch (index.section,index.row){
+                
+            case (1,0): return cat.hidden_fields.contains("type_name")
+            case (1,1): return cat.hidden_fields.contains("type_model_name")
+            case (1,2): return cat.hidden_fields.contains("is_automatic")
+            case (1,3): return cat.hidden_fields.contains("manufacture_date")
+            case (1,4): return cat.hidden_fields.contains("kilometer")
+                
+            case (2,0): return cat.hidden_fields.contains("space")
+            case (2,1): return cat.hidden_fields.contains("rooms_num")
+            case (2,2): return cat.hidden_fields.contains("floor")
+            case (2,3): return cat.hidden_fields.contains("furniture")
+                
+            case (3,0): return cat.hidden_fields.contains("type_name")
+                
+            case (4,0): return cat.hidden_fields.contains("type_name")
+                
+            case (8,0): return cat.hidden_fields.contains("education")
+            case (8,1): return cat.hidden_fields.contains("schedule")
+            case (8,2): return cat.hidden_fields.contains("salary")
+                
+            default:
+                break
+            }
+        }
+        
+        return false
+    }
+
     
     
     override func viewDidLoad() {
@@ -335,6 +363,10 @@ class FilterVC: BaseTVC {
         let h : CGFloat = 54.0
         let h2 : CGFloat = 80
         
+        
+        if ifHidden(index: indexPath){
+            return 0
+        }
         
         // when job hide price
         if self.filter.category != nil{

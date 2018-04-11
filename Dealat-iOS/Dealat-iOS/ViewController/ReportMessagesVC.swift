@@ -36,9 +36,13 @@ class ReportMessagesVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         Communication.shared.report_item(ad_id: self.ad.ad_id.intValue, report_message_id: self.selectedReportMessage.report_message_id.intValue) { (res) in
             self.hideLoading()
             
-            self.dismiss(animated: false, completion: {
-                self.adDetailsVC.parentBase?.showErrorMessage(text: "ReportSuccessful".localized)
-            })
+            self.dismiss(animated: false, completion: nil)
+            self.adDetailsVC.showErrorMessage(text: res.message)
+            
+//            self.dismiss(animated: false, completion: {
+//                self.adDetailsVC.showErrorMessage(text: "SDSDSD")
+//                self.adDetailsVC.showErrorMessage(text: "ReportSuccessful".localized)
+//            })
         }
     }
 

@@ -38,6 +38,7 @@ class Communication: BaseManager {
     let get_data_listsURL = "/items_control/get_data_lists/format/json"
     let get_countriesURL = "/users_control/get_countries/format/json"
     let post_new_itemURL = "/items_control/post_new_item/format/json"
+    let edit_itemURL = "/items_control/edit/format/json"
     let get_commercial_itemsURL = "/commercial_items_control/get_commercial_items/format/json"
     let get_report_messagesURL  = "/items_control/get_report_messages/format/json"
     let report_itemURL  = "/items_control/report_item/format/json"
@@ -53,7 +54,9 @@ class Communication: BaseManager {
     let get_my_itemsURL = "/users_control/get_my_items/format/json"
     let get_my_infoURL = "/users_control/get_my_info/format/json"
     let edit_user_infoURL = "/users_control/edit_user_info/format/json"
-    
+    let item_images_uploadURL = "/items_control/item_images_upload/format/json"
+    let item_video_uploadURL = "/items_control/item_video_upload/format/json"
+
     let get_my_chat_sessionsURL = "/users_control/get_my_chat_sessions/format/json"
     let get_chat_messagesURL = "/users_control/get_chat_messages/format/json"
     let send_msgURL = "/users_control/send_msg/format/json"
@@ -61,6 +64,8 @@ class Communication: BaseManager {
     let mark_searchURL = "/users_control/mark_search/format/json"
     let get_my_bookmarksURL = "/users_control/get_my_bookmarks/format/json"
     let get_bookmark_searchURL = "/items_control/get_bookmark_search/format/json"
+    let delete_bookmarkURL = "/users_control/delete_bookmark/format/json"
+    
     let change_statusURL = "/items_control/change_status/format/json"
     let logoutURL = "/users_control/logout/format/json"
     
@@ -307,7 +312,7 @@ class Communication: BaseManager {
         }
     }
     
-    func report_item(ad_id : Int,report_message_id : Int,  callback :  @escaping (Bool) -> Void){
+    func report_item(ad_id : Int,report_message_id : Int,  callback :  @escaping (CustomResponse) -> Void){
         let url = URL(string: baseURL + report_itemURL)!
         
         let params : [String : Any] = ["ad_id" : ad_id ,"report_message_id" : report_message_id ]
@@ -321,7 +326,7 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    callback(true)
+                    callback(value)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -475,10 +480,8 @@ class Communication: BaseManager {
             params[i.key] = i.value
         }
         params["category_id"] = category_id
-//        params["show_period"] = show_period
         params["title"] = title
         params["description"] = description
-        params["country"] = 1 // TO DO
         
         let images2 = images.filter({!$0.isEmpty})
         if !images2.isEmpty {
@@ -525,6 +528,61 @@ class Communication: BaseManager {
         }
     }
     
+    func edit_item(ad_id : Int,category_id : Int,title : String,description : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
+        
+        let url = URL(string: baseURL + edit_itemURL)!
+        
+        var params : [String : Any] = [:]
+        for i in paramsAdditional{
+            params[i.key] = i.value
+        }
+        params["ad_id"] = ad_id
+        params["category_id"] = category_id
+        params["title"] = title
+        params["description"] = description
+        
+        let images2 = images.filter({!$0.isEmpty})
+        if !images2.isEmpty {
+            if let main_image = images2.first{
+                params["main_image"] = main_image
+            }
+            
+            var imagesArray = [String]()
+            for i in 1..<images2.count{
+                imagesArray.append(images2[i])
+            }
+            
+            if let yy = JSON(imagesArray).rawString(){
+                params["images"] = yy
+            }
+        }
+        
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    
+                    callback(value)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+
     
     func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]?) -> Void){
         let url = URL(string: baseURL + get_commercial_itemsURL)!
@@ -598,7 +656,7 @@ class Communication: BaseManager {
         }
     }
     
-    func verify( code : String,is_multi : Int, callback : @escaping (Bool) -> Void){
+    func verify(code : String,is_multi : Int, callback : @escaping (Bool) -> Void){
         
         let url = URL(string: baseURL + verifyURL)!
         
@@ -1090,6 +1148,34 @@ class Communication: BaseManager {
                     }
                     
                     callback(res)
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func delete_bookmark(user_bookmark_id : Int , callback : @escaping (CustomResponse) -> Void){
+        
+        let url = URL(string: baseURL + delete_bookmarkURL)!
+        let params = ["user_bookmark_id" : user_bookmark_id]
+
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    callback(value)
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                 }

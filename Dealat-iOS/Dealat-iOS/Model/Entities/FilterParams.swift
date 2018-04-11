@@ -46,50 +46,62 @@ class FilterParams{
         }
         if let x = filter.category{
             params["category_id"] = x.category_id.intValue
+            params["category_name"] = x.category_name
         }
+        
+        if let x = filter.city{
+            params["city_id"] = x.city_id.intValue
+            params["city_name"] = x.city_name
+        }
+        
         if let x = filter.location{
             params["location_id"] = x.location_id.intValue
+            params["location_name"] = x.location_name
         }
         
         if let x = filter.type_id{
             params["type_id"] = x.type_id.intValue
+            params["type_name"] = x.name
         }
         
-        if let x = filter.type_id{
-            params["type_id"] = x.type_id.intValue
-        }
         
         if let x = filter.type_model_id{
             params["type_model_id"] = JSON(x.map({$0.type_model_id.intValue})).rawString()
+            params["model_name"] = JSON(x.map({$0.name})).rawString()
         }
         
         if let x = filter.schedule_id{
             params["schedule_id"] = JSON(x.map({$0.schedual_id.intValue})).rawString()
+            params["schedule_name"] = JSON(x.map({$0.name})).rawString()
         }
         
         if let x = filter.education_id{
             params["education_id"] = JSON(x.map({$0.education_id.intValue})).rawString()
+            params["education_name"] = JSON(x.map({$0.name})).rawString()
         }
         
         if let x = filter.manufacture_date{
             params["manufacture_date"] = JSON(x).rawString()
+            params["years_name"] = JSON(x).rawString()
         }
         
         if let x = filter.searchText{
             params["query"] = x
         }
-
         
         if let x = filter.is_new{
             params["is_new"] = x
-        }
+            params["state_name"] = (x == 1) ? "new".localized : "old".localized
+         }
         
         if let x = filter.is_automatic{
             params["is_automatic"] = x
+            params["automatic_name"] = (x == 1) ? "new".localized : "old".localized
         }
         
         if let x = filter.with_furniture{
             params["with_furniture"] = x
+            params["furniture_name"] = (x == 1) ? "yes".localized : "no".localized
         }
         
         if let x = filter.price.min{
@@ -120,19 +132,19 @@ class FilterParams{
             params["space_min"] = x
         }
         if let x = filter.space.max{
-            params["space_num_max"] = x
+            params["space_max"] = x
         }
         if let x = filter.floor.min{
             params["floor_min"] = x
         }
         if let x = filter.floor.max{
-            params["floor_num_max"] = x
+            params["floor_max"] = x
         }
         if let x = filter.salary.min{
             params["salary_min"] = x
         }
         if let x = filter.salary.max{
-            params["salary_num_max"] = x
+            params["salary_max"] = x
         }
         
         return params

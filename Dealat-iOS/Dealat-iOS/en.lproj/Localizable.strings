@@ -72,6 +72,7 @@
 "From" = "From";
 "To" = "To";
 "Show" = "Show";
+"Delete" = "Delete";
 "ShowPeriod" = "Period";
 
 //
@@ -130,3 +131,8 @@
 "TypeHere" = "Type here";
 "ChooseReport" = "Select reason";
 "ReportSuccessful" = "Done";
+
+"DeleteBookmark" = "Are you sure to remove this saved searches?";
+
+"RejectionReason" = "RejectionReason";
+"AdStatus" = "AdStatus";
