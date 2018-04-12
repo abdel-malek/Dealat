@@ -21,6 +21,7 @@ class AD : BaseEntity {
     var publish_date : String!
     var is_featured : JSON!
     var status : JSON!
+    var reject_note : String!
     var price : JSON!
     var main_image : String!
     var main_vedio : String!
@@ -133,6 +134,7 @@ class AD : BaseEntity {
         publish_date <- map["publish_date"]
         is_featured <- map["is_featured"]
         status <- map["status"]
+        reject_note <- map["reject_note"]
         price <- map["price"]
         main_image <- map["main_image"]
         main_vedio <- map["main_vedio"]

@@ -43,7 +43,7 @@ class BaseTVC: UITableViewController,UISearchBarDelegate {
     
     func showLoading(){
         hud.show(in: self.navigationController!.view, animated: false)
-        hud.shadow = JGProgressHUDShadow(color: Theme.Color.red, offset: .zero, radius: 5.0, opacity: 0.2)
+        hud.shadow = JGProgressHUDShadow(color: Theme.Color.red, offset: .zero, radius: 5.0, opacity: 0.2)        
     }
     
     func hideLoading(){

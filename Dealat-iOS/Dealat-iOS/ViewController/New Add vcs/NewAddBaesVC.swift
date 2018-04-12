@@ -10,6 +10,8 @@ import UIKit
 
 class NewAddBaesVC: UIViewController {
 
+    @IBOutlet weak var submitBtn : UIButton!
+    
     var homeVC : HomeVC!
     var embeddedViewController : NewAddVC!
     var ad  : AD!
@@ -17,9 +19,6 @@ class NewAddBaesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
-
-        self.title = "Sell".localized
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -28,6 +27,15 @@ class NewAddBaesVC: UIViewController {
             i.ad = self.ad
             i.homeVC = self.homeVC
             self.addChildViewController(i)
+
+            if i.editMode{
+                self.title = "SellEdit".localized
+                self.submitBtn.setTitle("SubmitEdit".localized, for: .normal)
+            }else{
+                self.title = "Sell".localized
+                self.submitBtn.setTitle("Submit".localized, for: .normal)
+            }
+
         }
     }
     

@@ -48,6 +48,7 @@
 
 //General
 "Sell" = "Submit an Ad";//Sell your item
+"SellEdit" = "Edit the Ad";
 "Category" = "Category";
 "City" = "City";
 "Area" = "Area";
@@ -105,6 +106,7 @@
 
 "Save" = "Save";
 "Submit" = "Submit";
+"SubmitEdit" = "Submit";
 "Search" = "Search";
 "OK" = "OK";
 "Cancel" = "Cancel";

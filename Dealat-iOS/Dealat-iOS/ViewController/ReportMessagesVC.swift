@@ -13,6 +13,9 @@ class ReportMessagesVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var tableViewHeight : NSLayoutConstraint!
     @IBOutlet weak var tableView : UITableView!
     @IBOutlet weak var doneBtn : UIButton!
+    
+    @IBOutlet weak var vv : UIView!
+
 
     var messages = [ReportMessage]()
     var ad : AD!
@@ -25,9 +28,11 @@ class ReportMessagesVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableViewHeight.constant = CGFloat(50 * messages.count)
+        
+        self.vv.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.cancel)))
     }
     
-    @IBAction func cancel(){
+    @objc @IBAction func cancel(){
         self.dismiss(animated: true, completion: nil)
     }
     

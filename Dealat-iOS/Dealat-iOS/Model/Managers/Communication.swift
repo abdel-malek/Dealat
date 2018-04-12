@@ -192,7 +192,7 @@ class Communication: BaseManager {
                         }
                     }
 
-                    for i in value.data["locations"].arrayValue{
+                    for i in value.data["location"].arrayValue{
                         if let obj = i.dictionaryObject, let a = Location(JSON: obj){
                             locations.append(a)
                         }

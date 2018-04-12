@@ -50,15 +50,20 @@ class CommericalCell: UICollectionViewCell {
             
             if imageNew!.index < newAddVC.imagesPaths.count{
 
-                if newAddVC.imagesPaths[imageNew!.index].isEmpty{
+                if newAddVC.imagesPaths[imageNew!.index].isEmpty,imageNew!.imag != nil{
                     if let ii = imageNew!.imag{
                         self.uploadImage(ii)
                     }
                     else{
-
                         self.img.image = imageNew!.imag
                     }
+                }else{
+                    print("ELSE")
+                    if imageNew!.imag == nil{
+                        Provider.sd_setImage(self.img, urlString: newAddVC.imagesPaths[imageNew!.index])
+                    }
                 }
+                
 //                else{
 //                    Provider.sd_setImage(self.img, urlString: newAddVC.imagesPaths[imageNew!.index])
 //                }

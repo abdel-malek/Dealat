@@ -21,6 +21,8 @@ class AdDetailsBaseVC: UIViewController {
     @IBOutlet weak var editBtn : UIButton!
     @IBOutlet weak var deleteBtn : UIButton!
     
+    @IBOutlet weak var sellerLbl : UILabel!
+
     var adDetailsVC : AdDetailsVC!
 
     
@@ -37,21 +39,13 @@ class AdDetailsBaseVC: UIViewController {
         let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
         self.navigationItem.backBarButtonItem = rr
     }
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let i = segue.destination as? AdDetailsVC{
             i.ad = self.ad
             i.parentBase = self
             self.adDetailsVC = i
-            
-            //            i.tamplateId = self.tamplateId
-            
-            //            var cat = ""
-            //            cat += (ad.parent_category_name != nil) ? "\(ad.parent_category_name!)-" : ""
-            //            cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""
-            //            i.category_full_name = "\(cat)"
-            
+
             self.addChildViewController(i)
         }
     }

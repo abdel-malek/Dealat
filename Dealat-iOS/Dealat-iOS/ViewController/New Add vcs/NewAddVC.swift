@@ -19,13 +19,16 @@ import SwiftyJSON
 class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,UITextFieldDelegate,YMSPhotoPickerViewControllerDelegate {
     
     @IBOutlet weak var collectionView : UICollectionView!
-    var homeVC : HomeVC!
+    var homeVC : HomeVC?
     var ad : AD!
     
     let cellIdentifier = "imageCellIdentifier"
-    var images: NSArray! = []
     
+//    var images: NSArray! = []
     var imagesPaths: [String] = []
+    
+    var imagesAssets: [UIImage]! = [UIImage]()
+
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
     
@@ -294,16 +297,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     func setupViews(){
-        
-        //        tfDescription.placeholder = "Description".localized
-        //        tfDescription.placeholderColor = .white
+
+        if self.editMode{
+            self.title = "SellEdit".localized
+        }else{
+            self.title = "Sell".localized
+        }
         
         
         tfDescription.text = "Description".localized
         tfDescription.delegate = self
         tfDescription.textColor = UIColor.white
         
-        //        tfDescription.becomeFirstResponder()
         tfDescription.selectedTextRange = tfDescription.textRange(from: tfDescription.beginningOfDocument, to: tfDescription.beginningOfDocument)
         
         
@@ -319,7 +324,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         // Navigation Item
         //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
-        self.title = "Sell".localized
+
         
         
         self.setPickerViewOn(self.tfCity)
@@ -526,6 +531,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.tableView.reloadData()
     }
     
+    func getDataFromUrl(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            completion(data, response, error)
+            }.resume()
+    }
+
+    
     func setDataForEdit(){
         if self.editMode{
             
@@ -541,9 +553,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                     self.selectedCity = city
                 }
             }
+            
+            print("LOCCCC : \(self.ad.location_id)")
 
             if let location_id = self.ad.location_id{
+                print(self.locations.count)
                 if let loc = self.locations.first(where: {$0.location_id.intValue == location_id.intValue}){
+                    print("sssss : \(loc.location_name)")
+
                     self.selectedLocation = loc
                 }
             }
@@ -560,21 +577,19 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.tfDescription.text = ad.description
 
             
-            let mutableImages: NSMutableArray! = []
-
+//            let mutableImages: [UIImage]! = [UIImage]()
+//
             self.imagesPaths.append(self.ad.main_image)
-            mutableImages.add(self.ad.main_image)
-            
+//
+//            mutableImages.append(self.ad.main_image)
+//
+//            
             for i in self.ad.images{
                 self.imagesPaths.append(i.image)
-                mutableImages.add(i)
+//                mutableImages.append(i)
             }
-            
-//            let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.images)
-//            self.images = NSArray.init(array: mutableImages)
-            
-            
-            self.images = mutableImages.copy() as? NSArray
+//
+//            self.images = mutableImages.copy() as? NSArray
 
 
             print("COUNT imagesPaths : \(imagesPaths.count)")
@@ -950,11 +965,37 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         if self.editMode{
             
             self.showLoading()
-//            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params) { (res) in
-//                self.hideLoading()
-//                self.navigationController?.popViewController(animated: true)
-//                self.homeVC.showErrorMessage(text: res.message)
-//            }
+            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params) { (res) in
+                self.hideLoading()
+                self.navigationController?.popViewController(animated: true)
+                
+                if let vcs = self.navigationController?.viewControllers{
+                    for i in vcs{
+                        if i.isKind(of: AdDetailsBaseVC.self){
+                            if let vc = i as? AdDetailsBaseVC{
+//                                vc.adDetailsVC.getRefreshing()
+                                
+                                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue) { (res) in
+                                    vc.adDetailsVC.hideLoading()
+                                    vc.adDetailsVC.ad = res
+                                    vc.ad = res
+                                    
+                                    let im = IMG()
+                                    im.image = self.ad.main_image
+                                    self.ad.images.insert(im, at: 0)
+                                    
+                                    vc.refreshBar()
+                                    vc.adDetailsVC.refreshData()
+                                }
+                                
+                                vc.showErrorMessage(text: res.message)
+                            }
+                        }
+                    }
+                }
+                
+                self.homeVC?.showErrorMessage(text: res.message)
+            }
             
             
         }else{
@@ -963,7 +1004,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.hideLoading()
                 
                 self.navigationController?.popViewController(animated: true)
-                self.homeVC.showErrorMessage(text: res.message)
+                self.homeVC?.showErrorMessage(text: res.message)
             }
         }
         
@@ -983,7 +1024,7 @@ extension NewAddVC{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
         
-        let img : UIImage! = (images != nil && indexPath.row < images.count) ?  self.images.object(at: indexPath.row) as? UIImage : nil
+        let img : UIImage! = (imagesAssets  != nil && indexPath.row < imagesAssets.count) ?  self.imagesAssets[indexPath.row] : nil
         cell.newAddVC = self
         cell.imageNew = (indexPath.row,img)
         
@@ -998,11 +1039,11 @@ extension NewAddVC{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row + 1)
         
-        if indexPath.row >= self.images.count{
+        if indexPath.row >= self.imagesAssets.count{
             let pickerViewController = YMSPhotoPickerViewController.init()
             
             var cnt : Int = 8
-            cnt -= (self.images != nil) ? self.images.count  : 0
+            cnt -= (self.imagesAssets != nil) ? self.imagesAssets.count  : 0
             pickerViewController.numberOfPhotoToSelect = UInt(cnt)
             
             pickerViewController.theme.titleLabelTextColor = Theme.Color.White
@@ -1021,11 +1062,12 @@ extension NewAddVC{
             
             alert.addAction(UIAlertAction.init(title: "Make as Main", style: .default, handler: { (ac) in
                 
-                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.images)
-                let temp = mutableImages.object(at: indexPath.row)
-                mutableImages.removeObject(at: indexPath.row)
+//                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.imagesAssets)
+                var mutableImages : [UIImage]! = self.imagesAssets
+                let temp = mutableImages[indexPath.row]
+                mutableImages.remove(at: indexPath.row)
                 mutableImages.insert(temp, at: 0)
-                self.images = NSArray.init(array: mutableImages)
+                self.imagesAssets = mutableImages
                 
                 if indexPath.row < self.imagesPaths.count{
                     let temp2 = self.imagesPaths[indexPath.row]
@@ -1056,9 +1098,9 @@ extension NewAddVC{
 extension NewAddVC{
     
     @objc func deletePhotoImage(_ index: Int) {
-        let mutableImages: NSMutableArray! = NSMutableArray.init(array: images)
-        mutableImages.removeObject(at: index)
-        self.images = NSArray.init(array: mutableImages)
+        var mutableImages: [UIImage]! = self.imagesAssets
+        mutableImages.remove(at: index)
+        self.imagesAssets =  mutableImages
         
         if index < self.imagesPaths.count{
             self.imagesPaths.remove(at: index)
@@ -1096,7 +1138,7 @@ extension NewAddVC{
     
     func photoPickerViewController(_ picker: YMSPhotoPickerViewController!, didFinishPicking image: UIImage!) {
         picker.dismiss(animated: true) {
-            self.images = [image]
+            self.imagesAssets = [image]
             self.collectionView.reloadData()
         }
     }
@@ -1110,27 +1152,25 @@ extension NewAddVC{
             options.resizeMode = .exact
             options.isSynchronous = true
             
-            let mutableImages: NSMutableArray! = []
+            var mutableImages: [UIImage]! = [UIImage]()
             
             //            let w = self.collectionView.frame.width - 12
             //            let customSize = CGSize(width: w / 4, height: w / 4)
             
-            for i in self.images{
-                mutableImages.add(i)
+            for i in self.imagesAssets{
+                mutableImages.append(i)
             }
             
             for asset: PHAsset in photoAssets
             {
-                
                 imageManager.requestImageData(for: asset, options: options, resultHandler: { (dat, ss, oo, rr) in
                     self.imagesPaths.append("")
-                    mutableImages.add(UIImage.init(data: dat!)!)
+                    mutableImages.append(UIImage.init(data: dat!)!)
                 })
-                
             }
             
             
-            self.images = mutableImages.copy() as? NSArray
+            self.imagesAssets = mutableImages
             self.collectionView.reloadData()
         }
     }
@@ -1390,7 +1430,7 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
             self.selectedCity = self.cities[row - 1]
         case 1: // Locations
             if row == 0{
-                self.selectedCity = nil
+                self.selectedLocation = nil
                 return
             }
             

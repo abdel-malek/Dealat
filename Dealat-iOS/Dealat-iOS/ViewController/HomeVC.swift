@@ -198,7 +198,7 @@ class HomeVC: BaseVC {
         }
         
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 2 / 3
-        SideMenuManager.default.menuAllowPushOfSameClassTwice = false
+        SideMenuManager.default.menuAllowPushOfSameClassTwice = true
         SideMenuManager.default.menuPresentMode = .menuSlideIn // YAHYA
         SideMenuManager.default.menuAnimationPresentDuration = 0.25 // YAHYA
         

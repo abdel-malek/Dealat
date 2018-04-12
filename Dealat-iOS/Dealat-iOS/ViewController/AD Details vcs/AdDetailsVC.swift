@@ -33,7 +33,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
 //    @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
     @IBOutlet weak var catLbl : UILabel!
-    @IBOutlet weak var sellerLbl : UILabel!
+//    @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var negotiableLbl : UILabel!
     @IBOutlet weak var cityLbl : UILabel!
     @IBOutlet weak var locationLbl : UILabel!
@@ -168,6 +168,20 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.title = ad.title
         Provider.sd_setImage(self.img, urlString: ad.main_image)
         
+        
+        if User.isRegistered(){
+            let same = self.ad.seller_id.intValue == User.getID()
+            if same{
+                if self.ad.status.intValue != 5{
+                    self.adRejectionStack.isHidden = true
+                }else{
+                    self.adRejectionLbl.text = self.ad.reject_note
+                }
+                
+                self.adStatusLbl.text = self.ad.getStatus().0
+            }
+        }
+        
         var number = ""
         let n = 5 - self.ad.ad_id.stringValue.count
         for _ in 0..<n{
@@ -203,7 +217,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
 //        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
         self.locationLbl.text = ad.location_name
         
-        self.sellerLbl.text = ad.seller_name
+//        self.sellerLbl.text = ad.seller_name
+        self.parentBase?.sellerLbl.text = ad.seller_name
         self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
         self.desLbl.text = ad.description
         
