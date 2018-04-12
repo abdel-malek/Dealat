@@ -49,6 +49,7 @@
 	                        <tr>
 	                          <th>#</th>
 	                          <th><?php echo $this->lang->line('created_at') ?></th>
+	                          <th><?php echo $this->lang->line('title') ?></th>
 	                          <th><?php echo $this->lang->line('position') ?></th>
 	                          <th><?php echo $this->lang->line('show_status') ?></th>
 	                          <th><?php echo $this->lang->line('details') ?></th>

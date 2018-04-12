@@ -88,13 +88,15 @@ $lang['commercial_ads_manage'] = "Commercials Manage";
 $lang['users_manage'] = "Users Manage"; 
 $lang['data_manage']= 'Data Manage';
 $lang['types']= 'Brands';
+$lang['pending_ads']= 'Pending ads';
+$lang['reported_ads_management'] = 'Reported Ads Manage';
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
 $lang['status'] = "Ad Status";
 $lang['all'] = "All";
 $lang['created_at'] = "Created at";
-$lang['tamplate_name'] = 'Type';
+$lang['tamplate_name'] = 'Template';
 $lang['title'] = 'Title';
 $lang['publish_date'] = 'Publish Date';
 $lang['price'] = 'Price';
@@ -193,7 +195,21 @@ $lang['all_types_list'] = 'All Brands list';
 $lang['template'] = 'For Template';
 $lang['type_models'] = 'Models';
 $lang['models_list'] = 'Models List';
+$lang['type_details'] = 'Brand Details';
+$lang['type_model_details'] = 'Model Details';
+$lang['add_type'] = 'Add new Brand';
 
+//reported ads manage
+$lang['anknown'] = 'Un known';
+$lang['reports'] = 'Reports';
+$lang['reports_list'] ='All Reports for this Ad';
+$lang['reported_ads_list'] = 'All Reported Ads list';
+$lang['report_msg'] = 'Report Message';
+
+//education manage
+$lang['educations'] = 'Educations';
+$lang['educations_list'] = 'Education Options list';
+$lang['add_education'] = 'Add new Education';
 
 $lang['log_out'] = 'Log Out';
 

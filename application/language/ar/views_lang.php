@@ -86,6 +86,8 @@ $lang['ads_management'] = "إدارة إعلانات المستخدمين";
 $lang['commercial_ads_manage'] = "إدارة الإعلانات التجارية";
 $lang['data_manage']= 'إدارة البيانات';
 $lang['types']= 'الماركات';
+$lang['pending_ads']= 'الإعلانات المنتظرة';
+$lang['reported_ads_management'] = 'إدارة التبليغات';
 
 
 //ads manage
@@ -93,7 +95,7 @@ $lang['users_ads_list'] = "قائمة إعلانات المستخدمين";
 $lang['status'] = "حالة الإعلان";
 $lang['all'] = "الكل";
 $lang['created_at'] = "تاريخ الإنشاء";
-$lang['tamplate_name'] = 'من نوع';
+$lang['tamplate_name'] = 'القالب';
 $lang['publish_date'] = 'تاريخ النشر';
 $lang['title'] = 'العنوان';
 $lang['price'] = 'السعر';
@@ -181,6 +183,10 @@ $lang['empty_table'] = "لا يوجد ";
 $lang['add_main_category'] = " إضافة صنف رئيسي";
 $lang['add_subcategory_for'] = " إضافة صنف فرعي لـ";
 $lang['category_details'] = "تفاصيل الصنف";
+$lang['arabic_name'] = "الاسم العربي";
+$lang['english_name'] = "الاسم الانغليزي ";
+$lang['templates'] = 'القالب';
+$lang['fields_status'] = 'حالة الحقول';
 
 //types manage
 $lang['types'] = 'الماركات';
@@ -188,6 +194,21 @@ $lang['all_types_list'] = 'قائمة جميع الماركات';
 $lang['template'] = 'تابعة للقالب';
 $lang['type_models'] = 'موديلات';
 $lang['models_list'] = 'قائمة الموديلات';
+$lang['type_details'] = 'تفاصيل الماركة';
+$lang['type_model_details'] = 'تفاصيل الموديل';
+$lang['add_type'] = 'إضافة ماركة جديدة';
+
+//reported ads manage
+$lang['anknown'] = 'غير معروف';
+$lang['reports'] = 'التبليغات';
+$lang['reports_list'] ='جميع التبليغات من أجل هذا الإعلان';
+$lang['reported_ads_list'] = 'قائمة الإعلانات المبلغ عنها';
+$lang['report_msg'] = 'رسالة التبليغ';
+
+//education manage
+$lang['educations'] = 'المستويات التعليمية';
+$lang['educations_list'] = 'قائمة خيارات المستوى التعليمي';
+$lang['add_education'] = 'إضافة مستوى تعليمي';
 
 
 $lang['log_out'] = 'تسجيل خروج';

@@ -18,4 +18,11 @@ class Type_models extends MY_Model {
 		return parent::get();
 	}
 	
+	public function get_all_by_type($type_id)
+	{
+	   $this->db->where('is_active' , 1);
+	   $this->db->where('type_id' , $type_id);
+	   return parent::get();
+	}
+	
 }

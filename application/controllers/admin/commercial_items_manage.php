@@ -40,6 +40,11 @@ class Commercial_items_manage extends REST_Controller {
 			$recorde[] = $row -> commercial_ad_id;
 			$recorde[] = $row -> created_at;
 			$recorde[] = $row->category_name;
+			if($row -> title != null){
+			   $recorde[] = $row -> title;
+			}else{
+			   $recorde[] = $this->lang->line('not_set'); 
+			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
 			$recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
 			$recorde[] = $row -> category_id;
@@ -57,6 +62,11 @@ class Commercial_items_manage extends REST_Controller {
 			$recorde = array();
 			$recorde[] = $row -> commercial_ad_id;
 			$recorde[] = $row -> created_at;
+		    if($row -> title != null){
+			   $recorde[] = $row -> title;
+			}else{
+			   $recorde[] = $this->lang->line('not_set'); 
+			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
 			$recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
 			$recorde[] = $row->position;

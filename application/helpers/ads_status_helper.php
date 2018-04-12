@@ -59,15 +59,27 @@ class STATUS{
 		}
 	}
 	
-	public static function get_list()
+	public static function get_list($lang = 'en')
 	{
-		return array(
-		   1 => 'pending',
-		   2 => 'Accepted',
-		   //3 => 'Expired',
-		   4 => 'Hidden',
-		   5 => 'Rejected',
-		   6 => 'Deleted'
-		);
+		if($lang == 'en'){
+	      return array(
+			   1 => 'pending',
+			   2 => 'Accepted',
+			   //3 => 'Expired',
+			   4 => 'Hidden',
+			   5 => 'Rejected',
+			   6 => 'Deleted'
+		  );
+		}else{
+		  return array(
+			   1 => 'قيد الانتظار',
+			   2 => 'مقبول',
+			   //3 => 'منتهي',
+			   4 => 'مخفي',
+			   5 => 'مرفوض',
+			   6 => 'محذوف'
+		  );
+		}
+
 	}
 }

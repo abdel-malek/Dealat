@@ -158,6 +158,11 @@ class Ads extends MY_Model {
 		  $this->delete_images($deleted_images);
 	    }
         
+		//delete unwanted vedios
+	    if($this->input->post('deleted_videos')){
+	   	  $deleted_vedios =  json_decode($this -> input -> post('deleted_videos'), true);
+		  $this->delete_videos($deleted_vedios);
+	    }
 		
 		$this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
@@ -213,16 +218,31 @@ class Ads extends MY_Model {
 	   	 	 $data['description'] = $this->input->post('description');
 	   	 }
 	   }
-	   if ($this->input->post('main_image')) {
+	   if ($this->input->post('main_image')!= null) {
 		  $data['main_image'] = $this->input->post('main_image');
 	   }
 	   
+	   if ($this->input->post('main_video')!= null) {
+	   	if(trim($this->input->post('description')) == -1){
+	   		$data['main_video'] = NULL;
+	   	}else{
+	   	    $data['main_video'] = $this->input->post('main_video');
+	   	}
+	   }
+	   
+	   // delete unwanted images
 	   if($this->input->post('deleted_images')){
 	   	  $deleted_images =  json_decode($this -> input -> post('deleted_images'), true);
 		  $this->db->where_in('image'  , $deleted_images);
 		  $this->db->where('ad_id'  , $ad_id);
 		  $this->db->delete('ad_images');
 		  $this->delete_images($deleted_images);
+	   }
+	   
+	   	//delete unwanted vedios
+	   if($this->input->post('deleted_videos')){
+	   	  $deleted_vedios =  json_decode($this -> input -> post('deleted_videos'), true);
+		  $this->delete_videos($deleted_vedios);
 	   }
 	   
 	   //add new second images
@@ -266,11 +286,20 @@ class Ads extends MY_Model {
 	   }
   }
 
-  public function delete_images($images_array , $main_image = null)
+  public function delete_images($images_array)
   {
   	  $ok = true;
       foreach ($images_array as $image_path) {
       	  $ok = unlink(PUBPATH.$image_path);	
+      }
+	  return $ok;
+  }
+  
+  public function delete_videos($videos_array)
+  {
+  	  $ok = true;
+      foreach ($videos_array as $path) {
+      	  $ok = unlink(PUBPATH.$path);	
       }
 	  return $ok;
   }
@@ -299,7 +328,7 @@ class Ads extends MY_Model {
   // }
  
   public function serach_with_filter($lang , $query_string = null , $category_id = null)
-  {
+   {
 	 //filter
 	 if($category_id != null){
 	 	$this->load->model('data_sources/categories');
@@ -371,7 +400,7 @@ class Ads extends MY_Model {
 		$this->db->where('price >= ' , $this->input->get('price_min')); 
 	 }
      return parent::get(); 
-  }
+   }
 
  
   public function get_lists($lang)
@@ -399,7 +428,7 @@ class Ads extends MY_Model {
 	   }
 	}
 	
-	public function get_all_ads_with_details($lang)
+   public function get_all_ads_with_details($lang)
 	{
 	    $this->db->select('ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
@@ -418,7 +447,7 @@ class Ads extends MY_Model {
 		return parent::get();
 	}
 	
-	public function get_user_ads($user_id , $lang)
+  public function get_user_ads($user_id , $lang)
 	{
 	  $this->db->select('ads.* ,
 	                  categories.'.$lang.'_name as category_name ,
@@ -439,7 +468,7 @@ class Ads extends MY_Model {
 	  return parent::get();
 	}
 
-    public function get_seller_id($ad_id)
+  public function get_seller_id($ad_id)
     {
        $this->db->select('user_id');
 	   $q = parent::get($ad_id);
@@ -449,6 +478,30 @@ class Ads extends MY_Model {
 	   	 return null;
 	   }
     }
+
+  public function get_pending_ads($lang)
+   {
+	   $this->db->select('ads.* ,
+		                  categories.'.$lang.'_name as category_name ,
+		                  categories.tamplate_id,
+		                  c.'.$lang.'_name as parent_category_name ,
+		                  users.name as seller_name
+		                 ');
+		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+		$this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
+	    $this->db->where('status' , STATUS::PENDING);
+		return parent::get();
+   }
+
+ public function get_pending_ads_counts()
+   { 
+   	  $this->db->select('count(ad_id) as pending_count');
+	  $this->db->where('status' , STATUS::PENDING);
+	  $q = parent::get();
+	  return $q[0]->pending_count;
+   }
+   
 
 
 }

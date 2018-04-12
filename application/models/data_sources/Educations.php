@@ -10,11 +10,14 @@ class Educations extends MY_Model {
 		parent::__construct();
 	}
 	
-   public function get_all($lang)
+   public function get_all($lang = null)
 	{
-		$this->db->select($lang.'_name as name , education_id');
+		if($lang != null){
+			$this->db->select($lang.'_name as name , education_id');
+		}
 		$this->db->where('is_active' , 1);
 		return parent::get();
 	}
+	
 	
 }

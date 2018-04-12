@@ -8,6 +8,7 @@
         <!-- /footer content -->
       </div>
     </div>
+    <?php $this->load->view('admin/ads/details_modal') ?>
     <?php $this->load->view('admin/commercial_ads/details_modal') ?>
     <!-- jQuery -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -94,7 +95,13 @@
        	 lang_array['ad_show'] = 'Ad is Shown' ;
        	 lang_array['ad_deleted'] = 'Ad is Deleted' ;
        	 lang_array['ad_saved'] = 'Ad is saved' ;
+       	 lang_array['type_saved'] = 'Brand is saved' ;
+       	 lang_array['type_deleted'] = 'Brand is Deleted' ;
+         lang_array['model_saved'] = 'Model is saved' ;
        	 lang_array['show_status_changed'] = 'Ad show status has been changed' ;
+       	 lang_array['names_validation'] = 'English and arabic names ara requierd.' ;
+       	 lang_array['note'] = 'Please Note' ;
+       	 lang_array['new_pending'] = 'A new pending ad is added' ;
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -118,7 +125,13 @@
        	 lang_array['ad_show'] = 'تم إظهار الإعلان' ;
        	 lang_array['ad_deleted'] = 'تم حذف الإعلان' ;
        	 lang_array['ad_saved'] = 'تم حفظ الإعلان' ;
+       	 lang_array['type_saved'] = 'تم حفظ الماركة' ;
+       	 lang_array['model_saved'] = 'تم حفظ الموديل' ;
+       	 lang_array['type_deleted'] = 'تم حذف الماركة' ;
          lang_array['show_status_changed'] = 'تم تغيير حالة ظهور الإعلان بنجاح' ;
+       	 lang_array['names_validation'] = 'يجب إدخال الاسم العربي والاسم الانغليزي' ;
+       	 lang_array['note'] = 'ملاحظة' ;
+       	 lang_array['new_pending'] = "يوجد لديك إعلان قيد الانتظار جديد" ;
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -142,6 +155,8 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/main_commercials.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/category.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/types.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/reported_ads.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/educations.js"></script>
    
   </body>
 </html>

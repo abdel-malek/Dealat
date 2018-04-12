@@ -3,11 +3,11 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b id="pending_label"><?php echo $this->lang->line('users_ads_list') ?></b></h3>  
+	                 <h3><b><?php echo $this->lang->line('reported_ads_list') ?></b></h3>  
 	              </div>
 	        
 	              	 <!-- filter form -->
-		             <div class="row" id="filter_panel">
+		             <!-- <div class="row" id="filter_panel">
 		              <div class="col-md-12 col-sm-12 col-xs-12">
 		                <div class="x_panel">
 		                  <div class="x_content" >
@@ -30,7 +30,7 @@
 		                  </div>
 		                </div>
 		              </div>
-		            </div>
+		            </div> -->
 		             <!-- /filter form -->
 	              
 	            </div>
@@ -41,23 +41,18 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">
 	                  <div class="x_content">
-	                  	<h2>
+	                  	<!-- <h2>
 	                  		<span id="status_count_label"> </span>
 	                  		<span class="countIcon"><span class="badge bg-green pending_count">5</span></span>
-	                    </h2>
-	                    <table id="ads_table" class="table table-striped table-bordered">
+	                    </h2> -->
+	                    <table id="reported_ads_table" class="table table-striped table-bordered">
 	                      <thead>
 	                        <tr>
-	                          <th>#</th>
-	                          <th><?php echo $this->lang->line('created_at') ?></th>
-	                          <th><?php echo $this->lang->line('tamplate_name') ?></th>
-	                          <th><?php echo $this->lang->line('category') ?></th>
+	                          <th><?php echo $this->lang->line('ad_number') ?></th>
 	                          <th><?php echo $this->lang->line('title') ?></th>
-	                          <th><?php echo $this->lang->line('publish_date') ?></th>
-	                          <th><?php echo $this->lang->line('price') ?></th>
-	                          <th><?php echo $this->lang->line('location') ?></th>
 	                          <th><?php echo $this->lang->line('status') ?></th>
 	                          <th><?php echo $this->lang->line('details') ?></th>
+	                          <th><?php echo $this->lang->line('reports') ?></th>
 	                        </tr>
 	                      </thead>
 	                      <tbody>
@@ -69,6 +64,7 @@
 	            </div>
 	          </div>
 	        </div>
+	        <?php $this->load->view('admin/ads/reported_ads/reports_modal') ?>
 	       <!-- </div>
 	      </div> -->
         

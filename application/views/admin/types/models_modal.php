@@ -8,14 +8,35 @@
           <h4 class="modal-title" id="myModalLabel"><?php echo $this->lang->line('models_list') ?></h4>
         </div>
         <div class="modal-body">
-              
+        	<div class="row">
+	            <div class="col-md-12 col-sm-12 col-xs-12">
+	                <div class="x_panel">
+	                  <div class="x_content">
+	                    <div class="pull-left">
+                           <button onclick="show_manage_models_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li></button>
+                        </div>
+			             <table id="models_table"  class="table table-bordered order_stock_items_class" style="width:100% !important">
+			               <thead>
+			                 <tr>
+			                  <th>#</th>
+			                  <th><?php echo $this->lang->line('english_name') ?></th>
+			                  <th><?php echo $this->lang->line('arabic_name') ?></th>
+			                  <th><?php echo $this->lang->line('edit') ?></th>
+			                 </tr>
+			                </thead>
+			               <tbody>
+			               </tbody>
+			             </table>
+			           </div>
+	                </div>
+	              </div>
+	         </div>   
+          </div>
         </div>
-        <!-- </div> -->
-        <input type="hidden"  id="post_id"/>
+        <input  type='hidden' id='model_type_id'/>
         <div class="modal-footer">
-          <!-- <button   onclick="save_comm()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="delete_comm()" id=""  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button> -->
         </div>
       </div>
     </div>
-  </div>
+     <?php $this->load->view('admin/types/type_model_manage_modal') ?>
+  <!-- </div> -->

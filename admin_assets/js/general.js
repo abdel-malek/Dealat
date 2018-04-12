@@ -9,7 +9,7 @@
        });
        
        
-      $( document ).ajaxStart(function() {
+     $( document ).ajaxStart(function() {
         // console.log('show');
          $('.dim-overlay').css('display','block');
          $('.loader').css('display','block');

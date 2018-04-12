@@ -24,6 +24,18 @@ class Items_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
 	
+	public function get_pending_items_get()
+	{
+		$ads_list = $this->ads->get_pending_ads($this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
+	}
+	
+	public function get_pending_count_get()
+	{
+		$count = $this->ads->get_pending_ads_counts();
+		$this->response(array('status' => true, 'data' =>$count, 'message' => ''));
+	}
+	
 	public function get_item_details_get()
     {
         $user_id = null;
@@ -64,6 +76,9 @@ class Items_control extends REST_Controller {
 		     'is_negotiable' => $this->input->post('is_negotiable'),
 		    // 'status' => 2    // temp
 		   );
+		   if($this->input->post('main_video')){
+		   	  $basic_data['main_video'] = $this->input->post('main_video');
+		   }
 		   $main_image = null;
 		   if ($this->input->post('main_image')) {
 			  $main_image = $this->input->post('main_image');
@@ -105,20 +120,47 @@ class Items_control extends REST_Controller {
     }
 
    public function item_images_upload_post()
-	{
-	 //  $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
-	     $image_name = date('m-d-Y_hia').'-'.'1';
-	      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
-	      if (isset($image['image'])) {
-	          $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
-	          $this -> response(array('status' => true, 'data' => $image_path, 'message' => $this->lang->line('sucess')));
-	      }else{
-	           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
-	      }
-	}
+   {
+      $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+      $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
+      if (isset($image['image'])) {
+          $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
+          $this -> response(array('status' => true, 'data' => $image_path, 'message' => $this->lang->line('sucess')));
+      }else{
+           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+      }
+   }
 	
-	public function delete_images_post()
-	{
+   public function item_video_upload_post()
+   {
+   	  $vedio_name = date('m-d-Y_hia').'-1';
+   	 // $vedio_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+	  $vedio = upload_attachement($this, ADS_VEDIO_PATH , $vedio_name, true); 
+	  if (isset($vedio['video'])) {
+          $vedio_path =  ADS_VEDIO_PATH.$vedio['video']['upload_data']['file_name'];
+          $this -> response(array('status' => true, 'data' => $vedio_path, 'message' => $this->lang->line('sucess')));
+      }else{
+          $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+      }
+   }
+   
+  public function delete_vedios_post()
+   {
+        $videos = $this -> input -> post('videos');
+		if(!$videos){
+			throw new Parent_Exception('You have to provide videos array');
+		}
+		$videos_array = json_decode($videos, true);
+	    $deleted = $this->ads->delete_videos($videos_array);
+		if($deleted){
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
+		}else{
+		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		}
+   }	
+	
+  public function delete_images_post()
+   {
 		$images = $this -> input -> post('images');
 		if(!$images){
 			throw new Parent_Exception('You have to provide images array');
@@ -130,19 +172,19 @@ class Items_control extends REST_Controller {
 		}else{
 		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
-	}
+   }
 
 	
-	public function search_get()
-	{
+  public function search_get()
+   {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$resuts = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
 		$this->response(array('status' => true, 'data' =>$resuts, 'message' => $this->lang->line('sucess')));
-	}
+   }
 	
-	public function get_bookmark_search_get()
-	{
+  public function get_bookmark_search_get()
+   {
 		$this->load->model('data_sources/user_search_bookmarks');
 		$bookmark_id = $this->input->get('user_bookmark_id');
 		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id);
@@ -316,9 +358,5 @@ class Items_control extends REST_Controller {
 			}
 		}
    	}
-       
-
-	
-	
 
 }

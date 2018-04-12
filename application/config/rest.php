@@ -194,9 +194,8 @@ $config['auth_override_class_method']['items_control']['item_images_upload'] = '
 $config['auth_override_class_method']['items_control']['delete_images'] = 'none';
 $config['auth_override_class_method']['items_control']['get_report_messages'] = 'none';
 $config['auth_override_class_method']['items_control']['report_item'] = 'none';
-
-$config['auth_override_class_method']['items_control']['test'] = 'none';
-
+$config['auth_override_class_method']['items_control']['get_pending_count'] = 'none';
+$config['auth_override_class_method']['items_control']['get_pending_items'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';
@@ -212,13 +211,11 @@ $config['auth_override_class_method']['users_control']['register'] = 'none';
 $config['auth_override_class_method']['users_control']['verify'] = 'none';
 $config['auth_override_class_method']['users_control']['get_countries'] = 'none';
 $config['auth_override_class_method']['users_control']['upload_personal_image'] = 'none';
-//$config['auth_override_class_method']['users_control']['edit_user_profile'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['get_commercial_items'] = 'none';
-
-//to be deleted 
-//$config['auth_override_class_method']['items_control']['post_new_item'] = 'none';
 $config['auth_override_class_method']['items_control']['get_data'] = 'none';
 $config['auth_override_class_method']['items_control']['action'] = 'none';
+$config['auth_override_class_method']['data_control']['get_type_info'] = 'none';
+$config['auth_override_class_method']['data_control']['get_type_model_info'] = 'none';
 
 
 
@@ -230,12 +227,15 @@ $config['auth_override_class_method']['categories_manage']['edit'] = 'none';
 $config['auth_override_class_method']['categories_manage']['check_child_exsist'] = 'none';
 $config['auth_override_class_method']['items_manage']['index'] = 'none';
 $config['auth_override_class_method']['items_manage']['all'] = 'none';
+$config['auth_override_class_method']['items_manage']['get_all_reported_items'] = 'none';
+$config['auth_override_class_method']['items_manage']['load_reported_items_page'] = 'none';
+$config['auth_override_class_method']['items_manage']['get_item_reports'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['index'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['load_main_manage_page'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['get_main'] = 'none';
 $config['auth_override_class_method']['commercial_items_manage']['get_without_main'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['get_info'] = 'none';
-$config['auth_override_class_method']['commercial_items_control']['item_images_upload'] = 'none';
+//$config['auth_override_class_method']['commercial_items_control']['item_images_upload'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['delete_image'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['save'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['delete'] = 'none';
@@ -245,6 +245,14 @@ $config['auth_override_class_method']['users_manage']['index'] = 'none';
 $config['auth_override_class_method']['users_manage']['change_language'] = 'none';
 $config['auth_override_class_method']['data_manage']['load_types_page'] = 'none';
 $config['auth_override_class_method']['data_manage']['get_all_types'] = 'none';
+$config['auth_override_class_method']['data_manage']['get_types_models'] = 'none';
+$config['auth_override_class_method']['data_manage']['add_type'] = 'none';
+$config['auth_override_class_method']['data_manage']['edit_type'] = 'none';
+$config['auth_override_class_method']['data_manage']['delete_type'] = 'none';
+$config['auth_override_class_method']['data_manage']['save_type_model'] = 'none';
+$config['auth_override_class_method']['data_manage']['get_all_educations'] = 'none';
+$config['auth_override_class_method']['data_manage']['load_educations_page'] = 'none';
+$config['auth_override_class_method']['data_manage']['save_education'] = 'none';
 
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';

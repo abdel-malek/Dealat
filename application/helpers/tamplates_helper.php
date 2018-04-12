@@ -44,7 +44,7 @@ class TAMPLATES {
 	      }
 	  }
 
-   public function get_templates_with_types($lang = 'en')
+   public static function get_templates_with_types($lang = 'en')
    {
        if($lang == 'en'){
       	 return array(

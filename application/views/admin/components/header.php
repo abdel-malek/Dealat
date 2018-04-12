@@ -88,7 +88,7 @@
               </div>
               <div class="profile_info">
                 <span><?php echo $this->lang->line('welcome') ?>,</span>
-                <h2>Ola</h2>
+                <!-- <h2>Ola</h2> -->
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -103,6 +103,9 @@
  				 	
  				  <!-- ads manage -->
                   <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('ads_management') ?></a></li>
+                  
+                  <!-- reported ads manage -->
+                  <li><a href="<?php echo base_url('index.php/admin/items_manage/load_reported_items_page'); ?>"><i class="fa fa-ban"></i><?php echo $this->lang->line('reported_ads_management') ?></a></li>
                   
                   <!-- user manage  -->
                   <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
@@ -119,9 +122,10 @@
                   <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-tags"></i><?php echo $this->lang->line('categories_management') ?></a></li>
                   
                   <!-- data manage -->
-                  <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('data_manage') ?><span class="fa fa-chevron-down"></a>
+                  <li><a><i class="fa fa-database"></i><?php echo ' ' ?><?php echo $this->lang->line('data_manage') ?><span class="fa fa-chevron-down"></a>
                  	 <ul id="" class="nav child_menu">
                  	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
+                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_educations_page'); ?>"><?php echo $this->lang->line('educations') ?></a></li>
                  	 </ul>
                   </li>
         
@@ -147,21 +151,8 @@
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href=""><i class="fa fa-sign-out pull-right"></i><?php echo $this->lang->line('log_out') ?></a></li>
                   </ul>
-                </li>
-                
-                <!-- pending ads --
-                <li role="presentation" class="dropdown pending_orders_dropdown" > 
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                  	<b></b>
-                  	<span class=" fa fa-angle-down"></span>
-                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green"></span> 
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu" style="width:400px !important; overflow-y:scroll; max-height: 400px;">
-
-                  </ul>
                 </li> -->
-                 
+                
                 <!-- language switch -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -173,7 +164,19 @@
                     </ul>
                 </li>
                 
-                
+                <!-- pending ads -->
+                <!-- <li role="presentation" class="dropdown pending_orders_dropdown" > 
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                  	<b><?php echo $this->lang->line('pending_ads') ?></b>
+                  	<span class=" fa fa-angle-down"></span>
+                     <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green" id='ads_count'></span> 
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu" style="width:400px !important; overflow-y:scroll; max-height: 400px;">
+
+                  </ul>
+                </li> -->
+                 
               </ul> 
             </nav>
           </div>

@@ -62,7 +62,7 @@ class Users extends MY_Model {
 		}else{
 			return false;
 		}
-    }
+   }
 
    public function login($phone , $password)
    {

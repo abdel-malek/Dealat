@@ -47,11 +47,25 @@
 		      	         </div>
 		             </div>
 		             <div class="form-group">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('status') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_status'> pending</label>
+		      	         </div>
+		             </div>
+		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('created_at') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_creation_date'> 2-19-2017</label>
 		      	         </div>
 		             </div>
+		             
+		             <div class="form-group">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('category') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_category'></label>
+		      	         </div>
+		             </div>
+		             
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('location') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -59,12 +73,6 @@
 		      	         </div>
 		             </div>
 		             
-		             <div class="form-group">
-		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('status') ?></label>
-		      	         <div class="col-md-6 col-sm-6 col-xs-12">
-		      	           <label class="form-control"  id='ad_status'> pending</label>
-		      	         </div>
-		             </div>
 		             
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('price') ?></label>
@@ -251,7 +259,7 @@
           <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
           <button style="display: none"  onclick="perform_action('accept')"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('accept_ad') ?></button>
         </div>
-        <?php $this->load->view('admin/ads/reject_ad_modal') ?>
       </div>
     </div>
   </div>
+  <?php $this->load->view('admin/ads/reject_ad_modal') ?>
