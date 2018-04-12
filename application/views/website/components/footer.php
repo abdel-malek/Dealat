@@ -222,6 +222,12 @@
 			autoHide: true,
 			zIndex: 2000
 		});
+		
+		$('[data-toggle="birthdate"]').datepicker({
+			format: 'yyyy-mm-dd',
+			autoHide: true,
+			zIndex: 2000
+		});
 	});
 
 </script>
@@ -240,6 +246,7 @@
 	new WOW().init();
 
 </script>
+
 <!-- main js file -->
 <script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>

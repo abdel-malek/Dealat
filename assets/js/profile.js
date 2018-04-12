@@ -15,7 +15,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-				//				console.log(data);
+				//								console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -97,8 +97,6 @@ $(function () {
 				//				statusId = $();
 				//					if(data.data[i].status === )
 			}
-		}).fail(function (response) {
-			alert("fail");
 		});
 
 		//get my fav ads
@@ -140,8 +138,6 @@ $(function () {
 					$(".profile-page .favorites .row.first").append(rendered);
 				}
 			}
-		}).fail(function (response) {
-			alert("fail");
 		});
 
 		//get user info
@@ -178,12 +174,13 @@ $(function () {
 				$("#edit-user-info-form input[name='name']").val(data.data.name);
 				$("#edit-user-info-form input[name='location_id']").val(data.data.city_id);
 				$("#edit-user-info-form .city-select").val(data.data.city_id);
+				$("#edit-user-info-form .gender-select").val(data.data.gender);
 				$("#edit-user-info-form input[name='email']").val(data.data.email);
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
+				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
+				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
 				//personal image
 			}
-		}).fail(function (response) {
-			alert("fail");
 		});
 
 		var registerImg = [];
@@ -194,6 +191,7 @@ $(function () {
 			dragDrop: false,
 			fileName: "image",
 			acceptFiles: "image/*",
+			maxFileCount: 1,
 			maxFileSize: 10000 * 1024,
 			showDelete: true,
 			showPreview: true,
@@ -202,13 +200,13 @@ $(function () {
 			uploadStr: "Upload Image",
 			returnType: "json",
 			onSuccess: function (files, data, xhr, pd) {
-				console.log(data.data);
+				//				console.log(data.data);
 				registerImg.push(data.data);
-				console.log("reg");
-				console.log(registerImg[0]);
+				//				console.log("reg");
+				//				console.log(registerImg[0]);
 			},
 			onError: function (files, status, errMsg, pd) {
-				console.log("upload failed");
+				//				console.log("upload failed");
 			},
 			deleteCallback: function (data, pd) {
 				//			console.log(data.data);
@@ -218,7 +216,7 @@ $(function () {
 						images: arr
 					},
 					function (resp, textStatus, jqXHR) {
-						alert("File Deleted");
+						//						alert("File Deleted");
 						deleted = data.data;
 						registerImg = [];
 					});
@@ -227,6 +225,7 @@ $(function () {
 		//edit user info
 		$(".profile-page").on("click", ".edit-user-info", function () {
 			$('#edit-user-info-modal .city-select')[0].sumo.reload();
+			$('#edit-user-info-modal .gender-select')[0].sumo.reload();
 			$("#edit-user-info-modal").modal("show");
 		});
 
@@ -236,8 +235,13 @@ $(function () {
 
 			e.preventDefault();
 			e.stopPropagation();
-
 			data = $(this).serializeArray();
+			for (i in data) {
+				//send -1 for empty values
+				if (data[i].value === "") {
+					data[i].value = "-1";
+				}
+			}
 			data.push({
 				name: "image",
 				value: registerImg[0]
@@ -252,7 +256,7 @@ $(function () {
 				if (data.status === false) {
 					console.log(data);
 				} else {
-					console.log(data);
+					//					console.log(data);
 					//					for (i in newData) {
 					//						if (newData[i].name === "phone") {
 					//							if (newData[i].value !== userInfo.phone) {
@@ -287,8 +291,6 @@ $(function () {
 						location.reload();
 					}, 3000);
 				}
-			}).fail(function (response) {
-				alert("fail");
 			});
 		});
 
@@ -317,7 +319,7 @@ $(function () {
 				if (data.status === false) {
 					console.log(data);
 				} else {
-					console.log(data);
+					//					console.log(data);
 					$("#delete-modal").modal("hide");
 					setTimeout(function () {
 						$("#success-modal .text").html("Advertisement deleted successfully")
@@ -328,16 +330,16 @@ $(function () {
 						location.reload();
 					}, 3000);
 				}
-			}).fail(function (response) {
-				alert("fail");
 			});
 		});
 
 		//open edit user ad modal
 		$(".profile-page .user-ads").on("click", ".edit-ad", function () {
-			var templateId, adId;
+			var templateId, adId, catId;
 			adId = $(this).parents(".card").data("adId");
 			templateId = $(this).parents(".card").data("templateId");
+			catId = $(this).parents(".card").data("categoryId");
+
 			$.ajax({
 				type: "get",
 				url: base_url + '/api/items_control/get_item_details',
@@ -350,7 +352,7 @@ $(function () {
 				if (data.status === false) {
 					console.log(data);
 				} else {
-					console.log(data);
+					//					console.log(data);
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
@@ -415,15 +417,30 @@ $(function () {
 
 
 				}
-			}).fail(function (response) {
-				alert("fail");
 			});
 
 			$("#ad-modal .categories-nav a.select").css("color", "#495057");
 			var templateId, subId, has_types = 0;
 
-			//		subId = $(this).data("categoryId");
+			subId = $(this).parents(".card").data("categoryId");
 			//		$("#ad-modal .template").addClass("d-none");
+
+			//put all fields as shown
+			$("#edit-ad-modal .field").each(function () {
+				$(this).removeClass("d-none");
+			});
+
+			//hide fields from template according to hiddenFields array
+			var hideArr = [];
+			for (i in hiddenFields) {
+				if (hiddenFields[i].categoryId == subId) {
+					hideArr = hiddenFields[i].hidden;
+					for (j in hideArr) {
+						$("#edit-ad-modal .field." + hideArr[j]).addClass("d-none");
+					}
+
+				}
+			}
 			$("#edit-ad-modal .template").each(function () {
 				$(this).addClass("d-none");
 
@@ -471,14 +488,14 @@ $(function () {
 			//						console.log($(this).serializeArray());
 			var data, i;
 			data = $(this).serializeArray();
-			console.log(data);
+			//			console.log(data);
 			for (i in data) {
 				//send -1 for empty values
 				if (data[i].value === "") {
 					data[i].value = "-1";
 				}
 			}
-			console.log(data);
+			//			console.log(data);
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',
@@ -487,13 +504,11 @@ $(function () {
 				//				data: $(this).serialize()
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+					//					console.log(data);
 				} else {
-					console.log(data);
+					//					console.log(data);
 					//					window.location();
 				}
-			}).fail(function (response) {
-				alert("fail");
 			});
 		});
 
@@ -505,16 +520,39 @@ $(function () {
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//				console.log(data);
 			} else {
-				console.log(data);
-				template = $('#chat-sessions-template').html();
-				Mustache.parse(template);
-				rendered = Mustache.render(template, data.data);
-				$(".profile-page .chats ul.sessions").append(rendered);
+				//				console.log(data);
+				var sessionData, sessionImage;
+				for (i in data.data) {
+					sessionData = [];
+					//					if(!data.data.seller_pic){
+					//						data.data.seller_pic = '/assets/images/Dealat%20logo%20red.png';
+					//					}
+					//					if(!data.data.user_pic){
+					//						data.data.user_pic = '/assets/images/Dealat%20logo%20red.png';
+					//					}
+					if (data.data[i].seller_id == user_id) {
+						sessionImage = data.data[i].user_pic;
+					} else {
+						sessionImage = data.data[i].seller_pic;
+					}
+					if (!sessionImage) {
+						sessionImage = '/assets/images/Dealat%20logo%20red.png';
+					}
+					sessionData = {
+						image: sessionImage,
+						details: data.data[i]
+					};
+
+					template = $('#chat-sessions-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, sessionData);
+					$(".profile-page .chats ul.sessions").append(rendered);
+				}
+
+
 			}
-		}).fail(function (response) {
-			alert("fail");
 		});
 
 		//open a chat session
@@ -527,7 +565,7 @@ $(function () {
 			$("#chat-form .ad-id").val(adId);
 			$("#chat-form .chat-session-id").val(sessionId);
 
-			console.log($("#chat-form").serializeArray());
+			//			console.log($("#chat-form").serializeArray());
 			if (sellerId == user_id) {
 				//then I am the ad seller and a user chatted with me
 
@@ -542,9 +580,9 @@ $(function () {
 					}
 				}).done(function (data) {
 					if (data.status === false) {
-						console.log(data);
+						//						console.log(data);
 					} else {
-						console.log(data);
+						//						console.log(data);
 						$("#chat-modal .chat").empty();
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
@@ -578,9 +616,9 @@ $(function () {
 					}
 				}).done(function (data) {
 					if (data.status === false) {
-						console.log(data);
+						//						console.log(data);
 					} else {
-						console.log(data);
+						//						console.log(data);
 						$("#chat-modal .chat").empty();
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
@@ -603,5 +641,72 @@ $(function () {
 
 			}
 		});
+
+		//get saved bookmarks
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/users_control/get_my_bookmarks',
+			dataType: "json"
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+			} else {
+				console.log(data);
+
+				for (i in data.data) {
+					
+					data.data[i].query = $.parseJSON(data.data[i].query);
+					data.data[i]["filter"] = $.param(data.data[i].query);
+					template = $('#saved-bookmarks-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, data.data[i]);
+					$(".profile-page .bookmarks .bookmarks-list").append(rendered);
+				}
+
+			}
+		});
+
+		//delete bookmark
+		$(".bookmarks").on("click", ".remove", function () {
+			var id, btn;
+			btn = $(this);
+			id = $(this).parents(".bookmark").data("bookmarkId");
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/users_control/delete_bookmark',
+				dataType: "json",
+				data: {
+					user_bookmark_id: id
+				}
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					//					console.log(data);
+					btn.parents(".bookmark").next("hr").remove();
+					btn.parents(".bookmark").remove();
+				}
+			});
+		});
+
+		//show bookmark
+		$(".bookmarks").on("click", ".show", function () {
+			var filter = $(this).parents(".bookmark").data("filter");
+
+			$.ajax({
+				type: "get",
+				url: base_url + '/api/items_control/search',
+				dataType: "json",
+				data: filter
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					window.location = base_url + '/search_control?' + filter;
+				}
+			});
+
+		});
+
 	}
 });

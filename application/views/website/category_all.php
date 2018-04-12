@@ -27,6 +27,11 @@
 
 	<section class="products">
 		<div class="categories">
+		<div style="position: relative">
+				<div class="sub-categories d-none">
+					<ul class="sub-list">
+					</ul>
+				</div>
 			<div class="category-slider slick-slider">
 
 				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
@@ -40,9 +45,11 @@
 				<?php endif; ?>
 
 			</div>
+			</div>
 		</div>
 
 		<div class="container-fluid main">
+<!--
 <div class="sub-categories d-none">
 				<div class="container">
 					<div class="row">
@@ -51,6 +58,7 @@
 					</div>
 				</div>
 			</div>
+-->
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<div class="row mb-4 ml-0 mr-0">

@@ -27,6 +27,11 @@
 
 	<section class="products">
 		<div class="categories">
+		<div style="position: relative">
+				<div class="sub-categories d-none">
+					<ul class="sub-list">
+					</ul>
+				</div>
 			<div class="category-slider slick-slider">
 
 				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
@@ -40,9 +45,11 @@
 				<?php endif; ?>
 
 			</div>
+			</div>
 		</div>
 
 		<div class="container-fluid main">
+<!--
 			<div class="sub-categories d-none">
 				<div class="container">
 					<div class="row">
@@ -50,6 +57,7 @@
 					</div>
 				</div>
 			</div>
+-->
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<div class="row mb-4 ml-0 mr-0">
@@ -81,7 +89,7 @@
 								</li>
 								<?php if($subcategories!= null && count($subcategories) > 1):?>
 								<?php foreach ($subcategories as $key => $category): ?>
-								<li data-filter=".<?php echo $category->category_name ?>">
+								<li data-filter=".<?php echo str_replace(' ','',$category->category_name); ?>">
 									<?php echo $category->category_name ?>
 								</li>
 								<?php endforeach; ?>
@@ -93,7 +101,7 @@
 
 					<div class="row ">
 						<?php if($ads != null): foreach ($ads as $ad):?>
-						<div class="col-sm-6 col-lg-4 mix <?php echo $ad->category_name ?>">
+						<div class="col-sm-6 col-lg-4 mix <?php echo  str_replace(' ','',$ad->category_name);  ?>">
 							<div class="card mb-4" data-ad-id="<?php echo $ad->ad_id ?>" data-template-id="<?php echo $ad->tamplate_id ?>">
 								<div class="overlay">
 									<div class="text"><i class="fas fa-info-circle"></i>

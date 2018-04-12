@@ -248,7 +248,9 @@ body {
 form .form-control:not(textarea) {
   border: none;
   border-bottom: 1px solid #ced4da;
-  font-size: .9rem; }
+  font-size: .9rem;
+  padding-bottom: 2px;
+  padding-left: 5px; }
 
 textarea.form-control {
   font-size: .9rem;
@@ -651,36 +653,32 @@ header.home {
   .home-page .products .row,
   .category-page .products .row {
     position: relative; }
+  .home-page .products .sub-categories,
+  .category-page .products .sub-categories {
+    position: absolute;
+    z-index: 3;
+    min-width: 150px; }
+    .home-page .products .sub-categories .sub-list,
+    .category-page .products .sub-categories .sub-list {
+      background-color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+      padding: 5px 8px;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      list-style: none; }
+      .home-page .products .sub-categories .sub-list .name,
+      .category-page .products .sub-categories .sub-list .name {
+        color: #333;
+        font-size: .85rem;
+        padding: 2px; }
+      .home-page .products .sub-categories .sub-list .name:hover,
+      .category-page .products .sub-categories .sub-list .name:hover {
+        cursor: pointer;
+        color: #c30a30;
+        background-color: #eee; }
   .home-page .products .main,
   .category-page .products .main {
     padding-top: 150px; }
-    .home-page .products .main .sub-categories,
-    .category-page .products .main .sub-categories {
-      margin-bottom: 20px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      transition: .5s;
-      font-size: .9rem;
-      color: #666; }
-      .home-page .products .main .sub-categories .container,
-      .category-page .products .main .sub-categories .container {
-        color: #fff;
-        background-color: #aaa;
-        padding: 8px;
-        border-radius: 13px;
-        position: relative; }
-        .home-page .products .main .sub-categories .container .row,
-        .category-page .products .main .sub-categories .container .row {
-          margin-left: 0;
-          margin-right: 0; }
-      .home-page .products .main .sub-categories .name,
-      .category-page .products .main .sub-categories .name {
-        cursor: pointer;
-        text-decoration: underline; }
-      .home-page .products .main .sub-categories .name:hover,
-      .category-page .products .main .sub-categories .name:hover {
-        cursor: pointer;
-        color: #c30a30; }
     .home-page .products .main .left-col,
     .category-page .products .main .left-col {
       padding-right: 45px;
@@ -696,6 +694,7 @@ header.home {
       .category-page .products .main .right-col .place-ad {
         width: 190.5px;
         position: absolute;
+        z-index: 3;
         right: 20px;
         transition: .2s; }
       .home-page .products .main .right-col .banners,
@@ -841,10 +840,10 @@ header.home {
   border-bottom: solid 1px #c30a30; }
 .profile-page #profile-tabs .tab {
   display: inline-block;
-  width: calc(90% / 3); }
+  width: calc(90% / 4); }
 .profile-page #profile-tabs .tab a {
   font-size: .9rem;
-  line-height: 2em;
+  line-height: initial;
   display: block;
   padding: 0 10px;
   outline: none;
@@ -864,17 +863,23 @@ header.home {
 .profile-page #profile-tabs .tab-container .panel-container {
   border: solid #666 1px;
   padding: 10px; }
-.profile-page #profile-tabs .chats ul {
+.profile-page #profile-tabs .chats ul,
+.profile-page #profile-tabs .bookmarks ul {
   list-style: none;
   padding: 0; }
-.profile-page #profile-tabs .chats li {
+.profile-page #profile-tabs .chats li,
+.profile-page #profile-tabs .bookmarks li {
   padding: 10px;
   transition: .2s; }
-.profile-page #profile-tabs .chats li:hover {
+.profile-page #profile-tabs .chats li:hover,
+.profile-page #profile-tabs .bookmarks li:hover {
   background-color: #fff;
   cursor: pointer; }
-.profile-page #profile-tabs .chats hr {
+.profile-page #profile-tabs .chats hr,
+.profile-page #profile-tabs .bookmarks hr {
   margin: 0; }
+.profile-page #profile-tabs .bookmark .details {
+  font-size: .8rem; }
 
 footer {
   min-height: 400px;
@@ -962,7 +967,7 @@ select option.placeholder {
         left: -30px;
         z-index: 1;
         color: #fff;
-        font-size: .85rem;
+        font-size: .8rem;
         box-shadow: 2px 1px 10px 0px #a8a8a8; }
       #card-modal .card .card-body .price-val {
         margin-top: 35%; }
@@ -991,6 +996,11 @@ select option.placeholder {
     #card-modal .card .details {
       width: 70%;
       margin: auto; }
+  #card-modal .card-img-slider .slick-slide img {
+    margin: auto;
+    height: inherit; }
+  #card-modal .card-img-slider .slick-slide img:hover {
+    cursor: pointer; }
   #card-modal .slick-arrow {
     top: 45%; }
   #card-modal .slick-prev {
@@ -1150,6 +1160,9 @@ select option.placeholder {
 
 #register-modal .lines:first-child {
   margin-top: 0px; }
+@media (max-width: 768px) {
+  #register-modal .border-right {
+    border: none !important; } }
 
 .SumoSelect > .CaptionCont {
   border-radius: 13px;

@@ -73,6 +73,7 @@
 				<li class='tab'><a href="#user-ads">My Ads</a></li>
 				<li class='tab'><a href="#favorites">Favorites</a></li>
 				<li class='tab'><a href="#chats">Chats</a></li>
+				<li class='tab'><a href="#bookmarks">Saved bookmarks</a></li>
 			</ul>
 			<div id="user-ads" class="user-ads">
 				<section class="products">
@@ -80,7 +81,7 @@
 						<div class="row no-gutters first">
 							<script id="user-ads-template" type="text/template">
 								<div class="col-12">
-									<div class="card mb-4" data-ad-id="{{ad.ad_id}}" data-template-id="{{ad.tamplate_id}}" data-status-id="{{ad.status}}">
+									<div class="card mb-4" data-ad-id="{{ad.ad_id}}" data-template-id="{{ad.tamplate_id}}" data-status-id="{{ad.status}}" data-category-id="{{ad.category_id}}">
 										<div class="container">
 											<div class="overlay">
 												<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
@@ -181,29 +182,77 @@
 					<ul class="sessions">
 
 						<script id="chat-sessions-template" type="text/template">
-							{{#.}}
-							<li class="session" data-session-id="{{chat_session_id}}" data-ad-id="{{ad_id}}" data-seller-id="{{seller_id}}">
+
+							<li class="session" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
 								<div class="row">
 									<div class="col-2">
 										<div class="chat-img">
-											<img src="<?php echo base_url('{{user_pic}}'); ?>" width="50px" alt="">
+											<img src="<?php echo base_url('{{image}}'); ?>" width="50px" alt="">
 										</div>
 									</div>
 									<div class="col-8">
-										<div class="chat-name">{{user_name}}</div>
+										<div class="chat-name">{{details.ad_title}}</div>
 									</div>
 									<div class="col-2">
-										<div class="chat-time">{{created_at}}</div>
+										<div class="chat-time">{{details.created_at}}</div>
 									</div>
 								</div>
 							</li>
-							<hr> 
-							{{/.}}
+							<hr>
+
 						</script>
-						
+
 					</ul>
 				</div>
 			</div>
+
+			<div id="bookmarks" class="bookmarks">
+				<ul class="bookmarks-list">
+					<script id="saved-bookmarks-template" type="text/template">
+
+						<li class="bookmark" data-bookmark-id="{{user_bookmark_id}}" data-filter="{{filter}}">
+							<div class="row">
+								<div class="col-sm-8 details">
+									{{# query.search}}
+									<div class="search"><span class="search-lbl">Search: </span><span class="search-val">{{query.search}}</span></div>{{/query.search}} {{#query.category_name}}
+									<div class="category"><span class="category-lbl">Category: </span><span class="query.category-val">{{query.category_name}}</span></div>{{/query.category_name}} {{#query.city_name}}
+									<div class="city"><span class="city-lbl">City: </span><span class="city-val">{{query.city_name}}</span></div>{{/query.city_name}} {{#query.location_name}}
+									<div class="location"><span class="location-lbl">Location: </span><span class="location-val">{{query.location_name}}</span></div>{{/query.location_name}} {{#query.price_min}}
+									<div class="price"><span class="price-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="price-val">from: {{query.price_min}}<?php echo $this->lang->line('sp'); ?> to: {{query.price_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.price_min}} {{#query.type_name}}
+									<div class="type "><span class="type-lbl">Type: </span><span class="type-val">{{query.type_name}}</span></div>{{/query.type_name}} {{#query.type_model_name}}
+									<div class="model "><span class="model-lbl">Model: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} {{#query.years_name}}
+									<div class="manufacture_date"><span class="manufacture_date-lbl">Manufacture date: </span><span class="manufacture_date-val">{{query.years_name}}</span></div>{{/query.years_name}} {{#query.automatic_name}}
+									<div class="is_automatic"><span class="is_automatic-lbl">Change: </span><span class="is_automatic-val">{{query.automatic_name}}</span></div>{{/query.automatic_name}} {{#query.state_name}}
+									<div class="is_new"><span class="is_new-lbl"></span>Status: <span class="is_new-val">{{query.state_name}}</span></div>{{/query.state_name}} {{#query.kilometer_min}}
+									<div class="kilometer"><span class="kilometer-lbl">Kilometer: </span><span class="kilometer-val">from: {{query.kilometer_min}} to: {{query.kilometer_max}}</span></div>{{/query.kilometer_min}} {{#query.space_min}}
+
+									<div class="space"><span class="space-lbl">Space: </span><span class="space-val">from: {{query.space_min}} to: {{query.space_max}}</span></div>{{/query.space_min}} {{#query.rooms_num_min}}
+									<div class="rooms_num"><span class="rooms_num-lbl">Rooms:</span><span class="rooms_num-val">from: {{query.rooms_num_min}} to: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
+									<div class="floor"><span class="floor-lbl">Floor: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.furniture_name}}
+									<div class="with_furniture"><span class="with_furniture-lbl">Furniture: </span><span class="with_furniture-val">{{query.furniture_name}}</span></div>{{/query.furniture_name}} {{#query.size_min}}
+
+									<div class="size"><span class="size-lbl">Size: </span><span class="size-val">from: {{query.size_min}} to: {{query.size_max}}</span></div>{{/query.size_min}} {{#query.schedule_name}}
+
+									<div class="schedule schedule_name"><span class="schedule-lbl">Schedule :</span><span class="schedule-val">{{query.schedule_name}}</span></div>{{/query.schedule_name}} {{#query.education_name}}
+									<div class="education education_name"><span class="education-lbl">Education: </span><span class="education-val">{{query.education_name}}</span></div>{{/query.education_name}} {{#query.salary_min}}
+
+									<div class="salary"><span class="salary-lbl">Salary: </span><span class="salary-val">from: {{query.salary_min}} to: {{query.salary_max}}</span></div>{{/query.salary_min}}
+								</div>
+								<div class="col-6 col-sm-2 text-center">
+									<div class="show">
+										<button class="btn button2 show">Show</button>
+									</div>
+								</div>
+								<div class="col-6 col-sm-2 text-center">
+									<div class="remove"><button class="btn button2 remove">Remove</button></div>
+								</div>
+							</div>
+						</li>
+						<hr>
+					</script>
+				</ul>
+			</div>
+
 
 		</div>
 	</div>
@@ -231,6 +280,7 @@
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
 								</div>
 
+								<!--
 								<div class="form-group">
 									<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
 										<ul class="navbar-nav">
@@ -243,13 +293,27 @@
 										</ul>
 									</nav>
 								</div>
+-->
+								<div class="form-group">
+									<select name="city_id" class="city-select" required>
+									<option selected value="" class="placeholder d-none">select city</option>
+								</select>
+								</div>
+
+								<div class="form-group">
+									<select name="location_id" class="location-select">
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('item_location'); ?></option>
+								</select>
+								</div>
 
 								<div class="form-group">
 									<select name="show_period" class="period-select" required>
 							<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>
+<!--
 							<option value="1"><?php echo $this->lang->line('week'); ?></option>
 							<option value="2"><?php echo $this->lang->line('10_days'); ?></option>
 							<option value="3"><?php echo $this->lang->line('month'); ?></option>
+-->
 						</select>
 								</div>
 
@@ -270,7 +334,7 @@
 
 							</div>
 							<div class="col-sm-6">
-								<div class="form-group d-none">
+								<div class="form-group d-none field type_name">
 									<nav class="navbar navbar-expand-md navbar-light bg-light types-nav">
 										<ul class="navbar-nav">
 											<li class="nav-item dropdown">
@@ -286,19 +350,19 @@
 								<!--type id/ type model id-->
 								<div class="template-vehicles template d-none" data-template-id="1">
 
-									<div class="form-group">
+									<div class="form-group field manufacture_date">
 										<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 									</div>
-									<div class="form-group">
+									<div class="form-group field kilometer">
 										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 									</div>
-									<!--						<div class="form-group">-->
-									<label class="">
+									<!--						<div class="form-group field">-->
+									<label class="field is_automatic">
 								<input type="checkbox" name="is_automatic" value="1"><span class=""> <?php echo $this->lang->line('automatic'); ?></span>
 							</label>
 									<!--						</div>-->
 									<br>
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -307,23 +371,23 @@
 								</div>
 								<!--properties template-->
 								<div class="template-properties template d-none" data-template-id="2">
-									<div class="form-group">
+									<div class="form-group field" space>
 										<input type="text" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field rooms_num">
 										<input type="number" class="form-control" name="rooms_num" placeholder="<?php echo $this->lang->line('rooms'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field floor">
 										<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field state">
 										<input type="text" class="form-control" name="state" placeholder="<?php echo $this->lang->line('state'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field with_furniture">
 										<label class="">
 											<input type='hidden' value='0' name='with_furniture'>
 											<input type="checkbox" name="with_furniture" value="1"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
@@ -334,7 +398,7 @@
 								<!--type id-->
 								<div class="template-mobiles template d-none" data-template-id="3">
 
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -344,11 +408,11 @@
 								<!--type id-->
 								<div class="template-electronics template d-none" data-template-id="4">
 
-									<div class="form-group">
+									<div class="form-group field size">
 										<input type="text" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -356,7 +420,7 @@
 								</div>
 								<!--fashion template-->
 								<div class="template-fashion template d-none" data-template-id="5">
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -364,7 +428,7 @@
 								</div>
 								<!--kids template-->
 								<div class="template-kids template d-none" data-template-id="6">
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -372,7 +436,7 @@
 								</div>
 								<!--sports template-->
 								<div class="template-sports template d-none" data-template-id="7">
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -381,30 +445,30 @@
 								<!--job positions template-->
 								<!--schedule id/experience id/education id-->
 								<div class="template-job template d-none" data-template-id="8">
-									<div class="form-group">
+									<div class="form-group field schedule_name">
 										<select name="schedule_id" class="schedules-select">
 										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>
 									</select>
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field education_name">
 										<select name="education_id" class="educations-select">
 										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>
 									</select>
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field experience">
 										<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group field salary">
 										<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 									</div>
 								</div>
 
 								<!--industries template-->
 								<div class="template-industries template d-none" data-template-id="9">
-									<div class="form-group">
+									<div class="form-group field is_new">
 										<label class="">
 								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
 							</label>
@@ -439,7 +503,7 @@
 					  <span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body text-center">
+				<div class="modal-body">
 					<form id="edit-user-info-form">
 						<input type="hidden" name="location_id" class="location-id">
 						<div id="fileuploader-register">Upload</div>
@@ -449,10 +513,26 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" name="name" placeholder="<?php echo $this->lang->line('name'); ?>">
+							<input type="text" class="form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>">
 						</div>
 						<div class="form-group">
 							<input type="email" class="form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="birthday" data-toggle="birthdate" placeholder="Birthdate">
+						</div>
+
+						<div class="form-group">
+							<select name="gender" class="gender-select">
+							<option value="" class="placeholder d-none" selected>Gender</option>
+							<option value="-1">Not set</option>
+							<option value="1">Male</option>
+							<option value="2">Female</option>
+						</select>
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="form-control" name="whatsup_number" placeholder="whatsapp">
 						</div>
 						<!--
 						<div class="form-group">

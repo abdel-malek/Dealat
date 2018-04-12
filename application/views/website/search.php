@@ -20,6 +20,8 @@
 		</div>
 	</section>
 
+<button class="btn button2 bookmark">bookmark</button>
+
 	<section class="products">
 
 		<div class="container-fluid main">

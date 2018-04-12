@@ -3,7 +3,7 @@
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
-<!--
+				<!--
 				<div class="slide">
 					<a href="">
 						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/slider1.png"); ?>')"></div>
@@ -24,7 +24,7 @@
 		</div>
 	</section>
 
-	
+
 	<section class="search">
 		<div class="container">
 			<header>
@@ -69,20 +69,27 @@
 
 	<section class="products">
 		<div class="categories">
-			<div class="category-slider slick-slider">
-				<?php if($main_categories != null): foreach ($main_categories as $category): ?>
-				<div class="category" data-category-id="<?php echo $category->category_id; ?>">
-					<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
-					<h6 class="name">
-						<?php echo $category->category_name ?>
-					</h6>
+			<div style="position: relative">
+				<div class="sub-categories d-none">
+					<ul class="sub-list">
+					</ul>
 				</div>
-				<?php endforeach; ?>
-				<?php endif; ?>
+				<div class="category-slider slick-slider">
+					<?php if($main_categories != null): foreach ($main_categories as $category): ?>
+					<div class="category" data-category-id="<?php echo $category->category_id; ?>">
+						<img src="<?php echo base_url($category->web_image); ?>" width="60px" alt="<?php echo $category->category_name ?>">
+						<h6 class="name">
+							<?php echo $category->category_name ?>
+						</h6>
+					</div>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
 			</div>
 		</div>
 
 		<div class="container-fluid main">
+			<!--
 			<div class="sub-categories d-none">
 				<div class="container">
 					<div class="row">
@@ -91,6 +98,18 @@
 					</div>
 				</div>
 			</div>
+-->
+
+			
+
+			<!--
+			<div class="sub-categories d-none">
+				<ul class="sub-list">
+				</ul>
+			</div>
+-->
+
+
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<h5 class="recent-txt">
@@ -134,7 +153,7 @@
 										</div>
 									</div>
 									<?php endif; ?>
-<!--
+									<!--
 									<div class="fav">
 										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
 									</div>
@@ -151,7 +170,7 @@
 				<div class="col-md-2 right-col order-first order-md-last">
 					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
-<!--
+						<!--
 						<div class="banner">
 							<button type="button" class="close">
 							  <span>&times;</span>
@@ -167,7 +186,7 @@
 -->
 					</aside>
 				</div>
-		
+
 			</div>
 		</div>
 	</section>
