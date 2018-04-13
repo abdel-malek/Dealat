@@ -2,20 +2,19 @@ package com.tradinos.core.network;
 
 import android.content.Context;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import com.android.volley.AuthFailureError;
+import com.android.volley.VolleyLog;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyLog;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
 
@@ -26,7 +25,7 @@ public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
 
     /* To hold the parameter name and the string content to upload */
     private Map<String, String> stringUploads = new HashMap<String, String>();
-    Context context;
+
 
     public PhotoMultipartRequest(Context context, String url, RequestMethod method, final TradinosParser<T> parser, SuccessCallback<T> successCallback, final FaildCallback faildCallback) {
         super(context, url, method, parser, successCallback, faildCallback);

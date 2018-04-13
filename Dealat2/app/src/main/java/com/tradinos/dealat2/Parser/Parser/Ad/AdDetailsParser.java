@@ -185,6 +185,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         }
 
         ad.setId(jsonObject.getString("ad_id"));
+        ad.setCreationDate(jsonObject.getString("created_at"));
         ad.setSellerId(jsonObject.getString("user_id"));
         ad.setSellerId(jsonObject.getString("seller_id"));
         ad.setSellerName(jsonObject.getString("seller_name"));
@@ -211,7 +212,11 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         if (validData(jsonObject.getString("reject_note")))
             ad.setRejectNote(jsonObject.getString("reject_note"));
 
-        ad.setPublishDate(jsonObject.getString("publish_date"));
+        if (validData(jsonObject.getString("publish_date")))
+            ad.setPublishDate(jsonObject.getString("publish_date"));
+
+        if (jsonObject.has("days")) // it most likely does have days
+            ad.setDays(jsonObject.getInt("days"));
 
         if (jsonObject.getInt("is_negotiable") == 0)
             ad.setNegotiable(false);

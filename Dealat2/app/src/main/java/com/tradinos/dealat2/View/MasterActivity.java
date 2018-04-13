@@ -414,15 +414,14 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return "";
     }
 
-    public String getExpiryTime(String stringDate, int period) {
+    public String getExpiryTime(String stringDate, int days) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat dateWithYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
-        int[] periods = {7, 10, 30};
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dateFormat.parse(stringDate));
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + periods[period - 1]);
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + days);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             Date expiryDate = calendar.getTime();

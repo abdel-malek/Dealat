@@ -40,7 +40,7 @@
                 android:padding="4dp"
                 android:scaleType="fitCenter"
                 android:background="@drawable/circel_gray_light_transparent"
-                android:src="@drawable/star_copy"
+                android:src="@drawable/ic_star_white_24dp"
                 />
         </FrameLayout>
 

@@ -89,7 +89,7 @@ public class HorizontalAdapter {
             imageView = view.findViewById(R.id.imageView);
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + images.get(i).getServerPath(),
+            mImageLoader.get(MyApplication.getBaseUrl() + images.get(i).getServerPath(),
                     ImageLoader.getImageListener(imageView,
                             R.drawable.others, R.drawable.others));
 

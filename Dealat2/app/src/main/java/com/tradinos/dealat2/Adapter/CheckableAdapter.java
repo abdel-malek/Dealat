@@ -80,7 +80,7 @@ public class CheckableAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null)
-            view = this.inflater.inflate(R.layout.row_check_result, null);
+            view = this.inflater.inflate(R.layout.row_item, null);
 
         ((TextView) view.findViewById(R.id.textView)).setText(getSelectedNames());
 

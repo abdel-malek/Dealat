@@ -54,6 +54,7 @@
         <item
             android:id="@+id/navSettings"
             android:title="@string/navSettings"
+            android:visible="false"
             />
 
         <item
@@ -64,7 +65,9 @@
 
         <item
             android:id="@+id/navHelp"
-            android:title="@string/navHelp" />
+            android:title="@string/navHelp"
+            android:visible="false"
+            />
 
     </group>
 

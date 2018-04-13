@@ -31,6 +31,7 @@ public class AdImagesAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return this.paths.size();
+        return this.paths.size(); // no need to check for videoPath to increase count +1 because a gap empty string
+        // was added to imagesPaths
     }
 }

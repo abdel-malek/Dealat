@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -88,7 +86,7 @@ public class AdAdapter extends BaseAdapter {
         if (item.getMainImageUrl() != null) {
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
+            mImageLoader.get(MyApplication.getBaseUrl() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageView,
                             defaultDrawable, defaultDrawable));
         } else
@@ -103,7 +101,10 @@ public class AdAdapter extends BaseAdapter {
         holder.textViewTitle.setText(item.getTitle());
 
         holder.textView.setText("500 Views");
-        holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
+
+        if (item.getPublishDate() != null)
+            holder.textViewDate.setText(context.getString(R.string.published)
+                    + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 
         if (item.isFavorite())
             holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));

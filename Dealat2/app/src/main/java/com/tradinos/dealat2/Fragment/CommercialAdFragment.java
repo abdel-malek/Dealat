@@ -49,7 +49,7 @@ public class CommercialAdFragment extends Fragment {
         if (commercialAd != null) {
             if (commercialAd.getImageUrl() != null) {
                 ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
-                mImageLoader.get(MyApplication.getBaseUrlForImages() + this.commercialAd.getImageUrl(), ImageLoader.getImageListener(imageView,
+                mImageLoader.get(MyApplication.getBaseUrl() + this.commercialAd.getImageUrl(), ImageLoader.getImageListener(imageView,
                         R.drawable.dealat_logo_red_background_lined, R.drawable.dealat_logo_red_background_lined));
             }
 

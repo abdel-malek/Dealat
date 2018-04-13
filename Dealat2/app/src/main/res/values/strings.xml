@@ -35,7 +35,9 @@
     <string name="allCategories">All Categories</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
-    <string name="expires">Expires on</string>
+    <string name="expires">Expires</string>
+    <string name="published">Published</string>
+    <string name="created">Created</string>
     <string name="newU">New</string>
     <string name="old">Old</string>
     <string name="manual">Manual</string>
@@ -44,8 +46,9 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
 
-    <string name="selectImages">You can select</string>
-    <string name="images">images</string>
+    <string name="selectImages">You can attach</string>
+    <string name="images">images with your ad</string>
+    <string name="alsoSelectVideo">and you can attach a video as well.</string>
 
 
     <!-- Views -->
@@ -68,10 +71,6 @@
     <string name="labelFrom">From</string>
     <string name="labelSelectTransmission">Select Transmission Type</string>
     <string name="labelFurnished">Furnished</string>
-    <string name="labelAdSettings">Ad\'s Settings</string>
-    <string name="labelViewDetails">View Details</string>
-    <string name="labelEditAd">Edit Ad</string>
-    <string name="labelDeleteAd">Delete Ad</string>
     <string name="labelProfileImage">Profile Image</string>
     <string name="labelSelectImage">Select Image</string>
     <string name="labelRemoveImage">Remove Image</string>
@@ -206,6 +205,7 @@
 
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
+    <string name="toastWaitTillVideoUploading">Please wait till video is uploaded</string>
     <string name="toastRegister">You need to register first!</string>
     <string name="toastVerify">You need to verify your number first!</string>
     <string name="toastSelectReport">Please, Select reporting reason</string>

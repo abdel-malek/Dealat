@@ -14,14 +14,14 @@ public class Ad implements Serializable {
     public final static int PENDING = 1, ACCEPTED = 2, EXPIRED = 3,
             HIDDEN = 4, REJECTED = 5, DELETED = 6;
 
-
-    private String id, cityId, locationId, categoryId, publishDate;
+    private String id, cityId, locationId, categoryId, publishDate, expiryDate, creationDate;
     private String title, description, locationName, cityName;
     private String sellerId, sellerName, sellerPhone;
     private String rejectNote;
     private String mainImageUrl, mainVideoUrl;
     private double price;
-    private int template, status, showPeriod, expiresAfter;
+    private int template, status, showPeriod, expiresAfter, days; //days is the number of days of showPeriod
+    // but here showPeriod stands for the id of it as we intent to make a management for it
     private boolean negotiable, featured, favorite;
     private List<String> imagesPaths;
 
@@ -65,14 +65,6 @@ public class Ad implements Serializable {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public String getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
     }
 
     public String getTitle() {
@@ -193,6 +185,38 @@ public class Ad implements Serializable {
 
     public void setExpiresAfter(int expiresAfter) {
         this.expiresAfter = expiresAfter;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
     public boolean isNegotiable() {

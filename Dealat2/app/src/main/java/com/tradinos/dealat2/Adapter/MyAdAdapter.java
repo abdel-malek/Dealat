@@ -16,7 +16,10 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.View.MasterActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by developer on 14.03.18.
@@ -52,10 +55,8 @@ public class MyAdAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (view == null) {
-            view = this.inflater.inflate(R.layout.row_my_ad, null);
-            view.setTag(new ViewHolder(view));
-        }
+        view = this.inflater.inflate(R.layout.row_my_ad, null);
+        view.setTag(new ViewHolder(view));
 
         initializeView(getItem(i), (ViewHolder) view.getTag());
 
@@ -67,20 +68,27 @@ public class MyAdAdapter extends BaseAdapter {
         if (item.getMainImageUrl() != null) {
 
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + item.getMainImageUrl(),
+            mImageLoader.get(MyApplication.getBaseUrl() + item.getMainImageUrl(),
                     ImageLoader.getImageListener(holder.imageViewMain,
                             defaultDrawable, defaultDrawable));
         } else
             holder.imageViewMain.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
         holder.textViewTitle.setText(item.getTitle());
-        holder.textViewDate.setText(((MasterActivity) context).formattedDate(item.getPublishDate()));
-        holder.textViewExpires.setText(context.getString(R.string.expires)
-                + " " + ((MasterActivity) context).getExpiryTime(item.getPublishDate(), item.getShowPeriod()));
 
+        if (item.getPublishDate() != null) {
+            holder.textViewDate.setText(context.getString(R.string.published)
+                    + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 
-        if (item.getExpiresAfter() <= 0)
-            item.setStatus(Ad.EXPIRED);
+            // only published ads their expiry dates are calculated
+            holder.textViewExpires.setText(context.getString(R.string.expires)
+                    + " " + ((MasterActivity) context).formattedDate(item.getExpiryDate()));
+
+            // if published // check for expiresAfter because ad may be expired // else don't change ad's status
+            if (item.getExpiresAfter() <= 0)
+                item.setStatus(Ad.EXPIRED);
+
+        }
 
         int statusRsc;
         String statusString;
@@ -112,7 +120,7 @@ public class MyAdAdapter extends BaseAdapter {
                 break;
 
             default:
-                statusRsc = R.drawable.dealat_logo_red;
+                statusRsc = R.drawable.dealat_logo_white_background;
                 statusString = "";
         }
 
@@ -121,6 +129,8 @@ public class MyAdAdapter extends BaseAdapter {
 
         if (item.isFeatured())
             holder.imageViewFeatured.setVisibility(View.VISIBLE);
+        else
+            holder.imageViewFeatured.setVisibility(View.INVISIBLE);
     }
 
 

@@ -59,7 +59,8 @@ public class ImagesDetailsActivity extends MasterActivity {
 
     @Override
     public void showData() {
-        viewPager.setAdapter(new ImageDetailsAdapter(getSupportFragmentManager(), currentAd.getImagesPaths(), currentAd.getTemplate()));
+        viewPager.setAdapter(new ImageDetailsAdapter(getSupportFragmentManager(), currentAd.getImagesPaths(),
+                currentAd.getMainVideoUrl(), currentAd.getTemplate()));
         int page = getIntent().getIntExtra("page", 0);
         viewPager.setCurrentItem(page);
         tabLayout.setupWithViewPager(viewPager);
@@ -92,7 +93,7 @@ public class ImagesDetailsActivity extends MasterActivity {
     private void downloadImage() {
         int page = viewPager.getCurrentItem();
 
-        DownloadRequest request = new DownloadRequest(Request.Method.GET, MyApplication.getBaseUrlForImages() + currentAd.getImagePath(page), new Response.Listener<byte[]>() {
+        DownloadRequest request = new DownloadRequest(Request.Method.GET, MyApplication.getBaseUrl() + currentAd.getImagePath(page), new Response.Listener<byte[]>() {
             @Override
             public void onResponse(byte[] response) {
                 if (response != null) {

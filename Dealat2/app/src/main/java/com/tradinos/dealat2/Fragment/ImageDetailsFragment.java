@@ -49,7 +49,7 @@ public class ImageDetailsFragment extends Fragment {
 
         if (path != null){
             ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + this.path, ImageLoader.getImageListener((ScalableImageView)rootView.findViewById(R.id.imageView),
+            mImageLoader.get(MyApplication.getBaseUrl() + this.path, ImageLoader.getImageListener((ScalableImageView)rootView.findViewById(R.id.imageView),
                     defaultDrawable, defaultDrawable));
         }
 

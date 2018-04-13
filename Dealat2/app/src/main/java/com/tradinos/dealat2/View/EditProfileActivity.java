@@ -110,7 +110,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
                         if (!TextUtils.isEmpty(result.getImageUrl())) {
                             ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
-                            mImageLoader.get(MyApplication.getBaseUrlForImages() + result.getImageUrl(), ImageLoader.getImageListener(imageViewPersonal,
+                            mImageLoader.get(MyApplication.getBaseUrl() + result.getImageUrl(), ImageLoader.getImageListener(imageViewPersonal,
                                     R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
                         }
                     }

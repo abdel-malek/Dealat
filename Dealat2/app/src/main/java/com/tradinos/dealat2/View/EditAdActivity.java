@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -21,8 +24,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -71,12 +76,14 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class EditAdActivity extends MasterActivity {
 
-    private final int REQUEST_SELECT = 7;
+    private final int REQUEST_SELECT = 7, REQUEST_SELECT_VIDEO = 8;
 
     private boolean enabled = false;
 
     private final String NULL = "-1";
     private Ad currentAd;
+    private String videoServerPath;
+
     private Category currentCategory;
     private Item selectedLocation;
     private List<Type> templateBrands = new ArrayList<>();
@@ -85,7 +92,7 @@ public class EditAdActivity extends MasterActivity {
     private HashMap<String, String> parameters = new HashMap<>();
 
     private HorizontalAdapter adapter;
-    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray();
+    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray(), deletedVideosJsonArray = new JSONArray();
 
     private Bitmap popupBitmap;
 
@@ -119,6 +126,10 @@ public class EditAdActivity extends MasterActivity {
 
     private View line1, line2, line3;
 
+    // views for upload video
+    private ProgressBar progressBarVideo;
+    private ImageButton imageButtonCheck, imageButtonVideo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_edit_ad);
@@ -139,12 +150,16 @@ public class EditAdActivity extends MasterActivity {
         currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
         editCategory.setText(currentCategory.getFullName());
 
-
         ShowProgressDialog();
         AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
                 currentAd = result;
+                videoServerPath = result.getMainVideoUrl();
+                if (videoServerPath != null){
+                    imageButtonCheck.setVisibility(View.VISIBLE);
+                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_play_arrow_gray));
+                }
 
                 adapter = new HorizontalAdapter(mContext, linearLayout);
                 List<Image> images = new ArrayList<>();
@@ -196,7 +211,7 @@ public class EditAdActivity extends MasterActivity {
     @Override
     public void showData() {
         ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
-                " " + getString(R.string.images));
+                " " + getString(R.string.images) + "\n" + getString(R.string.alsoSelectVideo));
     }
 
     @Override
@@ -263,6 +278,10 @@ public class EditAdActivity extends MasterActivity {
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
+
+        progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
+        imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
+        imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
     }
 
     @Override
@@ -365,6 +384,26 @@ public class EditAdActivity extends MasterActivity {
                 return false;
             }
         });
+
+        imageButtonVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("video/*");
+                startActivityForResult(intent, REQUEST_SELECT_VIDEO);
+            }
+        });
+
+        imageButtonCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletedVideosJsonArray.put(videoServerPath);
+
+                imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
+                videoServerPath = null;
+                imageButtonCheck.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override
@@ -430,7 +469,7 @@ public class EditAdActivity extends MasterActivity {
                         imageView.setImageBitmap(popupBitmap);
                     } else {
                         ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
-                        mImageLoader.get(MyApplication.getBaseUrlForImages() + clickedImage.getServerPath(),
+                        mImageLoader.get(MyApplication.getBaseUrl() + clickedImage.getServerPath(),
                                 ImageLoader.getImageListener(imageView,
                                         R.drawable.others, R.drawable.others));
                     }
@@ -490,15 +529,23 @@ public class EditAdActivity extends MasterActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_SELECT) {
-            List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SELECT) {
+                List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
 
-            int base = adapter.getCount();
-            adapter.setViews(newImages);
+                int base = adapter.getCount();
+                adapter.setViews(newImages);
 
-            // uploading images
-            for (int i = 0; i < newImages.size(); i++)
-                new UploadImage(i + base).execute(newImages.get(i));
+                // uploading images
+                for (int i = 0; i < newImages.size(); i++)
+                    new UploadImage(i + base).execute(newImages.get(i));
+            } else if (requestCode == REQUEST_SELECT_VIDEO) {
+                String path = new ImageDecoder().getVideoPath(data.getData(), getContentResolver());
+                Bitmap bm = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND);
+                imageButtonVideo.setImageBitmap(bm);
+                progressBarVideo.setVisibility(View.VISIBLE);
+                new UploadVideo().execute(path);
+            }
         }
     }
 
@@ -575,6 +622,15 @@ public class EditAdActivity extends MasterActivity {
 
             if (deletedImgsJsonArray.length() > 0)
                 parameters.put("deleted_images", deletedImgsJsonArray.toString());
+
+            if (deletedVideosJsonArray.length() > 0)
+                parameters.put("deleted_videos", deletedVideosJsonArray.toString());
+
+            if (videoServerPath == null)
+                parameters.put("main_video", NULL);
+            else
+                parameters.put("main_video", videoServerPath);
+
 
             return true;
         }
@@ -921,6 +977,23 @@ public class EditAdActivity extends MasterActivity {
 
                     image.setLoading(false);
                     adapter.updateViews(position);
+                }
+            });
+            return null;
+        }
+    }
+
+    class UploadVideo extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            AdController.getInstance(mController).uploadVideo(new File(strings[0]), new SuccessCallback<String>() {
+                @Override
+                public void OnSuccess(String result) {
+                    videoServerPath = result;
+                    progressBarVideo.setVisibility(View.INVISIBLE);
+                    imageButtonCheck.setVisibility(View.VISIBLE);
                 }
             });
             return null;

@@ -150,7 +150,7 @@ public class MyApplication extends Application {
         editor.commit();
     }
 
-    public static String getBaseUrlForImages() {
+    public static String getBaseUrl() {
         return "http://dealat.tradinos.com/";
        // return "http://192.168.9.17/Dealat/";
     }

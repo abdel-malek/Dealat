@@ -1,6 +1,8 @@
 package com.tradinos.dealat2.View;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -50,7 +52,7 @@ import com.tradinos.dealat2.R;
 
 public class AdDetailsActivity extends MasterActivity {
 
-    private final int REQUEST_CALL = 6;
+    private final int REQUEST_CALL = 6, REQUEST_EDIT = 7;
 
     private boolean enabled = false;
 
@@ -108,6 +110,10 @@ public class AdDetailsActivity extends MasterActivity {
                 currentAd.setSellerName(result.getSellerName());
                 currentAd.setFavorite(result.isFavorite());
                 currentAd.setImagesPaths(result.getImagesPaths());
+                currentAd.setMainVideoUrl(result.getMainVideoUrl());
+
+                if (result.getMainVideoUrl() != null)// just a gap thing for video // because count of fragments must increase +1
+                    result.getImagesPaths().add(0, "");
 
                 viewPager.setAdapter(new AdImagesAdapter(getSupportFragmentManager(), result.getImagesPaths(), currentAd.getTemplate()));
 
@@ -119,14 +125,21 @@ public class AdDetailsActivity extends MasterActivity {
                     View view = LayoutInflater.from(mContext).inflate(R.layout.row_tab_image, null);
 
                     ImageView imageView = view.findViewById(R.id.imageView);
+                    String path = result.getImagePath(i);
 
                     int defaultDrawable = getTemplateDefaultImage(currentAd.getTemplate());
 
-                    if (result.getImagePath(i) != null) {
+                    if (path == null)
+                        imageView.setImageDrawable(ContextCompat.getDrawable(mContext, defaultDrawable));
+                    else if (path.equals("")) { // a Video is added to ad.getImagesPaths as empty string ""
+                        imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_play_arrow_gray));
+                        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    } else {
                         ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
-                        mImageLoader.get(MyApplication.getBaseUrlForImages() + result.getImagePath(i), ImageLoader.getImageListener(imageView,
+                        mImageLoader.get(MyApplication.getBaseUrl() + path, ImageLoader.getImageListener(imageView,
                                 defaultDrawable, defaultDrawable));
                     }
+
                     tabLayout.getTabAt(i).setCustomView(view);
 
                     View tab = tabStrip.getChildAt(i);
@@ -140,7 +153,11 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewId.setText(result.getFormattedId());
                 textViewTitle.setText(result.getTitle());
                 textViewTitle2.setText(result.getTitle());
-                textViewPublishDate.setText(formattedDate(result.getPublishDate()));
+                ((TextView) findViewById(R.id.textViewCat)).setText(currentCategory.getFullName());
+
+                if (result.getPublishDate() != null)  // unaccepted ads their publish dates are null
+                    textViewPublishDate.setText(getString(R.string.published) + " " + formattedDate(result.getPublishDate()));
+
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
                 textViewCity.setText(result.getCityName());
 
@@ -150,8 +167,6 @@ public class AdDetailsActivity extends MasterActivity {
                     findViewById(R.id.containerLocation).setVisibility(View.VISIBLE);
                 }
 
-                //suppose to get expires after
-                textViewExpires.setText(getExpiryTime(result.getPublishDate(), result.getShowPeriod()));
                 textViewSeller.setText(result.getSellerName());
 
                 // SpannableString content = new SpannableString(result.getSellerPhone());
@@ -177,20 +192,32 @@ public class AdDetailsActivity extends MasterActivity {
                         ((TextView) findViewById(R.id.textViewStatus)).setText(getStringStatus(currentAd.getStatus()));
                         findViewById(R.id.container4).setVisibility(View.VISIBLE);
 
+                        ((TextView) findViewById(R.id.textViewCreated)).setText(formattedDate(currentAd.getCreationDate()));
+                        findViewById(R.id.container6).setVisibility(View.VISIBLE);
+
+                        if (result.getPublishDate() != null) {
+                            textViewExpires.setText(getExpiryTime(result.getPublishDate(), result.getDays()));
+
+                            findViewById(R.id.container7).setVisibility(View.VISIBLE);
+                            findViewById(R.id.line19).setVisibility(View.VISIBLE);
+                        }
+
                         if (currentAd.isRejected()) {
                             ((TextView) findViewById(R.id.textViewNote)).setText(currentAd.getRejectNote());
                             findViewById(R.id.container5).setVisibility(View.VISIBLE);
                         }
 
-                    } else { // user cannot contact themselves
+                        // so seller can edit or delete their ad
+                        findViewById(R.id.containerSetting).setVisibility(View.VISIBLE);
+
+                    } else { // seller cannot contact themselves
                         if (currentAd.isFavorite())
                             buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star));
 
                         buttonFav.setVisibility(View.VISIBLE);
 
-                        findViewById(R.id.buttonCall).setVisibility(View.VISIBLE);
-                        findViewById(R.id.line4).setVisibility(View.VISIBLE);
-                        findViewById(R.id.buttonMessage).setVisibility(View.VISIBLE);
+                        findViewById(R.id.containerContact).setVisibility(View.VISIBLE);
+
                         buttonReport.setVisibility(View.VISIBLE); // seller cannot report their ad
                     }
                 } else
@@ -294,6 +321,7 @@ public class AdDetailsActivity extends MasterActivity {
 
         if (registered() && user.IsLogged()) {
 
+            Intent intent;
             switch (view.getId()) {
                 case R.id.buttonFav:
                     if (currentAd.isFavorite()) {
@@ -305,7 +333,7 @@ public class AdDetailsActivity extends MasterActivity {
                                 mAnimation.setDuration(800);
                                 buttonFav.startAnimation(mAnimation);
 
-                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.star_copy));
+                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_white_24dp));
                                 showMessageInToast(R.string.toastUnfavorite);
                                 currentAd.setFavorite(false);
                             }
@@ -343,7 +371,7 @@ public class AdDetailsActivity extends MasterActivity {
                     break;
 
                 case R.id.buttonMessage:
-                    Intent intent = new Intent(mContext, ChatActivity.class);
+                    intent = new Intent(mContext, ChatActivity.class);
                     Chat chat = new Chat();
                     chat.setAdId(currentAd.getId());
                     chat.setSellerId(currentAd.getSellerId());
@@ -356,6 +384,44 @@ public class AdDetailsActivity extends MasterActivity {
                     startActivity(intent);
 
                     break;
+
+                case R.id.buttonEdit:
+                    intent = new Intent(mContext, EditAdActivity.class);
+                    intent.putExtra("ad", currentAd);
+                    startActivityForResult(intent, REQUEST_EDIT);
+                    finish();
+
+                    break;
+
+                case R.id.buttonDelete:
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    ShowProgressDialog();
+                                    AdController.getInstance(mController).changeStatus(currentAd.getId(), Ad.DELETED,
+                                            new SuccessCallback<String>() {
+                                                @Override
+                                                public void OnSuccess(String result) {
+
+                                                    HideProgressDialog();
+                                                    showMessageInToast(R.string.toastAdDeleted);
+                                                    finish();
+                                                }
+                                            });
+
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
+                    builder.setMessage(R.string.areYouSureDeleteAd).setPositiveButton(getString(R.string.yes), dialogClickListener)
+                            .setNegativeButton(getString(R.string.no), dialogClickListener).show();
+
+                    break;
             }
         }
     }
@@ -365,6 +431,12 @@ public class AdDetailsActivity extends MasterActivity {
         intent.putExtra("ad", currentAd);
         intent.putExtra("page", viewPager.getCurrentItem());
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_EDIT)
+            finish();
     }
 
     @Override
@@ -568,7 +640,7 @@ public class AdDetailsActivity extends MasterActivity {
                     containerModel.setVisibility(View.VISIBLE);
                 }
 
-                if (!currentCategory.shouldHideTag(getString(R.string.hideKilo))){
+                if (!currentCategory.shouldHideTag(getString(R.string.hideKilo))) {
                     findViewById(R.id.line14).setVisibility(View.VISIBLE);
                     containerKilometer.setVisibility(View.VISIBLE);
                 }

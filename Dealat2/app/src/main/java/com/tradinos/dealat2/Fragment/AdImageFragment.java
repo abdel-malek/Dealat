@@ -49,13 +49,17 @@ public class AdImageFragment extends Fragment {
 
         int defaultDrawable = ((MasterActivity) getContext()).getTemplateDefaultImage(templateId);
 
-        if (path != null) {
-
-            ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + this.path, ImageLoader.getImageListener(imageView,
-                    defaultDrawable, defaultDrawable));
-        } else
+        if (path == null)
             imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), defaultDrawable));
+        else if (path.equals("")) {// a Video is added to ad.getImagesPaths as empty string ""
+            imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_play_arrow_gray));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+         else {
+            ImageLoader mImageLoader = InternetManager.getInstance(getContext()).getImageLoader();
+            mImageLoader.get(MyApplication.getBaseUrl() + this.path, ImageLoader.getImageListener(imageView,
+                    defaultDrawable, defaultDrawable));
+        }
 
         return rootView;
     }

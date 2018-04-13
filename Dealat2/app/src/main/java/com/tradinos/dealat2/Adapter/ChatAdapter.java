@@ -80,7 +80,7 @@ public class ChatAdapter extends BaseAdapter {
 
         if (url != null) {
             ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-            mImageLoader.get(MyApplication.getBaseUrlForImages() + url,
+            mImageLoader.get(MyApplication.getBaseUrl() + url,
                     ImageLoader.getImageListener(holder.imageView,
                             R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
         }

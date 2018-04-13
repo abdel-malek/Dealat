@@ -45,6 +45,39 @@
                     android:orientation="horizontal"
                     >
 
+                    <FrameLayout
+                        android:layout_width="@dimen/imageViewLarge"
+                        android:layout_height="@dimen/imageViewLarge">
+
+                        <ImageButton
+                            android:id="@+id/buttonVideo"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_margin="4dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_video_call_white_36dp"
+                            android:background="@color/grayLightTransparent"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/imageCheck"
+                            android:layout_width="@dimen/imageXSmall"
+                            android:layout_height="@dimen/imageXSmall"
+                            android:layout_gravity="end"
+                            android:visibility="invisible"
+                            android:elevation="4dp"
+                            android:background="@drawable/ic_cancel_white_18dp"
+                            />
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="invisible"
+                            android:indeterminateDrawable="@drawable/progress_bar"
+                            />
+                    </FrameLayout>
+
                     <ImageButton
                         android:id="@+id/buttonEdit"
                         android:layout_width="96dp"

@@ -27,7 +27,6 @@ import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyProfileActivity extends MasterActivity {
@@ -84,7 +83,7 @@ public class MyProfileActivity extends MasterActivity {
                                 User user = new CurrentAndroidUser(mContext).Get();
                                 if (user != null && !TextUtils.isEmpty(user.getImageUrl())){
                                     ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
-                                    mImageLoader.get(MyApplication.getBaseUrlForImages() + user.getImageUrl(),
+                                    mImageLoader.get(MyApplication.getBaseUrl() + user.getImageUrl(),
                                             ImageLoader.getImageListener(((ImageView)findViewById(R.id.imageView)),
                                             R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
                                 }

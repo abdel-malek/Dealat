@@ -74,73 +74,10 @@ public class MyAdsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                final Dialog adSettingDialog = new Dialog(getContext());
-                adSettingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                adSettingDialog.setContentView(R.layout.popup_ad_settings);
 
-                Button buttonView = adSettingDialog.findViewById(R.id.buttonTrue),
-                        buttonEdit = adSettingDialog.findViewById(R.id.buttonEdit),
-                        buttonDelete = adSettingDialog.findViewById(R.id.buttonFalse);
-
-
-                buttonView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), AdDetailsActivity.class);
-                        intent.putExtra("ad", ads.get(i));
-                        getContext().startActivity(intent);
-                        adSettingDialog.dismiss();
-                    }
-                });
-
-
-                buttonEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), EditAdActivity.class);
-                        intent.putExtra("ad", ads.get(i));
-                        getContext().startActivity(intent);
-                        adSettingDialog.dismiss();
-                    }
-                });
-
-                buttonDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case DialogInterface.BUTTON_POSITIVE:
-                                        final MyProfileActivity activity = (MyProfileActivity) getActivity();
-                                        activity.ShowProgressDialog();
-                                        AdController.getInstance(activity.getController()).changeStatus(ads.get(i).getId(), Ad.DELETED,
-                                                new SuccessCallback<String>() {
-                                                    @Override
-                                                    public void OnSuccess(String result) {
-
-                                                        ads.remove(i);
-                                                        ((MyAdAdapter) listView.getAdapter()).notifyDataSetChanged();
-
-                                                        activity.HideProgressDialog();
-                                                        activity.showMessageInToast(R.string.toastAdDeleted);
-                                                        adSettingDialog.dismiss();
-                                                    }
-                                                });
-
-                                        break;
-                                }
-                            }
-                        };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), AlertDialog.THEME_HOLO_LIGHT);
-                        builder.setMessage(R.string.areYouSureDeleteAd).setPositiveButton(getString(R.string.yes), dialogClickListener)
-                                .setNegativeButton(getString(R.string.no), dialogClickListener).show();
-                    }
-                });
-
-                adSettingDialog.show();
+                Intent intent = new Intent(getContext(), AdDetailsActivity.class);
+                intent.putExtra("ad", ads.get(i));
+                getContext().startActivity(intent);
             }
         });
 

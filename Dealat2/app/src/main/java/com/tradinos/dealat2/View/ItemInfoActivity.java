@@ -4,15 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -57,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -74,13 +72,13 @@ public class ItemInfoActivity extends MasterActivity {
     private Category selectedCategory;
     private Item selectedLocation;
     private int currentTemplate;
-    private String videoUrl;
+    private String videoServerPath;
 
     private HashMap<Integer, List<Type>> brands = new HashMap<>();
 
     private HashMap<String, String> parameters = new HashMap<>();
 
-    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray();
+    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray(), deletedVideosJsonArray = new JSONArray();
 
     private HorizontalAdapter adapter;
 
@@ -115,7 +113,9 @@ public class ItemInfoActivity extends MasterActivity {
             containerEx, containerSalary;
 
     private View line1, line2, line3;
-   // private ProgressBar progressBarVideo;
+    // views for upload video
+    private ProgressBar progressBarVideo;
+    private ImageButton imageButtonCheck, imageButtonVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +161,7 @@ public class ItemInfoActivity extends MasterActivity {
     public void showData() {
 
         ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
-                " " + getString(R.string.images));
+                " " + getString(R.string.images) + "\n" + getString(R.string.alsoSelectVideo));
 
         int startYear = AdVehicle.START_YEAR;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -239,7 +239,9 @@ public class ItemInfoActivity extends MasterActivity {
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
 
-      //  progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
+        progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
+        imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
+        imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
     }
 
     @Override
@@ -328,6 +330,26 @@ public class ItemInfoActivity extends MasterActivity {
                 return false;
             }
         });
+
+        imageButtonVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("video/*");
+                startActivityForResult(Intent.createChooser(intent,"Select a Video"), REQUEST_SELECT_VIDEO);
+            }
+        });
+
+        imageButtonCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletedVideosJsonArray.put(videoServerPath);
+
+                imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
+                videoServerPath = null;
+                imageButtonCheck.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override
@@ -405,13 +427,7 @@ public class ItemInfoActivity extends MasterActivity {
 
                 popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
             }
-        } //else if (view.getId() == R.id.buttonVideo) {
-          //  Intent intent = new Intent(Intent.ACTION_PICK,  MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-          //  Intent intent = new Intent();
-          //  intent.setType("video/*");
-          //  intent.setAction(Intent.ACTION_GET_CONTENT);
-          //  startActivityForResult(Intent.createChooser(intent, "Select a Video "), REQUEST_SELECT_VIDEO);
-      //  }
+        }
     }
 
     @Override
@@ -439,38 +455,13 @@ public class ItemInfoActivity extends MasterActivity {
                     new UploadImage(i + base).execute(newImages.get(i));
 
             } else if (requestCode == REQUEST_SELECT_VIDEO) {
-             /*   String path = getPath(data.getData());
+                String path = new ImageDecoder().getVideoPath(data.getData(), getContentResolver());
                 Bitmap bm = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND);
-                ((ImageButton)findViewById(R.id.buttonVideo)).setImageBitmap(bm);
+                imageButtonVideo.setImageBitmap(bm);
                 progressBarVideo.setVisibility(View.VISIBLE);
-                new uploadVideo().execute(path);*/
+                new UploadVideo().execute(path);
             }
         }
-    }
-
-    private String getPath(Uri uri) {
-      /*  String[] filePathColumn = {MediaStore.Video.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-
-        if (cursor.moveToFirst()){
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String path = cursor.getString(columnIndex);
-            cursor.close();
-            return path;
-        }
-        cursor.close();
-
-        return "";
-*/
-
-        String[] projection = {MediaStore.Video.Media.DATA, MediaStore.Video.Media.SIZE, MediaStore.Video.Media.DURATION};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        cursor.moveToFirst();
-        String filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
-        int fileSize = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
-        long duration = TimeUnit.MILLISECONDS.toSeconds(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)));
-
-        return filePath;
     }
 
     @Override
@@ -618,6 +609,8 @@ public class ItemInfoActivity extends MasterActivity {
 
         } else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
+        else if (progressBarVideo.getVisibility() == View.VISIBLE)
+            showMessageInToast(R.string.toastWaitTillVideoUploading);
         else {
             if (!inputIsEmpty(editDesc))
                 parameters.put("description", stringInput(editDesc));
@@ -655,8 +648,11 @@ public class ItemInfoActivity extends MasterActivity {
             if (deletedImgsJsonArray.length() > 0)
                 parameters.put("deleted_images", deletedImgsJsonArray.toString());
 
-            if (videoUrl != null)
-                parameters.put("main_video", videoUrl);
+            if (deletedVideosJsonArray.length() > 0)
+                parameters.put("deleted_videos", deletedVideosJsonArray.toString());
+
+            if (videoServerPath != null)
+                parameters.put("main_video", videoServerPath);
 
             return true;
         }
@@ -836,20 +832,21 @@ public class ItemInfoActivity extends MasterActivity {
             return null;
         }
     }
-/*
-    class uploadVideo extends AsyncTask<String, Void, String> {
+
+    class UploadVideo extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
+
             AdController.getInstance(mController).uploadVideo(new File(strings[0]), new SuccessCallback<String>() {
                 @Override
                 public void OnSuccess(String result) {
-                    videoUrl = result;
+                    videoServerPath = result;
                     progressBarVideo.setVisibility(View.INVISIBLE);
-                    showMessageInToast(result);
+                    imageButtonCheck.setVisibility(View.VISIBLE);
                 }
             });
             return null;
         }
-    }*/
+    }
 }

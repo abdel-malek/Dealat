@@ -50,8 +50,6 @@ public class ChatActivity extends MasterActivity {
     private User user;
     private Chat currentChat;
 
-    private HashMap<String, String> parameters = new HashMap<>();
-
     private MessageAdapter adapter;
 
     // views
@@ -152,7 +150,8 @@ public class ChatActivity extends MasterActivity {
                     Message message = new Message();
                     message.setText(stringInput(editTextMsg));
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+                    // HH gives 24hours but hh give 12hours // so it's formatted back to 12hours in MessageAdapter
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
                     message.setCreatedAt(dateFormat.format(new Date()));
 
                     if (amISeller())
@@ -166,6 +165,7 @@ public class ChatActivity extends MasterActivity {
                     adapter.addMessage(message);
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
+                    HashMap<String, String> parameters = new HashMap<>();
 
                     parameters.put("ad_id", currentChat.getAdId());
                     parameters.put("msg", message.getText());
@@ -176,7 +176,7 @@ public class ChatActivity extends MasterActivity {
                     editTextMsg.setText("");
                     showButton(HIDE);
 
-                    new SendMessage(adapter.getItemCount() - 1).execute(message.getText());
+                    new SendMessage(parameters, adapter.getItemCount() - 1).execute(message.getText());
                 }
             }
         });
@@ -194,7 +194,8 @@ public class ChatActivity extends MasterActivity {
             Message message = new Message();
             message.setText(intent.getStringExtra("msg"));
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+            // HH gives 24hours but hh give 12hours // so it's formatted back to 12hours in MessageAdapter
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             message.setCreatedAt(dateFormat.format(new Date()));
 
             if (amISeller())
@@ -208,11 +209,14 @@ public class ChatActivity extends MasterActivity {
         }
     }
 
-    class SendMessage extends AsyncTask<String, Void, Message>{
+    class SendMessage extends AsyncTask<String, Void, Message> {
 
         int position;
-        SendMessage(int position){
+        HashMap<String, String> parameters;
+
+        SendMessage(HashMap<String, String> parameters, int position) {
             this.position = position;
+            this.parameters = parameters;
         }
 
         @Override

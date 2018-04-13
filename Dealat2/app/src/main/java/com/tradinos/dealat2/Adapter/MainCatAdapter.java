@@ -67,7 +67,7 @@ public class MainCatAdapter extends BaseAdapter {
         int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(getItem(i).getTemplateId());
 
         ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-        mImageLoader.get(MyApplication.getBaseUrlForImages() + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,
+        mImageLoader.get(MyApplication.getBaseUrl() + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,
                 defaultDrawable, defaultDrawable));
 
         return view;
