@@ -13,9 +13,24 @@ class CommericalCell: UICollectionViewCell {
     
     @IBOutlet weak var img : UIImageView!
     @IBOutlet weak var lbl : UILabel!
-    
+
     var newAddVC : NewAddVC!
     
+    var videoPath : String!{
+        didSet{
+            
+            self.lbl.text = nil
+            
+            if videoPath == nil{
+                self.img.image = #imageLiteral(resourceName: "ic_video_call")
+            }else{
+                self.img.image = #imageLiteral(resourceName: "ic_videocam")
+            }
+            
+//            self.img.image = self.img.image?.withRenderingMode(.alwaysTemplate)
+//            self.img.tintColor = Theme.Color.red
+        }
+    }
     
     var commercial : Commercial!{
         didSet{
@@ -32,7 +47,11 @@ class CommericalCell: UICollectionViewCell {
     
     var im : IMG! {
         didSet{
+            if !self.im.isVideo{
             Provider.sd_setImage(self.img, urlString: im.image)
+            }else{
+                self.img.image = #imageLiteral(resourceName: "playIcon")
+            }
         }
     }
     
@@ -58,10 +77,9 @@ class CommericalCell: UICollectionViewCell {
                         self.img.image = imageNew!.imag
                     }
                 }else{
-                    print("ELSE")
-                    if imageNew!.imag == nil{
+//                    if imageNew!.imag == nil || imageNew!.imag == UIImage.init(){
                         Provider.sd_setImage(self.img, urlString: newAddVC.imagesPaths[imageNew!.index])
-                    }
+//                    }
                 }
                 
 //                else{

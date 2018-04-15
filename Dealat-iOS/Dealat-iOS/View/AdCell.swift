@@ -70,7 +70,7 @@ class AdCell : UICollectionViewCell{
             
             if let date = self.ad.expiry_date, !date.isEmpty{
                 if let d = Date.init(fromString: date, format: .custom("yyyy-MM-dd hh:mm:ss")){
-                    self.expiry_date.text = "expires on \(d.toString(format: DateFormatType.isoDate))"
+                    self.expiry_date.text = "AdExpires".localized + " \(d.toString(format: DateFormatType.isoDate))"
                 }
             }
             

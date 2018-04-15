@@ -10,6 +10,8 @@ import UIKit
 import AFDateHelper
 import SwiftyJSON
 import Lightbox
+import Photos
+
 
 class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -22,6 +24,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     //General
     @IBOutlet weak var adStatusLbl : UILabel!
+    @IBOutlet weak var adCreatedDatebl : UILabel!
+    
+    @IBOutlet weak var adExpiresDatebl : UILabel!
+    @IBOutlet weak var adExpiresStack : UIStackView!
+
+
     @IBOutlet weak var adRejectionLbl : UILabel!
     @IBOutlet weak var adRejectionStack : UIStackView!
     
@@ -93,6 +101,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     var selectedIndex : Int = 0
     var ad : AD!
 
+
     func ifHidden(index : IndexPath) -> Bool{
         
         if let cat = Provider.shared.catsFull.filter({$0.category_id.intValue == self.ad.category_id.intValue}).first,cat.hidden_fields != nil {
@@ -149,15 +158,30 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     override func getRefreshing() {
         Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue) { (res) in
             self.hideLoading()
+
+            let expairy_date = self.ad.expiry_date
+            
             self.ad = res
-            self.parentBase?.ad = res
+
+            if res.expiry_date == nil || res.expiry_date.isEmpty{
+                self.ad.expiry_date = expairy_date
+            }
+            
+            self.parentBase?.ad = self.ad
+            self.parentBase?.adBase = AD(JSON : self.ad.toJSON())
             
             
-//            if !res.images.isEmpty{
-                let im = IMG()
-                im.image = self.ad.main_image
-                self.ad.images.insert(im, at: 0)
-//            }
+            let im = IMG()
+            im.image = self.ad.main_image
+            self.ad.images.insert(im, at: 0)
+            
+            if let u = self.ad.main_video{
+                let video = IMG()
+                video.image = u
+                video.isVideo = true
+                self.ad.images.insert(video, at: 0)
+            }
+            
             
             self.parentBase?.refreshBar()
             self.refreshData()
@@ -179,6 +203,22 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 }
                 
                 self.adStatusLbl.text = self.ad.getStatus().0
+                self.adCreatedDatebl.text = self.ad.created_at
+                
+                self.adExpiresDatebl.text = nil
+                
+                if let date = self.ad.expiry_date, !date.isEmpty{
+                    if let d = Date.init(fromString: date, format: .custom("yyyy-MM-dd hh:mm:ss")){
+                        self.adExpiresDatebl.text = "\(d.toString(format: DateFormatType.isoDate))"
+                    }
+                }
+                
+                if self.adExpiresDatebl.text == nil{
+                    self.adExpiresStack.isHidden = true
+                }else{
+                    self.adExpiresStack.isHidden = false
+                }
+
             }
         }
         
@@ -473,22 +513,16 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             
             for i in self.ad.images{
                 if let urlString = i.image, let url = URL.init(string: Communication.shared.baseImgsURL + urlString){
-                    let im = LightboxImage.init(imageURL: url)
-                    images.append(im)
+                    if !i.isVideo{
+                        let im = LightboxImage.init(imageURL: url, text: self.ad.title, videoURL: nil)
+                        images.append(im)
+                    }else{
+                        let im = LightboxImage.init(image: #imageLiteral(resourceName: "ic_play_circle_outline"), text: self.ad.title, videoURL: url)
+                        images.append(im)
+                    }
                 }
             }
             
-            /*for i in 0..<self.ad.images.count{
-                if let j =  collectionView.cellForItem(at: IndexPath.init(item: i, section: 0)){
-                    if let cc = j as? CommericalCell{
-                        if let m = cc.img.image{
-                            let im = LightboxImage.init(image: m)
-                            images.append(im)
-                        }
-                    }
-                }
-            }*/
-
             
             self.imagesController = LightboxController(images: images)
             self.imagesController.dynamicBackground = true
@@ -515,11 +549,10 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     @objc func shareImage(){
         
+        if !self.ad.images[self.imagesController.currentPage].isVideo{
         let imgV = UIImageView()
         
         Provider.sd_setImage(imgV, urlString: self.ad.images[self.imagesController.currentPage].image)
-        
-            // set up activity view controller
         
         guard let imgg = imgV.image else {
             return
@@ -529,13 +562,46 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             
-            // exclude some activity types from the list (optional)
             activityViewController.excludedActivityTypes = [  ]
         //UIActivityType.airDrop, UIActivityType.postToFacebook
             
-            // present the view controller
             self.imagesController.present(activityViewController, animated: true, completion: nil)
-        
+        }else{
+            
+            let urlString = Communication.shared.baseImgsURL +  self.ad.images[self.imagesController.currentPage].image
+//            if let urlToShare = URL.init(string: urlString){
+            
+
+                DispatchQueue.global(qos: .background).async {
+                    if let url = URL(string: urlString),
+                        let urlData = NSData(contentsOf: url) {
+                        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+                        let filePath="\(documentsPath)/dealat.mp4"
+                        DispatchQueue.main.async {
+                            urlData.write(toFile: filePath, atomically: true)
+                            
+                            // share video
+                            let activityViewController = UIActivityViewController(activityItems: [URL(fileURLWithPath: filePath)], applicationActivities: nil)
+                            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                            activityViewController.excludedActivityTypes = [  ]
+                            //UIActivityType.airDrop, UIActivityType.postToFacebook
+                            
+                            self.imagesController.present(activityViewController, animated: true, completion: nil)
+                            
+                            
+                            // sace video
+                           /* PHPhotoLibrary.shared().performChanges({
+                                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+                            }) { completed, error in
+                                if completed {
+                                    print("Video is saved!")
+                                }
+                            }*/
+                            
+                        }
+                    }
+                }
+        }
     }
     
     

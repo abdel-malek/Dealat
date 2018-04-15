@@ -12,6 +12,8 @@ import KSToastView
 class AdDetailsBaseVC: UIViewController {
     
     var ad : AD!
+    var adBase : AD!
+
     var tamplateId : Int = -1
     
     // BottomBar
@@ -22,6 +24,8 @@ class AdDetailsBaseVC: UIViewController {
     @IBOutlet weak var deleteBtn : UIButton!
     
     @IBOutlet weak var sellerLbl : UILabel!
+    
+    var msg : String = ""
 
     var adDetailsVC : AdDetailsVC!
 
@@ -39,6 +43,15 @@ class AdDetailsBaseVC: UIViewController {
         let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
         self.navigationItem.backBarButtonItem = rr
     }
+    
+    @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
+        print("unwindToVC1")
+        
+        self.showErrorMessage(text: self.msg)
+        self.adDetailsVC.refreshData()
+        self.adDetailsVC.getData()
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let i = segue.destination as? AdDetailsVC{
@@ -80,7 +93,7 @@ class AdDetailsBaseVC: UIViewController {
     
     @IBAction func editAction(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
-        vc.ad = self.ad
+        vc.ad = self.adBase
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

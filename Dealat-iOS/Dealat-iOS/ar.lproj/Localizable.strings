@@ -67,7 +67,9 @@
 "Price SP" = "السعر (ل.س)";
 "Filter" = "بحث";
 "AdNumber" = "رقم الإعلان";
-"AdDate" = "تاريخ الإعلان";
+"AdDate" = "تاريخ نشر الإعلان";
+"AdDateCreated" = "تاريخ إنشاء الإعلان";
+"AdExpires" = "تاريخ الانتهاء";
 "From" = "من";
 "To" = "إلى";
 "Show" = "عرض";
@@ -138,3 +140,9 @@
 
 "RejectionReason" = "سبب الرفض";
 "AdStatus" = "حالة الإعلان";
+
+"Delete Photo" = "حذف الصورة";
+"Capture video" = "إلتقاط فيديو";
+"Choose video" = "اختيار مقطع فيديو";
+"Make as Main" = "وضع الصورة في المقدمة";
+

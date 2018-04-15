@@ -24,7 +24,7 @@ class AD : BaseEntity {
     var reject_note : String!
     var price : JSON!
     var main_image : String!
-    var main_vedio : String!
+    var main_video : String!
     var is_negotiable : JSON!
     var title : String!
     var description : String!
@@ -137,7 +137,7 @@ class AD : BaseEntity {
         reject_note <- map["reject_note"]
         price <- map["price"]
         main_image <- map["main_image"]
-        main_vedio <- map["main_vedio"]
+        main_video <- map["main_video"]
         is_negotiable <- map["is_negotiable"]
         title <- map["title"]
         description <- map["description"]

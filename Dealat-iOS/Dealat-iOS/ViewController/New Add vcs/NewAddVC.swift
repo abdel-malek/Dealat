@@ -24,10 +24,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     let cellIdentifier = "imageCellIdentifier"
     
-//    var images: NSArray! = []
+    //    var images: NSArray! = []
     var imagesPaths: [String] = []
-    
     var imagesAssets: [UIImage]! = [UIImage]()
+    var imagesPathsDeleted: [String] = []
+    
+    var videoUrl : URL!
+    var videoPath : String!
+    var videoPathDeleted : String!
 
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
@@ -114,7 +118,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         didSet{
             if self.tfCategory != nil{
                 self.resetFields()
-
+                
                 let nn = Cat.getName(selectedCategory.category_id.intValue)
                 
                 self.tfCategory.text = nn//selectedCategory.category_name
@@ -126,6 +130,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
     }
+    
     
     var selectedCity : City!{
         didSet{
@@ -158,7 +163,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
     }
-
+    
     
     var selectedType : Type!{
         didSet{
@@ -227,25 +232,25 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             case (2,2): return cat.hidden_fields.contains("floor")
             case (2,3): return cat.hidden_fields.contains("state")
             case (2,4): return cat.hidden_fields.contains("furniture")
-
+                
             case (3,0): return cat.hidden_fields.contains("type_name")
             case (3,1): return cat.hidden_fields.contains("state")
-
+                
             case (4,0): return cat.hidden_fields.contains("type_name")
             case (4,1): return cat.hidden_fields.contains("state")
             case (4,2): return cat.hidden_fields.contains("size")
-
+                
             case (5,0): return cat.hidden_fields.contains("state")
             case (6,0): return cat.hidden_fields.contains("state")
             case (7,0): return cat.hidden_fields.contains("state")
-
+                
             case (8,0): return cat.hidden_fields.contains("education")
             case (8,1): return cat.hidden_fields.contains("schedule")
             case (8,2): return cat.hidden_fields.contains("experience")
             case (8,3): return cat.hidden_fields.contains("salary")
-
+                
             case (9,0): return cat.hidden_fields.contains("state")
-
+                
             default:
                 break
             }
@@ -278,14 +283,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.periods = periods
             
             if self.editMode{
-                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue, callback: { (res) in
-                    
-                    self.hideLoading()
-                    self.ad = res
-                    self.refreshData()
-                    self.setDataForEdit()
-                    
-                })
+                //                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue, callback: { (res) in
+                //
+                //                    self.hideLoading()
+                //                    self.ad = res
+                //                    self.refreshData()
+                //                    self.setDataForEdit()
+                //
+                //                })
+                
+                self.hideLoading()
+                self.refreshData()
+                self.setDataForEdit()
                 
                 
             }else{
@@ -296,8 +305,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
     }
     
+    func setupTypes(){
+        types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
+    }
+    
     func setupViews(){
-
+        
         if self.editMode{
             self.title = "SellEdit".localized
         }else{
@@ -324,14 +337,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         // Navigation Item
         //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
-
+        
         
         
         self.setPickerViewOn(self.tfCity)
         self.setPickerViewOn(self.tfLocation)
         self.setPickerViewOn(self.tfPeriod)
-
-
+        
+        
         //1
         self.setPickerViewOn(self.tfType)
         self.setPickerViewOn(self.tfModel)
@@ -536,7 +549,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             completion(data, response, error)
             }.resume()
     }
-
+    
     
     func setDataForEdit(){
         if self.editMode{
@@ -555,12 +568,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
             
             print("LOCCCC : \(self.ad.location_id)")
-
+            
             if let location_id = self.ad.location_id{
                 print(self.locations.count)
                 if let loc = self.locations.first(where: {$0.location_id.intValue == location_id.intValue}){
                     print("sssss : \(loc.location_name)")
-
+                    
                     self.selectedLocation = loc
                 }
             }
@@ -570,28 +583,30 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                     self.selectedPeriod = period
                 }
             }
-
+            
             self.tfPrice.text = ad.price.stringValue
             self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
             self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
             self.tfDescription.text = ad.description
-
             
-//            let mutableImages: [UIImage]! = [UIImage]()
-//
+            
+            print("COUNT IMAGES : \(self.ad.images.count)")
+            
             self.imagesPaths.append(self.ad.main_image)
-//
-//            mutableImages.append(self.ad.main_image)
-//
-//            
+            self.imagesAssets.append(UIImage.init())
+
+
             for i in self.ad.images{
                 self.imagesPaths.append(i.image)
-//                mutableImages.append(i)
+                self.imagesAssets.append(UIImage.init())
             }
-//
-//            self.images = mutableImages.copy() as? NSArray
-
-
+            
+            if let vid = self.ad.main_video, !vid.isEmpty{
+                self.videoPath = vid
+                self.videoUrl = URL.init(string: Communication.shared.baseImgsURL + vid)
+            }
+            
+            
             print("COUNT imagesPaths : \(imagesPaths.count)")
             self.collectionView.reloadData()
             
@@ -602,7 +617,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.selectedTransmission = self.ad.vehicle.is_automatic.intValue
                 
                 self.selectedStatus = self.ad.vehicle.is_new.intValue
-
+                
                 self.tfKilometers.text = self.ad.vehicle.kilometer.stringValue
                 
                 if let type_id = self.ad.vehicle.type_id{
@@ -616,14 +631,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                         self.selectedModel = model
                     }
                 }
-
-
                 
-//                if let type = self.ad.vehicle.
-//
-//                self.type_nameLbl.text = ad.vehicle.type_name
-//                self.type_model_nameLbl.text = ad.vehicle.type_model_name
-
+                
+                
+                //                if let type = self.ad.vehicle.
+                //
+                //                self.type_nameLbl.text = ad.vehicle.type_name
+                //                self.type_model_nameLbl.text = ad.vehicle.type_model_name
+                
                 
                 break
                 
@@ -805,7 +820,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.validMessage(tf: tfCity ,message : "Please enter".localized +  "City".localized)
             return
         }
-
+        
         guard let loc = self.selectedLocation, let location_id = loc.location_id else {
             self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Area".localized)
             return
@@ -815,7 +830,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.validMessage(tf: tfPeriod ,message : "Please enter".localized +  "ShowPeriod".localized)
             return
         }
-
+        
         guard let desAd = self.tfDescription.text, !desAd.isEmpty else {
             self.validMessage(message : "Please enter".localized +  "Description".localized)
             return
@@ -838,7 +853,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         params["city_id"] = city_id.intValue
         params["location_id"] = location_id.intValue
         params["show_period"] = show_period_id.intValue
-
+        
         params["is_negotiable"] = self.negotiableSwitch.isOn ? 1 : 0
         params["is_featured"] = self.featuredSwitch.isOn ? 1 : 0
         
@@ -903,7 +918,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             params["rooms_num"] = rooms
             params["floor"] = floor
             params["space"] = space
-//            params["is_new"] = is_new
+            //            params["is_new"] = is_new
             params["with_furniture"] = tfWith_furniture.isOn ? 1 : 0
             
         case 3:
@@ -962,18 +977,39 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
+        for i in self.imagesPathsDeleted{
+            var imagesArray = [String]()
+            imagesArray.append(i)
+            
+            if let yy = JSON(imagesArray).rawString(){
+                params["deleted_images"] = yy
+            }
+        }
+        
+        if let i = self.videoPathDeleted{
+            params["deleted_videos"] = i
+        }
+        
+        if let i = self.videoPath{
+            params["main_video"] = i
+        }
+        
+        
         if self.editMode{
             
             self.showLoading()
             Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params) { (res) in
                 self.hideLoading()
-                self.navigationController?.popViewController(animated: true)
                 
+                self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
+                
+                
+                /*self.navigationController?.popViewController(animated: true)
                 if let vcs = self.navigationController?.viewControllers{
                     for i in vcs{
                         if i.isKind(of: AdDetailsBaseVC.self){
                             if let vc = i as? AdDetailsBaseVC{
-//                                vc.adDetailsVC.getRefreshing()
+                                //                                vc.adDetailsVC.getRefreshing()
                                 
                                 Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue) { (res) in
                                     vc.adDetailsVC.hideLoading()
@@ -992,9 +1028,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                             }
                         }
                     }
-                }
+                }*/
                 
-                self.homeVC?.showErrorMessage(text: res.message)
             }
             
             
@@ -1008,9 +1043,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
         }
         
-        
-        
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "unwindSegueToVC1"{
+            if let vc = segue.destination as? AdDetailsBaseVC{
+                if let value = sender as? CustomResponse{
+                    vc.msg = value.message
+                }
+            }
+        }
+    }
+    
     
 }
 
@@ -1022,13 +1066,23 @@ extension NewAddVC{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
         
-        let img : UIImage! = (imagesAssets  != nil && indexPath.row < imagesAssets.count) ?  self.imagesAssets[indexPath.row] : nil
-        cell.newAddVC = self
-        cell.imageNew = (indexPath.row,img)
+        if indexPath.row == 0{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
+            
+            cell.newAddVC = self
+            cell.videoPath = self.videoPath
+            
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
+            let img : UIImage! = (imagesAssets  != nil && indexPath.row - 1 < imagesAssets.count) ?  self.imagesAssets[indexPath.row - 1] : nil
+            cell.newAddVC = self
+            cell.imageNew = (indexPath.row - 1,img)
+            
+            return cell
+        }
         
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -1039,56 +1093,62 @@ extension NewAddVC{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row + 1)
         
-        if indexPath.row >= self.imagesAssets.count{
-            let pickerViewController = YMSPhotoPickerViewController.init()
+        
+        if indexPath.row == 0{
             
-            var cnt : Int = 8
-            cnt -= (self.imagesAssets != nil) ? self.imagesAssets.count  : 0
-            pickerViewController.numberOfPhotoToSelect = UInt(cnt)
+            self.selectVideoAction()
             
-            pickerViewController.theme.titleLabelTextColor = Theme.Color.White
-            pickerViewController.theme.navigationBarBackgroundColor = Theme.Color.red
-            pickerViewController.theme.tintColor = Theme.Color.White
-            pickerViewController.theme.orderTintColor = Theme.Color.red
-            pickerViewController.theme.orderLabelTextColor = Theme.Color.White
-            pickerViewController.theme.cameraVeilColor = Theme.Color.red
-            pickerViewController.theme.cameraIconColor = UIColor.white
-            pickerViewController.theme.statusBarStyle = .lightContent
-            
-            self.yms_presentCustomAlbumPhotoView(pickerViewController, delegate: self)
         }else{
-            let alert = UIAlertController.init(title: "Would you like to:", message: "", preferredStyle: .actionSheet)
-            
-            
-            alert.addAction(UIAlertAction.init(title: "Make as Main", style: .default, handler: { (ac) in
+            if indexPath.row - 1 >= self.imagesPaths.count{
+                let pickerViewController = YMSPhotoPickerViewController.init()
                 
-//                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.imagesAssets)
-                var mutableImages : [UIImage]! = self.imagesAssets
-                let temp = mutableImages[indexPath.row]
-                mutableImages.remove(at: indexPath.row)
-                mutableImages.insert(temp, at: 0)
-                self.imagesAssets = mutableImages
+                var cnt : Int = 7
+                cnt -= (self.imagesAssets != nil) ? self.imagesAssets.count  : 0
+                pickerViewController.numberOfPhotoToSelect = UInt(cnt)
                 
-                if indexPath.row < self.imagesPaths.count{
-                    let temp2 = self.imagesPaths[indexPath.row]
-                    self.imagesPaths.remove(at: indexPath.row)
-                    self.imagesPaths.insert(temp2, at: indexPath.row)
-                }
+                pickerViewController.theme.titleLabelTextColor = Theme.Color.White
+                pickerViewController.theme.navigationBarBackgroundColor = Theme.Color.red
+                pickerViewController.theme.tintColor = Theme.Color.White
+                pickerViewController.theme.orderTintColor = Theme.Color.red
+                pickerViewController.theme.orderLabelTextColor = Theme.Color.White
+                pickerViewController.theme.cameraVeilColor = Theme.Color.red
+                pickerViewController.theme.cameraIconColor = UIColor.white
+                pickerViewController.theme.statusBarStyle = .lightContent
                 
-                self.collectionView.reloadData()
-            }))
-            
-            
-            alert.addAction(UIAlertAction.init(title: "Delete Photo", style: .destructive, handler: { (ac) in
+                self.yms_presentCustomAlbumPhotoView(pickerViewController, delegate: self)
+            }else{
+                let alert = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
                 
-                self.deletePhotoImage(indexPath.row)
-                self.collectionView.reloadData()
-            }))
-            
-            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
-            
-            self.present(alert, animated: true, completion: nil)
-            
+                
+                alert.addAction(UIAlertAction.init(title: "Make as Main".localized, style: .default, handler: { (ac) in
+                    
+                    //                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.imagesAssets)
+                    var mutableImages : [UIImage]! = self.imagesAssets
+                    let temp = mutableImages[indexPath.row - 1]
+                    mutableImages.remove(at: indexPath.row - 1)
+                    mutableImages.insert(temp, at: 0)
+                    self.imagesAssets = mutableImages
+                    
+                    if indexPath.row - 1 < self.imagesPaths.count{
+                        let temp2 = self.imagesPaths[indexPath.row - 1]
+                        self.imagesPaths.remove(at: indexPath.row - 1)
+                        self.imagesPaths.insert(temp2, at: 0)
+                    }
+                    
+                    self.collectionView.reloadData()
+                }))
+                
+                
+                alert.addAction(UIAlertAction.init(title: "Delete Photo".localized, style: .destructive, handler: { (ac) in
+                    
+                    self.deletePhotoImage(indexPath.row - 1)
+                    self.collectionView.reloadData()
+                }))
+                
+                alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }
@@ -1103,8 +1163,10 @@ extension NewAddVC{
         self.imagesAssets =  mutableImages
         
         if index < self.imagesPaths.count{
+            self.imagesPathsDeleted.append(self.imagesPaths[index])
             self.imagesPaths.remove(at: index)
         }
+        
         
         self.collectionView.reloadData()
     }
@@ -1174,170 +1236,13 @@ extension NewAddVC{
             self.collectionView.reloadData()
         }
     }
-    
-    
-    /*func uploadImage(_ img : UIImage){
-     
-     let path = savePhotoLocal(img)
-     
-     Alamofire.upload(
-     multipartFormData: { multipartFormData in
-     
-     if let p = path{
-     multipartFormData.append(p, withName: "image")
-     }else{
-     multipartFormData.append("".getData, withName: "image")
-     }
-     
-     },
-     to: "http://192.168.9.53/Dealat/index.php/api/ads_control/ad_images_upload/format/json" ,headers : Communication.shared.getHearders(),
-     encodingCompletion: { encodingResult in
-     
-     switch encodingResult {
-     case .success(let upload, _, _):
-     
-     upload.uploadProgress(closure: { (Progress) in
-     print("Upload Progress: \(Progress.fractionCompleted)")
-     if Progress.fractionCompleted == 1{
-     }
-     })
-     
-     upload.responseObject { (response : DataResponse<CustomResponse>) in
-     debugPrint(response)
-     
-     Communication.shared.output(response)
-     self.hideLoading()
-     
-     switch response.result{
-     case .success(let value):
-     
-     if value.status{
-     
-     
-     }else{
-     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
-     }
-     break
-     case .failure(let error):
-     print(error.localizedDescription)
-     notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
-     break
-     }
-     
-     }
-     case .failure(let encodingError):
-     self.hideLoading()
-     print(encodingError)
-     }
-     })
-     
-     
-     }
-     
-     func savePhotoLocal(_ img : UIImage) -> URL?{
-     let tt = img.resized(toWidth: 512)
-     
-     var imageData = UIImagePNGRepresentation(tt!)
-     
-     let imageSize: Int = imageData!.count
-     print("size of image in KB: %f ", imageSize / 1024)
-     
-     if (imageSize / 1024) > 2000 {
-     
-     return nil
-     }
-     
-     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-     
-     let path = dir.appendingPathComponent("img.png")
-     
-     //writing
-     do {
-     try imageData!.write(to: path, options: Data.WritingOptions.atomic)
-     }
-     catch {}
-     }
-     
-     let rrr = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-     
-     return  rrr.appendingPathComponent("img.png")
-     }*/
-    
-    
 }
 
-// IQTEXTFIELD
-extension NewAddVC{
-    
-    func setupTypes(){
-        types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
-    }
-    
-    
-    /*var selectedLocation : Location!{
-     let row = self.tfLocation.selectedRow
-     if row != -1, self.locations.count > row{
-     return self.locations[row]
-     }
-     return nil
-     }
-     
-     var selectedType : Type!{
-     let row = self.tfType.selectedRow
-     if row != -1, self.types.count > row{
-     return self.types[row]
-     }
-     return nil
-     }
-     
-     
-     var selectedModel : Model!{
-     let row = self.tfModel.selectedRow
-     if row != -1, self.selectedType.models.count > row{
-     return self.selectedType.models[row]
-     }
-     return nil
-     }
-     
-     
-     func setupLocations(){
-     let list = self.locations.map({"\($0.city_name!) - \($0.location_name!)"})
-     tfLocation.itemList = list
-     tfLocation.itemListUI = list
-     tfLocation.dropDownMode = .textPicker
-     tfLocation.isOptionalDropDown = true
-     tfLocation.delegate = self
-     }
-     
-     
-     func setupModels(){
-     let list = self.selectedType.models.map({"\($0.name!)"})
-     tfModel.itemList = list
-     tfModel.itemListUI = list
-     tfModel.dropDownMode = .textPicker
-     tfModel.isOptionalDropDown = true
-     tfModel.delegate = self
-     }
-     
-     func setupTypes(){
-     types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
-     
-     let list = self.types.map({"\($0.name!)"})
-     tfType.itemList = list
-     tfType.itemListUI = list
-     tfType.dropDownMode = .textPicker
-     tfType.isOptionalDropDown = true
-     tfType.delegate = self
-     }
-     */
-    
-}
 
 extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
@@ -1499,6 +1404,139 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         }
         return nil
     }
+}
+
+
+extension NewAddVC : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func SelectVideo(){
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.mediaTypes = ["public.movie"]
+        
+        // Make sure ViewController is notified when the user picks an image.
+        imagePickerController.delegate = self
+        
+        imagePickerController.title = "Videos"
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func captureVideo(){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+            imagePicker.mediaTypes = ["public.movie"]
+            imagePicker.cameraCaptureMode = .video
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+
+    
+    
+    @objc func selectVideoAction() {
+        let alert = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction.init(title: "Capture video".localized, style: .default, handler: { (ac) in
+            self.captureVideo()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Choose video".localized, style: .default, handler: { (ac) in
+            self.SelectVideo()
+        }))
+        
+        if self.videoUrl != nil{
+            alert.addAction(UIAlertAction.init(title: "Delete".localized, style: .destructive, handler: { (ac) in
+                
+                self.videoPathDeleted = self.videoPath
+                self.videoUrl = nil
+                self.videoPath = nil
+                self.collectionView.reloadData()
+                
+            }))
+
+        }
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        
+        if let url = info[UIImagePickerControllerMediaURL] as? URL{
+            print("UIImagePickerControllerMediaURL :\(url.absoluteString)" )
+            
+            self.videoUrl = url
+            
+            Alamofire.upload(
+                multipartFormData: { multipartFormData in
+                    
+                        multipartFormData.append(url, withName: "video")
+                    
+            },
+                to: "\(Communication.shared.baseURL + Communication.shared.item_video_uploadURL)" ,headers : Communication.shared.getHearders(),
+                encodingCompletion: { encodingResult in
+                    
+                    switch encodingResult {
+                    case .success(let upload, _, _):
+                        
+                        upload.uploadProgress(closure: { (Progress) in
+                            print("Upload Progress: \(Progress.fractionCompleted)")
+                            if Progress.fractionCompleted == 1{
+                            }
+                        })
+                        
+                        upload.responseObject { (response : DataResponse<CustomResponse>) in
+                            debugPrint(response)
+                            
+                            Communication.shared.output(response)
+                            self.hideLoading()
+                            
+                            switch response.result{
+                            case .success(let value):
+                                
+                                if value.status{
+                                    
+                                    self.videoPath = value.data.stringValue
+                                    self.collectionView.reloadData()
+
+                                    
+                                }else{
+                                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                                }
+                                break
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                                break
+                            }
+                            
+                        }
+                    case .failure(let encodingError):
+                        //                    self.hideLoading()
+                        print(encodingError)
+                    }
+            })
+
+        }
+
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
+    }
     
 }
+
+

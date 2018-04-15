@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>230414477988-hhccd2sobp34fa1ot36kh1qce3ad746v.apps.googleusercontent.com</string>
+	<string>460183534566-16qfm0m4cf6q5t4gnokrbfdek4es7938.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.230414477988-hhccd2sobp34fa1ot36kh1qce3ad746v</string>
+	<string>com.googleusercontent.apps.460183534566-16qfm0m4cf6q5t4gnokrbfdek4es7938</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAn8dN_g601YpjJ7R-mBGbAWJElkOfzjjE</string>
+	<string>AIzaSyCng1vUa0xeahqzGsBupFwhDpLYyr4Y2H0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>230414477988</string>
+	<string>460183534566</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.dealat</string>
 	<key>PROJECT_ID</key>
-	<string>dealat-5b9e0</string>
+	<string>dealat-d3c04</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dealat-5b9e0.appspot.com</string>
+	<string>dealat-d3c04.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:230414477988:ios:9728a6af9e8142d2</string>
+	<string>1:460183534566:ios:9728a6af9e8142d2</string>
 	<key>DATABASE_URL</key>
-	<string>https://dealat-5b9e0.firebaseio.com</string>
+	<string>https://dealat-d3c04.firebaseio.com</string>
 </dict>
 </plist>

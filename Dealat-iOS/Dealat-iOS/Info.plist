@@ -35,6 +35,8 @@
 	<string>The Photo Library is used to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The photo library is used to select photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The photo library is used to your microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>calibri.ttf</string>

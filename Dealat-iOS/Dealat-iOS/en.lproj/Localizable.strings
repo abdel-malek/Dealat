@@ -69,7 +69,9 @@
 "Price SP" = "Price (S.P)";
 "Filter" = "Filter";
 "AdNumber" = "Number";
-"AdDate" = "Date";
+"AdDate" = "Published date";
+"AdDateCreated" = "Created date";
+"AdExpires" = "Expires on";
 "From" = "From";
 "To" = "To";
 "Show" = "Show";
@@ -136,5 +138,11 @@
 
 "DeleteBookmark" = "Are you sure to remove this saved searches?";
 
-"RejectionReason" = "RejectionReason";
-"AdStatus" = "AdStatus";
+"RejectionReason" = "Rejection reason";
+"AdStatus" = "Status";
+
+
+"Delete Photo" = "Delete Photo";
+"Capture video" = "Capture video";
+"Choose video" = "Choose video";
+"Make as Main" = "Make as Main";
