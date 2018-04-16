@@ -7,6 +7,14 @@
 .btn.google {
   font-size: 0.8rem; }
 
+header.home .home-icon {
+  display: inline-block;
+  vertical-align: middle; }
+
+header.home .language-wrapper .language-switch a {
+  border: none;
+  border-left: 1px solid #fff; }
+
 .categories .category-slider .slick-slide h6 {
   font-size: .8rem;
   font-weight: bold; }
@@ -55,6 +63,18 @@ section.search {
   direction: rtl;
   text-align: right; }
 
+.search-page .products .card .feat-en,
+.profile-page .products .card .feat-en,
+.home-page .products .card .feat-en,
+.category-page .products .card .feat-en {
+  display: none; }
+
+.search-page .products .card .feat-ar,
+.profile-page .products .card .feat-ar,
+.home-page .products .card .feat-ar,
+.category-page .products .card .feat-ar {
+  display: block; }
+
 .search-wrapper .icon {
   right: auto;
   left: 20px; }
@@ -77,30 +97,50 @@ section.search {
   margin: 0;
   margin-left: 40px; }
 
-#ad-modal .modal-content {
+#ad-modal .modal-content,
+#edit-ad-modal .modal-content,
+#filter-modal .modal-content {
   direction: rtl;
   text-align: right; }
-  #ad-modal .modal-content ul.navbar-nav {
+  #ad-modal .modal-content ul.navbar-nav,
+  #edit-ad-modal .modal-content ul.navbar-nav,
+  #filter-modal .modal-content ul.navbar-nav {
     padding: 0; }
-  #ad-modal .modal-content li.dropdown {
+  #ad-modal .modal-content li.dropdown,
+  #edit-ad-modal .modal-content li.dropdown,
+  #filter-modal .modal-content li.dropdown {
     padding-right: 0; }
-  #ad-modal .modal-content a.select {
+  #ad-modal .modal-content a.select,
+  #edit-ad-modal .modal-content a.select,
+  #filter-modal .modal-content a.select {
     direction: ltr; }
-  #ad-modal .modal-content .dropdown-menu {
+  #ad-modal .modal-content .dropdown-menu,
+  #edit-ad-modal .modal-content .dropdown-menu,
+  #filter-modal .modal-content .dropdown-menu {
     direction: ltr;
     text-align: right; }
-  #ad-modal .modal-content .dropdown-menu.main-dropdown {
+  #ad-modal .modal-content .dropdown-menu.main-dropdown,
+  #edit-ad-modal .modal-content .dropdown-menu.main-dropdown,
+  #filter-modal .modal-content .dropdown-menu.main-dropdown {
     left: auto;
     right: 0; }
-  #ad-modal .modal-content .dropdown-menu .show > .dropdown-toggle::after {
+  #ad-modal .modal-content .dropdown-menu .show > .dropdown-toggle::after,
+  #edit-ad-modal .modal-content .dropdown-menu .show > .dropdown-toggle::after,
+  #filter-modal .modal-content .dropdown-menu .show > .dropdown-toggle::after {
     transform: rotate(90deg); }
+
+#filter-modal .multiple .options {
+  direction: ltr; }
 
 #register-modal .form-group,
 #login-modal .form-group {
   direction: rtl;
   text-align: right; }
 
+#fileuploader-edit-ad .ajax-upload-dragdrop,
 #fileuploader-ad .ajax-upload-dragdrop,
+#fileuploader-edit-ad-main .ajax-upload-dragdrop,
+#fileuploader-ad-main .ajax-upload-dragdrop,
 #fileuploader-register .ajax-upload-dragdrop {
   text-align: right; }
 
@@ -115,5 +155,65 @@ footer {
   direction: rtl; }
   footer .section {
     text-align: right; }
+
+.profile-page .user-details {
+  direction: rtl;
+  text-align: right; }
+
+.profile-page #profile-tabs .etabs {
+  direction: rtl;
+  text-align: right; }
+
+.profile-page #profile-tabs .chats ul,
+.profile-page #profile-tabs .bookmarks ul {
+  direction: rtl; }
+
+.profile-page #profile-tabs .chats li,
+.profile-page #profile-tabs .bookmarks li {
+  text-align: right; }
+
+.search-page .products .main,
+.profile-page .products .main {
+  direction: rtl; }
+
+.search-page .products .card .container, .profile-page .products .card .container {
+  padding-right: 0;
+  padding-left: auto; }
+
+.search-page .products .card .price,
+.profile-page .products .card .price {
+  left: auto;
+  right: -35px; }
+
+.search-page .products .card .card-body,
+.profile-page .products .card .card-body {
+  text-align: right; }
+
+.profile-page .user-ads .status {
+  right: auto;
+  left: 0; }
+
+header.home .header-account-logged li a {
+  text-align: right;
+  padding-right: 10px;
+  padding-left: 0; }
+
+#edit-user-info-form {
+  text-align: right;
+  direction: rtl; }
+
+#notification-modal .text,
+#success-modal .text,
+#success-btn-modal .text,
+#delete-modal .text {
+  direction: rtl; }
+
+.profile-page .chat-tab-link .new-msg {
+  left: auto;
+  right: -28px; }
+
+#report-form .SumoSelect {
+  direction: rtl;
+  text-align: right; }
 
 /*# sourceMappingURL=style-ar.css.map */

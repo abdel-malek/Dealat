@@ -10,6 +10,17 @@
 	font-size: .8rem
 }
 
+header.home .home-icon{
+	display: inline-block;
+	    vertical-align: middle;
+}
+
+header.home .language-wrapper .language-switch a{
+	border: none;
+	    border-left: 1px solid #fff;
+}
+
+
 .categories .category-slider .slick-slide h6 {
 	font-size: .8rem;
 	font-weight: bold
@@ -72,6 +83,19 @@ section.search {
 	text-align: right;
 }
 
+.search-page .products .card .feat-en,
+.profile-page .products .card .feat-en,
+.home-page .products .card .feat-en,
+.category-page .products .card .feat-en {
+	display: none
+}
+
+.search-page .products .card .feat-ar,
+.profile-page .products .card .feat-ar,
+.home-page .products .card .feat-ar,
+.category-page .products .card .feat-ar {
+	display: block
+}
 
 //category page
 .search-wrapper {
@@ -104,7 +128,9 @@ section.search {
 }
 
 //post ad modal
-#ad-modal .modal-content {
+#ad-modal .modal-content ,
+#edit-ad-modal .modal-content,
+#filter-modal .modal-content {
 	direction: rtl;
 	text-align: right;
 
@@ -117,18 +143,22 @@ section.search {
 	a.select {
 		direction: ltr;
 	}
-	.dropdown-menu{
+	.dropdown-menu {
 		direction: ltr;
-	text-align: right;
-		
+		text-align: right;
+
 	}
-	.dropdown-menu.main-dropdown{
+	.dropdown-menu.main-dropdown {
 		left: auto;
 		right: 0;
 	}
-	.dropdown-menu .show > .dropdown-toggle::after{
-    transform: rotate(90deg);
+	.dropdown-menu .show > .dropdown-toggle::after {
+		transform: rotate(90deg);
+	}
 }
+
+#filter-modal .multiple .options {
+	    direction: ltr;
 }
 
 #register-modal .form-group,
@@ -137,7 +167,10 @@ section.search {
 	text-align: right
 }
 
+#fileuploader-edit-ad,
 #fileuploader-ad,
+#fileuploader-edit-ad-main,
+#fileuploader-ad-main,
 #fileuploader-register {
 	.ajax-upload-dragdrop {
 		text-align: right
@@ -146,7 +179,7 @@ section.search {
 
 //card modal
 #card-modal {
-	.card{
+	.card {
 		font-size: .9rem;
 	}
 	.card-body .row {
@@ -163,4 +196,76 @@ footer {
 	.section {
 		text-align: right
 	}
+}
+
+//profile page
+.profile-page .user-details {
+	direction: rtl;
+	text-align: right
+}
+
+.profile-page #profile-tabs .etabs {
+	direction: rtl;
+	text-align: right;
+}
+
+.profile-page #profile-tabs .chats ul,
+.profile-page #profile-tabs .bookmarks ul {
+	direction: rtl
+}
+
+.profile-page #profile-tabs .chats li,
+.profile-page #profile-tabs .bookmarks li {
+	text-align: right;
+}
+
+.search-page .products .main,
+.profile-page .products .main {
+	direction: rtl
+}
+.search-page .products .card .container, .profile-page .products .card .container{
+	padding-right: 0;
+	padding-left: auto
+}
+.search-page .products .card .price,
+.profile-page .products .card .price {
+	left: auto;
+	right: -35px
+}
+
+.search-page .products .card .card-body,
+.profile-page .products .card .card-body {
+	text-align: right
+}
+
+.profile-page .user-ads .status {
+	right: auto;
+	left: 0
+}
+
+header.home .header-account-logged li a {
+	text-align: right;
+	padding-right: 10px;
+	padding-left: 0
+}
+
+//edit user info modal
+#edit-user-info-form {
+	text-align: right;
+	direction: rtl;
+}
+
+#notification-modal .text,
+#success-modal .text,
+#success-btn-modal .text,
+#delete-modal .text{
+	direction: rtl
+}
+.profile-page .chat-tab-link .new-msg{
+	left: auto;
+	right: -28px
+}
+#report-form .SumoSelect{
+	direction: rtl;
+    text-align: right;
 }

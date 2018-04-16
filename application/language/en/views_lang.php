@@ -7,6 +7,9 @@ $lang['place_ad'] = "Place an ad";
 $lang['latest_ads'] = "Latest Ads";
 $lang['search'] = "Search";
 $lang['filter'] = "Filter";
+$lang['home'] = "Home";
+$lang['arabic'] = "ar";
+$lang['english'] = "en";
 //card
 $lang['view_details'] = "View Details";
 //card modal
@@ -15,6 +18,10 @@ $lang['seller_rating'] = "Seller Rating";
 $lang['price'] = "Price";
 $lang['chat_seller'] = "Chat with seller";
 $lang['contact_info'] = "Contact Information";
+$lang['item_status'] = "Status";
+$lang['report_ad'] = "Report Ad";
+$lang['report'] = "Report";
+$lang['add_fav'] = "Add to favorites";
 //place ad modal
 $lang['item_name'] = "Item's name";
 $lang['item_price'] = "Item's price";
@@ -23,6 +30,7 @@ $lang['add_description'] = "Add description";
 $lang['select_category'] = "Select Category";
 $lang['show_period'] = "Keep ad for...";
 $lang['select_type'] = "Select type";
+$lang['select_model'] = "Select model";
 $lang['manufacture_date'] = "Manufacturing date";
 $lang['kilometers'] = "Kilometers";
 $lang['space'] = "Space";
@@ -30,6 +38,7 @@ $lang['rooms'] = "Rooms";
 $lang['floor'] = "Floor";
 $lang['state'] = "State";
 $lang['with_furniture'] = "With furniture";
+$lang['without_furniture'] = "Without furniture";
 $lang['size'] = "Size";
 $lang['schedule'] = "Schedule";
 $lang['experience'] = "Experience";
@@ -50,6 +59,8 @@ $lang['month'] = "Month";
 //filter modal
 $lang['old'] = "Old";
 $lang['select_status'] = "Select status";
+$lang['select_motion'] = "Select motion";
+$lang['manual'] = "Manual";
 //register/login modal
 $lang['username'] = "User Name";
 $lang['password'] = "Password";
@@ -60,6 +71,14 @@ $lang['create_account1'] = "Create an account using";
 $lang['create_account2'] = "or create a new one here";
 $lang['log_into_account'] = "Log Into Your Account";
 $lang['signin_with'] = "or sign in with";
+$lang['birthdate'] = "Birthdate";
+$lang['gender'] = "Gender";
+$lang['male'] = "Male";
+$lang['female'] = "Female";
+$lang['not_set'] = "Not set";
+$lang['select_city'] = "select city";
+$lang['select_location'] = "select location";
+$lang['whatsapp_number'] = "Whatsapp";
 //verify sms modal
 $lang['verification'] = "Verification";
 $lang['verify'] = "Verify";
@@ -72,12 +91,29 @@ $lang['resend_code'] = "Resend code";
 $lang['about'] = "About";
 $lang['reviews'] = "Client Reviews";
 $lang['contact_us'] = "Contact Us";
+//profile page
+$lang['my_ads'] = "My Ads";
+$lang['favorites'] = "Favorites";
+$lang['chats'] = "Chats";
+$lang['saved_searches'] = "Saved searches";
+$lang['edit_info'] = "Edit Info";
+$lang['expiry_date'] = "Expiry Date";
+$lang['show'] = "Show";
+$lang['profile'] = "Profile";
+$lang['update'] = "Update";
+$lang['edit_ad'] = "Edit Ad";
+$lang['delete_ad_confirm'] = "Are you sure you want to delete this ad?";
+$lang['rejection_reason'] = "Rejection reason";
 
 $lang['yes'] = "Yes";
 $lang['no'] = "No";
 $lang['send'] = "Send";
 $lang['all'] = "All";
-$lang['sp'] = "SP";
+$lang['sp']  = "SP";
+$lang['from']  = "from";
+$lang['to']  = "to";
+$lang['ok']  = "Ok";
+$lang['save_search']  = "Save search";
 
 //admin
 $lang['welcome'] = "Welcome";
@@ -126,7 +162,7 @@ $lang['basic_info']= 'Basic info';
 $lang['detailed_info']= 'detailed info';
 $lang['seller_info']= 'Seller info';
 $lang['description']= 'Description';
-$lang['seller_name']= 'Name';
+$lang['seller_name']= 'Seller Name';
 $lang['seller_phone']= 'Phone';
 $lang['not_set']= 'Not set';
 $lang['accept_ad'] = 'Accept';

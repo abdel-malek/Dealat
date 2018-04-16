@@ -47,6 +47,7 @@ body {
   border-color: #94c47e; }
 
 /*loading*/
+.loading-overlay1,
 .loading-overlay {
   background-color: #fff;
   position: fixed;
@@ -56,11 +57,17 @@ body {
   height: 100%;
   z-index: 101; }
 
+.loading-overlay1 {
+  background-color: rgba(255, 255, 255, 0.62);
+  display: none; }
+
+.loading-overlay1 .logo,
 .loading-overlay .logo {
   width: 100%;
   text-align: center;
   position: relative;
   top: 40px; }
+  .loading-overlay1 .logo img,
   .loading-overlay .logo img {
     width: 300px; }
 
@@ -412,7 +419,10 @@ summary:focus {
   .profile-page .products .card .card-title, .home-page .products .card .card-title,
   .category-page .products .card .card-title {
     font-weight: bold;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .search-page .products .card fieldset,
   .profile-page .products .card fieldset, .home-page .products .card fieldset,
   .category-page .products .card fieldset {
@@ -422,13 +432,20 @@ summary:focus {
   .category-page .products .card .feat {
     position: absolute;
     top: -1px;
-    left: -1px;
-    color: #fff;
     z-index: 2; }
     .search-page .products .card .feat img,
     .profile-page .products .card .feat img, .home-page .products .card .feat img,
     .category-page .products .card .feat img {
       width: 80px; }
+  .search-page .products .card .feat-ar,
+  .profile-page .products .card .feat-ar, .home-page .products .card .feat-ar,
+  .category-page .products .card .feat-ar {
+    display: none;
+    right: -1px; }
+  .search-page .products .card .feat-en,
+  .profile-page .products .card .feat-en, .home-page .products .card .feat-en,
+  .category-page .products .card .feat-en {
+    left: -1px; }
 
 .search-page .products .card,
 .profile-page .products .card {
@@ -441,9 +458,6 @@ summary:focus {
   .profile-page .products .card .card-left {
     height: 100%;
     min-height: 200px; }
-  .search-page .products .card .card-img-top,
-  .profile-page .products .card .card-img-top {
-    height: 100%; }
   .search-page .products .card .price,
   .profile-page .products .card .price {
     bottom: 5%;
@@ -457,7 +471,9 @@ summary:focus {
     .profile-page .products .card .card-body .details {
       max-height: 55px;
       max-width: 100%;
-      overflow: auto; }
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
 .search-page .products .card:hover .overlay,
 .profile-page .products .card:hover .overlay {
   height: 12%;
@@ -780,7 +796,7 @@ header.home {
   margin-bottom: 30px; }
   .search-page .products .main,
   .profile-page .products .main {
-    padding-top: 40px; }
+    padding-top: 15px; }
     .search-page .products .main .left-col,
     .profile-page .products .main .left-col {
       padding-right: 45px;
@@ -1030,13 +1046,30 @@ select option.placeholder {
     color: #FFCC36; }
   #card-modal .rating-stars ul > li.star.selected > svg {
     color: #FF912C; }
+  #card-modal .modal-header {
+    position: relative; }
+  #card-modal .btn.report {
+    width: 30px;
+    height: 30px;
+    min-height: 10px;
+    padding: 0;
+    line-height: normal;
+    position: absolute;
+    left: 0; }
 
+#fileuploader-edit-ad .ajax-upload-dragdrop,
 #fileuploader-ad .ajax-upload-dragdrop,
+#fileuploader-edit-ad-main .ajax-upload-dragdrop,
+#fileuploader-ad-main .ajax-upload-dragdrop,
 #fileuploader-register .ajax-upload-dragdrop {
   padding: 10px;
   border: 1px solid #ced4da;
-  border-radius: 13px; }
+  border-radius: 13px;
+  width: 100% !important; }
+  #fileuploader-edit-ad .ajax-upload-dragdrop b,
   #fileuploader-ad .ajax-upload-dragdrop b,
+  #fileuploader-edit-ad-main .ajax-upload-dragdrop b,
+  #fileuploader-ad-main .ajax-upload-dragdrop b,
   #fileuploader-register .ajax-upload-dragdrop b {
     color: #6c757d;
     opacity: 1;
@@ -1044,7 +1077,10 @@ select option.placeholder {
     font-size: inherit;
     font-family: inherit;
     padding-left: 10px; }
+#fileuploader-edit-ad .ajax-file-upload,
 #fileuploader-ad .ajax-file-upload,
+#fileuploader-edit-ad-main .ajax-file-upload,
+#fileuploader-ad-main .ajax-file-upload,
 #fileuploader-register .ajax-file-upload {
   padding: 0;
   margin: 0;
@@ -1052,9 +1088,8 @@ select option.placeholder {
   border-radius: 2rem;
   height: auto;
   min-height: 35px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: .8rem;
+  padding: 5px 3px;
+  font-size: .65rem;
   font-weight: bold;
   border: none;
   box-shadow: 0px 1px 10px 0px #a8a8a8;
@@ -1063,13 +1098,22 @@ select option.placeholder {
   width: 40%;
   text-align: center;
   cursor: grab !important; }
+#fileuploader-edit-ad .ajax-file-upload input[type="file"],
 #fileuploader-ad .ajax-file-upload input[type="file"],
+#fileuploader-edit-ad-main .ajax-file-upload input[type="file"],
+#fileuploader-ad-main .ajax-file-upload input[type="file"],
 #fileuploader-register .ajax-file-upload input[type="file"] {
   cursor: auto; }
+#fileuploader-edit-ad .ajax-file-upload:hover,
 #fileuploader-ad .ajax-file-upload:hover,
+#fileuploader-edit-ad-main .ajax-file-upload:hover,
+#fileuploader-ad-main .ajax-file-upload:hover,
 #fileuploader-register .ajax-file-upload:hover {
   cursor: auto !important; }
+#fileuploader-edit-ad .ajax-file-upload input[type="file"]:hover,
 #fileuploader-ad .ajax-file-upload input[type="file"]:hover,
+#fileuploader-edit-ad-main .ajax-file-upload input[type="file"]:hover,
+#fileuploader-ad-main .ajax-file-upload input[type="file"]:hover,
 #fileuploader-register .ajax-file-upload input[type="file"]:hover {
   cursor: auto !important; }
 
@@ -1232,6 +1276,36 @@ select option.placeholder {
 #filter-modal .dropdown-toggle::after {
   color: #000; }
 
+#edit-ad-modal .image-wrapper {
+  max-width: 120px;
+  text-align: center;
+  border: 1px solid #6c757d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin: 5px;
+  border-radius: 4px;
+  padding: 5px; }
+  #edit-ad-modal .image-wrapper .delete {
+    box-shadow: inset 0 39px 0 -24px #e67a73;
+    background-color: #e4685d;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #b23e35;
+    cursor: pointer;
+    vertical-align: top;
+    margin: 5px;
+    min-height: 25px;
+    border: none; }
+
 fieldset,
 .rate-group {
   display: inline;
@@ -1273,7 +1347,9 @@ label {
     background: none;
     margin: 0;
     padding: 0 0 10px 0;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 50vh; }
   #chat-modal .chat li {
     padding: 0.5rem;
     overflow: hidden;
@@ -1311,10 +1387,48 @@ label {
     -moz-user-select: none;
     -ms-user-select: none; }
   #chat-modal .msg time:before {
-    content: "\f017";
+    content: "\f00c";
     color: #ddd;
     font-family: FontAwesome;
     display: inline-block;
     margin-right: 4px; }
+
+.header-account-logged {
+  position: relative; }
+  .header-account-logged .new-msg {
+    position: absolute;
+    top: 2px;
+    left: -40px;
+    background-color: #c30a30;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: .15s;
+    color: #fff; }
+  .header-account-logged .new-msg:hover {
+    background-color: #fff;
+    color: #c30a30; }
+
+.profile-page .chat-tab-link {
+  position: relative; }
+  .profile-page .chat-tab-link .new-msg {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    background-color: #c30a30;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 24px;
+    text-align: center;
+    transition: .15s;
+    color: #fff; }
+
+#report-form .SumoSelect {
+  text-align: left;
+  min-width: 200px; }
 
 /*# sourceMappingURL=style.css.map */

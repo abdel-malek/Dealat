@@ -1,12 +1,15 @@
 <body class="search-page">
 	<?php $this->load->view('website/common'); ?>
 
-	<section class="search">
+	<section class="search mt-3">
 		<div class="container">
 			<header>
 				<div class="row align-items-center text-center">
-					<div class="col-sm-3"><span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span></div>
-					<div class="col-md-3"><button class="btn button2 w-75 filter"><?php echo $this->lang->line('filter'); ?></button></div>
+					<!--					<div class="col-sm-3"><span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span></div>-->
+					<div class="col-sm-3">
+						<button class="btn button2 w-75 bookmark mb-1"><?php echo $this->lang->line('save_search'); ?></button>
+					</div>
+					<div class="col-md-3"><button class="btn button2 w-75 filter  mb-1"><?php echo $this->lang->line('filter'); ?></button></div>
 					<!--					<div class="col-md-5 "><input type="search" class="form-control" placeholder="Search"></div>-->
 					<div class="col-md-5 ">
 						<div class="search-wrapper">
@@ -15,18 +18,21 @@
 						</div>
 					</div>
 				</div>
-				<!--				<button class="btn button2 ad">Place an Ad</button>-->
 			</header>
 		</div>
 	</section>
 
-<button class="btn button2 bookmark">bookmark</button>
 
 	<section class="products">
 
-		<div class="container-fluid main">
+		<div class="container main">
+			<?php if($category_name){ ?>
+			<div class="mb-4">
+				<?php echo 'Showing results from ' . $category_name ;?>
+			</div>
+			<?php }?>
 			<div class="row no-gutters">
-				<div class="col-md-10 left-col">
+				<div class="col-md-12 left-col">
 					<div class="row">
 						<!-- ad start  -->
 						<?php if(isset($ads) && $ads != null): ?>
@@ -39,19 +45,27 @@
 										<div class="col-md-6">
 											<div class="card-left">
 												<div class="overlay">
-													<div class="text"><i class="fas fa-info-circle"></i> View Details</div>
+													<div class="text"><i class="fas fa-info-circle"></i>
+														<?php echo $this->lang->line('view_details'); ?>
+													</div>
 												</div>
-												
+
 												<?php if($ad->is_featured != 0): ?>
-												<div class="feat"><img src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt=""></div>
+												<div class="feat feat-ar">
+													<img class="" src="<?php echo base_url('assets/images/featured/featured_ad_ar.png'); ?>" alt="">
+												</div>
+												<div class="feat feat-en">
+													<img class="" src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt="">
+												</div>
 												<?php endif; ?>
-												
+
 												<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')"></div>
 
 												<?php if($ad->price != 0): ?>
 												<div class="price">
 													<div class="price-val">
 														<?php echo $ad->price ?>
+														<?php echo $this->lang->line('sp'); ?>
 													</div>
 												</div>
 												<?php endif; ?>
@@ -68,15 +82,15 @@
 												<div class="details mb-2">
 													<?php echo $ad->description ?>
 												</div>
-												<div class="location"><span class="location-lbl">Location: </span><span class="location-val"><?php echo $ad->city_name.'-'.$ad->location_name ?></span></div>
+												<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val"><?php echo $ad->city_name.'-'.$ad->location_name ?></span></div>
 
-<!--												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
+												<!--												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
 												<!--									<div class="rating">stars</div>-->
 
 
-												<div class="date"><span class="date-lbl">Published </span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
-												<div class="negotiable"><span class="negotiable-lbl">Is negotiable: </span><span class="negotiable-val"><?php echo $ad->is_negotiable ?></span></div>
-												<div class="seller"><span class="seller-lbl">Seller: </span><span class="seller-val"><?php echo $ad->seller_name ?></span></div>
+												<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?> </span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
+												<!--												<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val"><?php echo $ad->is_negotiable ?></span></div>-->
+												<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val"><?php echo $ad->seller_name ?></span></div>
 											</div>
 										</div>
 									</div>
@@ -84,28 +98,21 @@
 							</div>
 						</div>
 						<?php endforeach; ?>
-						<?php else: ?>
+						<div class="text-center">
+							<?php else: echo 'No search results found'?>
+						</div>
+
 						<?php endif;?>
 						<!-- ad end -->
 					</div>
 				</div>
+				<!--
 				<div class="col-md-2 right-col">
 					<aside class="banners">
-						<div class="banner">
-							<button type="button" class="close">
-							  <span>&times;</span>
-							</button>
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-
-						</div>
-						<div class="banner">
-							<button type="button" class="close">
-							  <span>&times;</span>
-							</button>
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-						</div>
+						
 					</aside>
 				</div>
+-->
 			</div>
 		</div>
 	</section>

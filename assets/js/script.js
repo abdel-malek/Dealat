@@ -14,22 +14,24 @@ $(function () {
 	var typesData, adImgs, mixer, category_id, category_name, i, template, rendered, subcategories = [];
 	adImgs = [];
 	mixer = mixitup('.products');
-	category_id = $(".category-page").data("categoryId");
+	//	category_id = $(".category-page").data("categoryId");
+	category_id = $("body").data("categoryId");
 	if (!category_id) {
 		//home page
 		category_id = 0;
 	}
-	category_name = $(".category-page").data("categoryName");
+	//	category_name = $(".category-page").data("categoryName");
+	category_name = $("body").data("categoryName");
 
 	//    Loading screen
-	$(window).on('load', function () {
-		$(".loading-overlay .spinner").fadeOut(500, function () {
-			$(this).parent().fadeOut(500, function () {
-				$("body").removeAttr('style');
-				$(this).remove();
-			});
-		});
-	});
+//	$(window).on('load', function () {
+//		$(".loading-overlay .spinner").fadeOut(500, function () {
+//			$(this).parent().fadeOut(500, function () {
+//				$("body").removeAttr('style');
+//				$(this).remove();
+//			});
+//		});
+//	});
 
 	$("button.register").click(function () {
 		$("#register-modal").modal("show");
@@ -45,19 +47,22 @@ $(function () {
 
 	function resetPostAd() {
 		$("#place-ad-form").trigger("reset");
-		$("#ad-modal a.select").css("color", "#6c757d");
+		//		$("#ad-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
-			$("#ad-modal .categories-nav .select").text("اختر فئة");
+			$("#ad-modal .categories-nav .select").text("اختر صنف");
 			//			$("#ad-modal .locations-nav .select").text("مكان القطعة");
-			$("#ad-modal .types-nav .select").text("اختر النوع");
+			$("#ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#ad-modal .categories-nav .select").text("Select Category");
 			//			$("#ad-modal .locations-nav .select").text("Item's Location");
 			$("#ad-modal .types-nav .select").text("Select type");
 		}
 		$("#ad-modal .ajax-file-upload-container").empty();
+		uploadobjMain.reset();
+		uploadobjOther.reset();
 		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		adImgs = [];
+		adMainImg = [];
 		$("#ad-modal .featured .warning").addClass("d-none");
 		$('#ad-modal .error-message').addClass("d-none");
 		$("#ad-modal .template").each(function () {
@@ -73,12 +78,10 @@ $(function () {
 
 	function resetEditAd() {
 		$("#edit-ad-form").trigger("reset");
-		$("#edit-ad-modal a.select").css("color", "#6c757d");
+		//		$("#edit-ad-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
-			//			$("#edit-ad-modal .locations-nav .select").text("مكان القطعة");
-			$("#edit-ad-modal .types-nav .select").text("اختر النوع");
+			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
-			//			$("#edit-ad-modal .locations-nav .select").text("Item's Location");
 			$("#edit-ad-modal .types-nav .select").text("Select type");
 		}
 		//		$("#edit-ad-modal .ajax-file-upload-container").empty();
@@ -89,9 +92,12 @@ $(function () {
 		$("#edit-ad-modal .template").each(function () {
 			$(this).addClass("d-none");
 		});
-		$('#ad-modal .city-select')[0].sumo.unSelectAll();
-		$('#ad-modal .location-select')[0].sumo.unSelectAll();
-		$('#ad-modal .location-select')[0].sumo.disable();
+		$("#edit-ad-modal .ajax-file-upload-container").empty();
+		uploadobjEditMain.reset();
+		uploadobjEditOther.reset();
+		$('#edit-ad-modal .city-select')[0].sumo.unSelectAll();
+		$('#edit-ad-modal .location-select')[0].sumo.unSelectAll();
+		$('#edit-ad-modal .location-select')[0].sumo.disable();
 		$('#edit-ad-modal .period-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .educations-select')[0].sumo.unSelectAll();
@@ -99,9 +105,9 @@ $(function () {
 
 	function resetFilter() {
 		$("#filter-form").trigger("reset");
-		$("#filter-modal a.select").css("color", "#6c757d");
+		//		$("#filter-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
-			$("#filter-modal .categories-nav .select").text("اختر فئة");
+			$("#filter-modal .categories-nav .select").text("اختر صنف");
 			//			$("#filter-modal .locations-nav .select").text("مكان القطعة");
 		} else {
 			$("#filter-modal .categories-nav .select").text("Select Category");
@@ -147,6 +153,10 @@ $(function () {
 		$('#register-modal .error-message').addClass("d-none");
 	});
 
+	$("#login-modal").on("hide.bs.modal", function () {
+		$('#login-modal .error-message').addClass("d-none");
+	});
+
 	//change selected in subcategories controls
 	$(".controls li").click(function () {
 		$(this).siblings("li").removeClass("selected");
@@ -166,8 +176,8 @@ $(function () {
 		if (data.status === false) {
 			console.log(data);
 		} else {
-			//			console.log(category_id);
-			//			console.log(data);
+			//									console.log(category_id);
+			//									console.log(data);
 			var adData, sliderDefaultImg, sliderImgCount = 0,
 				sideImgCount = 0,
 				sideDefaultImg;
@@ -237,7 +247,7 @@ $(function () {
 				subcategories.push({
 					categoryId: data.data[i].category_id,
 					children: data.data[i].children
-				})
+				});
 			}
 			//console.log(subcategories);
 			var catData;
@@ -331,51 +341,6 @@ $(function () {
 			window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + category_id + "&category_name=" + category_name;
 		}
 
-		//		$.ajax({
-		//			type: "get",
-		//			url: base_url + '/api/categories_control/get_subcategories?category_id=' + category_id,
-		//			dataType: "json"
-		//		}).done(function (data) {
-		//			if (data.status === false) {
-		//				//console.log("error status false");
-		//			} else {
-		//				console.log(data);
-		//				var subData, sub = [],
-		//					all;
-		//				
-		//				$(".categories .sub-categories .sub-list").empty();
-		//				if (data.data.length > 1) {
-		//					if (lang === "ar") {
-		//						all = "الكل";
-		//					} else {
-		//						all = 'All';
-		//					}
-		//					subData = {
-		//						sub: data.data,
-		//						catId: category_id
-		//					};
-		//					template = $('#sub-categories-template').html();
-		//					Mustache.parse(template);
-		//					rendered = Mustache.render(template, subData);
-		//					$(".categories .sub-categories .sub-list").append(rendered);
-		//					$(".categories .sub-categories").removeClass("d-none");
-		//
-		//					$("html, body").animate({
-		//						scrollTop: $(".categories").offset().top
-		//					}, 700);
-		//					
-		//					$(".categories .sub-categories").css({
-		//						top: "35px",
-		//						left: clickedCat.offset().left + 0.5 * clickedCat.width()
-		//					});
-		//
-		//				} else {
-		//					window.location = base_url + "/home_control/load_ads_by_category_page?category_id=" + category_id + "&category_name=" + category_name;
-		//				}
-		//			}
-		//		});
-
-
 	});
 
 	//hide subcategories menu
@@ -429,7 +394,8 @@ $(function () {
 
 			//			$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.disable();
 
-			$('#ad-modal .city-select , #edit-ad-modal .city-select, #filter-modal .city-select').change(function () {
+			//			$('#ad-modal .city-select , #edit-ad-modal .city-select, #filter-modal .city-select').change(function () {
+			$('#ad-modal  , #edit-ad-modal , #filter-modal ').on("change", ".city-select", function () {
 				var cityId, i, j;
 				cityId = $(this).find('option:selected').val();
 				$('#ad-modal .location-select option:not(.placeholder), #edit-ad-modal .location-select option:not(.placeholder), #filter-modal .location-select option:not(.placeholder)').remove();
@@ -447,7 +413,10 @@ $(function () {
 							}
 							$('#ad-modal .location-select')[0].sumo.reload();
 							$('#filter-modal .location-select')[0].sumo.reload();
-
+							if ($(".profile-page").length > 0) {
+								//		mixer.destroy();
+								$('#edit-ad-modal .location-select')[0].sumo.reload();
+							}
 							$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.enable();
 
 						} else {
@@ -555,41 +524,38 @@ $(function () {
 			}
 
 			//change sumo select placeholder color
-			$('select').each(function () {
-				if ($(this).attr("multiple") !== "multiple") {
-					var selected;
-					selected = $(this).find('option:selected');
-					if (selected.hasClass("placeholder")) {
-						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
-					} else {
-						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
-					}
-				}
-			});
+			//			$('select').each(function () {
+			//				if ($(this).attr("multiple") !== "multiple") {
+			//					var selected;
+			//					selected = $(this).find('option:selected');
+			//					if (selected.hasClass("placeholder")) {
+			//						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
+			//					} else {
+			//						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
+			//					}
+			//				}
+			//			});
 
-			$('select').change(function () {
-				if ($(this).attr("multiple") !== "multiple") {
-					var selected;
-					selected = $(this).find('option:selected');
-					if (selected.hasClass("placeholder")) {
-						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
-					} else {
-						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
-					}
-				}
-			});
+			//			$('select').change(function () {
+			//				if ($(this).attr("multiple") !== "multiple") {
+			//					var selected;
+			//					selected = $(this).find('option:selected');
+			//					if (selected.hasClass("placeholder")) {
+			//						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
+			//					} else {
+			//						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
+			//					}
+			//				}
+			//			});
 		}
 
 	});
 
 
 	//filter modal manufacture date
-	//	var i
-	//	, yearsArr=[];
-	//	for(i = 1980; i<= 2018; i++){
-	//		yearsArr.push(i);
-	//	}
-	for (i = 1980; i <= 2018; i += 1) {
+	var dteNow = new Date();
+	var intYear = dteNow.getFullYear();
+	for (i = 1970; i <= intYear; i += 1) {
 		$("#filter-modal .manufacture-date-select").append($('<option>', {
 			value: i,
 			text: i
@@ -598,10 +564,15 @@ $(function () {
 
 	$('select.manufacture-date-select')[0].sumo.reload();
 
+//	setTimeout(function () {
+//					$(".loading-overlay1").fadeOut("fast");
+//				}, 3000);
+		
 	function openCardModal() {
 
 		$("#card-modal .card").remove();
 
+		var ajaxLoadTimeout;
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/items_control/get_item_details',
@@ -609,6 +580,20 @@ $(function () {
 			data: {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
+			},
+			beforeSend: function () {
+				ajaxLoadTimeout = setTimeout(function () {
+					$(".loading-overlay1").fadeIn("fast");
+//					$(".loading-overlay .spinner").fadeIn("fast");
+				}, 1000);
+			},
+			complete: function () {
+//				$(".loading-overlay1").fadeOut("fast");
+				clearTimeout(ajaxLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
+//				$(".loading-overlay .spinner").fadeOut(300, function () {
+//					$(this).parent().fadeOut(100, function () {});
+//				});
 			}
 		}).done(function (data) {
 			if (data.status === false) {
@@ -633,16 +618,16 @@ $(function () {
 				}
 				if (data.data.is_automatic === "0") {
 					if (lang === "ar") {
-						automatic = "لا";
+						automatic = "يدوي";
 					} else {
-						automatic = "No";
+						automatic = "Manual";
 					}
 
 				} else {
 					if (lang === "ar") {
-						automatic = "نعم";
+						automatic = "اوتوماتيكي";
 					} else {
-						automatic = "Yes";
+						automatic = "Automatic";
 					}
 				}
 				if (data.data.with_furniture === "0") {
@@ -766,10 +751,20 @@ $(function () {
 
 	//view template fields when change category in place ad modal
 	$("#ad-modal .categories-nav").on("click", ".last-subcategory", function () {
-		$("#ad-modal .categories-nav a.select").css("color", "#495057");
+		//		$("#ad-modal .categories-nav a.select").css("color", "#495057");
 		var templateId, subId, has_types = 0;
 		templateId = $(this).data("templateId");
 		subId = $(this).data("categoryId");
+		//if category is properties
+		if (templateId === 2) {
+			console.log("1");
+			$("#ad-modal .location-select").attr("required", "true");
+			$('#ad-modal .location-select')[0].sumo.reload();
+		} else {
+			console.log("2");
+			$("#ad-modal .location-select").removeAttr("required");
+			$('#ad-modal .location-select')[0].sumo.reload();
+		}
 		//		$("#ad-modal .template").addClass("d-none");
 
 		//put all fields as shown
@@ -813,7 +808,7 @@ $(function () {
 			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		}
 		if (lang === "ar") {
-			$("#ad-modal .types-nav .select").text("اختر النوع");
+			$("#ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#ad-modal .types-nav .select").text("Select type");
 		}
@@ -831,7 +826,7 @@ $(function () {
 
 	//view template fields when change category in filter modal
 	$("#filter-modal .categories-nav").on("click", ".last-subcategory", function () {
-		$("#filter-modal .categories-nav a.select").css("color", "#495057");
+		//		$("#filter-modal .categories-nav a.select").css("color", "#495057");
 
 		var templateId, subId, subName, has_types = 0;
 		templateId = $(this).data("templateId");
@@ -885,7 +880,7 @@ $(function () {
 			$("#filter-modal .model-select").parents(".form-group").addClass("d-none");
 		}
 		if (lang === "ar") {
-			$("#filter-modal .type-select .placeholder").text("اختر النوع");
+			$("#filter-modal .type-select .placeholder").text("اختر الماركة");
 		} else {
 			$("#filter-modal .type-select .placeholder").text("Select type");
 		}
@@ -905,31 +900,10 @@ $(function () {
 		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
 	});
 
-	//locations select
-	//	$("#ad-modal .locations-nav,#edit-ad-modal .locations-nav, #filter-modal .locations-nav").on("click", ".location", function () {
-	//		$("#ad-modal .locations-nav a.select").css("color", "#495057");
-	//		$("#filter-modal .locations-nav a.select").css("color", "#495057");
-	//		var locationId;
-	//		locationId = $(this).data("locationId");
-	//		if ($(this).parents("#ad-modal").length > 0) {
-	//			$("#place-ad-form .location-id").val(locationId);
-	//			//change select placeholder
-	//			$("#ad-modal .locations-nav .select").text($(this).text());
-	//		} else if ($(this).parents("#edit-ad-modal").length > 0) {
-	//			$("#edit-ad-form .location-id").val(locationId);
-	//			//change select placeholder
-	//			$("#edit-ad-modal .locations-nav .select").text($(this).text());
-	//		} else if ($(this).parents("#filter-modal").length > 0) {
-	//			$("#filter-form .location-id").val(locationId);
-	//			//change select placeholder
-	//			$("#filter-modal .locations-nav .select").text($(this).text());
-	//		}
-	//	});
-
 	//types select
 	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".type-item", function () {
-		$("#ad-modal .types-nav a.select").css("color", "#495057");
-		$("#filter-modal .types-nav a.select").css("color", "#495057");
+		//		$("#ad-modal .types-nav a.select").css("color", "#495057");
+		//		$("#filter-modal .types-nav a.select").css("color", "#495057");
 		var typeId;
 		if ($(this).parents("#ad-modal").length > 0) {
 			if ($(this).find("ul").length > 0) {
@@ -971,8 +945,8 @@ $(function () {
 
 	//model select
 	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".model", function () {
-		$("#ad-modal .types-nav a.select").css("color", "#495057");
-		$("#filter-modal .types-nav a.select").css("color", "#495057");
+		//		$("#ad-modal .types-nav a.select").css("color", "#495057");
+		//		$("#filter-modal .types-nav a.select").css("color", "#495057");
 		var typeId, typeModelId;
 		typeId = $(this).data("typeId");
 		typeModelId = $(this).data("typeModelId");
@@ -999,7 +973,57 @@ $(function () {
 
 
 	//upload ad main image
-	$("#fileuploader-ad").uploadFile({
+	var upload, uploadMain, adMainImg = [];
+	if (lang === "ar") {
+		upload = "اختر صور إضافية";
+		uploadMain = "اختر صورة الإعلان الرئيسية";
+	} else {
+		upload = "Upload more images";
+		uploadMain = "Upload main ad image";
+	}
+var uploadobjMain, uploadobjOther;
+	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
+		url: base_url + '/api/items_control/item_images_upload',
+		multiple: false,
+		dragDrop: false,
+		fileName: "image",
+		acceptFiles: "image/*",
+		maxFileSize: 10000 * 1024,
+		maxFileCount: 1,
+		showDelete: true,
+		//				statusBarWidth:600,
+		dragdropWidth: "100%",
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		uploadStr: uploadMain,
+		returnType: "json",
+		onSuccess: function (files, data, xhr, pd) {
+			adMainImg.push(data.data);
+		},
+		onError: function (files, status, errMsg, pd) {
+			//console.log("upload failed");
+		},
+		deleteCallback: function (data, pd) {
+			//			console.log(data.data);
+			var arr;
+			arr = [data.data];
+			$.post(base_url + '/api/items_control/delete_images', {
+					images: arr
+				},
+				function (resp, textStatus, jqXHR) {
+					var i, deleted;
+					deleted = data.data;
+					for (i in adMainImg) {
+						if (adMainImg[i] === deleted) {
+							adMainImg.splice(i, 1);
+						}
+					}
+				});
+		}
+	});
+	
+	uploadobjOther = $("#fileuploader-ad").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
 		multiple: true,
 		dragDrop: true,
@@ -1014,7 +1038,7 @@ $(function () {
 		showPreview: true,
 		previewHeight: "100px",
 		previewWidth: "100px",
-		uploadStr: "Upload Images",
+		uploadStr: upload,
 		returnType: "json",
 		onSuccess: function (files, data, xhr, pd) {
 			//			console.log(data);
@@ -1057,30 +1081,29 @@ $(function () {
 		evnt.stopImmediatePropagation();
 
 		//console.log(adImgs);
-		var i, data, upladed_imgs = [],
+		var i, data, uploaded_imgs = [],
 			main_img = "",
 			secondary_imgs = [];
 		//copy adimgs into uploaded_imgs
 		for (i in adImgs) {
-			upladed_imgs.push(adImgs[i]);
+			uploaded_imgs.push(adImgs[i]);
 		}
-		main_img = upladed_imgs[0];
-		upladed_imgs.splice(0, 1);
-		secondary_imgs = upladed_imgs;
+//		main_img = uploaded_imgs[0];
+//		main_img = uploaded_imgs[0];
+//		uploaded_imgs.splice(0, 1);
+		secondary_imgs = uploaded_imgs;
 		secondary_imgs = JSON.stringify(secondary_imgs);
 
 		data = $(this).serializeArray(); // convert form to array
+		console.log(data);
 		data.push({
 			name: "main_image",
-			value: main_img
+			value: adMainImg[0]
 		}, {
 			name: "images",
 			value: secondary_imgs
 		});
-		//		console.log($(this).serializeArray());
-		//		console.log($(this).serialize());
-		//		console.log(data);
-		//		console.log($.param(data));
+
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -1107,28 +1130,25 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				//				console.log(data);
-				//				if ($("#ad-modal .featured input").is(':checked')) {
-				//					$("#ad-modal").modal("hide");
-				//					setTimeout(function () {
-				//						$("#pay-modal").modal("show");
-				//					}, 500);
-				//				} else {
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
-					$("#success-modal .text").html("Advertisement Added Successfully");
-					$("#success-modal").modal("show");
+					if (lang === "ar") {
+						$("#success-btn-modal .text").html("تم إنشاء إعلانك بنجاح وهو الآن معلق بانتظار الموافقة عليه");
+					} else {
+						$("#success-btn-modal .text").html("Your ad has been added successfully and it is now pending waiting for approval");
+					}
+
+					$("#success-btn-modal").modal("show");
 				}, 500);
-				setTimeout(function () {
-					$("#success-modal").modal("hide");
-				}, 2000);
-				//				}
 				//reset
 				resetPostAd();
 			}
 		});
 	});
 
+	$("#success-btn-modal .submit").click(function () {
+		$("#success-btn-modal").modal("hide");
+	});
 	//	$(".place-ad").css("width", $(".right-col").width());
 
 	$(window).scroll(function () {
@@ -1140,7 +1160,6 @@ $(function () {
 				top: 0,
 				"z-index": 10
 			});
-
 
 			$(".category-slider img").css("width", "30%");
 			if (lang === "ar") {
@@ -1281,37 +1300,28 @@ $(function () {
 			data = {
 				query: $(this).val()
 			};
-			//			if ($(this).parents(".category-page").length > 0) {
-			//				window.location = base_url + '/search_control?query=' + query + '&category_id=' + category_id ;
-			//			} else {
-			//				window.location = base_url + '/search_control?query=' + query;
-			//			}
-			window.location = base_url + '/search_control?query=' + query;
-			//			$.ajax({
-			//				type: "get",
-			//				//				url: base_url + '/api/ads_control/search?query=' + query,
-			//				url: base_url + '/api/ads_control/search',
-			//				dataType: "json",
-			//				data: data
-			//			}).done(function (data) {
-			//				if (data.status === false) {
-			//					//					console.log("error status false");
-			//					alert("error status false");
-			//				} else {
-			//					alert("success status true");
-			//				}
-			//			}).fail(function (response) {
-			//				alert("fail");
-			//			});
+
+			sessionStorage.removeItem('bookmark');
+			sessionStorage.setItem('bookmark', $.param({
+				query: query,
+				search: query
+			}));
+
+			if (category_id) {
+				window.location = base_url + '/search_control?query=' + query + '&category_id=' + category_id + '&category_name=' + category_name;
+			} else {
+				window.location = base_url + '/search_control?query=' + query;
+			}
 		}
 	});
 
 	//bookmark search
 	$(".search-page .bookmark").click(function () {
+		if (!logged) {
+			$("#login-modal").modal("show");
+			return;
+		}
 		var data = sessionStorage.getItem('bookmark');
-		//		console.log(sessionStorage.getItem('bookmark'));
-		//		console.log(JSON.parse(sessionStorage.getItem('bookmark')));
-		//		console.log($.param(data));
 		console.log(data);
 
 		$.ajax({
@@ -1324,8 +1334,16 @@ $(function () {
 				console.log(data);
 			} else {
 				console.log(data);
+				if (lang === "ar") {
+					$("#success-modal .text").html("م حفظ البحث بنجاح");
+				} else {
+					$("#success-modal .text").html("Search saved successfully");
+				}
+				$("#success-modal").modal("show");
+				setTimeout(function () {
+					$("#success-modal").modal("hide");
 
-
+				}, 3000);
 			}
 		});
 	});
@@ -1480,20 +1498,26 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-				console.log(data);
-				console.log(base_url + '/search_control?' + data);
+				//				console.log(data);
+				//				console.log(base_url + '/search_control?' + data);
 				window.location = base_url + '/search_control?' + data1;
 			}
 		});
 	});
 
-	//chat with seller
+	//open chat modal when click on chat with seller
 	$("#card-modal button.chat").click(function () {
+		if (!logged) {
+			$("#card-modal").modal("hide");
+
+			setTimeout(function () {
+				$("#login-modal").modal("show");
+			}, 500);
+			return;
+		}
 		var adId;
-		//		adId = $(this).parents(".modal-content").find(".card").data("adId");
 		adId = $("#card-modal").find(".card").data("adId");
 		$("#chat-form .ad-id").val(adId);
-
 
 		//get chat message
 		$.ajax({
@@ -1507,7 +1531,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-				console.log(data);
+				//				console.log(data);
 				$("#chat-modal .chat").empty();
 				for (i in data.data) {
 					if (data.data[i].to_seller === "1") {
@@ -1529,8 +1553,118 @@ $(function () {
 				}, 500);
 			}
 		});
+	});
+
+	var notSeenMsgs = 0,
+		notSeenInterval;
+	//check for not seen messages
+	function checkNewMsgs() {
+		//get chat messages
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/users_control/get_my_chat_sessions',
+			dataType: "json",
+			data: $("#chat-form").serialize()
+		}).done(function (data) {
+			if (data.status === false) {
+				console.log(data);
+			} else {
+				//				console.log(data);
+				notSeenMsgs = 0;
+				var newMsgSessions = [];
+				for (i in data.data) {
+					if ((user_id == data.data[i].seller_id && data.data[i].seller_seen == 0) || (user_id == data.data[i].user_id && data.data[i].user_seen == 0)) {
+						newMsgSessions.push(data.data[i].chat_session_id);
+						notSeenMsgs += 1;
+					}
+				}
+				if (notSeenMsgs > 0) {
+					console.log("not");
+					$(".header-account-logged .new-msg").removeClass("d-none");
+					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
 
 
+				} else {
+					$(".header-account-logged .new-msg").addClass("d-none");
+					$(".profile-page .chat-tab-link .new-msg").addClass("d-none");
+				}
+
+				$(".sessions .session").each(function () {
+					$(this).removeAttr("style");
+					for (i in newMsgSessions) {
+						if ($(this).data("sessionId") == newMsgSessions[i]) {
+							$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+						}
+					}
+				});
+			}
+		});
+	}
+	checkNewMsgs();
+	notSeenInterval = setInterval(checkNewMsgs, 5000);
+
+	$(".header-account-logged .new-msg").click(function () {
+		if (lang === "ar") {
+			$("#success-modal .text").html("لديك رسائل غير مقروءة <br> الرجاء تفقد حسابك");
+		} else {
+			$("#success-modal .text").html("You have unread messages, <br> please check your profile");
+		}
+		$("#success-modal").modal("show");
+		setTimeout(function () {
+			$("#success-modal").modal("hide");
+		}, 3000);
+	});
+
+	//auto check for new messages for an opened chat session and append it
+	var intervalId;
+	$('#chat-modal').on('shown.bs.modal', function (e) {
+		$("#chat-modal .chat").stop().animate({
+			scrollTop: $("#chat-modal .chat")[0].scrollHeight
+		}, 300);
+		var lastMsgId;
+		intervalId = setInterval(function () {
+
+			//get chat messages
+			$.ajax({
+				type: "get",
+				url: base_url + '/api/users_control/get_chat_messages',
+				dataType: "json",
+				data: $("#chat-form").serialize()
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
+					console.log(lastMsgId);
+					console.log(data);
+					var startIndex;
+					if (data.data[data.data.length - 1].message_id != lastMsgId) {
+						//to know last msg index in data.data array
+						for (i = data.data.length - 1; i >= 0; i -= 1) {
+							if (data.data[i].message_id == lastMsgId) {
+								startIndex = i;
+								break;
+							}
+						}
+						for (i = startIndex + 1; i < data.data.length; i += 1) {
+							//todo add seller check later to avoid any errs in msg display self or other
+							template = $('#chat-other-template').html();
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$("#chat-modal .chat").append(rendered);
+						}
+						$("#chat-modal .chat").stop().animate({
+							scrollTop: $("#chat-modal .chat")[0].scrollHeight
+						}, 300);
+					}
+				}
+			});
+
+		}, 5000);
+	});
+
+	$('#chat-modal').on('hide.bs.modal', function (e) {
+		clearInterval(intervalId);
 	});
 
 	$("#chat-form").submit(function (e) {
@@ -1555,10 +1689,12 @@ $(function () {
 				$("#chat-modal .chat").append(rendered);
 
 				$("#chat-form input[name='msg']").val("");
+				$("#chat-modal .chat").stop().animate({
+					scrollTop: $("#chat-modal .chat")[0].scrollHeight
+				}, 300);
 			}
 		});
 	});
-
 
 
 	//language
@@ -1588,7 +1724,7 @@ $(function () {
 	//register
 	$('#register-form').submit(function (e) {
 		$('#register-modal .error-message').addClass("d-none");
-		var pass1, pass2, data, phone;
+		var pass1, pass2, data, phone, whatsup;
 		phone = $(this).find(".phone").val();
 
 		if (phone.length !== 9) {
@@ -1603,6 +1739,7 @@ $(function () {
 			}, 500);
 			return false;
 		}
+
 
 		pass1 = $(this).find(".password").val();
 		pass2 = $(this).find(".confirm_password").val();
@@ -1619,17 +1756,26 @@ $(function () {
 			return false;
 		}
 
+		whatsup = $(this).find(".whatsup").val();
+
+		if (whatsup.length !== 9 && whatsup !== "") {
+			if (lang === "ar") {
+				$('#register-modal .error-message').text("رقم الواتساب يجب أن يتكون من 9 أرقام");
+			} else {
+				$('#register-modal .error-message').text("Whatsapp number must be exactly 9 characters in length");
+			}
+			$('#register-modal .error-message').removeClass("d-none");
+			$("#register-modal").animate({
+				scrollTop: $("body").offset().top
+			}, 500);
+			return false;
+		}
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
 		$("#verify-modal").find(".phone").val($(this).find(".phone").val());
 		$(this).find(".lang").val(lang);
 
-		//		data = $(this).serializeArray();
-		//		data.push({
-		//			name: "image",
-		//			value: registerImg[0]
-		//		})
 		$.ajax({
 			type: "post",
 			url: base_url + '/users_control_web/register',
@@ -1707,7 +1853,12 @@ $(function () {
 				//				}, 500);
 				//				} else{
 				setTimeout(function () {
-					$("#success-modal .text").html("You have registered successfully,<br>You can now sign in");
+					if (lang === "ar") {
+						$("#success-modal .text").html("تم إنشاء حسابك بنجاح <br>بإمكانك تسجيل الدخول إلى حسابك");
+					} else {
+						$("#success-modal .text").html("You have registered successfully,<br>You can now sign in");
+					}
+
 					$("#success-modal").modal("show");
 				}, 500);
 				setTimeout(function () {
@@ -1723,12 +1874,21 @@ $(function () {
 		});
 	});
 
-	//login
-	function login() {
-
-	}
-
 	$('#login-form').submit(function (e) {
+		var phone = $(this).find(".phone").val();
+
+		if (phone.length !== 9) {
+			if (lang === "ar") {
+				$('#login-modal .error-message').text("رقم الهاتف يجب أن يتكون من 9 أرقام");
+			} else {
+				$('#login-modal .error-message').text("Phone must be exactly 9 characters in length");
+			}
+			$('#login-modal .error-message').removeClass("d-none");
+			$("#login-modal").animate({
+				scrollTop: $("body").offset().top
+			}, 500);
+			return false;
+		}
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
@@ -1774,21 +1934,13 @@ $(function () {
 
 	});
 
-	//add/remove from favorite
-	//	if ($(".card .fav .icon").data("added") === 0) {
-	//		$(".card .fav .icon").html('<i class="far fa-heart fa-2x"></i>');
-	//		$(".card .fav .icon").css("color", "#999");
-	//	} else if ($(".card .fav .icon").data("added") === 1) {
-	//		$(".card .fav .icon").html('<i class="fas fa-heart fa-2x"></i>');
-	//		$(".card .fav .icon").css("color", "#FF87A0");
-	//	}
 
-	//add item to favorite
-	//	$(".card .fav .icon").mouseenter(function () {
+
+	//favorite icon hover
 	$("#card-modal").on("mouseenter", ".card .fav .icon", function () {
 		$(this).css("color", "#FF87A0");
 	});
-	//	$(".card .fav .icon").mouseleave(function () {
+
 	$("#card-modal").on("mouseleave", ".card .fav .icon", function () {
 		if ($(this).data("added") === 0) {
 			$(this).css("color", "#999");
@@ -1797,7 +1949,7 @@ $(function () {
 		}
 	});
 
-	//	$(".card .fav .icon").click(function () {
+	//add/remove from favorite
 	$("#card-modal").on("click", ".card .fav .icon", function () {
 		if (!logged) {
 			$("#card-modal").modal("hide");
@@ -1843,11 +1995,13 @@ $(function () {
 
 
 	$("#notification-modal .submit").click(function () {
-		window.location = base_url;
+		$("#notification-modal").modal("hide");
+	});
+	$("#notification-modal").on("hidden.bs.modal", function () {
+		location.reload();
 	});
 
 	//report ad
-	//	var reportArr = [];
 	$.ajax({
 		type: "get",
 		url: base_url + '/api/items_control/get_report_messages',
@@ -1891,12 +2045,17 @@ $(function () {
 				$("#report-form .report-select")[0].sumo.unSelectAll();
 				$("#report-modal").modal("hide");
 				setTimeout(function () {
-					$("#success-modal .text").html("Ad reported successfully");
+					if (lang === "ar") {
+						$("#success-modal .text").html("تم التبليغ عن الإعلان");
+					} else {
+						$("#success-modal .text").html("Ad reported successfully");
+					}
+
 					$("#success-modal").modal("show");
 				}, 500);
 				setTimeout(function () {
 					$("#success-modal").modal("hide");
-				}, 2000);
+				}, 3000);
 			}
 		});
 	});

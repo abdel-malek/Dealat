@@ -4,23 +4,7 @@
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
-<!--
-				<div class="slide">
-					<a href="">
-						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/slider1.png"); ?>')"></div>
-					</a>
-				</div>
-				<div class="slide">
-					<a href="">
-						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/banner-772x250.jpg"); ?>')"></div>
-					</a>
-				</div>
-				<div class="slide">
-					<a href="">
-						<div class="ad-image" style="background-image: url('<?php echo base_url("assets/images/slider1.png"); ?>')"></div>
-					</a>
-				</div>
--->
+			
 			</div>
 		</div>
 	</section>
@@ -49,16 +33,6 @@
 		</div>
 
 		<div class="container-fluid main">
-<!--
-<div class="sub-categories d-none">
-				<div class="container">
-					<div class="row">
-					
-						
-					</div>
-				</div>
-			</div>
--->
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
 					<div class="row mb-4 ml-0 mr-0">
@@ -85,7 +59,12 @@
 								</div>
 
 								<?php if($ad->is_featured != 0): ?>
-								<div class="feat"><img src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt=""></div>
+								<div class="feat feat-ar">
+								<img class="" src="<?php echo base_url('assets/images/featured/featured_ad_ar.png'); ?>" alt="">
+								</div>
+								<div class="feat feat-en">
+								<img class="" src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt="">
+								</div>
 								<?php endif; ?>
 
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
@@ -129,21 +108,7 @@
 				<div class="col-md-2 right-col order-first order-md-last">
 					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
-<!--
-						<div class="banner">
-							<button type="button" class="close">
-							  <span>&times;</span>
-							</button>
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-
-						</div>
-						<div class="banner">
-							<button type="button" class="close">
-							  <span>&times;</span>
-							</button>
-							<a href=""><img src="<?php echo base_url("assets/images/af-coinbase-2.jpg"); ?>" class="img-fluid" alt=""></a>
-						</div>
--->
+					
 					</aside>
 				</div>
 			</div>

@@ -13,9 +13,9 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//				console.log(data);
 			} else {
-				//								console.log(data);
+				//				console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -33,9 +33,14 @@ $(function () {
 						}
 					}
 
+					if (data.data[i].expired_after <= 0 && data.data[i].status === "2") {
+						data.data[i].status = "3";
+					}
+
+
 					if (data.data[i].status === "1") {
 						if (lang === "ar") {
-							status = "معلق";
+							status = "قيد الانتظار";
 						} else {
 							status = "Pending";
 						}
@@ -58,31 +63,47 @@ $(function () {
 						} else {
 							status = "Hidden";
 						}
-					} else if (data.data[i].status === "4") {
+					} else if (data.data[i].status === "5") {
 						if (lang === "ar") {
-							status = "مخفي";
+							status = "مرفوض";
 						} else {
-							status = "Hidden";
+							status = "Rejected";
 						}
-					} else if (data.data[i].status === "4") {
+					} else if (data.data[i].status === "6") {
 						if (lang === "ar") {
-							status = "مخفي";
+							status = "محذوف";
 						} else {
-							status = "Hidden";
+							status = "Deleted";
 						}
 					}
 
-					adData = {
-						ad: data.data[i],
-						date: data.data[i].publish_date.split(' ')[0],
-						negotiable: negotiable,
-						status: status
-					};
+					if (data.data[i].publish_date) {
+						adData = {
+							ad: data.data[i],
+							publish: data.data[i].publish_date.split(' ')[0],
+							expiry: data.data[i].expiry_date.split(' ')[0],
+							negotiable: negotiable,
+							status: status
+						};
+					} else {
+						adData = {
+							ad: data.data[i],
+							negotiable: negotiable,
+							status: status
+						};
+					}
 
+					if (data.data[i].status === "5") {
+						adData.reject_note = data.data[i].reject_note;
+					}
 					template = $('#user-ads-template').html();
 					Mustache.parse(template);
 					rendered = Mustache.render(template, adData);
 					$(".profile-page .user-ads .row.first").append(rendered);
+
+					if (data.data[i].status === "3") {
+						$(".profile-page .user-ads .card[data-ad-id=" + data.data[i].ad_id + "] .edit-ad").addClass("d-none");
+					}
 				}
 				$(".profile-page .user-ads .card").each(function () {
 					statusId1 = $(this).data("statusId");
@@ -106,7 +127,7 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//				console.log(data);
 			} else {
 				var adData, negotiable, type, i, template, rendered, templateId;
 
@@ -148,10 +169,9 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//				console.log(data);
 			} else {
 				//				console.log(data);
-				//				var i, template, rendered;
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -184,9 +204,16 @@ $(function () {
 		});
 
 		var registerImg = [];
+		var uploadPersonal;
+		if (lang === "ar") {
+			uploadPersonal = "اختر صورة";
+		} else {
+			uploadPersonal = "Upload Image";
+		}
+
 		//upload register image
 		$("#fileuploader-register").uploadFile({
-			url: base_url + '/api/items_control/item_images_upload',
+			url: base_url + '/api/users_control/upload_personal_image',
 			multiple: false,
 			dragDrop: false,
 			fileName: "image",
@@ -197,31 +224,25 @@ $(function () {
 			showPreview: true,
 			previewHeight: "100px",
 			previewWidth: "100px",
-			uploadStr: "Upload Image",
+			uploadStr: uploadPersonal,
 			returnType: "json",
 			onSuccess: function (files, data, xhr, pd) {
-				//				console.log(data.data);
 				registerImg.push(data.data);
-				//				console.log("reg");
-				//				console.log(registerImg[0]);
 			},
-			onError: function (files, status, errMsg, pd) {
-				//				console.log("upload failed");
-			},
+			onError: function (files, status, errMsg, pd) {},
 			deleteCallback: function (data, pd) {
-				//			console.log(data.data);
 				var arr;
 				arr = [data.data];
 				$.post(base_url + '/api/items_control/delete_images', {
 						images: arr
 					},
 					function (resp, textStatus, jqXHR) {
-						//						alert("File Deleted");
 						deleted = data.data;
 						registerImg = [];
 					});
 			}
 		});
+
 		//edit user info
 		$(".profile-page").on("click", ".edit-user-info", function () {
 			$('#edit-user-info-modal .city-select')[0].sumo.reload();
@@ -230,7 +251,21 @@ $(function () {
 		});
 
 		$("#edit-user-info-form").submit(function (e) {
-			var newData, i, data, newPhone;
+			var newData, i, data, newPhone, whatsup;
+			whatsup = $(this).find(".whatsup").val();
+
+			if (whatsup.length !== 9 && whatsup !== "") {
+				if (lang === "ar") {
+					$('#edit-user-info-modal .error-message').text("رقم الهاتف يجب أن يتكون من 9 أرقام");
+				} else {
+					$('#edit-user-info-modal .error-message').text("Phone must be exactly 9 characters in length");
+				}
+				$('#edit-user-info-modal .error-message').removeClass("d-none");
+				$("#edit-user-info-modal").animate({
+					scrollTop: $("body").offset().top
+				}, 500);
+				return false;
+			}
 			newData = $(this).serializeArray();
 
 			e.preventDefault();
@@ -245,16 +280,15 @@ $(function () {
 			data.push({
 				name: "image",
 				value: registerImg[0]
-			})
+			});
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/users_control/edit_user_info',
 				dataType: "json",
-				//				data: $(this).serialize()
 				data: $.param(data)
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+					//					console.log(data);
 				} else {
 					//					console.log(data);
 					//					for (i in newData) {
@@ -283,7 +317,12 @@ $(function () {
 
 					$("#edit-user-info-modal").modal("hide");
 					setTimeout(function () {
-						$("#success-modal .text").html("Data Updated successfully")
+						if (lang === "ar") {
+							$("#success-modal .text").html("تم تحديث معلوماتك بنجاح");
+						} else {
+							$("#success-modal .text").html("Data Updated successfully");
+						}
+
 						$("#success-modal").modal("show");
 					}, 500);
 					setTimeout(function () {
@@ -301,6 +340,7 @@ $(function () {
 			//			adStatus = $(this).parents(".card").data("adStatus");
 			$("#delete-modal .ad-id").val(adId);
 			//			$("#delete-modal .status-id").val(adStatus);
+
 			$("#delete-modal").modal("show");
 		});
 
@@ -317,12 +357,17 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+					//					console.log(data);
 				} else {
 					//					console.log(data);
 					$("#delete-modal").modal("hide");
 					setTimeout(function () {
-						$("#success-modal .text").html("Advertisement deleted successfully")
+						if (lang === "ar") {
+							$("#success-modal .text").html("تم حذف الإعلان بنجاح");
+						} else {
+							$("#success-modal .text").html("Advertisement deleted successfully");
+						}
+
 						$("#success-modal").modal("show");
 					}, 500);
 					setTimeout(function () {
@@ -331,6 +376,106 @@ $(function () {
 					}, 3000);
 				}
 			});
+		});
+
+		var uploadEdit, uploadMainEdit, editAdImgs =[], editMainImg = [];
+		if (lang === "ar") {
+			uploadEdit = "اختر صور إضافية";
+			uploadMainEdit = "اختر صورة الإعلان الرئيسية";
+		} else {
+			uploadEdit = "Upload more images";
+			uploadMainEdit = "Upload main ad image";
+		}
+
+		 uploadobjEditMain = $("#fileuploader-edit-ad-main").uploadFile({
+			url: base_url + '/api/items_control/item_images_upload',
+			multiple: false,
+			dragDrop: false,
+			fileName: "image",
+			acceptFiles: "image/*",
+			maxFileSize: 10000 * 1024,
+			maxFileCount: 1,
+			showDelete: true,
+			dragdropWidth: "100%",
+			showPreview: true,
+			previewHeight: "100px",
+			previewWidth: "100px",
+			uploadStr: uploadMainEdit,
+			returnType: "json",
+			onSuccess: function (files, data, xhr, pd) {
+				editMainImg.push(data.data);
+				$("#edit-ad-modal .ad-images .main-img").remove();
+			},
+			onError: function (files, status, errMsg, pd) {
+				//console.log("upload failed");
+			},
+			deleteCallback: function (data, pd) {
+				//			console.log(data.data);
+				var arr;
+				arr = [data.data];
+				$.post(base_url + '/api/items_control/delete_images', {
+						images: arr
+					},
+					function (resp, textStatus, jqXHR) {
+						var i, deleted;
+						deleted = data.data;
+						for (i in editMainImg) {
+							if (editMainImg[i] === deleted) {
+								editMainImg.splice(i, 1);
+							}
+						}
+					});
+			}
+		});
+
+		uploadobjEditOther = $("#fileuploader-edit-ad").uploadFile({
+			url: base_url + '/api/items_control/item_images_upload',
+			multiple: true,
+			dragDrop: true,
+			fileName: "image",
+			acceptFiles: "image/*",
+			maxFileSize: 10000 * 1024,
+			maxFileCount: 8,
+			showDelete: true,
+			dragdropWidth: "100%",
+			showPreview: true,
+			previewHeight: "100px",
+			previewWidth: "100px",
+			uploadStr: uploadEdit,
+			returnType: "json",
+			onSuccess: function (files, data, xhr, pd) {
+				//			console.log(data);
+				//			editAdImgs.push(data.data.slice(12));
+				editAdImgs.push(data.data);
+				//			console.log(editAdImgs);
+				//			$("#ad-modal .main-image").val(data.data.slice(12));
+			},
+			onError: function (files, status, errMsg, pd) {
+				//console.log("upload failed");
+			},
+			deleteCallback: function (data, pd) {
+				//			console.log(data.data);
+				var arr;
+				arr = [data.data];
+				//				for (var i = 0; i < data.data.length; i++) {
+				$.post(base_url + '/api/items_control/delete_images', {
+						images: arr
+					},
+					function (resp, textStatus, jqXHR) {
+						//Show Message    
+						//					alert("File Deleted");
+						var i, deleted;
+						//					deleted = data.data.slice(12);
+						deleted = data.data;
+						for (i in editAdImgs) {
+							if (editAdImgs[i] === deleted) {
+								editAdImgs.splice(i, 1);
+							}
+						}
+						//					console.log(editAdImgs);
+					});
+				//				}
+			}
 		});
 
 		//open edit user ad modal
@@ -352,7 +497,7 @@ $(function () {
 				if (data.status === false) {
 					console.log(data);
 				} else {
-					//					console.log(data);
+					console.log(data);
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
@@ -360,6 +505,16 @@ $(function () {
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
 					$("#edit-ad-modal .period-select")[0].sumo.reload();
 					$("#edit-ad-modal input[name='price']").val(data.data.price);
+					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
+					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
+
+					if (data.data.location_id) {
+						console.log("o");
+						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
+						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
+						$("#edit-ad-modal select[name='location_id']")[0].sumo.reload();
+					}
+
 					if (data.data.is_negotiable === "1") {
 						$("#edit-ad-modal input[name='is_negotiable']").prop("checked", true);
 					}
@@ -414,8 +569,18 @@ $(function () {
 					if (data.data.salary) {
 						$("#edit-ad-modal input[name='salary']").val(data.data.salary);
 					}
-
-
+					
+					editAdImgs =[];
+					for(i in data.data.images){
+						editAdImgs.push(data.data.images[i].image);
+					}
+					
+					
+					$("#edit-ad-modal .ad-images").empty();
+					template = $('#ad-edit-images-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, data.data);
+					$("#edit-ad-modal .ad-images").append(rendered);
 				}
 			});
 
@@ -438,7 +603,6 @@ $(function () {
 					for (j in hideArr) {
 						$("#edit-ad-modal .field." + hideArr[j]).addClass("d-none");
 					}
-
 				}
 			}
 			$("#edit-ad-modal .template").each(function () {
@@ -464,7 +628,7 @@ $(function () {
 				$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
 			}
 			if (lang === "ar") {
-				$("#edit-ad-modal .types-nav .select").text("اختر النوع");
+				$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
 			} else {
 				$("#edit-ad-modal .types-nav .select").text("Select type");
 			}
@@ -480,15 +644,51 @@ $(function () {
 
 			$("#edit-ad-modal").modal("show");
 		});
+		
+		var deleteImgArr = [];
+		$("#edit-ad-modal .ad-images").on("click", ".delete", function(){
+			console.log("asd");
+			var url = $(this).parents(".image-wrapper").data("url");
+			deleteImgArr.push(url);
+			console.log(deleteImgArr);
+			$(this).parents("image-wrapper").remove();
+		});
 
 		//submit edit user ad
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 			//						console.log($(this).serializeArray());
-			var data, i;
+			var data, i,
+			secondary_imgs = [];
+		//copy adimgs into uploaded_imgs
+		for (i in editAdImgs) {
+			secondary_imgs.push(editAdImgs[i]);
+		}
+//		secondary_imgs = uploaded_imgs;
+		secondary_imgs = JSON.stringify(secondary_imgs);
+		
 			data = $(this).serializeArray();
 			//			console.log(data);
+			data.push({
+				name: "main_image",
+				value: editMainImg[0]
+			}, {
+				name: "images",
+				value: secondary_imgs
+			});
+			
+//			console.log(deleteImgArr);
+			if(deleteImgArr.length > 0){
+				deleteImgArr = JSON.stringify(deleteImgArr);
+				console.log(deleteImgArr);
+				console.log("a");
+				data.push({
+				name: "deleted_images",
+				value: deleteImgArr
+			});
+			}
+
 			for (i in data) {
 				//send -1 for empty values
 				if (data[i].value === "") {
@@ -501,13 +701,22 @@ $(function () {
 				url: base_url + '/api/items_control/edit',
 				dataType: "json",
 				data: $.param(data)
-				//				data: $(this).serialize()
 			}).done(function (data) {
 				if (data.status === false) {
-					//					console.log(data);
+					console.log(data);
 				} else {
-					//					console.log(data);
-					//					window.location();
+					console.log(data);
+					$("#edit-ad-modal").modal("hide");
+					setTimeout(function () {
+						if (lang === "ar") {
+							$("#notification-modal .text").html("تم تعديل إعلانك بنجاج وهو الآن بانتظار الموافقة عليه");
+						} else {
+							$("#notification-modal .text").html("Your ad has been edited successfully and it is now pending waiting for admin approval");
+						}
+
+						$("#notification-modal").modal("show");
+					}, 500);
+					//no need for reset function when edit success because page reloads
 				}
 			});
 		});
@@ -523,25 +732,23 @@ $(function () {
 				//				console.log(data);
 			} else {
 				//				console.log(data);
-				var sessionData, sessionImage;
+				var sessionData, sessionImage, username;
 				for (i in data.data) {
 					sessionData = [];
-					//					if(!data.data.seller_pic){
-					//						data.data.seller_pic = '/assets/images/Dealat%20logo%20red.png';
-					//					}
-					//					if(!data.data.user_pic){
-					//						data.data.user_pic = '/assets/images/Dealat%20logo%20red.png';
-					//					}
 					if (data.data[i].seller_id == user_id) {
 						sessionImage = data.data[i].user_pic;
+						username = data.data[i].user_name;
 					} else {
 						sessionImage = data.data[i].seller_pic;
+						username = data.data[i].seller_name;
 					}
 					if (!sessionImage) {
 						sessionImage = '/assets/images/Dealat%20logo%20red.png';
 					}
 					sessionData = {
 						image: sessionImage,
+						//						date: data.data[i].publish_date.split(' ')[0],
+						username: username,
 						details: data.data[i]
 					};
 
@@ -550,8 +757,6 @@ $(function () {
 					rendered = Mustache.render(template, sessionData);
 					$(".profile-page .chats ul.sessions").append(rendered);
 				}
-
-
 			}
 		});
 
@@ -565,25 +770,21 @@ $(function () {
 			$("#chat-form .ad-id").val(adId);
 			$("#chat-form .chat-session-id").val(sessionId);
 
-			//			console.log($("#chat-form").serializeArray());
-			if (sellerId == user_id) {
-				//then I am the ad seller and a user chatted with me
-
-				//get chat message
-				$.ajax({
-					type: "get",
-					url: base_url + '/api/users_control/get_chat_messages',
-					dataType: "json",
-					data: {
-						ad_id: adId,
-						chat_session_id: sessionId
-					}
-				}).done(function (data) {
-					if (data.status === false) {
-						//						console.log(data);
-					} else {
-						//						console.log(data);
-						$("#chat-modal .chat").empty();
+			$.ajax({
+				type: "get",
+				url: base_url + '/api/users_control/get_chat_messages',
+				dataType: "json",
+				data: {
+					ad_id: adId,
+					chat_session_id: sessionId
+				}
+			}).done(function (data) {
+				if (data.status === false) {
+					//						console.log(data);
+				} else {
+					$("#chat-modal .chat").empty();
+					if (sellerId == user_id) {
+						//then I am the ad seller and a user chatted with me
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
 								// message from other to me
@@ -598,28 +799,8 @@ $(function () {
 								$("#chat-modal .chat").append(rendered);
 							}
 						}
-
-						$("#chat-modal").modal("show");
-					}
-				});
-			} else {
-				//then I chatted with ad seller(I started chat)
-
-				//get chat message
-				$.ajax({
-					type: "get",
-					url: base_url + '/api/users_control/get_chat_messages',
-					dataType: "json",
-					data: {
-						ad_id: adId,
-						chat_session_id: sessionId
-					}
-				}).done(function (data) {
-					if (data.status === false) {
-						//						console.log(data);
 					} else {
-						//						console.log(data);
-						$("#chat-modal .chat").empty();
+						//then I chatted with ad seller(I started chat)
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
 								// message from me to seller
@@ -634,12 +815,14 @@ $(function () {
 								$("#chat-modal .chat").append(rendered);
 							}
 						}
-
-						$("#chat-modal").modal("show");
 					}
-				});
 
-			}
+					$("#chat-modal").modal("show");
+					$("#chat-modal .chat").stop().animate({
+						scrollTop: $("#chat-modal .chat")[0].scrollHeight
+					}, 1000);
+				}
+			});
 		});
 
 		//get saved bookmarks
@@ -649,14 +832,12 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+				//				console.log(data);
 			} else {
-				console.log(data);
-
+				//				console.log(data);
 				for (i in data.data) {
-					
 					data.data[i].query = $.parseJSON(data.data[i].query);
-					data.data[i]["filter"] = $.param(data.data[i].query);
+					data.data[i].filter = $.param(data.data[i].query);
 					template = $('#saved-bookmarks-template').html();
 					Mustache.parse(template);
 					rendered = Mustache.render(template, data.data[i]);
@@ -668,6 +849,7 @@ $(function () {
 
 		//delete bookmark
 		$(".bookmarks").on("click", ".remove", function () {
+
 			var id, btn;
 			btn = $(this);
 			id = $(this).parents(".bookmark").data("bookmarkId");
@@ -680,11 +862,22 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+					//					console.log(data);
 				} else {
 					//					console.log(data);
 					btn.parents(".bookmark").next("hr").remove();
 					btn.parents(".bookmark").remove();
+					if (lang === "ar") {
+						$("#success-modal .text").html("تم حذف البحث بنجاح");
+					} else {
+						$("#success-modal .text").html("Saved search deleted successfully");
+					}
+
+					$("#success-modal").modal("show");
+					setTimeout(function () {
+						$("#success-modal").modal("hide");
+					}, 2000);
+
 				}
 			});
 		});
@@ -700,12 +893,11 @@ $(function () {
 				data: filter
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+					//					console.log(data);
 				} else {
 					window.location = base_url + '/search_control?' + filter;
 				}
 			});
-
 		});
 
 	}
