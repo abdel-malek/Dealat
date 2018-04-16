@@ -27,4 +27,10 @@ class User_tokens extends MY_Model {
 			return false;
 		}
 	}
+	
+	public function get_tokens_by_ids($users_ids)
+	{
+		$this->db->where_in('user_id'  , $users_ids);
+	    return parent::get();
+	}
 }

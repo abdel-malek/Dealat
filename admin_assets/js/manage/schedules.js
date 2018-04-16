@@ -1,7 +1,7 @@
-var education_table;
+var schedules_table;
  $(document).ready(function() {
- 	var educations_TableButtons = function() {
-           education_table = $("#educations_table").DataTable({
+ 	var schedules_TableButtons = function() {
+           schedules_table = $("#schedules_table").DataTable({
              "oLanguage": {
 				  	"sProcessing":   lang_array['sProcessing'],
 					"sLengthMenu":   lang_array['sLengthMenu'],
@@ -21,13 +21,13 @@ var education_table;
 			 },
              "bServerSide": false,
              aaSorting : [[0, 'desc']],
-             "sAjaxSource": base_url + '/admin/data_manage/get_all_educations/format/json',
+             "sAjaxSource": base_url + '/admin/data_manage/get_all_schedules/format/json',
              "columnDefs": [
                  {
                     "targets": -1, // edit
                     "data": null,
                     "mRender": function(date, type, full) {
-                       	 return '<button id="" onclick="show_education_manage_modal(\'' + full[0] + '\');"  type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
+                       	 return '<button id="" onclick="show_schedule_manage_modal(\'' + full[0] + '\');"  type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		             }
 		         },
 	          ],
@@ -36,31 +36,32 @@ var education_table;
               ],
             });
         };
-        educations_TableManageButtons = function() {
+        schedules_TableManageButtons = function() {
           "use strict";
           return {
             init: function() {
-              educations_TableButtons();
+              schedules_TableButtons();
             }
           };
         }();
 
-       educations_TableManageButtons.init();  
+      schedules_TableManageButtons.init();  
  });
  
 
  
-function show_education_manage_modal (id) {
-  $('#education_id').val(id);
+function show_schedule_manage_modal (id) {
+  $('#schedule_delete_btn').css('display' , 'none');
+  $('#schedule_id').val(id);
   if(id != 0){ 
-  	  $('#education_delete_btn').css('display' , 'inline');
+  	  $('#schedule_delete_btn').css('display' , 'inline');
 	  $.ajax({
-        url: base_url + '/api/data_control/get_education_info/format/json?education_id='+id,
+        url: base_url + '/api/data_control/get_schedule_info/format/json?schedule_id='+id,
         type: "get",
         dataType: "json",
         success: function(response) {
-           $('#education_en_name').val(response.data['en_name']);
-           $('#education_ar_name').val(response.data['ar_name']);
+           $('#schedule_en_name').val(response.data['en_name']);
+           $('#schedule_ar_name').val(response.data['ar_name']);
         },error: function(xhr, status, error){
         	new PNotify({
                   title: lang_array['attention'],
@@ -74,13 +75,13 @@ function show_education_manage_modal (id) {
         }
      });
    }
-   $('.education_manage_modal').modal('show');
+   $('.schedules_manage_modal').modal('show');
  }
  
-function save_education () {
-  var id = $('#education_id').val();
-  var en_name = $('#education_en_name').val();
-  var ar_name = $('#education_ar_name').val();
+function save_schedule() {
+  var id = $('#schedule_id').val();
+  var en_name = $('#schedule_en_name').val();
+  var ar_name = $('#schedule_ar_name').val();
 	if(en_name =='' || ar_name == ''){
 		new PNotify({
               title: lang_array['attention'],
@@ -95,10 +96,10 @@ function save_education () {
 		var data  ={
 			'en_name' : en_name , 
 			'ar_name' : ar_name , 
-			'education_id' : id
+			'schedule_id' : id
 		};
 	    $.ajax({
-	        url: base_url + '/admin/data_manage/save_education/format/json',
+	        url: base_url + '/admin/data_manage/save_schedule/format/json',
 	        type: "post",
 	        dataType: "json",
 	        data: data,
@@ -116,15 +117,15 @@ function save_education () {
 	            }else{
 	                new PNotify({
 	                  title:  lang_array['success'],
-	                  text: lang_array['education_saved'],
+	                  text: lang_array['schedule_saved'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
 					        sticker: false
 					 }
 	               });
-	                 education_table.ajax.url( base_url + '/admin/data_manage/get_all_types/format/json').load();
-			         $('.education_manage_modal').modal('hide');
+	                 schedules_table.ajax.url( base_url + '/admin/data_manage/get_all_schedules/format/json').load();
+			         $('.schedules_manage_modal').modal('hide');
 	             }
 	        },error: function(xhr, status, error){
 	        	new PNotify({
@@ -141,11 +142,11 @@ function save_education () {
 	}
 }
 
-function delete_education() {
-  var id = $('#education_id').val();
-   data = {'education_id' : id};
+function delete_schedule() {
+  var id = $('#schedule_id').val();
+   data = {'schedule_id' : id};
     $.ajax({
-        url:  base_url + '/admin/data_manage/delete_education/format/json',
+        url:  base_url + '/admin/data_manage/delete_schedule/format/json',
         type: "post",
         dataType: "json",
         data: data,
@@ -163,15 +164,15 @@ function delete_education() {
             }else{
                 new PNotify({
                   title:  lang_array['success'],
-                  text: lang_array['education_deleted'],
+                  text: lang_array['schedule_deleted'],
                   type: 'success',
                   styling: 'bootstrap3',
                   buttons: {
 				        sticker: false
 				 }
                });
-                education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
-			    $('.education_manage_modal').modal('hide');
+                 schedules_table.ajax.url( base_url + '/admin/data_manage/get_all_schedules/format/json').load();
+			     $('.schedules_manage_modal').modal('hide');
              }
         },error: function(xhr, status, error){
         	new PNotify({

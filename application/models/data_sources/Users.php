@@ -73,7 +73,8 @@ class Users extends MY_Model {
                 'LOGIN_USER_ID' => $user->user_id,
                 'USERNAME' => $user->name,
                 'PHP_AUTH_PW' => md5($password),
-                'IS_LOGGED_IN' => 1
+                'IS_LOGGED_IN' => 1,
+                'IS_ADMIN' => 0
             );
             $this->session->set_userdata($newdata);
             return $user;
@@ -137,5 +138,17 @@ class Users extends MY_Model {
 	  $this->db->join('ads', 'users.user_id = ads.user_id', 'left outer');
 	  $this->db->group_by('users.user_id' );
 	  return parent::get();
+  }
+  
+  public function get_user_ids_by_city($city_id)
+  {
+      $users = parent::get_by(array('city_id' => $city_id));
+	  $ids_array = array();
+	  if($users){
+	  	foreach ($users as $row) {
+			$ids_array[] = $row->user_id;  
+		}
+	  }
+	  return $ids_array;
   }
 }

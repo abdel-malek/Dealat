@@ -15,9 +15,11 @@ class Locations extends MY_Model {
 		return parent::get();
 	}
 	
-	public function get_cities($lang)
+	public function get_cities($lang = null)
 	{
-	    $this->db->select('cites.'.$lang.'_name as name , city_id');
+		if($lang){
+		   $this->db->select('cites.'.$lang.'_name as name , city_id');
+		}
 		$this->db->where('is_active' , 1);
 		return $this->db->get('cites')->result_array();
 	}
@@ -35,10 +37,26 @@ class Locations extends MY_Model {
 	
 	public function get_by_city($lang , $city_id)
 	{
-		$this->db->select('locations.'.$lang.'_name as location_name ,
-	                       locations.location_id');
+	    $this->db->select('locations.'.$lang.'_name as location_name ,
+           locations.location_id');
 		$this->db->where('locations.is_active' , 1);
 		$this->db->where('locations.city_id' , $city_id);
 		return parent::get();
+	}
+	
+    public function get_by_city_for_manage( $city_id)
+	{
+		$this->db->where('locations.is_active' , 1);
+		$this->db->where('locations.city_id' , $city_id);
+		return parent::get();
+	}
+	
+	public function get_city_info($city_id)
+	{
+		$this->db->select('cites.*');
+		$this->db->from('cites');
+		$this->db->where('city_id' , $city_id);
+		return $this->db->get()->row_array(); 
+	   
 	}
 }

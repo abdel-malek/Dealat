@@ -98,10 +98,21 @@
        	 lang_array['type_saved'] = 'Brand is saved' ;
        	 lang_array['type_deleted'] = 'Brand is Deleted' ;
          lang_array['model_saved'] = 'Model is saved' ;
+         lang_array['model_deleted'] = 'Model is Deleted' ;
+         lang_array['schedule_saved'] = 'Work Schedule is saved' ;
+       	 lang_array['schedule_deleted'] = 'Work Schedule is deleted' ;
        	 lang_array['show_status_changed'] = 'Ad show status has been changed' ;
        	 lang_array['names_validation'] = 'English and arabic names ara requierd.' ;
        	 lang_array['note'] = 'Please Note' ;
        	 lang_array['new_pending'] = 'A new pending ad is added' ;
+       	 lang_array['education_saved'] = 'Education is saved';
+       	 lang_array['education_deleted'] = 'Education is Deleted';
+       	 lang_array['user_status_changed'] = 'User activation status has been changed';
+       	 lang_array['city_saved'] = 'City is saved' ;
+       	 lang_array['city_deleted'] = 'City is Deleted' ;
+       	 lang_array['location_saved'] = 'Area is saved' ;
+       	 lang_array['location_deleted'] = 'Area is Deleted' ;
+       	 lang_array['notification_sent'] = 'Notification sent successfully'
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -127,11 +138,22 @@
        	 lang_array['ad_saved'] = 'تم حفظ الإعلان' ;
        	 lang_array['type_saved'] = 'تم حفظ الماركة' ;
        	 lang_array['model_saved'] = 'تم حفظ الموديل' ;
+       	 lang_array['model_deleted'] = 'تم حذف الموديل' ;
        	 lang_array['type_deleted'] = 'تم حذف الماركة' ;
+       	 lang_array['schedule_saved'] = 'تم حفظ دوام العمل' ;
+       	 lang_array['schedule_deleted'] = 'تم حذف دوام العمل' ;
          lang_array['show_status_changed'] = 'تم تغيير حالة ظهور الإعلان بنجاح' ;
        	 lang_array['names_validation'] = 'يجب إدخال الاسم العربي والاسم الانغليزي' ;
        	 lang_array['note'] = 'ملاحظة' ;
        	 lang_array['new_pending'] = "يوجد لديك إعلان قيد الانتظار جديد" ;
+       	 lang_array['education_saved'] = 'تم حفظ المستوى التعليمي ';
+       	 lang_array['education_deleted'] = 'تم حذف المستوى التعليمي ';
+       	 lang_array['user_status_changed'] = 'تم تغيير حالة فعالية المستخدم';
+          lang_array['city_saved'] = 'تم حفظ المحافظة' ;
+       	 lang_array['city_deleted'] = 'تم حذف المحافظة' ;
+       	 lang_array['location_saved'] = 'تم حفظ المنطقة' ;
+       	 lang_array['location_deleted'] = 'تم حذف المنطقة'
+       	 lang_array['notification_sent'] = 'تم إرسال الإشعار بنجاح'
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -157,6 +179,9 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/types.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/reported_ads.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/educations.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/schedules.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/cities.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/notifications.js"></script>
    
   </body>
 </html>

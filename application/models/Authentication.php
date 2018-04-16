@@ -5,10 +5,16 @@
 class Authentication extends MY_Model {
 	public function __construct() {
 		$this -> load -> model('data_sources/users');
+		$this -> load -> model('data_sources/admins');
 	}
 
-	public function check_user($username, $password , $type) {
-	    $user = $this -> users -> check_authentication($username, $password ,$type);
+	public function check_user($username, $password , $type , $is_admin) {
+		$user = null;
+		if($is_admin == 1){
+		   $user = $this -> admins -> check_authentication($username, $password);
+		}else{
+		   $user = $this -> users -> check_authentication($username, $password ,$type);
+		}
 		return $user;
 	}
 }

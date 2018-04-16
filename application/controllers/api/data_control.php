@@ -24,4 +24,33 @@ class Data_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
 	
+	
+	public function get_education_info_get()
+	{
+		$this->load->model('data_sources/educations');
+		$info = $this->educations->get($this->input->get('education_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+
+   public function get_schedule_info_get()
+	{
+		$this->load->model('data_sources/schedules');
+		$info = $this->schedules->get($this->input->get('schedule_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
+   public function get_city_info_get()
+	{
+	    $this->load->model('data_sources/locations');
+		$info = $this->locations->get_city_info($this->input->get('city_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
+	public function get_location_info_get()
+	{
+	    $this->load->model('data_sources/locations');
+		$info = $this->locations->get($this->input->get('location_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
 }

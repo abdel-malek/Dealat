@@ -119,47 +119,47 @@ var current_pending_count = 0;
      });
      
  // reload to get new pending ads.      
-    setInterval(function() {
-		ads_table.ajax.reload( null, false );
-		$.ajax({
-        url: base_url + '/api/items_control/get_pending_count/format/json',
-        type: "get",
-        dataType: "json",
-        global: false,     // this makes sure ajaxStart is not triggered
-        success: function(response) {
-            // highlight the new pendeing rows. 
-            var new_count = response.data;
-            var diff = new_count - current_pending_count;
-            console.log(diff);
-            if(diff > 0){
-              $(ads_table.rows().nodes()).each(function(index){
-            	//console.log(index);
-             	if(index < diff){
-             		$(this).css("background-color", "#1abb9c63");
-                    setTimeout(function () {
-                        //$(this).removeAttr("style");
-                        $(this).css("background-color", "#fff");
-                    }, 2500);
-             	}else{
-             	   return false;
-             	}
-             });
-	          new PNotify({
-	              title: lang_array['note'],
-	              text: lang_array['new_pending'],
-	              type: 'info',
-	              styling: 'bootstrap3',
-	              buttons: {
-				        sticker: false
-				   }
-	          });
-            }
-            $('.pending_count').html(response.data);
-            current_pending_count = response.data;
-        },error: function(xhr, status, error){
-        }
-     });
-	 }, 6000 );  // 4000
+    // setInterval(function() {
+		// ads_table.ajax.reload( null, false );
+		// $.ajax({
+        // url: base_url + '/api/items_control/get_pending_count/format/json',
+        // type: "get",
+        // dataType: "json",
+        // global: false,     // this makes sure ajaxStart is not triggered
+        // success: function(response) {
+            // // highlight the new pendeing rows. 
+            // var new_count = response.data;
+            // var diff = new_count - current_pending_count;
+            // console.log(diff);
+            // if(diff > 0){
+              // $(ads_table.rows().nodes()).each(function(index){
+            	// //console.log(index);
+             	// if(index < diff){
+             		// $(this).css("background-color", "#1abb9c63");
+                    // setTimeout(function () {
+                        // //$(this).removeAttr("style");
+                        // $(this).css("background-color", "#fff");
+                    // }, 2500);
+             	// }else{
+             	   // return false;
+             	// }
+             // });
+	          // new PNotify({
+	              // title: lang_array['note'],
+	              // text: lang_array['new_pending'],
+	              // type: 'info',
+	              // styling: 'bootstrap3',
+	              // buttons: {
+				        // sticker: false
+				   // }
+	          // });
+            // }
+            // $('.pending_count').html(response.data);
+            // current_pending_count = response.data;
+        // },error: function(xhr, status, error){
+        // }
+     // });
+	 // }, 6000 );  // 4000
 	 
 	 
 	// set select to pending 

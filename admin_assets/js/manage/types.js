@@ -410,3 +410,51 @@ function save_type_model(){
      }); 
 	}	
 }
+
+
+function delete_type_model() {
+  var id = $('#type_model_id').val();
+  var type_id = $('#model_type_id').val();
+   data = {'type_model_id' : id};
+    $.ajax({
+        url:  base_url + '/admin/data_manage/delete_type_model/format/json',
+        type: "post",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+            if(response.status == false){
+           	  new PNotify({
+	                  title: lang_array['attention'],
+	                  text: response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+            }else{
+                new PNotify({
+                  title:  lang_array['success'],
+                  text: lang_array['model_deleted'],
+                  type: 'success',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				 }
+               });
+               type_models_table.ajax.url(base_url + '/admin/data_manage/get_types_models/format/json?type_id='+type_id).load();
+		       $('.type_model_manage_modal').modal('hide');
+             }
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+}

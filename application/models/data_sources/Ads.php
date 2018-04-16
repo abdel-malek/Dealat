@@ -12,7 +12,7 @@ class Ads extends MY_Model {
 	
 	
 	public function get_latest_ads($lang)
-	{
+	 {
 		$this->db->select('ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
 		                  categories.tamplate_id,
@@ -28,10 +28,10 @@ class Ads extends MY_Model {
        // $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
 		return $q; 
-	}
+	 }
 	
 	public function get_ads_by_category($main_category_id , $lang)
-	{
+	 {
 	    $this->db->select('ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
 		                  c.'.$lang.'_name as parent_category_name ,
@@ -50,7 +50,7 @@ class Ads extends MY_Model {
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
-	}
+	 }
     
 	public function get_ad_details($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC , $user_id = null)
 	{
@@ -64,12 +64,14 @@ class Ads extends MY_Model {
 		                   users.whatsup_number,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
+		                   show_periods.days
 		                  ');
        	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');

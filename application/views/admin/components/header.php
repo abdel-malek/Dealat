@@ -88,7 +88,7 @@
               </div>
               <div class="profile_info">
                 <span><?php echo $this->lang->line('welcome') ?>,</span>
-                <!-- <h2>Ola</h2> -->
+                <h2><?php echo $this->session->userdata('USERNAME') ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -126,8 +126,13 @@
                  	 <ul id="" class="nav child_menu">
                  	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
                  	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_educations_page'); ?>"><?php echo $this->lang->line('educations') ?></a></li>
+                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_schedules_page'); ?>"><?php echo $this->lang->line('schedules') ?></a></li>
+                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_cities_page'); ?>"><?php echo $this->lang->line('cities_and_areas') ?></a></li>
                  	 </ul>
                   </li>
+                  
+                  <!-- notification -->
+                  <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('notifications') ?></a></li>
         
                 </ul>
               </div>
@@ -144,14 +149,14 @@
               </div>
 
              <ul class="nav navbar-nav navbar-right">
-                <!-- <li class="">
+                <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class=" fa fa-angle-down"></span>
+                    <?php echo $this->session->userdata('USERNAME') ?>  <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href=""><i class="fa fa-sign-out pull-right"></i><?php echo $this->lang->line('log_out') ?></a></li>
+                    <li><a href="<?php echo base_url('index.php/admin/users_manage/logout') ?>"><i class="fa fa-sign-out pull-right"></i><?php echo $this->lang->line('log_out') ?></a></li>
                   </ul>
-                </li> -->
+                </li>
                 
                 <!-- language switch -->
                 <li class="dropdown">

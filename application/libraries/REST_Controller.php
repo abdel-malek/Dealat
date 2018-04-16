@@ -1199,7 +1199,7 @@ abstract class REST_Controller extends CI_Controller {
      * @param string $password The password to validate
      * @return boolean
      */
-    protected function _perform_library_auth($username = '', $password = NULL) {
+    protected function _perform_library_auth($username = '', $password = NULL , $is_admin=0) {
         if (empty($username)) {
             log_message('debug', 'Library Auth: failure, empty username');
             return false;
@@ -1217,7 +1217,8 @@ abstract class REST_Controller extends CI_Controller {
             log_message('debug', 'Library Auth: failure, empty auth_library_function');
             return false;
         }
-		$user_type;
+		//check user's account type (mobile ,web , both)
+		$user_type; 
 		$header = $this->input->request_headers();
 	    if (isset($header['Api-call']) && $header['Api-call'] == 1) {
             $user_type = ACCOUNT_TYPE::MOBILE;
@@ -1226,7 +1227,10 @@ abstract class REST_Controller extends CI_Controller {
             $user_type = ACCOUNT_TYPE::WEB;
         }
         $this->load->model($auth_library_class);
-	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type);
+	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type , $is_admin);
+		if($is_admin == 1){
+			$this->current_user->user_id = $this->current_user->admin_id;
+		}
 		//dump($this->current_user);
         $this->data['user'] = $this->current_user;
 		if ($this->current_user) {
@@ -1243,7 +1247,7 @@ abstract class REST_Controller extends CI_Controller {
      * @param string $password The user's password
      * @return boolean
      */
-    protected function _check_login($username = '', $password = NULL) {
+    protected function _check_login($username = '', $password = NULL , $is_admin=0) {
 
         if (empty($username)) {
             return FALSE;
@@ -1258,7 +1262,7 @@ abstract class REST_Controller extends CI_Controller {
 
         if ($auth_source == 'library') {
             log_message('debug', 'performing Library authentication for $username');
-            return $this->_perform_library_auth($username, $password);
+            return $this->_perform_library_auth($username, $password , $is_admin);
         }
 
         $valid_logins = $this->config->item('rest_valid_logins');
@@ -1289,6 +1293,7 @@ abstract class REST_Controller extends CI_Controller {
 
         $username = NULL;
         $password = NULL;
+		$is_admin = 0;
 
         // mod_php
 
@@ -1306,14 +1311,11 @@ abstract class REST_Controller extends CI_Controller {
             if ($this->session->userdata('PHP_AUTH_USER')) {
                 $username = $this->session->userdata('PHP_AUTH_USER');
                 $password = $this->session->userdata('PHP_AUTH_PW');
+				$is_admin = $this->session->userdata('IS_ADMIN');
             }
-		//	dump($this->session->userdata('PHP_AUTH_USER'));
-		//	dump($username);
-		//	dump($password);
-//             var_dump($username);
         }
 
-        if (!$this->_check_login($username, $password)) {
+        if (!$this->_check_login($username, $password , $is_admin)) {
             $this->_force_login();
         }
     }

@@ -3,7 +3,7 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b><?php echo $this->lang->line('educations_list') ?></b></h3>  
+	                 <h3><b><?php echo $this->lang->line('schedules_list') ?></b></h3>  
 	              </div>
 	              	 <!-- filter form -->
 		              <!-- /filter form -->
@@ -19,9 +19,9 @@
 	                <div class="x_panel">
 	                  <div class="x_content">
                   	    <div class="pull-left">
-                           <button onclick="show_education_manage_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_education') ?></button>
+                           <button onclick="show_schedule_manage_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_schedule') ?></button>
                         </div>
-	                    <table id="educations_table" class="table table-striped table-bordered">
+	                    <table id="schedules_table" class="table table-striped table-bordered">
 	                      <thead>
 	                        <tr>
 	                          <th>#</th>
@@ -39,4 +39,4 @@
 	            </div>
 	          </div>
 	        </div>
-	        <?php $this->load->view('admin/educations/education_manage_modal') ?>
+	        <?php $this->load->view('admin/schedules/schedules_manage_modal') ?>

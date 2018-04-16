@@ -96,7 +96,7 @@ class Data_manage extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 	    	$this->load->model('data_sources/types');
-			$this->types->delete($this->input->post('type_id'));
+			$this->types->save(array('is_active' => 0) ,$this->input->post('type_id'));
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
    }
@@ -124,6 +124,18 @@ class Data_manage extends REST_Controller {
 			$this->response(array('status' => true, 'data' =>$type_model_id, 'message' => ''));
 		}
    }
+
+  public function delete_type_model_post()
+  {
+        $this -> form_validation -> set_rules('type_model_id', 'type model id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+	    	$this->load->model('data_sources/type_models');
+			$this->type_models->save(array('is_active' => 0) ,$this->input->post('type_model_id'));
+			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+		}
+  }
 
   public function load_educations_page_get()
   {
@@ -167,4 +179,181 @@ class Data_manage extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
   }
+  
+ public function delete_education_post()
+ {
+    $this -> form_validation -> set_rules('education_id', 'education_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+    	$this->load->model('data_sources/educations');
+		$this->educations->save(array('is_active' => 0) ,$this->input->post('education_id'));
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	}
+ }
+ 
+ 
+ public function load_schedules_page_get($value='')
+ {
+	  $this -> data['subview'] = 'admin/schedules/index';
+	  $this -> load -> view('admin/_main_layout', $this -> data);
+ }
+ 
+ public function get_all_schedules_get()
+  {
+  	$this->load->model('data_sources/schedules');
+	$schedules = $this->schedules->get_by(array('is_active'=>1));
+    $output = array("aaData" => array());
+	foreach ($schedules as $row) {
+			$recorde = array();
+			$recorde[] = $row -> schedule_id;
+			$recorde[] = $row -> en_name;
+			$recorde[] = $row -> ar_name;
+			$output['aaData'][] = $recorde;
+		}
+	echo json_encode($output);  
+  }
+ 
+ public function save_schedule_post()
+ {
+     $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+     $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+	 if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	 } else {
+		$this->load->model('data_sources/schedules');
+		$data = array(
+		   'en_name' => $this->input->post('en_name'),
+		   'ar_name' => $this->input->post('ar_name'),
+		);
+		$id = $this->input->post('schedule_id');
+		if($id != 0){ // edit
+		   $new_id = $this->schedules->save($data , $id);
+		}else{ // add
+		   $new_id = $this->schedules->save($data);	
+		}
+      $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+    }
+  }
+ 
+ public function delete_schedule_post()
+ {
+    $this -> form_validation -> set_rules('schedule_id', 'schedule_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+    	$this->load->model('data_sources/schedules');
+		$this->schedules->save(array('is_active' => 0) ,$this->input->post('schedule_id'));
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	} 
+ }
+ 
+ 
+ public function load_cities_page_get()
+ {
+    $this -> data['subview'] = 'admin/cities/index';
+    $this -> load -> view('admin/_main_layout', $this -> data);
+ }
+ 
+ public function get_all_cities_get()
+ {
+    $this->load->model('data_sources/locations');
+	$cities = $this->locations->get_cities();
+    $output = array("aaData" => array());
+	foreach ($cities as $row) {
+			$recorde = array();
+			$recorde[] = $row['city_id'];
+			$recorde[] = $row['en_name'];
+			$recorde[] = $row['ar_name'];
+			$output['aaData'][] = $recorde;
+		}
+	echo json_encode($output);  
+ }
+ 
+ public function get_city_areas_get()
+ {
+    $this->load->model('data_sources/locations');
+	$data = $this->locations->get_by_city_for_manage($this->input->get('city_id'));
+    $output = array("aaData" => array());
+	foreach ($data as $row) {
+			$recorde = array();
+			$recorde[] = $row -> location_id;
+			$recorde[] = $row -> en_name;
+			$recorde[] = $row -> ar_name;
+			$output['aaData'][] = $recorde;
+		}
+	echo json_encode($output);  
+ }
+ 
+ public function save_city_post()
+ {
+    $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+    $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+		$this->load->model('data_sources/cities');
+		$data = array(
+		   'en_name' => $this->input->post('en_name'),
+		   'ar_name' => $this->input->post('ar_name'),
+		);
+		$id = $this->input->post('city_id');
+		if($id != 0){ // edit
+		   $new_id = $this->cities->save($data , $id);
+		}else{ // add
+		   $new_id = $this->cities->save($data);	
+		}
+		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+	}
+ }
+ 
+ public function delete_city_post()
+ {
+    $this -> form_validation -> set_rules('city_id', 'city_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	}else {
+    	$this->load->model('data_sources/cities');
+		$this->cities->save(array('is_active' => 0) ,$this->input->post('city_id'));
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	}  
+ }
+ 
+ public function save_location_post()
+ {
+    $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+    $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+	$this -> form_validation -> set_rules('city_id', 'city_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+		$this->load->model('data_sources/locations');
+		$data = array(
+		   'en_name' => $this->input->post('en_name'),
+		   'ar_name' => $this->input->post('ar_name'),
+		   'city_id' => $this->input->post('city_id')
+		);
+		$id = $this->input->post('location_id');
+		if($id != 0){ // edit
+		   $new_id = $this->locations->save($data , $id);
+		}else{ // add
+		   $new_id = $this->locations->save($data);	
+		}
+		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+	}
+ }
+ 
+ public function delete_location_post()
+ {
+    $this -> form_validation -> set_rules('location_id', 'location_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	}else {
+    	$this->load->model('data_sources/locations');
+		$this->locations->save(array('is_active' => 0) ,$this->input->post('location_id'));
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	}  
+ }
+ 
+ 
 }

@@ -23,8 +23,11 @@ class Messages extends MY_Model {
 		    if($session_info->seller_id == $user_id){ // from seller to user msg. 
 				$data['to_seller'] = 0;
 			    $to_seller = 0;
+				// change chat session user seen status to 0
+				$this->chat_sessions->save(array('user_seen' => 0) , $chat_session_id);
 			}else{
-				
+			    //from user to seller so change user seen status to 0
+			    $this->chat_sessions->save(array('seller_seen' => 0) , $chat_session_id);
 			}
 			$msg_id = parent::save($data);
 		}else if( $ad_id != null){  // from user to seller 
@@ -33,6 +36,8 @@ class Messages extends MY_Model {
 			if($check_exist_result){ // there is already chat session for this ad and user and seller
 			    $data['chat_session_id'] = $check_exist_result->chat_session_id;
 		        $msg_id = parent::save($data);
+				// chane seller seen status to 0 
+				$this->chat_sessions->save(array('seller_seen' => 0) , $check_exist_result->chat_session_id);
 			}else{ // no chat session so create new one 
 			    if($seller_id == $user_id){ // the seller is sending msg to his self so we can not create a chat session!!
 			    	 $this->db->trans_rollback();

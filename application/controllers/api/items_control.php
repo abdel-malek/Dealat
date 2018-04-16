@@ -65,22 +65,26 @@ class Items_control extends REST_Controller {
 		}else {
 		   $basic_data = array(
 		     'user_id' => $this->current_user->user_id,
-		     'location_id' => $this->input->post('location_id'),
 		     'city_id' => $this->input->post('city_id'),
 		     'show_period' => $this->input->post('show_period'),
 		     'price' => $this->input->post('price'),
 		     'title' => $this->input->post('title'),
-		     'description' => $this->input->post('description'),
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
 		     'is_negotiable' => $this->input->post('is_negotiable'),
 		    // 'status' => 2    // temp
 		   );
-		   if($this->input->post('main_video')){
+		   if($this->input->post('main_video') && $this->input->post('main_video')!=''){
 		   	  $basic_data['main_video'] = $this->input->post('main_video');
 		   }
+		   if($this->input->post('location_id') && $this->input->post('location_id')!=''){
+		   	  $basic_data['location_id'] = $this->input->post('location_id');
+		   }
+		   if($this->input->post('description') && $this->input->post('description')!=''){
+		   	  $basic_data['description'] = $this->input->post('description');
+		   }
 		   $main_image = null;
-		   if ($this->input->post('main_image')) {
+		   if ($this->input->post('main_image') && $this->input->post('main_image') != '') {
 			  $main_image = $this->input->post('main_image');
 		   }
 		   $ads_images_paths = array();

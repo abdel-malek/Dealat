@@ -17,7 +17,7 @@
                </div> 	
                
                <div class="form-group" id='template_select_div' style="display:none">
-      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('position') ?></label>
+      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('template') ?></label>
       	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
   	                <select class="form-control select2_single" id="type_template_select" tabindex="-1" style="margin-bottom: 10px; !important;">
                     	<?php $templates = TAMPLATES::get_templates_with_types($this->session->userdata('language'));?>
