@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "230414477988",
-    "firebase_url": "https://dealat-5b9e0.firebaseio.com",
-    "project_id": "dealat-5b9e0",
-    "storage_bucket": "dealat-5b9e0.appspot.com"
+    "project_number": "460183534566",
+    "firebase_url": "https://dealat-d3c04.firebaseio.com",
+    "project_id": "dealat-d3c04",
+    "storage_bucket": "dealat-d3c04.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:230414477988:android:ceafbde07aae9d7a",
+        "mobilesdk_app_id": "1:460183534566:android:ceafbde07aae9d7a",
         "android_client_info": {
           "package_name": "com.tradinos.dealat2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "230414477988-r1qhe89m865oj4lrkdjmmkvj9r32hlf2.apps.googleusercontent.com",
+          "client_id": "460183534566-3b8lq1i96usptmaldjvtgo6idthpk6l1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAB9f2agOJlz-JSLjm1F5Qi9R2vhmovQxA"
+          "current_key": "AIzaSyCTr-OpgVNjDNqzm5PfrptVwUzQvzvAzaY"
         }
       ],
       "services": {

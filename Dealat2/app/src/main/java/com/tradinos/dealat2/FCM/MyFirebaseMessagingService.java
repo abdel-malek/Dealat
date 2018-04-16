@@ -88,7 +88,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra("chat", chat);
                 break;
 
-            default://just in case
+            default://for Public notification
                 intent = new Intent(this, HomeActivity.class);
         }
 

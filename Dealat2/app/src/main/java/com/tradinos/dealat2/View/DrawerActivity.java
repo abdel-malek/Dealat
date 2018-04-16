@@ -181,11 +181,13 @@ public abstract class DrawerActivity extends MasterActivity
                 startActivity(intent);
                 break;
 
-            case R.id.nav_categories:
-                break;
-
             case R.id.nav_savedSearches:
                 intent = new Intent(mContext, BookmarksActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_qrCode:
+                intent = new Intent(mContext, QRCodeActivity.class);
                 startActivity(intent);
                 break;
 
@@ -197,9 +199,6 @@ public abstract class DrawerActivity extends MasterActivity
                 setLocale("en");
                 break;
 
-            case R.id.navSettings:
-                break;
-
             case R.id.navLogout:
                 logout();
 
@@ -207,6 +206,12 @@ public abstract class DrawerActivity extends MasterActivity
                 new CurrentAndroidUser(mContext).clearUser();
                 LoginManager.getInstance().logOut();*/
 
+                break;
+
+            case R.id.nav_categories:
+                break;
+
+            case R.id.navSettings:
                 break;
 
             case R.id.navHelp:

@@ -1,11 +1,12 @@
 package com.tradinos.dealat2;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
@@ -26,7 +27,10 @@ public class SplashActivity extends MasterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_splash);
+
         super.onCreate(savedInstanceState);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/all_android");
 
         /* New Handler to
          * close this Splash-Screen after some seconds.*/
@@ -51,6 +55,7 @@ public class SplashActivity extends MasterActivity {
                         break;
 
                     case User.REGISTERED:
+
                         final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                         UserController.getInstance(new ParentController(mContext, new FaildCallback() {
                             @Override

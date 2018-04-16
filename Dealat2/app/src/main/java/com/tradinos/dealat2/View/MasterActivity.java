@@ -15,12 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.FaildCallback;
@@ -60,6 +59,10 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         super.setContentView(contentViewRes);
         mContext = this; //assigned in setContentView
+
+        Tracker tracker = ((MyApplication)getApplication()).getDefaultTracker();
+        tracker.setScreenName(this.getClass().getSimpleName());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         defineController();
         assignUIReferences();
@@ -227,49 +230,6 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         super.onBackPressed();
     }
 
-
-   /* public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-     //   if(view != null)
-     //       params.height += view.getMeasuredHeight()/5;
-        listView.setLayoutParams(params);
-    }*/
-
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
 
     public int getTemplateDefaultImage(int template) {
 

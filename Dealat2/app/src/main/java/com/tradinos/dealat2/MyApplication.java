@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.User;
@@ -18,10 +20,27 @@ import java.util.Locale;
 
 public class MyApplication extends Application {
 
+    private static Tracker sTracker;
+
     static List<Category> allCategories;
 
     static SharedPreferences sharedPreferences;
 
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        if (sTracker == null) {
+            GoogleAnalytics sAnalytics = GoogleAnalytics.getInstance(this);
+            sTracker = sAnalytics.newTracker("UA-117516159-1");
+            sTracker.enableExceptionReporting(true);
+          //  sTracker.enableAutoActivityTracking(true);
+        }
+
+        return sTracker;
+    }
 
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
