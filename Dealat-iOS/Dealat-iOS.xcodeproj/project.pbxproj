@@ -243,6 +243,7 @@
 		82F0C20820286407008922A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82F0C21B2028648A008922A0 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		82F0C21D20286525008922A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		82F2B5772084B05500B996E2 /* Dealat-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dealat-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessagesVC.swift; sourceTree = "<group>"; };
 		82FEE63E2075068A00D9DB45 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		82FEE640207506ED00D9DB45 /* ReportMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessage.swift; sourceTree = "<group>"; };
@@ -400,6 +401,7 @@
 				82F0C21620286430008922A0 /* View */,
 				82F0C2142028642F008922A0 /* ViewController */,
 				82893DE32033237C009151FC /* Localizable.strings */,
+				82F2B5772084B05500B996E2 /* Dealat-iOS-Bridging-Header.h */,
 			);
 			path = "Dealat-iOS";
 			sourceTree = "<group>";
@@ -623,6 +625,7 @@
 				TargetAttributes = {
 					82F0C1E220286404008922A0 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1105,6 +1108,7 @@
 			baseConfigurationReference = 379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
@@ -1115,6 +1119,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dealat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dealat-iOS/Dealat-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1125,6 +1131,7 @@
 			baseConfigurationReference = BDD28EAD72431D331D5A7292 /* Pods-Dealat-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
@@ -1135,6 +1142,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dealat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dealat-iOS/Dealat-iOS-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

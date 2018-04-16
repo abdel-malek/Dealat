@@ -22,6 +22,9 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
         super.viewDidLoad()
 
         getData()
+        
+        Provider.setScreenName("My Favorites")
+
     }
     
     override func setupViews() {

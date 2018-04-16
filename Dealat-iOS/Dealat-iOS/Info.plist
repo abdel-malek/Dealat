@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -31,12 +31,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to take a new photo</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The photo library is used to your microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>The Photo Library is used to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The photo library is used to select photos</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>The photo library is used to your microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>calibri.ttf</string>

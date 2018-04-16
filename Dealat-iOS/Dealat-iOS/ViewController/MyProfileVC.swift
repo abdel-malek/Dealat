@@ -40,6 +40,9 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         
         self.title = "My Profile".localized
         configureNavigationBar()
+        
+        Provider.setScreenName("Profile")
+
     }
     
     func configureNavigationBar() {

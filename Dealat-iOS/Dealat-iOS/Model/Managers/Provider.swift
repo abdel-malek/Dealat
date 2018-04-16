@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SDWebImage
 import Kingfisher
+import Google
 
 class Provider : BaseManager {
     
@@ -96,6 +97,17 @@ class Provider : BaseManager {
             
         }else{
             img.image = nil
+        }
+    }
+    
+    
+    static func setScreenName(_ name : String){
+        if let tracker = GAI.sharedInstance().defaultTracker{
+            tracker.set(kGAIScreenName, value: name + " screen")
+            
+            if let builder = GAIDictionaryBuilder.createScreenView(){
+                tracker.send(builder.build() as! [AnyHashable : Any])
+            }
         }
     }
     

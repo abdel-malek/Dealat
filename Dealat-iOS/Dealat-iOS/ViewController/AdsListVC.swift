@@ -57,6 +57,8 @@ class AdsListVC: BaseVC {
         getData()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(openFilter))
+        
+        Provider.setScreenName("Ads list")
 
     }
     

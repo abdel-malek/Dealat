@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 import SwiftyJSON
+import AFDateHelper
 
 class Message : BaseEntity {
     
@@ -19,6 +20,9 @@ class Message : BaseEntity {
     var created_at : String!
     var modified_at : String!
     
+    //    var date : Date!
+    //    var dateFull : Date!
+    
     // Mappable
     override func mapping(map: Map) {
         message_id <- map["message_id"]
@@ -27,6 +31,37 @@ class Message : BaseEntity {
         chat_session_id <- map["chat_session_id"]
         created_at <- map["created_at"]
         modified_at <- map["modified_at"]
+        
+        //        date <- map["date"]
+        //        dateFull <- map["dateFull"]
+        
     }
+    
+    
+    func getDate() -> Date{
+        if let created_at = self.created_at{
+            if let date  = Date.init(fromString: created_at, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
+                
+                return  Date.init(fromString: date.toString(format: DateFormatType.isoDate), format: DateFormatType.isoDate)!
+            }
+        }
+        
+        print("FALSEEEEEEEE")
+        return Date()
+
+    }
+    
+    func getDateFull() -> Date{
+        if let created_at = self.created_at{
+            if let date  = Date.init(fromString: created_at, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
+                return  date
+            }
+        }
+        
+        print("FALSEEEEEEEE")
+        return Date()
+    }
+    
+    
 }
 

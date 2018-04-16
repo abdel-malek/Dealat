@@ -52,6 +52,9 @@ class EditProfileVC: BaseVC {
         
         
         getData()
+        
+        Provider.setScreenName("Edit profile")
+
     }
     
     override func getRefreshing() {

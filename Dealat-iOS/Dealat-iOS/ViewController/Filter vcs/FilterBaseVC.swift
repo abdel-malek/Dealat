@@ -24,6 +24,9 @@ class FilterBaseVC: BaseVC {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetFilters))
         
+        Provider.setScreenName("Filter")
+
+        
     }
     
     @objc func dis(){

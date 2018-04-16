@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import Firebase
 import FirebaseMessaging
 import UserNotifications
+import Google
 
 
 @UIApplicationMain
@@ -18,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
-
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -43,9 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupNotification(application)
         
         
-//        Communication.shared.get_my_info { (res) in
-//            
-//        }
         
         return true
     }
@@ -82,6 +78,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                selector: #selector(self.tokenRefreshNotification),
                                                name: .InstanceIDTokenRefresh,
                                                object: nil)
+        
+        
+        if let gai = GAI.sharedInstance()  {
+            //            assert(false, "Google Analytics not configured correctly")
+            //        }
+            gai.tracker(withTrackingId: "UA-117516159-1")
+            // Optional: automatically report uncaught exceptions.
+            gai.trackUncaughtExceptions = true
+            // Optional: set Logger to VERBOSE for debug information.
+            // Remove before app release.
+            gai.logger.logLevel = .verbose;
+        }
+
     }
 
     
@@ -205,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let refreshedToken = Messaging.messaging().fcmToken {
             
-//            Messaging.messaging().subscribe(toTopic: "/topics/test")
+            Messaging.messaging().subscribe(toTopic: "/topics/all_ios")
             
             if User.isRegistered(){
                 if !refreshedToken.isEmpty{

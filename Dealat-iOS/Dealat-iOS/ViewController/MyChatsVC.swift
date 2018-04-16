@@ -23,6 +23,8 @@ class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,Indi
         }
 
         getData()
+        
+        Provider.setScreenName("My Chats")
     }
     
     override func setupViews() {

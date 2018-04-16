@@ -35,6 +35,9 @@ class AdDetailsBaseVC: UIViewController {
         
         self.title = self.ad.title
         configureNavigationBar()
+        
+        Provider.setScreenName("Ad details")
+
     }
     
     func configureNavigationBar() {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFDateHelper
 
 class MessageCell: BaseCell {
     
@@ -28,13 +29,25 @@ class MessageCell: BaseCell {
                     self.vv1.isHidden = false
                     self.vv2.isHidden = true
                     self.text1Lbl.text = m.text
-                    self.date1Lbl.text = m.created_at
+                    
+                    if let date = m.created_at{
+                        if let d = Date.init(fromString: date, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
+                            self.date1Lbl.text = d.toString(dateStyle: .none, timeStyle: .short, isRelative: false)
+                        }
+                    }
+//                    self.date1Lbl.text = m.created_at
                     
                 }else{
                     self.vv2.isHidden = false
                     self.vv1.isHidden = true
                     self.text2Lbl.text = m.text
-                    self.date2Lbl.text = m.created_at
+                    if let date = m.created_at{
+                        if let d = Date.init(fromString: date, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
+                            self.date2Lbl.text = d.toString(dateStyle: .none, timeStyle: .short, isRelative: false)
+                        }
+                    }
+
+//                    self.date2Lbl.text = m.created_at
                 }
             }
             
@@ -79,7 +92,6 @@ extension UILabel {
                               tokenRange: nil, sentenceRange: nil)
 
         if let kk = lang{
-            print("KKKKKK \(kk.rawValue)")
             if kk.rawValue.contains("ar") {
                 self.textAlignment = NSTextAlignment.right
             } else {

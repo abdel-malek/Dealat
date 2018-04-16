@@ -23,6 +23,8 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         self.okBtn.isHidden = true
         
         getData()
+        
+        Provider.setScreenName("Select city")
     }
     
     override func getRefreshing() {

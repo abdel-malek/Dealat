@@ -42,6 +42,8 @@ class RegisterVC: BaseVC {
         super.viewDidLoad()
         
         self.getData()
+        
+        Provider.setScreenName("Register")
     }
     
     override func setupViews() {

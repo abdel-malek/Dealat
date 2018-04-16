@@ -19,6 +19,9 @@ class NewAddBaesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        Provider.setScreenName("New Ad")
+
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

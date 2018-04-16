@@ -65,6 +65,9 @@ class HomeVC: BaseVC {
         
         getData()
         setupSideMenuNavController()
+        
+        Provider.setScreenName("Home")
+
     }
     
     override func setupViews() {

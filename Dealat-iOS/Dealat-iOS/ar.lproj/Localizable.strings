@@ -34,7 +34,7 @@
 "Edit Profile" = "تعديل ملفي";
 "Change Language" = "تغيير اللغة";
 "Settings" = "الإعدادات";
-"Help" = "مساعدة";
+"Help" = "عن التطبيق";
 "Logout" = "تسجيل خروج";
 
 
@@ -132,7 +132,7 @@
 "Please add images" = "يرجى إضافة صور";
 "required" = "مطلوب";
 
-"TypeHere" = "أدخل الرسالة";
+"TypeHere" = "أدخل رسالتك..";
 "ChooseReport" = "اختر سبب حذف الإعلان";
 "ReportSuccessful" = "تم استلام التبليغ";
 

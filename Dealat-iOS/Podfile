@@ -26,6 +26,11 @@ pod 'IQKeyboardManagerSwift'
 
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
+#pod 'GoogleAnalytics'
+pod 'Google/Analytics'
+
+
+
 
 pod 'JVFloatLabeledTextField'
 pod 'SkyFloatingLabelTextField'

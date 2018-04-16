@@ -19,6 +19,9 @@ class MyAdsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,UIColl
         super.viewDidLoad()
         
         getData()
+        
+        Provider.setScreenName("My Ads")
+
     }
     
     override func setupViews() {

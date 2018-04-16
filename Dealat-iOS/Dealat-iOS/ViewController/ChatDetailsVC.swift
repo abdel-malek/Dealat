@@ -9,6 +9,8 @@
 import UIKit
 import GrowingTextView
 import IQKeyboardManagerSwift
+import SwiftyJSON
+import AFDateHelper
 
 class ChatDetailsVC: BaseVC {
 
@@ -19,6 +21,8 @@ class ChatDetailsVC: BaseVC {
     
     var chat = Chat()
     var messages = [Message]()
+    
+    var messages2 = [(Date,[Message])]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,9 @@ class ChatDetailsVC: BaseVC {
         IQKeyboardManager.sharedManager().disabledDistanceHandlingClasses = [ChatDetailsVC.self]
         
         getData()
+        
+        Provider.setScreenName("Chat details")
+
     }
     
     
@@ -78,15 +85,49 @@ class ChatDetailsVC: BaseVC {
     }
     
     override func getRefreshing() {
+        
         Communication.shared.get_chat_messages(chat: self.chat) { (res) in
             self.hideLoading()
             self.textView.text = nil
+
+           
             self.messages = res
-            self.tableView.reloadData()
             
-            if !self.messages.isEmpty{
-                self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+            var messagesTemp = [Message]()
+            var messages3 =  [(Date,[Message])]()
+
+            
+            for i in self.messages{
+                messagesTemp.append(Message.init(JSON : i.toJSON())!)
             }
+            
+            
+            var temp = [Message]()
+            
+            for i in messagesTemp{
+                if !temp.contains(where: {$0.getDate() == i.getDate()}){
+                    temp.append(Message.init(JSON : i.toJSON())!)
+                }
+            }
+            
+            for i in temp{
+                let mesgs = messagesTemp.filter({$0.getDate() == i.getDate()}).sorted(by: { (m1, m2) -> Bool in
+                   return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
+                })
+                
+                messages3.append((i.getDate(), mesgs))
+            }
+            
+
+            self.messages2 = messages3
+            
+                self.tableView.reloadData()
+
+
+            if let m = messages3.last{
+                self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+            }
+            
         }
     }
     
@@ -167,15 +208,53 @@ class ChatDetailsVC: BaseVC {
 
 extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.messages2.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.messages.count
+        return self.messages2[section].1.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MessageCell
         
-        cell.message = self.messages[indexPath.row]
+        cell.message = self.messages2[indexPath.section].1[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.messages2[section].0.toString()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let vv = UIView(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 40))
+        vv.backgroundColor = .clear
+        
+        
+        let ll = UILabel()
+        ll.font = Theme.Font.Calibri
+        ll.text = self.messages2[section].0.toString(format: DateFormatType.isoDate)
+        ll.backgroundColor = UIColor.gray
+        ll.textColor = . white
+        ll.textAlignment = .center
+        ll.sizeToFit()
+        ll.center = vv.center
+        
+        let vv2 = UIView.init()
+        vv2.frame.size.width = ll.bounds.width + 8
+        vv2.frame.size.height = ll.bounds.height + 8
+        vv2.center = ll.center
+        vv2.backgroundColor = .gray
+        vv2.cornerRadius = 5
+
+        
+        vv.addSubview(vv2)
+        vv.addSubview(ll)
+
+        
+        return vv
     }
     
 }
@@ -193,8 +272,10 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         print("textViewDidBeginEditing")
         
-        if !self.messages.isEmpty{
-            self.tableView.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: UITableViewScrollPosition.bottom, animated: false)
+        if let m = self.messages2.last{
+//            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
         }
     }
+    
 }
+
