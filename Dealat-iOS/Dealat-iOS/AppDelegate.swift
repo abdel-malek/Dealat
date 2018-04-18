@@ -33,14 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         
-        //        UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
+        //UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
         
-                
         Provider.isArabic = AppDelegate.isArabic()
         
         AppDelegate.setupViews()
         setupNotification(application)
-        
         
         
         return true
@@ -90,7 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Remove before app release.
             gai.logger.logLevel = .verbose;
         }
-
+        
+        
     }
 
     

@@ -525,7 +525,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             
             
             self.imagesController = LightboxController(images: images)
-            self.imagesController.dynamicBackground = true
+            
             
             self.imagesController.headerView.deleteButton.isHidden = false
             self.imagesController.headerView.deleteButton.isEnabled = true
@@ -533,8 +533,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
 
             self.imagesController.headerView.deleteButton.addTarget(self, action: #selector(shareImage), for: .touchUpInside)
             
-            present(self.imagesController, animated: true, completion: nil)
             if indexPath.row < images.count{
+                self.imagesController.dynamicBackground = true
+                present(self.imagesController, animated: true, completion: nil)
                 self.imagesController.goTo(indexPath.item)
             }
             

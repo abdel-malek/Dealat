@@ -79,6 +79,7 @@ class AD : BaseEntity {
     // 3 Mobiles
     class Mobile : BaseEntity{
         var is_new : JSON!
+        var type_id : JSON!
         var type_name : String!
     }
     
@@ -87,6 +88,7 @@ class AD : BaseEntity {
         var is_new : JSON!
         var type_name : String!
         var size : String!
+        var type_id : JSON!
 
     }
     
@@ -113,6 +115,9 @@ class AD : BaseEntity {
         var schedule_name : String!
         var experience : String!
         var salary : String!
+        var schedule_id : JSON!
+        var education_id : JSON!
+
     }
     
     // 9 Industry
@@ -179,11 +184,15 @@ class AD : BaseEntity {
         // 3 Mobile
         mobile.is_new <- map["is_new"]
         mobile.type_name <- map["type_name"]
-        electronic.size <- map["size"]
+        mobile.type_id <- map["type_id"]
+
 
         // 4 Electronic
         electronic.is_new <- map["is_new"]
         electronic.type_name <- map["type_name"]
+        electronic.size <- map["size"]
+        electronic.type_id <- map["type_id"]
+
 
         // 5 Fashion
         fashion.is_new <- map["is_new"]

@@ -169,6 +169,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         didSet{
             self.tfType.text = (selectedType != nil) ? selectedType.name : nil
             self.tfType3.text = (selectedType != nil) ? selectedType.name : nil
+            self.tfType4.text = (selectedType != nil) ? selectedType.name : nil
         }
     }
     var selectedModel : Model!{
@@ -589,11 +590,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
             self.tfDescription.text = ad.description
             
-            
             print("COUNT IMAGES : \(self.ad.images.count)")
             
-            self.imagesPaths.append(self.ad.main_image)
-            self.imagesAssets.append(UIImage.init())
+            if self.ad.main_image != nil{
+                self.imagesPaths.append(self.ad.main_image)
+                self.imagesAssets.append(UIImage.init())
+            }
 
 
             for i in self.ad.images{
@@ -632,14 +634,72 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                     }
                 }
                 
+            case 2:
                 
+                self.tfStatus2.text = self.ad.property.state
+                self.tfRooms_num.text = self.ad.property.rooms_num
+                self.tfFloor.text = self.ad.property.floor
+                self.tfSpace.text = self.ad.property.space
+
+                if let f = self.ad.property.with_furniture{
+                    self.tfWith_furniture.setOn(f.boolValue, animated: false)
+                }
                 
-                //                if let type = self.ad.vehicle.
-                //
-                //                self.type_nameLbl.text = ad.vehicle.type_name
-                //                self.type_model_nameLbl.text = ad.vehicle.type_model_name
+            case 3:
+                if let type_id = self.ad.mobile.type_id{
+                    if let type = self.typesBase.first(where: {$0.type_id.intValue == type_id.intValue}){
+                        self.selectedType = type
+                    }
+                }
+
+                if let is_new = self.ad.mobile.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
                 
-                
+            case 4:
+                if let type_id = self.ad.electronic.type_id{
+                    if let type = self.typesBase.first(where: {$0.type_id.intValue == type_id.intValue}){
+                        self.selectedType = type
+                    }
+                }
+
+                if let is_new = self.ad.electronic.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
+
+                self.tfSize.text = self.ad.electronic.size
+
+            case 5:
+                if let is_new = self.ad.fashion.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
+            case 6:
+                if let is_new = self.ad.kids.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
+            case 7:
+                if let is_new = self.ad.sport.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
+            case 9:
+                if let is_new = self.ad.industry.is_new{
+                    self.selectedStatus = is_new.Boolean ? 1 : 0
+                }
+            case 8:
+                if let schedule_id = self.ad.job.schedule_id{
+                    if let schedule = self.schedules.first(where: {$0.schedual_id.intValue == schedule_id.intValue}){
+                        self.selectedSchedule = schedule
+                    }
+                }
+                if let education_id = self.ad.job.education_id{
+                    if let education = self.educations.first(where: {$0.education_id.intValue == education_id.intValue}){
+                        self.selectedEducation = education
+                    }
+                }
+
+                self.tfExperince.text = self.ad.job.experience
+                self.tfSalary.text = self.ad.job.salary
+
                 break
                 
             default:
@@ -935,8 +995,23 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             params["is_new"] = is_new
             
         case 4:
+            guard let is_new = self.selectedStatus else {
+                self.validMessage(message : "Please enter".localized + "State".localized)
+                return
+            }
+
+//            guard let type = self.selectedType, let type_id = type.type_id else {
+//                self.validMessage(tf : self.tfType4, message : "Please enter".localized + "TypeName".localized)
+//                return
+//            }
             
-            params["is_new"] = self.tfSize.text!
+            if let type = self.selectedType, let type_id = type.type_id {
+//                self.validMessage(tf : self.tfType4, message : "Please enter".localized + "TypeName".localized)
+                params["type_id"] = type_id.intValue
+            }
+
+            params["is_new"] = is_new
+            params["size"] = self.tfSize.text!
         case 5,6,7,9:
             guard let is_new = self.selectedStatus else {
                 self.validMessage(message : "Please enter".localized + "State".localized)
@@ -944,7 +1019,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
             
             params["is_new"] = is_new
-            
             
         case 8:
             guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedual_id else {
@@ -977,18 +1051,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
-        for i in self.imagesPathsDeleted{
-            var imagesArray = [String]()
-            imagesArray.append(i)
+        
+        if !self.imagesPathsDeleted.isEmpty{
+//            var imagesArray = [String]()
+//            imagesArray.append(i)
             
-            if let yy = JSON(imagesArray).rawString(){
+            if let yy = JSON(self.imagesPathsDeleted).rawString(){
                 params["deleted_images"] = yy
             }
         }
         
+        
         if let i = self.videoPathDeleted{
-            params["deleted_videos"] = i
+            if let yy = JSON([i]).rawString(){
+                params["deleted_videos"] = yy
+            }
+//            params["deleted_videos"] = i
         }
+        
         
         if let i = self.videoPath{
             params["main_video"] = i
@@ -1481,6 +1561,8 @@ extension NewAddVC : UIImagePickerControllerDelegate, UINavigationControllerDele
             
             self.videoUrl = url
             
+            self.showLoading()
+
             Alamofire.upload(
                 multipartFormData: { multipartFormData in
                     

@@ -94,9 +94,14 @@ class CommericalCell: UICollectionViewCell {
     
     
     func uploadImage(_ img : UIImage){
+        if img.size == CGSize.zero{
+            print("ZERRROOOO")
+            return
+        }
         
         let path = savePhotoLocal(img)
         
+        self.newAddVC.showLoading()
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 
@@ -122,6 +127,8 @@ class CommericalCell: UICollectionViewCell {
                     upload.responseObject { (response : DataResponse<CustomResponse>) in
                         debugPrint(response)
                         
+                        self.newAddVC.hideLoading()
+
                         Communication.shared.output(response)
                         //                        self.hideLoading()
                         
@@ -130,10 +137,12 @@ class CommericalCell: UICollectionViewCell {
                             
                             if value.status{
                                 
-                                self.newAddVC.imagesPaths[self.imageNew!.index] = value.data.stringValue
-                                
-                                Provider.sd_setImage(self.img, urlString: value.data.stringValue)
+                                if self.imageNew != nil,value.data != nil {
+                                    self.newAddVC.imagesPaths[self.imageNew!.index] = value.data.stringValue
+                                    
+                                    Provider.sd_setImage(self.img, urlString: value.data.stringValue)
 //                                self.img.image = #imageLiteral(resourceName: "ad6")
+                                }
                                 
                             }else{
                                 notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -156,17 +165,28 @@ class CommericalCell: UICollectionViewCell {
     }
     
     func savePhotoLocal(_ img : UIImage) -> URL?{
-        let tt = img.resized(toWidth: 512)
+        var imageData : Data?
+        let im = img
         
-        var imageData = UIImagePNGRepresentation(tt!)
-        
-        let imageSize: Int = imageData!.count
-        print("size of image in KB: %f ", imageSize / 1024)
-        
-        if (imageSize / 1024) > 2000 {
-            
-            return nil
+        if let tt = im.resized(toWidth: 512){
+            imageData = UIImagePNGRepresentation(tt)
+            print("TYPE11")
+        }else if let d = UIImagePNGRepresentation(im){
+            imageData = d
+            print("TYPE22")
+
+        }else if let d = UIImageJPEGRepresentation(im, 1){
+            imageData = d
+            print("TYPE33")
         }
+        
+        if let imageSize: Int = imageData?.count{
+            print("size of image in KB: %f ", imageSize / 1024)
+            if (imageSize / 1024) > 2000 {
+                return nil
+            }
+        }
+
         let random = CGFloat.random() + CGFloat(self.imageNew!.index)
         
         if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
