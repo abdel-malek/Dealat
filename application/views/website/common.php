@@ -85,8 +85,12 @@
 					<span class="language-switch">
 						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
 						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
+<!--
 						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=en')?>" data-locale="en"><?php echo $this->lang->line('english'); ?></a>
 						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=ar') ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></a>
+-->
+				<span class="english <?php echo $en_lng; ?>"  data-locale="en"><?php echo $this->lang->line('english'); ?></span>
+						<span class="arabic <?php echo $ar_lng; ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></span>
 					</span>
 				</span>
 
@@ -120,7 +124,7 @@
 							</li>
 						</ul>
 					</div>
-					<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
+					<div class="new-msg d-none"><a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>"><i class="fas fa-envelope"></i></a></div>
 				</div>
 			</div>
 <?php } ?>
@@ -1274,6 +1278,7 @@
 				</div>
 				<form id="verify-form">
 					<input type="hidden" class="phone" name="phone" />
+					<input type="hidden" class="password" />
 					<input type="text" class="form-control" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
 					<div class="modal-footer">
 						<button class="btn button2 submit" type="submit"><?php echo $this->lang->line('verify'); ?></button>

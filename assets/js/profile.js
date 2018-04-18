@@ -496,9 +496,9 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {
-//					console.log(data);
+					//					console.log(data);
 				} else {
-//					console.log(data);
+					console.log(data);
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
@@ -649,12 +649,23 @@ $(function () {
 		$("#edit-ad-modal").on("hide.bs.modal", function () {
 			deleteImgArr = [];
 		});
+		
+		
 		var deleteImgArr = [];
 		$("#edit-ad-modal .ad-images").on("click", ".delete", function () {
 			var url = $(this).parents(".image-wrapper").data("url");
 			deleteImgArr.push(url);
 			console.log(deleteImgArr);
 			$(this).parents(".image-wrapper").remove();
+			console.log("b4");
+			console.log(editAdImgs);
+			for (i in editAdImgs) {
+				if (editAdImgs[i] == url) {
+					editAdImgs.splice(i, 1);
+				}
+			}
+			console.log("after");
+			console.log(editAdImgs);
 		});
 
 		//submit edit user ad
@@ -673,14 +684,25 @@ $(function () {
 
 			data = $(this).serializeArray();
 			console.log(data);
-			data.push({
-				name: "main_image",
-				value: editMainImg[0]
-			}, {
-				name: "images",
-				value: secondary_imgs
-			});
 
+			if (editMainImg.length > 0) {
+				data.push({
+						name: "main_image",
+						value: editMainImg[0]
+					}
+					//					  , {
+					//				name: "images",
+					//				value: secondary_imgs
+					//			}
+				);
+			}
+
+			if (secondary_imgs.length > 0) {
+				data.push({
+					name: "images",
+					value: secondary_imgs
+				});
+			}
 			//			console.log(deleteImgArr);
 			if (deleteImgArr.length > 0) {
 				deleteImgArr = JSON.stringify(deleteImgArr);
@@ -734,7 +756,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
-//				console.log(data);
+				//				console.log(data);
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
 					sessionData = [];
@@ -762,7 +784,7 @@ $(function () {
 				}
 			}
 		});
-		
+
 
 		//open a chat session
 		$(".profile-page .chats").on("click", ".session", function () {
@@ -789,7 +811,7 @@ $(function () {
 				if (data.status === false) {
 					//						console.log(data);
 				} else {
-//					console.log(data);
+					//					console.log(data);
 
 					$("#chat-modal .chat").empty();
 					var msgDate = data.data[0].created_at.split(' ')[0];
@@ -813,7 +835,11 @@ $(function () {
 								msgDate = data.data[i].created_at.split(' ')[0];
 								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 							}
-							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true
+							});
 							Mustache.parse(template);
 							rendered = Mustache.render(template, data.data[i]);
 							$("#chat-modal .chat").append(rendered);
@@ -834,8 +860,12 @@ $(function () {
 								msgDate = data.data[i].created_at.split(' ')[0];
 								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 							}
-							
-							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true
+							});
 							Mustache.parse(template);
 							rendered = Mustache.render(template, data.data[i]);
 							$("#chat-modal .chat").append(rendered);

@@ -553,21 +553,21 @@ header.home {
       width: 100%; }
   header.home .language-wrapper .language-switch {
     text-transform: uppercase; }
-  header.home .language-wrapper .language-switch a {
+  header.home .language-wrapper .language-switch span {
     color: #fff;
     border-right: 1px solid #fff;
     padding: 0 4px;
     cursor: pointer;
     text-decoration: none;
     font-size: .8rem; }
-  header.home .language-wrapper .language-switch a.selected {
+  header.home .language-wrapper .language-switch span.selected {
     font-weight: bold; }
   header.home .language-wrapper .language-switch a:hover {
     color: #eee; }
-  header.home .language-wrapper .language-switch a:last-of-type {
+  header.home .language-wrapper .language-switch span:last-of-type {
     border: none; }
   @media (max-width: 768px) {
-    header.home .language-wrapper .language-switch a,
+    header.home .language-wrapper .language-switch span,
     header.home .home-icon {
       font-size: 0.7rem; } }
   @media (max-width: 480px) {
@@ -1449,9 +1449,15 @@ label {
     cursor: pointer;
     transition: .15s;
     color: #fff; }
+    .header-account-logged .new-msg a {
+      text-decoration: none;
+      color: #fff; }
   .header-account-logged .new-msg:hover {
     background-color: #fff;
     color: #c30a30; }
+    .header-account-logged .new-msg:hover a {
+      text-decoration: none;
+      color: #c30a30; }
 
 .profile-page .chat-tab-link {
   position: relative; }

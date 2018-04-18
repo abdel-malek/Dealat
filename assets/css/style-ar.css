@@ -11,7 +11,7 @@ header.home .home-icon {
   display: inline-block;
   vertical-align: middle; }
 
-header.home .language-wrapper .language-switch a {
+header.home .language-wrapper .language-switch span {
   border: none;
   border-left: 1px solid #fff; }
 

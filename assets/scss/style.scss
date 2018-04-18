@@ -735,7 +735,8 @@ header.home {
 			text-transform: uppercase; //			padding: 0 2.4rem;
 			//			justify-content: center;
 		}
-		.language-switch a {
+//		.language-switch a {
+		.language-switch span {
 			color: #fff;
 			border-right: 1px solid #fff;
 			padding: 0 4px;
@@ -743,18 +744,22 @@ header.home {
 			text-decoration: none;
 			font-size: .8rem;
 		}
-		.language-switch a.selected {
+//		.language-switch a.selected {
+		.language-switch span.selected {
 			font-weight: bold
 		}
+//		.language-switch a:hover {
 		.language-switch a:hover {
 			color: #eee
 		}
-		.language-switch a:last-of-type {
+//		.language-switch a:last-of-type {
+		.language-switch span:last-of-type {
 			border: none;
 		}
 	}
 	@media(max-width: 768px) {
-		.language-wrapper .language-switch a,
+//		.language-wrapper .language-switch a,
+		.language-wrapper .language-switch span,
 		.home-icon {
 			font-size: .7rem
 		}
@@ -1997,11 +2002,20 @@ label {
 		text-align: center;
 		cursor: pointer;
 		transition: .15s;
-		color: #fff
+		color: #fff;
+		a{
+			text-decoration: none;
+			color: #fff
+		}
+		
 	}
 	.new-msg:hover {
 		background-color: #fff;
 		color: $main;
+		a{
+			text-decoration: none;
+			color:  $main
+		}
 	}
 }
 

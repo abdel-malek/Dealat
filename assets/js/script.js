@@ -1687,15 +1687,15 @@ var ajaxLoadTimeout;
 
 
 	$(".header-account-logged .new-msg").click(function () {
-		if (lang === "ar") {
-			$("#success-modal .text").html("لديك رسائل غير مقروءة <br> الرجاء تفقد حسابك");
-		} else {
-			$("#success-modal .text").html("You have unread messages, <br> please check your profile");
-		}
-		$("#success-modal").modal("show");
-		setTimeout(function () {
-			$("#success-modal").modal("hide");
-		}, 3000);
+//		if (lang === "ar") {
+//			$("#success-modal .text").html("لديك رسائل غير مقروءة <br> الرجاء تفقد حسابك");
+//		} else {
+//			$("#success-modal .text").html("You have unread messages, <br> please check your profile");
+//		}
+//		$("#success-modal").modal("show");
+//		setTimeout(function () {
+//			$("#success-modal").modal("hide");
+//		}, 3000);
 	});
 
 	//auto check for new messages for an opened chat session and append it
@@ -1782,27 +1782,22 @@ var ajaxLoadTimeout;
 
 
 	//language
-	//	$(".language-switch span").click(function (e) {
-	////		e.preventDefault();
-	//		var language = "en";
-	//		if ($(this).hasClass("english")) {
-	//			language = "en";
-	//		} else if ($(this).hasClass("arabic")) {
-	//			language = "ar";
-	//		}
-	//		$.ajax({
-	//			type: "get",
-	//			url: base_url + '/users_control_web/change_language?language=' + language,
-	//			dataType: "json"
-	//		}).done(function (data) {
-	//			if (data.status === false) {
-	//				location.reload();
-	//				console.log(data);
-	////				return false;
-	//			} else {
-	//			}
-	//		});
-	//	});
+		$(".language-switch span").click(function (e) {
+			var language = "en";
+			if ($(this).hasClass("english")) {
+				language = "en";
+			} else if ($(this).hasClass("arabic")) {
+				language = "ar";
+			}
+			$.ajax({
+				type: "get",
+				url: base_url + '/users_control_web/change_language?language=' + language,
+				dataType: "json",
+				complete: function () {
+					location.reload();
+			}
+			});
+		});
 
 
 	//register
@@ -1857,7 +1852,10 @@ var ajaxLoadTimeout;
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
+		//save user data in verify modal to use for login
 		$("#verify-modal").find(".phone").val($(this).find(".phone").val());
+		$("#verify-modal").find(".password").val($(this).find(".password").val());
+		
 		$(this).find(".lang").val(lang);
 
 		$.ajax({
@@ -1927,33 +1925,65 @@ var ajaxLoadTimeout;
 				$('#verify-modal .error-message').html(wholeMessage);
 				$('#verify-modal .error-message').removeClass("d-none");
 			} else {
+				
+//				//				if($(".profile-page").length > 0){
+//				//					setTimeout(function () {
+//				//					$("#notification-modal .text").html("Phone number changed successfully,<br>You will be logged out, please sign in with your new number")
+//				//					$("#notification-modal").modal("show");
+//				//				}, 500);
+//				//				} else{
+//				$("#verify-modal").modal("hide");
+//				setTimeout(function () {
+//					if (lang === "ar") {
+//						$("#success-modal .text").html("تم إنشاء حسابك بنجاح <br>بإمكانك تسجيل الدخول إلى حسابك");
+//					} else {
+//						$("#success-modal .text").html("You have registered successfully,<br>You can now sign in");
+//					}
+//
+//					$("#success-modal").modal("show");
+//				}, 500);
+//				setTimeout(function () {
+//					$("#success-modal").modal("hide");
+//					setTimeout(function () {
+//						$("#login-modal input[name='phone']").val($("#verify-form input[name='phone']").val());
+//						$("#login-modal").modal("show");
+//					}, 500);
+//				}, 3000);
+//
+//				//			}
+				//login directly
+				$.ajax({
+			type: "post",
+			url: base_url + '/users_control_web/login',
+			dataType: "json",
+			data: {
+				phone: $("#verify-modal").find(".phone").val(),
+				password:$("#verify-modal").find(".password").val()
+			}
+		}).done(function (data) {
+			if (data.status === false) {
 //				console.log(data);
-
-				$("#verify-modal").modal("hide");
-				//				if($(".profile-page").length > 0){
-				//					setTimeout(function () {
-				//					$("#notification-modal .text").html("Phone number changed successfully,<br>You will be logged out, please sign in with your new number")
-				//					$("#notification-modal").modal("show");
-				//				}, 500);
-				//				} else{
-				setTimeout(function () {
-					if (lang === "ar") {
-						$("#success-modal .text").html("تم إنشاء حسابك بنجاح <br>بإمكانك تسجيل الدخول إلى حسابك");
+				var errorMessage = $.parseHTML(data.message),
+					node,
+					wholeMessage = '';
+				for (node in errorMessage) {
+					if (errorMessage[node].nodeName === 'P') {
+						wholeMessage += errorMessage[node].textContent;
 					} else {
-						$("#success-modal .text").html("You have registered successfully,<br>You can now sign in");
+						if (node === "0") {
+							wholeMessage = errorMessage[node].textContent;
+						} else {
+							wholeMessage += '<br>';
+						}
 					}
-
-					$("#success-modal").modal("show");
-				}, 500);
-				setTimeout(function () {
-					$("#success-modal").modal("hide");
-					setTimeout(function () {
-						$("#login-modal input[name='phone']").val($("#verify-form input[name='phone']").val());
-						$("#login-modal").modal("show");
-					}, 500);
-				}, 3000);
-
-				//			}
+				}
+				$('#verify-modal .error-message').html(wholeMessage);
+				$('#verify-modal .error-message').removeClass("d-none");
+			} else {
+//				console.log(data);
+				window.location = base_url;
+			}
+		});
 			}
 		});
 	});

@@ -510,8 +510,9 @@
 											<button class="btn btn-danger delete" type="button">Delete</button>
 										</div>
 									</div>
-									<div class="">Other images:</div>
+									
 									<div class="secondary-imgs">
+									<div class="">Other images:</div>
 										{{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
@@ -519,6 +520,16 @@
 										</div>
 										{{/images}}
 									</div>
+									
+									{{#main_video}}
+									<div class="main-video">
+										<div class="">Video:</div>
+										<div class="image-wrapper"  data-url="{{main_video}}">
+											<img src="<?php echo base_url('{{main_video}}'); ?>" alt="" width="100px" height="100px">
+											<button class="btn btn-danger delete" type="button">Delete</button>
+										</div>
+									</div>
+									{{/main_video}}
 								</script>
 								<!--							<div id="fileuploader-ad">Upload</div>-->
 								<div id="fileuploader-edit-ad-main">Upload</div>

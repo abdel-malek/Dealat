@@ -23,6 +23,7 @@
 	
 	  gtag('config', 'UA-117516159-1');
 	</script>
+	<link rel="shortcut icon" href="<?php echo base_url('assets/images/dealat-ico/dealatnot_WMN_icon.ico'); ?>" type="image/x-icon">
 	<title>
 		Dealat
 	</title>

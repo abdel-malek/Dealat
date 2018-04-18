@@ -17,7 +17,7 @@ class Users_control_web extends REST_Controller {
 	{
 	  $current_lang = $this->input->get('language');
 	  $this->session->set_userdata(array('language' => $current_lang));
-	  redirect('home_control');
+//	  redirect('home_control');
 	}
 	
     public function register_post()
