@@ -671,6 +671,7 @@ header.home {
     position: relative; }
   .home-page .products .sub-categories,
   .category-page .products .sub-categories {
+    display: none;
     position: absolute;
     z-index: 3;
     min-width: 150px; }
@@ -1061,6 +1062,7 @@ select option.placeholder {
 #fileuploader-ad .ajax-upload-dragdrop,
 #fileuploader-edit-ad-main .ajax-upload-dragdrop,
 #fileuploader-ad-main .ajax-upload-dragdrop,
+#fileuploader-ad-video .ajax-upload-dragdrop,
 #fileuploader-register .ajax-upload-dragdrop {
   padding: 10px;
   border: 1px solid #ced4da;
@@ -1070,6 +1072,7 @@ select option.placeholder {
   #fileuploader-ad .ajax-upload-dragdrop b,
   #fileuploader-edit-ad-main .ajax-upload-dragdrop b,
   #fileuploader-ad-main .ajax-upload-dragdrop b,
+  #fileuploader-ad-video .ajax-upload-dragdrop b,
   #fileuploader-register .ajax-upload-dragdrop b {
     color: #6c757d;
     opacity: 1;
@@ -1081,6 +1084,7 @@ select option.placeholder {
 #fileuploader-ad .ajax-file-upload,
 #fileuploader-edit-ad-main .ajax-file-upload,
 #fileuploader-ad-main .ajax-file-upload,
+#fileuploader-ad-video .ajax-file-upload,
 #fileuploader-register .ajax-file-upload {
   padding: 0;
   margin: 0;
@@ -1102,18 +1106,21 @@ select option.placeholder {
 #fileuploader-ad .ajax-file-upload input[type="file"],
 #fileuploader-edit-ad-main .ajax-file-upload input[type="file"],
 #fileuploader-ad-main .ajax-file-upload input[type="file"],
+#fileuploader-ad-video .ajax-file-upload input[type="file"],
 #fileuploader-register .ajax-file-upload input[type="file"] {
   cursor: auto; }
 #fileuploader-edit-ad .ajax-file-upload:hover,
 #fileuploader-ad .ajax-file-upload:hover,
 #fileuploader-edit-ad-main .ajax-file-upload:hover,
 #fileuploader-ad-main .ajax-file-upload:hover,
+#fileuploader-ad-video .ajax-file-upload:hover,
 #fileuploader-register .ajax-file-upload:hover {
   cursor: auto !important; }
 #fileuploader-edit-ad .ajax-file-upload input[type="file"]:hover,
 #fileuploader-ad .ajax-file-upload input[type="file"]:hover,
 #fileuploader-edit-ad-main .ajax-file-upload input[type="file"]:hover,
 #fileuploader-ad-main .ajax-file-upload input[type="file"]:hover,
+#fileuploader-ad-video .ajax-file-upload input[type="file"]:hover,
 #fileuploader-register .ajax-file-upload input[type="file"]:hover {
   cursor: auto !important; }
 
@@ -1342,6 +1349,15 @@ label {
 
 #chat-modal {
   /* M E S S A G E S */ }
+  #chat-modal .modal-header {
+    background-color: #c30a30;
+    padding: 5px 0;
+    margin-bottom: 8px; }
+  #chat-modal .chat-header {
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    font-weight: bold; }
   #chat-modal .chat {
     list-style: none;
     background: none;
@@ -1354,6 +1370,15 @@ label {
     padding: 0.5rem;
     overflow: hidden;
     display: flex; }
+  #chat-modal .chat .day {
+    position: relative;
+    display: block;
+    text-align: center;
+    color: #aaa;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: default; }
   #chat-modal .other .msg {
     order: 1;
     box-shadow: -1px 2px 0px #D4D4D4;
@@ -1392,6 +1417,22 @@ label {
     font-family: FontAwesome;
     display: inline-block;
     margin-right: 4px; }
+  #chat-modal .self .msg time {
+    color: #aaa; }
+  #chat-modal .self .msg time:before {
+    color: #bbb; }
+  #chat-modal .other .msg time {
+    color: #ddd; }
+  #chat-modal .send-wrapper {
+    position: relative; }
+    #chat-modal .send-wrapper .telegram {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1px 1px 0 0;
+      min-height: 10px;
+      height: 30px;
+      width: 30px; }
 
 .header-account-logged {
   position: relative; }

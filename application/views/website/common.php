@@ -157,6 +157,11 @@
 			{{#ad.images}}
 			<div class="card-img-top"><img src="<?php echo base_url('{{image}}'); ?>"></div>
 			{{/ad.images}}
+			{{#ad.main_video}}
+			<div class="card-img-top"><video height="200" controls>
+  <source src="<?php echo base_url('{{ad.main_video}}'); ?>" type="video/mp4">
+</video></div>
+			{{/ad.main_video}}
 		</div>
 		<div class="card-body">
 			<div class="fav">
@@ -740,6 +745,7 @@
 
 							<div id="fileuploader-ad-main">Upload</div>
 							<div id="fileuploader-ad">Upload</div>
+							<div id="fileuploader-ad-video">Upload</div>
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
 								<span class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></span>
@@ -1162,6 +1168,10 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <div class="chat-header">
+        	<div class="ad-name"></div>
+        	<div class="user-name"></div>
+        </div>
 			</div>
 			<div class="modal-body">
 
@@ -1173,14 +1183,15 @@
         </div>
 -->
 				<ol class="chat">
-					<!--        <div class="day">Hoy</div>-->
+<!--					   <div class="day">Hoy</div>     -->
 				</ol>
 
 				<script id="chat-self-template" type="text/template">
+				
 					<li class="self" data-msg-id="{{message_id}}">
 						<div class="msg">
 							<p>{{text}}</p>
-							<time>{{created_at}}</time>
+							<time>{{time}}</time>
 						</div>
 					</li>
 				</script>
@@ -1189,7 +1200,7 @@
 					<li class="other" data-msg-id="{{message_id}}">
 						<div class="msg">
 							<p>{{text}}</p>
-							<time>{{created_at}}</time>
+							<time>{{time}}</time>
 						</div>
 					</li>
 				</script>
@@ -1199,11 +1210,15 @@
 					<input type="hidden" class="ad-id" name="ad_id">
 					<input type="hidden" class="seller-id">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
-					<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Send a message to the seller">
+					<div class="send-wrapper">
+						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Write your message...">
+						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
+					</div>
+<!--					<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Send a message to the seller">-->
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit" form="chat-form"><?php echo $this->lang->line('send'); ?></button>
+<!--				<button type="submit" class="btn button2 submit" form="chat-form"><?php echo $this->lang->line('send'); ?></button>-->
 			</div>
 		</div>
 	</div>

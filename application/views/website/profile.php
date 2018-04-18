@@ -190,7 +190,7 @@
 
 						<script id="chat-sessions-template" type="text/template">
 
-							<li class="session" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
+							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
 								<div class="row">
 									<div class="col-2">
 										<div class="chat-img text-center">
@@ -505,7 +505,7 @@
 
 									<div class="main-img">
 										<div class="">Main image:</div>
-										<div class="image-wrapper">
+										<div class="image-wrapper"  data-url="{{main_image}}">
 											<img src="<?php echo base_url('{{main_image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
 										</div>

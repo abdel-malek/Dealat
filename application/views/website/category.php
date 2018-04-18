@@ -12,7 +12,7 @@
 	<section class="products">
 		<div class="categories">
 		<div style="position: relative">
-				<div class="sub-categories d-none">
+				<div class="sub-categories">
 					<ul class="sub-list">
 					</ul>
 				</div>
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 						<div class="col-sm-8 col-md-6">
-							<div class="search-wrapper">
+							<div class="search-wrapper mb-2">
 								<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
 								<span class="icon"><i class="fas fa-search"></i></span>
 							</div>
