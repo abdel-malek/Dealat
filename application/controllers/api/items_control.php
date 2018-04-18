@@ -244,10 +244,14 @@ class Items_control extends REST_Controller {
 				  throw new Parent_Exception('you have to provide a publish date');	
 				}else{
 				   $data = array(
-				     'publish_date'=>$this->input->post('publish_date'),
+				     //'publish_date'=>$this->input->post('publish_date'),
 				     'is_featured' => $this->input->post('is_featured'),
 				     'status' => STATUS::ACCEPTED 
 				   );
+				   $current_info = $this->ads->get($ad_id);
+				   if(!isset($ad_info->publish_date)){
+				   	 $data['publish_date'] = $this->input->post('publish_date');
+				   }
 				   $ad_id = $this->ads->save($data , $ad_id);
 				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
 				   $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_accepted') , $ad_info ,$this->lang->line('accepted_title')  , NotificationHelper::ACTION);

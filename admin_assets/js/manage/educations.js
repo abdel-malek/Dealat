@@ -123,7 +123,7 @@ function save_education () {
 					        sticker: false
 					 }
 	               });
-	                 education_table.ajax.url( base_url + '/admin/data_manage/get_all_types/format/json').load();
+	                 education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
 			         $('.education_manage_modal').modal('hide');
 	             }
 	        },error: function(xhr, status, error){

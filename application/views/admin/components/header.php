@@ -132,7 +132,7 @@
                   </li>
                   
                   <!-- notification -->
-                  <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('notifications') ?></a></li>
+                  <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-bell"></i><?php echo $this->lang->line('notifications') ?></a></li>
         
                 </ul>
               </div>

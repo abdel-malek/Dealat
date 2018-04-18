@@ -131,6 +131,9 @@ class Categories extends MY_Model {
 	    'hidden_fields' => $this->input->post('hidden_fields'),
 	    'parent_id' =>$parent_id
 	   );
+	   if($parent_id == 0){
+	   	 $category_data['web_image'] = 'assets/images/Categories/web/others.png';
+	   }
 	   $new_subcategory = $this->save($category_data);
        $this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {

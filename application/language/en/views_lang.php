@@ -126,6 +126,9 @@ $lang['data_manage']= 'Data Manage';
 $lang['types']= 'Brands';
 $lang['pending_ads']= 'Pending ads';
 $lang['reported_ads_management'] = 'Reported Ads Manage';
+$lang['schedules'] = 'Schedules';
+$lang['cities_and_areas'] = 'Cities and Areas';
+$lang['notifications'] = 'Notifications';
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -162,7 +165,7 @@ $lang['basic_info']= 'Basic info';
 $lang['detailed_info']= 'detailed info';
 $lang['seller_info']= 'Seller info';
 $lang['description']= 'Description';
-$lang['seller_name']= 'Seller Name';
+$lang['seller_name']= 'Name';
 $lang['seller_phone']= 'Phone';
 $lang['not_set']= 'Not set';
 $lang['accept_ad'] = 'Accept';
@@ -174,6 +177,8 @@ $lang['write_reject_note'] = 'Write the reject reason';
 $lang['cont'] = 'Continue';
 $lang['cancel'] = 'Cancel';
 $lang['ad_number'] = 'Ad number';
+$lang['expire_at'] = 'Expires at';
+$lang['published_at'] = 'Published at';
 
 
 // new
@@ -207,7 +212,7 @@ $lang['name'] = "Name";
 $lang['phone'] = "Phone";
 $lang['email'] = "Email";
 $lang['city'] = "City";
-$lang['user_status'] = "Status";
+$lang['user_status'] = "Is Active?";
 $lang['none'] = "None";
 $lang['ads_num'] = "Ads Number";
 
@@ -246,7 +251,30 @@ $lang['report_msg'] = 'Report Message';
 $lang['educations'] = 'Educations';
 $lang['educations_list'] = 'Education Options list';
 $lang['add_education'] = 'Add new Education';
+$lang['education_details'] = 'Education Details';
+
+//schedules manage
+$lang['schedules_list'] = 'Work Schedules Options list';
+$lang['schedule_details'] = 'Schedule Details';
+$lang['add_schedule'] = 'Add new Work Schedule';
+
+//locations
+$lang['all_cities_list'] = 'All Cities list';
+$lang['locations'] = 'Areas';
+$lang['add_city'] = 'Add New City';
+$lang['city_details'] = 'City Details';
+$lang['locations_list'] = 'Areas List';
+$lang['locations_details'] = 'Area Deatils';
+
+//notification 
+$lang['send_public_notification'] = 'Send Public Notification';
+$lang['notify_text'] = 'Notification Message';
+$lang['notify_title'] = 'Notification Title';
+$lang['select_usres_city'] = 'Select User\'s City';
+$lang['send_notification'] = 'Send Notification';
+// login
+$lang['login_form'] = 'Login Form';
+$lang['login'] = 'Login';
 
 $lang['log_out'] = 'Log Out';
-
 

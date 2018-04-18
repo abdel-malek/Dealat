@@ -1230,6 +1230,8 @@ abstract class REST_Controller extends CI_Controller {
 	    $this->current_user = $this->$auth_library_class->$auth_library_function($username, $password , $user_type , $is_admin);
 		if($is_admin == 1){
 			$this->current_user->user_id = $this->current_user->admin_id;
+		}else{
+			$this->current_user->user_id = $this->current_user->user_id;
 		}
 		//dump($this->current_user);
         $this->data['user'] = $this->current_user;

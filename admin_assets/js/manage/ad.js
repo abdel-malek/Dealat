@@ -195,8 +195,6 @@ var current_pending_count = 0;
  });
  
  function show_ad_details (ad_id , tamplate_id) {
- 	 // console.log(ad_id);
- 	//  console.log(tamplate_id);
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
@@ -206,8 +204,29 @@ var current_pending_count = 0;
         type: "get",
         dataType: "json",
         success: function(response) {
-           // console.log(response.data);   
+            console.log(response.data);   
             $item_info = response.data;
+            if(lang == 'en'){
+            	$('#ad_deatils_title').html('Ad #'+$item_info['ad_id']+' Details');
+            }else{
+            	$('#ad_deatils_title').html('تفاصيل الإعلان #'+ $item_info['ad_id']);
+            }
+            if($item_info['publish_date'] != null){
+            	$('#publish_date_div').css('display' , 'inline');
+            	$('#ad_publish_date').html($item_info['publish_date']);
+            }
+            if($item_info['expired_after'] != null){
+            	$('#expiry_date_div').css('display' , 'inline');
+            	$('#ad_expire_date').html($item_info['expiry_date']);
+            	if($item_info['expired_after'] <= 0){
+            		if(lang =='en'){
+            			$('#ad_deatils_title').append('<div class="pull-right"><h2 style="color: red"><b>Expired</b></h2></div>');
+            		}else{
+            			$('#ad_deatils_title').append('<div class="pull-left"><h2 style="color: red"><b>منتهي</b></h2></div>');
+            		}
+            		
+            	}
+            }
             //fill basic info
             $('.ads_details  #ad_title').html($item_info['title']);
             if($item_info['description'] != null){
@@ -302,8 +321,6 @@ var current_pending_count = 0;
             if($item_info['status'] ==  HIDDEN){
             	 $('.ads_details  #show_btn').css('display', 'inline');
             }
-            
-            
             $('.ads_details').modal('show');
             setTimeout(function () {
                 $(".images-slider").slick("refresh");
@@ -384,6 +401,7 @@ var current_pending_count = 0;
 					 }
 	               });
 	                $('.reject_model').modal('hide');
+	                reported_ads_table.ajax.url(base_url + '/admin/items_manage/get_all_reported_items/format/json').load();
 	              }else if(action == 'hide' ){
 	                new PNotify({
 	                  title: lang_array['success'],

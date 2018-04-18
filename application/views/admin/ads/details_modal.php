@@ -5,7 +5,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel"><?php echo $this->lang->line('ad_details') ?></h4>
+          <h4 class="modal-title" id="ad_deatils_title"><?php echo $this->lang->line('ad_details') ?></h4>
         </div>
         <div class="modal-body">
         	
@@ -56,6 +56,20 @@
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('created_at') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_creation_date'> 2-19-2017</label>
+		      	         </div>
+		             </div>
+		             
+		             <div class="form-group" style="display: none" id='publish_date_div'>
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('published_at') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_publish_date'></label>
+		      	         </div>
+		             </div>
+		             
+		             <div class="form-group" style="display: none" id='expiry_date_div'>
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('expire_at') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_expire_date'></label>
 		      	         </div>
 		             </div>
 		             

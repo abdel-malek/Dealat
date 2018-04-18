@@ -109,8 +109,8 @@
    
    $("#fileuploader-comm_ad").uploadFile({
         url: base_url + '/api/commercial_items_control/item_images_upload',
-        multiple: true,
-        dragDrop: true,
+        multiple: false,
+        dragDrop: false,
         fileName: "image",
         acceptFiles: "image/*",
         maxFileSize: 10000 * 1024,

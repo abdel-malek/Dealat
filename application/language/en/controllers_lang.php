@@ -27,7 +27,7 @@ $lang['image_is_requierd'] = "Ad Image is requierd";
 $lang['change_status_warning'] = "You can only delete or hide the ad";
 
 // notifications
-$lang['ad_accepted'] = 'Congrats! Your Ad is Accepted';
+$lang['ad_accepted'] = 'Congrats! Your Ad has been Accepted';
 $lang['accepted_title'] = 'Accepted';
 $lang['ad_rejected'] = 'Sorry! Your Ad is Rejected';
 $lang['rejected_title'] = 'Rejected';

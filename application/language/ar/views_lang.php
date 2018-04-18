@@ -112,6 +112,8 @@ $lang['from']  = "من";
 $lang['to']  = "إلى";
 $lang['ok']  = "حسناً";
 $lang['save_search']  = "حفظ البحث";
+
+
 //admin
 $lang['welcome'] = "مرحبًا";
 $lang['management'] = "الإدارة";
@@ -122,6 +124,9 @@ $lang['data_manage']= 'إدارة البيانات';
 $lang['types']= 'الماركات';
 $lang['pending_ads']= 'الإعلانات المنتظرة';
 $lang['reported_ads_management'] = 'إدارة التبليغات';
+$lang['schedules'] = 'جداول الدوام';
+$lang['cities_and_areas'] = 'المحافظات والمناطق';
+$lang['notifications'] = 'الإشعارات';
 
 
 //ads manage
@@ -153,7 +158,7 @@ $lang['state'] = 'حالة العقار';
 $lang['with_furniture'] = 'مع أثاث';
 $lang['size'] = 'الحجم';
 $lang['education'] = 'المستوى التعليمي';
-$lang['schedule'] = 'جدول الدوام';
+$lang['schedule'] = 'جدول الدوام ';
 $lang['experience'] = 'مستوى الخبرة';
 $lang['salary'] = 'الراتب';
 $lang['ad_details']= 'تفاصيل الإعلان';
@@ -161,7 +166,7 @@ $lang['basic_info']= 'المعلومات الرئيسية';
 $lang['detailed_info']= 'المعلومات التفصيلية';
 $lang['seller_info']= 'معلومات البائع';
 $lang['description']= 'الوصف';
-$lang['seller_name']= 'اسم البائع';
+$lang['seller_name']= 'اسم';
 $lang['seller_phone']= 'رقم';
 $lang['not_set']= 'غير محدد';
 $lang['accept_ad'] = 'قبول الأعلان';
@@ -173,6 +178,8 @@ $lang['write_reject_note'] = 'اكتب اسباب الرفض هنا';
 $lang['cont'] = 'اكمل';
 $lang['cancel'] = 'تراجع';
 $lang['ad_number'] = 'رقم الإعلان';
+$lang['expire_at'] = 'ينتهي بـ';
+$lang['published_at'] = 'نُشر بـ';
 
 //commercial ads manage 
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
@@ -205,7 +212,7 @@ $lang['name'] = "الاسم";
 $lang['phone'] = "الهاتف";
 $lang['email'] = "البريد الالكتروني";
 $lang['city'] = "المدينة";
-$lang['user_status'] = "الحالة";
+$lang['user_status'] = "فعّال؟";
 $lang['none'] = "لا يوجد";
 $lang['ads_num'] = "عدد إعلاناته";
 
@@ -243,13 +250,32 @@ $lang['report_msg'] = 'رسالة التبليغ';
 $lang['educations'] = 'المستويات التعليمية';
 $lang['educations_list'] = 'قائمة خيارات المستوى التعليمي';
 $lang['add_education'] = 'إضافة مستوى تعليمي';
+$lang['education_details'] = 'تفاصيل المستوى التعليمي';
+
+//schedules manage
+$lang['schedules_list'] = 'قائمة خيارات جدول الدوام';
+$lang['schedule_details'] = 'تفاصيل جدول الدوام';
+$lang['add_schedule'] = 'إضافة خيار جدول دوام جديد';
+
+
+//locations
+$lang['all_cities_list'] = 'قائمة كل المحافظات';
+$lang['locations'] = 'المناطق';
+$lang['add_city'] = 'إضافة محافظة جديدة';
+$lang['city_details'] = 'تفاصيل المحافظة';
+$lang['locations_list'] = 'قائمة المناطق';
+$lang['locations_details'] = 'تفاصيل المنطقة';
+
+//notification 
+$lang['send_public_notification'] = 'إرسال الإشعارات العامة';
+$lang['notify_text'] = 'محتوى الإشعار';
+$lang['notify_title'] = 'عنوان الإشعار';
+$lang['select_usres_city'] = 'اختر مدينة المستخدمين';
+$lang['send_notification'] = 'إرسال الإشعار';
+
+// login
+$lang['login_form'] = 'تسجيل الدخول';
+$lang['login'] = 'سجل الدخول';
 
 
 $lang['log_out'] = 'تسجيل خروج';
-
-
-
-
-
-
-

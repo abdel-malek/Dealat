@@ -25,7 +25,7 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
-       // $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');                              
+        $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
 		return $q; 
 	 }
@@ -46,7 +46,7 @@ class Ads extends MY_Model {
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		$this->db->where('status' , STATUS::ACCEPTED);
-    	//$this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
+    	$this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
@@ -64,8 +64,10 @@ class Ads extends MY_Model {
 		                   users.whatsup_number,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
-		                   show_periods.days
-		                  ');
+		                   show_periods.days,
+						   DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
+	                       timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
+		                  ', false);
        	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
@@ -142,7 +144,7 @@ class Ads extends MY_Model {
 	    if($main_image != null){
 	    	$ad_main_image = $main_image;
 	    }else{
-	    	$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
+	    	//$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
 	    }
 		$updated_ad_id = $this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
         // save ad images 
@@ -305,29 +307,6 @@ class Ads extends MY_Model {
       }
 	  return $ok;
   }
-
-  // public function serach_ads($query_string ,$lang , $category_id = null)
-  // {
- 	 // $this->db->select('ads.* ,
-	                   // categories.'.$lang.'_name as category_name ,
-	                   // c.'.$lang.'_name as parent_category_name ,
-	                  // ');
-     // $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
-	 // $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
-	 // // if(strlen($query_string) <  3){
-	 	// // $this->db->like('ads.title', $query_string); 
-		// // $this->db->or_like('ads.description', $query_string); 
-	 // // }
-	// // else{
-	 	// $this->db->where('MATCH(ads.title) AGAINST (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
-	    // $this->db->or_where('MATCH(ads.description) AGAINST  (\"<' . $this->db->escape($query_string) . '*\"  IN BOOLEAN MODE)', NULL, FALSE);
-	 // //}
-     // $this->db->where('status' , STATUS::ACCEPTED);
-	 // if($category_id){
-	    // $this->db->where("(categories.category_id = '$category_id' OR categories.parent_id = '$category_id' OR c.parent_id = '$category_id')");
-	 // }
-	 // return parent::get();
-  // }
  
   public function serach_with_filter($lang , $query_string = null , $category_id = null)
    {
@@ -373,6 +352,7 @@ class Ads extends MY_Model {
                           ');
 	 }
 	 $this->db->where('status' , STATUS::ACCEPTED );
+     $this->db->where('(DATE_ADD(publish_date, INTERVAL show_period DAY) > NOW())');   
 	//serach
 	 if($query_string != null){
 	     if(strlen($query_string) < 3){

@@ -28,7 +28,7 @@ $lang['image_is_requierd'] = "يجب إرفاق صورة للإعلان";
 $lang['change_status_warning'] = "يمكنك فقط ان تحذف الإعلان أو أن تجعله مخفيّاً";
 
 // notifications
-$lang['ad_accepted'] = 'مبارك! تم قبول إعلانك';
+$lang['ad_accepted'] = 'تهانينا! تم قبول إعلانك';
 $lang['accepted_title'] = 'قبول';
 $lang['ad_rejected'] = 'عذراً! تم رفض إعلانك';
 $lang['rejected_title'] = 'رفض';
