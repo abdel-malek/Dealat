@@ -7,7 +7,8 @@ $(function () {
 
 	$(window).resize(function () {
 		$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
-		$(".categories .sub-categories").addClass("d-none");
+//		$(".categories .sub-categories").addClass("d-none");
+		$(".categories .sub-categories").slideUp("fast");
 	});
 
 	//global variables
@@ -24,14 +25,14 @@ $(function () {
 	category_name = $("body").data("categoryName");
 
 	//    Loading screen
-//	$(window).on('load', function () {
-//		$(".loading-overlay .spinner").fadeOut(500, function () {
-//			$(this).parent().fadeOut(500, function () {
-//				$("body").removeAttr('style');
-//				$(this).remove();
-//			});
-//		});
-//	});
+	//	$(window).on('load', function () {
+	//		$(".loading-overlay .spinner").fadeOut(500, function () {
+	//			$(this).parent().fadeOut(500, function () {
+	//				$("body").removeAttr('style');
+	//				$(this).remove();
+	//			});
+	//		});
+	//	});
 
 	$("button.register").click(function () {
 		$("#register-modal").modal("show");
@@ -63,6 +64,7 @@ $(function () {
 		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		adImgs = [];
 		adMainImg = [];
+		adVideo = [];
 		$("#ad-modal .featured .warning").addClass("d-none");
 		$('#ad-modal .error-message').addClass("d-none");
 		$("#ad-modal .template").each(function () {
@@ -183,10 +185,10 @@ $(function () {
 				sideDefaultImg;
 
 			sliderDefaultImg = {
-				image: "assets/images/banner-772x250.jpg"
+				image: "assets/images/default_top_ad.jpg"
 			};
 			sideDefaultImg = {
-				image: "assets/images/af-coinbase-2.jpg"
+				image: "assets/images/default-side_ad.jpg"
 			};
 
 			if (data.data.length !== 0) {
@@ -298,6 +300,7 @@ $(function () {
 
 	//view subcategories when click on category slider
 	$(".category").click(function () {
+		
 		var clickedCat, sub = [],
 			subData, all;
 		clickedCat = $(this);
@@ -326,7 +329,11 @@ $(function () {
 			Mustache.parse(template);
 			rendered = Mustache.render(template, subData);
 			$(".categories .sub-categories .sub-list").append(rendered);
-			$(".categories .sub-categories").removeClass("d-none");
+//			$(".categories .sub-categories").removeClass("d-none");
+//			$(".categories .sub-categories").slideUp("fast");
+//			setTimeout(function(){
+				$(".categories .sub-categories").slideDown("fast");
+//								 },300);
 
 			$("html, body").animate({
 				scrollTop: $(".categories").offset().top
@@ -345,7 +352,8 @@ $(function () {
 
 	//hide subcategories menu
 	$(".main").click(function (e) {
-		$(".categories .sub-categories").addClass("d-none");
+//		$(".categories .sub-categories").addClass("d-none");
+		$(".categories .sub-categories").slideUp("fast");
 	});
 
 	//click on subcategory
@@ -392,6 +400,7 @@ $(function () {
 			}
 			$('#filter-modal .city-select')[0].sumo.reload();
 
+			$('#ad-modal .location-select')[0].sumo.disable();
 			//			$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.disable();
 
 			//			$('#ad-modal .city-select , #edit-ad-modal .city-select, #filter-modal .city-select').change(function () {
@@ -564,15 +573,25 @@ $(function () {
 
 	$('select.manufacture-date-select')[0].sumo.reload();
 
-//	setTimeout(function () {
-//					$(".loading-overlay1").fadeOut("fast");
-//				}, 3000);
-		
+	//	setTimeout(function () {
+	//					$(".loading-overlay1").fadeOut("fast");
+	//				}, 3000);
+var ajaxLoadTimeout;
+	$(document).ajaxStart(function () {
+	ajaxLoadTimeout = setTimeout(function () {
+					$(".loading-overlay1").fadeIn("fast");
+				}, 1000);
+
+}).ajaxComplete(function () {
+	clearTimeout(ajaxLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
+});
+	
 	function openCardModal() {
 
 		$("#card-modal .card").remove();
 
-		var ajaxLoadTimeout;
+//		var ajaxLoadTimeout;
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/items_control/get_item_details',
@@ -580,21 +599,21 @@ $(function () {
 			data: {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
-			},
-			beforeSend: function () {
-				ajaxLoadTimeout = setTimeout(function () {
-					$(".loading-overlay1").fadeIn("fast");
-//					$(".loading-overlay .spinner").fadeIn("fast");
-				}, 1000);
-			},
-			complete: function () {
-//				$(".loading-overlay1").fadeOut("fast");
-				clearTimeout(ajaxLoadTimeout);
-				$(".loading-overlay1").fadeOut("fast");
-//				$(".loading-overlay .spinner").fadeOut(300, function () {
-//					$(this).parent().fadeOut(100, function () {});
-//				});
 			}
+//			beforeSend: function () {
+//				ajaxLoadTimeout = setTimeout(function () {
+//					$(".loading-overlay1").fadeIn("fast");
+//					//					$(".loading-overlay .spinner").fadeIn("fast");
+//				}, 1000);
+//			},
+//			complete: function () {
+//				//				$(".loading-overlay1").fadeOut("fast");
+//				clearTimeout(ajaxLoadTimeout);
+//				$(".loading-overlay1").fadeOut("fast");
+//				//				$(".loading-overlay .spinner").fadeOut(300, function () {
+//				//					$(this).parent().fadeOut(100, function () {});
+//				//				});
+//			}
 		}).done(function (data) {
 			if (data.status === false) {
 				console.log(data);
@@ -757,11 +776,9 @@ $(function () {
 		subId = $(this).data("categoryId");
 		//if category is properties
 		if (templateId === 2) {
-			console.log("1");
 			$("#ad-modal .location-select").attr("required", "true");
 			$('#ad-modal .location-select')[0].sumo.reload();
 		} else {
-			console.log("2");
 			$("#ad-modal .location-select").removeAttr("required");
 			$('#ad-modal .location-select')[0].sumo.reload();
 		}
@@ -973,15 +990,18 @@ $(function () {
 
 
 	//upload ad main image
-	var upload, uploadMain, adMainImg = [];
+	var upload, uploadMain, uploadVideo, adMainImg = [],
+		adVideo = [];
 	if (lang === "ar") {
 		upload = "اختر صور إضافية";
 		uploadMain = "اختر صورة الإعلان الرئيسية";
+		uploadVideo = "اختر فيديو";
 	} else {
 		upload = "Upload more images";
 		uploadMain = "Upload main ad image";
+		uploadVideo = "Upload video";
 	}
-var uploadobjMain, uploadobjOther;
+	var uploadobjMain, uploadobjOther, uploadobjvideo;
 	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
 		multiple: false,
@@ -1022,7 +1042,7 @@ var uploadobjMain, uploadobjOther;
 				});
 		}
 	});
-	
+
 	uploadobjOther = $("#fileuploader-ad").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
 		multiple: true,
@@ -1075,6 +1095,49 @@ var uploadobjMain, uploadobjOther;
 		}
 	});
 
+	//video
+	uploadobjvideo = $("#fileuploader-ad-video").uploadFile({
+		url: base_url + '/api/items_control/item_video_upload',
+		multiple: false,
+		dragDrop: false,
+		fileName: "video",
+		acceptFiles: "video/*",
+		maxFileSize: 10000 * 1024,
+		maxFileCount: 1,
+		showDelete: true,
+		//				statusBarWidth:600,
+		dragdropWidth: "100%",
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		uploadStr: uploadVideo,
+		returnType: "json",
+		onSuccess: function (files, data, xhr, pd) {
+//			console.log(data);
+			adVideo.push(data.data);
+		},
+		onError: function (files, status, errMsg, pd) {
+//			console.log("upload failed");
+		},
+		deleteCallback: function (data, pd) {
+			//			console.log(data.data);
+			var arr;
+			arr = [data.data];
+			$.post(base_url + '/api/items_control/delete_vedios', {
+					images: arr
+				},
+				function (resp, textStatus, jqXHR) {
+					var i, deleted;
+					deleted = data.data;
+					for (i in adVideo) {
+						if (adVideo[i] === deleted) {
+							adVideo.splice(i, 1);
+						}
+					}
+				});
+		}
+	});
+
 	//place ad form submit
 	$("#place-ad-form").submit(function (evnt) {
 		evnt.preventDefault();
@@ -1084,26 +1147,40 @@ var uploadobjMain, uploadobjOther;
 		var i, data, uploaded_imgs = [],
 			main_img = "",
 			secondary_imgs = [];
-		//copy adimgs into uploaded_imgs
-		for (i in adImgs) {
-			uploaded_imgs.push(adImgs[i]);
-		}
-//		main_img = uploaded_imgs[0];
-//		main_img = uploaded_imgs[0];
-//		uploaded_imgs.splice(0, 1);
-		secondary_imgs = uploaded_imgs;
-		secondary_imgs = JSON.stringify(secondary_imgs);
 
 		data = $(this).serializeArray(); // convert form to array
-		console.log(data);
+//		console.log(data);
+
+		if (adMainImg.length > 0) {
 		data.push({
 			name: "main_image",
 			value: adMainImg[0]
-		}, {
-			name: "images",
-			value: secondary_imgs
 		});
+		}
+		//copy adimgs into uploaded_imgs
+		if (adImgs.length > 0) {
+			for (i in adImgs) {
+				uploaded_imgs.push(adImgs[i]);
+			}
+			//		main_img = uploaded_imgs[0];
+			//		main_img = uploaded_imgs[0];
+			//		uploaded_imgs.splice(0, 1);
+			secondary_imgs = uploaded_imgs;
+			secondary_imgs = JSON.stringify(secondary_imgs);
+			data.push({
+				name: "images",
+				value: secondary_imgs
+			});
+		}
 
+		if (adVideo.length > 0) {
+			data.push({
+				name: "main_video",
+				value: adVideo[0]
+			});
+		}
+
+//		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -1130,6 +1207,7 @@ var uploadobjMain, uploadobjOther;
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
+//				console.log(data);
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
 					if (lang === "ar") {
@@ -1331,9 +1409,9 @@ var uploadobjMain, uploadobjOther;
 			data: sessionStorage.getItem('bookmark')
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+//				console.log(data);
 			} else {
-				console.log(data);
+//				console.log(data);
 				if (lang === "ar") {
 					$("#success-modal .text").html("م حفظ البحث بنجاح");
 				} else {
@@ -1483,7 +1561,7 @@ var uploadobjMain, uploadobjOther;
 			});
 		}
 
-		console.log(data);
+//		console.log(data);
 		data1 = $.param(data);
 
 		sessionStorage.removeItem('bookmark');
@@ -1496,7 +1574,7 @@ var uploadobjMain, uploadobjOther;
 			data: data1
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+//				console.log(data);
 			} else {
 				//				console.log(data);
 				//				console.log(base_url + '/search_control?' + data);
@@ -1529,7 +1607,7 @@ var uploadobjMain, uploadobjOther;
 			}
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+//				console.log(data);
 			} else {
 				//				console.log(data);
 				$("#chat-modal .chat").empty();
@@ -1564,10 +1642,11 @@ var uploadobjMain, uploadobjOther;
 			type: "get",
 			url: base_url + '/api/users_control/get_my_chat_sessions',
 			dataType: "json",
+			global: false,     // this makes sure ajaxStart is not triggered
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+//				console.log(data);
 			} else {
 				//				console.log(data);
 				notSeenMsgs = 0;
@@ -1579,7 +1658,7 @@ var uploadobjMain, uploadobjOther;
 					}
 				}
 				if (notSeenMsgs > 0) {
-					console.log("not");
+//					console.log("not");
 					$(".header-account-logged .new-msg").removeClass("d-none");
 					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
 
@@ -1600,8 +1679,12 @@ var uploadobjMain, uploadobjOther;
 			}
 		});
 	}
-	checkNewMsgs();
-	notSeenInterval = setInterval(checkNewMsgs, 5000);
+	
+	if (logged) {
+		checkNewMsgs();
+		notSeenInterval = setInterval(checkNewMsgs, 5000);
+	}
+
 
 	$(".header-account-logged .new-msg").click(function () {
 		if (lang === "ar") {
@@ -1629,14 +1712,15 @@ var uploadobjMain, uploadobjOther;
 				type: "get",
 				url: base_url + '/api/users_control/get_chat_messages',
 				dataType: "json",
+				global: false,     // this makes sure ajaxStart is not triggered
 				data: $("#chat-form").serialize()
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+//					console.log(data);
 				} else {
 					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
-					console.log(lastMsgId);
-					console.log(data);
+//					console.log(lastMsgId);
+//					console.log(data);
 					var startIndex;
 					if (data.data[data.data.length - 1].message_id != lastMsgId) {
 						//to know last msg index in data.data array
@@ -1671,7 +1755,7 @@ var uploadobjMain, uploadobjOther;
 		e.preventDefault();
 		e.stopPropagation();
 
-		console.log($(this).serializeArray());
+//		console.log($(this).serializeArray());
 
 		$.ajax({
 			type: "post",
@@ -1680,9 +1764,9 @@ var uploadobjMain, uploadobjOther;
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
+//				console.log(data);
 			} else {
-				console.log(data);
+//				console.log(data);
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);

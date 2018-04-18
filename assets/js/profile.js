@@ -378,7 +378,8 @@ $(function () {
 			});
 		});
 
-		var uploadEdit, uploadMainEdit, editAdImgs =[], editMainImg = [];
+		var uploadEdit, uploadMainEdit, editAdImgs = [],
+			editMainImg = [];
 		if (lang === "ar") {
 			uploadEdit = "اختر صور إضافية";
 			uploadMainEdit = "اختر صورة الإعلان الرئيسية";
@@ -387,7 +388,7 @@ $(function () {
 			uploadMainEdit = "Upload main ad image";
 		}
 
-		 uploadobjEditMain = $("#fileuploader-edit-ad-main").uploadFile({
+		uploadobjEditMain = $("#fileuploader-edit-ad-main").uploadFile({
 			url: base_url + '/api/items_control/item_images_upload',
 			multiple: false,
 			dragDrop: false,
@@ -569,13 +570,13 @@ $(function () {
 					if (data.data.salary) {
 						$("#edit-ad-modal input[name='salary']").val(data.data.salary);
 					}
-					
-					editAdImgs =[];
-					for(i in data.data.images){
+
+					editAdImgs = [];
+					for (i in data.data.images) {
 						editAdImgs.push(data.data.images[i].image);
 					}
-					
-					
+
+
 					$("#edit-ad-modal .ad-images").empty();
 					template = $('#ad-edit-images-template').html();
 					Mustache.parse(template);
@@ -644,14 +645,18 @@ $(function () {
 
 			$("#edit-ad-modal").modal("show");
 		});
-		
+
+
+		$("#edit-ad-modal").on("hide.bs.modal", function () {
+			deleteImgArr = [];
+		});
 		var deleteImgArr = [];
-		$("#edit-ad-modal .ad-images").on("click", ".delete", function(){
+		$("#edit-ad-modal .ad-images").on("click", ".delete", function () {
 			console.log("asd");
 			var url = $(this).parents(".image-wrapper").data("url");
 			deleteImgArr.push(url);
 			console.log(deleteImgArr);
-			$(this).parents("image-wrapper").remove();
+			$(this).parents(".image-wrapper").remove();
 		});
 
 		//submit edit user ad
@@ -660,16 +665,16 @@ $(function () {
 			e.stopPropagation();
 			//						console.log($(this).serializeArray());
 			var data, i,
-			secondary_imgs = [];
-		//copy adimgs into uploaded_imgs
-		for (i in editAdImgs) {
-			secondary_imgs.push(editAdImgs[i]);
-		}
-//		secondary_imgs = uploaded_imgs;
-		secondary_imgs = JSON.stringify(secondary_imgs);
-		
+				secondary_imgs = [];
+			//copy adimgs into uploaded_imgs
+			for (i in editAdImgs) {
+				secondary_imgs.push(editAdImgs[i]);
+			}
+			//		secondary_imgs = uploaded_imgs;
+			secondary_imgs = JSON.stringify(secondary_imgs);
+
 			data = $(this).serializeArray();
-			//			console.log(data);
+			console.log(data);
 			data.push({
 				name: "main_image",
 				value: editMainImg[0]
@@ -677,18 +682,18 @@ $(function () {
 				name: "images",
 				value: secondary_imgs
 			});
-			
-//			console.log(deleteImgArr);
-			if(deleteImgArr.length > 0){
+
+			//			console.log(deleteImgArr);
+			if (deleteImgArr.length > 0) {
 				deleteImgArr = JSON.stringify(deleteImgArr);
 				console.log(deleteImgArr);
 				console.log("a");
 				data.push({
-				name: "deleted_images",
-				value: deleteImgArr
-			});
+					name: "deleted_images",
+					value: deleteImgArr
+				});
 			}
-
+			console.log(data);
 			for (i in data) {
 				//send -1 for empty values
 				if (data[i].value === "") {
@@ -731,7 +736,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
-				//				console.log(data);
+				console.log(data);
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
 					sessionData = [];
@@ -759,6 +764,7 @@ $(function () {
 				}
 			}
 		});
+		
 
 		//open a chat session
 		$(".profile-page .chats").on("click", ".session", function () {
@@ -766,6 +772,9 @@ $(function () {
 			adId = $(this).data("adId");
 			sessionId = $(this).data("sessionId");
 			sellerId = $(this).data("sellerId");
+
+			$("#chat-modal .chat-header .ad-name").text($(this).data("adname"));
+			$("#chat-modal .chat-header .user-name").text($(this).data("username"));
 
 			$("#chat-form .ad-id").val(adId);
 			$("#chat-form .chat-session-id").val(sessionId);
@@ -782,22 +791,34 @@ $(function () {
 				if (data.status === false) {
 					//						console.log(data);
 				} else {
+					console.log(data);
+
 					$("#chat-modal .chat").empty();
+					var msgDate = data.data[0].created_at.split(' ')[0];
+					$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+
 					if (sellerId == user_id) {
 						//then I am the ad seller and a user chatted with me
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
 								// message from other to me
 								template = $('#chat-other-template').html();
-								Mustache.parse(template);
-								rendered = Mustache.render(template, data.data[i]);
-								$("#chat-modal .chat").append(rendered);
+
 							} else {
 								template = $('#chat-self-template').html();
-								Mustache.parse(template);
-								rendered = Mustache.render(template, data.data[i]);
-								$("#chat-modal .chat").append(rendered);
+
 							}
+
+							//check msg date
+							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+								//update msg date
+								msgDate = data.data[i].created_at.split(' ')[0];
+								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+							}
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$("#chat-modal .chat").append(rendered);
 						}
 					} else {
 						//then I chatted with ad seller(I started chat)
@@ -805,18 +826,23 @@ $(function () {
 							if (data.data[i].to_seller === "1") {
 								// message from me to seller
 								template = $('#chat-self-template').html();
-								Mustache.parse(template);
-								rendered = Mustache.render(template, data.data[i]);
-								$("#chat-modal .chat").append(rendered);
+
 							} else {
 								template = $('#chat-other-template').html();
-								Mustache.parse(template);
-								rendered = Mustache.render(template, data.data[i]);
-								$("#chat-modal .chat").append(rendered);
 							}
+							//check msg date
+							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+								//update msg date
+								msgDate = data.data[i].created_at.split(' ')[0];
+								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+							}
+							
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$("#chat-modal .chat").append(rendered);
 						}
 					}
-
 					$("#chat-modal").modal("show");
 					$("#chat-modal .chat").stop().animate({
 						scrollTop: $("#chat-modal .chat")[0].scrollHeight
