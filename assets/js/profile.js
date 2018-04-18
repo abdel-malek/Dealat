@@ -496,9 +496,9 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
+//					console.log(data);
 				} else {
-					console.log(data);
+//					console.log(data);
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
@@ -510,7 +510,6 @@ $(function () {
 					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
 
 					if (data.data.location_id) {
-						console.log("o");
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.reload();
@@ -652,7 +651,6 @@ $(function () {
 		});
 		var deleteImgArr = [];
 		$("#edit-ad-modal .ad-images").on("click", ".delete", function () {
-			console.log("asd");
 			var url = $(this).parents(".image-wrapper").data("url");
 			deleteImgArr.push(url);
 			console.log(deleteImgArr);
@@ -736,7 +734,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
-				console.log(data);
+//				console.log(data);
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
 					sessionData = [];
@@ -791,7 +789,7 @@ $(function () {
 				if (data.status === false) {
 					//						console.log(data);
 				} else {
-					console.log(data);
+//					console.log(data);
 
 					$("#chat-modal .chat").empty();
 					var msgDate = data.data[0].created_at.split(' ')[0];
