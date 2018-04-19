@@ -129,6 +129,7 @@ $lang['reported_ads_management'] = 'Reported Ads Manage';
 $lang['schedules'] = 'Schedules';
 $lang['cities_and_areas'] = 'Cities and Areas';
 $lang['notifications'] = 'Notifications';
+$lang['about_us_manage'] = 'About us Manage';
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -272,6 +273,16 @@ $lang['notify_text'] = 'Notification Message';
 $lang['notify_title'] = 'Notification Title';
 $lang['select_usres_city'] = 'Select User\'s City';
 $lang['send_notification'] = 'Send Notification';
+
+//about manage
+$lang['set_about_info'] = 'Set About Information';
+$lang['about_ar'] = 'About us Arabic';
+$lang['about_en'] = 'About us English';
+$lang['facebook_link'] = 'Facebook link';
+$lang['twiter_link'] = 'Twiter link';
+$lang['youtube_link'] = 'Youtube link';
+$lang['linkedin_link'] = 'LinkedIn link';
+$lang['instagram_link'] = 'Instagram link';
 // login
 $lang['login_form'] = 'Login Form';
 $lang['login'] = 'Login';

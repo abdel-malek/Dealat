@@ -218,6 +218,7 @@ $config['auth_override_class_method']['data_control']['get_type_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_type_model_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_education_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_schedule_info'] = 'none';
+$config['auth_override_class_method']['data_control']['get_about_info'] = 'none';
 
 
 

@@ -13,7 +13,10 @@ class Users_control extends REST_Controller {
 	}
 
 	public function index_get() {
+		dump($this->data['city']);
 	}
+	
+	
 	
 	// this regiter method is for mobiles platforms
 	public function register_post()

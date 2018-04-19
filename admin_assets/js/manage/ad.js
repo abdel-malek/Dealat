@@ -84,9 +84,30 @@ var current_pending_count = 0;
                     "targets": -1, // details
                     "data": null,
                     "mRender": function(date, type, full) {
+                      // var full9 = full[9].split(" ");
+                       //var template_id = full9[0];
                        return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[9] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
-		         } 
+		         },
+		         // {
+                    // "targets": -2, // status
+                    // "data": null,
+                    // "mRender": function(date, type, full) {
+                       // var full9 = full[9].split(" ");
+                       // console.log(full9);
+                       // var expire_after = full9[1];
+                      // // console.log(expire_after);
+                       // if(expire_after <= 0){
+                       	  // if(lang='en'){
+                       	  	 // return 'Expired';
+                       	  // }else{
+                       	  	  // return 'منتهي';
+                       	  // }
+                       // }else{
+                       	  // return full[8]; // status
+                       // }
+		             // }
+		         // } 
 	          ],
               dom: "Bfrtip",
               buttons: [
@@ -119,47 +140,47 @@ var current_pending_count = 0;
      });
      
  // reload to get new pending ads.      
-    // setInterval(function() {
-		// ads_table.ajax.reload( null, false );
-		// $.ajax({
-        // url: base_url + '/api/items_control/get_pending_count/format/json',
-        // type: "get",
-        // dataType: "json",
-        // global: false,     // this makes sure ajaxStart is not triggered
-        // success: function(response) {
-            // // highlight the new pendeing rows. 
-            // var new_count = response.data;
-            // var diff = new_count - current_pending_count;
-            // console.log(diff);
-            // if(diff > 0){
-              // $(ads_table.rows().nodes()).each(function(index){
-            	// //console.log(index);
-             	// if(index < diff){
-             		// $(this).css("background-color", "#1abb9c63");
-                    // setTimeout(function () {
-                        // //$(this).removeAttr("style");
-                        // $(this).css("background-color", "#fff");
-                    // }, 2500);
-             	// }else{
-             	   // return false;
-             	// }
-             // });
-	          // new PNotify({
-	              // title: lang_array['note'],
-	              // text: lang_array['new_pending'],
-	              // type: 'info',
-	              // styling: 'bootstrap3',
-	              // buttons: {
-				        // sticker: false
-				   // }
-	          // });
-            // }
-            // $('.pending_count').html(response.data);
-            // current_pending_count = response.data;
-        // },error: function(xhr, status, error){
-        // }
-     // });
-	 // }, 6000 );  // 4000
+    setInterval(function() {
+		ads_table.ajax.reload( null, false );
+		$.ajax({
+        url: base_url + '/api/items_control/get_pending_count/format/json',
+        type: "get",
+        dataType: "json",
+        global: false,     // this makes sure ajaxStart is not triggered
+        success: function(response) {
+            // highlight the new pendeing rows. 
+            var new_count = response.data;
+            var diff = new_count - current_pending_count;
+            console.log(diff);
+            if(diff > 0){
+              $(ads_table.rows().nodes()).each(function(index){
+            	//console.log(index);
+             	if(index < diff){
+             		$(this).css("background-color", "#1abb9c63");
+                    setTimeout(function () {
+                        //$(this).removeAttr("style");
+                        $(this).css("background-color", "#fff");
+                    }, 2500);
+             	}else{
+             	   return false;
+             	}
+             });
+	          new PNotify({
+	              title: lang_array['note'],
+	              text: lang_array['new_pending'],
+	              type: 'info',
+	              styling: 'bootstrap3',
+	              buttons: {
+				        sticker: false
+				   }
+	          });
+            }
+            $('.pending_count').html(response.data);
+            current_pending_count = response.data;
+        },error: function(xhr, status, error){
+        }
+     });
+	 }, 6000 );  // 4000
 	 
 	 
 	// set select to pending 

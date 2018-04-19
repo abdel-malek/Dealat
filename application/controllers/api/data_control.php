@@ -53,4 +53,11 @@ class Data_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
 	
+	public function get_about_info_get()
+	{
+		$this->load->model('data_sources/about_info');
+		$info = $this->about_info->get_info($this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
 }

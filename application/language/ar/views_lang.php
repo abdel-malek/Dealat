@@ -127,6 +127,7 @@ $lang['reported_ads_management'] = 'إدارة التبليغات';
 $lang['schedules'] = 'جداول الدوام';
 $lang['cities_and_areas'] = 'المحافظات والمناطق';
 $lang['notifications'] = 'الإشعارات';
+$lang['about_us_manage'] = 'إدارة معلومات حول';
 
 
 //ads manage
@@ -272,6 +273,16 @@ $lang['notify_text'] = 'محتوى الإشعار';
 $lang['notify_title'] = 'عنوان الإشعار';
 $lang['select_usres_city'] = 'اختر مدينة المستخدمين';
 $lang['send_notification'] = 'إرسال الإشعار';
+
+//about manage
+$lang['set_about_info'] = 'ضبط معلومات من نحن';
+$lang['about_ar'] = 'من نحن بالعربي';
+$lang['about_en'] = 'من نحن بالانغليزي';
+$lang['facebook_link'] = 'رابط فيس بوك';
+$lang['twiter_link'] = 'رابط تويتر';
+$lang['youtube_link'] = 'رابط يوتيوب';
+$lang['linkedin_link'] = 'رابط لينكدان';
+$lang['instagram_link'] = 'رابط انستغرام';
 
 // login
 $lang['login_form'] = 'تسجيل الدخول';

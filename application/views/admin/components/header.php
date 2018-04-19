@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dealat</title>
+    <title>Dealat CMS</title>
     
     <script type="text/javascript">
 		var base_url = "<?php echo base_url() . 'index.php'; ?>";
@@ -133,6 +133,9 @@
                   
                   <!-- notification -->
                   <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-bell"></i><?php echo $this->lang->line('notifications') ?></a></li>
+                  
+                   <!-- about us -->
+                  <li><a href="<?php echo base_url('index.php/admin/data_manage/load_about_manage'); ?>"><i class="fa fa-folder-open"></i><?php echo $this->lang->line('about_us_manage') ?></a></li>
         
                 </ul>
               </div>

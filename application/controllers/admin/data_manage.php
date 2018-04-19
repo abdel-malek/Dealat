@@ -356,4 +356,31 @@ class Data_manage extends REST_Controller {
  }
  
  
+ public function load_about_manage_get()
+ {
+ 	$this->load->model('data_sources/about_info');
+ 	$this->data['about_info'] = $this->about_info->get(null , true , 1);
+    $this -> data['subview'] = 'admin/about_manage';
+    $this -> load -> view('admin/_main_layout', $this -> data);
+ }
+ 
+ public function save_about_post()
+ {
+    $this->load->model('data_sources/about_info');
+    $data = array(
+      'ar_about_us' => $this->input->post('ar_about_us'),
+      'en_about_us' => $this->input->post('en_about_us'),
+      'phone' => $this->input->post('phone') ,
+      'email' => $this->input->post('email'),
+      'facebook_link' => $this->input->post('facebook_link'),
+      'youtube_link' => $this->input->post('youtube_link'),
+      'linkedin_link' => $this->input->post('linkedin_link'),
+      'twiter_link' => $this->input->post('twiter_link'),
+      'instagram_link' => $this->input->post('instagram_link'),
+	);
+   $saved = $this->about_info->save($data , 1);
+   $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
+ }
+ 
+ 
 }

@@ -182,6 +182,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/schedules.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/cities.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/notifications.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/about.js"></script>
    
   </body>
 </html>
