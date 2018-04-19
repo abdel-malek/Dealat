@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_blur"
+    >
+
+    <LinearLayout
+        android:id="@+id/parentPanel"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="24dp"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/imageViewLarge"
+            android:layout_height="@dimen/imageViewLarge"
+            android:layout_margin="8dp"
+            android:src="@drawable/dealat_logo_red"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:layoutDirection="ltr"
+            >
+
+            <ImageButton
+                android:id="@+id/buttonFacebook"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/facebook"
+                android:scaleType="centerInside"
+                android:background="@null"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonLinkedIn"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/linkedin"
+                android:scaleType="centerInside"
+                android:background="@null"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonTwitter"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/twitter"
+                android:scaleType="centerInside"
+                android:background="@null"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonYoutube"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/youtube"
+                android:scaleType="centerInside"
+                android:background="@null"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonInstagram"
+                android:layout_width="@dimen/imageSmall"
+                android:layout_height="@dimen/imageSmall"
+                android:layout_marginStart="12dp"
+                android:visibility="gone"
+                android:onClick="onClick"
+                android:src="@drawable/instagram"
+                android:scaleType="centerInside"
+                android:background="@null"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/textViewPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="invisible"
+            android:onClick="onClick"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/textHeadline"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+</ScrollView>

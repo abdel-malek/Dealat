@@ -36,7 +36,7 @@ public class ParentController extends Controller {
 
     protected void addToHeader(TradinosRequest request){
         try {
-            request.getHeaders().put("city_id", MyApplication.getCity());
+            request.getHeaders().put("city", MyApplication.getCity());
             request.getHeaders().put("lang", MyApplication.getLocale().toString());
             request.getHeaders().put("Api-call", "1");
 

@@ -28,6 +28,7 @@
 
 
     <!-- Internal Strings -->
+    <string name="phonePrefix">0</string>
     <string name="all">الكل</string>
     <string name="allCategories">كل التصنيفات</string>
     <string name="today">اليوم</string>
@@ -172,11 +173,11 @@
 
     <!-- Drawer -->
     <string name="navHome">الرئيسية</string>
-    <string name="navCategories">التصنيفات</string>
     <string name="navSavedSearches">عمليات البحث المحفوظة</string>
     <string name="navLanguage">اللغة</string>
     <string name="navSettings">الإعدادات</string>
     <string name="navHelp">مساعدة</string>
+    <string name="navAbout">معلومات عن التطبيق</string>
     <string name="navLogout">تسجيل الخروج</string>
 
 

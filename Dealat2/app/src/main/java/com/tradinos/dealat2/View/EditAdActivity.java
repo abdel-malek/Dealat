@@ -156,7 +156,7 @@ public class EditAdActivity extends MasterActivity {
             public void OnSuccess(Ad result) {
                 currentAd = result;
                 videoServerPath = result.getMainVideoUrl();
-                if (videoServerPath != null){
+                if (videoServerPath != null) {
                     imageButtonCheck.setVisibility(View.VISIBLE);
                     imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_play_arrow_gray));
                 }
@@ -609,16 +609,21 @@ public class EditAdActivity extends MasterActivity {
 
             imagesJsonArray = new JSONArray();
             Image image;
-            for (int i = 0; i < adapter.getCount(); i++) {
-                image = adapter.getItem(i);
-                if (image.isMarkedAsMain())
-                    parameters.put("main_image", image.getServerPath());
-                else
-                    imagesJsonArray.put(image.getServerPath());
-            }
 
-            if (imagesJsonArray.length() > 0)
-                parameters.put("images", imagesJsonArray.toString());
+            if (adapter.getCount() > 0) {
+                for (int i = 0; i < adapter.getCount(); i++) {
+                    image = adapter.getItem(i);
+                    if (image.isMarkedAsMain())
+                        parameters.put("main_image", image.getServerPath());
+                    else
+                        imagesJsonArray.put(image.getServerPath());
+                }
+
+                if (imagesJsonArray.length() > 0)
+                    parameters.put("images", imagesJsonArray.toString());
+            } else
+                parameters.put("main_image", NULL);
+
 
             if (deletedImgsJsonArray.length() > 0)
                 parameters.put("deleted_images", deletedImgsJsonArray.toString());

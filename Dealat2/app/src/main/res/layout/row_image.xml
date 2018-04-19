@@ -5,6 +5,13 @@
     android:background="@color/grayTransparent">
 
     <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageView
         android:id="@+id/imageViewCheck"
         android:layout_width="@dimen/imageXSmall"
         android:layout_height="@dimen/imageXSmall"
@@ -13,12 +20,5 @@
         android:visibility="invisible"
         android:elevation="4dp"
         android:src="@drawable/checked_copy"
-        />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
         />
 </FrameLayout>

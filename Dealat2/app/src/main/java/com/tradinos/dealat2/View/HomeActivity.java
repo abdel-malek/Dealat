@@ -98,6 +98,14 @@ public class HomeActivity extends DrawerActivity {
             }
         });
 
+
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.setIconified(false);
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -126,7 +134,7 @@ public class HomeActivity extends DrawerActivity {
         if (view.getId() == R.id.buttonTrue) {
 
             if (registered()){
-                Intent intent = new Intent(mContext, ItemInfoActivity.class);
+                Intent intent = new Intent(mContext, SubmitAdActivity.class);
                 intent.putExtra("category", mainCategory);
 
                 startActivity(intent);

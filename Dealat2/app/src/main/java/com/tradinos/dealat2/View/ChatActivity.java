@@ -47,6 +47,7 @@ public class ChatActivity extends MasterActivity {
     // to show or hide buttonSend
     private final int SHOW = 1, HIDE = 2;
 
+    private ChatReceiver receiver;
     private User user;
     private Chat currentChat;
 
@@ -65,12 +66,20 @@ public class ChatActivity extends MasterActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.dealat.MSG");
 
-        ChatReceiver receiver = new ChatReceiver();
+        receiver = new ChatReceiver();
         registerReceiver(receiver, filter);
-        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(receiver);
     }
 
     @Override

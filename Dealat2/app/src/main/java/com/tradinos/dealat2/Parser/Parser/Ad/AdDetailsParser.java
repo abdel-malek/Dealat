@@ -114,9 +114,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 }
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdMobile) ad).setSecondhand(false);
-                else
                     ((AdMobile) ad).setSecondhand(true);
+                else
+                    ((AdMobile) ad).setSecondhand(false);
 
                 break;
 
@@ -132,9 +132,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                     ((AdElectronic) ad).setSize(jsonObject.getDouble("size"));
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdElectronic) ad).setSecondhand(false);
-                else
                     ((AdElectronic) ad).setSecondhand(true);
+                else
+                    ((AdElectronic) ad).setSecondhand(false);
 
                 break;
 
@@ -142,9 +142,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 ad = new AdFashion();
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdFashion) ad).setSecondhand(false);
-                else
                     ((AdFashion) ad).setSecondhand(true);
+                else
+                    ((AdFashion) ad).setSecondhand(false);
 
                 break;
 
@@ -152,9 +152,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 ad = new AdKid();
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdKid) ad).setSecondhand(false);
-                else
                     ((AdKid) ad).setSecondhand(true);
+                else
+                    ((AdKid) ad).setSecondhand(false);
 
                 break;
 
@@ -162,9 +162,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 ad = new AdSport();
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdSport) ad).setSecondhand(false);
-                else
                     ((AdSport) ad).setSecondhand(true);
+                else
+                    ((AdSport) ad).setSecondhand(false);
 
                 break;
 
@@ -172,9 +172,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 ad = new AdIndustry();
 
                 if (jsonObject.getInt("is_new") == 0)
-                    ((AdIndustry) ad).setSecondhand(false);
-                else
                     ((AdIndustry) ad).setSecondhand(true);
+                else
+                    ((AdIndustry) ad).setSecondhand(false);
 
                 break;
 
@@ -194,6 +194,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
         ad.setCityId(jsonObject.getString("city_id"));
         ad.setCityName(jsonObject.getString("city_name"));
+
+        if (validData(jsonObject.getString("whatsup_number")))
+            ad.setWhatsAppNumber(jsonObject.getString("whatsup_number"));
 
         if (validData(jsonObject.getString("location_id"))) {
             ad.setLocationId(jsonObject.getString("location_id"));
@@ -255,6 +258,6 @@ public class AdDetailsParser implements TradinosParser<Ad> {
     }
 
     private boolean validData(String data) {
-        return !data.equals("null") && !data.equals("0");
+        return !data.equals("null") && !data.equals("0") && !data.equals("");
     }
 }

@@ -7,8 +7,8 @@ public enum APIModel {
     users,
     ads,
     categories,
-    commercialAds;
-    ;
+    commercialAds,
+    data;
 
     @Override
     public String toString () {
@@ -24,6 +24,9 @@ public enum APIModel {
 
             case commercialAds:
                 return "commercial_items_control";
+
+            case data:
+                return "data_control";
 
             default:
                 return  "" ;

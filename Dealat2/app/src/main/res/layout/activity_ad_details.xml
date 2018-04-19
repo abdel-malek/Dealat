@@ -157,6 +157,7 @@
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/others"
                 />
 
             <RelativeLayout
@@ -1059,14 +1060,14 @@
             android:id="@+id/containerContact"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center"
             >
 
             <ImageButton
                 android:id="@+id/buttonCall"
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
                 android:background="@null"
@@ -1082,11 +1083,33 @@
             <ImageButton
                 android:id="@+id/buttonMessage"
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
                 android:background="@null"
-                android:src="@drawable/ic_textsms_white_24dp" />
+                android:src="@drawable/ic_textsms_white_24dp"
+                />
+
+            <View
+                android:id="@+id/line20"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:background="@color/white" />
+
+            <Button
+                android:id="@+id/buttonWhatsApp"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                android:visibility="gone"
+                android:text="WhatsApp"
+                android:textColor="@color/white"
+                android:background="@null"
+                />
         </LinearLayout>
 
         <LinearLayout

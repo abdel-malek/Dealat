@@ -96,6 +96,7 @@ public class SelectImagesActivity extends MasterActivity {
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_WRITE);
                 } else {
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
                     // Ensure that there's a camera activity to handle the intent
                     if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                         // Create the File where the photo should go
@@ -138,16 +139,14 @@ public class SelectImagesActivity extends MasterActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == RESULT_OK) {
-                adapter.addCapturedImage(new Image(mCurrentPhotoPath));
-                adapter.notifyDataSetChanged();
+                   adapter.addCapturedImage(new Image(mCurrentPhotoPath));
+                   adapter.notifyDataSetChanged();
 
             } else if (resultCode == RESULT_CANCELED) {
 
-                if (photoFile != null) {
-                    if (photoFile.delete()) { // to remove it from gallery
+                if (photoFile != null)
+                    if (photoFile.delete())
                         MediaScannerConnection.scanFile(mContext, new String[]{photoFile.getPath()}, new String[]{"image/*"}, null);
-                    }
-                }
             }
         }
     }

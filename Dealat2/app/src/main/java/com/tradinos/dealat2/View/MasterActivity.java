@@ -244,7 +244,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
                 return R.drawable.smartphone_call;
 
             case Category.ELECTRONICS:
-                return R.drawable.photo_camera;
+                return R.drawable.camera;
 
             case Category.FASHION:
                 return R.drawable.female_black_dress;

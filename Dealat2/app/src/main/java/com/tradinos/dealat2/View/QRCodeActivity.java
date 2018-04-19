@@ -1,7 +1,6 @@
 package com.tradinos.dealat2.View;
-
+/*
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,20 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-import com.tradinos.dealat2.R;
-
-import java.util.logging.Logger;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by developer on 16.04.18.
  */
-
+/*
 public class QRCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private final int REQUEST_CAMERA = 1;
@@ -84,3 +79,4 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
         //  finish();
     }
 }
+*/

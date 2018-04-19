@@ -186,10 +186,10 @@ public abstract class DrawerActivity extends MasterActivity
                 startActivity(intent);
                 break;
 
-            case R.id.nav_qrCode:
+          /*  case R.id.nav_qrCode:
                 intent = new Intent(mContext, QRCodeActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
 
             case R.id.navAr:
                 setLocale("ar");
@@ -208,10 +208,13 @@ public abstract class DrawerActivity extends MasterActivity
 
                 break;
 
-            case R.id.nav_categories:
-                break;
 
             case R.id.navSettings:
+                break;
+
+            case R.id.navAbout:
+                intent = new Intent(mContext, AboutActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.navHelp:

@@ -16,7 +16,7 @@ public class Ad implements Serializable {
 
     private String id, cityId, locationId, categoryId, publishDate, expiryDate, creationDate;
     private String title, description, locationName, cityName;
-    private String sellerId, sellerName, sellerPhone;
+    private String sellerId, sellerName, sellerPhone, whatsAppNumber;
     private String rejectNote;
     private String mainImageUrl, mainVideoUrl;
     private double price;
@@ -121,6 +121,14 @@ public class Ad implements Serializable {
 
     public void setSellerPhone(String sellerPhone) {
         this.sellerPhone = sellerPhone;
+    }
+
+    public String getWhatsAppNumber() {
+        return whatsAppNumber;
+    }
+
+    public void setWhatsAppNumber(String whatsAppNumber) {
+        this.whatsAppNumber = whatsAppNumber;
     }
 
     public String getRejectNote() {

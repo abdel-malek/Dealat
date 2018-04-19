@@ -63,7 +63,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * Created by developer on 20.02.18.
  */
 
-public class ItemInfoActivity extends MasterActivity {
+public class SubmitAdActivity extends MasterActivity {
 
     private boolean enabled = false;
 

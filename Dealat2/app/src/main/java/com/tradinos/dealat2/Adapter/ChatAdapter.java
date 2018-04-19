@@ -54,10 +54,8 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = this.inflater.inflate(R.layout.row_chat, null);
-            view.setTag(new ViewHolder(view));
-        }
+        view = this.inflater.inflate(R.layout.row_chat, null);
+        view.setTag(new ViewHolder(view));
 
         initializeView(getItem(i), (ViewHolder) view.getTag());
 
