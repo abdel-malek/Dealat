@@ -290,3 +290,8 @@ $lang['login'] = 'سجل الدخول';
 
 
 $lang['log_out'] = 'تسجيل خروج';
+$lang['item_name'] = "الاسم";
+$lang['item_price'] = "السعر";
+$lang['seller_name']= 'اسم البائع';
+$lang['results_from'] = 'عرض النتائج من ';
+$lang['no_results_found'] = 'لا يوجد نتائج للبحث';

@@ -168,6 +168,9 @@ section.search {
 	text-align: right
 }
 
+#register-form{
+    direction: rtl;
+}
 #fileuploader-edit-ad,
 #fileuploader-ad,
 #fileuploader-edit-ad-main,
@@ -259,14 +262,35 @@ header.home .header-account-logged li a {
 #notification-modal .text,
 #success-modal .text,
 #success-btn-modal .text,
+#verify-modal .text,
 #delete-modal .text{
 	direction: rtl
 }
-.profile-page .chat-tab-link .new-msg{
-	left: auto;
-	right: -28px
+
+#verify-modal .code{
+	direction: rtl;
 }
+.profile-page .session .new-msg{
+		left: auto;
+	right: 5px;
+//	right: -28px
+}
+//.profile-page .chat-tab-link .new-msg{
+//	left: auto;
+//	right: -28px
+//}
 #report-form .SumoSelect{
 	direction: rtl;
     text-align: right;
+}
+
+.error-message{
+	direction: rtl;
+	border-right: 2px solid transparent;
+	border-left: none;
+	border-color: #fa7751;
+}
+.search-result-label{
+	direction: rtl;
+	text-align: right
 }

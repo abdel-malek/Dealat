@@ -1,3 +1,4 @@
+<div class="main-wrapper">
 <!--  loading -->
 <!--
 	<section class="loading-overlay">
@@ -54,11 +55,13 @@
 <div class="social-fixed">
 	<span class="show-social"><i class="fas fa-angle-left"></i></span>
 	<div class="icons" data-show="1">
-		<span class="icon facebook"><a href=""><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>
-		<span class="icon youtube"><a href=""><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>
-		<span class="icon twitter"><a href=""><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>
-		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>
-
+	
+<script id="social-fixed-template" type="text/template">
+	{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>{{/facebook_link}}
+	{{#youtube_link}}<span class="icon youtube"><a href="{{youtube_link}}"><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>{{/youtube_link}}
+		{{#twiter_link}}<span class="icon twitter"><a href="{{twiter_link}}"><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>{{/twiter_link}}
+<!--		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>-->
+		</script>
 	</div>
 </div>
 
@@ -179,7 +182,7 @@
 
 				<div class="col-4 info-col">
 					<div class="number"><span class="number-lbl"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val">{{ad.ad_id}}</span></div>
-					<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.category_name}}</span></div>
+					<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 					<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
 					<!--<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
 						<span class="rating-val">
@@ -222,7 +225,7 @@
 				</div>
 
 				<div class="col-4 info-col">
-					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}-  {{ad.location_name}}</span></div>
+					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 					<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
 					<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
 				</div>
@@ -514,14 +517,14 @@
 							</script>
 
 							<div class="form-group">
-								<select name="city_id" class="city-select" required>
+								<select name="city_id" class="city-select" required placeholder="sfaf">
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>
 								</select>
 							</div>
 
 							<div class="form-group">
 								<select name="location_id" class="location-select">
-									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('item_location'); ?></option>
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
 								</select>
 							</div>
 
@@ -831,7 +834,7 @@
 
 							<div class="form-group">
 								<select name="location_id" class="location-select">
-									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('item_location'); ?></option>
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
 								</select>
 							</div>
 
@@ -1268,10 +1271,10 @@
         </button>
 			</div>
 			<div class="modal-body text-center">
-				<div class="modal-verify-sms__text">
+				<h6 class="text">
 					<?php echo $this->lang->line('verification_text'); ?>
 					<div class="phone-num-sec"></div>
-				</div>
+				</h6>
 
 				<div class="error-message full d-none">
 					<?php echo $this->lang->line('verification_error'); ?>
@@ -1279,7 +1282,7 @@
 				<form id="verify-form">
 					<input type="hidden" class="phone" name="phone" />
 					<input type="hidden" class="password" />
-					<input type="text" class="form-control" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
+					<input type="text" class="form-control code" name="verification_code" placeholder="<?php echo $this->lang->line('enter_code'); ?>" required />
 					<div class="modal-footer">
 						<button class="btn button2 submit" type="submit"><?php echo $this->lang->line('verify'); ?></button>
 					</div>

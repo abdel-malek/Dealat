@@ -129,6 +129,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
+//				console.log(data);
 				var adData, negotiable, type, i, template, rendered, templateId;
 
 				for (i in data.data) {
@@ -378,14 +379,16 @@ $(function () {
 			});
 		});
 
-		var uploadEdit, uploadMainEdit, editAdImgs = [],
+		var uploadEdit, uploadMainEdit,uploadVideoEdit, editAdImgs = [],
 			editMainImg = [];
 		if (lang === "ar") {
 			uploadEdit = "اختر صور إضافية";
 			uploadMainEdit = "اختر صورة الإعلان الرئيسية";
+			uploadVideo = "اختر فيديو";
 		} else {
 			uploadEdit = "Upload more images";
 			uploadMainEdit = "Upload main ad image";
+			uploadVideo = "Upload video";
 		}
 
 		uploadobjEditMain = $("#fileuploader-edit-ad-main").uploadFile({
@@ -479,6 +482,49 @@ $(function () {
 			}
 		});
 
+		//video
+	uploadobjvideo = $("#fileuploader-ad-video").uploadFile({
+		url: base_url + '/api/items_control/item_video_upload',
+		multiple: false,
+		dragDrop: false,
+		fileName: "video",
+		acceptFiles: "video/*",
+		maxFileSize: 10000 * 1024,
+		maxFileCount: 1,
+		showDelete: true,
+		//				statusBarWidth:600,
+		dragdropWidth: "100%",
+		showPreview: true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		uploadStr: uploadVideo,
+		returnType: "json",
+		onSuccess: function (files, data, xhr, pd) {
+//			console.log(data);
+			adVideo.push(data.data);
+		},
+		onError: function (files, status, errMsg, pd) {
+//			console.log("upload failed");
+		},
+		deleteCallback: function (data, pd) {
+			//			console.log(data.data);
+			var arr;
+			arr = [data.data];
+			$.post(base_url + '/api/items_control/delete_vedios', {
+					images: arr
+				},
+				function (resp, textStatus, jqXHR) {
+					var i, deleted;
+					deleted = data.data;
+					for (i in adVideo) {
+						if (adVideo[i] === deleted) {
+							adVideo.splice(i, 1);
+						}
+					}
+				});
+		}
+	});
+		
 		//open edit user ad modal
 		$(".profile-page .user-ads").on("click", ".edit-ad", function () {
 			var templateId, adId, catId;
@@ -513,6 +559,8 @@ $(function () {
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.reload();
+					} else{
+						$("#edit-ad-modal select[name='location_id']")[0].sumo.disable();
 					}
 
 					if (data.data.is_negotiable === "1") {
@@ -781,6 +829,27 @@ $(function () {
 					Mustache.parse(template);
 					rendered = Mustache.render(template, sessionData);
 					$(".profile-page .chats ul.sessions").append(rendered);
+					
+					
+					//check for new msgs
+					notSeenMsgs = 0;
+				var newMsgSessions = [];
+				for (i in data.data) {
+					if ((user_id == data.data[i].seller_id && data.data[i].seller_seen == 0) || (user_id == data.data[i].user_id && data.data[i].user_seen == 0)) {
+						newMsgSessions.push(data.data[i].chat_session_id);
+						notSeenMsgs += 1;
+					}
+				}
+			
+					$(".profile-page .sessions .session").each(function () {
+					$(this).removeAttr("style");
+					for (i in newMsgSessions) {
+						if ($(this).data("sessionId") == newMsgSessions[i]) {
+							$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+							$(this).find(".new-msg").removeClass("d-none");
+						}
+					}
+				});
 				}
 			}
 		});

@@ -793,7 +793,7 @@ header.home {
 
 .search-page .products,
 .profile-page .products {
-  margin-top: 25px;
+  margin-top: 10px;
   margin-bottom: 30px; }
   .search-page .products .main,
   .profile-page .products .main {
@@ -826,6 +826,11 @@ header.home {
       .profile-page .products .main .banners {
         display: none; } }
 
+.profile-page .products {
+  margin-top: 0; }
+  .profile-page .products .card {
+    width: 87%; }
+
 .profile-page .user-details {
   font-size: .85rem;
   color: #333; }
@@ -840,66 +845,80 @@ header.home {
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat; }
-.profile-page .user-ads .status {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color: #c30a30;
-  font-size: 1rem; }
-.profile-page .user-ads .card:hover .overlay {
-  height: 0; }
-.profile-page .user-ads .card:hover .card-img-top {
-  cursor: auto; }
-.profile-page #profile-tabs .tab {
-  padding-right: 10%; }
-.profile-page #profile-tabs .etabs {
-  text-align: center;
-  border-bottom: solid 1px #c30a30; }
-.profile-page #profile-tabs .tab {
-  display: inline-block;
-  width: calc(90% / 4); }
-.profile-page #profile-tabs .tab a {
-  font-size: .9rem;
-  line-height: initial;
-  display: block;
-  padding: 0 10px;
-  outline: none;
-  color: #aaa;
-  text-decoration: none; }
-.profile-page #profile-tabs .tab:first-child a {
-  white-space: nowrap; }
-.profile-page #profile-tabs .tab a:hover {
-  color: #999; }
-.profile-page #profile-tabs .tab.active {
-  padding-top: 6px;
-  position: relative;
-  top: 1px; }
-.profile-page #profile-tabs .tab a.active {
-  font-weight: bold;
-  color: #c30a30; }
-.profile-page #profile-tabs .tab-container .panel-container {
-  border: solid #666 1px;
-  padding: 10px; }
-.profile-page #profile-tabs .chats ul,
-.profile-page #profile-tabs .bookmarks ul {
-  list-style: none;
-  padding: 0; }
-.profile-page #profile-tabs .chats li,
-.profile-page #profile-tabs .bookmarks li {
-  padding: 10px;
-  transition: .2s; }
-.profile-page #profile-tabs .chats li:hover,
-.profile-page #profile-tabs .bookmarks li:hover {
-  background-color: #fff;
-  cursor: pointer; }
-.profile-page #profile-tabs .chats hr,
-.profile-page #profile-tabs .bookmarks hr {
-  margin: 0; }
-.profile-page #profile-tabs .bookmark .details {
-  font-size: .8rem; }
+.profile-page .user-ads {
+  max-height: 490px;
+  overflow-y: auto; }
+  .profile-page .user-ads .status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #c30a30;
+    font-size: 1rem; }
+  .profile-page .user-ads .card:hover .overlay {
+    height: 0; }
+  .profile-page .user-ads .card:hover .card-img-top {
+    cursor: auto; }
+.profile-page #profile-tabs {
+  margin-bottom: 20px; }
+  .profile-page #profile-tabs .tab {
+    padding-right: 10%; }
+  .profile-page #profile-tabs .etabs {
+    text-align: center;
+    border-bottom: solid 1px #c30a30;
+    margin-bottom: 5px; }
+  .profile-page #profile-tabs .tab {
+    display: inline-block;
+    width: calc(90% / 4); }
+  .profile-page #profile-tabs .tab a {
+    font-size: .9rem;
+    line-height: initial;
+    display: block;
+    padding: 0 10px;
+    outline: none;
+    color: #aaa;
+    text-decoration: none; }
+  .profile-page #profile-tabs .tab:first-child a {
+    white-space: nowrap; }
+  .profile-page #profile-tabs .tab a:hover {
+    color: #999; }
+  .profile-page #profile-tabs .tab.active {
+    padding-top: 6px;
+    position: relative;
+    top: 1px; }
+  .profile-page #profile-tabs .tab a.active {
+    font-weight: bold;
+    color: #c30a30; }
+  .profile-page #profile-tabs .tab-container .panel-container {
+    border: solid #666 1px;
+    padding: 10px; }
+  .profile-page #profile-tabs .chats ul,
+  .profile-page #profile-tabs .bookmarks ul {
+    list-style: none;
+    padding: 0; }
+  .profile-page #profile-tabs .chats li,
+  .profile-page #profile-tabs .bookmarks li {
+    padding: 10px;
+    transition: .2s; }
+  .profile-page #profile-tabs .chats li:hover,
+  .profile-page #profile-tabs .bookmarks li:hover {
+    background-color: #fff;
+    cursor: pointer; }
+  .profile-page #profile-tabs .chats hr,
+  .profile-page #profile-tabs .bookmarks hr {
+    margin: 0; }
+  .profile-page #profile-tabs .bookmark .details {
+    font-size: .8rem; }
+  .profile-page #profile-tabs .sessions, .profile-page #profile-tabs .bookmarks-list {
+    max-height: 400px;
+    overflow-y: auto; }
+
+.main-wrapper {
+  min-height: calc(100vh - 200px);
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */ }
 
 footer {
-  min-height: 400px;
+  min-height: 100px;
   color: #eee;
   background-color: #c30a30;
   padding: 20px;
@@ -914,11 +933,13 @@ footer {
     padding: 10px; }
   footer .contact .social {
     margin-bottom: 20px; }
-    footer .contact .social span {
+    footer .contact .social .icon {
       padding-right: 8px; }
-    footer .contact .social span:hover {
+    footer .contact .social .icon:hover a {
       cursor: pointer;
       color: #ddd; }
+    footer .contact .social a {
+      color: #eee; }
   footer .contact .info {
     list-style: none;
     padding: 0; }
@@ -1459,17 +1480,20 @@ label {
       text-decoration: none;
       color: #c30a30; }
 
-.profile-page .chat-tab-link {
+.profile-page .sessions {
+  margin-bottom: 0; }
+
+.profile-page .session {
   position: relative; }
-  .profile-page .chat-tab-link .new-msg {
+  .profile-page .session .new-msg {
     position: absolute;
-    top: -3px;
-    left: 0;
+    top: 21%;
+    left: 5px;
     background-color: #c30a30;
     border: 2px solid #fff;
     border-radius: 50%;
     width: 36px;
-    height: 24px;
+    height: 30px;
     text-align: center;
     transition: .15s;
     color: #fff; }

@@ -73,7 +73,9 @@
 -->
 				<li class='tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
 				<li class='tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
-				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?><div class="new-msg d-none"><i class="fas fa-envelope"></i></div></a>
+				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?>
+<!--				<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>-->
+				</a>
 
 				</li>
 				<li class='tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
@@ -106,7 +108,7 @@
 														<div class="card-title mb-1">{{ad.title}}</div>
 														<!--<div class="details mb-2">{{ad.description}}</div>-->
 														<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.category_name}}</span></div>
-														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}- {{ad.location_name}}</span></div>
+														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 
 														{{#publish}}
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{publish}}</span></div>{{/publish}} {{#expiry}}
@@ -166,7 +168,7 @@
 													<div class="card-body">
 														<div class="card-title mb-1">{{ad.title}}</div>
 														<div class="details mb-2">{{ad.description}}</div>
-														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}- {{ad.location_name}}</span></div>
+														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{date}}</span></div>
 														<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
@@ -191,7 +193,8 @@
 						<script id="chat-sessions-template" type="text/template">
 
 							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
-								<div class="row">
+							<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
+								<div class="row no-gutters">
 									<div class="col-2">
 										<div class="chat-img text-center">
 											<img src="<?php echo base_url('{{image}}'); ?>" width="50px" alt="">
@@ -218,7 +221,7 @@
 					<script id="saved-bookmarks-template" type="text/template">
 
 						<li class="bookmark" data-bookmark-id="{{user_bookmark_id}}" data-filter="{{filter}}">
-							<div class="row">
+							<div class="row no-gutters">
 								<div class="col-sm-8 details">
 									{{# query.search}}
 									<div class="search"><span class="search-lbl"><?php echo $this->lang->line('search'); ?>: </span><span class="search-val">{{query.search}}</span></div>{{/query.search}} {{#query.category_name}}
@@ -534,6 +537,7 @@
 								<!--							<div id="fileuploader-ad">Upload</div>-->
 								<div id="fileuploader-edit-ad-main">Upload</div>
 								<div id="fileuploader-edit-ad">Upload</div>
+<!--								<div id="fileuploader-edit-ad-video">Upload</div>-->
 							</div>
 						</div>
 						<div class="modal-footer">

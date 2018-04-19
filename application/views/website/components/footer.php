@@ -1,12 +1,47 @@
-<footer>
+</div><!--main wrapper close-->
+
+<footer class="page-footer">
+	<script id="footer-template" type="text/template">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="section about">
+						<h3>
+							<?php echo $this->lang->line('about'); ?>
+						</h3>
+						<div class="">{{about_us}}</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="section contact">
+						<h3>
+							<?php echo $this->lang->line('contact_us'); ?>
+						</h3>
+						<div class="social">
+							{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><i class="fab fa-facebook-square fa-2x"></i></a></span>{{/facebook_link}} {{#youtube_link}}
+							<span class="icon youtube"><a href="{{youtube_link}}"><i class="fab fa-youtube-square fa-2x"></i></a></span>{{/youtube_link}} {{#twiter_link}}
+							<span class="icon twitter"><a href="{{twiter_link}}"><i class="fab fa-twitter-square fa-2x"></i></a></span>{{/twiter_link}}
+							<!--<span class="icon google"><a href=""><i class="fab fa-google-plus-square fa-2x"></i></a></span>-->
+						</div>
+						<ul class="info">
+							<li><i class="fas fa-envelope"></i> {{email}}</li>
+							<li><i class="fas fa-phone" data-fa-transform="flip-h"></i> {{phone}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+<!--
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-7">
 				<div class="section about">
 					<h3>
 						<?php echo $this->lang->line('about'); ?>
 					</h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima cum ipsum amet id sunt distinctio eos! Impedit dolorum neque alias sequi distinctio nam quas provident? Commodi nesciunt, asperiores! Quis, accusamus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero qui est aperiam accusamus nobis, voluptatibus sapiente fugiat atque ipsam consequatur eius laudantium aliquid quidem hic alias officiis rem praesentium dicta.</div>
 			</div>
+			
 			<div class="col-md-4">
 				<div class="section reviews">
 					<h3>
@@ -17,16 +52,17 @@
 					<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus laborum reprehenderit quibusdam veritatis commodi excepturi deserunt sint corporis, ipsum. Nobis architecto inventore, voluptatibus distinctio ratione odio minus quis, amet rerum.</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+
+			<div class="col-md-5">
 				<div class="section contact">
 					<h3>
 						<?php echo $this->lang->line('contact_us'); ?>
 					</h3>
 					<div class="social">
-						<span class="facebook"><i class="fab fa-facebook-square fa-2x"></i></span>
-						<span class="youtube"><i class="fab fa-youtube-square fa-2x"></i></span>
-						<span class="twitter"><i class="fab fa-twitter-square fa-2x"></i></span>
-						<span class="google"><i class="fab fa-google-plus-square fa-2x"></i></span>
+						<span class="icon facebook"><a href=""><i class="fab fa-facebook-square fa-2x"></i></a></span>
+						<span class="icon youtube"><a href=""><i class="fab fa-youtube-square fa-2x"></i></a></span>
+						<span class="icon twitter"><a href=""><i class="fab fa-twitter-square fa-2x"></i></a></span>
+						<span class="icon google"><a href=""><i class="fab fa-google-plus-square fa-2x"></i></a></span>
 					</div>
 					<ul class="info">
 						<li><i class="fas fa-envelope"></i> support@dealat.com</li>
@@ -37,6 +73,7 @@
 			</div>
 		</div>
 	</div>
+-->
 </footer>
 
 <!--  jQuery library  -->
@@ -76,7 +113,7 @@
 <!--  mixit up  -->
 <script src="<?php echo base_url('assets/js/mixitup.min.js'); ?>"></script>
 <script>
-//	var mixer = mixitup('.products');
+	//	var mixer = mixitup('.products');
 
 </script>
 <!--  slick slider  -->
@@ -99,12 +136,12 @@
 			pauseOnHover: false
 		});
 
-//		$('#card-modal .card-img-slider').slick({
-//			infinite: true,
-//			slidesToShow: 1,
-//			mobileFirst: true,
-//			swipeToSlide: true
-//		});
+		//		$('#card-modal .card-img-slider').slick({
+		//			infinite: true,
+		//			slidesToShow: 1,
+		//			mobileFirst: true,
+		//			swipeToSlide: true
+		//		});
 
 		$('.category-slider').slick({
 			infinite: false,
@@ -136,6 +173,8 @@
 				}
 			]
 		});
+
+
 	});
 
 </script>
@@ -153,61 +192,61 @@
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
 <script>
 	$(document).ready(function() {
-//		$("#fileuploader-register").uploadFile({
-//			//				url: base_url + '/api/ads_control/ad_images_upload',
-//			multiple: false,
-//			dragDrop: false,
-//			//				fileName:"myfile"
-//			acceptFiles: "image/*",
-//			maxFileSize: 10000 * 1024,
-//			showDelete: true,
-//			showPreview: true,
-//			previewHeight: "100px",
-//			previewWidth: "100px",
-//			uploadStr: "Upload Image"
-//		});
-//
-//		$("#fileuploader-ad").uploadFile({
-//			url: base_url + '/api/ads_control/ad_images_upload',
-//			multiple: true,
-//			dragDrop: true,
-//			fileName: "image",
-//			acceptFiles: "image/*",
-//			maxFileSize: 10000 * 1024,
-//			//see docs for localization(lang)
-//			showDelete: true,
-//			//				statusBarWidth:600,
-//			dragdropWidth: "100%",
-//			showPreview: true,
-//			previewHeight: "100px",
-//			previewWidth: "100px",
-//			uploadStr: "Upload Images",
-//			returnType: "json",
-//			onSuccess: function(files, data, xhr, pd) {
-//				console.log("success");
-//				console.log(data);
-//			},
-//			onError: function(files, status, errMsg, pd) {
-//				console.log("fail");
-//				console.log(data);
-//			},
-//			deleteCallback: function(data, pd) {
-//				console.log(data.data);
-//				var arr;
-//				arr=[data.data];
-////				for (var i = 0; i < data.data.length; i++) {
-//					$.post(base_url + '/api/ads_control/delete_images', {
-//							images: arr
-//						},
-//						function(resp, textStatus, jqXHR) {
-//							//Show Message    
-//							alert("File Deleted");
-//						});
-////				}
-////				pd.statusbar.hide(); 
-//
-//			}
-//		});
+		//		$("#fileuploader-register").uploadFile({
+		//			//				url: base_url + '/api/ads_control/ad_images_upload',
+		//			multiple: false,
+		//			dragDrop: false,
+		//			//				fileName:"myfile"
+		//			acceptFiles: "image/*",
+		//			maxFileSize: 10000 * 1024,
+		//			showDelete: true,
+		//			showPreview: true,
+		//			previewHeight: "100px",
+		//			previewWidth: "100px",
+		//			uploadStr: "Upload Image"
+		//		});
+		//
+		//		$("#fileuploader-ad").uploadFile({
+		//			url: base_url + '/api/ads_control/ad_images_upload',
+		//			multiple: true,
+		//			dragDrop: true,
+		//			fileName: "image",
+		//			acceptFiles: "image/*",
+		//			maxFileSize: 10000 * 1024,
+		//			//see docs for localization(lang)
+		//			showDelete: true,
+		//			//				statusBarWidth:600,
+		//			dragdropWidth: "100%",
+		//			showPreview: true,
+		//			previewHeight: "100px",
+		//			previewWidth: "100px",
+		//			uploadStr: "Upload Images",
+		//			returnType: "json",
+		//			onSuccess: function(files, data, xhr, pd) {
+		//				console.log("success");
+		//				console.log(data);
+		//			},
+		//			onError: function(files, status, errMsg, pd) {
+		//				console.log("fail");
+		//				console.log(data);
+		//			},
+		//			deleteCallback: function(data, pd) {
+		//				console.log(data.data);
+		//				var arr;
+		//				arr=[data.data];
+		////				for (var i = 0; i < data.data.length; i++) {
+		//					$.post(base_url + '/api/ads_control/delete_images', {
+		//							images: arr
+		//						},
+		//						function(resp, textStatus, jqXHR) {
+		//							//Show Message    
+		//							alert("File Deleted");
+		//						});
+		////				}
+		////				pd.statusbar.hide(); 
+		//
+		//			}
+		//		});
 
 	});
 
@@ -222,7 +261,7 @@
 			autoHide: true,
 			zIndex: 2000
 		});
-		
+
 		$('[data-toggle="birthdate"]').datepicker({
 			format: 'yyyy-mm-dd',
 			autoHide: true,
@@ -233,13 +272,14 @@
 </script>
 <!--easy tabs-->
 <script src="<?php echo base_url('assets/js/jquery.easytabs.min.js'); ?>"></script>
-	<script>
-		$(function() {
-			$('#profile-tabs').easytabs({
-				//				tabs: "> ul li"
-			});
+<script>
+	$(function() {
+		$('#profile-tabs').easytabs({
+			//				tabs: "> ul li"
 		});
-	</script>
+	});
+
+</script>
 <!-- WOW -->
 <script src="<?php echo base_url('assets/js/wow.min.js'); ?>"></script>
 <script>

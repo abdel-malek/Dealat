@@ -735,7 +735,7 @@ header.home {
 			text-transform: uppercase; //			padding: 0 2.4rem;
 			//			justify-content: center;
 		}
-//		.language-switch a {
+		//		.language-switch a {
 		.language-switch span {
 			color: #fff;
 			border-right: 1px solid #fff;
@@ -744,21 +744,21 @@ header.home {
 			text-decoration: none;
 			font-size: .8rem;
 		}
-//		.language-switch a.selected {
+		//		.language-switch a.selected {
 		.language-switch span.selected {
 			font-weight: bold
 		}
-//		.language-switch a:hover {
+		//		.language-switch a:hover {
 		.language-switch a:hover {
 			color: #eee
 		}
-//		.language-switch a:last-of-type {
+		//		.language-switch a:last-of-type {
 		.language-switch span:last-of-type {
 			border: none;
 		}
 	}
 	@media(max-width: 768px) {
-//		.language-wrapper .language-switch a,
+		//		.language-wrapper .language-switch a,
 		.language-wrapper .language-switch span,
 		.home-icon {
 			font-size: .7rem
@@ -1148,7 +1148,8 @@ header.home {
 .profile-page {
 
 	.products {
-		margin-top: 25px;
+		//		margin-top: 25px;
+		margin-top: 10px;
 		margin-bottom: 30px;
 		@extend %card-horizontal;
 		.main {
@@ -1187,6 +1188,16 @@ header.home {
 	}
 } //End products - search page
 .profile-page {
+
+	.products {
+		margin-top: 0;
+		.card{
+			width: 87%
+		}
+	}
+}
+
+.profile-page {
 	.user-details {
 		font-size: .85rem;
 		color: #333;
@@ -1205,6 +1216,8 @@ header.home {
 		}
 	}
 	.user-ads {
+		max-height: 490px;
+		overflow-y: auto;
 		.status {
 			position: absolute;
 			bottom: 0;
@@ -1222,12 +1235,14 @@ header.home {
 		}
 	}
 	#profile-tabs {
+		    margin-bottom: 20px;
 		.tab {
 			padding-right: 10%
 		}
 		.etabs {
 			text-align: center;
 			border-bottom: solid 1px $main;
+			    margin-bottom: 5px;
 		}
 		.tab {
 			display: inline-block;
@@ -1264,6 +1279,7 @@ header.home {
 		}
 		.chats,
 		.bookmarks {
+			
 			ul {
 				list-style: none;
 				padding: 0
@@ -1285,12 +1301,24 @@ header.home {
 				font-size: .8rem;
 			}
 		}
+		.sessions, .bookmarks-list{
+			max-height: 400px;
+    overflow-y: auto;
+		}
 	}
+}
+
+.main-wrapper {
+	min-height: calc(100vh - 200px);
+
+	/* Equal to height of footer */
+	/* But also accounting for potential margin-bottom of last child */
+	//  margin-bottom: -50px;
 }
 
 //footer
 footer {
-	min-height: 400px;
+	min-height: 100px;
 	color: #eee;
 	background-color: $main;
 	padding: 20px;
@@ -1311,12 +1339,15 @@ footer {
 	.contact {
 		.social {
 			margin-bottom: 20px;
-			span {
+			.icon {
 				padding-right: 8px;
 			}
-			span:hover {
+			.icon:hover a {
 				cursor: pointer;
 				color: #ddd
+			}
+			a {
+				color: #eee
 			}
 		}
 		.info {
@@ -1545,8 +1576,7 @@ select option.placeholder {
 		line-height: 25px;
 		border-radius: 2rem;
 		height: auto;
-		min-height: 35px;
-		//		padding-top: 5px;
+		min-height: 35px; //		padding-top: 5px;
 		//		padding-bottom: 5px;
 		padding: 5px 3px;
 		font-size: .65rem;
@@ -1784,12 +1814,10 @@ select option.placeholder {
 	.image-wrapper {
 		max-width: 120px;
 		text-align: center;
-		border: 1px solid #6c757d;
-		//    width: 40% !important;
+		border: 1px solid #6c757d; //    width: 40% !important;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		display: inline-block;
-		//    min-height: 180px;
+		display: inline-block; //    min-height: 180px;
 		margin-top: 10px;
 		margin-right: 10px;
 		margin: 5px;
@@ -1893,7 +1921,7 @@ label {
 		display: block;
 		text-align: center;
 		color: #aaa;
-//		background-color: #e5e5e5;
+		//		background-color: #e5e5e5;
 		height: 20px;
 		margin-top: 5px;
 		margin-bottom: 5px;
@@ -1960,22 +1988,22 @@ label {
 		display: inline-block;
 		margin-right: 4px;
 	}
-	.self .msg time{
+	.self .msg time {
 		color: #aaa;
 	}
-	.self .msg time:before{
+	.self .msg time:before {
 		color: #bbb;
 	}
-	.other .msg time{
+	.other .msg time {
 		color: #ddd;
 	}
-	.other .msg time:before{
-//		color: #bbb;
+	.other .msg time:before {
+		//		color: #bbb;
 	}
-	
-	.send-wrapper{
+
+	.send-wrapper {
 		position: relative;
-		.telegram{
+		.telegram {
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -2003,39 +2031,58 @@ label {
 		cursor: pointer;
 		transition: .15s;
 		color: #fff;
-		a{
+		a {
 			text-decoration: none;
 			color: #fff
 		}
-		
+
 	}
 	.new-msg:hover {
 		background-color: #fff;
 		color: $main;
-		a{
+		a {
 			text-decoration: none;
-			color:  $main
+			color: $main
 		}
 	}
 }
 
-.profile-page .chat-tab-link {
+.profile-page .sessions {
+	margin-bottom: 0
+}
+.profile-page .session {
 	position: relative;
 	.new-msg {
 		position: absolute;
-		top: -3px;
-		left: 0;
+		top: 21%;
+		left: 5px;
 		background-color: #c30a30;
 		border: 2px solid #fff;
 		border-radius: 50%;
 		width: 36px;
-		height: 24px;
+		height: 30px;
 		text-align: center;
 		transition: .15s;
 		color: #fff;
 	}
 }
 
+//.profile-page .chat-tab-link {
+//	position: relative;
+//	.new-msg {
+//		position: absolute;
+//		top: -3px;
+//		left: 0;
+//		background-color: #c30a30;
+//		border: 2px solid #fff;
+//		border-radius: 50%;
+//		width: 36px;
+//		height: 24px;
+//		text-align: center;
+//		transition: .15s;
+//		color: #fff;
+//	}
+//}
 #report-form .SumoSelect {
 	text-align: left;
 	min-width: 200px;

@@ -27,8 +27,8 @@
 
 		<div class="container main">
 			<?php if($category_name){ ?>
-			<div class="mb-4">
-				<?php echo 'Showing results from ' . $category_name ;?>
+			<div class="mb-4 search-result-label">
+				<?php echo $this->lang->line('results_from') . $category_name ;?>
 			</div>
 			<?php }?>
 			<div class="row no-gutters">
@@ -98,8 +98,10 @@
 							</div>
 						</div>
 						<?php endforeach; ?>
-						<div class="text-center">
-							<?php else: echo 'No search results found'?>
+						
+							<?php else: ?>
+							<div class="mx-auto mt-5" style="font-size: 1.1rem">
+							<?php echo $this->lang->line('no_results_found'); ?>
 						</div>
 
 						<?php endif;?>

@@ -400,7 +400,7 @@ $(function () {
 			}
 			$('#filter-modal .city-select')[0].sumo.reload();
 
-			$('#ad-modal .location-select')[0].sumo.disable();
+			$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.disable();
 			//			$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.disable();
 
 			//			$('#ad-modal .city-select , #edit-ad-modal .city-select, #filter-modal .city-select').change(function () {
@@ -1211,9 +1211,9 @@ var ajaxLoadTimeout;
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
 					if (lang === "ar") {
-						$("#success-btn-modal .text").html("تم إنشاء إعلانك بنجاح وهو الآن معلق بانتظار الموافقة عليه");
+						$("#success-btn-modal .text").html("تم إنشاء إعلانك بنجاح وهو الآن بانتظار الموافقة عليه");
 					} else {
-						$("#success-btn-modal .text").html("Your ad has been added successfully and it is now pending waiting for approval");
+						$("#success-btn-modal .text").html("Your ad has been added successfully and it is now waiting for approval");
 					}
 
 					$("#success-btn-modal").modal("show");
@@ -1413,7 +1413,7 @@ var ajaxLoadTimeout;
 			} else {
 //				console.log(data);
 				if (lang === "ar") {
-					$("#success-modal .text").html("م حفظ البحث بنجاح");
+					$("#success-modal .text").html("تم حفظ البحث بنجاح");
 				} else {
 					$("#success-modal .text").html("Search saved successfully");
 				}
@@ -1657,25 +1657,30 @@ var ajaxLoadTimeout;
 						notSeenMsgs += 1;
 					}
 				}
+				
 				if (notSeenMsgs > 0) {
 //					console.log("not");
 					$(".header-account-logged .new-msg").removeClass("d-none");
-					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
+//					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
+//					$(".profile-page .session .new-msg").removeClass("d-none");
 
 
 				} else {
 					$(".header-account-logged .new-msg").addClass("d-none");
-					$(".profile-page .chat-tab-link .new-msg").addClass("d-none");
+//					$(".profile-page .chat-tab-link .new-msg").addClass("d-none");
+					$(".profile-page .session .new-msg").addClass("d-none");
 				}
 
-				$(".sessions .session").each(function () {
+				if ($(".profile-page").length > 0) {
+				$(".profile-page .sessions .session").each(function () {
 					$(this).removeAttr("style");
 					for (i in newMsgSessions) {
 						if ($(this).data("sessionId") == newMsgSessions[i]) {
 							$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+							$(this).find(".new-msg").removeClass("d-none");
 						}
 					}
-				});
+				});}
 			}
 		});
 	}
@@ -1704,6 +1709,7 @@ var ajaxLoadTimeout;
 		$("#chat-modal .chat").stop().animate({
 			scrollTop: $("#chat-modal .chat")[0].scrollHeight
 		}, 300);
+		$("#chat-modal input[name='msg']").focus();
 		var lastMsgId;
 		intervalId = setInterval(function () {
 
@@ -1952,6 +1958,20 @@ var ajaxLoadTimeout;
 //
 //				//			}
 				//login directly
+				$("#verify-modal").modal("hide");
+				setTimeout(function () {
+					if (lang === "ar") {
+						$("#success-modal .text").html("تم إنشاء حسابك بنجاح");
+					} else {
+						$("#success-modal .text").html("You have successfully registered");
+					}
+
+					$("#success-modal").modal("show");
+				}, 500);
+				setTimeout(function () {
+					$("#success-modal").modal("hide");
+					
+				}, 3000);
 				$.ajax({
 			type: "post",
 			url: base_url + '/users_control_web/login',
@@ -2174,5 +2194,25 @@ var ajaxLoadTimeout;
 		});
 	});
 
-
+//footer content
+	$.ajax({
+			type: "get",
+			url: base_url + '/api/data_control/get_about_info',
+			dataType: "json"
+		}).done(function (data) {
+			if (data.status === false) {
+//				console.log(data);
+			} else {
+//				console.log(data);
+				template = $('#footer-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data);
+						$(".page-footer").append(rendered);
+				
+				template = $('#social-fixed-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data);
+						$(".social-fixed .icons").append(rendered);
+			}
+		});
 });

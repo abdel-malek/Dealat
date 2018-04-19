@@ -288,4 +288,8 @@ $lang['login_form'] = 'Login Form';
 $lang['login'] = 'Login';
 
 $lang['log_out'] = 'Log Out';
-
+$lang['item_name'] = "Name";
+$lang['item_price'] = "Price";
+$lang['seller_name']= 'Seller name';
+$lang['results_from'] = 'Showing results from ';
+$lang['no_results_found'] = 'No search results found';

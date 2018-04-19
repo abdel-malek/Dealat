@@ -3,7 +3,7 @@
 	<section>
 		<div class="container-fluid">
 			<div class="ads-slider">
-				
+
 			</div>
 		</div>
 	</section>
@@ -72,19 +72,19 @@
 		</div>
 
 		<div class="container-fluid main">
-			
+
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-<!--
+					<!--
 					<h5 class="recent-txt">
 						<?php echo $this->lang->line('latest_ads'); ?>
 					</h5>
 -->
-				<div class="row mb-4 ml-0 mr-0 align-items-center">
+					<div class="row mb-4 ml-0 mr-0 align-items-center">
 						<div class="col-md-2">
 							<h5 class="recent-txt mb-0">
-						<?php echo $this->lang->line('latest_ads'); ?>
-					</h5>
+								<?php echo $this->lang->line('latest_ads'); ?>
+							</h5>
 						</div>
 						<div class="col-sm-8 col-md-6">
 							<div class="search-wrapper mb-2">
@@ -106,10 +106,10 @@
 
 								<?php if($ad->is_featured != 0): ?>
 								<div class="feat feat-ar">
-								<img class="" src="<?php echo base_url('assets/images/featured/featured_ad_ar.png'); ?>" alt="">
+									<img class="" src="<?php echo base_url('assets/images/featured/featured_ad_ar.png'); ?>" alt="">
 								</div>
 								<div class="feat feat-en">
-								<img class="" src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt="">
+									<img class="" src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt="">
 								</div>
 								<?php endif; ?>
 
@@ -122,9 +122,14 @@
 											<div class="card-title">
 												<?php echo $ad->title ?>
 											</div>
+											<div>
+												<div class="clearfix"></div>
+												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
+											</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
 										</div>
-										<div class="col-12 mt-2">
+
+										<div class="col-12">
 											<div class="clearfix"></div>
 											<div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>
@@ -154,7 +159,7 @@
 				<div class="col-md-2 right-col order-first order-md-last">
 					<button class="btn button2 place-ad animated infinite pulse "><i class="fas fa-plus"></i> <?php echo $this->lang->line('place_ad'); ?></button>
 					<aside class="banners">
-						
+
 					</aside>
 				</div>
 
