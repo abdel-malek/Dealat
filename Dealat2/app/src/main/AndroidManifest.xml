@@ -8,6 +8,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!-- This tells Android Market (and any other interested parties) that your application makes use of
+    the camera and to filter your application accordingly.
+    Using the <uses-feature> does not guarantee that your app will not be installed on a device without a camera,
+    even if it’s absolutely required. If you only publish through Android Market, though,
+    users with devices without a camera will not see your app listed
+     -->
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -25,6 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".View.LanguageActivity"
+            android:screenOrientation="portrait"
+            />
+
         <activity
             android:name=".View.CityActivity"
             android:screenOrientation="portrait" />
@@ -66,10 +79,10 @@
             android:name=".View.AdDetailsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".View.ReportActivity"
+        <activity
+            android:name=".View.ReportActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".View.MyProfileActivity"
@@ -79,8 +92,7 @@
         <activity
             android:name=".View.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".View.EditAdActivity"
@@ -89,16 +101,21 @@
 
         <activity
             android:name=".View.ChatActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name=".View.BookmarksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".View.ImagesDetailsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".View.BookmarksActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".View.ImagesDetailsActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".View.AboutActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".View.AboutActivity"
+        <activity android:name=".View.PublicNotificationActivity"
             android:screenOrientation="portrait"
             />
 
@@ -117,18 +134,20 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".FCM.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
 
         <activity
@@ -136,8 +155,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>

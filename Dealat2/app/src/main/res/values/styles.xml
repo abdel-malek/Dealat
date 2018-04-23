@@ -63,4 +63,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
+    <!-- this was needed to change cursor and bubble color in editText because The bubble uses colorAccent-->
+    <style name="editTextRed">
+        <item name="colorAccent">@color/red</item>
+    </style>
 </resources>

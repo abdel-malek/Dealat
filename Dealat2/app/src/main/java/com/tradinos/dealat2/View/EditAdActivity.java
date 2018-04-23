@@ -156,10 +156,6 @@ public class EditAdActivity extends MasterActivity {
             public void OnSuccess(Ad result) {
                 currentAd = result;
                 videoServerPath = result.getMainVideoUrl();
-                if (videoServerPath != null) {
-                    imageButtonCheck.setVisibility(View.VISIBLE);
-                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_play_arrow_gray));
-                }
 
                 adapter = new HorizontalAdapter(mContext, linearLayout);
                 List<Image> images = new ArrayList<>();
@@ -201,6 +197,12 @@ public class EditAdActivity extends MasterActivity {
                         HideProgressDialog();
 
                         showTemplate();
+
+                        if (videoServerPath != null) {
+                            imageButtonCheck.setVisibility(View.VISIBLE);
+                            imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_play_arrow_gray));
+                        }
+
                         fillTemplate(result);
                     }
                 });
@@ -869,6 +871,8 @@ public class EditAdActivity extends MasterActivity {
 
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
+
+                findViewById(R.id.containerVideo).setVisibility(visibility);
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideSpace)))
                     containerSpace.setVisibility(visibility);

@@ -6,7 +6,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    public static final int NOT_REGISTERED = 1, LOCATED = 2, PENDING = 3, REGISTERED = 4;
+    public static final int NOT_REGISTERED = 1, LOCATED = 2, PENDING = 3, REGISTERED = 4, Languaged = 5;
 
     private String id, name, phone, whatsAppNumber, email;
     private String serverKey, cityId, cityName;

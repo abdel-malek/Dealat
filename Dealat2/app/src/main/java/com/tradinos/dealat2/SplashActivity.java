@@ -10,18 +10,22 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Controller.ParentController;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.View.CityActivity;
 import com.tradinos.dealat2.View.HomeActivity;
+import com.tradinos.dealat2.View.LanguageActivity;
 import com.tradinos.dealat2.View.MasterActivity;
 import com.tradinos.dealat2.View.RegisterActivity;
 import com.tradinos.dealat2.View.VerificationActivity;
 
 public class SplashActivity extends MasterActivity {
 
-    /** Duration of wait **/
+    /**
+     * Duration of wait
+     **/
     private final int SPLASH_DISPLAY_LENGTH = 1500;
 
     @Override
@@ -34,13 +38,18 @@ public class SplashActivity extends MasterActivity {
 
         /* New Handler to
          * close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 Intent mainIntent;
 
-                switch (MyApplication.getUserState()){
+                switch (MyApplication.getUserState()) {
+                    case User.Languaged:
+                        mainIntent = new Intent(SplashActivity.this, CityActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+                        break;
 
                     case User.LOCATED:
                         mainIntent = new Intent(SplashActivity.this, RegisterActivity.class);
@@ -56,31 +65,37 @@ public class SplashActivity extends MasterActivity {
 
                     case User.REGISTERED:
 
-                        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                        UserController.getInstance(new ParentController(mContext, new FaildCallback() {
+                        UserController.getInstance(mController).getUserInfo(new SuccessCallback<User>() {
                             @Override
-                            public void OnFaild(Code errorCode, String Message, String data) {
-                                HideProgressDialog();
+                            public void OnSuccess(User result) {
+                                new CurrentAndroidUser(mContext).Save(result);
+                                MyApplication.saveCity(result.getCityId());
 
-                                Intent intent = new Intent(mContext, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        })).saveUserToken(refreshedToken, new SuccessCallback<String>() {
-                            @Override
-                            public void OnSuccess(String result) {
-                                HideProgressDialog();
+                                final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                                UserController.getInstance(new ParentController(mContext, new FaildCallback() {
+                                    @Override
+                                    public void OnFaild(Code errorCode, String Message, String data) {
 
-                                Intent intent = new Intent(mContext, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
+                                        Intent intent = new Intent(mContext, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })).saveUserToken(refreshedToken, new SuccessCallback<String>() {
+                                    @Override
+                                    public void OnSuccess(String result) {
+
+                                        Intent intent = new Intent(mContext, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
                             }
                         });
 
                         break;
 
                     default: //NOT_REGISTERED
-                        mainIntent = new Intent(SplashActivity.this, CityActivity.class);
+                        mainIntent = new Intent(SplashActivity.this, LanguageActivity.class);
                         startActivity(mainIntent);
                         finish();
                 }

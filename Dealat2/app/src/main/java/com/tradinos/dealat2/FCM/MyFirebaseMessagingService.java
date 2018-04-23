@@ -19,6 +19,7 @@ import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.View.AdDetailsActivity;
 import com.tradinos.dealat2.View.ChatActivity;
 import com.tradinos.dealat2.View.HomeActivity;
+import com.tradinos.dealat2.View.PublicNotificationActivity;
 
 import org.json.JSONException;
 
@@ -88,7 +89,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra("chat", chat);
                 break;
 
-            default://for Public notification
+            case "3":
+                intent = new Intent(this, PublicNotificationActivity.class);
+                intent.putExtra("title", title);
+                intent.putExtra("txt", txt);
+                break;
+
+            default: // just in case
                 intent = new Intent(this, HomeActivity.class);
         }
 

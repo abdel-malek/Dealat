@@ -19,6 +19,7 @@ import android.widget.GridView;
 
 import com.tradinos.dealat2.Adapter.ImageAdapter;
 import com.tradinos.dealat2.Model.Image;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
 import java.io.File;
@@ -36,8 +37,6 @@ public class SelectImagesActivity extends MasterActivity {
 
     private final int REQUEST_CAMERA = 12,
             REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14;
-
-    private String mCurrentPhotoPath;
 
     private ImageAdapter adapter;
 
@@ -108,9 +107,14 @@ public class SelectImagesActivity extends MasterActivity {
                         }
                         // Continue only if the File was successfully created
                         if (photoFile != null) {
-                            //Uri photoUri = Uri.fromFile(photoFile);
-                            photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
-                                    + ".provider", photoFile);
+                            // N is for Nougat Api 24 Android 7
+                            if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT){
+                                photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
+                                        + ".provider", photoFile);
+                            }
+                            else
+                                photoUri = Uri.fromFile(photoFile);
+
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                             startActivityForResult(takePictureIntent, REQUEST_CAMERA);
                         }
@@ -139,7 +143,7 @@ public class SelectImagesActivity extends MasterActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == RESULT_OK) {
-                   adapter.addCapturedImage(new Image(mCurrentPhotoPath));
+                   adapter.addCapturedImage(new Image(MyApplication.getImagePath()));
                    adapter.notifyDataSetChanged();
 
             } else if (resultCode == RESULT_CANCELED) {
@@ -185,6 +189,8 @@ public class SelectImagesActivity extends MasterActivity {
 
             listOfAllImages.add(0, new Image(absolutePathOfImage));
         }
+        cursor.close();
+
         return listOfAllImages;
     }
 
@@ -208,7 +214,8 @@ public class SelectImagesActivity extends MasterActivity {
         MediaScannerConnection.scanFile(mContext, new String[]{image.getPath()}, new String[]{"image/*"}, null);
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        MyApplication.saveImagePath(image.getAbsolutePath());
+
         return image;
     }
 }

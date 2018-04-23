@@ -53,12 +53,15 @@
 
 
     <!-- Views -->
+    <string name="labelPleaseSelectLang">Please, Select your language</string>
     <string name="labelPleaseSelectCity">Please, Select your city</string>
     <string name="labelSelectCity">Select a city</string>
     <string name="labelGender">Gender</string>
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
+    <string name="labelAgree">I have read and agree the</string>
+    <string name="labelTerms">terms and conditions of Dealat</string>
     <string name="labelFeatured">Featured</string>
     <string name="labelAutomatic">Automatic</string>
     <string name="labelWithFurn">With Furniture</string>
@@ -76,6 +79,8 @@
     <string name="labelSelectImage">Select Image</string>
     <string name="labelRemoveImage">Remove Image</string>
     <string name="labelReport">Report an ad</string>
+    <string name="labelPaidFeature">This feature lets your ad appear first in ads list, but it\'s paid.\n
+        If you want your ad to be featured, enable it, and Admin will contact you.</string>
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
@@ -156,7 +161,7 @@
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
     <string name="buttonVerify">Verify</string>
-    <string name="buttonSell">Submit an Ad</string>
+    <string name="buttonSell">Submit your ad for free</string>
     <string name="buttonTakePhoto">Take a photo</string>
     <string name="buttonDone">Done</string>
     <string name="buttonCancel">Cancel</string>
@@ -169,6 +174,9 @@
     <string name="buttonSave">Save</string>
     <string name="buttonSend">Send</string>
     <string name="buttonReport">Report</string>
+    <string name="buttonContinue">Continue</string>
+    <string name="buttonOpenApp">Open App</string>
+    <string name="buttonDeactivate">Deactivate Account</string>
 
     <string name="tabMyAds">My Ads</string>
     <string name="tabFav">Favorites</string>
@@ -218,6 +226,7 @@
     <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
     <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
     <string name="areYouSureDeleteSearch">Are you sure you want to delete this search?</string>
+    <string name="areYouSureDeactivate">Are you sure you want to deactivate your account?</string>
     <string name="logout_messg">Are you sure you want to logout?</string>
 
 </resources>

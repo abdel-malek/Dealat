@@ -2,6 +2,7 @@ package com.tradinos.dealat2.View;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -172,7 +173,7 @@ public class AdDetailsActivity extends MasterActivity {
 
                 // SpannableString content = new SpannableString(result.getSellerPhone());
                 // content.setSpan(new UnderlineSpan(), 0, result.getSellerPhone().length(), 0);
-                textViewPhone.setText(result.getSellerPhone());
+                textViewPhone.setText(getPhoneNumber(result.getSellerPhone()));
 
                 if (result.isNegotiable())
                     textNegotiable.setText(getString(R.string.yes));
@@ -218,11 +219,6 @@ public class AdDetailsActivity extends MasterActivity {
                         buttonFav.setVisibility(View.VISIBLE);
 
                         findViewById(R.id.containerContact).setVisibility(View.VISIBLE);
-                       /*
-                        if (currentAd.getWhatsAppNumber() != null){
-                            findViewById(R.id.line20).setVisibility(View.VISIBLE);
-                            findViewById(R.id.buttonWhatsApp).setVisibility(View.VISIBLE);
-                        }*/
 
                         buttonReport.setVisibility(View.VISIBLE); // seller cannot report their ad
                     }
@@ -371,7 +367,7 @@ public class AdDetailsActivity extends MasterActivity {
                     } else {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
 
-                        callIntent.setData(Uri.parse("tel:" + getString(R.string.phonePrefix) + currentAd.getSellerPhone()));
+                        callIntent.setData(Uri.parse("tel:" + getPhoneNumber(currentAd.getSellerPhone())));
                         startActivity(callIntent);
                     }
 
@@ -469,7 +465,7 @@ public class AdDetailsActivity extends MasterActivity {
         if (requestCode == REQUEST_CALL) {
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + getString(R.string.phonePrefix) + currentAd.getSellerPhone()));
+            callIntent.setData(Uri.parse("tel:" + getPhoneNumber(currentAd.getSellerPhone())));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
                 startActivity(callIntent);
         }

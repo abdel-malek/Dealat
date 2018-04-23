@@ -1,6 +1,8 @@
 package com.tradinos.dealat2.View;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -27,6 +29,7 @@ import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.SplashActivity;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.Utils.SelectDateFragment;
 
@@ -103,7 +106,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                         if (!TextUtils.isEmpty(result.getEmail()))
                             editEmail.setText(result.getEmail());
 
-                        if (!TextUtils.isEmpty(result.getBirthday())){
+                        if (!TextUtils.isEmpty(result.getBirthday())) {
                             editBirthday.setText(result.getBirthday()); //formattedDate
                             buttonRemove.setVisibility(View.VISIBLE);
                         }
@@ -239,6 +242,35 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                 });
 
                 dialog.show();
+
+                break;
+
+            case R.id.buttonDelete:
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                ShowProgressDialog();
+                                UserController.getInstance(mController).deactivateAccount(new SuccessCallback<String>() {
+                                    @Override
+                                    public void OnSuccess(String result) {
+                                        HideProgressDialog();
+                                        MyApplication.saveUserState(User.NOT_REGISTERED);
+                                        new CurrentAndroidUser(mContext).clearUser();
+
+                                        Intent intent = new Intent(mContext, SplashActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                });
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+                builder.setMessage(R.string.areYouSureDeactivate).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                        .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
 
                 break;
 

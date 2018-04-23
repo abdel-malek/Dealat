@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
-    android:id="@+id/parentPanel"
     >
     <TextView
         android:id="@+id/textView"
@@ -11,31 +10,24 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:layout_marginTop="36dp"
-        android:text="@string/labelPleaseSelectCity"
+        android:text="@string/labelPleaseSelectLang"
         android:textColor="@color/white"
         android:textAppearance="@style/textHeadline"
         />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_above="@+id/buttonTrue"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        >
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerHeight="@dimen/lineHight"
-            android:divider="@color/white"
-            android:scrollbars="none"
-            />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/buttonTrue"
+        android:dividerHeight="@dimen/lineHight"
+        android:divider="@color/white"
+        android:scrollbars="none"
+        />
 
     <Button
         android:id="@+id/buttonTrue"
@@ -43,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="onClick"
-        android:enabled="false"
         android:text="@string/buttonContinue"
         android:textAppearance="@style/textNormal"
         android:textColor="@color/white"

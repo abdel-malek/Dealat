@@ -46,8 +46,11 @@
                     >
 
                     <FrameLayout
+                        android:id="@+id/containerVideo"
                         android:layout_width="@dimen/imageViewLarge"
-                        android:layout_height="@dimen/imageViewLarge">
+                        android:layout_height="@dimen/imageViewLarge"
+                        android:visibility="gone"
+                        >
 
                         <ImageButton
                             android:id="@+id/buttonVideo"

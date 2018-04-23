@@ -49,7 +49,7 @@ public class MyApplication extends Application {
 
     public static Locale getLocale() {
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("locale", "en"); // English is default
+        String json = sharedPreferences.getString("locale", "ar"); // Arabic is default
 
         return gson.fromJson(json, Locale.class);
     }
@@ -84,6 +84,17 @@ public class MyApplication extends Application {
 
     public static String getCity() {
         return sharedPreferences.getString("cityId", "");
+    }
+
+    public static void saveImagePath(String path){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("path", path);
+        editor.commit();
+    }
+
+    public static String getImagePath(){
+        return sharedPreferences.getString("path", "");
     }
 
     public static List<Category> getAllCategories() {
@@ -170,7 +181,7 @@ public class MyApplication extends Application {
     }
 
     public static String getBaseUrl() {
-        return "http://dealat.tradinos.com/";
-       // return "http://192.168.9.17/Dealat/";
+       // return "http://dealat.tradinos.com/";
+        return "http://192.168.9.17/Dealat/";
     }
 }

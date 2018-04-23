@@ -47,7 +47,7 @@ public class UserController extends ParentController {
         String url = new URLBuilder(APIModel.users, "get_countries").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new ItemListParser("city_id"), successCallback, getmFaildCallback());
 
-        //addToHeader(request);
+        addToHeader(request);
         request.Call();
     }
 
@@ -117,6 +117,15 @@ public class UserController extends ParentController {
         addToHeader(request);
         authenticationRequired(request);
 
+        request.Call();
+    }
+
+    public void deactivateAccount(SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.users, "delete_my_account").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+
+        authenticationRequired(request);
+        addToHeader(request);
         request.Call();
     }
 

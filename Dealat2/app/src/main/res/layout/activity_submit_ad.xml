@@ -44,8 +44,11 @@
                     >
 
                     <FrameLayout
+                        android:id="@+id/containerVideo"
                         android:layout_width="@dimen/imageViewLarge"
-                        android:layout_height="@dimen/imageViewLarge">
+                        android:layout_height="@dimen/imageViewLarge"
+                        android:visibility="gone"
+                        >
 
                         <ImageButton
                             android:id="@+id/buttonVideo"
@@ -227,8 +230,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="16dp"
                 android:background="@color/white"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/labelPaidFeature"
+                android:textColor="@color/whiteTransparent"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                />
 
             <!-- Templates -->
 
@@ -566,6 +576,21 @@
                 style="@style/editTextWhite"
                 android:background="@drawable/outline_white"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switchTerms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    android:theme="@style/switchStyle"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
         </LinearLayout>
     </ScrollView>

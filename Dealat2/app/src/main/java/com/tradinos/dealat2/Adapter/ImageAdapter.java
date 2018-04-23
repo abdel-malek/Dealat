@@ -30,7 +30,8 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context context, List<Image> images) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.images = images;
+        this.images = new ArrayList<>();
+        this.images.addAll(images);
     }
 
     @Override
@@ -64,8 +65,6 @@ public class ImageAdapter extends BaseAdapter {
 
         view = this.inflater.inflate(R.layout.row_image, null);
         view.setTag(i);
-        //view.setLayoutParams(new FrameLayout.LayoutParams(220, 220));
-
 
         ImageView imageView = view.findViewById(R.id.imageView);
         final ImageView imageViewCheck = view.findViewById(R.id.imageViewCheck);

@@ -49,6 +49,7 @@
     <string name="alsoSelectVideo">ويمكنك إرفاق فيديو أيضاً.</string>
 
     <!-- Views -->
+    <string name="labelPleaseSelectLang">من فضلك، اختر لغتك</string>
     <string name="labelPleaseSelectCity">من فضلك، اختر محافظتك</string>
     <string name="labelSelectCity">اختر محافظة</string>
     <string name="labelGender">الجنس</string>
@@ -72,6 +73,8 @@
     <string name="labelSelectImage">اختيار صورة</string>
     <string name="labelRemoveImage">إزالة الصورة</string>
     <string name="labelReport">الإبلاغ عن الإعلان</string>
+    <string name="labelPaidFeature">    هذه الميزة تجعل إعلانك يظهر ببداية قائمة الإعلانات، وهي ميزة مدفوعة.\n
+إذا كنت تريد أن يكون إعلانك مميّزاً قم بتفعيل هذا الخيار، وبعدها ستتواصل الإدارة معك.</string>
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
@@ -152,7 +155,7 @@
     <string name="buttonRegister">تسجيل</string>
     <string name="buttonSkip">تخطّي</string>
     <string name="buttonVerify">تفعيل الحساب</string>
-    <string name="buttonSell">إضافة عرض</string>
+    <string name="buttonSell">اضف إعلانك مجاناً</string>
     <string name="buttonTakePhoto">التقط صورة</string>
     <string name="buttonDone">تم</string>
     <string name="buttonCancel">إلغاء</string>
@@ -165,6 +168,9 @@
     <string name="buttonSave">حفظ</string>
     <string name="buttonSend">إرسال</string>
     <string name="buttonReport">إبلاغ</string>
+    <string name="buttonContinue">متابعة</string>
+    <string name="buttonOpenApp">افتح التطبيق</string>
+    <string name="buttonDeactivate">تعطيل الحساب</string>
 
     <string name="tabMyAds">إعلاناتي</string>
     <string name="tabFav">المفضلة</string>
@@ -214,6 +220,7 @@
     <string name="areYouSureEdit">هذا الإعلان سيكون قيد الانتظار حتى يوافق المدير على التعديلات، هل أنت متأكد أنك تريد تعديله؟</string>
     <string name="areYouSureDeleteAd">هل أنت متأكد أنك تريد حذف هذا الإعلان؟</string>
     <string name="areYouSureDeleteSearch">هل أنت متأكد أنك تريد حذف هذا البحث؟</string>
+    <string name="areYouSureDeactivate">هل أنت متأكد أنك تريد تعطيل حسابك؟</string>
     <string name="logout_messg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
 
 

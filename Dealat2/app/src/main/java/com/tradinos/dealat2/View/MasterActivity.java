@@ -60,7 +60,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         super.setContentView(contentViewRes);
         mContext = this; //assigned in setContentView
 
-        Tracker tracker = ((MyApplication)getApplication()).getDefaultTracker();
+        Tracker tracker = ((MyApplication) getApplication()).getDefaultTracker();
         tracker.setScreenName(this.getClass().getSimpleName());
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -321,6 +321,24 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             if (items.get(i).getId().equals(id))
                 return i;
         return 0;
+    }
+
+    public String getPhoneNumber(String number) {
+
+        if (!number.startsWith(getString(R.string.phonePrefix)))
+            return getString(R.string.phonePrefix) + number;
+
+        return number;
+    }
+
+    public String getWhatsAppNumber(String number) {
+        if (number.startsWith("0"))
+            number = number.substring(1);
+
+        if (number.length() == 9)
+            number = "963" + number;
+
+        return number;
     }
 
     public String formattedDate(String stringDate) {

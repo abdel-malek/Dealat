@@ -36,9 +36,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/container2"
+        android:layout_height="match_parent"
         android:layout_below="@+id/container"
+        android:layout_above="@+id/container2"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:scrollbars="none"
@@ -63,13 +63,15 @@
             android:layout_marginEnd="8dp"
             android:padding="8dp"
             android:hint="@string/hintWriteMsg"
+            android:textColor="@color/grayDark"
+            android:theme="@style/editTextRed"
             android:background="@drawable/rounded_corner_white"
             />
 
         <LinearLayout
             android:id="@+id/container3"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <ImageButton
                 android:id="@+id/buttonTrue"
                 android:layout_width="@dimen/imageSmall"

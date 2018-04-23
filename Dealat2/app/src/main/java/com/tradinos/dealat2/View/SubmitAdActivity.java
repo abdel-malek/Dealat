@@ -119,7 +119,7 @@ public class SubmitAdActivity extends MasterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_item_info);
+        setContentView(R.layout.activity_submit_ad);
         super.onCreate(savedInstanceState);
     }
 
@@ -336,7 +336,7 @@ public class SubmitAdActivity extends MasterActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("video/*");
-                startActivityForResult(Intent.createChooser(intent,"Select a Video"), REQUEST_SELECT_VIDEO);
+                startActivityForResult(Intent.createChooser(intent, "Select a Video"), REQUEST_SELECT_VIDEO);
             }
         });
 
@@ -437,13 +437,13 @@ public class SubmitAdActivity extends MasterActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
 
-                if (selectedCategory.getTemplateId() != currentTemplate) {
-                    replaceTemplate();
+                // if (selectedCategory.getTemplateId() != currentTemplate) {
+                replaceTemplate();
 
-                    List<Type> templateBrands = brands.get(currentTemplate);
-                    if (templateBrands != null)
-                        spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
-                }
+                List<Type> templateBrands = brands.get(currentTemplate);
+                if (templateBrands != null)
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+                //  }
             } else if (requestCode == REQUEST_SELECT_IMG) {
                 List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
 
@@ -494,6 +494,16 @@ public class SubmitAdActivity extends MasterActivity {
 
         switch (currentTemplate) {
             case Category.PROPERTIES:
+
+                // video is only available with property
+                if (visibility == View.GONE && videoServerPath != null) {
+                    deletedVideosJsonArray.put(videoServerPath);
+                    videoServerPath = null;
+                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
+                    imageButtonCheck.setVisibility(View.INVISIBLE);
+                }
+
+                findViewById(R.id.containerVideo).setVisibility(visibility);
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideSpace)))
                     containerSpace.setVisibility(visibility);

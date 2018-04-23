@@ -131,6 +131,17 @@ public class ChatActivity extends MasterActivity {
 
     @Override
     public void assignActions() {
+
+        // this handy, when editTextMsg is focused and keypad is opened, the very last messages will be pushed up
+        // and not covered with editTextMsg (more precisely container2
+        recyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                if (adapter != null)
+                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
+
         editTextMsg.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -93,7 +93,7 @@ public class AboutActivity extends MasterActivity {
         if (requestCode == REQUEST_CALL) {
 
             Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + about.getPhone()));
+            callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
                 startActivity(callIntent);
         }
@@ -131,7 +131,7 @@ public class AboutActivity extends MasterActivity {
                 } else {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
 
-                    callIntent.setData(Uri.parse("tel:" + about.getPhone()));
+                    callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
                     startActivity(callIntent);
                 }
                 break;
