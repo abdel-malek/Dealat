@@ -1150,7 +1150,8 @@ header.home {
 	.products {
 		//		margin-top: 25px;
 		margin-top: 10px;
-		margin-bottom: 30px;
+//		margin-bottom: 30px;
+		margin-bottom: 0;
 		@extend %card-horizontal;
 		.main {
 			padding-top: 15px;
@@ -1191,6 +1192,7 @@ header.home {
 
 	.products {
 		margin-top: 0;
+		
 		.card{
 			width: 87%
 		}
@@ -1216,8 +1218,8 @@ header.home {
 		}
 	}
 	.user-ads {
-		max-height: 490px;
-		overflow-y: auto;
+//		max-height: 490px;
+//		overflow-y: auto;
 		.status {
 			position: absolute;
 			bottom: 0;
@@ -1302,8 +1304,8 @@ header.home {
 			}
 		}
 		.sessions, .bookmarks-list{
-			max-height: 400px;
-    overflow-y: auto;
+//			max-height: 400px;
+//    overflow-y: auto;
 		}
 	}
 }
@@ -1555,6 +1557,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main,
 #fileuploader-ad-main,
 #fileuploader-ad-video,
+#fileuploader-edit-ad-video,
 #fileuploader-register {
 	.ajax-upload-dragdrop {
 		padding: 10px;
@@ -1706,10 +1709,12 @@ select option.placeholder {
 	.lines:first-child {
 		margin-top: 0px;
 	}
-
+	.border-middle{
+		border-right: 1px solid #dee2e6;
+	}
 	@media(max-width: 768px) {
-		.border-right {
-			border: none !important
+		.border-middle {
+			border: none
 		}
 	}
 }
@@ -1908,8 +1913,8 @@ label {
 		margin: 0; //    padding: 0 0 50px 0;
 		padding: 0 0 10px 0; //    margin-top: 60px;
 		margin-bottom: 10px;
-		overflow-y: auto;
-		max-height: 50vh;
+//		overflow-y : auto;
+//		max-height: 50vh;
 	}
 	.chat li {
 		padding: 0.5rem;
@@ -2085,5 +2090,6 @@ label {
 //}
 #report-form .SumoSelect {
 	text-align: left;
+	width: auto;
 	min-width: 200px;
 }

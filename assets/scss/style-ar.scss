@@ -170,6 +170,16 @@ section.search {
 
 #register-form{
     direction: rtl;
+	.border-middle{
+		border-right: none;
+		border-left: 1px solid #dee2e6;
+	}
+	.phone-wrapper{
+		direction: ltr;
+		input{
+			direction: rtl;
+		}
+	}
 }
 #fileuploader-edit-ad,
 #fileuploader-ad,

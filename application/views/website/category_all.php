@@ -67,8 +67,13 @@
 								</div>
 								<?php endif; ?>
 
+								<?php if($ad->main_image == null): ?>
+								<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/default_ad/' .$ad->tamplate_id. '.png'); ?>')">
+								</div>
+								<?php else: ?>
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 								</div>
+								<?php endif; ?>
 								
 								<div class="card-body">
 									<div class="row">
@@ -77,16 +82,10 @@
 											<div class="card-title">
 												<?php echo $ad->title ?>
 											</div>
-											<div class="col-12 mt-2">
-											<div class="card-title">
-												<?php echo $ad->title ?>
-											</div>
 											<div>
 												<div class="clearfix"></div>
 												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 											</div>
-											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
-										</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
 										</div>
 <!--										<div class="col-5 mt-2">-->

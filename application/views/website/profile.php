@@ -193,7 +193,7 @@
 						<script id="chat-sessions-template" type="text/template">
 
 							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
-							<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
+								<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
 								<div class="row no-gutters">
 									<div class="col-2">
 										<div class="chat-img text-center">
@@ -293,7 +293,7 @@
 
 								<!--
 								<div class="form-group">
-									<nav class="navbar navbar-expand-md navbar-light bg-light locations-nav">
+									<nav class="navbar navbar-expand-md navbar-light  locations-nav">
 										<ul class="navbar-nav">
 											<li class="nav-item dropdown">
 												<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
@@ -313,7 +313,7 @@
 
 								<div class="form-group">
 									<select name="location_id" class="location-select">
-									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('item_location'); ?></option>
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
 								</select>
 								</div>
 
@@ -347,7 +347,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group d-none field type_name">
-									<nav class="navbar navbar-expand-md navbar-light bg-light types-nav">
+									<nav class="navbar navbar-expand-md navbar-light types-nav">
 										<ul class="navbar-nav">
 											<li class="nav-item dropdown">
 												<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_type'); ?></a>
@@ -505,17 +505,18 @@
 								</div>
 
 								<script id="ad-edit-images-template" type="text/template">
-
+									{{#main_image}}
 									<div class="main-img">
 										<div class="">Main image:</div>
-										<div class="image-wrapper"  data-url="{{main_image}}">
+										<div class="image-wrapper main-image" data-url="{{main_image}}">
 											<img src="<?php echo base_url('{{main_image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
 										</div>
 									</div>
-									
+									{{/main_image}}
+
 									<div class="secondary-imgs">
-									<div class="">Other images:</div>
+										{{#images}}<div class="">Other images:</div>{{/images}}
 										{{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
@@ -523,12 +524,12 @@
 										</div>
 										{{/images}}
 									</div>
-									
+
 									{{#main_video}}
 									<div class="main-video">
 										<div class="">Video:</div>
-										<div class="image-wrapper"  data-url="{{main_video}}">
-											<img src="<?php echo base_url('{{main_video}}'); ?>" alt="" width="100px" height="100px">
+										<div class="image-wrapper video" data-url="{{main_video}}">
+											<img src="<?php echo base_url('assets/images/default_ad/video.png'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
 										</div>
 									</div>
@@ -537,7 +538,7 @@
 								<!--							<div id="fileuploader-ad">Upload</div>-->
 								<div id="fileuploader-edit-ad-main">Upload</div>
 								<div id="fileuploader-edit-ad">Upload</div>
-<!--								<div id="fileuploader-edit-ad-video">Upload</div>-->
+								<div id="fileuploader-edit-ad-video">Upload</div>
 							</div>
 						</div>
 						<div class="modal-footer">

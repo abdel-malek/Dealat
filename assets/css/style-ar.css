@@ -139,6 +139,13 @@ section.search {
 
 #register-form {
   direction: rtl; }
+  #register-form .border-middle {
+    border-right: none;
+    border-left: 1px solid #dee2e6; }
+  #register-form .phone-wrapper {
+    direction: ltr; }
+    #register-form .phone-wrapper input {
+      direction: rtl; }
 
 #fileuploader-edit-ad .ajax-upload-dragdrop,
 #fileuploader-ad .ajax-upload-dragdrop,

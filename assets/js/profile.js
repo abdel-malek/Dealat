@@ -15,7 +15,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
-				//				console.log(data);
+				console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -31,6 +31,10 @@ $(function () {
 						} else {
 							negotiable = "Negotiable";
 						}
+					}
+
+					if (!data.data[i].main_image) {
+						data.data[i].main_image = 'assets/images/default_ad/' + data.data[i].tamplate_id + '.png';
 					}
 
 					if (data.data[i].expired_after <= 0 && data.data[i].status === "2") {
@@ -129,7 +133,7 @@ $(function () {
 			if (data.status === false) {
 				//				console.log(data);
 			} else {
-//				console.log(data);
+				//				console.log(data);
 				var adData, negotiable, type, i, template, rendered, templateId;
 
 				for (i in data.data) {
@@ -379,16 +383,17 @@ $(function () {
 			});
 		});
 
-		var uploadEdit, uploadMainEdit,uploadVideoEdit, editAdImgs = [],
-			editMainImg = [];
+		var uploadEdit, uploadMainEdit, uploadVideoEdit, editAdImgs = [],
+			editMainImg = [],
+			editAdVideo = [];
 		if (lang === "ar") {
 			uploadEdit = "اختر صور إضافية";
 			uploadMainEdit = "اختر صورة الإعلان الرئيسية";
-			uploadVideo = "اختر فيديو";
+			uploadVideoEdit = "اختر فيديو";
 		} else {
 			uploadEdit = "Upload more images";
 			uploadMainEdit = "Upload main ad image";
-			uploadVideo = "Upload video";
+			uploadVideoEdit = "Upload video";
 		}
 
 		uploadobjEditMain = $("#fileuploader-edit-ad-main").uploadFile({
@@ -411,14 +416,13 @@ $(function () {
 				$("#edit-ad-modal .ad-images .main-img").remove();
 			},
 			onError: function (files, status, errMsg, pd) {
-				//console.log("upload failed");
+				
 			},
 			deleteCallback: function (data, pd) {
-				//			console.log(data.data);
 				var arr;
 				arr = [data.data];
 				$.post(base_url + '/api/items_control/delete_images', {
-						images: arr
+						images: JSON.stringify(arr)
 					},
 					function (resp, textStatus, jqXHR) {
 						var i, deleted;
@@ -435,7 +439,7 @@ $(function () {
 		uploadobjEditOther = $("#fileuploader-edit-ad").uploadFile({
 			url: base_url + '/api/items_control/item_images_upload',
 			multiple: true,
-			dragDrop: true,
+			dragDrop: false,
 			fileName: "image",
 			acceptFiles: "image/*",
 			maxFileSize: 10000 * 1024,
@@ -448,83 +452,71 @@ $(function () {
 			uploadStr: uploadEdit,
 			returnType: "json",
 			onSuccess: function (files, data, xhr, pd) {
-				//			console.log(data);
-				//			editAdImgs.push(data.data.slice(12));
 				editAdImgs.push(data.data);
-				//			console.log(editAdImgs);
-				//			$("#ad-modal .main-image").val(data.data.slice(12));
 			},
 			onError: function (files, status, errMsg, pd) {
-				//console.log("upload failed");
 			},
 			deleteCallback: function (data, pd) {
-				//			console.log(data.data);
 				var arr;
 				arr = [data.data];
-				//				for (var i = 0; i < data.data.length; i++) {
 				$.post(base_url + '/api/items_control/delete_images', {
-						images: arr
+						images: JSON.stringify(arr)
 					},
 					function (resp, textStatus, jqXHR) {
-						//Show Message    
-						//					alert("File Deleted");
 						var i, deleted;
-						//					deleted = data.data.slice(12);
 						deleted = data.data;
 						for (i in editAdImgs) {
 							if (editAdImgs[i] === deleted) {
 								editAdImgs.splice(i, 1);
 							}
 						}
-						//					console.log(editAdImgs);
 					});
-				//				}
 			}
 		});
 
 		//video
-	uploadobjvideo = $("#fileuploader-ad-video").uploadFile({
-		url: base_url + '/api/items_control/item_video_upload',
-		multiple: false,
-		dragDrop: false,
-		fileName: "video",
-		acceptFiles: "video/*",
-		maxFileSize: 10000 * 1024,
-		maxFileCount: 1,
-		showDelete: true,
-		//				statusBarWidth:600,
-		dragdropWidth: "100%",
-		showPreview: true,
-		previewHeight: "100px",
-		previewWidth: "100px",
-		uploadStr: uploadVideo,
-		returnType: "json",
-		onSuccess: function (files, data, xhr, pd) {
-//			console.log(data);
-			adVideo.push(data.data);
-		},
-		onError: function (files, status, errMsg, pd) {
-//			console.log("upload failed");
-		},
-		deleteCallback: function (data, pd) {
-			//			console.log(data.data);
-			var arr;
-			arr = [data.data];
-			$.post(base_url + '/api/items_control/delete_vedios', {
-					images: arr
-				},
-				function (resp, textStatus, jqXHR) {
-					var i, deleted;
-					deleted = data.data;
-					for (i in adVideo) {
-						if (adVideo[i] === deleted) {
-							adVideo.splice(i, 1);
+		uploadobjEditVideo = $("#fileuploader-edit-ad-video").uploadFile({
+			url: base_url + '/api/items_control/item_video_upload',
+			multiple: false,
+			dragDrop: false,
+			fileName: "video",
+			acceptFiles: "video/*",
+			maxFileSize: 10000 * 1024,
+			maxFileCount: 1,
+			showDelete: true,
+			//				statusBarWidth:600,
+			dragdropWidth: "100%",
+			showPreview: true,
+			previewHeight: "100px",
+			previewWidth: "100px",
+			uploadStr: uploadVideoEdit,
+			returnType: "json",
+			onSuccess: function (files, data, xhr, pd) {
+				//			console.log(data);
+				editAdVideo.push(data.data);
+			},
+			onError: function (files, status, errMsg, pd) {
+				//			console.log("upload failed");
+			},
+			deleteCallback: function (data, pd) {
+				//			console.log(data.data);
+				var arr;
+				arr = [data.data];
+				$.post(base_url + '/api/items_control/delete_vedios', {
+						videos: JSON.stringify(arr)
+					},
+					function (resp, textStatus, jqXHR) {
+						var i, deleted;
+						deleted = data.data;
+						for (i in editAdVideo) {
+							if (editAdVideo[i] === deleted) {
+								editAdVideo.splice(i, 1);
+							}
 						}
-					}
-				});
-		}
-	});
-		
+					});
+			}
+		});
+
 		//open edit user ad modal
 		$(".profile-page .user-ads").on("click", ".edit-ad", function () {
 			var templateId, adId, catId;
@@ -559,7 +551,7 @@ $(function () {
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.reload();
-					} else{
+					} else {
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.disable();
 					}
 
@@ -695,25 +687,34 @@ $(function () {
 
 
 		$("#edit-ad-modal").on("hide.bs.modal", function () {
+			editMainImg = [];
+			editAdImgs = [];
+			editAdVideo = [];
 			deleteImgArr = [];
+			deleteMainImgArr = [];
+			deleteVideoArr = [];
 		});
-		
-		
-		var deleteImgArr = [];
+
+		var deleteImgArr = [],
+			deleteMainImgArr = [],
+			deleteVideoArr = [];
 		$("#edit-ad-modal .ad-images").on("click", ".delete", function () {
 			var url = $(this).parents(".image-wrapper").data("url");
-			deleteImgArr.push(url);
-			console.log(deleteImgArr);
-			$(this).parents(".image-wrapper").remove();
-			console.log("b4");
-			console.log(editAdImgs);
-			for (i in editAdImgs) {
-				if (editAdImgs[i] == url) {
-					editAdImgs.splice(i, 1);
+			if ($(this).parents(".image-wrapper").hasClass("main-image")) {
+				deleteMainImgArr.push(url);
+				deleteImgArr.push(url);
+			} else if ($(this).parents(".image-wrapper").hasClass("video")) {
+				deleteVideoArr.push(url);
+			} else {
+				deleteImgArr.push(url);
+				for (i in editAdImgs) {
+					if (editAdImgs[i] == url) {
+						editAdImgs.splice(i, 1);
+					}
 				}
 			}
-			console.log("after");
-			console.log(editAdImgs);
+			$(this).parents(".image-wrapper").remove();
+
 		});
 
 		//submit edit user ad
@@ -723,44 +724,66 @@ $(function () {
 			//						console.log($(this).serializeArray());
 			var data, i,
 				secondary_imgs = [];
-			//copy adimgs into uploaded_imgs
-			for (i in editAdImgs) {
-				secondary_imgs.push(editAdImgs[i]);
-			}
-			//		secondary_imgs = uploaded_imgs;
-			secondary_imgs = JSON.stringify(secondary_imgs);
 
 			data = $(this).serializeArray();
 			console.log(data);
 
 			if (editMainImg.length > 0) {
 				data.push({
-						name: "main_image",
-						value: editMainImg[0]
-					}
-					//					  , {
-					//				name: "images",
-					//				value: secondary_imgs
-					//			}
-				);
+					name: "main_image",
+					value: editMainImg[0]
+				});
 			}
 
-			if (secondary_imgs.length > 0) {
+			if (editAdImgs.length > 0) {
+				//copy adimgs into uploaded_imgs
+				for (i in editAdImgs) {
+					secondary_imgs.push(editAdImgs[i]);
+				}
+				secondary_imgs = JSON.stringify(secondary_imgs);
 				data.push({
 					name: "images",
 					value: secondary_imgs
 				});
 			}
+
+			if (editAdVideo.length > 0) {
+				data.push({
+					name: "main_video",
+					value: editAdVideo[0]
+				});
+			}
+
 			//			console.log(deleteImgArr);
 			if (deleteImgArr.length > 0) {
 				deleteImgArr = JSON.stringify(deleteImgArr);
-				console.log(deleteImgArr);
-				console.log("a");
+				
 				data.push({
 					name: "deleted_images",
 					value: deleteImgArr
 				});
 			}
+			
+			if (deleteMainImgArr.length > 0) {
+				data.push({
+					name: "main_image",
+					value: "-1"
+				});
+			}
+
+			if (deleteVideoArr.length > 0) {
+				deleteVideoArr = JSON.stringify(deleteVideoArr);
+				
+				data.push({
+					name: "deleted_videos",
+					value: deleteVideoArr
+				},{
+					name: "main_video",
+					value: "-1"
+				});
+				
+			}
+
 			console.log(data);
 			for (i in data) {
 				//send -1 for empty values
@@ -829,27 +852,27 @@ $(function () {
 					Mustache.parse(template);
 					rendered = Mustache.render(template, sessionData);
 					$(".profile-page .chats ul.sessions").append(rendered);
-					
-					
+
+
 					//check for new msgs
 					notSeenMsgs = 0;
-				var newMsgSessions = [];
-				for (i in data.data) {
-					if ((user_id == data.data[i].seller_id && data.data[i].seller_seen == 0) || (user_id == data.data[i].user_id && data.data[i].user_seen == 0)) {
-						newMsgSessions.push(data.data[i].chat_session_id);
-						notSeenMsgs += 1;
-					}
-				}
-			
-					$(".profile-page .sessions .session").each(function () {
-					$(this).removeAttr("style");
-					for (i in newMsgSessions) {
-						if ($(this).data("sessionId") == newMsgSessions[i]) {
-							$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
-							$(this).find(".new-msg").removeClass("d-none");
+					var newMsgSessions = [];
+					for (i in data.data) {
+						if ((user_id == data.data[i].seller_id && data.data[i].seller_seen == 0) || (user_id == data.data[i].user_id && data.data[i].user_seen == 0)) {
+							newMsgSessions.push(data.data[i].chat_session_id);
+							notSeenMsgs += 1;
 						}
 					}
-				});
+
+					$(".profile-page .sessions .session").each(function () {
+						$(this).removeAttr("style");
+						for (i in newMsgSessions) {
+							if ($(this).data("sessionId") == newMsgSessions[i]) {
+								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+								$(this).find(".new-msg").removeClass("d-none");
+							}
+						}
+					});
 				}
 			}
 		});

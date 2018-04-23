@@ -347,7 +347,7 @@
 					<!--					<div id="fileuploader-register">Upload</div>-->
 					<input type="hidden" name="lang" class="lang">
 					<div class="row">
-						<div class="col-sm-6 border-right">
+						<div class="col-sm-6 border-middle">
 							<div class="form-group">
 								<select name="city_id" class="city-select" required>
 							<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('select_city'); ?></option>
@@ -356,7 +356,7 @@
 							<div class="form-group">
 								<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
 							</div>
-							<div class="form-group">
+							<div class="form-group phone-wrapper">
 								<div class="row no-gutters">
 									<div class="col-2 text-center"><span style="font-weight: bold;position: relative;top: 30%;">+963</span></div>
 									<div class="col-10">
@@ -517,7 +517,7 @@
 							</script>
 
 							<div class="form-group">
-								<select name="city_id" class="city-select" required placeholder="sfaf">
+								<select name="city_id" class="city-select" required>
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>
 								</select>
 							</div>
@@ -755,7 +755,7 @@
 							<div id="fileuploader-ad-video">Upload</div>
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
-								<span class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></span>
+								<div class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></div>
 							</label>
 							<div class="">
 								<input id="terms-agree" type="checkbox" name="terms_agree" class="" value="1" required>
@@ -1155,7 +1155,7 @@
 			<div class="modal-body">
 				<form id="report-form" class="text-center">
 					<input type="hidden" name="ad_id" class="ad-id">
-					<select name="report_message_id" class="report-select" required placeholder="why to report this ad">
+					<select name="report_message_id" class="report-select" required placeholder="<?php echo $this->lang->line('why_report_ad'); ?>">
 						<option disabled selected value="" class="d-none" >
 					</select>
 				</form>
@@ -1218,7 +1218,7 @@
 					<input type="hidden" class="seller-id">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">
-						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Write your message...">
+						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
 						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
 					</div>
 <!--					<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Send a message to the seller">-->

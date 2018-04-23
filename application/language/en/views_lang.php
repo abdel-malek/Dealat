@@ -293,3 +293,7 @@ $lang['item_price'] = "Price";
 $lang['seller_name']= 'Seller name';
 $lang['results_from'] = 'Showing results from ';
 $lang['no_results_found'] = 'No search results found';
+$lang['why_report_ad'] = 'Why to report this ad';
+$lang['write_message'] = 'Write your message...';
+$lang['diactivate'] = 'Deactivate';
+$lang['activate'] = 'Activate';

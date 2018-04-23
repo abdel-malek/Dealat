@@ -13,7 +13,7 @@
 		var user_id = "<?php echo $this->session->userdata('LOGIN_USER_ID') ?>";
 		
 		var hiddenFields = [];
-		var uploadobjEditMain, uploadobjEditOther;
+		var uploadobjEditMain, uploadobjEditOther, uploadobjEditVideo;
 	</script>
 	
     <script>

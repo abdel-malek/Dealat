@@ -794,7 +794,7 @@ header.home {
 .search-page .products,
 .profile-page .products {
   margin-top: 10px;
-  margin-bottom: 30px; }
+  margin-bottom: 0; }
   .search-page .products .main,
   .profile-page .products .main {
     padding-top: 15px; }
@@ -845,19 +845,16 @@ header.home {
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat; }
-.profile-page .user-ads {
-  max-height: 490px;
-  overflow-y: auto; }
-  .profile-page .user-ads .status {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    color: #c30a30;
-    font-size: 1rem; }
-  .profile-page .user-ads .card:hover .overlay {
-    height: 0; }
-  .profile-page .user-ads .card:hover .card-img-top {
-    cursor: auto; }
+.profile-page .user-ads .status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #c30a30;
+  font-size: 1rem; }
+.profile-page .user-ads .card:hover .overlay {
+  height: 0; }
+.profile-page .user-ads .card:hover .card-img-top {
+  cursor: auto; }
 .profile-page #profile-tabs {
   margin-bottom: 20px; }
   .profile-page #profile-tabs .tab {
@@ -908,9 +905,6 @@ header.home {
     margin: 0; }
   .profile-page #profile-tabs .bookmark .details {
     font-size: .8rem; }
-  .profile-page #profile-tabs .sessions, .profile-page #profile-tabs .bookmarks-list {
-    max-height: 400px;
-    overflow-y: auto; }
 
 .main-wrapper {
   min-height: calc(100vh - 200px);
@@ -1084,6 +1078,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main .ajax-upload-dragdrop,
 #fileuploader-ad-main .ajax-upload-dragdrop,
 #fileuploader-ad-video .ajax-upload-dragdrop,
+#fileuploader-edit-ad-video .ajax-upload-dragdrop,
 #fileuploader-register .ajax-upload-dragdrop {
   padding: 10px;
   border: 1px solid #ced4da;
@@ -1094,6 +1089,7 @@ select option.placeholder {
   #fileuploader-edit-ad-main .ajax-upload-dragdrop b,
   #fileuploader-ad-main .ajax-upload-dragdrop b,
   #fileuploader-ad-video .ajax-upload-dragdrop b,
+  #fileuploader-edit-ad-video .ajax-upload-dragdrop b,
   #fileuploader-register .ajax-upload-dragdrop b {
     color: #6c757d;
     opacity: 1;
@@ -1106,6 +1102,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main .ajax-file-upload,
 #fileuploader-ad-main .ajax-file-upload,
 #fileuploader-ad-video .ajax-file-upload,
+#fileuploader-edit-ad-video .ajax-file-upload,
 #fileuploader-register .ajax-file-upload {
   padding: 0;
   margin: 0;
@@ -1128,6 +1125,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main .ajax-file-upload input[type="file"],
 #fileuploader-ad-main .ajax-file-upload input[type="file"],
 #fileuploader-ad-video .ajax-file-upload input[type="file"],
+#fileuploader-edit-ad-video .ajax-file-upload input[type="file"],
 #fileuploader-register .ajax-file-upload input[type="file"] {
   cursor: auto; }
 #fileuploader-edit-ad .ajax-file-upload:hover,
@@ -1135,6 +1133,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main .ajax-file-upload:hover,
 #fileuploader-ad-main .ajax-file-upload:hover,
 #fileuploader-ad-video .ajax-file-upload:hover,
+#fileuploader-edit-ad-video .ajax-file-upload:hover,
 #fileuploader-register .ajax-file-upload:hover {
   cursor: auto !important; }
 #fileuploader-edit-ad .ajax-file-upload input[type="file"]:hover,
@@ -1142,6 +1141,7 @@ select option.placeholder {
 #fileuploader-edit-ad-main .ajax-file-upload input[type="file"]:hover,
 #fileuploader-ad-main .ajax-file-upload input[type="file"]:hover,
 #fileuploader-ad-video .ajax-file-upload input[type="file"]:hover,
+#fileuploader-edit-ad-video .ajax-file-upload input[type="file"]:hover,
 #fileuploader-register .ajax-file-upload input[type="file"]:hover {
   cursor: auto !important; }
 
@@ -1232,9 +1232,11 @@ select option.placeholder {
 
 #register-modal .lines:first-child {
   margin-top: 0px; }
+#register-modal .border-middle {
+  border-right: 1px solid #dee2e6; }
 @media (max-width: 768px) {
-  #register-modal .border-right {
-    border: none !important; } }
+  #register-modal .border-middle {
+    border: none; } }
 
 .SumoSelect > .CaptionCont {
   border-radius: 13px;
@@ -1384,9 +1386,7 @@ label {
     background: none;
     margin: 0;
     padding: 0 0 10px 0;
-    margin-bottom: 10px;
-    overflow-y: auto;
-    max-height: 50vh; }
+    margin-bottom: 10px; }
   #chat-modal .chat li {
     padding: 0.5rem;
     overflow: hidden;
@@ -1500,6 +1500,7 @@ label {
 
 #report-form .SumoSelect {
   text-align: left;
+  width: auto;
   min-width: 200px; }
 
 /*# sourceMappingURL=style.css.map */

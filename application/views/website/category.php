@@ -94,8 +94,13 @@
 								</div>
 								<?php endif; ?>
 
+								<?php if($ad->main_image == null): ?>
+								<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/default_ad/' .$ad->tamplate_id. '.png'); ?>')">
+								</div>
+								<?php else: ?>
 								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
 								</div>
+								<?php endif; ?>
 
 								<div class="card-body">
 									<div class="row">
