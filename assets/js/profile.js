@@ -12,10 +12,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_items',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				console.log(data);
+			if (data.status === false) {} else {
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -40,7 +37,6 @@ $(function () {
 					if (data.data[i].expired_after <= 0 && data.data[i].status === "2") {
 						data.data[i].status = "3";
 					}
-
 
 					if (data.data[i].status === "1") {
 						if (lang === "ar") {
@@ -119,8 +115,6 @@ $(function () {
 						}
 					});
 				});
-				//				statusId = $();
-				//					if(data.data[i].status === )
 			}
 		});
 
@@ -130,10 +124,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_favorites',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				var adData, negotiable, type, i, template, rendered, templateId;
 
 				for (i in data.data) {
@@ -173,10 +164,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_info',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -292,9 +280,7 @@ $(function () {
 				dataType: "json",
 				data: $.param(data)
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
+				if (data.status === false) {} else {
 					//					console.log(data);
 					//					for (i in newData) {
 					//						if (newData[i].name === "phone") {
@@ -342,10 +328,7 @@ $(function () {
 		$(".profile-page .user-ads").on("click", ".delete-ad", function () {
 			var adId, adStatus;
 			adId = $(this).parents(".card").data("adId");
-			//			adStatus = $(this).parents(".card").data("adStatus");
 			$("#delete-modal .ad-id").val(adId);
-			//			$("#delete-modal .status-id").val(adStatus);
-
 			$("#delete-modal").modal("show");
 		});
 
@@ -361,10 +344,7 @@ $(function () {
 					status: 6 //for delete
 				}
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
-					//					console.log(data);
+				if (data.status === false) {} else {
 					$("#delete-modal").modal("hide");
 					setTimeout(function () {
 						if (lang === "ar") {
@@ -372,7 +352,6 @@ $(function () {
 						} else {
 							$("#success-modal .text").html("Advertisement deleted successfully");
 						}
-
 						$("#success-modal").modal("show");
 					}, 500);
 					setTimeout(function () {
@@ -415,9 +394,7 @@ $(function () {
 				editMainImg.push(data.data);
 				$("#edit-ad-modal .ad-images .main-img").remove();
 			},
-			onError: function (files, status, errMsg, pd) {
-				
-			},
+			onError: function (files, status, errMsg, pd) {},
 			deleteCallback: function (data, pd) {
 				var arr;
 				arr = [data.data];
@@ -454,8 +431,7 @@ $(function () {
 			onSuccess: function (files, data, xhr, pd) {
 				editAdImgs.push(data.data);
 			},
-			onError: function (files, status, errMsg, pd) {
-			},
+			onError: function (files, status, errMsg, pd) {},
 			deleteCallback: function (data, pd) {
 				var arr;
 				arr = [data.data];
@@ -484,7 +460,6 @@ $(function () {
 			maxFileSize: 10000 * 1024,
 			maxFileCount: 1,
 			showDelete: true,
-			//				statusBarWidth:600,
 			dragdropWidth: "100%",
 			showPreview: true,
 			previewHeight: "100px",
@@ -492,14 +467,10 @@ $(function () {
 			uploadStr: uploadVideoEdit,
 			returnType: "json",
 			onSuccess: function (files, data, xhr, pd) {
-				//			console.log(data);
 				editAdVideo.push(data.data);
 			},
-			onError: function (files, status, errMsg, pd) {
-				//			console.log("upload failed");
-			},
+			onError: function (files, status, errMsg, pd) {},
 			deleteCallback: function (data, pd) {
-				//			console.log(data.data);
 				var arr;
 				arr = [data.data];
 				$.post(base_url + '/api/items_control/delete_vedios', {
@@ -533,9 +504,7 @@ $(function () {
 					template_id: templateId
 				}
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
+				if (data.status === false) {} else {
 					console.log(data);
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
@@ -546,6 +515,12 @@ $(function () {
 					$("#edit-ad-modal input[name='price']").val(data.data.price);
 					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
 					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
+
+					if (templateId === 2) {
+						$("#edit-ad-modal #fileuploader-edit-ad-video").removeClass("d-none");
+					} else {
+						$("#edit-ad-modal #fileuploader-edit-ad-video").addClass("d-none");
+					}
 
 					if (data.data.location_id) {
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
@@ -615,7 +590,6 @@ $(function () {
 						editAdImgs.push(data.data.images[i].image);
 					}
 
-
 					$("#edit-ad-modal .ad-images").empty();
 					template = $('#ad-edit-images-template').html();
 					Mustache.parse(template);
@@ -628,7 +602,6 @@ $(function () {
 			var templateId, subId, has_types = 0;
 
 			subId = $(this).parents(".card").data("categoryId");
-			//		$("#ad-modal .template").addClass("d-none");
 
 			//put all fields as shown
 			$("#edit-ad-modal .field").each(function () {
@@ -662,7 +635,6 @@ $(function () {
 			});
 			//display types select only if category is vehicles, mobiles or electronics
 			if (has_types !== 0) {
-				//			if (templateId === 1 || templateId === 3 || templateId===4) {
 				$("#edit-ad-modal .types-nav").parent(".form-group").removeClass("d-none");
 			} else {
 				$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
@@ -672,15 +644,6 @@ $(function () {
 			} else {
 				$("#edit-ad-modal .types-nav .select").text("Select type");
 			}
-			//		$("#edit-ad-form .type-model-id").val("");
-			//		$("#edit-ad-form .type-id").val("");
-			//		$("#edit-ad-form .category-id").val(subId);
-
-			//change select placeholder
-			//		$("#edit-ad-modal .categories-nav .select").text($(this).text());
-			//
-			//		$('#edit-ad-modal .schedules-select')[0].sumo.selectItem(0);
-			//		$('#edit-ad-modal .educations-select')[0].sumo.selectItem(0);
 
 			$("#edit-ad-modal").modal("show");
 		});
@@ -721,7 +684,7 @@ $(function () {
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
-			//						console.log($(this).serializeArray());
+
 			var data, i,
 				secondary_imgs = [];
 
@@ -754,16 +717,15 @@ $(function () {
 				});
 			}
 
-			//			console.log(deleteImgArr);
 			if (deleteImgArr.length > 0) {
 				deleteImgArr = JSON.stringify(deleteImgArr);
-				
+
 				data.push({
 					name: "deleted_images",
 					value: deleteImgArr
 				});
 			}
-			
+
 			if (deleteMainImgArr.length > 0) {
 				data.push({
 					name: "main_image",
@@ -773,25 +735,23 @@ $(function () {
 
 			if (deleteVideoArr.length > 0) {
 				deleteVideoArr = JSON.stringify(deleteVideoArr);
-				
+
 				data.push({
 					name: "deleted_videos",
 					value: deleteVideoArr
-				},{
+				}, {
 					name: "main_video",
 					value: "-1"
 				});
-				
 			}
 
-			console.log(data);
 			for (i in data) {
 				//send -1 for empty values
 				if (data[i].value === "") {
 					data[i].value = "-1";
 				}
 			}
-			//			console.log(data);
+
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',
@@ -824,10 +784,7 @@ $(function () {
 			dataType: "json",
 			data: $(this).serialize()
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
 					sessionData = [];
@@ -843,7 +800,6 @@ $(function () {
 					}
 					sessionData = {
 						image: sessionImage,
-						//						date: data.data[i].publish_date.split(' ')[0],
 						username: username,
 						details: data.data[i]
 					};
@@ -852,7 +808,6 @@ $(function () {
 					Mustache.parse(template);
 					rendered = Mustache.render(template, sessionData);
 					$(".profile-page .chats ul.sessions").append(rendered);
-
 
 					//check for new msgs
 					notSeenMsgs = 0;
@@ -900,11 +855,7 @@ $(function () {
 					chat_session_id: sessionId
 				}
 			}).done(function (data) {
-				if (data.status === false) {
-					//						console.log(data);
-				} else {
-					//					console.log(data);
-
+				if (data.status === false) {} else {
 					$("#chat-modal .chat").empty();
 					var msgDate = data.data[0].created_at.split(' ')[0];
 					$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
@@ -915,10 +866,8 @@ $(function () {
 							if (data.data[i].to_seller === "1") {
 								// message from other to me
 								template = $('#chat-other-template').html();
-
 							} else {
 								template = $('#chat-self-template').html();
-
 							}
 
 							//check msg date
@@ -942,7 +891,6 @@ $(function () {
 							if (data.data[i].to_seller === "1") {
 								// message from me to seller
 								template = $('#chat-self-template').html();
-
 							} else {
 								template = $('#chat-other-template').html();
 							}
@@ -977,10 +925,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_bookmarks',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				for (i in data.data) {
 					data.data[i].query = $.parseJSON(data.data[i].query);
 					data.data[i].filter = $.param(data.data[i].query);
@@ -989,7 +934,6 @@ $(function () {
 					rendered = Mustache.render(template, data.data[i]);
 					$(".profile-page .bookmarks .bookmarks-list").append(rendered);
 				}
-
 			}
 		});
 
@@ -1007,10 +951,7 @@ $(function () {
 					user_bookmark_id: id
 				}
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
-					//					console.log(data);
+				if (data.status === false) {} else {
 					btn.parents(".bookmark").next("hr").remove();
 					btn.parents(".bookmark").remove();
 					if (lang === "ar") {
@@ -1018,12 +959,10 @@ $(function () {
 					} else {
 						$("#success-modal .text").html("Saved search deleted successfully");
 					}
-
 					$("#success-modal").modal("show");
 					setTimeout(function () {
 						$("#success-modal").modal("hide");
 					}, 2000);
-
 				}
 			});
 		});
@@ -1038,13 +977,29 @@ $(function () {
 				dataType: "json",
 				data: filter
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
+				if (data.status === false) {} else {
 					window.location = base_url + '/search_control?' + filter;
 				}
 			});
 		});
 
+		//delete account
+		$(".user-details").on("click", ".delete-account", function () {
+			$("#delete-account-modal").modal("show");
+		});
+
+		$("#delete-account-modal .submit").on("click", function () {
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/users_control/delete_my_account',
+				dataType: "json"
+			}).done(function (data) {
+				if (data.status === false) {
+					console.log(data);
+				} else {
+					console.log(data);
+				}
+			});
+		});
 	}
 });

@@ -43,7 +43,7 @@ $lang['experience'] = "الخبرة";
 $lang['education'] = "الدراسة";
 $lang['salary'] = "الراتب";
 $lang['set_as_featured'] = "إضافة كإعلان مميز";
-$lang['featured_cost'] = "يتطلب دفع";
+$lang['featured_cost'] = "هذا سيكلف سعراً أكبر";
 $lang['agree_policy'] = "أنا أوافق على";
 $lang['terms'] = "بنود الخدمة لديلات";
 $lang['select_category'] = "اختر صنف";
@@ -299,3 +299,7 @@ $lang['why_report_ad'] = 'سبب التبليغ عن الإعلان';
 $lang['write_message'] = 'اكتب رسالتك هنا';
 $lang['diactivate'] = 'إلغاء تفعيل الصنف';
 $lang['activate'] = 'تفعيل';
+
+$lang['delete_account'] = 'حذف الحساب';
+$lang['delete_account_confirm'] = 'هل أنت متأكد من حذف حسابك نهائياً؟';
+$lang['delete_account_confirm_note'] = 'ملاحظة: لا يمكنك التراجع عن هذه الخطوة, كل إعلاناتك وبياناتك على هذا الموقع سيتم حذفها';

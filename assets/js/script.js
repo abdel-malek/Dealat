@@ -51,11 +51,9 @@ $(function () {
 		//		$("#ad-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
 			$("#ad-modal .categories-nav .select").text("اختر صنف");
-			//			$("#ad-modal .locations-nav .select").text("مكان القطعة");
 			$("#ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#ad-modal .categories-nav .select").text("Select Category");
-			//			$("#ad-modal .locations-nav .select").text("Item's Location");
 			$("#ad-modal .types-nav .select").text("Select type");
 		}
 		$("#ad-modal .ajax-file-upload-container").empty();
@@ -112,10 +110,8 @@ $(function () {
 		//		$("#filter-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
 			$("#filter-modal .categories-nav .select").text("اختر صنف");
-			//			$("#filter-modal .locations-nav .select").text("مكان القطعة");
 		} else {
 			$("#filter-modal .categories-nav .select").text("Select Category");
-			//			$("#filter-modal .locations-nav .select").text("Item's Location");
 		}
 		$("#filter-modal .type-select").parents(".form-group").addClass("d-none");
 		$("#filter-modal .model-select").parents(".form-group").addClass("d-none");
@@ -180,8 +176,6 @@ $(function () {
 		if (data.status === false) {
 			console.log(data);
 		} else {
-			//									console.log(category_id);
-			//									console.log(data);
 			var adData, sliderDefaultImg, sliderImgCount = 0,
 				sideImgCount = 0,
 				sideDefaultImg;
@@ -195,7 +189,6 @@ $(function () {
 
 			if (data.data.length !== 0) {
 				for (i in data.data) {
-					//					if (data.data[i].is_main === "1") {
 					if (data.data[i].position === "2") {
 						//top slider ad
 						sliderImgCount += 1;
@@ -244,8 +237,6 @@ $(function () {
 		if (data.status === false) {
 			//console.log(data);
 		} else {
-			//			console.log(data);
-
 			//save subcategories in array
 			for (i in data.data) {
 				subcategories.push({
@@ -253,7 +244,6 @@ $(function () {
 					children: data.data[i].children
 				});
 			}
-			//console.log(subcategories);
 			var catData;
 			catData = {
 				categories: data.data
@@ -285,13 +275,10 @@ $(function () {
 						$(".categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
 					} else {
 						if (data.data[i].children[j].hidden_fields) {
-							//								console.log(data.data[i].children[j].hidden_fields);
-							//								console.log($.parseJSON(data.data[i].children[j].hidden_fields));
 							hiddenFields.push({
 								categoryId: data.data[i].children[j].category_id,
 								hidden: $.parseJSON(data.data[i].children[j].hidden_fields)
 							});
-
 						}
 					}
 				}
@@ -331,11 +318,7 @@ $(function () {
 			Mustache.parse(template);
 			rendered = Mustache.render(template, subData);
 			$(".categories .sub-categories .sub-list").append(rendered);
-			//			$(".categories .sub-categories").removeClass("d-none");
-			//			$(".categories .sub-categories").slideUp("fast");
-			//			setTimeout(function(){
 			$(".categories .sub-categories").slideDown("fast");
-			//								 },300);
 
 			$("html, body").animate({
 				scrollTop: $(".categories").offset().top
@@ -354,7 +337,6 @@ $(function () {
 
 	//hide subcategories menu
 	$(".main").click(function (e) {
-		//		$(".categories .sub-categories").addClass("d-none");
 		$(".categories .sub-categories").slideUp("fast");
 	});
 
@@ -406,11 +388,8 @@ $(function () {
 			$('#ad-modal .location-select')[0].sumo.disable();
 
 			$('#filter-modal .location-select')[0].sumo.disable();
-			//			$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.disable();
 
-			//			$('#ad-modal .city-select , #edit-ad-modal .city-select, #filter-modal .city-select').change(function () {
 			$('#ad-modal  , #edit-ad-modal , #filter-modal ').on("change", ".city-select", function () {
-
 				var cityId, i, j;
 				cityId = $(this).find('option:selected').val();
 				$('#ad-modal .location-select option:not(.placeholder), #edit-ad-modal .location-select option:not(.placeholder), #filter-modal .location-select option:not(.placeholder)').remove();
@@ -467,11 +446,9 @@ $(function () {
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
-			//			$("#ad-modal .types-nav .types, #filter-modal .types-nav .types").append(rendered);
 			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
 
 			//if type with no models don't open a menu and remove arrow 
-			//			$("#ad-modal .types-nav ul.dropdown-menu, #filter-modal .types-nav ul.dropdown-menu").each(function () {
 			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
 				if ($(this).html().trim() === "") {
 					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
@@ -487,10 +464,8 @@ $(function () {
 			$('#filter-modal select.type-select')[0].sumo.reload();
 
 			$('#filter-modal .type-select').change(function () {
-				//				console.log(typesData.types);
 				var typeId, i, j;
 				typeId = $(this).find('option:selected').val();
-				//				console.log(typeId);
 				$('#filter-modal .model-select option').remove();
 				//				$('select.model-select')[0].sumo.reload();
 				for (i in typesData.types) {
@@ -590,9 +565,6 @@ $(function () {
 
 	$('select.manufacture-date-select')[0].sumo.reload();
 
-	//	setTimeout(function () {
-	//					$(".loading-overlay1").fadeOut("fast");
-	//				}, 3000);
 	var ajaxLoadTimeout;
 	$(document).ajaxStart(function () {
 		ajaxLoadTimeout = setTimeout(function () {
@@ -605,10 +577,7 @@ $(function () {
 	});
 
 	function openCardModal() {
-
 		$("#card-modal .card").remove();
-
-		//		var ajaxLoadTimeout;
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/items_control/get_item_details',
@@ -617,25 +586,10 @@ $(function () {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
 			}
-			//			beforeSend: function () {
-			//				ajaxLoadTimeout = setTimeout(function () {
-			//					$(".loading-overlay1").fadeIn("fast");
-			//					//					$(".loading-overlay .spinner").fadeIn("fast");
-			//				}, 1000);
-			//			},
-			//			complete: function () {
-			//				//				$(".loading-overlay1").fadeOut("fast");
-			//				clearTimeout(ajaxLoadTimeout);
-			//				$(".loading-overlay1").fadeOut("fast");
-			//				//				$(".loading-overlay .spinner").fadeOut(300, function () {
-			//				//					$(this).parent().fadeOut(100, function () {});
-			//				//				});
-			//			}
 		}).done(function (data) {
 			if (data.status === false) {
 				console.log(data);
 			} else {
-				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -804,6 +758,13 @@ $(function () {
 		//			$('#ad-modal .location-select')[0].sumo.reload();
 		//		}
 
+		//only show upload video in properties
+				if (templateId === 2) {
+					$("#ad-modal #fileuploader-ad-video").removeClass("d-none");
+				} else {
+		$("#ad-modal #fileuploader-ad-video").addClass("d-none");
+				}
+		
 		//if category is job remove price and negotiable inputs
 		if (templateId === 8) {
 			$("#ad-modal input[name='price']").closest(".form-group").addClass("d-none");
@@ -813,22 +774,19 @@ $(function () {
 			$("#ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
 		}
 
-		//		$("#ad-modal .template").addClass("d-none");
-
 		//put all fields as shown
 		$("#ad-modal .field").each(function () {
 			$(this).removeClass("d-none");
 		});
+
 		//hide fields from template according to hiddenFields array
 		var hideArr = [];
 		for (i in hiddenFields) {
 			if (hiddenFields[i].categoryId == subId) {
 				hideArr = hiddenFields[i].hidden;
 				for (j in hideArr) {
-					//					console.log(hideArr[j]);
 					$("#ad-modal .field." + hideArr[j]).addClass("d-none");
 				}
-
 			}
 		}
 
@@ -848,6 +806,7 @@ $(function () {
 				$(this).removeClass("d-none");
 			}
 		});
+
 		//display types select only if category is vehicles, mobiles or electronics
 		if (has_types !== 0) {
 			//			if (templateId === 1 || templateId === 3 || templateId===4) {
@@ -866,7 +825,11 @@ $(function () {
 
 
 		//change select placeholder
-		$("#ad-modal .categories-nav .select").text($(this).text());
+		var catText, subText, text;
+		catText = $(this).closest(".dropdown-menu").siblings("a").text();
+		subText = $(this).text();
+		text = catText + "-" + subText;
+		$(this).closest(".categories-nav").find(".select").text(text);
 
 		$('#ad-modal .schedules-select')[0].sumo.selectItem(0);
 		$('#ad-modal .educations-select')[0].sumo.selectItem(0);
@@ -875,14 +838,11 @@ $(function () {
 	//view template fields when change category in filter modal
 	$("#filter-modal .categories-nav").on("click", ".last-subcategory", function () {
 		//		$("#filter-modal .categories-nav a.select").css("color", "#495057");
-
 		var templateId, subId, subName, has_types = 0;
 		templateId = $(this).data("templateId");
 		$("#filter-form input.template-id").val(templateId);
 		subId = $(this).data("categoryId");
 		subName = $(this).text();
-
-		//		$("#filter-modal .template").addClass("d-none");
 
 		//put all fields as shown
 		$("#filter-modal .field").each(function () {
@@ -895,7 +855,6 @@ $(function () {
 			if (hiddenFields[i].categoryId == subId) {
 				hideArr = hiddenFields[i].hidden;
 				for (j in hideArr) {
-					//					console.log(hideArr[j]);
 					$("#filter-modal .field." + hideArr[j]).addClass("d-none");
 				}
 			}
@@ -935,9 +894,13 @@ $(function () {
 
 		$("#filter-form .category-id").val(subId);
 		$("#filter-form input[name='category_name']").val(subName);
-		//		console.log($("#filter-form input[name='category_name']").val());
+
 		//change select placeholder
-		$("#filter-modal .categories-nav .select").text($(this).text());
+		var catText, subText, text;
+		catText = $(this).closest(".dropdown-menu").siblings("a").text();
+		subText = $(this).text();
+		text = catText + "-" + subText;
+		$(this).closest(".categories-nav").find(".select").text(text);
 
 		$('#filter-modal .manufacture-date-select')[0].sumo.unSelectAll();
 		$('#filter-modal .type-select')[0].sumo.selectItem(0);
@@ -948,56 +911,28 @@ $(function () {
 		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
 	});
 
-	//types select
-	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".type-item", function () {
-		//		$("#ad-modal .types-nav a.select").css("color", "#495057");
-		//		$("#filter-modal .types-nav a.select").css("color", "#495057");
-		var typeId;
-		if ($(this).parents("#ad-modal").length > 0) {
-			if ($(this).find("ul").length > 0) {
-				//has children models
-			} else {
-				//has no children models
-				typeId = $(this).data("typeId");
-				$("#place-ad-form .type-model-id").val("");
-				$("#place-ad-form .type-id").val(typeId);
-			}
-			//		console.log("type: " + $("#place-ad-form .type-id").val());
-			//		console.log("model: " + $("#place-ad-form .type-model-id").val());
-			//change select placeholder
-			$("#ad-modal .types-nav .select").text($(this).text());
-		} else if ($(this).parents("#edit-ad-modal").length > 0) {
-			if ($(this).find("ul").length > 0) {
-				//has children models
-			} else {
-				//has no children models
-				typeId = $(this).data("typeId");
-				$("#edit-ad-form .type-model-id").val("");
-				$("#edit-ad-form .type-id").val(typeId);
-			}
-			//change select placeholder
-			$("#edit-ad-modal .types-nav .select").text($(this).text());
-		} else if ($(this).parents("#filter-modal").length > 0) {
-			if ($(this).find("ul").length > 0) {
-				//has children models
-			} else {
-				//has no children models
-				typeId = $(this).data("typeId");
-				$("#filter-form .type-model-id").val("");
-				$("#filter-form .type-id").val(typeId);
-			}
-			//change select placeholder
-			$("#filter-modal .types-nav .select").text($(this).text());
-		}
-	});
-
-	//model select
-	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".model", function () {
-		//		$("#ad-modal .types-nav a.select").css("color", "#495057");
-		//		$("#filter-modal .types-nav a.select").css("color", "#495057");
+	//type model select
+	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".dropdown-item", function () {
 		var typeId, typeModelId;
-		typeId = $(this).data("typeId");
-		typeModelId = $(this).data("typeModelId");
+
+		$("#place-ad-form .type-model-id").val("");
+		$("#place-ad-form .type-id").val("");
+
+		if ($(this).hasClass("type")) {
+			typeId = $(this).data("typeId");
+			//change select placeholder
+			$(this).closest(".types-nav").find(".select").text($(this).text());
+		} else if ($(this).hasClass("model")) {
+			typeId = $(this).data("typeId");
+			typeModelId = $(this).data("typeModelId");
+			//change select placeholder
+			var typeName, modelName, text;
+			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
+			modelName = $(this).text();
+			text = typeName + "-" + modelName;
+			$(this).closest(".types-nav").find(".select").text(text);
+		}
+
 		if ($(this).parents("#ad-modal").length > 0) {
 			$("#place-ad-form .type-id").val(typeId);
 			$("#place-ad-form .type-model-id").val(typeModelId);
@@ -1008,6 +943,9 @@ $(function () {
 			$("#filter-form .type-id").val(typeId);
 			$("#filter-form .type-model-id").val(typeModelId);
 		}
+
+		//		console.log("type: " + $("#place-ad-form .type-id").val());
+		//		console.log("model: " + $("#place-ad-form .type-model-id").val());
 	});
 
 	//featured ad
@@ -1032,6 +970,7 @@ $(function () {
 		uploadMain = "Upload main ad image";
 		uploadVideo = "Upload video";
 	}
+
 	var uploadobjMain, uploadobjOther, uploadobjvideo;
 	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
@@ -1082,9 +1021,7 @@ $(function () {
 		acceptFiles: "image/*",
 		maxFileSize: 10000 * 1024,
 		maxFileCount: 8,
-		//see docs for localization(lang)
 		showDelete: true,
-		//				statusBarWidth:600,
 		dragdropWidth: "100%",
 		showPreview: true,
 		previewHeight: "100px",
@@ -1092,37 +1029,24 @@ $(function () {
 		uploadStr: upload,
 		returnType: "json",
 		onSuccess: function (files, data, xhr, pd) {
-			//			console.log(data);
-			//			adImgs.push(data.data.slice(12));
 			adImgs.push(data.data);
-			//			console.log(adImgs);
-			//			$("#ad-modal .main-image").val(data.data.slice(12));
 		},
-		onError: function (files, status, errMsg, pd) {
-			//console.log("upload failed");
-		},
+		onError: function (files, status, errMsg, pd) {},
 		deleteCallback: function (data, pd) {
-			//			console.log(data.data);
 			var arr;
 			arr = [data.data];
-			//				for (var i = 0; i < data.data.length; i++) {
 			$.post(base_url + '/api/items_control/delete_images', {
 					images: JSON.stringify(arr)
 				},
 				function (resp, textStatus, jqXHR) {
-					//Show Message    
-					//					alert("File Deleted");
 					var i, deleted;
-					//					deleted = data.data.slice(12);
 					deleted = data.data;
 					for (i in adImgs) {
 						if (adImgs[i] === deleted) {
 							adImgs.splice(i, 1);
 						}
 					}
-					//					console.log(adImgs);
 				});
-			//				}
 		}
 	});
 
@@ -1136,7 +1060,6 @@ $(function () {
 		maxFileSize: 10000 * 1024,
 		maxFileCount: 1,
 		showDelete: true,
-		//				statusBarWidth:600,
 		dragdropWidth: "100%",
 		showPreview: true,
 		previewHeight: "100px",
@@ -1144,14 +1067,10 @@ $(function () {
 		uploadStr: uploadVideo,
 		returnType: "json",
 		onSuccess: function (files, data, xhr, pd) {
-			//			console.log(data);
 			adVideo.push(data.data);
 		},
-		onError: function (files, status, errMsg, pd) {
-			//			console.log("upload failed");
-		},
+		onError: function (files, status, errMsg, pd) {},
 		deleteCallback: function (data, pd) {
-			//			console.log(data.data);
 			var arr;
 			arr = [data.data];
 			$.post(base_url + '/api/items_control/delete_vedios', {
@@ -1174,13 +1093,11 @@ $(function () {
 		evnt.preventDefault();
 		evnt.stopImmediatePropagation();
 
-		//console.log(adImgs);
 		var i, data, uploaded_imgs = [],
 			main_img = "",
 			secondary_imgs = [];
 
-		data = $(this).serializeArray(); // convert form to array
-		//		console.log(data);
+		data = $(this).serializeArray();
 
 		if (adMainImg.length > 0) {
 			data.push({
@@ -1193,9 +1110,6 @@ $(function () {
 			for (i in adImgs) {
 				uploaded_imgs.push(adImgs[i]);
 			}
-			//		main_img = uploaded_imgs[0];
-			//		main_img = uploaded_imgs[0];
-			//		uploaded_imgs.splice(0, 1);
 			secondary_imgs = uploaded_imgs;
 			secondary_imgs = JSON.stringify(secondary_imgs);
 			data.push({
@@ -1211,22 +1125,18 @@ $(function () {
 			});
 		}
 
-		//		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
 			dataType: "json",
 			data: $.param(data)
-			//				$(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 				var errorMessage = $.parseHTML(data.message),
 					node,
 					wholeMessage = '';
 				for (node in errorMessage) {
 					if (errorMessage[node].nodeName === 'P') {
-						//console.log(errorMessage[node].innerHTML);
 						wholeMessage += errorMessage[node].innerHTML;
 					} else {
 						wholeMessage += '<br>';
@@ -1238,7 +1148,7 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				//				console.log(data);
+				console.log(data);
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
 					if (lang === "ar") {
@@ -1258,12 +1168,10 @@ $(function () {
 	$("#success-btn-modal .submit").click(function () {
 		$("#success-btn-modal").modal("hide");
 	});
-	//	$(".place-ad").css("width", $(".right-col").width());
 
+	//	$(".place-ad").css("width", $(".right-col").width());
 	$(window).scroll(function () {
-		//		if ($(this).scrollTop() > $(".products").offset().top && $(this).scrollTop() < ($(".products .row").offset().top + $(".products").innerHeight())) {
 		if ($(this).scrollTop() > $(".products").offset().top) {
-			//			$(".categories").addClass("slider-fixed");	
 			$(".categories").css({
 				position: "fixed",
 				top: 0,
@@ -1278,18 +1186,6 @@ $(function () {
 			}
 
 		} else {
-			//			$(".categories").removeClass("slider-fixed");	
-			//			setTimeout(function () {
-			//			$(".categories").css({
-			//				position: "absolute"
-			//			});
-			//			$(".category-slider img").css("width", "60%");
-			//			if (lang === "ar") {
-			//				$(".category-slider h6").css("font-size", ".8rem");
-			//			} else {
-			//				$(".category-slider h6").css("font-size", ".7rem");
-			//			}
-
 			$(".categories, .category-slider img, .category-slider h6").removeAttr("style");
 		}
 		if ($(window).innerWidth() > 768) {
@@ -1298,13 +1194,10 @@ $(function () {
 					//				width: $(".right-col").width(),
 					top: $(".categories").height(),
 					right: "20px",
-					//					"z-index": 11,
 					position: "fixed"
-					//				width: $(".right-col").width()
 				});
 			} else {
 				$(".place-ad").removeAttr("style");
-				//			$(".place-ad").css("width", $(".right-col").width());
 			}
 		} else {
 			$(".place-ad").removeAttr("style");
@@ -1431,7 +1324,6 @@ $(function () {
 			return;
 		}
 		var data = sessionStorage.getItem('bookmark');
-		//		console.log(data);
 
 		$.ajax({
 			type: "post",
@@ -1439,10 +1331,7 @@ $(function () {
 			dataType: "json",
 			data: sessionStorage.getItem('bookmark')
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				if (lang === "ar") {
 					$("#success-modal .text").html("تم حفظ البحث بنجاح");
 				} else {
@@ -1451,7 +1340,6 @@ $(function () {
 				$("#success-modal").modal("show");
 				setTimeout(function () {
 					$("#success-modal").modal("hide");
-
 				}, 3000);
 			}
 		});
@@ -1480,7 +1368,7 @@ $(function () {
 			});
 			manufactureDateArr = JSON.stringify(manufactureDateArr);
 			manufactureDateNameArr = manufactureDateNameArr.slice(0, -2);
-			//			manufactureDateNameArr = JSON.stringify(manufactureDateNameArr);
+
 			data.push({
 				name: "manufacture_date",
 				value: manufactureDateArr
@@ -1542,8 +1430,6 @@ $(function () {
 		}
 
 		var templateId = $("#filter-form input.template-id").val();
-		//		console.log(templateId);
-		//		console.log($('#filter-modal .template[data-template-id="'+templateId+'"] .status-select option:selected').val());
 
 		if ($('#filter-modal .template[data-template-id="' + templateId + '"] .status-select option:selected').val() !== "") {
 			data.push({
@@ -1592,23 +1478,18 @@ $(function () {
 			});
 		}
 
-		//		console.log(data);
 		data1 = $.param(data);
 
 		sessionStorage.removeItem('bookmark');
 		sessionStorage.setItem('bookmark', data1);
-		//		window.location = base_url + '/search_control?' + $.param(data);
+
 		$.ajax({
 			type: "get",
 			url: base_url + '/api/items_control/search',
 			dataType: "json",
 			data: data1
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
-				//				console.log(base_url + '/search_control?' + data);
+			if (data.status === false) {} else {
 				window.location = base_url + '/search_control?' + data1;
 			}
 		});
@@ -1637,10 +1518,7 @@ $(function () {
 				ad_id: adId
 			}
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				$("#chat-modal .chat").empty();
 				for (i in data.data) {
 					if (data.data[i].to_seller === "1") {
@@ -1676,10 +1554,7 @@ $(function () {
 			global: false, // this makes sure ajaxStart is not triggered
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			if (data.status === false) {} else {
 				notSeenMsgs = 0;
 				var newMsgSessions = [];
 				for (i in data.data) {
@@ -1688,20 +1563,15 @@ $(function () {
 						notSeenMsgs += 1;
 					}
 				}
-
 				if (notSeenMsgs > 0) {
-					//					console.log("not");
 					$(".header-account-logged .new-msg").removeClass("d-none");
 					//					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
 					//					$(".profile-page .session .new-msg").removeClass("d-none");
-
-
 				} else {
 					$(".header-account-logged .new-msg").addClass("d-none");
 					//					$(".profile-page .chat-tab-link .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
-
 				if ($(".profile-page").length > 0) {
 					$(".profile-page .sessions .session").each(function () {
 						$(this).removeAttr("style");
@@ -1719,21 +1589,8 @@ $(function () {
 
 	if (logged) {
 		checkNewMsgs();
-		notSeenInterval = setInterval(checkNewMsgs, 5000);
+		notSeenInterval = setInterval(checkNewMsgs, 3000);
 	}
-
-
-	$(".header-account-logged .new-msg").click(function () {
-		//		if (lang === "ar") {
-		//			$("#success-modal .text").html("لديك رسائل غير مقروءة <br> الرجاء تفقد حسابك");
-		//		} else {
-		//			$("#success-modal .text").html("You have unread messages, <br> please check your profile");
-		//		}
-		//		$("#success-modal").modal("show");
-		//		setTimeout(function () {
-		//			$("#success-modal").modal("hide");
-		//		}, 3000);
-	});
 
 	//auto check for new messages for an opened chat session and append it
 	var intervalId;
@@ -1745,7 +1602,7 @@ $(function () {
 		var lastMsgId;
 		intervalId = setInterval(function () {
 
-			//get chat messages
+			//get chat messages for a live(opened) chat session
 			$.ajax({
 				type: "get",
 				url: base_url + '/api/users_control/get_chat_messages',
@@ -1753,12 +1610,9 @@ $(function () {
 				global: false, // this makes sure ajaxStart is not triggered
 				data: $("#chat-form").serialize()
 			}).done(function (data) {
-				if (data.status === false) {
-					//					console.log(data);
-				} else {
+				if (data.status === false) {} else {
 					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
-					//					console.log(lastMsgId);
-					//					console.log(data);
+					var msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
 					var startIndex;
 					if (data.data[data.data.length - 1].message_id != lastMsgId) {
 						//to know last msg index in data.data array
@@ -1770,6 +1624,18 @@ $(function () {
 						}
 						for (i = startIndex + 1; i < data.data.length; i += 1) {
 							//todo add seller check later to avoid any errs in msg display self or other
+							//check msg date
+							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+								//update msg date
+								msgDate = data.data[i].created_at.split(' ')[0];
+								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+							}
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true
+							});
+							console.log(data.data[i]);
 							template = $('#chat-other-template').html();
 							Mustache.parse(template);
 							rendered = Mustache.render(template, data.data[i]);
@@ -1782,7 +1648,7 @@ $(function () {
 				}
 			});
 
-		}, 5000);
+		}, 1000);
 	});
 
 	$('#chat-modal').on('hide.bs.modal', function (e) {
@@ -1793,18 +1659,20 @@ $(function () {
 		e.preventDefault();
 		e.stopPropagation();
 
-		//		console.log($(this).serializeArray());
-
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/users_control/send_msg',
 			dataType: "json",
 			data: $(this).serialize()
 		}).done(function (data) {
-			if (data.status === false) {
-				//				console.log(data);
-			} else {
-				//				console.log(data);
+			console.log(data.data);
+			if (data.status === false) {} else {
+				data.data.time = new Date(data.data.created_at).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true
+							});
+				
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
@@ -1837,7 +1705,6 @@ $(function () {
 		});
 	});
 
-
 	//register
 	$('#register-form').submit(function (e) {
 		$('#register-modal .error-message').addClass("d-none");
@@ -1856,7 +1723,6 @@ $(function () {
 			}, 500);
 			return false;
 		}
-
 
 		pass1 = $(this).find(".password").val();
 		pass2 = $(this).find(".confirm_password").val();
@@ -1901,16 +1767,13 @@ $(function () {
 			url: base_url + '/users_control_web/register',
 			dataType: "json",
 			data: $(this).serialize()
-			//			data: $.param(data)
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 				var errorMessage = $.parseHTML(data.message),
 					node,
 					wholeMessage = '';
 				for (node in errorMessage) {
 					if (errorMessage[node].nodeName === 'P') {
-						//console.log(errorMessage[node].innerHTML);
 						wholeMessage += '-' + errorMessage[node].innerHTML;
 					} else {
 						wholeMessage += '<br>';
@@ -1944,14 +1807,11 @@ $(function () {
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 				var errorMessage = $.parseHTML(data.message),
 					node,
 					wholeMessage = '';
-				//				console.log(errorMessage);
 				for (node in errorMessage) {
 					if (errorMessage[node].nodeName === 'P') {
-						//						console.log(errorMessage[node]);
 						wholeMessage += '-' + errorMessage[node].innerHTML;
 
 					} else if (errorMessage[node].nodeName === '#text') {
@@ -1963,32 +1823,13 @@ $(function () {
 				$('#verify-modal .error-message').html(wholeMessage);
 				$('#verify-modal .error-message').removeClass("d-none");
 			} else {
-
-				//				//				if($(".profile-page").length > 0){
-				//				//					setTimeout(function () {
-				//				//					$("#notification-modal .text").html("Phone number changed successfully,<br>You will be logged out, please sign in with your new number")
-				//				//					$("#notification-modal").modal("show");
-				//				//				}, 500);
-				//				//				} else{
-				//				$("#verify-modal").modal("hide");
-				//				setTimeout(function () {
-				//					if (lang === "ar") {
-				//						$("#success-modal .text").html("تم إنشاء حسابك بنجاح <br>بإمكانك تسجيل الدخول إلى حسابك");
-				//					} else {
-				//						$("#success-modal .text").html("You have registered successfully,<br>You can now sign in");
-				//					}
-				//
-				//					$("#success-modal").modal("show");
-				//				}, 500);
-				//				setTimeout(function () {
-				//					$("#success-modal").modal("hide");
+				//				if($(".profile-page").length > 0){
 				//					setTimeout(function () {
-				//						$("#login-modal input[name='phone']").val($("#verify-form input[name='phone']").val());
-				//						$("#login-modal").modal("show");
-				//					}, 500);
-				//				}, 3000);
-				//
-				//				//			}
+				//					$("#notification-modal .text").html("Phone number changed successfully,<br>You will be logged out, please sign in with your new number")
+				//					$("#notification-modal").modal("show");
+				//				}, 500);
+				//				} else{
+				//			}
 				//login directly
 				$("#verify-modal").modal("hide");
 				setTimeout(function () {
@@ -2014,7 +1855,6 @@ $(function () {
 					}
 				}).done(function (data) {
 					if (data.status === false) {
-						//				console.log(data);
 						var errorMessage = $.parseHTML(data.message),
 							node,
 							wholeMessage = '';
@@ -2032,7 +1872,6 @@ $(function () {
 						$('#verify-modal .error-message').html(wholeMessage);
 						$('#verify-modal .error-message').removeClass("d-none");
 					} else {
-						//				console.log(data);
 						window.location = base_url;
 					}
 				});
@@ -2065,7 +1904,6 @@ $(function () {
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 				var errorMessage = $.parseHTML(data.message),
 					node,
 					wholeMessage = '';
@@ -2083,24 +1921,11 @@ $(function () {
 				$('#login-modal .error-message').html(wholeMessage);
 				$('#login-modal .error-message').removeClass("d-none");
 			} else {
-				//				console.log(data);
 				window.location = base_url;
-				//				$("#verify-modal").modal("hide");
-				//				setTimeout(function () {
-				//					$("#success-modal").modal("show");
-				//				}, 500);
-				//				setTimeout(function () {
-				//					$("#success-modal").modal("hide");
-				//				}, 2000);
-				//				//				}
-				//				//reset
-				//				resetPostAd();
 			}
 		});
 
 	});
-
-
 
 	//favorite icon hover
 	$("#card-modal").on("mouseenter", ".card .fav .icon", function () {
@@ -2130,14 +1955,12 @@ $(function () {
 			$(this).html('<i class="fas fa-heart fa-2x"></i>');
 			$(this).css("color", "FF87A0");
 			$(this).data("added", 1);
-			//			$(this).siblings(".text").text("Add to favorites");
 			$(this).attr("title", "Remove from favorites");
 			url = base_url + '/api/items_control/set_as_favorite';
 		} else if ($(this).data("added") === 1) {
 			$(this).html('<i class="far fa-heart fa-2x"></i>');
 			$(this).css("color", "#999");
 			$(this).data("added", 0);
-			//			$(this).siblings(".text").text("Remove from favorites");
 			$(this).attr("title", "Add to favorites");
 			url = base_url + '/api/items_control/remove_from_favorite';
 		}
@@ -2151,14 +1974,11 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 			} else {
-				//				console.log(data);
 			}
 		});
 
 	});
-
 
 	$("#notification-modal .submit").click(function () {
 		$("#notification-modal").modal("hide");
@@ -2174,7 +1994,6 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {
-			//			console.log(data);
 		} else {
 			for (i in data.data) {
 				$("#report-form .report-select").append($('<option>', {
@@ -2192,7 +2011,6 @@ $(function () {
 		setTimeout(function () {
 			$("#report-modal").modal("show");
 		}, 500);
-
 	});
 
 	$("#report-form").submit(function (e) {
@@ -2205,7 +2023,6 @@ $(function () {
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {
-				//				console.log(data);
 			} else {
 				$("#report-form").trigger("reset");
 				$("#report-form .report-select")[0].sumo.unSelectAll();
@@ -2238,9 +2055,7 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {
-			//				console.log(data);
 		} else {
-			//				console.log(data);
 			template = $('#footer-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);

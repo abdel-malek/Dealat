@@ -50,6 +50,7 @@
 					</div>
 					<div class="col-md-2 mt-2">
 						<button class="btn button2 edit-user-info"><?php echo $this->lang->line('edit_info'); ?></button>
+						<button class="btn button2 delete-account"><?php echo $this->lang->line('delete_account'); ?></button>
 					</div>
 				</script>
 			</div>
@@ -290,21 +291,7 @@
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
 								</div>
-
-								<!--
-								<div class="form-group">
-									<nav class="navbar navbar-expand-md navbar-light  locations-nav">
-										<ul class="navbar-nav">
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
-												<ul class="dropdown-menu cities main-dropdown">
-
-												</ul>
-											</li>
-										</ul>
-									</nav>
-								</div>
--->
+								
 								<div class="form-group">
 									<select name="city_id" class="city-select" required>
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>
@@ -320,16 +307,10 @@
 								<div class="form-group">
 									<select name="show_period" class="period-select" required>
 							<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>
-<!--
-							<option value="1"><?php echo $this->lang->line('week'); ?></option>
-							<option value="2"><?php echo $this->lang->line('10_days'); ?></option>
-							<option value="3"><?php echo $this->lang->line('month'); ?></option>
--->
 						</select>
 								</div>
 
 								<div class="form-group">
-									<!--todo display currency/ take only numbers-->
 									<input type="number" class="form-control" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
 								</div>
 
@@ -516,8 +497,8 @@
 									{{/main_image}}
 
 									<div class="secondary-imgs">
-										{{#images}}<div class="">Other images:</div>{{/images}}
 										{{#images}}
+										<div class="">Other images:</div>{{/images}} {{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
@@ -535,10 +516,9 @@
 									</div>
 									{{/main_video}}
 								</script>
-								<!--							<div id="fileuploader-ad">Upload</div>-->
 								<div id="fileuploader-edit-ad-main">Upload</div>
 								<div id="fileuploader-edit-ad">Upload</div>
-								<div id="fileuploader-edit-ad-video">Upload</div>
+								<div id="fileuploader-edit-ad-video" class="d-none">Upload</div>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -592,11 +572,7 @@
 						<div class="form-group">
 							<input type="number" class="form-control whatsup" name="whatsup_number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
 						</div>
-						<!--
-						<div class="form-group">
-							<input type="text" class="form-control" name="phone" placeholder="<?php //echo $this->lang->line('phone'); ?>">
-						</div>
--->
+						
 						<div class="modal-footer">
 							<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('update'); ?></button>
 						</div>
@@ -632,4 +608,25 @@
 		</div>
 	</div>
 
-	<!--<script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>-->
+	<!--delete account modal-->
+	<div id="delete-account-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<h6 class="text">
+						<?php echo $this->lang->line('delete_account_confirm'); ?>
+					</h6>
+					<div class="note text-danger"><?php echo $this->lang->line('delete_account_confirm_note'); ?></div>
+					<div class="modal-footer">
+						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('yes'); ?></button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>

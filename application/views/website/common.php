@@ -1,18 +1,6 @@
 <div class="main-wrapper">
 <!--  loading -->
 <!--
-	<section class="loading-overlay">
-		<div class="logo">
-			<img src="images/icons/LOGO.png" alt="Aura">
-		</div>
-
-		<div class="spinner">
-			<div class="dot1"></div>
-			<div class="dot2"></div>
-		</div>
-	</section>
--->
-<!--
 <section class="loading-overlay">
 	<div class="spinner">
 		<div class="sk-circle">
@@ -68,14 +56,7 @@
 <header class="home">
 	<div class="container">
 		<div class="row align-items-center">
-			<!--			<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1">-->
-			<!--
-		<div class="col-lg-1">
-			<span class="home-icon">
-				<a href="<?php echo base_url() ?>" style="color: #fff">Home</a>
-			</span>
-		</div>
--->
+			
 			<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1 offset-lg-0">
 				<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
 			</div>
@@ -88,10 +69,6 @@
 					<span class="language-switch">
 						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
 						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
-<!--
-						<a class="english <?php echo $en_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=en')?>" data-locale="en"><?php echo $this->lang->line('english'); ?></a>
-						<a class="arabic <?php echo $ar_lng; ?>" href="<?php echo site_url('/users_control_web/change_language?language=ar') ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></a>
--->
 				<span class="english <?php echo $en_lng; ?>"  data-locale="en"><?php echo $this->lang->line('english'); ?></span>
 						<span class="arabic <?php echo $ar_lng; ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></span>
 					</span>
@@ -112,7 +89,7 @@
 
 			</div>
 			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
-				<!--				<button class="btn button2 logged"><?php echo $this->session->userdata('USERNAME'); ?></button>-->
+				
 				<div class="header-account-logged">
 					<div class="header-account-dropdown dropdown">
 						<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn button2 logged">
@@ -149,8 +126,6 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
-
-<!--				<button type="button" class="btn button2 report" title=""><?php echo $this->lang->line('report_ad'); ?></button>-->
 				<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>
 			</div>
 		</div>
@@ -471,10 +446,8 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<input type="hidden" name="category_id" class="category-id">
-							<!--							<input type="hidden" name="location_id" class="location-id">-->
 							<input type="hidden" name="type_id" class="type-id">
 							<input type="hidden" name="type_model_id" class="type-model-id">
-							<!--					<input type="hidden" name="main_image" class="main-image">-->
 
 							<div class="form-group">
 								<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
@@ -528,43 +501,13 @@
 								</select>
 							</div>
 
-
-							<!--
-							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light locations-nav">
-									<ul class="navbar-nav">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
-											<ul class="dropdown-menu cities main-dropdown">
-
-											</ul>
-										</li>
-									</ul>
-								</nav>
-							</div>
-
-							<script id="ad-modal-cities-template" type="text/template">
-								{{ #cities }}
-								<li><a class="dropdown-item dropdown-toggle" href="" data-city-id={{city_id}}>{{city_name}}</a>
-									<ul class="dropdown-menu">
-										{{ #locations }}
-										<li><a class="dropdown-item location" href="" data-location-id={{location_id}}>{{location_name}}</a></li>
-										{{ /locations }}
-									</ul>
-								</li>
-								{{ /cities }}
-							</script>
--->
-
 							<div class="form-group">
 								<select name="show_period" class="period-select" required>
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>
-
 								</select>
 							</div>
 
 							<div class="form-group">
-								<!--todo display currency/ take only numbers-->
 								<input type="number" class="form-control" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
 							</div>
 
@@ -578,19 +521,6 @@
 								<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>"></textarea>
 							</div>
 
-							<!--
-							<label class="featured">
-								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
-								<span class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></span>
-							</label>
-							<div class="">
-								<input id="terms-agree" type="checkbox" name="terms_agree" class="" value="1" required>
-								<label for="terms-agree" class="">
-									<span class=""><?php echo $this->lang->line('agree_policy'); ?> <a href="" target="_blank"><?php echo $this->lang->line('terms'); ?></a></span>
-									<span class="d-none text-danger">(required) <i class="fas fa-exclamation"></i></span>
-								</label>
-							</div>
--->
 						</div>
 						<div class="col-sm-6">
 							<div class="form-group d-none field type_name">
@@ -752,7 +682,7 @@
 
 							<div id="fileuploader-ad-main">Upload</div>
 							<div id="fileuploader-ad">Upload</div>
-							<div id="fileuploader-ad-video">Upload</div>
+							<div id="fileuploader-ad-video" class="d-none">Upload</div>
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
 								<div class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></div>
@@ -793,7 +723,6 @@
 							<input type="hidden" class="template-id">
 							<input type="hidden" name="category_id" class="category-id">
 							<input type="hidden" name="category_name">
-							<!--							<input type="hidden" name="location_id" class="location-id">-->
 
 							<div class="form-group">
 								<input type="text" class="search form-control" name="search" placeholder="<?php echo $this->lang->line('search'); ?>">
@@ -810,21 +739,6 @@
 									</ul>
 								</nav>
 							</div>
-
-							<!--
-							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light locations-nav">
-									<ul class="navbar-nav">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('item_location'); ?></a>
-											<ul class="dropdown-menu cities main-dropdown">
-
-											</ul>
-										</li>
-									</ul>
-								</nav>
-							</div>
--->
 
 							<div class="form-group">
 								<select name="city_id" class="city-select">
@@ -1072,54 +986,10 @@
 -->
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('search'); ?></button>
-						<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
 					</div>
 				</form>
 			</div>
 
-		</div>
-	</div>
-</div>
-
-<!--pay modal-->
-<div id="pay-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-			</div>
-			<div class="modal-body">
-				<p>Choose your payment method</p>
-				<form action="">
-
-					<div class="form-group">
-						<input type="text" class="form-control" name="bank_name" placeholder="Bank Name">
-					</div>
-
-					<div class="form-group">
-						<input type="text" class="form-control" name="account_number" placeholder="Account Number">
-					</div>
-
-					<div class="form-group">
-						<input type="text" class="form-control" name="routing_number" placeholder="Routing Number">
-					</div>
-
-					<div class="form-group">
-						<select name="" class="category-select" placeholder="Account Type">
-							<option disabled selected value="foo" >
-							<option value="1">type1</option>
-							<option value="2">type2</option>
-							<option value="3">type3</option>
-						</select>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit">Authorize</button>
-				<!--					<button type="button" class="btn button1" data-dismiss="modal">Cancel</button>-->
-			</div>
 		</div>
 	</div>
 </div>
@@ -1181,16 +1051,8 @@
         </div>
 			</div>
 			<div class="modal-body">
-
-				<!--
-			<div class="menu">
-            <div class="back"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-            <div class="name">Alex</div>
-            <div class="last">18:09</div>
-        </div>
--->
 				<ol class="chat">
-<!--					   <div class="day">Hoy</div>     -->
+
 				</ol>
 
 				<script id="chat-self-template" type="text/template">
@@ -1212,7 +1074,6 @@
 					</li>
 				</script>
 
-
 				<form id="chat-form">
 					<input type="hidden" class="ad-id" name="ad_id">
 					<input type="hidden" class="seller-id">
@@ -1221,11 +1082,9 @@
 						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
 						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
 					</div>
-<!--					<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="Send a message to the seller">-->
 				</form>
 			</div>
 			<div class="modal-footer">
-<!--				<button type="submit" class="btn button2 submit" form="chat-form"><?php echo $this->lang->line('send'); ?></button>-->
 			</div>
 		</div>
 	</div>
@@ -1291,24 +1150,6 @@
 		</div>
 	</div>
 </div>
-
-
-<!--
-<script id="sub-categories-template" type="text/template">
-	<div class="col-sm-3">
-		<div class="sub">
-			<li><span class="name all" data-id={{catId}}><?php echo $this->lang->line('all'); ?></span></li>
-		</div>
-	</div>
-	{{ #sub }}
-	<div class="col-sm-3">
-		<div class="sub">
-			<li><span class="name" data-id={{category_id}}>{{category_name}}</span></li>
-		</div>
-	</div>
-	{{ /sub }}
-</script>
--->
 
 <script id="main-commercial-ads-template" type="text/template">
 	{{#.}}

@@ -297,3 +297,7 @@ $lang['why_report_ad'] = 'Why to report this ad';
 $lang['write_message'] = 'Write your message...';
 $lang['diactivate'] = 'Deactivate';
 $lang['activate'] = 'Activate';
+
+$lang['delete_account'] = 'Delete Account';
+$lang['delete_account_confirm'] = 'Are you sure you want to delete your account permenently?';
+$lang['delete_account_confirm_note'] = 'Note: this step cannot be reversed, all your ads and data in this website will be deleted';

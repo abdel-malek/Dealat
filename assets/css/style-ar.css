@@ -240,4 +240,8 @@ header.home .header-account-logged li a {
   direction: rtl;
   text-align: right; }
 
+#delete-account-modal .note {
+  direction: rtl;
+  text-align: right !important; }
+
 /*# sourceMappingURL=style-ar.css.map */

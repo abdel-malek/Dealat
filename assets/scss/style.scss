@@ -1913,8 +1913,8 @@ label {
 		margin: 0; //    padding: 0 0 50px 0;
 		padding: 0 0 10px 0; //    margin-top: 60px;
 		margin-bottom: 10px;
-//		overflow-y : auto;
-//		max-height: 50vh;
+		overflow-y : auto;
+		max-height: 50vh;
 	}
 	.chat li {
 		padding: 0.5rem;
@@ -2092,4 +2092,8 @@ label {
 	text-align: left;
 	width: auto;
 	min-width: 200px;
+}
+
+#delete-account-modal .note{
+	text-align: left !important;
 }

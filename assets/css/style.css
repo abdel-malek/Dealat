@@ -1386,7 +1386,9 @@ label {
     background: none;
     margin: 0;
     padding: 0 0 10px 0;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 50vh; }
   #chat-modal .chat li {
     padding: 0.5rem;
     overflow: hidden;
@@ -1502,5 +1504,8 @@ label {
   text-align: left;
   width: auto;
   min-width: 200px; }
+
+#delete-account-modal .note {
+  text-align: left !important; }
 
 /*# sourceMappingURL=style.css.map */
