@@ -16,6 +16,8 @@ class Chat_sessions extends MY_Model {
 		// $this->db->where('chat_sessions.user_id' , $user_id );
 		// $this->db->or_where('chat_sessions.user_id' , $user_id);
 		$this->db->where("(chat_sessions.user_id = '$user_id' OR chat_sessions.seller_id = '$user_id')");
+		$this->db->where('u.is_deleted' , 0);
+		$this->db->where('s.is_deleted' , 0);
 		return parent::get(null , $is_single);
 	}
 	

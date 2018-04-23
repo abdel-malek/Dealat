@@ -24,7 +24,7 @@ class Commercial_ads extends MY_Model {
 	   }else{
 	   	 $this->db->where('position !=' , POSITION::MOBILE);
 	   }
-	   $this->db->where('is_active' , 1);
+	   $this->db->where('commercial_ads.is_active' , 1);
 	   return parent::get();
 	}
 	

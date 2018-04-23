@@ -70,10 +70,12 @@ class User_activation_codes extends MY_Model {
 	
 	public function send_code_SMS($phone , $msg)
 	{
-	    $url ='https://bms.syriatel.sy/API/SendSMS.aspx?'.
-	          'job_name=DEALAT&user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone . ';';
+		// dump($phone);
+	     //$url ='https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone . ';';
+	     $url ='https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone;
 	     try {
 	       $result = file_get_contents($url);
+		 //  dump($result);
 	       if ($result == "963" . $phone) {
 	           return 1;
 	       } else

@@ -335,4 +335,16 @@ class Users_control extends REST_Controller {
 		 $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	 }
    }
+   
+   public function delete_my_account_post()
+   {
+       $current_user = $this->current_user->user_id;
+	   $this->load->model('data_sources/users');
+	   $user_id = $this->users->save(array('is_deleted'=>1) , $current_user);
+	   if($user_id){
+	   	   $this->response(array('status' => true, 'data' => $user_id, "message" => $this->lang->line('sucess')));
+	   }else{
+	   	   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+	   }
+   }
 }

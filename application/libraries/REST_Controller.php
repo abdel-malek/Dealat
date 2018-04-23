@@ -733,15 +733,17 @@ abstract class REST_Controller extends CI_Controller {
 	
   protected function _detect_city() {
         $header = $this->input->request_headers();
-        if (isset($header['city'])) {
-            $this->session->set_userdata(array('city' => $header['city']));
-            return $header['city'];
+        if (isset($header['City'])) {
+            $this->session->set_userdata(array('city' => $header['City']));
+            return $header['City'];
         }
-        if (!$this->session->userdata('city')) {
+        if (!$this->session->userdata('City')) {
             $this->session->set_userdata(array('city' => 1));
             return 1;
         }
+		//print_r($this->session->userdata);
         return $this->session->userdata('city');
+		
    }
 	
    protected function _detect_auth() {

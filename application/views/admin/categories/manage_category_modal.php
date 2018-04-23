@@ -113,7 +113,8 @@
           </div>
         <div class="modal-footer">
           <button   onclick="save_category()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="" id=""  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button  style="display: none"  onclick="delete_cat()" id="delete_category_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('diactivate') ?></button>
+          <button  style="display: none"  onclick="activate_cat()" id="activate_category_btn"  type="button" class="btn btn-primary"><?php echo $this->lang->line('activate') ?></button>
           <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
           	 data-toggle="modal" data-target=".delete_modal"
 		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

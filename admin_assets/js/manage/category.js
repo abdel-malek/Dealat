@@ -81,6 +81,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
    if(is_main){ // manage main cat
    	  if(id == 0){ //add
    	  	 $('.choose_tamplate_div').css('display' , 'inline'); 
+   	  	 
    	  }else{
    	  	is_edit = true;
    	  }
@@ -98,6 +99,18 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         dataType: "json",
         success: function(response) {
         	cat_info = response.data;
+            // check the deactivation ability
+        	var has_ads = check_ad_exsistence(cat_info['category_id']);
+        	console.log('check : '+ has_ads);
+        	if(has_ads == 0){
+        		// check wich btn to show the deactivate or the activate. 
+        		if(cat_info['is_active'] == 0){
+        			$('#activate_category_btn').css('display', 'inline');
+        		}else{
+        			$('#delete_category_btn').css('display', 'inline');
+        		}
+        	}
+        	
             $('#cat_arabic_name').val(cat_info['ar_name']);
             $('#cat_english_name').val(cat_info['en_name']);
             has_child = check_child_exsistence(id);
@@ -138,6 +151,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         }
      });
    }else{ // add
+   	 $('#delete_category_btn').css('display', 'none');
    	  if(is_main){
    	  	 template_id = $('#cat_tamplate').val();
    	  }
@@ -156,6 +170,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
    $('.manage_cat').modal('show');
 }
 
+
  $('.manage_cat').on('hidden.bs.modal', function () {
 	  $('#cat_arabic_name').val('');
 	  $('#cat_english_name').val('');
@@ -163,7 +178,10 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
 	  $('.hidden_fields_manage_div').css('display' , 'none'); 
 	  $('.template_info_cat').css('display' , 'none');
 	  $('.hide_check_box').prop('checked' , true); 
+	  $('#activate_category_btn').css('display', 'none');
+	  $('#deleted_category_btn').css('display', 'none');
  });
+
  
  
  
@@ -225,7 +243,8 @@ function save_category(){
 	            }else{
 	                new PNotify({
 	                  title:  lang_array['success'],
-	                  text: lang_array['ad_saved'],
+	                //  text: lang_array['category_saved'],
+	                  text: '',
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -249,26 +268,119 @@ function save_category(){
 	    });
 }
 
+
+function delete_cat () {
+  var id = $('#cat_id_input').val();
+   data = {'category_id' : id};
+    $.ajax({
+        url:  base_url + '/admin/categories_manage/deactivate_cat/format/json',
+        type: "post",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+            if(response.status == false){
+           	  new PNotify({
+	                  title: lang_array['attention'],
+	                  text: response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+            }else{
+                new PNotify({
+                  title:  lang_array['success'],
+                  //text: lang_array['category_deactivated'],
+                  text: '',
+                  type: 'success',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				 }
+               });
+                // education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
+			    // $('.education_manage_modal').modal('hide');
+			    location.reload();
+             }
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+}
+
+
+function activate_cat () {
+  var id = $('#cat_id_input').val();
+   data = {'category_id' : id};
+    $.ajax({
+        url:  base_url + '/admin/categories_manage/activate_cat/format/json',
+        type: "post",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+            if(response.status == false){
+           	  new PNotify({
+	                  title: lang_array['attention'],
+	                  text: response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+            }else{
+                new PNotify({
+                  title:  lang_array['success'],
+                  //text: lang_array['category_activated'],
+                  text: '',
+                  type: 'success',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				 }
+               });
+                // education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
+			    // $('.education_manage_modal').modal('hide');
+			    location.reload();
+             }
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+}
+
 function check_child_exsistence (cat_id) {
     return $.ajax({
 	        url: base_url + '/admin/categories_manage/check_child_exsist?category_id='+cat_id,
 	        type: "get",
 	        dataType: "json",
 	        async: false,
-	        // success: function(response) {
-	        	// console.log(response.data);
-	            // has_child =  response.data;
-	        // },error: function(xhr, status, error){
-	        	// new PNotify({
-	                  // title: lang_array['attention'],
-	                  // text: lang_array['something_wrong'],
-	                  // type: 'error',
-	                  // styling: 'bootstrap3',
-	                  // buttons: {
-					        // sticker: false
-					// }
-	            // });
-	        // }
+	     }).responseText;
+}
+
+function check_ad_exsistence (cat_id) {
+    return $.ajax({
+	        url: base_url + '/admin/categories_manage/check_ad_exsit?category_id='+cat_id,
+	        type: "get",
+	        dataType: "json",
+	        async: false,
 	     }).responseText;
 }
   

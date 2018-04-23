@@ -140,7 +140,7 @@ var current_pending_count = 0;
      });
      
  // reload to get new pending ads.      
-    setInterval(function() {
+   setInterval(function() {
 		ads_table.ajax.reload( null, false );
 		$.ajax({
         url: base_url + '/api/items_control/get_pending_count/format/json',
@@ -181,8 +181,6 @@ var current_pending_count = 0;
         }
      });
 	 }, 6000 );  // 4000
-	 
-	 
 	// set select to pending 
      $("#status_select").val(PENDING).trigger('change'); 
  });

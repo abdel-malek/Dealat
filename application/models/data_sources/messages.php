@@ -35,6 +35,7 @@ class Messages extends MY_Model {
 			$msg_id = null;
 			if($check_exist_result){ // there is already chat session for this ad and user and seller
 			    $data['chat_session_id'] = $check_exist_result->chat_session_id;
+			    $chat_session_id = $data['chat_session_id'];
 		        $msg_id = parent::save($data);
 				// chane seller seen status to 0 
 				$this->chat_sessions->save(array('seller_seen' => 0) , $check_exist_result->chat_session_id);

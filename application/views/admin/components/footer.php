@@ -113,6 +113,7 @@
        	 lang_array['location_saved'] = 'Area is saved' ;
        	 lang_array['location_deleted'] = 'Area is Deleted' ;
        	 lang_array['notification_sent'] = 'Notification sent successfully'
+       	// lang_array['category_deactivated'] = 'Category and ';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;

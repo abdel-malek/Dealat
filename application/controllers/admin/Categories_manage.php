@@ -19,7 +19,7 @@ class Categories_manage extends REST_Controller {
 	public function index_get($value='')
 	{
 		$this->load->model('data_sources/categories');
-		$this->data['main_categories'] = $this->categories->get_main_categories($this->data['lang']);
+		$this->data['main_categories'] = $this->categories->get_main_categories_for_manage($this->data['lang']);
 		$this -> data['subview'] = 'admin/categories/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
@@ -41,6 +41,32 @@ class Categories_manage extends REST_Controller {
 		   }
 		}
 	}
+	
+	
+	public function deactivate_cat_post()
+	{
+	    $this -> form_validation -> set_rules('category_id', 'category_id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
+			$this->categories->diactivate($child_ids);
+			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+		}
+	}
+	
+	public function activate_cat_post()
+	{
+		$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
+			$this->categories->activate($child_ids);
+			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+		}
+	}
+	
 	
 	public function edit_post()
 	{
@@ -93,6 +119,18 @@ class Categories_manage extends REST_Controller {
 		$check_res = $this->categories->has_child($cat_id);
 		echo $check_res;
 		//$this->response(array('status' => true, 'data' =>$check_res, 'message' => $this->lang->line('sucess')));
+	}
+	
+	public function check_ad_exsit_get()
+	{
+		$this->load->model('data_sources/ads');
+	    $cat_id  = $this->input->get('category_id');
+		$check_result = $this->ads->check_category_ads_existence($cat_id);
+		if($check_result){
+			echo 1;
+		}else{
+			echo 0;
+		}
 	}
 
    

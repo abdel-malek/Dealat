@@ -10,6 +10,7 @@ class Categories extends MY_Model {
 	public function get_nested($lang)
 	{
 	    $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
+	    $this->db->where('is_active', 1);
 		$this -> db -> order_by($this -> _order_by);
 		$categories = $this -> db -> get('categories') -> result_array();
 	    // create an array to hold the references
@@ -54,10 +55,18 @@ class Categories extends MY_Model {
    public function get_all($lang)
     {
        $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
+	   $this->db->where('is_active', 1);
 	   return parent::get();
     }
 	
 	public function get_main_categories($lang)
+	{
+		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
+		$this->db->where('is_active' , 1);
+		return parent::get_by(array('parent_id'=>0));
+	}
+
+   	public function get_main_categories_for_manage($lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		return parent::get_by(array('parent_id'=>0));
@@ -66,7 +75,7 @@ class Categories extends MY_Model {
 	public function get_category_subcategories($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
-		$q = parent::get_by(array('parent_id'=>$category_id));
+		$q = parent::get_by(array('parent_id'=>$category_id , 'is_active' =>1));
 		$array = array();
 		if($q != null){
 			foreach ($q as $row) {
@@ -76,6 +85,7 @@ class Categories extends MY_Model {
 		return $array;
 	}
 	
+	// for manage
     public function get_subcats_with_parents($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name ,
@@ -155,4 +165,40 @@ class Categories extends MY_Model {
 	  	return 0;
 	  }
    }
+   
+   public function get_nested_ids($category_id )
+   {
+       $this->db->select('categories.category_id as category_id , sun_cat.category_id as sun_id, sun_sun_cat.category_id as sun_sun_id');
+	   $this->db->join('categories as sun_cat' ,'sun_cat.parent_id = categories.category_id' , 'left outer');
+	   $this->db->join('categories as sun_sun_cat' ,'sun_sun_cat.parent_id = sun_cat.category_id' , 'left outer');
+	   $this->db->where('categories.category_id' , $category_id);
+	   $q =  $this->db->get('categories')->result();
+	   $ids = array();
+	   $ids[$category_id] = $category_id;
+	   foreach ($q as $row) {
+	   	   if($row->sun_id != null){
+	   	   	  $ids[$row->sun_id] = $row->sun_id;
+	   	   }
+	   	   if($row->sun_sun_id){
+	   	   	  $ids[$row->sun_sun_id] = $row->sun_sun_id;
+	   	   }
+	   }
+       return $ids;
+   }
+   
+   public function diactivate($ids)
+   {
+	  $this->db->set('is_active' , 0);
+	  $this->db->where_in('category_id' , $ids);
+	  return $this->db->update('categories');
+   }
+   
+   public function activate($ids)
+   {
+	  $this->db->set('is_active' , 1);
+	  $this->db->where_in('category_id' , $ids);
+	  return $this->db->update('categories');
+   }
+   
+   
 }
