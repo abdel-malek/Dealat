@@ -1546,6 +1546,7 @@ $(function () {
 		notSeenInterval;
 	//check for not seen messages
 	function checkNewMsgs() {
+//		console.log("sess");
 		//get chat messages
 		$.ajax({
 			type: "get",
@@ -1585,23 +1586,18 @@ $(function () {
 				}
 			}
 		});
+		
+		notSeenInterval = setTimeout(checkNewMsgs, 3000);
 	}
 
 	if (logged) {
 		checkNewMsgs();
-		notSeenInterval = setInterval(checkNewMsgs, 3000);
+//		notSeenInterval = setTimeout(checkNewMsgs, 3000);
 	}
 
 	//auto check for new messages for an opened chat session and append it
-	var intervalId;
-	$('#chat-modal').on('shown.bs.modal', function (e) {
-		$("#chat-modal .chat").stop().animate({
-			scrollTop: $("#chat-modal .chat")[0].scrollHeight
-		}, 300);
-		$("#chat-modal input[name='msg']").focus();
-		var lastMsgId;
-		intervalId = setInterval(function () {
-
+	function checkLiveSessionMsg () {
+//console.log("msg");
 			//get chat messages for a live(opened) chat session
 			$.ajax({
 				type: "get",
@@ -1647,12 +1643,22 @@ $(function () {
 					}
 				}
 			});
-
-		}, 1000);
+ intervalId = setTimeout(checkLiveSessionMsg, 1000);
+		}
+	
+	var intervalId;
+	$('#chat-modal').on('shown.bs.modal', function (e) {
+		$("#chat-modal .chat").stop().animate({
+			scrollTop: $("#chat-modal .chat")[0].scrollHeight
+		}, 300);
+		$("#chat-modal input[name='msg']").focus();
+		var lastMsgId;
+		intervalId = setTimeout(checkLiveSessionMsg, 1000);
 	});
 
 	$('#chat-modal').on('hide.bs.modal', function (e) {
-		clearInterval(intervalId);
+//		clearInterval(intervalId);
+		clearTimeout(intervalId);
 	});
 
 	$("#chat-form").submit(function (e) {
