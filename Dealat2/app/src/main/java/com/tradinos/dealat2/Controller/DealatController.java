@@ -37,4 +37,8 @@ public class DealatController extends ParentController {
         request.Call();
     }
 
+    public void getTerms(){
+
+    }
+
 }

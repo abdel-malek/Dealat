@@ -685,7 +685,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:gravity="center"
         >
 
@@ -693,7 +692,7 @@
             android:id="@+id/buttonFalse"
             android:layout_width="100dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
             android:text="@string/buttonDelete"
             android:textColor="@color/white"
@@ -705,12 +704,12 @@
             android:id="@+id/buttonTrue"
             android:layout_width="100dp"
             android:layout_height="36dp"
-            android:layout_marginStart="8dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
             android:text="@string/buttonShow"
-            android:textColor="@color/white"
+            android:textColor="@color/red"
             android:textAppearance="@style/textNormal"
-            android:background="@drawable/rounded_corner_red"
+            android:background="@drawable/rounded_corner_white"
             />
     </LinearLayout>
 

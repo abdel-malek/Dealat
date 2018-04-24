@@ -15,14 +15,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -92,7 +96,7 @@ public class SubmitAdActivity extends MasterActivity {
             textDate,
             textEdu, textSch;
 
-    private EditText editTitle, editDesc, editCategory, editPrice,
+    private EditText editTitle, editDesc, editCategory, editPrice, editTextError,
             editKilo,
             editSize,
             editSpace, editRooms, editFloors, editState,
@@ -108,6 +112,8 @@ public class SubmitAdActivity extends MasterActivity {
             switchAutomatic,
             switchFurn;
 
+    private Button buttonTerms;
+    private CheckBox checkboxTerms;
     private TextInputLayout containerPrice, containerKilometer, containerSize,
             containerSpace, containerRooms, containerFloors, containerState,
             containerEx, containerSalary;
@@ -174,6 +180,11 @@ public class SubmitAdActivity extends MasterActivity {
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
         adapter = new HorizontalAdapter(mContext, linearLayout);
+
+
+        SpannableString content = new SpannableString(getString(R.string.labelTerms));
+        content.setSpan(new UnderlineSpan(), 0, getString(R.string.labelTerms).length(), 0);
+        buttonTerms.setText(content);
     }
 
     @Override
@@ -242,6 +253,11 @@ public class SubmitAdActivity extends MasterActivity {
         progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
         imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
         imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
+
+        checkboxTerms = (CheckBox) findViewById(R.id.checkboxTerms);
+        buttonTerms = (Button) findViewById(R.id.buttonTerms);
+
+        editTextError = (EditText) findViewById(R.id.editTextError);
     }
 
     @Override
@@ -268,19 +284,10 @@ public class SubmitAdActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getName());
+                autoCompleteLocation.setError(null);
 
-                if (selectedLocation.isNothing())
+                if (selectedLocation.isNothing()) //this unnecessary because there is no NoItem in locations
                     selectedLocation = null;
-            }
-        });
-
-        autoCompleteLocation.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (autoCompleteLocation.getText().toString().equals(""))
-                    autoCompleteLocation.showDropDown();
-                return false;
             }
         });
 
@@ -304,6 +311,24 @@ public class SubmitAdActivity extends MasterActivity {
             }
         });
 
+        autoCompleteLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (autoCompleteLocation.getText().toString().equals(""))
+                    autoCompleteLocation.showDropDown();
+            }
+        });
+
+        editCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+                intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
+                intent.putExtra("category", selectedCategory);
+                startActivityForResult(intent, REQUEST_SELECT_CAT);
+            }
+        });
+
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -315,19 +340,6 @@ public class SubmitAdActivity extends MasterActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-
-        editCategory.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-                    intent.putExtra("action", SubCategoriesActivity.ACTION_SELECT_CAT);
-                    intent.putExtra("category", selectedCategory);
-                    startActivityForResult(intent, REQUEST_SELECT_CAT);
-                }
-                return false;
             }
         });
 
@@ -348,6 +360,22 @@ public class SubmitAdActivity extends MasterActivity {
                 imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
                 videoServerPath = null;
                 imageButtonCheck.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        buttonTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, TermsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        checkboxTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    editTextError.setError(null);
             }
         });
     }
@@ -436,6 +464,9 @@ public class SubmitAdActivity extends MasterActivity {
             if (requestCode == REQUEST_SELECT_CAT) {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
+                //if error was set, then category was selected
+                //previuos error didn't disappear automatically
+                editCategory.setError(null);
 
                 // if (selectedCategory.getTemplateId() != currentTemplate) {
                 replaceTemplate();
@@ -602,7 +633,11 @@ public class SubmitAdActivity extends MasterActivity {
 
     private boolean checkGeneralInput() {
 
-        if (inputIsEmpty(editTitle)) {
+        if (!checkboxTerms.isChecked()) {
+            editTextError.setError(getString(R.string.errorAgreeToTerms));
+            editTextError.requestFocus();
+
+        } else if (inputIsEmpty(editTitle)) {
             editTitle.setError(getString(R.string.errorRequired));
             editTitle.requestFocus();
 

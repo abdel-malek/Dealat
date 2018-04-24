@@ -73,8 +73,12 @@
     <string name="labelSelectImage">اختيار صورة</string>
     <string name="labelRemoveImage">إزالة الصورة</string>
     <string name="labelReport">الإبلاغ عن الإعلان</string>
-    <string name="labelPaidFeature">    هذه الميزة تجعل إعلانك يظهر ببداية قائمة الإعلانات، وهي ميزة مدفوعة.\n
-إذا كنت تريد أن يكون إعلانك مميّزاً قم بتفعيل هذا الخيار، وبعدها ستتواصل الإدارة معك.</string>
+    <string name="labelPaidFeature">هذه الميزة مدفوعة. إذا كنت تريد أن يكون إعلانك مميّزاً قم بتفعيلها، وبعدها ستتواصل الإدارة معك.</string>
+
+    <string name="labelAgree">لقد قرأت وأوافق على</string>
+    <string name="labelTerms">شروط استخدام ديلات</string>
+    <string name="labelShowPhone">إظهار رقم الموبايل</string>
+    <string name="labelOnlyToRegistered">سيظهر رقم موبايلك مع تفاصيل إعلاناتك</string>
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
@@ -192,6 +196,7 @@
     <string name="errorCodeLenght">رمز التحقق يحب أن يحوي ٦ خانات!</string>
     <string name="errorPhoneLength">رقم الموبايل يحب أن يحوي ٩ خانات!</string>
     <string name="errorCategory">لايمكن تغيير تصنيف الإعلان</string>
+    <string name="errorAgreeToTerms">يجب أن توافق على شروط استخدام ديلات!</string>
 
 
     <!-- Toasts -->

@@ -60,8 +60,6 @@
     <string name="labelchooseCategory">Choose a Category</string>
     <string name="labelNegotiable">Negotiable</string>
     <string name="labelSecondhand">Secondhand</string>
-    <string name="labelAgree">I have read and agree the</string>
-    <string name="labelTerms">terms and conditions of Dealat</string>
     <string name="labelFeatured">Featured</string>
     <string name="labelAutomatic">Automatic</string>
     <string name="labelWithFurn">With Furniture</string>
@@ -79,8 +77,12 @@
     <string name="labelSelectImage">Select Image</string>
     <string name="labelRemoveImage">Remove Image</string>
     <string name="labelReport">Report an ad</string>
-    <string name="labelPaidFeature">This feature lets your ad appear first in ads list, but it\'s paid.\n
-        If you want your ad to be featured, enable it, and Admin will contact you.</string>
+    <string name="labelPaidFeature">This feature is paid. If you want your ad to be featured, enable it, and Admin will contact you.</string>
+
+    <string name="labelAgree">I have read and agree to the</string>
+    <string name="labelTerms">terms of Dealat</string>
+    <string name="labelShowPhone">Show phone number</string>
+    <string name="labelOnlyToRegistered">Your phone number will be shown with your ads\' details</string>
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
@@ -198,6 +200,7 @@
     <string name="errorCodeLenght">Code must have 6 digits</string>
     <string name="errorPhoneLength">Phone number must have 9 digits</string>
     <string name="errorCategory">Category can\'t be changed!</string>
+    <string name="errorAgreeToTerms">You must agree to Dealat terms!</string>
 
 
     <!-- Toasts -->

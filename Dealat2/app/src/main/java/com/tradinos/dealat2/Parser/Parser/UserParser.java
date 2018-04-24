@@ -42,6 +42,9 @@ public class UserParser implements TradinosParser<User> {
         if (validData(jsonObject.getString("personal_image")))
             user.setImageUrl(jsonObject.getString("personal_image"));
 
+        if (jsonObject.getInt("visible_phone") == 1)
+            user.setVisiblePhone(true);
+
         return user;
     }
 

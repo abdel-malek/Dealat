@@ -2,7 +2,6 @@ package com.tradinos.dealat2.View;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -113,6 +112,7 @@ public class AdDetailsActivity extends MasterActivity {
                 currentAd.setFavorite(result.isFavorite());
                 currentAd.setImagesPaths(result.getImagesPaths());
                 currentAd.setMainVideoUrl(result.getMainVideoUrl());
+                currentAd.setVisiblePhone(result.isVisiblePhone());
 
                 if (result.getMainVideoUrl() != null)// just a gap thing for video // because count of fragments must increase +1
                     result.getImagesPaths().add(0, "");
@@ -171,10 +171,6 @@ public class AdDetailsActivity extends MasterActivity {
 
                 textViewSeller.setText(result.getSellerName());
 
-                // SpannableString content = new SpannableString(result.getSellerPhone());
-                // content.setSpan(new UnderlineSpan(), 0, result.getSellerPhone().length(), 0);
-                textViewPhone.setText(getPhoneNumber(result.getSellerPhone()));
-
                 if (result.isNegotiable())
                     textNegotiable.setText(getString(R.string.yes));
                 else
@@ -187,7 +183,10 @@ public class AdDetailsActivity extends MasterActivity {
                 showTemplate();
 
                 if (user.IsLogged()) {
-                    textViewPhone.setVisibility(View.VISIBLE);
+                    if (currentAd.isVisiblePhone()){
+                        textViewPhone.setText(getPhoneNumber(result.getSellerPhone()));
+                        textViewPhone.setVisibility(View.VISIBLE);
+                    }
 
                     if (currentAd.getSellerId().equals(user.Get().getId())) { // view info for Seller
 

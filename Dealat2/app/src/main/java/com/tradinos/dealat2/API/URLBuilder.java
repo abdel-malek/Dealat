@@ -45,7 +45,7 @@ public class URLBuilder {
         //   SERVER_URL = "http://dealat.tradinos.com/index.php/api";
         else {
                SERVER_URL = preferences.getString("server_url", "http://192.168.9.17/Dealat/index.php/api" + "");
-          //  SERVER_URL = preferences.getString("server_url", "http://dealat.tradinos.com/index.php/api" + "");
+           // SERVER_URL = preferences.getString("server_url", "http://dealat.tradinos.com/index.php/api" + "");
         }
         return SERVER_URL;
     }

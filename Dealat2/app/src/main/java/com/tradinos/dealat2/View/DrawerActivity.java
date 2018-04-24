@@ -278,9 +278,16 @@ public abstract class DrawerActivity extends MasterActivity
         mContext.getResources().updateConfiguration(conf,
                 getResources().getDisplayMetrics());
 
-        Intent refresh = new Intent(this, HomeActivity.class);
-        startActivity(refresh);
-        finish();
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+        UserController.getInstance(mController).updateLanguage(refreshedToken, lang, new SuccessCallback<String>() {
+            @Override
+            public void OnSuccess(String result) {
+                Intent refresh = new Intent(mContext, HomeActivity.class);
+                startActivity(refresh);
+                finish();
+            }
+        });
     }
 
     protected void logout() {
@@ -289,7 +296,7 @@ public abstract class DrawerActivity extends MasterActivity
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                         UserController.getInstance(mController).logOut(refreshedToken, new SuccessCallback<String>() {
                             @Override

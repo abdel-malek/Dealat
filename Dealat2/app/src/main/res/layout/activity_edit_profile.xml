@@ -144,7 +144,7 @@
                 android:id="@+id/editBirthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textIsSelectable="true"
+               android:focusable="false"
                 style="@style/editTextWhite"
                 android:backgroundTint="@color/white"
                 />
@@ -174,8 +174,27 @@
         android:id="@+id/spinnerGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         style="@style/Base.Widget.AppCompat.Spinner.Underlined"
         android:backgroundTint="@color/white"
+        />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switchPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/labelShowPhone"
+        android:textColor="@color/white"
+        android:textAppearance="@style/textNormal"
+        android:theme="@style/switchStyle"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/labelOnlyToRegistered"
+        android:textColor="@color/whiteTransparent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         />
 
     <Button
@@ -197,7 +216,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="8dp"
         android:gravity="center"
         >
 
@@ -206,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
             android:enabled="false"
             android:text="@string/buttonSave"
@@ -219,7 +238,7 @@
             android:layout_width="wrap_content"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
             android:text="@string/buttonCancel"
             android:textColor="@color/red"

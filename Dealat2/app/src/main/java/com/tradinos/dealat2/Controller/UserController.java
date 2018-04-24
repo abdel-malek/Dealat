@@ -14,6 +14,7 @@ import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.Bookmark;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.Parser.Parser.Ad.AdListParser;
 import com.tradinos.dealat2.Parser.Parser.Bookmark.BookmarkListParser;
 import com.tradinos.dealat2.Parser.Parser.Item.ItemListParser;
@@ -79,6 +80,8 @@ public class UserController extends ParentController {
 
         request.addParameter("token", token);
         request.addParameter("os", "1");
+        request.addParameter("lang", MyApplication.getLocale().toString());
+
         authenticationRequired(request);
         addToHeader(request);
         request.Call();
@@ -120,9 +123,21 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void deactivateAccount(SuccessCallback<String> successCallback){
+    public void deactivateAccount(SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.users, "delete_my_account").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+
+        authenticationRequired(request);
+        addToHeader(request);
+        request.Call();
+    }
+
+    public void updateLanguage(String token, String lang, SuccessCallback<String> successCallback) {
+        String url = new URLBuilder(APIModel.users, "update_lang").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+
+        request.addParameter("token", token);
+        request.addParameter("lang", lang);
 
         authenticationRequired(request);
         addToHeader(request);

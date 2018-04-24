@@ -30,6 +30,7 @@ public class CurrentAndroidUser implements CurrentUser {
             editor.putString("serverKey", user.getServerKey());
             editor.putString("cityId", user.getCityId());
             editor.putString("personal_image", user.getImageUrl());
+            editor.putBoolean("visible_phone", user.isVisiblePhone());
         }
 
         editor.commit();
@@ -54,6 +55,7 @@ public class CurrentAndroidUser implements CurrentUser {
             user.setServerKey(preferences.getString("serverKey", ""));
             user.setCityId(preferences.getString("cityId", ""));
             user.setImageUrl(preferences.getString("personal_image", ""));
+            user.setVisiblePhone(preferences.getBoolean("visible_phone", false));
 
             return user;
         }

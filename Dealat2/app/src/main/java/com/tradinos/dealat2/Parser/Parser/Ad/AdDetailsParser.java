@@ -185,6 +185,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         }
 
         ad.setId(jsonObject.getString("ad_id"));
+        ad.setTitle(jsonObject.getString("title"));
         ad.setCreationDate(jsonObject.getString("created_at"));
         ad.setSellerId(jsonObject.getString("user_id"));
         ad.setSellerId(jsonObject.getString("seller_id"));
@@ -203,10 +204,11 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             ad.setLocationName(jsonObject.getString("location_name"));
         }
 
-        ad.setTitle(jsonObject.getString("title"));
-
         if (validData(jsonObject.getString("description")))
             ad.setDescription(jsonObject.getString("description"));
+
+        if (jsonObject.getInt("visible_phone") == 1)
+            ad.setVisiblePhone(true);
 
         ad.setPrice(jsonObject.getDouble("price"));
         ad.setStatus(jsonObject.getInt("status"));

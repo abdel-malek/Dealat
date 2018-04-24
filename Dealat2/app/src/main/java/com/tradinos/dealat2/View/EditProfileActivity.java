@@ -9,8 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -57,6 +57,7 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
     private AppCompatSpinner spinnerCity, spinnerGender;
     private ImageView imageViewPersonal;
     private Button buttonRemove;
+    private SwitchCompat switchPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                             buttonRemove.setVisibility(View.VISIBLE);
                         }
 
+                        if (result.isVisiblePhone())
+                            switchPhone.setChecked(true);
+
                         if (!TextUtils.isEmpty(result.getImageUrl())) {
                             ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
                             mImageLoader.get(MyApplication.getBaseUrl() + result.getImageUrl(), ImageLoader.getImageListener(imageViewPersonal,
@@ -136,19 +140,17 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
         spinnerGender = (AppCompatSpinner) findViewById(R.id.spinnerGender);
         buttonRemove = (Button) findViewById(R.id.buttonRemove);
+        switchPhone = findViewById(R.id.switchPhone);
 
         findViewById(R.id.buttonEdit).setEnabled(false);
     }
 
     @Override
     public void assignActions() {
-
-        editBirthday.setOnTouchListener(new View.OnTouchListener() {
+        editBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    showDatePickerDialog(getSupportFragmentManager());
-                return false;
+            public void onClick(View view) {
+                showDatePickerDialog(getSupportFragmentManager());
             }
         });
 
@@ -199,6 +201,11 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
                     if (image == null)
                         parameters.put("image", NULL);
+
+                    if (switchPhone.isChecked())
+                        parameters.put("visible_phone", "1");
+                    else
+                        parameters.put("visible_phone", "0");
 
                     ShowProgressDialog();
                     UserController.getInstance(mController).editUserInfo(image, parameters, new SuccessCallback<User>() {

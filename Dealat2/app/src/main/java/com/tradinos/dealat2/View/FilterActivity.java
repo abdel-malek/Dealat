@@ -259,13 +259,11 @@ public class FilterActivity extends MasterActivity {
             }
         });
 
-        autoCompleteLocation.setOnTouchListener(new View.OnTouchListener() {
-
+        autoCompleteLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View view) {
                 if (autoCompleteLocation.getText().toString().equals(""))
                     autoCompleteLocation.showDropDown();
-                return false;
             }
         });
 
@@ -289,16 +287,13 @@ public class FilterActivity extends MasterActivity {
             }
         });
 
-        editCategory.setOnTouchListener(new View.OnTouchListener() {
+        editCategory.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    Intent intent = new Intent(mContext, SubCategoriesActivity.class);
-                    intent.putExtra("action", SubCategoriesActivity.ACTION_FILTER_CAT);
-                    intent.putExtra("category", selectedCategory);
-                    startActivityForResult(intent, REQUEST_FILTER_CAT);
-                }
-                return false;
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, SubCategoriesActivity.class);
+                intent.putExtra("action", SubCategoriesActivity.ACTION_FILTER_CAT);
+                intent.putExtra("category", selectedCategory);
+                startActivityForResult(intent, REQUEST_FILTER_CAT);
             }
         });
 
@@ -521,7 +516,7 @@ public class FilterActivity extends MasterActivity {
             case Category.INDUSTRIES:
 
                 item = ((Item) spinnerState.getSelectedItem());
-                if (!item.isNothing()){
+                if (!item.isNothing()) {
                     parameters.put("is_new", item.getId());
                     parameters.put(getString(R.string.stateName), item.getName());
                 }

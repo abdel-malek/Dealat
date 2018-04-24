@@ -115,6 +115,10 @@
             android:name=".View.AboutActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".View.TermsActivity"
+            android:screenOrientation="portrait"
+            />
+
         <activity android:name=".View.PublicNotificationActivity"
             android:screenOrientation="portrait"
             />

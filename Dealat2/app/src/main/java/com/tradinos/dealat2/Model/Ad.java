@@ -22,7 +22,7 @@ public class Ad implements Serializable {
     private double price;
     private int template, status, showPeriod, expiresAfter, days; //days is the number of days of showPeriod
     // but here showPeriod stands for the id of it as we intent to make a management for it
-    private boolean negotiable, featured, favorite;
+    private boolean negotiable, featured, favorite, visiblePhone;
     private List<String> imagesPaths;
 
     public Ad(){
@@ -249,6 +249,14 @@ public class Ad implements Serializable {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public boolean isVisiblePhone() {
+        return visiblePhone;
+    }
+
+    public void setVisiblePhone(boolean visiblePhone) {
+        this.visiblePhone = visiblePhone;
     }
 
     public List<String> getImagesPaths() {

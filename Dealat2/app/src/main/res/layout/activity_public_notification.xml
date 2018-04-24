@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textAppearance="@style/textHeadline"
+        android:textColor="@color/grayDark"
         />
 
     <TextView
@@ -26,31 +27,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
         android:gravity="center"
+        android:layoutDirection="ltr"
         >
 
         <Button
-            android:id="@+id/buttonTrue"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:id="@+id/buttonFalse"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
-            android:text="@string/buttonOpenApp"
+            android:text="@string/buttonCancel"
             android:textAppearance="@style/textNormal"
             android:textColor="@color/white"
             android:background="@drawable/rounded_corner_red"
             />
 
         <Button
-            android:id="@+id/buttonFalse"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:id="@+id/buttonTrue"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:layout_margin="8dp"
             android:onClick="onClick"
-            android:text="@string/buttonCancel"
+            android:text="@string/buttonOpenApp"
             android:textAppearance="@style/textNormal"
             android:textColor="@color/red"
             android:background="@drawable/rounded_corner_white"

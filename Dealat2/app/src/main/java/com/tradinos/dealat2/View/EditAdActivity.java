@@ -18,7 +18,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -284,6 +283,7 @@ public class EditAdActivity extends MasterActivity {
         progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
         imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
         imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
+
     }
 
     @Override
@@ -319,22 +319,12 @@ public class EditAdActivity extends MasterActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLocation = ((AutoCompleteAdapter) autoCompleteLocation.getAdapter()).getItem(i);
                 autoCompleteLocation.setText(selectedLocation.getName());
+                autoCompleteLocation.setError(null);
 
                 if (selectedLocation.isNothing())
                     selectedLocation = null;
             }
         });
-
-        autoCompleteLocation.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (autoCompleteLocation.getText().toString().equals(""))
-                    autoCompleteLocation.showDropDown();
-                return false;
-            }
-        });
-
 
         autoCompleteLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -356,6 +346,22 @@ public class EditAdActivity extends MasterActivity {
             }
         });
 
+        autoCompleteLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (autoCompleteLocation.getText().toString().equals(""))
+                    autoCompleteLocation.showDropDown();
+            }
+        });
+
+        editCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editCategory.setError(getString(R.string.errorCategory));
+                editCategory.requestFocus();
+            }
+        });
+
         spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -373,17 +379,6 @@ public class EditAdActivity extends MasterActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-
-        editCategory.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    editCategory.setError(getString(R.string.errorCategory));
-                    editCategory.requestFocus();
-                }
-                return false;
             }
         });
 
@@ -637,7 +632,6 @@ public class EditAdActivity extends MasterActivity {
                 parameters.put("main_video", NULL);
             else
                 parameters.put("main_video", videoServerPath);
-
 
             return true;
         }
