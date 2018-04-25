@@ -53,7 +53,7 @@ class EditProfileVC: BaseVC {
         
         getData()
         
-        Provider.setScreenName("Edit profile")
+        Provider.setScreenName("EditProfileActivity")
 
     }
     
@@ -77,6 +77,25 @@ class EditProfileVC: BaseVC {
                 
             })
         }
+    }
+    
+    
+    @IBAction func deactiveAction(){
+        let alert = UIAlertController.init(title: "Alert!".localized, message: "deactiveMessage".localized, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction.init(title: "OK".localized, style: .destructive, handler: { (ac) in
+            self.showLoading()
+            Communication.shared.delete_my_account({ (res) in
+                self.hideLoading()
+                User.saveMe(me: User())
+                
+                AppDelegate.setupViews()
+            })
+        }))
+
+        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func setupViews(){
@@ -109,9 +128,15 @@ class EditProfileVC: BaseVC {
             
             if let place = i.placeholder{
                 let arr = place.components(separatedBy: "*")
+                
                 if let temp = arr.first{
-                    i.placeholder = temp.localized + "*"
+                    if arr.count == 2{
+                        i.placeholder = temp.localized + "*"
+                    }else{
+                        i.placeholder = temp.localized
+                    }
                 }
+                
             }
         }
         

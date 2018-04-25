@@ -43,7 +43,7 @@ class RegisterVC: BaseVC {
         
         self.getData()
         
-        Provider.setScreenName("Register")
+        Provider.setScreenName("RegisterActivity")
     }
     
     override func setupViews() {

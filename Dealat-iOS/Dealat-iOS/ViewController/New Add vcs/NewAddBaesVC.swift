@@ -20,8 +20,11 @@ class NewAddBaesVC: UIViewController {
         super.viewDidLoad()
 
         
-        Provider.setScreenName("New Ad")
-
+        if ad != nil{
+            Provider.setScreenName("EditAdActivity")
+        }else{
+            Provider.setScreenName("SubmitAdActivity")
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

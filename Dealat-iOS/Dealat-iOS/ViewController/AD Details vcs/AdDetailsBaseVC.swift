@@ -36,7 +36,7 @@ class AdDetailsBaseVC: UIViewController {
         self.title = self.ad.title
         configureNavigationBar()
         
-        Provider.setScreenName("Ad details")
+        Provider.setScreenName("AdDetailsActivity")
 
     }
     
@@ -68,16 +68,80 @@ class AdDetailsBaseVC: UIViewController {
     
     @IBAction func callAction(){
         if User.isRegistered(){
-            print("--\(self.ad.seller_phone)")
-            if let phone  = self.ad.seller_phone, let url = URL(string: "telprompt:\(phone)") {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.openURL(url)
+            
+            
+            if let phone  = self.ad.seller_phone  {
+                
+                self.tellPhone(phone,withAlert: true)
+
+                /*self.ad.whatsup_number = phone
+                
+                if let whatsapp = self.ad.whatsup_number{
+                    let alert = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+                    
+                    alert.addAction(UIAlertAction.init(title: "Call".localized, style: .default, handler: { (ac) in
+                        self.tellPhone(whatsapp,withAlert : false)
+                    }))
+                    
+                    alert.addAction(UIAlertAction.init(title: "Whatsapp".localized, style: .default, handler: { (ac) in
+                        self.whatsappPhone(whatsapp)
+                    }))
+                    
+                    alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+                    
+                    self.present(alert, animated: true, completion: nil)
                 }
+                    
+                else{
+                    self.tellPhone(phone,withAlert: true)
+                }*/
             }
+            
+            
         }else{
             self.showErrorMessage(text: "need_register".localized)
         }
     }
+    
+    func tellPhone(_ p : String, withAlert : Bool = false){
+        let urlString = withAlert ? "telprompt://" : "tel://"
+        
+        var phone = p
+        if phone.first == "0"{
+            _ = phone.dropFirst()
+        }
+        if phone.count == 9{
+            phone = "0" + phone
+        }
+
+        
+        if let url = URL(string: "\(urlString)\(phone)"){
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    func whatsappPhone(_ p : String){
+        
+        var phone = p
+        
+        if phone.first == "0"{
+            _ = phone.dropFirst()
+        }
+        if phone.count == 9{
+            phone = "963" + p
+        }
+        
+        if let url = URL(string: "whatsapp://send?phone=\(phone)"){
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    
+    
     
     @IBAction func openChat(){
         if User.isRegistered(){

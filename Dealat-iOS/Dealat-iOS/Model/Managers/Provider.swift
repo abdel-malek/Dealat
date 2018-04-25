@@ -47,13 +47,24 @@ class Provider : BaseManager {
     static func setCity(_ city_id : Int){
         UserDefaults.standard.set(city_id, forKey: "city_id")
     }
-    
     static func getCity() -> Int{
         if let city_id = UserDefaults.standard.value(forKey: "city_id") as? Int{
             return city_id
         }
         return 0
     }
+    
+    
+    static func setLang(_ lang : String){
+        UserDefaults.standard.set(lang, forKey: "lang_first")
+    }
+    static func getLang() -> String{
+        if let lang = UserDefaults.standard.value(forKey: "lang_first") as? String{
+            return lang
+        }
+        return ""
+    }
+
     
     static func getEnglishNumber(_ NumberStr : String) -> String{
         let Formatter: NumberFormatter = NumberFormatter()
@@ -90,7 +101,9 @@ class Provider : BaseManager {
         let url = URL.init(string: Communication.shared.baseImgsURL + us){
             
             print("------\n" + url.absoluteString + "\n------")
-            
+            img.sd_setShowActivityIndicatorView(true)
+            img.sd_setIndicatorStyle(.gray)
+
             img.sd_setImage(with: url, placeholderImage: nil, options: .refreshCached, completed: nil)
             
 //            img.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil, completionHandler: nil)
@@ -103,7 +116,7 @@ class Provider : BaseManager {
     
     static func setScreenName(_ name : String){
         if let tracker = GAI.sharedInstance().defaultTracker{
-            tracker.set(kGAIScreenName, value: name + " screen")
+            tracker.set(kGAIScreenName, value: name)
             
             if let builder = GAIDictionaryBuilder.createScreenView(){
                 tracker.send(builder.build() as! [AnyHashable : Any])

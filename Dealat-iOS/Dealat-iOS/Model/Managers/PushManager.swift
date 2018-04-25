@@ -18,7 +18,7 @@ class PushManager{
     static var token : String?
     static var storyBoard = UIStoryboard(name: "Main", bundle: nil)
     
-    static func handleForegroundNotification(data: [AnyHashable: Any]?) {
+    /*static func handleForegroundNotification(data: [AnyHashable: Any]?) {
         
         if let notification = data {
             
@@ -55,9 +55,9 @@ class PushManager{
                 }
             }
         }
-    }
+    }*/
     
-    static func handleNotificationTapping(data: [AnyHashable: Any]?)
+    static func handleNotificationTapping2(data: [AnyHashable: Any]?)
     {
         print("handleNotificationTapping")
         
@@ -158,5 +158,55 @@ class PushManager{
             navigationController.pushViewController(vc, animated: true)
         }
     }
+    
+    
+    static func handleForegroundNotification(_ data: [AnyHashable: Any]?) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        if let vc = appDelegate.window?.rootViewController{
+            vc.showAlert_notification(data)
+        }
+        
+        if let notification = data {
+            if let aps = notification["aps"] as? [String: AnyObject]
+            {
+                if let msg = aps["alert"] as? [String: AnyObject]
+                {
+                    
+                    let title = ((msg["title"] as? String) != nil) ? msg["title"] as! String : "Dealat"
+                    let body = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
+
+                
+                    let not : UILocalNotification = UILocalNotification()
+                    not.alertTitle = title
+                    not.alertBody =  body
+                    not.userInfo = data;
+                    not.soundName = UILocalNotificationDefaultSoundName
+                    not.fireDate = Date()
+                    UIApplication.shared.scheduleLocalNotification(not)
+                    
+                    var soundId: SystemSoundID = 0
+                    let bundle = Bundle.main
+                    guard let soundUrl = bundle.url(forResource: "sms", withExtension: "wav") else{
+                        return
+                    }
+                    AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundId)
+                    AudioServicesPlayAlertSound(soundId)
+                }
+            }
+        }
+    }
+    
+    static func handleNotificationTapping( data: [AnyHashable: Any]?){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if let vc = appDelegate.window?.rootViewController{
+            vc.showAlert_notification(data)
+            print("OKK")
+        }
+        
+        print("false")
+
+    }
+
     
 }

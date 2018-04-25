@@ -15,6 +15,7 @@ import KMPlaceholderTextView
 import SkyFloatingLabelTextField
 import SwiftyJSON
 //import IQDropDownTextField
+import UICheckbox_Swift
 
 class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,UITextFieldDelegate,YMSPhotoPickerViewControllerDelegate {
     
@@ -120,10 +121,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.resetFields()
                 
                 let nn = Cat.getName(selectedCategory.category_id.intValue)
-                
+                print("NNNN : \(nn)")
                 self.tfCategory.text = nn//selectedCategory.category_name
                 self.tfCategory.adjustsFontSizeToFitWidth = true
                 self.tfCategory.minimumFontSize = 8
+                
+                
+                //new
+                self.videoPathDeleted = self.videoPath
+                self.videoUrl = nil
+                self.videoPath = nil
+                self.collectionView.reloadData()
+                
                 
                 self.setupTypes()
                 self.refreshData()
@@ -270,6 +279,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         getData()
         setupViews()
         
+        
+        
     }
     
     
@@ -335,6 +346,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         self.tableView.backgroundView = img
+        
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 100
+
         
         // Navigation Item
         //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Reset", style: .plain, target: self, action: #selector(self.reset))
@@ -726,7 +741,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         switch indexPath.section {
         case 0:
-            return (indexPath.row == 0) ? UITableViewAutomaticDimension : 54
+            return (indexPath.row == 0 || indexPath.row == 8) ? UITableViewAutomaticDimension : 54
         case 11:
             return UITableViewAutomaticDimension
         default:
@@ -881,10 +896,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             return
         }
         
-        guard let loc = self.selectedLocation, let location_id = loc.location_id else {
-            self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Area".localized)
-            return
-        }
+//        guard let loc = self.selectedLocation, let location_id = loc.location_id else {
+//            self.validMessage(tf: tfLocation ,message : "Please enter".localized +  "Area".localized)
+//            return
+//        }
+        
         
         guard let period = self.selectedPeriod, let show_period_id = period.show_period_id else {
             self.validMessage(tf: tfPeriod ,message : "Please enter".localized +  "ShowPeriod".localized)
@@ -910,8 +926,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             return
         }
         
+        
+        if let loc = self.selectedLocation, let location_id = loc.location_id{
+            params["location_id"] = location_id.intValue
+        }
+
         params["city_id"] = city_id.intValue
-        params["location_id"] = location_id.intValue
         params["show_period"] = show_period_id.intValue
         
         params["is_negotiable"] = self.negotiableSwitch.isOn ? 1 : 0
@@ -1051,7 +1071,6 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
-        
         if !self.imagesPathsDeleted.isEmpty{
 //            var imagesArray = [String]()
 //            imagesArray.append(i)
@@ -1075,10 +1094,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
+//        print("STATUSSS : \(self.ad.status.intValue)")
+//        return
+        
         if self.editMode{
             
             self.showLoading()
-            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params) { (res) in
+            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
                 self.hideLoading()
                 
                 self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
@@ -1135,6 +1157,21 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
     }
     
+    //
+    func isSelectTemplate(_ id : Int) -> Bool{
+        
+        if let cat = self.selectedCategory, let tamplate_id = cat.tamplate_id, tamplate_id.intValue == 2{
+            return true
+        }else{
+            return false
+        }
+        
+//        return (self.selectedCategory != nil,
+//                 (self.selectedCategory!.tamplate_id != nil),
+//                 self.selectedCategory!.tamplate_id.intValue == id)
+        
+    }
+    
     
 }
 
@@ -1147,22 +1184,31 @@ extension NewAddVC{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
-            
-            cell.newAddVC = self
-            cell.videoPath = self.videoPath
-            
-            return cell
+        
+        if isSelectTemplate(2){
+            if indexPath.row == 0{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
+                
+                cell.newAddVC = self
+                cell.videoPath = self.videoPath
+                
+                return cell
+            }else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
+                let img : UIImage! = (imagesAssets  != nil && indexPath.row - 1 < imagesAssets.count) ?  self.imagesAssets[indexPath.row - 1] : nil
+                cell.newAddVC = self
+                cell.imageNew = (indexPath.row - 1,img)
+                
+                return cell
+            }
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
-            let img : UIImage! = (imagesAssets  != nil && indexPath.row - 1 < imagesAssets.count) ?  self.imagesAssets[indexPath.row - 1] : nil
+            let img : UIImage! = (imagesAssets  != nil && indexPath.row < imagesAssets.count) ?  self.imagesAssets[indexPath.row] : nil
             cell.newAddVC = self
-            cell.imageNew = (indexPath.row - 1,img)
+            cell.imageNew = (indexPath.row,img)
             
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -1174,15 +1220,68 @@ extension NewAddVC{
         print(indexPath.row + 1)
         
         
-        if indexPath.row == 0{
-            
-            self.selectVideoAction()
-            
+        if isSelectTemplate(2){
+            if indexPath.row == 0{
+                
+                self.selectVideoAction()
+                
+            }else{
+                if indexPath.row - 1 >= self.imagesPaths.count{
+                    let pickerViewController = YMSPhotoPickerViewController.init()
+                    
+                    var cnt : Int = 7
+                    cnt -= (self.imagesAssets != nil) ? self.imagesAssets.count  : 0
+                    pickerViewController.numberOfPhotoToSelect = UInt(cnt)
+                    
+                    pickerViewController.theme.titleLabelTextColor = Theme.Color.White
+                    pickerViewController.theme.navigationBarBackgroundColor = Theme.Color.red
+                    pickerViewController.theme.tintColor = Theme.Color.White
+                    pickerViewController.theme.orderTintColor = Theme.Color.red
+                    pickerViewController.theme.orderLabelTextColor = Theme.Color.White
+                    pickerViewController.theme.cameraVeilColor = Theme.Color.red
+                    pickerViewController.theme.cameraIconColor = UIColor.white
+                    pickerViewController.theme.statusBarStyle = .lightContent
+                    
+                    self.yms_presentCustomAlbumPhotoView(pickerViewController, delegate: self)
+                }else{
+                    let alert = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+                    
+                    
+                    alert.addAction(UIAlertAction.init(title: "Make as Main".localized, style: .default, handler: { (ac) in
+                        
+                        //                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.imagesAssets)
+                        var mutableImages : [UIImage]! = self.imagesAssets
+                        let temp = mutableImages[indexPath.row - 1]
+                        mutableImages.remove(at: indexPath.row - 1)
+                        mutableImages.insert(temp, at: 0)
+                        self.imagesAssets = mutableImages
+                        
+                        if indexPath.row - 1 < self.imagesPaths.count{
+                            let temp2 = self.imagesPaths[indexPath.row - 1]
+                            self.imagesPaths.remove(at: indexPath.row - 1)
+                            self.imagesPaths.insert(temp2, at: 0)
+                        }
+                        
+                        self.collectionView.reloadData()
+                    }))
+                    
+                    
+                    alert.addAction(UIAlertAction.init(title: "Delete Photo".localized, style: .destructive, handler: { (ac) in
+                        
+                        self.deletePhotoImage(indexPath.row - 1)
+                        self.collectionView.reloadData()
+                    }))
+                    
+                    alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }else{
-            if indexPath.row - 1 >= self.imagesPaths.count{
+            if indexPath.row >= self.imagesPaths.count{
                 let pickerViewController = YMSPhotoPickerViewController.init()
                 
-                var cnt : Int = 7
+                var cnt : Int = 8
                 cnt -= (self.imagesAssets != nil) ? self.imagesAssets.count  : 0
                 pickerViewController.numberOfPhotoToSelect = UInt(cnt)
                 
@@ -1204,14 +1303,14 @@ extension NewAddVC{
                     
                     //                let mutableImages: NSMutableArray! = NSMutableArray.init(array: self.imagesAssets)
                     var mutableImages : [UIImage]! = self.imagesAssets
-                    let temp = mutableImages[indexPath.row - 1]
-                    mutableImages.remove(at: indexPath.row - 1)
+                    let temp = mutableImages[indexPath.row]
+                    mutableImages.remove(at: indexPath.row)
                     mutableImages.insert(temp, at: 0)
                     self.imagesAssets = mutableImages
                     
-                    if indexPath.row - 1 < self.imagesPaths.count{
-                        let temp2 = self.imagesPaths[indexPath.row - 1]
-                        self.imagesPaths.remove(at: indexPath.row - 1)
+                    if indexPath.row < self.imagesPaths.count{
+                        let temp2 = self.imagesPaths[indexPath.row]
+                        self.imagesPaths.remove(at: indexPath.row)
                         self.imagesPaths.insert(temp2, at: 0)
                     }
                     
@@ -1221,7 +1320,7 @@ extension NewAddVC{
                 
                 alert.addAction(UIAlertAction.init(title: "Delete Photo".localized, style: .destructive, handler: { (ac) in
                     
-                    self.deletePhotoImage(indexPath.row - 1)
+                    self.deletePhotoImage(indexPath.row)
                     self.collectionView.reloadData()
                 }))
                 
@@ -1230,7 +1329,11 @@ extension NewAddVC{
                 self.present(alert, animated: true, completion: nil)
             }
         }
+        
+        
     }
+    
+    
 }
 
 
@@ -1306,8 +1409,12 @@ extension NewAddVC{
             for asset: PHAsset in photoAssets
             {
                 imageManager.requestImageData(for: asset, options: options, resultHandler: { (dat, ss, oo, rr) in
-                    self.imagesPaths.append("")
-                    mutableImages.append(UIImage.init(data: dat!)!)
+                    
+                    if dat != nil, let img = UIImage.init(data: dat!){
+                        self.imagesPaths.append("")
+                        mutableImages.append(img)
+                    }
+                    
                 })
             }
             
@@ -1621,4 +1728,31 @@ extension NewAddVC : UIImagePickerControllerDelegate, UINavigationControllerDele
     
 }
 
+
+extension UIImage {
+    // MARK: - UIImage+Resize
+    func compressTo(_ expectedSizeInK:Int) -> UIImage? {
+        let sizeInBytes = expectedSizeInK * 1024
+        var needCompress:Bool = true
+        var imgData:Data?
+        var compressingValue:CGFloat = 1.0
+        while (needCompress && compressingValue > 0.0) {
+            if let data:Data = UIImageJPEGRepresentation(self, compressingValue) {
+                if data.count < sizeInBytes {
+                    needCompress = false
+                    imgData = data
+                } else {
+                    compressingValue -= 0.1
+                }
+            }
+        }
+        
+        if let data = imgData {
+            if (data.count < sizeInBytes) {
+                return UIImage(data: data)
+            }
+        }
+        return nil
+    }
+}
 

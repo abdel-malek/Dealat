@@ -24,7 +24,7 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         
         getData()
         
-        Provider.setScreenName("Select city")
+        Provider.setScreenName("CityActivity")
     }
     
     override func getRefreshing() {

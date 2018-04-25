@@ -236,3 +236,55 @@ extension JSON{
     }
 }
 
+
+
+extension UIViewController{
+    
+    func showAlert_notification(_ data: [AnyHashable: Any]?)
+    {
+        let view = "View".localized
+        let cancel = "OK".localized
+        var publicNot : Bool = false
+        
+        if let notification = data {
+            if let aps = notification["aps"] as? [String: AnyObject]
+            {
+                print("APS")
+                if let msg = aps["alert"] as? [String: AnyObject]
+                {
+                    
+                    do{
+                        let not = JSON(notification["ntf_type"])
+                        let type = not.intValue
+                        
+                        if type == 3{
+                            publicNot = true
+                        }
+                    }catch let err{ print("ERROR: \(err.localizedDescription)")}
+
+                    
+                    let title = ((msg["title"] as? String) != nil) ? msg["title"] as! String : "Dealat"
+                    let body = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
+
+                    print("MSG")
+                    
+                    let alert = UIAlertController(title: title, message: body.emojiUnescapedString, preferredStyle: .alert)
+                    
+                    
+                    alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+                    
+                    if !publicNot {
+                        alert.addAction(UIAlertAction(title: view, style: .default, handler: { (ac) in
+                            PushManager.handleNotificationTapping2(data: data)
+                        }))
+                    }
+                    
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+
+    
+}

@@ -23,11 +23,11 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
-//    let baseImgsURL = "http://192.168.9.17/Dealat/"
+    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
+    let baseImgsURL = "http://192.168.9.17/Dealat/"
     
-    let baseURL = "http://dealat.tradinos.com/index.php/api"
-    let baseImgsURL = "http://dealat.tradinos.com/"
+//    let baseURL = "http://dealat.tradinos.com/index.php/api"
+//    let baseImgsURL = "http://dealat.tradinos.com/"
     
     let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
@@ -68,6 +68,8 @@ class Communication: BaseManager {
     
     let change_statusURL = "/items_control/change_status/format/json"
     let logoutURL = "/users_control/logout/format/json"
+    var get_about_infoURL  = "/data_control/get_about_info/format/json"
+    let delete_my_accountURL = "/users_control/delete_my_account/format/json"
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -528,7 +530,7 @@ class Communication: BaseManager {
         }
     }
     
-    func edit_item(ad_id : Int,category_id : Int,title : String,description : String,images : [String],paramsAdditional : [String: Any], _ callback : @escaping (CustomResponse) -> Void){
+    func edit_item(ad_id : Int,category_id : Int,title : String,description : String,images : [String],paramsAdditional : [String: Any],edit_status : Int, _ callback : @escaping (CustomResponse) -> Void){
         
         let url = URL(string: baseURL + edit_itemURL)!
         
@@ -695,7 +697,8 @@ class Communication: BaseManager {
         
         let url = URL(string: baseURL + save_user_tokenURL)!
         
-        let params : [String : Any] = ["token" : token,"os" : 2]
+        let lang = AppDelegate.isArabic() ? "ar" : "en"
+        let params : [String : Any] = ["token" : token,"os" : 2,"lang" : lang]
         
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -1215,6 +1218,63 @@ class Communication: BaseManager {
         }
     }
 
+    
+    func get_about_info( _ callback : @escaping (AboutInfo) -> Void){
+        
+        let url = URL(string: baseURL + get_about_infoURL)!
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    if let i = value.data.dictionaryObject{
+                        if let a = AboutInfo(JSON: i){
+                            callback(a)
+                        }
+                    }
+
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+    
+    
+    func delete_my_account(_ callback : @escaping (Bool) -> Void){
+        
+        let url = URL(string: baseURL + delete_my_accountURL)!
+        
+        Alamofire.request(url, method: .post, parameters: nil, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
 
     
     

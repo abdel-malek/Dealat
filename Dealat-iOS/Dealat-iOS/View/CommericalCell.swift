@@ -166,19 +166,25 @@ class CommericalCell: UICollectionViewCell {
     
     func savePhotoLocal(_ img : UIImage) -> URL?{
         var imageData : Data?
-        let im = img
+        var im : UIImage!
         
-        if let tt = im.resized(toWidth: 512){
+        if img.compressTo(300) != nil{
+            im = img.compressTo(300)
+        }else{
+            im = img
+        }
+        
+         if let tt = im.resized(toWidth: 300){
             imageData = UIImagePNGRepresentation(tt)
             print("TYPE11")
         }else if let d = UIImagePNGRepresentation(im){
             imageData = d
             print("TYPE22")
 
-        }else if let d = UIImageJPEGRepresentation(im, 1){
+         }else if let d = UIImageJPEGRepresentation(im, 0.8){
             imageData = d
             print("TYPE33")
-        }
+         }
         
         if let imageSize: Int = imageData?.count{
             print("size of image in KB: %f ", imageSize / 1024)

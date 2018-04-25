@@ -39,6 +39,7 @@ class AD : BaseEntity {
     var seller_name : String!
     var seller_id : JSON! = 1
     var seller_phone : String!
+    var whatsup_number : String!
     var images = [IMG]()
     var is_favorite : JSON!
     var expiry_date : String!
@@ -157,11 +158,11 @@ class AD : BaseEntity {
         seller_name <- map["seller_name"]
         seller_id <- map["seller_id"]
         seller_phone <- map["seller_phone"]
+        whatsup_number <- map["whatsup_number"]
         images <- map["images"]
         is_favorite <- map["is_favorite"]
         expiry_date <- map["expiry_date"]
         expired_after <- map["expired_after"]
-
         
         // 1 Vehicle
         vehicle.manufacture_date <- map["manufacture_date"]
@@ -172,7 +173,6 @@ class AD : BaseEntity {
         vehicle.type_model_name <- map["type_model_name"]
         vehicle.type_id <- map["type_id"]
         vehicle.type_model_id <- map["type_model_id"]
-
         
         // 2 property
         property.state <- map["state"]
@@ -186,13 +186,11 @@ class AD : BaseEntity {
         mobile.type_name <- map["type_name"]
         mobile.type_id <- map["type_id"]
 
-
         // 4 Electronic
         electronic.is_new <- map["is_new"]
         electronic.type_name <- map["type_name"]
         electronic.size <- map["size"]
         electronic.type_id <- map["type_id"]
-
 
         // 5 Fashion
         fashion.is_new <- map["is_new"]

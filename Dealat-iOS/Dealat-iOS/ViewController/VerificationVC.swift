@@ -17,7 +17,7 @@ class VerificationVC: BaseVC {
 
         self.tfCode.placeHolderColor = Theme.Color.White
         
-        Provider.setScreenName("Verification")
+        Provider.setScreenName("VerificationActivity")
 
     }
     override func viewWillAppear(_ animated: Bool) {

@@ -6,9 +6,147 @@
   Copyright © 2018 Tradinos UG. All rights reserved.
 */
 
-/*
- 
- 
- 
- 
-*/
+//Register
+"Register" = "Register";
+"Name" = "Name";
+"PhoneNumber" = "Phone Number";
+"Email" = "Email address";
+"Password" = "Password";
+"ConfirmPassword" = "Confirm password";
+"SetArea" = "Set Area";
+"SignIn" = "Sign in";
+"Already" = "Already have an account?";
+"Skip" = "Skip";
+"Verification" =  "Verification";
+"VerificationCode" = "Verification Code";
+"Activate" = "Activate";
+"need_register" = "You must login";
+"Alert!" = "Alert!";
+"previousRegister" = "You have registered from a different device previously, Do you want to keep registration from both devices?";
+"removeAdd" = "Would you like to remove your Add?";
+"Whatsapp" = "Whatsapp";
+"Birthday" = "Birthday";
+"Gender" = "Gender";
+"Call" = "Call";
+
+
+
+//SIDE MENU
+"Home" = "Home";
+"My Profile" = "My Profile";
+"Categories" = "Categories";
+"Saved searches" = "Saved searches";
+"Edit Profile" = "Edit Profile";
+"Change Language" = "Change Language";
+"Settings" = "Settings";
+"Help" = "About App";
+"Logout" = "Log out";
+
+//My Profile
+"My Ads" = "My Ads";
+"Favorites" = "Favorites";
+"My Chats" = "My Chats";
+
+
+
+//General
+"Sell" = "Submit an Ad";//Sell your item
+"SellEdit" = "Edit the Ad";
+"Category" = "Category";
+"City" = "City";
+"Area" = "Area";
+"Seller" = "Seller name";
+"Negotiable" = "Negotiable";
+"Featured" = "Featured";
+"Description" = "Description";
+"old" = "Old";
+"new" = "New";
+"yes" = "Yes";
+"no" = "No";
+"S.P" = "S.P";
+"Free" = "Free";
+"All" = "All";
+"Title" = "Title";
+"ChooseCategory" = "Choose Category";
+"Price" = "Price";
+"Price SP" = "Price (S.P)";
+"Filter" = "Filter";
+"AdNumber" = "Number";
+"AdDate" = "Published date";
+"AdDateCreated" = "Created date";
+"AdExpires" = "Expires on";
+"AdExpired" = "Expired on";
+"From" = "From";
+"To" = "To";
+"Show" = "Show";
+"Delete" = "Delete";
+"ShowPeriod" = "Period";
+
+//
+"Year" = "Year";
+"IsAutomatic" = "Transmission";
+"Kilometer" = "Kilometer";
+"TypeName" = "Brand";
+"TypeModelName" = "Model";
+"Automatic" = "Automatic";
+"Manual" = "Manual";
+
+
+
+//Properties
+"Space" = "Space";
+"Rooms" = "Rooms";
+"Floor" = "Floor";
+"PropertyState" = "Property state";
+"State" = "State";
+"Furniture" = "Furnitured";
+
+//Electroiec
+"Size" = "Size";
+
+//Job
+"Education" = "Education";
+"Schedule" = "Schedule";
+"Experience" = "Experience";
+"Salary" = "Salary";
+
+"Save" = "Save";
+"Submit" = "Submit";
+"SubmitEdit" = "Submit";
+"Search" = "Search";
+"OK" = "OK";
+"Cancel" = "Cancel";
+"AR" = "العربية";
+"EN" = "English";
+"ChangeLangTitle" = "Select App Language";
+"ChangeLangMessage" = "You need to restart the app to apply the new language";
+"AddImages" = "Add images";
+
+"ChangeLangTitle2" = "Looks Weird?";
+"ChangeLangMessage2" = "Please restart your app and it will be fine.";
+
+//Add status
+"Pending" = "Pending";
+"Accepted" = "Accepted";
+"Hidden" = "Hidden";
+"Rejected" = "Rejected";
+"Deleted" = "Deleted";
+
+"Please enter" = "Please enter ";
+"Please add images" = "Please add images";
+"required" = "Required";
+
+"TypeHere" = "Type here";
+"ChooseReport" = "Select reason";
+"ReportSuccessful" = "Done";
+
+"DeleteBookmark" = "Are you sure to remove this saved searches?";
+
+"RejectionReason" = "Rejection reason";
+"AdStatus" = "Status";
+
+
+"Delete Photo" = "Delete Photo";
+"Capture video" = "Capture video";
+"Choose video" = "Choose video";
+"Make as Main" = "Make as Main";

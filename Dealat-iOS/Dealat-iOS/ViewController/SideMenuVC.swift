@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseMessaging
 
 class SideMenuVC: BaseVC {
     
@@ -83,7 +84,7 @@ class SideMenuVC: BaseVC {
             if i.tag == -1{
                 if User.isRegistered(){
                 
-                    let alert = UIAlertController.init(title: "Alert!".localized, message: "Are you sure you want to logout?", preferredStyle: .alert)
+                    let alert = UIAlertController.init(title: "Alert!".localized, message: "logoutMessage".localized, preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
                         
@@ -145,6 +146,12 @@ class SideMenuVC: BaseVC {
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
 
+            if i.tag == 9{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "AboutVC") as! AboutVC
+//                vc.homeVC = self.homeVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+
             
             
             // CHANGE LANGUAGE
@@ -190,17 +197,31 @@ class SideMenuVC: BaseVC {
     func refreshImg(){
         let me = User.getCurrentUser()
         
-        if let path = me.personal_image{
-            Provider.sd_setImage(self.img, urlString: path)
+        if User.isRegistered(){
+            if let path = me.personal_image{
+                Provider.sd_setImage(self.img, urlString: path)
+            }
         }
     }
     
     func restartHome(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
-//        vc.isChangeLanguage = true
         let nv = UINavigationController.init(rootViewController: vc)
-        appDelegate.window?.rootViewController = nv
+        
+        if User.isRegistered(), let refreshedToken = Messaging.messaging().fcmToken {
+            print("TOKEEEN : \(refreshedToken)")
+            self.showLoading()
+            Communication.shared.save_user_token(refreshedToken) { (res) in
+                self.hideLoading()
+                
+                appDelegate.window?.rootViewController = nv
+            }
+        }else{
+            appDelegate.window?.rootViewController = nv
+        }
+
+        
     }
     
     

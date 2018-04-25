@@ -66,7 +66,7 @@ class HomeVC: BaseVC {
         getData()
         setupSideMenuNavController()
         
-        Provider.setScreenName("Home")
+        Provider.setScreenName("HomeActivity")
 
     }
     

@@ -40,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.setupViews()
         setupNotification(application)
         
+        Communication.shared.get_about_info { (res) in
+            
+        }
+        
         
         return true
     }
@@ -106,13 +110,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let me = User.getCurrentUser()
-        if Provider.getCity() == 0 {
-            /*let vc = storyboard.instantiateViewController(withIdentifier: "SelectLocationVC") as! SelectLocationVC
-            
-            appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: vc)*/
+        
+        if Provider.getLang() == "" {
+            let vc = storyboard.instantiateViewController(withIdentifier: "SelectLangVC") as! SelectLangVC
+            appDelegate.window?.rootViewController =  vc
+        }
+        
+        else if Provider.getCity() == 0 {
+            let vc = storyboard.instantiateViewController(withIdentifier: "SelectLocationVC") as! SelectLocationVC
+            appDelegate.window?.rootViewController = vc
         }
             
         else{
@@ -154,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print(userInfo)
         
-        //notific.post(name: _refreshChats.not, object: nil,userInfo : userInfo)
+        notific.post(name: "refreshChats".not, object: nil,userInfo : userInfo)
         
         if #available(iOS 10, *){
             
@@ -162,7 +171,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else{
             
             if application.applicationState == .active{
-                PushManager.handleForegroundNotification(data: userInfo)
+                PushManager.handleForegroundNotification(userInfo)
                 completionHandler(.newData)
             }else if application.applicationState != .background{
                 PushManager.handleNotificationTapping(data: userInfo)
@@ -202,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
         // With swizzling disabled you must set the APNs token here.
-        Messaging.messaging().setAPNSToken(deviceToken, type: MessagingAPNSTokenType.sandbox)
+        Messaging.messaging().setAPNSToken(deviceToken, type: MessagingAPNSTokenType.prod)
         
         Messaging.messaging().apnsToken = deviceToken
         
@@ -258,7 +267,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         }
         
         //TODO
-        //        PushManager.handleNotificationTapping2(userInfo)
+//                PushManager.handleNotificationTapping2(userInfo)
         PushManager.handleNotificationTapping(data: userInfo)
         
         print(userInfo)

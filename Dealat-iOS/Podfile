@@ -29,7 +29,7 @@ pod 'Firebase/Messaging'
 #pod 'GoogleAnalytics'
 pod 'Google/Analytics'
 
-
+pod 'UICheckbox.Swift'
 
 
 pod 'JVFloatLabeledTextField'
@@ -44,6 +44,7 @@ pod 'IQDropDownTextField'
 pod 'GrowingTextView', '~> 0.5.5'
 pod 'ActiveLabel'
 pod 'Lightbox'
+#pod 'Emoji-swift'
 
 
 

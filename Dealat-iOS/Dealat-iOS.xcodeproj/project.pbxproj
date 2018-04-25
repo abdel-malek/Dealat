@@ -10,6 +10,8 @@
 		6EDC59CD649ACE509FA18C96 /* Pods_Dealat_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A80EAEF46234EA904EA977 /* Pods_Dealat_iOS.framework */; };
 		82049450207E080700E57CF9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8204944F207E080700E57CF9 /* BookmarkCell.swift */; };
 		82049452207E0CC100E57CF9 /* BookmarkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82049451207E0CC100E57CF9 /* BookmarkQuery.swift */; };
+		8207D75320909D6600E4E506 /* SelectLangVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8207D75220909D6600E4E506 /* SelectLangVC.swift */; };
+		8207D7582090B53300E4E506 /* DLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8207D7562090B53200E4E506 /* DLRadioButton.m */; };
 		8208B31B2039B00B000817A4 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8208B31A2039B00B000817A4 /* FilterVC.swift */; };
 		82105EEE204D3BA20050DDD8 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EED204D3BA20050DDD8 /* City.swift */; };
 		82105EF2204D5A410050DDD8 /* MyProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82105EF1204D5A410050DDD8 /* MyProfileVC.swift */; };
@@ -43,6 +45,8 @@
 		824663DC203084CE00F303EA /* CategoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824663DB203084CE00F303EA /* CategoriesVC.swift */; };
 		8267E28020302D43007130A4 /* AdsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E27F20302D43007130A4 /* AdsListVC.swift */; };
 		8268D474208397AC0090C9EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8268D473208397AC0090C9EF /* GoogleService-Info.plist */; };
+		8271B9E120888A3700CE86D8 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271B9E020888A3700CE86D8 /* AboutVC.swift */; };
+		8271B9E32088969F00CE86D8 /* AboutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271B9E22088969F00CE86D8 /* AboutInfo.swift */; };
 		82893DB02032D6F5009151FC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82893DAF2032D6F5009151FC /* Location.swift */; };
 		82893DB22032D742009151FC /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82893DB12032D742009151FC /* Type.swift */; };
 		82893DB42032D7BE009151FC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82893DB32032D7BE009151FC /* Model.swift */; };
@@ -94,6 +98,8 @@
 		82F0C20720286407008922A0 /* Dealat_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C20620286407008922A0 /* Dealat_iOSUITests.swift */; };
 		82F0C21C2028648A008922A0 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 82F0C21B2028648A008922A0 /* Podfile */; };
 		82F0C21E20286525008922A0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F0C21D20286525008922A0 /* User.swift */; };
+		82FAEA57208F2F590082823F /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FAEA56208F2F590082823F /* Emoji.swift */; };
+		82FAEA59208F2F640082823F /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FAEA58208F2F640082823F /* String+Emoji.swift */; };
 		82FAFB2F2075F57D004EF09D /* ReportMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */; };
 		82FEE63F2075068A00D9DB45 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE63E2075068A00D9DB45 /* Period.swift */; };
 		82FEE641207506ED00D9DB45 /* ReportMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEE640207506ED00D9DB45 /* ReportMessage.swift */; };
@@ -148,6 +154,9 @@
 		379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8204944F207E080700E57CF9 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		82049451207E0CC100E57CF9 /* BookmarkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkQuery.swift; sourceTree = "<group>"; };
+		8207D75220909D6600E4E506 /* SelectLangVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLangVC.swift; sourceTree = "<group>"; };
+		8207D7562090B53200E4E506 /* DLRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLRadioButton.m; sourceTree = "<group>"; };
+		8207D7572090B53300E4E506 /* DLRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLRadioButton.h; sourceTree = "<group>"; };
 		8208B31A2039B00B000817A4 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		82105EED204D3BA20050DDD8 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		82105EF1204D5A410050DDD8 /* MyProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVC.swift; sourceTree = "<group>"; };
@@ -181,6 +190,9 @@
 		824663DB203084CE00F303EA /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
 		8267E27F20302D43007130A4 /* AdsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListVC.swift; sourceTree = "<group>"; };
 		8268D473208397AC0090C9EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8271B9E020888A3700CE86D8 /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
+		8271B9E22088969F00CE86D8 /* AboutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfo.swift; sourceTree = "<group>"; };
+		8271B9E42088C32B00CE86D8 /* Dealat-iOS_prod.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Dealat-iOS_prod.entitlements"; sourceTree = "<group>"; };
 		82893DAF2032D6F5009151FC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		82893DB12032D742009151FC /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		82893DB32032D7BE009151FC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -244,6 +256,8 @@
 		82F0C21B2028648A008922A0 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		82F0C21D20286525008922A0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		82F2B5772084B05500B996E2 /* Dealat-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dealat-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		82FAEA56208F2F590082823F /* Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
+		82FAEA58208F2F640082823F /* String+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
 		82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessagesVC.swift; sourceTree = "<group>"; };
 		82FEE63E2075068A00D9DB45 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		82FEE640207506ED00D9DB45 /* ReportMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportMessage.swift; sourceTree = "<group>"; };
@@ -278,6 +292,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8207D7552090B51700E4E506 /* DLRadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				8207D7572090B53300E4E506 /* DLRadioButton.h */,
+				8207D7562090B53200E4E506 /* DLRadioButton.m */,
+			);
+			path = DLRadioButton;
+			sourceTree = "<group>";
+		};
+		821B6578208F2DBA00D4B78E /* Emoji */ = {
+			isa = PBXGroup;
+			children = (
+				82FAEA56208F2F590082823F /* Emoji.swift */,
+				82FAEA58208F2F640082823F /* String+Emoji.swift */,
+			);
+			path = Emoji;
+			sourceTree = "<group>";
+		};
 		8226F0192028871E0077FA74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				829247AE205FDA930093A226 /* Dealat-iOS.entitlements */,
+				8271B9E42088C32B00CE86D8 /* Dealat-iOS_prod.entitlements */,
 				82F0C1E620286404008922A0 /* AppDelegate.swift */,
 				82F0C1E820286404008922A0 /* ViewController.swift */,
 				82F0C1EA20286404008922A0 /* Main.storyboard */,
@@ -430,6 +463,7 @@
 				823547B72029A6AB003478F1 /* BaseVC.swift */,
 				82893DBB2032E480009151FC /* BaseTVC.swift */,
 				82EB4802204C134B00D25E1D /* SelectLocationVC.swift */,
+				8207D75220909D6600E4E506 /* SelectLangVC.swift */,
 				829C214320345C3B00FFFC9B /* RegisterVC.swift */,
 				82EB4804204C215600D25E1D /* VerificationVC.swift */,
 				823547C72029C3D9003478F1 /* SideMenuVC.swift */,
@@ -443,6 +477,7 @@
 				82B97A7B205550C300ADF51B /* EditProfileVC.swift */,
 				82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */,
 				82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */,
+				8271B9E020888A3700CE86D8 /* AboutVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -454,6 +489,8 @@
 		82F0C21520286430008922A0 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				8207D7552090B51700E4E506 /* DLRadioButton */,
+				821B6578208F2DBA00D4B78E /* Emoji */,
 				82B97A6D20551F1500ADF51B /* ActiveLabel */,
 				824663D62030315200F303EA /* DesignableX */,
 				8226F02720289D1A0077FA74 /* Fonts */,
@@ -531,6 +568,7 @@
 				82FEE63E2075068A00D9DB45 /* Period.swift */,
 				82FEE640207506ED00D9DB45 /* ReportMessage.swift */,
 				82049451207E0CC100E57CF9 /* BookmarkQuery.swift */,
+				8271B9E22088969F00CE86D8 /* AboutInfo.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -790,6 +828,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeBack/SwipeBack.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/UICheckbox.Swift/UICheckbox_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/YangMingShan/YangMingShan.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -825,6 +864,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeBack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICheckbox_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YangMingShan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -845,6 +885,7 @@
 				8226F015202886B90077FA74 /* PushManager.swift in Sources */,
 				824663DA203031E000F303EA /* CardView.swift in Sources */,
 				82893DB02032D6F5009151FC /* Location.swift in Sources */,
+				8207D7582090B53300E4E506 /* DLRadioButton.m in Sources */,
 				82FEE63F2075068A00D9DB45 /* Period.swift in Sources */,
 				82B97A7C205550C300ADF51B /* EditProfileVC.swift in Sources */,
 				822516EB2029DFF3009FF0DE /* CategoryCell.swift in Sources */,
@@ -855,6 +896,7 @@
 				8226F007202882F00077FA74 /* Cat.swift in Sources */,
 				82B97A7420551F4200ADF51B /* ActiveLabel.swift in Sources */,
 				82893DBC2032E480009151FC /* BaseTVC.swift in Sources */,
+				82FAEA57208F2F590082823F /* Emoji.swift in Sources */,
 				82B97A7820551F4200ADF51B /* RegexParser.swift in Sources */,
 				82893DB62032D9D8009151FC /* Education.swift in Sources */,
 				82105EF2204D5A410050DDD8 /* MyProfileVC.swift in Sources */,
@@ -904,6 +946,7 @@
 				82105EF8204D5BD60050DDD8 /* MyFavoritesVC.swift in Sources */,
 				82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */,
 				82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */,
+				8207D75320909D6600E4E506 /* SelectLangVC.swift in Sources */,
 				8226F017202886D50077FA74 /* Theme.swift in Sources */,
 				82AA9558205664A10048AC74 /* FilterParams.swift in Sources */,
 				82EB4805204C215600D25E1D /* VerificationVC.swift in Sources */,
@@ -911,9 +954,12 @@
 				82E8BD13202B285100684368 /* AdCell.swift in Sources */,
 				823547C82029C3D9003478F1 /* SideMenuVC.swift in Sources */,
 				8226F013202886960077FA74 /* Provider.swift in Sources */,
+				8271B9E32088969F00CE86D8 /* AboutInfo.swift in Sources */,
 				82893DBA2032E400009151FC /* NewAddVC.swift in Sources */,
 				824663D82030316000F303EA /* UIViewX.swift in Sources */,
+				8271B9E120888A3700CE86D8 /* AboutVC.swift in Sources */,
 				8226F00D2028838F0077FA74 /* BaseManager.swift in Sources */,
+				82FAEA59208F2F640082823F /* String+Emoji.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,7 +1178,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Dealat-iOS/Dealat-iOS_prod.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z93D2H934T;
 				ENABLE_BITCODE = NO;

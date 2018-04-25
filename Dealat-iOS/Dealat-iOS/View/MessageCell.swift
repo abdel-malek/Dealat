@@ -28,7 +28,7 @@ class MessageCell: BaseCell {
                 if !m.to_seller.Boolean{
                     self.vv1.isHidden = false
                     self.vv2.isHidden = true
-                    self.text1Lbl.text = m.text
+                    self.text1Lbl.text = m.text.emojiUnescapedString
                     
                     if let date = m.created_at{
                         if let d = Date.init(fromString: date, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
@@ -40,7 +40,7 @@ class MessageCell: BaseCell {
                 }else{
                     self.vv2.isHidden = false
                     self.vv1.isHidden = true
-                    self.text2Lbl.text = m.text
+                    self.text2Lbl.text = m.text.emojiUnescapedString
                     if let date = m.created_at{
                         if let d = Date.init(fromString: date, format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss")){
                             self.date2Lbl.text = d.toString(dateStyle: .none, timeStyle: .short, isRelative: false)

@@ -42,18 +42,21 @@ class Cat : BaseEntity {
     
     static func getName(_ category_id : Int) -> String{
         
-        var n = ""
+        var n = [String]()
         
         if let f = Provider.shared.catsFull.filter({$0.category_id.intValue == category_id}).first{
-            n += f.category_name!
+            n.append(f.category_name!)
             
             if let f2 = Provider.shared.catsFull.filter({$0.category_id.intValue == f.parent_id.intValue}).first{
-                n += "-\(getName(f2.category_id.intValue))"
+                n.append("\(getName(f2.category_id.intValue))")
             }
         }
         
-        
-        return n
+        if AppDelegate.isArabic(){
+            return n.reversed().joined(separator: "-")
+        }else{
+            return n.joined(separator: "-")
+        }
     }
     
     

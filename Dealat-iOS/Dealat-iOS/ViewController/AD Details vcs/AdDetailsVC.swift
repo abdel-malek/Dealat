@@ -87,7 +87,6 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     // 7 Sport
     @IBOutlet weak var is_new7 : UILabel!
     
-    
     // 8 Job
     @IBOutlet weak var education_nameLbl : UILabel!
     @IBOutlet weak var schedule_nameLbl : UILabel!
@@ -175,7 +174,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             im.image = self.ad.main_image
             self.ad.images.insert(im, at: 0)
             
-            if let u = self.ad.main_video{
+            if let u = self.ad.main_video, !u.isEmpty, u != "-1"{
                 let video = IMG()
                 video.image = u
                 video.isVideo = true

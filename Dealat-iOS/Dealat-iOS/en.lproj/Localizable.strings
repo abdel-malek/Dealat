@@ -14,7 +14,8 @@
 "Email" = "Email address";
 "Password" = "Password";
 "ConfirmPassword" = "Confirm password";
-"SetArea" = "Set Area";
+"SetArea" = "Choose Area";
+"SetLang" = "Choose Language";
 "SignIn" = "Sign in";
 "Already" = "Already have an account?";
 "Skip" = "Skip";
@@ -25,7 +26,12 @@
 "Alert!" = "Alert!";
 "previousRegister" = "You have registered from a different device previously, Do you want to keep registration from both devices?";
 "removeAdd" = "Would you like to remove your Add?";
-
+"Whatsapp" = "Whatsapp";
+"Birthday" = "Birthday";
+"Gender" = "Gender";
+"Call" = "Call";
+"Male" = "Male";
+"Famale" = "Famale";
 
 
 //SIDE MENU
@@ -36,18 +42,21 @@
 "Edit Profile" = "Edit Profile";
 "Change Language" = "Change Language";
 "Settings" = "Settings";
-"Help" = "About as";
+"Help" = "About App";
 "Logout" = "Log out";
+"Deactive" = "Deactive account";
 
 //My Profile
 "My Ads" = "My Ads";
 "Favorites" = "Favorites";
 "My Chats" = "My Chats";
+"showPhone" = "Show phone number";
+"showPhone2" = "Your phone number will be shown with your ads's details";
 
 
 
 //General
-"Sell" = "Submit an Ad";//Sell your item
+"Sell" = "Submit your ad for free";//Sell your item
 "SellEdit" = "Edit the Ad";
 "Category" = "Category";
 "City" = "City";
@@ -112,6 +121,7 @@
 "Search" = "Search";
 "OK" = "OK";
 "Cancel" = "Cancel";
+"View" = "View";
 "AR" = "العربية";
 "EN" = "English";
 "ChangeLangTitle" = "Select App Language";
@@ -120,6 +130,10 @@
 
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";
+
+"logoutMessage" = "Are you sure you want to logout?";
+"deactiveMessage" = "Are you sure you want to delete your account?";
+"featureMessage" = "This feature is paid. If you want your ad to be featured, enable it, and Admin will contact you.";
 
 //Add status
 "Pending" = "Pending";
@@ -137,6 +151,7 @@
 "ReportSuccessful" = "Done";
 
 "DeleteBookmark" = "Are you sure to remove this saved searches?";
+
 
 "RejectionReason" = "Rejection reason";
 "AdStatus" = "Status";

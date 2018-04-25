@@ -28,10 +28,11 @@ class ChatDetailsVC: BaseVC {
         super.viewDidLoad()
 
         if Provider.isArabic{
-//            sendBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            sendBtn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            sendBtn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            sendBtn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            sendBtn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
+        
+        textView.tintColor = Theme.Color.red
         
         IQKeyboardManager.sharedManager().disabledToolbarClasses = [ChatDetailsVC.self]
         IQKeyboardManager.sharedManager().disabledTouchResignedClasses = [ChatDetailsVC.self]
@@ -39,8 +40,65 @@ class ChatDetailsVC: BaseVC {
         
         getData()
         
-        Provider.setScreenName("Chat details")
+        Provider.setScreenName("ChatActivity")
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        notific.addObserver(self, selector: #selector(self.getNewMessage(_:)), name: "refreshChats".not, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        notific.removeObserver(self, name: "refreshChats".not, object: nil)
+    }
+
+    @objc func getNewMessage(_ not : Notification){
+        
+        if let notification = not.userInfo {
+            print("handleNotificationTapping: \(notification)")
+            
+            do{
+                let not = JSON(notification["ntf_type"])
+                
+                print("TTT : \(not.intValue)")
+                
+                let type = not.intValue
+                
+                print("TYPE : \(type)")
+                
+                if type == 1{
+                    print("BODY : \(notification["ntf_body"])")
+                    
+                    if let payload = notification["ntf_body"]
+                    {
+                        print("ntf_body: \(payload)")
+                        
+                        let bod = JSON(payload)
+                        do{
+                            let dd = bod.stringValue.data(using: String.Encoding.utf8)
+                            let ii = try JSONSerialization.jsonObject(with: dd!, options: JSONSerialization.ReadingOptions.mutableLeaves)
+                            let tt  = JSON(ii)
+                            
+                            if let obj = tt.dictionaryObject{
+                                if let chat = Chat(JSON: obj){
+                                    if let id1 = chat.chat_session_id, let id2 = self.chat.chat_session_id{
+                                        if id1.intValue == id2.intValue{
+                                            self.getRefreshing()
+                                        }
+                                    }
+                                }
+                            }
+                        }catch let err{
+                            print("ERROR")
+                            print(err.localizedDescription)
+                        }
+                    }
+                    
+                }
+            }catch let err{ print("ERROR: \(err.localizedDescription)")}
+        }
     }
     
     
@@ -193,7 +251,7 @@ class ChatDetailsVC: BaseVC {
                 chat_session_id = self.chat.chat_session_id.intValue
             }
             
-            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message, callback: { (res) in
+            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message.emojiEscapedString, callback: { (res) in
                 
                 self.getRefreshing()
             })
@@ -225,6 +283,10 @@ extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.messages2[section].0.toString()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.textView.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -273,7 +335,7 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
         print("textViewDidBeginEditing")
         
         if let m = self.messages2.last{
-//            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
         }
     }
     

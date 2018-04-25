@@ -41,7 +41,7 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         self.title = "My Profile".localized
         configureNavigationBar()
         
-        Provider.setScreenName("Profile")
+        Provider.setScreenName("MyProfileActivity")
 
     }
     

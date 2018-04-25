@@ -30,6 +30,10 @@ class ReportMessagesVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         tableViewHeight.constant = CGFloat(50 * messages.count)
         
         self.vv.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.cancel)))
+        
+        
+        Provider.setScreenName("ReportActivity")
+
     }
     
     @objc @IBAction func cancel(){

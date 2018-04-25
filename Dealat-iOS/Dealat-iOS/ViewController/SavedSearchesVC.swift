@@ -21,7 +21,7 @@ class SavedSearchesVC: BaseVC, UITableViewDelegate,UITableViewDataSource {
         
         getData()
         
-        Provider.setScreenName("Saved searches")
+        Provider.setScreenName("BookmarksActivity")
 
     }
     
