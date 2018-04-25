@@ -694,8 +694,8 @@ public class AdDetailsActivity extends MasterActivity {
             case Ad.ACCEPTED:
                 return getString(R.string.statusAccepted);
 
-            case Ad.EXPIRED:
-                return getString(R.string.statusExpired);
+          /*  case Ad.EXPIRED:
+                return getString(R.string.statusExpired);*/
 
             case Ad.HIDDEN:
                 return getString(R.string.statusHidden);

@@ -158,7 +158,7 @@ public class SubmitAdActivity extends MasterActivity {
                 result.getSchedules().add(Item.getNoItem());
                 spinnerSch.setAdapter(new ItemAdapter(mContext, result.getSchedules()));
 
-                setTemplateVisibility(View.VISIBLE);
+                showTemplate();
             }
         });
     }
@@ -465,16 +465,15 @@ public class SubmitAdActivity extends MasterActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
                 //if error was set, then category was selected
-                //previuos error didn't disappear automatically
+                //previous error didn't disappear automatically
                 editCategory.setError(null);
 
-                // if (selectedCategory.getTemplateId() != currentTemplate) {
                 replaceTemplate();
 
                 List<Type> templateBrands = brands.get(currentTemplate);
                 if (templateBrands != null)
                     spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
-                //  }
+
             } else if (requestCode == REQUEST_SELECT_IMG) {
                 List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
 
@@ -514,25 +513,16 @@ public class SubmitAdActivity extends MasterActivity {
     }
 
     private void replaceTemplate() {
-        setTemplateVisibility(View.GONE);
+        hideTemplate();
         currentTemplate = selectedCategory.getTemplateId();
-        setTemplateVisibility(View.VISIBLE);
+        showTemplate();
     }
 
-    private void setTemplateVisibility(int visibility) {
-        if (visibility != View.VISIBLE && visibility != View.GONE)
-            return;
+    private void showTemplate() {
+        int visibility = View.VISIBLE;
 
         switch (currentTemplate) {
             case Category.PROPERTIES:
-
-                // video is only available with property
-                if (visibility == View.GONE && videoServerPath != null) {
-                    deletedVideosJsonArray.put(videoServerPath);
-                    videoServerPath = null;
-                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
-                    imageButtonCheck.setVisibility(View.INVISIBLE);
-                }
 
                 findViewById(R.id.containerVideo).setVisibility(visibility);
 
@@ -556,10 +546,7 @@ public class SubmitAdActivity extends MasterActivity {
                 break;
 
             case Category.JOBS:
-                if (visibility == View.VISIBLE)
-                    containerPrice.setVisibility(View.GONE);
-                else if (visibility == View.GONE)
-                    containerPrice.setVisibility(View.VISIBLE);
+                containerPrice.setVisibility(View.GONE);
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideSchedule))) {
                     textSch.setVisibility(visibility);
@@ -628,6 +615,81 @@ public class SubmitAdActivity extends MasterActivity {
                     line2.setVisibility(visibility);
                     switchSecondhand.setVisibility(visibility);
                 }
+        }
+    }
+
+    private void hideTemplate() {
+        int visibility = View.GONE;
+
+        switch (currentTemplate) {
+            case Category.PROPERTIES:
+
+                // video is only available with property
+                if (videoServerPath != null) {
+                    deletedVideosJsonArray.put(videoServerPath);
+                    videoServerPath = null;
+                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
+                    imageButtonCheck.setVisibility(View.INVISIBLE);
+                }
+                findViewById(R.id.containerVideo).setVisibility(visibility);
+
+                containerSpace.setVisibility(visibility);
+                containerRooms.setVisibility(visibility);
+                containerFloors.setVisibility(visibility);
+                containerState.setVisibility(visibility);
+
+                switchFurn.setVisibility(visibility);
+                line3.setVisibility(visibility);
+
+                break;
+
+            case Category.JOBS:
+                containerPrice.setVisibility(View.VISIBLE);
+
+                textSch.setVisibility(visibility);
+                spinnerSch.setVisibility(visibility);
+
+                textEdu.setVisibility(visibility);
+                spinnerEdu.setVisibility(visibility);
+
+                containerEx.setVisibility(visibility);
+                containerSalary.setVisibility(visibility);
+
+                break;
+
+            case Category.VEHICLES:
+                textBrand.setVisibility(visibility);
+                spinnerBrand.setVisibility(visibility);
+
+                textModel.setVisibility(visibility);
+                spinnerModel.setVisibility(visibility);
+
+                textDate.setVisibility(visibility);
+                spinnerYear.setVisibility(visibility);
+
+                containerKilometer.setVisibility(visibility);
+
+                switchAutomatic.setVisibility(visibility);
+                line1.setVisibility(visibility);
+
+                switchSecondhand.setVisibility(visibility);
+                line2.setVisibility(visibility);
+
+                break;
+
+            case Category.ELECTRONICS:
+                containerSize.setVisibility(visibility);
+
+            case Category.MOBILES:
+                textBrand.setVisibility(visibility);
+                spinnerBrand.setVisibility(visibility);
+
+            case Category.FASHION:
+            case Category.KIDS:
+            case Category.SPORTS:
+            case Category.INDUSTRIES:
+                line2.setVisibility(visibility);
+                switchSecondhand.setVisibility(visibility);
         }
     }
 
@@ -733,10 +795,11 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!inputIsEmpty(editEx))
                     parameters.put("experience", stringInput(editEx));
 
-                if (!inputIsEmpty(editSalary)) {
-                    parameters.put("price", "0");
+                // send it any way, even if salary is empty because price is always required
+                parameters.put("price", "0");
+
+                if (!inputIsEmpty(editSalary))
                     parameters.put("salary", stringInput(editSalary));
-                }
 
                 item = ((Item) spinnerEdu.getSelectedItem());
                 if (!item.isNothing())

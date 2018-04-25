@@ -121,6 +121,7 @@
 
         <activity android:name=".View.PublicNotificationActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"
             />
 
         <provider

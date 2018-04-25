@@ -1,7 +1,6 @@
 package com.tradinos.dealat2.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Animatable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;

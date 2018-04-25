@@ -132,12 +132,12 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void updateLanguage(String token, String lang, SuccessCallback<String> successCallback) {
+    public void updateLanguage(String token, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.users, "update_lang").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
         request.addParameter("token", token);
-        request.addParameter("lang", lang);
+        request.addParameter("lang", MyApplication.getLocale().toString());
 
         authenticationRequired(request);
         addToHeader(request);

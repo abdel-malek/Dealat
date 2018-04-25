@@ -16,10 +16,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.View.MasterActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by developer on 14.03.18.
@@ -81,13 +78,15 @@ public class MyAdAdapter extends BaseAdapter {
                     + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 
             // only published ads their expiry dates are calculated
-            holder.textViewExpires.setText(context.getString(R.string.expires)
-                    + " " + ((MasterActivity) context).formattedDate(item.getExpiryDate()));
+            String text;
+            if (item.getExpiresAfter() <= 0){
+                text = context.getString(R.string.expired);
+                holder.textViewExpires.setTextColor(ContextCompat.getColor(context, R.color.red));
+            }
+            else
+                text = context.getString(R.string.expires);
 
-            // if published // check for expiresAfter because ad may be expired // else don't change ad's status
-            if (item.getExpiresAfter() <= 0)
-                item.setStatus(Ad.EXPIRED);
-
+            holder.textViewExpires.setText(text + " " + ((MasterActivity) context).formattedDate(item.getExpiryDate()));
         }
 
         int statusRsc;
@@ -104,10 +103,10 @@ public class MyAdAdapter extends BaseAdapter {
                 statusString = context.getString(R.string.statusAccepted);
                 break;
 
-            case Ad.EXPIRED:
+        /*    case Ad.EXPIRED:
                 statusRsc = R.drawable.expired_copy;
                 statusString = context.getString(R.string.statusExpired);
-                break;
+                break;*/
 
             case Ad.HIDDEN:
                 statusRsc = R.drawable.hidden;

@@ -2,9 +2,6 @@ package com.tradinos.dealat2.FCM;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.tradinos.core.network.Code;
-import com.tradinos.core.network.FaildCallback;
-import com.tradinos.core.network.SuccessCallback;
 
 /**
  * Created by developer on 12.03.18.
@@ -24,18 +21,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-      /*  UserController.getInstance(new ParentController(this, new FaildCallback() {
-
-            @Override
-            public void OnFaild(Code errorCode, String Message, String data) {
-
-            }
-        })).registerToken(refreshedToken, new SuccessCallback<String>() {
-            @Override
-            public void OnSuccess(String result) {
-
-            }
-        });*/
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the

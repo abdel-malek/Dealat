@@ -37,6 +37,7 @@
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="expires">Expires</string>
+    <string name="expired">Expired</string>
     <string name="published">Published</string>
     <string name="created">Created</string>
     <string name="newU">New</string>
@@ -177,7 +178,7 @@
     <string name="buttonSend">Send</string>
     <string name="buttonReport">Report</string>
     <string name="buttonContinue">Continue</string>
-    <string name="buttonOpenApp">Open App</string>
+    <string name="buttonView">View</string>
     <string name="buttonDeactivate">Deactivate Account</string>
 
     <string name="tabMyAds">My Ads</string>
@@ -207,11 +208,11 @@
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
     <string name="toastFavorite">Ad\'s added to your favorites</string>
     <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
-    <string name="toastAdReported">Ad\'s reported</string>
-    <string name="toastBookmark">Search\'s Saved</string>
-    <string name="toastUnBookmark">Search\'s Removed</string>
+    <string name="toastAdReported">Ad\'s been reported</string>
+    <string name="toastBookmark">Search Saved</string>
+    <string name="toastUnBookmark">Search Removed</string>
     <string name="toastSaved">Changes Saved</string>
-    <string name="toastAdDeleted">Ad\'s Deleted</string>
+    <string name="toastAdDeleted">Ad Deleted</string>
     <string name="toastImageSave">Image\'s saved to gallery</string>
     <string name="toastThnxRating">Thanx for rating</string>
 

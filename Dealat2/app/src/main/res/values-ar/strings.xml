@@ -34,6 +34,7 @@
     <string name="today">اليوم</string>
     <string name="yesterday">الأمس</string>
     <string name="expires">ينتهي</string>
+    <string name="expired">انتهى</string>
     <string name="published">تم نشره</string>
     <string name="created">تم إنشاؤه</string>
     <string name="newU">جديد</string>
@@ -173,7 +174,7 @@
     <string name="buttonSend">إرسال</string>
     <string name="buttonReport">إبلاغ</string>
     <string name="buttonContinue">متابعة</string>
-    <string name="buttonOpenApp">افتح التطبيق</string>
+    <string name="buttonView">عرض</string>
     <string name="buttonDeactivate">تعطيل الحساب</string>
 
     <string name="tabMyAds">إعلاناتي</string>

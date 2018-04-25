@@ -51,7 +51,7 @@ public abstract class DrawerActivity extends MasterActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-       // FacebookSdk.sdkInitialize(this);
+        // FacebookSdk.sdkInitialize(this);
         super.onCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -101,12 +101,12 @@ public abstract class DrawerActivity extends MasterActivity
                     textViewName.setText(user.getName());
                     //   textViewCity.setText(user.getCityName());
 
-                    if (!TextUtils.isEmpty(user.getImageUrl())){
+                    if (!TextUtils.isEmpty(user.getImageUrl())) {
                         ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
 
                         // you may comment FacebookSdk.sdkInitialize(this); in onCreate
-                     //   mImageLoader.get(user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
-                     //                   R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                        //   mImageLoader.get(user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
+                        //                   R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
 
                         mImageLoader.get(MyApplication.getBaseUrl() + user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
                                 R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
@@ -278,16 +278,21 @@ public abstract class DrawerActivity extends MasterActivity
         mContext.getResources().updateConfiguration(conf,
                 getResources().getDisplayMetrics());
 
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
-        UserController.getInstance(mController).updateLanguage(refreshedToken, lang, new SuccessCallback<String>() {
-            @Override
-            public void OnSuccess(String result) {
-                Intent refresh = new Intent(mContext, HomeActivity.class);
-                startActivity(refresh);
-                finish();
-            }
-        });
+        if (MyApplication.getUserState() == User.REGISTERED) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            UserController.getInstance(mController).updateLanguage(refreshedToken, new SuccessCallback<String>() {
+                @Override
+                public void OnSuccess(String result) {
+                    Intent refresh = new Intent(mContext, HomeActivity.class);
+                    startActivity(refresh);
+                    finish();
+                }
+            });
+        } else {
+            Intent refresh = new Intent(mContext, HomeActivity.class);
+            startActivity(refresh);
+            finish();
+        }
     }
 
     protected void logout() {

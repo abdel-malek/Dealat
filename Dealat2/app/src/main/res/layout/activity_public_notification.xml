@@ -4,56 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:gravity="center"
+    android:background="@color/grayTransparent"
     >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:textAppearance="@style/textHeadline"
-        android:textColor="@color/grayDark"
-        />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:textAppearance="@style/textNormal"
-        />
-
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layoutDirection="ltr"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:background="@drawable/rounded_corner_white"
         >
 
-        <Button
-            android:id="@+id/buttonFalse"
-            android:layout_width="100dp"
-            android:layout_height="36dp"
-            android:layout_margin="8dp"
-            android:onClick="onClick"
-            android:text="@string/buttonCancel"
-            android:textAppearance="@style/textNormal"
-            android:textColor="@color/white"
-            android:background="@drawable/rounded_corner_red"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="4dp"
+            android:textAppearance="@style/textHeadline"
+            android:textColor="@color/grayDark"
             />
 
-        <Button
-            android:id="@+id/buttonTrue"
-            android:layout_width="100dp"
-            android:layout_height="36dp"
-            android:layout_margin="8dp"
-            android:onClick="onClick"
-            android:text="@string/buttonOpenApp"
-            android:textAppearance="@style/textNormal"
-            android:textColor="@color/red"
-            android:background="@drawable/rounded_corner_white"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lineHight"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/grayLight"
             />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layoutDirection="ltr"
+            >
+
+            <Button
+                android:id="@+id/buttonFalse"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
+                android:layout_margin="8dp"
+                android:onClick="onClick"
+                android:text="@string/buttonCancel"
+                android:textAppearance="@style/textNormal"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_corner_red"
+                />
+
+            <Button
+                android:id="@+id/buttonTrue"
+                android:layout_width="100dp"
+                android:layout_height="36dp"
+                android:layout_margin="8dp"
+                android:onClick="onClick"
+                android:text="@string/buttonView"
+                android:textAppearance="@style/textNormal"
+                android:textColor="@color/red"
+                android:background="@drawable/rounded_corner_white"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

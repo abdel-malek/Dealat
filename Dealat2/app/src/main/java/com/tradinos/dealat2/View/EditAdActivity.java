@@ -153,7 +153,9 @@ public class EditAdActivity extends MasterActivity {
         AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
+
                 currentAd = result;
+
                 videoServerPath = result.getMainVideoUrl();
 
                 adapter = new HorizontalAdapter(mContext, linearLayout);
@@ -633,6 +635,8 @@ public class EditAdActivity extends MasterActivity {
             else
                 parameters.put("main_video", videoServerPath);
 
+            parameters.put("edit_status", String.valueOf(currentAd.getStatus()));
+
             return true;
         }
 
@@ -959,7 +963,6 @@ public class EditAdActivity extends MasterActivity {
                 }
         }
     }
-
 
     class UploadImage extends AsyncTask<Image, Void, String> {
 

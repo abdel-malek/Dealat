@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -114,7 +113,7 @@ public class FilterActivity extends MasterActivity {
                 result.getSchedules().add(0, new Item("-1", getString(R.string.all)));
                 spinnerSch.setAdapter(new CheckableAdapter(mContext, result.getSchedules()));
 
-                setTemplateVisibility(View.VISIBLE);
+                showTemplate();
             }
         });
     }
@@ -361,13 +360,12 @@ public class FilterActivity extends MasterActivity {
                 selectedCategory = (Category) data.getSerializableExtra("category");
                 editCategory.setText(selectedCategory.getFullName());
 
-                if (selectedCategory.getTemplateId() != currentTemplate) {
-                    replaceTemplate();
+                replaceTemplate();
 
-                    List<Type> templateBrands = brands.get(currentTemplate);
-                    if (templateBrands != null)
-                        spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
-                }
+                List<Type> templateBrands = brands.get(currentTemplate);
+                if (templateBrands != null)
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+
             }
         }
     }
@@ -524,14 +522,13 @@ public class FilterActivity extends MasterActivity {
     }
 
     private void replaceTemplate() {
-        setTemplateVisibility(View.GONE);
+        hideTemplate();
         currentTemplate = selectedCategory.getTemplateId();
-        setTemplateVisibility(View.VISIBLE);
+        showTemplate();
     }
 
-    private void setTemplateVisibility(int visibility) {
-        if (visibility != View.VISIBLE && visibility != View.GONE)
-            return;
+    private void showTemplate() {
+        int visibility = View.VISIBLE;
 
         switch (currentTemplate) {
             case Category.PROPERTIES:
@@ -573,13 +570,8 @@ public class FilterActivity extends MasterActivity {
                     containerSalary.setVisibility(visibility);
                 }
 
-                if (visibility == View.GONE) {
-                    textPrice.setVisibility(View.VISIBLE);
-                    containerPrice.setVisibility(View.VISIBLE);
-                } else {
-                    textPrice.setVisibility(View.GONE);
-                    containerPrice.setVisibility(View.GONE);
-                }
+                textPrice.setVisibility(View.GONE);
+                containerPrice.setVisibility(View.GONE);
 
                 break;
 
@@ -636,6 +628,78 @@ public class FilterActivity extends MasterActivity {
                     textState.setVisibility(visibility);
                     spinnerState.setVisibility(visibility);
                 }
+        }
+    }
+
+    private void hideTemplate() {
+        int visibility = View.GONE;
+
+        switch (currentTemplate) {
+            case Category.PROPERTIES:
+                textSpace.setVisibility(visibility);
+                containerSpace.setVisibility(visibility);
+
+                textRooms.setVisibility(visibility);
+                containerRooms.setVisibility(visibility);
+
+                textFloor.setVisibility(visibility);
+                containerFloors.setVisibility(visibility);
+
+                textFurn.setVisibility(visibility);
+                spinnerFurn.setVisibility(visibility);
+
+                break;
+
+            case Category.JOBS:
+                textSch.setVisibility(visibility);
+                spinnerSch.setVisibility(visibility);
+
+                textEdu.setVisibility(visibility);
+                spinnerEdu.setVisibility(visibility);
+
+                textSalary.setVisibility(visibility);
+                containerSalary.setVisibility(visibility);
+
+                textPrice.setVisibility(View.VISIBLE);
+                containerPrice.setVisibility(View.VISIBLE);
+
+                break;
+
+            case Category.VEHICLES:
+                textBrand.setVisibility(visibility);
+                spinnerBrand.setVisibility(visibility);
+
+                textModel.setVisibility(visibility);
+                spinnerModel.setVisibility(visibility);
+
+                textDate.setVisibility(visibility);
+                spinnerYear.setVisibility(visibility);
+
+                textKilo.setVisibility(visibility);
+                containerKilometer.setVisibility(visibility);
+
+                textTransmission.setVisibility(visibility);
+                spinnerTransmission.setVisibility(visibility);
+
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
+
+                break;
+
+            case Category.ELECTRONICS:
+                textSize.setVisibility(visibility);
+                containerSize.setVisibility(visibility);
+
+            case Category.MOBILES:
+                textBrand.setVisibility(visibility);
+                spinnerBrand.setVisibility(visibility);
+
+            case Category.FASHION:
+            case Category.KIDS:
+            case Category.SPORTS:
+            case Category.INDUSTRIES:
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
         }
     }
 }
