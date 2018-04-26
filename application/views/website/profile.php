@@ -50,7 +50,7 @@
 					</div>
 					<div class="col-md-2 mt-2">
 						<button class="btn button2 edit-user-info"><?php echo $this->lang->line('edit_info'); ?></button>
-						<button class="btn button2 delete-account"><?php echo $this->lang->line('delete_account'); ?></button>
+						<!--<button class="btn button2 delete-account"><?php echo $this->lang->line('delete_account'); ?></button>-->
 					</div>
 				</script>
 			</div>
@@ -287,11 +287,12 @@
 								<input type="hidden" name="location_id" class="location-id">
 								<input type="hidden" name="type_id" class="type-id">
 								<input type="hidden" name="type_model_id" class="type-model-id">
+								<input type="hidden" class="ad-status">
 
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
 								</div>
-								
+
 								<div class="form-group">
 									<select name="city_id" class="city-select" required>
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>
@@ -349,24 +350,26 @@
 									<div class="form-group field kilometer">
 										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 									</div>
-									<!--						<div class="form-group field">-->
-									<label class="field is_automatic">
-									<input type='hidden' value='0' name='is_automatic'>
-								<input type="checkbox" name="is_automatic" value="1"><span class=""> <?php echo $this->lang->line('automatic'); ?></span>
-							</label>
-									<!--						</div>-->
-									<br>
+									<div class="form-group field is_automatic">
+										<select name="is_automatic" class="automatic-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>
+										<option value="1"><?php echo $this->lang->line('automatic'); ?></option>
+										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
+									</select>
+									</div>
+
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 
 								</div>
 								<!--properties template-->
 								<div class="template-properties template d-none" data-template-id="2">
-									<div class="form-group field" space>
+									<div class="form-group field space">
 										<input type="text" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 									</div>
 
@@ -394,10 +397,11 @@
 								<div class="template-mobiles template d-none" data-template-id="3">
 
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--electronics template-->
@@ -409,37 +413,41 @@
 									</div>
 
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--fashion template-->
 								<div class="template-fashion template d-none" data-template-id="5">
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--kids template-->
 								<div class="template-kids template d-none" data-template-id="6">
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--sports template-->
 								<div class="template-sports template d-none" data-template-id="7">
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--job positions template-->
@@ -469,10 +477,11 @@
 								<!--industries template-->
 								<div class="template-industries template d-none" data-template-id="9">
 									<div class="form-group field is_new">
-										<label class="">
-										<input type='hidden' value='0' name='is_new'>
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+										<select name="is_new" class="status-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 									</div>
 								</div>
 								<!--services template-->
@@ -551,13 +560,13 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>">
+							<input type="text" class="form-control" name="name" title="Username" placeholder="<?php echo $this->lang->line('username'); ?>">
 						</div>
 						<div class="form-group">
-							<input type="email" class="form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
+							<input type="email" class="form-control" name="email" title="Email" placeholder="<?php echo $this->lang->line('email'); ?>">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" name="birthday" data-toggle="birthdate" placeholder="<?php echo $this->lang->line('birthdate'); ?>">
+							<input type="text" class="form-control" name="birthday" title="Birthdate" data-toggle="birthdate" placeholder="<?php echo $this->lang->line('birthdate'); ?>">
 						</div>
 
 						<div class="form-group">
@@ -570,13 +579,27 @@
 						</div>
 
 						<div class="form-group">
-							<input type="number" class="form-control whatsup" name="whatsup_number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
+							<input type="number" class="form-control whatsup" name="whatsup_number" title="Whatsapp Number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
 						</div>
-						
+
+						<div class="form-group">
+							<label class="">
+								<input type="checkbox" name="visible_phone" value="1"><span class=""> <?php echo $this->lang->line('visible_phone'); ?></span>
+							</label>
+							<div class="visible-phone-note">
+								<?php echo $this->lang->line('visible_phone_note'); ?>
+							</div>
+						</div>
+
+						<div class="delete-account text-danger">
+							<?php echo $this->lang->line('delete_account'); ?>
+						</div>
+
 						<div class="modal-footer">
 							<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('update'); ?></button>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div>
@@ -621,7 +644,9 @@
 					<h6 class="text">
 						<?php echo $this->lang->line('delete_account_confirm'); ?>
 					</h6>
-					<div class="note text-danger"><?php echo $this->lang->line('delete_account_confirm_note'); ?></div>
+					<div class="note text-danger">
+						<?php echo $this->lang->line('delete_account_confirm_note'); ?>
+					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('yes'); ?></button>
 					</div>

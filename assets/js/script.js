@@ -590,6 +590,7 @@ $(function () {
 			if (data.status === false) {
 				console.log(data);
 			} else {
+				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -759,12 +760,12 @@ $(function () {
 		//		}
 
 		//only show upload video in properties
-				if (templateId === 2) {
-					$("#ad-modal #fileuploader-ad-video").removeClass("d-none");
-				} else {
-		$("#ad-modal #fileuploader-ad-video").addClass("d-none");
-				}
-		
+		if (templateId === 2) {
+			$("#ad-modal #fileuploader-ad-video").removeClass("d-none");
+		} else {
+			$("#ad-modal #fileuploader-ad-video").addClass("d-none");
+		}
+
 		//if category is job remove price and negotiable inputs
 		if (templateId === 8) {
 			$("#ad-modal input[name='price']").closest(".form-group").addClass("d-none");
@@ -1509,6 +1510,9 @@ $(function () {
 		adId = $("#card-modal").find(".card").data("adId");
 		$("#chat-form .ad-id").val(adId);
 
+		$("#chat-modal .chat-header .ad-name").text($(this).parents(".modal-content").find(".card-title").text());
+		$("#chat-modal .chat-header .user-name").text($(this).parents(".modal-content").find(".seller-val").text());
+		
 		//get chat message
 		$.ajax({
 			type: "get",
@@ -1546,7 +1550,7 @@ $(function () {
 		notSeenInterval;
 	//check for not seen messages
 	function checkNewMsgs() {
-//		console.log("sess");
+		//		console.log("sess");
 		//get chat messages
 		$.ajax({
 			type: "get",
@@ -1584,68 +1588,74 @@ $(function () {
 						}
 					});
 				}
+				notSeenInterval = setTimeout(checkNewMsgs, 3000);
 			}
 		});
-		
-		notSeenInterval = setTimeout(checkNewMsgs, 3000);
 	}
 
 	if (logged) {
 		checkNewMsgs();
-//		notSeenInterval = setTimeout(checkNewMsgs, 3000);
+		//		notSeenInterval = setTimeout(checkNewMsgs, 3000);
 	}
 
 	//auto check for new messages for an opened chat session and append it
-	function checkLiveSessionMsg () {
-//console.log("msg");
-			//get chat messages for a live(opened) chat session
-			$.ajax({
-				type: "get",
-				url: base_url + '/api/users_control/get_chat_messages',
-				dataType: "json",
-				global: false, // this makes sure ajaxStart is not triggered
-				data: $("#chat-form").serialize()
-			}).done(function (data) {
-				if (data.status === false) {} else {
-					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
-					var msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
-					var startIndex;
-					if (data.data[data.data.length - 1].message_id != lastMsgId) {
-						//to know last msg index in data.data array
-						for (i = data.data.length - 1; i >= 0; i -= 1) {
-							if (data.data[i].message_id == lastMsgId) {
-								startIndex = i;
-								break;
-							}
+	function checkLiveSessionMsg() {
+		//console.log("msg");
+		//get chat messages for a live(opened) chat session
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/users_control/get_chat_messages',
+			dataType: "json",
+			global: false, // this makes sure ajaxStart is not triggered
+			data: $("#chat-form").serialize()
+		}).done(function (data) {
+			if (data.status === false) {} else {
+				lastMsgId = $('#chat-modal .chat li').last().data("msgId");
+				var msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
+				var startIndex, isSeller;
+				isSeller = $("#chat-modal .is-seller").val();
+				
+				if (data.data[data.data.length - 1].message_id != lastMsgId) {
+					//to know last msg index in data.data array
+					for (i = data.data.length - 1; i >= 0; i -= 1) {
+						if (data.data[i].message_id == lastMsgId) {
+							startIndex = i;
+							break;
 						}
-						for (i = startIndex + 1; i < data.data.length; i += 1) {
-							//todo add seller check later to avoid any errs in msg display self or other
-							//check msg date
-							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
-								//update msg date
-								msgDate = data.data[i].created_at.split(' ')[0];
-								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
-							}
-							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
-								hour: 'numeric',
-								minute: 'numeric',
-								hour12: true
-							});
-							console.log(data.data[i]);
-							template = $('#chat-other-template').html();
-							Mustache.parse(template);
-							rendered = Mustache.render(template, data.data[i]);
-							$("#chat-modal .chat").append(rendered);
-						}
-						$("#chat-modal .chat").stop().animate({
-							scrollTop: $("#chat-modal .chat")[0].scrollHeight
-						}, 300);
 					}
+					for (i = startIndex + 1; i < data.data.length; i += 1) {
+						//check msg date
+						if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+							//update msg date
+							msgDate = data.data[i].created_at.split(' ')[0];
+							$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+						}
+						data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+							hour: 'numeric',
+							minute: 'numeric',
+							hour12: true
+						});
+						
+						if((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0") ){
+							template = $('#chat-other-template').html();
+						} else{
+							template = $('#chat-self-template').html();
+						}
+						
+//						template = $('#chat-other-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data[i]);
+						$("#chat-modal .chat").append(rendered);
+					}
+					$("#chat-modal .chat").stop().animate({
+						scrollTop: $("#chat-modal .chat")[0].scrollHeight
+					}, 300);
 				}
-			});
- intervalId = setTimeout(checkLiveSessionMsg, 1000);
-		}
-	
+				intervalId = setTimeout(checkLiveSessionMsg, 100);
+			}
+		});
+	}
+
 	var intervalId;
 	$('#chat-modal').on('shown.bs.modal', function (e) {
 		$("#chat-modal .chat").stop().animate({
@@ -1653,11 +1663,11 @@ $(function () {
 		}, 300);
 		$("#chat-modal input[name='msg']").focus();
 		var lastMsgId;
-		intervalId = setTimeout(checkLiveSessionMsg, 1000);
+		intervalId = setTimeout(checkLiveSessionMsg);
 	});
 
 	$('#chat-modal').on('hide.bs.modal', function (e) {
-//		clearInterval(intervalId);
+		//		clearInterval(intervalId);
 		clearTimeout(intervalId);
 	});
 
@@ -1669,16 +1679,17 @@ $(function () {
 			type: "post",
 			url: base_url + '/api/users_control/send_msg',
 			dataType: "json",
+			global: false, // this makes sure ajaxStart is not triggered
 			data: $(this).serialize()
 		}).done(function (data) {
 			console.log(data.data);
 			if (data.status === false) {} else {
 				data.data.time = new Date(data.data.created_at).toLocaleString('en-US', {
-								hour: 'numeric',
-								minute: 'numeric',
-								hour12: true
-							});
-				
+					hour: 'numeric',
+					minute: 'numeric',
+					hour12: true
+				});
+
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
@@ -1806,11 +1817,16 @@ $(function () {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
+		var data = $(this).serializeArray();
+		data.push({
+					name: "is_multi",
+					value: 1
+				});
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/users_control/verify',
 			dataType: "json",
-			data: $(this).serialize()
+			data: $.param(data)
 		}).done(function (data) {
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
@@ -1979,9 +1995,7 @@ $(function () {
 				ad_id: adId
 			}
 		}).done(function (data) {
-			if (data.status === false) {
-			} else {
-			}
+			if (data.status === false) {} else {}
 		});
 
 	});
@@ -1999,8 +2013,7 @@ $(function () {
 		url: base_url + '/api/items_control/get_report_messages',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {
-		} else {
+		if (data.status === false) {} else {
 			for (i in data.data) {
 				$("#report-form .report-select").append($('<option>', {
 					value: data.data[i].report_message_id,
@@ -2028,8 +2041,7 @@ $(function () {
 			dataType: "json",
 			data: $(this).serialize()
 		}).done(function (data) {
-			if (data.status === false) {
-			} else {
+			if (data.status === false) {} else {
 				$("#report-form").trigger("reset");
 				$("#report-form .report-select")[0].sumo.unSelectAll();
 				$("#report-modal").modal("hide");
@@ -2060,8 +2072,7 @@ $(function () {
 		url: base_url + '/api/data_control/get_about_info',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {
-		} else {
+		if (data.status === false) {} else {
 			template = $('#footer-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);

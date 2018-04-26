@@ -1,6 +1,6 @@
 <div class="main-wrapper">
-<!--  loading -->
-<!--
+	<!--  loading -->
+	<!--
 <section class="loading-overlay">
 	<div class="spinner">
 		<div class="sk-circle">
@@ -20,146 +20,145 @@
 	</div>
 </section>
 -->
-<section class="loading-overlay1">
-	<div class="spinner">
-		<div class="sk-circle">
-			<div class="sk-circle1 sk-child"></div>
-			<div class="sk-circle2 sk-child"></div>
-			<div class="sk-circle3 sk-child"></div>
-			<div class="sk-circle4 sk-child"></div>
-			<div class="sk-circle5 sk-child"></div>
-			<div class="sk-circle6 sk-child"></div>
-			<div class="sk-circle7 sk-child"></div>
-			<div class="sk-circle8 sk-child"></div>
-			<div class="sk-circle9 sk-child"></div>
-			<div class="sk-circle10 sk-child"></div>
-			<div class="sk-circle11 sk-child"></div>
-			<div class="sk-circle12 sk-child"></div>
+	<section class="loading-overlay1">
+		<div class="spinner">
+			<div class="sk-circle">
+				<div class="sk-circle1 sk-child"></div>
+				<div class="sk-circle2 sk-child"></div>
+				<div class="sk-circle3 sk-child"></div>
+				<div class="sk-circle4 sk-child"></div>
+				<div class="sk-circle5 sk-child"></div>
+				<div class="sk-circle6 sk-child"></div>
+				<div class="sk-circle7 sk-child"></div>
+				<div class="sk-circle8 sk-child"></div>
+				<div class="sk-circle9 sk-child"></div>
+				<div class="sk-circle10 sk-child"></div>
+				<div class="sk-circle11 sk-child"></div>
+				<div class="sk-circle12 sk-child"></div>
+			</div>
+		</div>
+	</section>
+	<!--end loading-->
+
+	<div class="social-fixed">
+		<span class="show-social"><i class="fas fa-angle-left"></i></span>
+		<div class="icons" data-show="1">
+
+			<script id="social-fixed-template" type="text/template">
+				{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>{{/facebook_link}} {{#youtube_link}}
+				<span class="icon youtube"><a href="{{youtube_link}}"><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>{{/youtube_link}} {{#twiter_link}}
+				<span class="icon twitter"><a href="{{twiter_link}}"><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>{{/twiter_link}}
+				<!--		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>-->
+			</script>
 		</div>
 	</div>
-</section>
-<!--end loading-->
 
-<div class="social-fixed">
-	<span class="show-social"><i class="fas fa-angle-left"></i></span>
-	<div class="icons" data-show="1">
-	
-<script id="social-fixed-template" type="text/template">
-	{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>{{/facebook_link}}
-	{{#youtube_link}}<span class="icon youtube"><a href="{{youtube_link}}"><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>{{/youtube_link}}
-		{{#twiter_link}}<span class="icon twitter"><a href="{{twiter_link}}"><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>{{/twiter_link}}
-<!--		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>-->
-		</script>
-	</div>
-</div>
+	<header class="home">
+		<div class="container">
+			<div class="row align-items-center">
 
-<header class="home">
-	<div class="container">
-		<div class="row align-items-center">
-			
-			<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1 offset-lg-0">
-				<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
-			</div>
-			<div class="col-5 col-sm-3 col-md-2 col-lg-3 offset-1 offset-sm-0">
-				<span class="home-icon" style="padding-right: 10px">
+				<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1 offset-lg-0">
+					<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
+				</div>
+				<div class="col-5 col-sm-3 col-md-2 col-lg-3 offset-1 offset-sm-0">
+					<span class="home-icon" style="padding-right: 10px">
 					<a href="<?php echo base_url() ?>" style="color: #fff"><?php echo $this->lang->line('home'); ?></a>
 				</span>
 
-				<span class="language-wrapper">
+					<span class="language-wrapper">
 					<span class="language-switch">
 						<?php if( $this->session->userdata("language")  == "en" ) $en_lng ="selected"; else $en_lng="";  ?>
 						<?php if( $this->session->userdata("language")  == "ar" ) $ar_lng ="selected"; else $ar_lng="";  ?>
 				<span class="english <?php echo $en_lng; ?>"  data-locale="en"><?php echo $this->lang->line('english'); ?></span>
-						<span class="arabic <?php echo $ar_lng; ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></span>
+					<span class="arabic <?php echo $ar_lng; ?>" data-locale="ar"><?php echo $this->lang->line('arabic'); ?></span>
 					</span>
-				</span>
+					</span>
 
-			</div>
-			<?php if( !($this->session->userdata('PHP_AUTH_USER'))){ ?>
-			<!--if not logged-->
-			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
-				<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
-			</div>
-			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
-				<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
-			</div>
-			<?php  }else{?>
-			<!--if logged-->
-			<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+				</div>
+				<?php if( !($this->session->userdata('PHP_AUTH_USER'))){ ?>
+				<!--if not logged-->
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+					<button class="btn button2 login"><?php echo $this->lang->line('sign_in'); ?></button>
+				</div>
+				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
+					<button class="btn button2 register"><?php echo $this->lang->line('register'); ?></button>
+				</div>
+				<?php  }else{?>
+				<!--if logged-->
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
 
-			</div>
-			<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
-				
-				<div class="header-account-logged">
-					<div class="header-account-dropdown dropdown">
-						<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn button2 logged">
+				</div>
+				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
+
+					<div class="header-account-logged">
+						<div class="header-account-dropdown dropdown">
+							<a class="header-account-open account-link" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><button class="btn button2 logged">
 							<span class="login-label"><?php echo $this->session->userdata('USERNAME'); ?></span></button>
 						</a>
-						<ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">
-							<li>
-								<a href="<?php echo base_url('index.php/users_control_web/load_profile') ?>" class="link"><?php echo $this->lang->line('profile'); ?></a>
-							</li>
-							<li>
-								<a href="<?php echo base_url('index.php/users_control_web/logout') ?>" data-no-turbolink="true" class="link logout-link"><?php echo $this->lang->line('logout'); ?></a>
-							</li>
-						</ul>
+							<ul class="dropdown-menu arrow" role="menu" aria-labelledby="dLabel">
+								<li>
+									<a href="<?php echo base_url('index.php/users_control_web/load_profile') ?>" class="link"><?php echo $this->lang->line('profile'); ?></a>
+								</li>
+								<li>
+									<a href="<?php echo base_url('index.php/users_control_web/logout') ?>" data-no-turbolink="true" class="link logout-link"><?php echo $this->lang->line('logout'); ?></a>
+								</li>
+							</ul>
+						</div>
+						<div class="new-msg d-none"><a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>"><i class="fas fa-envelope"></i></a></div>
 					</div>
-					<div class="new-msg d-none"><a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>"><i class="fas fa-envelope"></i></a></div>
 				</div>
+				<?php } ?>
 			</div>
-<?php } ?>
 		</div>
-	</div>
-</header>
+	</header>
 
-<!--card modal-->
-<div id="card-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!--card modal-->
+	<div id="card-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-			</div>
-			<div class="modal-body">
+				</div>
+				<div class="modal-body">
 
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
-				<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
+					<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<script id="ad-details-template" type="text/template">
-	<div class="card" data-ad-id="{{ad.ad_id}}" data-category-id="{{ad.category_id}}">
-		<div class="card-img-slider slick-slider">
-			<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>
-			{{#ad.images}}
-			<div class="card-img-top"><img src="<?php echo base_url('{{image}}'); ?>"></div>
-			{{/ad.images}}
-			{{#ad.main_video}}
-			<div class="card-img-top"><video height="200" controls>
+	<script id="ad-details-template" type="text/template">
+		<div class="card" data-ad-id="{{ad.ad_id}}" data-category-id="{{ad.category_id}}">
+			<div class="card-img-slider slick-slider">
+				<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>
+				{{#ad.images}}
+				<div class="card-img-top"><img src="<?php echo base_url('{{image}}'); ?>"></div>
+				{{/ad.images}} {{#ad.main_video}}
+				<div class="card-img-top"><video height="200" controls>
   <source src="<?php echo base_url('{{ad.main_video}}'); ?>" type="video/mp4">
 </video></div>
-			{{/ad.main_video}}
-		</div>
-		<div class="card-body">
-			<div class="fav">
-				<span class="icon" data-added="{{ad.is_favorite}}" title="<?php echo $this->lang->line('add_fav'); ?>"><i class="far fa-heart fa-2x"></i></span>
+				{{/ad.main_video}}
 			</div>
-			<div class="row">
-				<div class="col-12 mb-4 text-center">
-					<div class="card-title">{{ad.title}}</div>
-					<div class="details">{{ad.description}}</div>
+			<div class="card-body">
+				<div class="fav">
+					<span class="icon" data-added="{{ad.is_favorite}}" title="<?php echo $this->lang->line('add_fav'); ?>"><i class="far fa-heart fa-2x"></i></span>
 				</div>
+				<div class="row">
+					<div class="col-12 mb-4 text-center">
+						<div class="card-title">{{ad.title}}</div>
+						<div class="details">{{ad.description}}</div>
+					</div>
 
-				<div class="col-4 info-col">
-					<div class="number"><span class="number-lbl"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val">{{ad.ad_id}}</span></div>
-					<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
-					<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
-					<!--<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
+					<div class="col-4 info-col">
+						<div class="number"><span class="number-lbl"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val">{{ad.ad_id}}</span></div>
+						<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
+						<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
+						<!--<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
 						<span class="rating-val">
 							<fieldset class="rating">
 								<span class="rate-group" data-value="5">
@@ -190,121 +189,122 @@
 						<div class="clearfix"></div>
 						</span>
 					</div>-->
-					<details open>
-						<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
-						<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:{{ad.seller_phone}}">{{ad.seller_phone}}</a></span></div>
-						{{#ad.whatsup_number}}
-						<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:{{ad.whatsup_number}}">{{ad.whatsup_number}}</a></span></div>{{/ad.whatsup_number}}
-					</details>
+						<details open>
+							<summary><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></summary>
+							<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href="tel:{{ad.seller_phone}}">{{ad.seller_phone}}</a></span></div>
+							{{#ad.whatsup_number}}
+							<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href="tel:{{ad.whatsup_number}}">{{ad.whatsup_number}}</a></span></div>{{/ad.whatsup_number}}
+						</details>
+
+					</div>
+
+					<div class="col-4 info-col">
+						<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
+						<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
+						<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
+					</div>
+
+					<div class="col-4 info-col templates">
+						<!--vehicles template-->
+						<div class="template-vehicles template d-none" data-template-id="1">
+							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="manufacture_date field"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>:</span><span class="manufacture_date-val"> {{ad.manufacture_date}}</span></div>
+							<div class="is_automatic field"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>:</span><span class="is_automatic-val"> {{automatic}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl"></span>
+								<?php echo $this->lang->line('item_status'); ?>:<span class="is_new-val"> {{status}}</span></div>
+							<div class="kilometer field"><span class="kilometer-lbl"><?php echo $this->lang->line('kilometrage'); ?>:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
+						</div>
+
+						<!--properties template-->
+						<div class="template-properties template d-none" data-template-id="2">
+							<div class="space field"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>:</span><span class="space-val"> {{ad.space}}</span></div>
+							<div class="rooms_num field"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
+							<div class="floor field"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
+							<div class="state field"><span class="state-lbl"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
+							<div class="with_furniture field"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
+						</div>
+
+						<!--mobiles template-->
+						<!--type id-->
+						<div class="template-mobiles template d-none" data-template-id="3">
+							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--electronics template-->
+						<!--type id-->
+						<div class="template-electronics template d-none" data-template-id="4">
+							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="size field"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>:</span><span class="size-val"> {{ad.size}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--fashion template-->
+						<div class="template-fashion template d-none" data-template-id="5">
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--kids template-->
+						<div class="template-kids template d-none" data-template-id="6">
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--sports template-->
+						<div class="template-sports template d-none" data-template-id="7">
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--job positions template-->
+						<!--schedule id/experience id/education id-->
+						<div class="template-job template d-none" data-template-id="8">
+							<div class="schedule field schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val"> {{ad.schedule}}</span></div>
+							<div class="education field education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>:</span><span class="education-val"> {{ad.education}}</span></div>
+							<div class="experience field experience"><span class="experience-lbl"><?php echo $this->lang->line('experience'); ?>:</span><span class="experience-val"> {{ad.experience}}</span></div>
+							<div class="salary field"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>:</span><span class="salary-val"> {{ad.salary}}</span></div>
+						</div>
+
+						<!--industries template-->
+						<div class="template-industries template d-none" data-template-id="9">
+							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+						</div>
+
+						<!--services template-->
+						<div class="template-services template d-none" data-template-id="10"></div>
+
+						<!--basic template-->
+						<div class="template-basic template d-none" data-template-id="11"></div>
+					</div>
 
 				</div>
-
-				<div class="col-4 info-col">
-					<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
-					<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
-					<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
-				</div>
-
-				<div class="col-4 info-col templates">
-					<!--vehicles template-->
-					<div class="template-vehicles template d-none" data-template-id="1">
-						<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-						<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-						<div class="manufacture_date field"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>:</span><span class="manufacture_date-val"> {{ad.manufacture_date}}</span></div>
-						<div class="is_automatic field"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>:</span><span class="is_automatic-val"> {{automatic}}</span></div>
-						<div class="is_new field"><span class="is_new-lbl"></span><?php echo $this->lang->line('item_status'); ?>:<span class="is_new-val"> {{status}}</span></div>
-						<div class="kilometer field"><span class="kilometer-lbl"><?php echo $this->lang->line('kilometrage'); ?>:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
+				<div class="price">
+					<div class="price-val">{{ad.price}}
+						<?php echo $this->lang->line('sp'); ?>
 					</div>
-
-					<!--properties template-->
-					<div class="template-properties template d-none" data-template-id="2">
-						<div class="space field"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>:</span><span class="space-val"> {{ad.space}}</span></div>
-						<div class="rooms_num field"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
-						<div class="floor field"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
-						<div class="state field"><span class="state-lbl"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
-						<div class="with_furniture field"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
-					</div>
-
-					<!--mobiles template-->
-					<!--type id-->
-					<div class="template-mobiles template d-none" data-template-id="3">
-						<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-						<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--electronics template-->
-					<!--type id-->
-					<div class="template-electronics template d-none" data-template-id="4">
-						<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-						<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-						<div class="size field"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>:</span><span class="size-val"> {{ad.size}}</span></div>
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--fashion template-->
-					<div class="template-fashion template d-none" data-template-id="5">
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--kids template-->
-					<div class="template-kids template d-none" data-template-id="6">
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--sports template-->
-					<div class="template-sports template d-none" data-template-id="7">
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--job positions template-->
-					<!--schedule id/experience id/education id-->
-					<div class="template-job template d-none" data-template-id="8">
-						<div class="schedule field schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val"> {{ad.schedule}}</span></div>
-						<div class="education field education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>:</span><span class="education-val"> {{ad.education}}</span></div>
-						<div class="experience field experience"><span class="experience-lbl"><?php echo $this->lang->line('experience'); ?>:</span><span class="experience-val"> {{ad.experience}}</span></div>
-						<div class="salary field"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>:</span><span class="salary-val"> {{ad.salary}}</span></div>
-					</div>
-
-					<!--industries template-->
-					<div class="template-industries template d-none" data-template-id="9">
-						<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
-					</div>
-
-					<!--services template-->
-					<div class="template-services template d-none" data-template-id="10"></div>
-
-					<!--basic template-->
-					<div class="template-basic template d-none" data-template-id="11"></div>
-				</div>
-
-			</div>
-			<div class="price">
-				<div class="price-val">{{ad.price}}
-					<?php echo $this->lang->line('sp'); ?>
 				</div>
 			</div>
 		</div>
-	</div>
-</script>
+	</script>
 
 
-<!--register modal-->
-<div id="register-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!--register modal-->
+	<div id="register-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-			</div>
-			<div class="modal-body">
-				<div class="error-message d-none"></div>
-				<!--
+				</div>
+				<div class="modal-body">
+					<div class="error-message d-none"></div>
+					<!--
 					<button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Sign up with Facebook</button>
 					<button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Sign up with Google</button>
 -->
-				<!--
+					<!--
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('create_account1'); ?></span>
 				</div>
@@ -318,102 +318,102 @@
 					<span class="text"><?php echo $this->lang->line('create_account2'); ?></span>
 				</div>
 -->
-				<form id="register-form">
-					<!--					<div id="fileuploader-register">Upload</div>-->
-					<input type="hidden" name="lang" class="lang">
-					<div class="row">
-						<div class="col-sm-6 border-middle">
-							<div class="form-group">
-								<select name="city_id" class="city-select" required>
+					<form id="register-form">
+						<!--					<div id="fileuploader-register">Upload</div>-->
+						<input type="hidden" name="lang" class="lang">
+						<div class="row">
+							<div class="col-sm-6 border-middle">
+								<div class="form-group">
+									<select name="city_id" class="city-select" required>
 							<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('select_city'); ?></option>
 						</select>
-							</div>
-							<div class="form-group">
-								<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
-							</div>
-							<div class="form-group phone-wrapper">
-								<div class="row no-gutters">
-									<div class="col-2 text-center"><span style="font-weight: bold;position: relative;top: 30%;">+963</span></div>
-									<div class="col-10">
-										<input type="number" class="phone form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
+								</div>
+								<div class="form-group">
+									<input type="text" class="user_name form-control" name="name" placeholder="<?php echo $this->lang->line('username'); ?>" required>
+								</div>
+								<div class="form-group phone-wrapper">
+									<div class="row no-gutters">
+										<div class="col-2 text-center"><span style="font-weight: bold;position: relative;top: 30%;">+963</span></div>
+										<div class="col-10">
+											<input type="number" class="phone form-control" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
+										</div>
 									</div>
+
+								</div>
+								<div class="form-group">
+									<input type="password" class="password form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
+								</div>
+								<div class="form-group">
+									<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<input type="email" class="email form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
 								</div>
 
-							</div>
-							<div class="form-group">
-								<input type="password" class="password form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
-							</div>
-							<div class="form-group">
-								<input type="password" class="confirm_password form-control" name="confirm_password" placeholder="<?php echo $this->lang->line('repassword'); ?>">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<input type="email" class="email form-control" name="email" placeholder="<?php echo $this->lang->line('email'); ?>">
-							</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="birthday" data-toggle="birthdate" placeholder="<?php echo $this->lang->line('birthdate'); ?>">
+								</div>
 
-							<div class="form-group">
-								<input type="text" class="form-control" name="birthday" data-toggle="birthdate" placeholder="<?php echo $this->lang->line('birthdate'); ?>">
-							</div>
-
-							<div class="form-group">
-								<select name="gender" class="gender-select">
+								<div class="form-group">
+									<select name="gender" class="gender-select">
 							<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('gender'); ?></option>
 							<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>
 							<option value="1"><?php echo $this->lang->line('male'); ?></option>
 							<option value="2"><?php echo $this->lang->line('female'); ?></option>
 						</select>
-							</div>
+								</div>
 
-							<div class="form-group">
-								<input type="number" class="form-control whatsup" name="whatsup_number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
+								<div class="form-group">
+									<input type="number" class="form-control whatsup" name="whatsup_number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="modal-footer">
-						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
-					</div>
-				</form>
+						<div class="modal-footer">
+							<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('register'); ?></button>
+						</div>
+					</form>
+				</div>
+
 			</div>
-
 		</div>
 	</div>
-</div>
 
-<!--login modal-->
-<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
+	<!--login modal-->
+	<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 
-			</div>
-			<div class="modal-body">
-				<div class="modal-title">
-					<h5>
-						<?php echo $this->lang->line('log_into_account'); ?>
-					</h5>
 				</div>
-				<!--
+				<div class="modal-body">
+					<div class="modal-title">
+						<h5>
+							<?php echo $this->lang->line('log_into_account'); ?>
+						</h5>
+					</div>
+					<!--
 					<div class="title lines">
 						<span class="text">Sign in with:</span>
 					</div>
 -->
-				<div class="error-message d-none text-left"></div>
-				<form id="login-form">
-					<div class="form-group">
-						<input type="number" class="form-control phone" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
-					</div>
-					<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
-				</form>
-				<!--
+					<div class="error-message d-none text-left"></div>
+					<form id="login-form">
+						<div class="form-group">
+							<input type="number" class="form-control phone" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
+						</div>
+						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
+					</form>
+					<!--
 				<div class="title lines">
 					<span class="text"><?php echo $this->lang->line('signin_with'); ?></span>
 				</div>
@@ -424,66 +424,66 @@
 					</div>
 				</div>
 -->
-			</div>
-			<div class="modal-footer">
+				</div>
+				<div class="modal-footer">
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!--ad modal-->
-<div id="ad-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<!--ad modal-->
+	<div id="ad-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					  <span aria-hidden="true">&times;</span>
 					</button>
-			</div>
-			<div class="modal-body">
-				<div class="error-message full d-none"></div>
-				<form id="place-ad-form">
-					<div class="row">
-						<div class="col-sm-6">
-							<input type="hidden" name="category_id" class="category-id">
-							<input type="hidden" name="type_id" class="type-id">
-							<input type="hidden" name="type_model_id" class="type-model-id">
+				</div>
+				<div class="modal-body">
+					<div class="error-message full d-none"></div>
+					<form id="place-ad-form">
+						<div class="row">
+							<div class="col-sm-6">
+								<input type="hidden" name="category_id" class="category-id">
+								<input type="hidden" name="type_id" class="type-id">
+								<input type="hidden" name="type_model_id" class="type-model-id">
 
-							<div class="form-group">
-								<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
-							</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
+								</div>
 
-							<div class="form-group">
-								<nav class="navbar navbar-expand-md navbar-light categories-nav">
-									<ul class="navbar-nav">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
-											<ul class="dropdown-menu main-categories main-dropdown">
-											</ul>
-										</li>
-									</ul>
-								</nav>
-							</div>
+								<div class="form-group">
+									<nav class="navbar navbar-expand-md navbar-light categories-nav">
+										<ul class="navbar-nav">
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_category'); ?></a>
+												<ul class="dropdown-menu main-categories main-dropdown">
+												</ul>
+											</li>
+										</ul>
+									</nav>
+								</div>
 
-							<script id="ad-modal-categories-template" type="text/template">
-								{{ #categories }}
-								<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
+								<script id="ad-modal-categories-template" type="text/template">
+									{{ #categories }}
+									<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
+										<ul class="dropdown-menu">
+											{{ #children }}
+											<li>
+												<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a>
+											</li>
+											{{ /children }}
+										</ul>
+									</li>
+									{{ /categories }}
+								</script>
+
+								<script id="ad-modal-subcategories-template" type="text/template">
 									<ul class="dropdown-menu">
-										{{ #children }}
+										{{ #. }}
 										<li>
-											<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a>
-										</li>
-										{{ /children }}
-									</ul>
-								</li>
-								{{ /categories }}
-							</script>
-
-							<script id="ad-modal-subcategories-template" type="text/template">
-								<ul class="dropdown-menu">
-									{{ #. }}
-									<li>
-										<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}"">{{category_name}}</a>
+											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}" ">{{category_name}}</a>
 									</li>
 									{{ /. }}
 								</ul>
@@ -557,16 +557,21 @@
 								<div class="form-group field kilometer">
 									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 								</div>
-								<!--						<div class="form-group">-->
-								<label class="field is_automatic">
-								<input type="checkbox" name="is_automatic" value="1"><span class=""> <?php echo $this->lang->line('automatic'); ?></span>
-							</label>
-								<!--						</div>-->
-								<br>
+
+								<div class="form-group field is_automatic">
+									<select name="is_automatic" class="automatic-select">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>
+										<option value="1"><?php echo $this->lang->line('automatic'); ?></option>
+										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
+									</select>
+								</div>
+
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 
 							</div>
@@ -599,9 +604,11 @@
 							<div class="template-mobiles template d-none" data-template-id="3">
 
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--electronics template-->
@@ -609,37 +616,45 @@
 							<div class="template-electronics template d-none" data-template-id="4">
 
 								<div class="form-group field size">
-									<input type="text" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+									<input type="number" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
 								</div>
 
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--fashion template-->
 							<div class="template-fashion template d-none" data-template-id="5">
-								<div class="form-group field">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+								<div class="form-group field is_new">
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--kids template-->
 							<div class="template-kids template d-none" data-template-id="6">
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--sports template-->
 							<div class="template-sports template d-none" data-template-id="7">
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--job positions template-->
@@ -669,9 +684,11 @@
 							<!--industries template-->
 							<div class="template-industries template d-none" data-template-id="9">
 								<div class="form-group field is_new">
-									<label class="">
-								<input type="checkbox" name="is_new" value="1"><span class=""> <?php echo $this->lang->line('new'); ?></span>
-							</label>
+									<select name="is_new" class="status-select ">
+										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
+										<option value="1"><?php echo $this->lang->line('new'); ?></option>
+										<option value="0"><?php echo $this->lang->line('old'); ?></option>
+									</select>
 								</div>
 							</div>
 							<!--services template-->
@@ -685,7 +702,7 @@
 							<div id="fileuploader-ad-video" class="d-none">Upload</div>
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
-								<div class="warning d-none text-warning"> <?php echo $this->lang->line('featured_cost'); ?></div>
+								<div class="warning d-none text-warning featured-note"> <?php echo $this->lang->line('featured_cost'); ?></div>
 							</label>
 							<div class="">
 								<input id="terms-agree" type="checkbox" name="terms_agree" class="" value="1" required>
@@ -695,10 +712,10 @@
 								</label>
 							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('submit_ad'); ?></button>
-					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('submit_ad'); ?></button>
+				</div>
 				</form>
 
 			</div>
@@ -806,8 +823,8 @@
 										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
 									</select>
 								</div>
-								<div class="form-group field">
-									<select name="is_new" class="status-select is_new">
+								<div class="form-group field is_new">
+									<select name="is_new" class="status-select">
 										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
 										<option value=""><?php echo $this->lang->line('all'); ?></option>
 										<option value="1"><?php echo $this->lang->line('new'); ?></option>
@@ -1045,10 +1062,10 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <div class="chat-header">
-        	<div class="ad-name"></div>
-        	<div class="user-name"></div>
-        </div>
+				<div class="chat-header">
+					<div class="ad-name"></div>
+					<div class="user-name"></div>
+				</div>
 			</div>
 			<div class="modal-body">
 				<ol class="chat">
@@ -1056,7 +1073,7 @@
 				</ol>
 
 				<script id="chat-self-template" type="text/template">
-				
+
 					<li class="self" data-msg-id="{{message_id}}">
 						<div class="msg">
 							<p>{{text}}</p>
@@ -1076,7 +1093,7 @@
 
 				<form id="chat-form">
 					<input type="hidden" class="ad-id" name="ad_id">
-					<input type="hidden" class="seller-id">
+					<input type="hidden" class="is-seller">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">
 						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">

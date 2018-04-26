@@ -1305,6 +1305,10 @@ select option.placeholder {
 #edit-ad-modal .dropdown-toggle::after,
 #filter-modal .dropdown-toggle::after {
   color: #000; }
+#ad-modal .featured-note,
+#edit-ad-modal .featured-note,
+#filter-modal .featured-note {
+  font-size: 0.65rem; }
 
 #edit-ad-modal .image-wrapper {
   max-width: 120px;
@@ -1507,5 +1511,15 @@ label {
 
 #delete-account-modal .note {
   text-align: left !important; }
+
+#edit-user-info-modal .visible-phone-note {
+  font-size: .65rem;
+  color: #888; }
+#edit-user-info-modal .delete-account {
+  cursor: pointer;
+  margin-left: 5px;
+  display: inline-block; }
+#edit-user-info-modal .delete-account:hover {
+  text-decoration: underline; }
 
 /*# sourceMappingURL=style.css.map */

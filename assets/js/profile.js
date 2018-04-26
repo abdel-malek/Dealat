@@ -1,6 +1,15 @@
 /*jslint browser: true*/
 /*global $, alert,console,lang, Mustache, base_url, user_id*/
 
+//constants
+//Ad Status: 
+//pending = 1
+//accepted = 2
+//expired = 3
+//hidden = 4
+//rejected = 5
+//deleted = 6
+
 $(function () {
 	if ($(".profile-page").length > 0) {
 		//		mixer.destroy();
@@ -101,9 +110,10 @@ $(function () {
 					rendered = Mustache.render(template, adData);
 					$(".profile-page .user-ads .row.first").append(rendered);
 
-					if (data.data[i].status === "3") {
-						$(".profile-page .user-ads .card[data-ad-id=" + data.data[i].ad_id + "] .edit-ad").addClass("d-none");
-					}
+					//remove edit button if ad expired
+					//					if (data.data[i].status === "3") {
+					//						$(".profile-page .user-ads .card[data-ad-id=" + data.data[i].ad_id + "] .edit-ad").addClass("d-none");
+					//					}
 				}
 				$(".profile-page .user-ads .card").each(function () {
 					statusId1 = $(this).data("statusId");
@@ -490,10 +500,12 @@ $(function () {
 
 		//open edit user ad modal
 		$(".profile-page .user-ads").on("click", ".edit-ad", function () {
-			var templateId, adId, catId;
+			var templateId, adId, catId, adStatus;
 			adId = $(this).parents(".card").data("adId");
 			templateId = $(this).parents(".card").data("templateId");
 			catId = $(this).parents(".card").data("categoryId");
+			adStatus = $(this).parents(".card").data("statusId");
+			$("#edit-ad-modal .ad-status").val(adStatus);
 
 			$.ajax({
 				type: "get",
@@ -509,13 +521,14 @@ $(function () {
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
-					$("#edit-ad-modal .locations-nav .select").text(data.data.location_name);
+//					$("#edit-ad-modal .locations-nav .select").text(data.data.location_name);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
 					$("#edit-ad-modal .period-select")[0].sumo.reload();
 					$("#edit-ad-modal input[name='price']").val(data.data.price);
 					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
 					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
 
+					//remove upload video except for properties category
 					if (templateId === 2) {
 						$("#edit-ad-modal #fileuploader-edit-ad-video").removeClass("d-none");
 					} else {
@@ -523,12 +536,10 @@ $(function () {
 					}
 
 					if (data.data.location_id) {
-						$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
 						$("#edit-ad-modal select[name='location_id']")[0].sumo.reload();
-					} else {
-						$("#edit-ad-modal select[name='location_id']")[0].sumo.disable();
 					}
+					$("#edit-ad-modal select[name='location_id']")[0].sumo.enable();
 
 					if (data.data.is_negotiable === "1") {
 						$("#edit-ad-modal input[name='is_negotiable']").prop("checked", true);
@@ -549,11 +560,15 @@ $(function () {
 					if (data.data.kilometer) {
 						$("#edit-ad-modal input[name='kilometer']").val(data.data.kilometer);
 					}
-					if (data.data.is_automatic === "1") {
-						$("#edit-ad-modal input[name='is_automatic']").prop("checked", true);
+					if (data.data.is_automatic) {
+//						$("#edit-ad-modal input[name='is_automatic']").prop("checked", true);
+						$("#edit-ad-modal select[name='is_automatic']").val(data.data.is_automatic);
+						$("#edit-ad-modal select[name='is_automatic']")[0].sumo.reload();
 					}
-					if (data.data.is_new === "1") {
-						$("#edit-ad-modal input[name='is_new']").prop("checked", true);
+					if (data.data.is_new) {
+//						$("#edit-ad-modal input[name='is_new']").prop("checked", true);
+						$("#edit-ad-modal select[name='is_new']").val(data.data.is_new);
+						$("#edit-ad-modal select[name='is_new']")[0].sumo.reload();
 					}
 					if (data.data.space) {
 						$("#edit-ad-modal input[name='space']").val(data.data.space);
@@ -598,7 +613,7 @@ $(function () {
 				}
 			});
 
-			$("#ad-modal .categories-nav a.select").css("color", "#495057");
+//			$("#ad-modal .categories-nav a.select").css("color", "#495057");
 			var templateId, subId, has_types = 0;
 
 			subId = $(this).parents(".card").data("categoryId");
@@ -680,17 +695,67 @@ $(function () {
 
 		});
 
+		//change all is_new select values if one select is changed
+		$('#edit-ad-modal').on("change", ".status-select", function () {
+			var newVal = $(this).val();
+			console.log($(this).val());
+			$('#edit-ad-modal .status-select').each(function(){
+				$(this).val(newVal);
+			});
+		});
+		
 		//submit edit user ad
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 
 			var data, i,
-				secondary_imgs = [];
+				secondary_imgs = [],
+				adStatus;
 
+			adStatus = $(this).find(".ad-status").val();
 			data = $(this).serializeArray();
 			console.log(data);
 
+//			if (adStatus === "1") {
+//				//pending
+//				data.push({
+//					name: "edit_status",
+//					value: 1
+//				});
+//			} else if (adStatus === "2") {
+//				//accepted 
+//				data.push({
+//					name: "edit_status",
+//					value: 2
+//				});
+//			} else if (adStatus === "3") {
+//				//expired 
+//				data.push({
+//					name: "edit_status",
+//					value: 3
+//				});
+//			} else if (adStatus === "4") {
+//				//hidden 
+//				data.push({
+//					name: "edit_status",
+//					value: 4
+//				});
+//			} else if (adStatus === "5") {
+//				//rejected 
+//				data.push({
+//					name: "edit_status",
+//					value: 5
+//				});
+//			} 
+			
+			if (adStatus) {
+				data.push({
+					name: "edit_status",
+					value: adStatus
+				});
+			} 
+			
 			if (editMainImg.length > 0) {
 				data.push({
 					name: "main_image",
@@ -835,10 +900,19 @@ $(function () {
 
 		//open a chat session
 		$(".profile-page .chats").on("click", ".session", function () {
-			var adId, sessionId, sellerId;
+			var adId, sessionId, sellerId, isSeller;
 			adId = $(this).data("adId");
 			sessionId = $(this).data("sessionId");
 			sellerId = $(this).data("sellerId");
+
+			if (user_id == sellerId) {
+				isSeller = 1;
+			} else {
+				isSeller = 0;
+			}
+
+			//this value not for send
+			$("#chat-modal .is-seller").val(isSeller);
 
 			$("#chat-modal .chat-header .ad-name").text($(this).data("adname"));
 			$("#chat-modal .chat-header .user-name").text($(this).data("username"));
@@ -860,7 +934,7 @@ $(function () {
 					var msgDate = data.data[0].created_at.split(' ')[0];
 					$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 
-					if (sellerId == user_id) {
+					if (isSeller) {
 						//then I am the ad seller and a user chatted with me
 						for (i in data.data) {
 							if (data.data[i].to_seller === "1") {
@@ -984,8 +1058,12 @@ $(function () {
 		});
 
 		//delete account
-		$(".user-details").on("click", ".delete-account", function () {
-			$("#delete-account-modal").modal("show");
+		$("#edit-user-info-modal").on("click", ".delete-account", function () {
+			$("#edit-user-info-modal").modal("hide");
+			setTimeout(function () {
+				$("#delete-account-modal").modal("show");
+			}, 500);
+
 		});
 
 		$("#delete-account-modal .submit").on("click", function () {
@@ -997,7 +1075,7 @@ $(function () {
 				if (data.status === false) {
 					console.log(data);
 				} else {
-					console.log(data);
+					window.location = base_url;
 				}
 			});
 		});
