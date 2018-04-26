@@ -12,12 +12,14 @@ class Admins extends MY_Model {
         $admin = $this->check_authentication($user_name, md5($password));
         if ($admin != NULL) {
             $newdata = array(
-                'PHP_AUTH_USER' => $user_name,
-                'LOGIN_USER_ID' => $admin->admin_id,
-                'USERNAME' => $admin->name,
+                'PHP_AUTH_USER_ADMIN' => $user_name,
+                'PHP_AUTH_USER' => null,
+                'LOGIN_USER_ID_ADMIN' => $admin->admin_id,
+                'USERNAME_ADMIN' => $admin->name,
                 'PHP_AUTH_PW' => md5($password),
                 'IS_LOGGED_IN' => 1,
-                'IS_ADMIN' => 1
+                'IS_ADMIN' => 1,
+                'IS_USER' => 0
             );
             $this->session->set_userdata($newdata);
             return $admin;

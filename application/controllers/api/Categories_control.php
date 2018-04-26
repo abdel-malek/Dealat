@@ -24,6 +24,12 @@ class Categories_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
 	}
 	
+	public function get_main_categories_get()
+	{
+		$categories = $this->categories->get_main_categories_for_manage($this->data['lang']);
+		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
+	}
+	
 	public function get_subcategories_get()
 	{
 		$category_id = $this->input->get('category_id');
@@ -41,5 +47,12 @@ class Categories_control extends REST_Controller {
 			$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 		}
 	}
+	
+	public function test_get()
+	{
+		$categories = $this->categories->get_childs_only($this->data['lang']);
+		dump($categories);
+	}
+
 	
 }

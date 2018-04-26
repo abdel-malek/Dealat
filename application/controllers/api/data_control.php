@@ -11,9 +11,16 @@ class Data_control extends REST_Controller {
 	
 	public function get_type_info_get()
 	{
+		$this->load->model('data_sources/categories');
 		$this->load->model('data_sources/types');
 		$info = $this->types->get($this->input->get('type_id'));
 		$info->template_name = TAMPLATES::get_tamplate_name($info->tamplate_id , $this->data['lang']);
+		$name = $this->categories->get_category_name($info->category_id , $this->data['lang']);
+		if($name){
+		    $info->category_name = $name->parent_name .'-'.$name->category_name;
+		}else{
+			$info->category_name = null;
+		}
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
 	

@@ -3,7 +3,7 @@
 class Categories extends MY_Model {
 	protected $_table_name = 'categories';
 	protected $_primary_key = 'categories.category_id';
-	protected $_order_by = 'parent_id ,categories.is_other, category_id';
+	protected $_order_by = 'categories.parent_id ,	categories.queue ,categories.is_other, categories.category_id';
 	public $rules = array();
 
 	
@@ -143,6 +143,9 @@ class Categories extends MY_Model {
 	   );
 	   if($parent_id == 0){
 	   	 $category_data['web_image'] = 'assets/images/Categories/web/others.png';
+	   }else{
+	   	  $parent_info = parent::get($parent_id);
+	   	  $category_data['is_active'] = $parent_info->is_active;
 	   }
 	   $new_subcategory = $this->save($category_data);
        $this -> db -> trans_complete();
@@ -198,6 +201,40 @@ class Categories extends MY_Model {
 	  $this->db->set('is_active' , 1);
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->update('categories');
+   }
+   
+   public function update_queue($parent_id , $cats_queue)
+   {
+        $queue = 0;
+		$result;
+	    foreach ($cats_queue as $cat_id) {
+	        $queue++;
+	        $result = parent::save(array('queue' => $queue) , $cat_id);
+	    }
+        return $result;
+   }
+   
+   public function get_childs_only($lang)
+   {
+       $this->db->select('categories.'.$lang.'_name as category_name ,
+		                  parent_category.'.$lang.'_name as parent_name , 
+		                  categories.category_id , categories.parent_id , categories.web_image, categories.mobile_image ,
+		                  categories.tamplate_id , categories.description');
+	   $this->db-> join('categories as child_category' , 'child_category.parent_id = categories.category_id' , 'left outer');
+	   $this->db-> join('categories as parent_category' , 'categories.parent_id = parent_category.category_id' , 'left outer');
+	   $this->db->where('child_category.category_id' , null );
+	    $this->db->where_in('categories.tamplate_id' , array(TAMPLATES::VEHICLES , TAMPLATES::MOBILES ,TAMPLATES::ELECTRONICS));
+	   return parent::get();
+   }
+   
+   public function get_category_name($cat_id , $lang)
+   {
+       $this->db->select('categories.'.$lang.'_name as category_name ,
+		                  parent_category.'.$lang.'_name as parent_name , 
+		                ');
+	   $this->db-> join('categories as parent_category' , 'categories.parent_id = parent_category.category_id' , 'left outer');
+	   $this->db->where('categories.category_id' , $cat_id);
+	   return parent::get(null , true);
    }
    
    

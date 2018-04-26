@@ -72,17 +72,21 @@ class User_activation_codes extends MY_Model {
 	{
 		// dump($phone);
 	     //$url ='https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone . ';';
-	     $url ='https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone;
-	     try {
-	       $result = file_get_contents($url);
-		 //  dump($result);
-	       if ($result == "963" . $phone) {
-	           return 1;
-	       } else
-	           return 0;
-	     } catch (Exception $e) {
-	        return false;
-	     }
+	    // $url ='https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=' . urlencode($msg) . '&sender=DEALAT&to=963' . $phone;
+		 $url = 'https://bms.syriatel.sy/API/SendSMS.aspx?user_name=dealat1&password=P@1234567&msg=TestMSG&sender=DEALAT&to='.$phone;
+		 $result =  file_get_contents($url);
+		 dump($result);
+		 return $result;
+	     // try {
+	       // $result = file_get_contents($url);
+		 // //  dump($result);
+	       // if ($result == "963" . $phone) {
+	           // return 1;
+	       // } else
+	           // return 0;
+	     // } catch (Exception $e) {
+	        // return false;
+	     // }
 	}
 	
 }

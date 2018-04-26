@@ -383,6 +383,137 @@ function check_ad_exsistence (cat_id) {
 	        async: false,
 	     }).responseText;
 }
+
+function show_sort_modal (parent_id) {
+	   $('#sort_parent_id').val(parent_id);
+	   var url;
+	   if(parent_id == 0){
+	   	 url = base_url + '/api/categories_control/get_main_categories/format/json';
+	   }else{
+	   	 url = base_url + '/api/categories_control/get_subcategories/format/json?category_id='+parent_id ;
+	   }
+       $.ajax({
+        url:  url,
+        type: "get",
+        dataType: "json",
+        success: function(response) {
+           console.log(response.data);
+            $('#categories_list').html('');
+            $.each( response.data, function( key, cat ) {
+                 $('#categories_list').append('<li class="sorted_li" id="' + cat['category_id'] + '">' + cat['category_name'] + '</li>');
+			});
+			set_sortable_config();
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+     $('.sort_category_modal').modal('show'); 
+}
+
+
+function save_sorted_categories () {
+    var categories_list = [];
+    $('#categories_list li').each(function (i)
+    {
+        categories_list.push(
+                $(this).attr("id")
+                );
+    });
+    var parent_id = $('#sort_parent_id').val();
+    var data = {
+        parent_id: parent_id,
+        categories_queue: categories_list
+    };
+    
+    console.log(data);
+      $.ajax({
+        url:  base_url + '/admin/categories_manage/update_categories_order/format/json',
+        type: "post",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+            if(response.status == false){
+           	  new PNotify({
+	                  title: lang_array['attention'],
+	                  text: response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+            }else{
+                new PNotify({
+                  title:  lang_array['success'],
+                  text: lang_array['categories_sorted'],
+                  type: 'success',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				 }
+               });
+			    location.reload();
+             }
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+    
+}
+
+
+function set_sortable_config () {
+      $("#categories_list").sortable({
+	  group: 'simple_with_animation',
+	  pullPlaceholder: false,
+	  // animation on drop
+	  onDrop: function  ($item, container, _super) {
+	    var $clonedItem = $('<li/>').css({height: 0});
+	    $item.before($clonedItem);
+	    $clonedItem.animate({'height': $item.height()});
+	
+	    $item.animate($clonedItem.position(), function  () {
+	      $clonedItem.detach();
+	      _super($item, container);
+	    });
+	  },
+	
+	  // set $item relative to cursor position
+	  onDragStart: function ($item, container, _super) {
+	    var offset = $item.offset(),
+	        pointer = container.rootGroup.pointer;
+	
+	    adjustment = {
+	      left: pointer.left - offset.left,
+	      top: pointer.top - offset.top
+	    };
+	
+	    _super($item, container);
+	  },
+	  onDrag: function ($item, position) {
+	    $item.css({
+	      left: position.left - adjustment.left,
+	      top: position.top - adjustment.top
+	    });
+	  }
+	});
+}
   
   
   

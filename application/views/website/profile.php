@@ -50,6 +50,7 @@
 					</div>
 					<div class="col-md-2 mt-2">
 						<button class="btn button2 edit-user-info"><?php echo $this->lang->line('edit_info'); ?></button>
+
 						<!--<button class="btn button2 delete-account"><?php echo $this->lang->line('delete_account'); ?></button>-->
 					</div>
 				</script>

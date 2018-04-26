@@ -17,6 +17,8 @@ class Data_manage extends REST_Controller {
 	
 	public function load_types_page_get()
 	{
+	  $this->load->model('data_sources/categories');
+	  $this->data['childs_cats'] = $this->categories->get_childs_only($this->data['lang']);
       $this -> data['subview'] = 'admin/types/index';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
 	}
@@ -59,6 +61,7 @@ class Data_manage extends REST_Controller {
         $this -> form_validation -> set_rules('en_name', 'english name', 'required');
 		$this -> form_validation -> set_rules('ar_name', 'arabic name', 'required');
 		$this -> form_validation -> set_rules('tamplate_id', 'Template', 'required');
+		$this -> form_validation -> set_rules('category_id', 'categoey id', 'required');
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
@@ -66,7 +69,8 @@ class Data_manage extends REST_Controller {
 			$data = array(
 			   'en_name' => $this->input->post('en_name'),
 			   'ar_name' => $this->input->post('ar_name'),
-			   'tamplate_id' => $this->input->post('tamplate_id')
+			   'tamplate_id' => $this->input->post('tamplate_id'),
+			   'category_id' => $this->input->post('category_id')
 			);
 			$type_id = $this->types->save($data);
 			$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));

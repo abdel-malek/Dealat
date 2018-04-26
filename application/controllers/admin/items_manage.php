@@ -52,6 +52,7 @@ class Items_manage extends REST_Controller {
 			$recorde[] = $row -> price;
 			$recorde[] = $row -> city_name. ' - '.$row->location_name;
 			$recorde[] = STATUS::get_name($row -> status  , $this->data['lang']);
+			$recorde[] = EDIT_STATUS::get_edit_status_name($row->edit_status , $this->data['lang']);
 			$recorde[] = $row -> tamplate_id;
 		//	$recorde[] = $row -> tamplate_id .''.$row->expired_after;
 			$output['aaData'][] = $recorde;

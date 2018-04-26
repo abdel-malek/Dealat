@@ -132,6 +132,25 @@ class Categories_manage extends REST_Controller {
 			echo 0;
 		}
 	}
+	
+	public function update_categories_order_post()
+	{
+		$this -> form_validation -> set_rules('parent_id', 'parent_id', 'required');
+		$this -> form_validation -> set_rules('categories_queue', 'categories_queue', 'required');
+		if (!$this -> form_validation -> run()) {
+		   throw new Validation_Exception(validation_errors());
+		}else{
+			$parent_id = $this->input->post('parent_id');
+			$categories_queue = $this -> input -> post('categories_queue');
+			$result = $this->categories->update_queue($parent_id , $categories_queue);
+			if($result){
+				$this->response(array('status' => true, 'data' =>$result, 'message' => $this->lang->line('sucess'))); 
+			}else{
+				$this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('failed')));
+			}
+		}
+		
+	}
 
    
 }

@@ -54,9 +54,8 @@ class Items_control extends REST_Controller {
     public function post_new_item_post()
     {
         $this->load->model('data_sources/categories');
-     // $this -> user_permission -> check_permission(PERMISSION::POST_AD, $this -> permissions, $this -> current_user->user_id);
 		$this -> form_validation -> set_rules('category_id', 'lang:category_id', 'required');
-		$this -> form_validation -> set_rules('city_id', 'lang:country', 'required');
+		$this -> form_validation -> set_rules('city_id', 'lang:city', 'required');
 		$this -> form_validation -> set_rules('show_period', 'lang:show_period', 'required');
 		$this -> form_validation -> set_rules('price', 'lang:price', 'required');
 		$this -> form_validation -> set_rules('title', 'lang:title', 'required');
@@ -72,7 +71,6 @@ class Items_control extends REST_Controller {
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
 		     'is_negotiable' => $this->input->post('is_negotiable'),
-		    // 'status' => 2    // temp
 		   );
 		   if($this->input->post('main_video') && $this->input->post('main_video')!=''){
 		   	  $basic_data['main_video'] = $this->input->post('main_video');
@@ -137,8 +135,7 @@ class Items_control extends REST_Controller {
 	
    public function item_video_upload_post()
    {
-   	  $vedio_name = date('m-d-Y_hia').'-1';
-   	 // $vedio_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+   	  $vedio_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
 	  $vedio = upload_attachement($this, ADS_VEDIO_PATH , $vedio_name, true); 
 	  if (isset($vedio['video'])) {
           $vedio_path =  ADS_VEDIO_PATH.$vedio['video']['upload_data']['file_name'];
@@ -229,7 +226,8 @@ class Items_control extends REST_Controller {
 	public function action_post()
 	{
 		$this->load->model('notification');
-		$this->load->helper('notification');
+		//$this->load->helper('notification');
+		$this->load->helper('notification_messages_helper');
 		if(!$this->input->post('ad_id')){
 		  	throw Parent_Exception('you have to provide an id');
 		}
@@ -251,30 +249,38 @@ class Items_control extends REST_Controller {
 				   $current_info = $this->ads->get($ad_id);
 				   if(!isset($ad_info->publish_date)){
 				   	 $data['publish_date'] = $this->input->post('publish_date');
+				   }else{
+				   	  if($ad_info->edit_status ==  EDIT_STATUS::AFTER_EXPIRE){
+				   	  	  $data['publish_date'] = $this->input->post('publish_date');
+				   	  }
 				   }
 				   $ad_id = $this->ads->save($data , $ad_id);
 				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
-				   $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_accepted') , $ad_info ,$this->lang->line('accepted_title')  , NotificationHelper::ACTION);
+				  // $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_accepted') , $ad_info ,$this->lang->line('accepted_title')  , NotificationHelper::ACTION);
+				   $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::ACCEPTED_MSG);
 				}
 			}else if($action == 'reject'){
 			    $note = $this->input->post('reject_note');
 			    $this->ads->save(array('status'=>STATUS::REJECTED , 'reject_note' => $note ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-				$this->notification->send_notification($ad_info->user_id , $this->lang->line('ad_rejected') , $ad_info , $this->lang->line('rejected_title') , NotificationHelper::ACTION);
+				//$this->notification->send_notification($ad_info->user_id , $this->lang->line('ad_rejected') , $ad_info , $this->lang->line('rejected_title') , NotificationHelper::ACTION);
+				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::REJECTED_MSG);
 			}else if($action == 'hide'){
 			    $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-			    $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_hidden'), $ad_info , $this->lang->line('hidden_title') , NotificationHelper::ACTION);
+			   // $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_hidden'), $ad_info , $this->lang->line('hidden_title') , NotificationHelper::ACTION);
+				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::HIDE_MSG);
 			}else if($action == 'show'){
 			    $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-			    $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_shown') , $ad_info , $this->lang->line('shown_title')  , NotificationHelper::ACTION);
+			    //$this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_shown') , $ad_info , $this->lang->line('shown_title')  , NotificationHelper::ACTION);
+			    $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::SHOW_MSG);
 			}else{
 			   throw Parent_Exception('No Such action'); 	
 			}
 		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
-	}
+    }
 
    public function set_as_favorite_post()
    {
@@ -311,7 +317,7 @@ class Items_control extends REST_Controller {
    }
    
    
-    public function test_post()
+  public function test_post()
     {
      $this->load->model('notification');
 	 $this->load->helper('notification');
@@ -319,7 +325,7 @@ class Items_control extends REST_Controller {
     }
    
 
-	public function change_status_post()
+  public function change_status_post()
 	{
 	  if(!($this->input->post('status') == STATUS::HIDDEN || $this->input->post('status') == STATUS::DELETED )){
 	  	  throw new Parent_Exception($this->lang->line('change_status_warning'));

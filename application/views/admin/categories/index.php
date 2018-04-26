@@ -22,7 +22,10 @@
 	                      <!-- Nav tabs -->
 	                      <ul class="nav nav-tabs tabs-left">
 	                      	<!-- main add -->
-	                      	<li><button id="main_cat_add_btn" onclick="show_manage_cat_modal(0 , 1 , 0 , 0);" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_main_category') ?></button></li>
+	                      	<li>
+	                      		<button id="main_cat_add_btn" onclick="show_manage_cat_modal(0 , 1 , 0 , 0);" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_main_category') ?></button>
+	                      		<button id="main_cat_add_btn" onclick="show_sort_modal(0);" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
+	                      	</li>
 	                        <?php if(isset($main_categories) && $main_categories!= null): ?>
 	                        	<?php foreach ($main_categories as $row):?>
 	                        	   <li class="li-row">
@@ -52,6 +55,7 @@
 	                                  <!-- sub add -->
 	                                    <button id="main_cat_add_btn" onclick="show_manage_cat_modal(0 ,0 ,<?php echo $row->category_id ?> , <?php echo $row->tamplate_id ?>  );" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_subcategory_for') ?>
 	                                     <?php echo $row->category_name ?></button>
+	                                     <button id="main_cat_add_btn" onclick="show_sort_modal(<?php echo $row->category_id ?> );" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
 			                             <!-- start accordion -->
 						                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
 						                      <?php $sub_cats =  get_sub_cats($row->category_id , $this->session->userdata('language'))?>
@@ -75,6 +79,7 @@
 								                          <div class="panel-body">
 								                          	<!-- sub sub add -->
 								                          	<button id="main_cat_add_btn" onclick="show_manage_cat_modal(0, 0 , <?php echo $sub_row->category_id ?>  , <?php echo $sub_row->tamplate_id ?> );" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_subcategory_for') ?>
+								                          	 <button id="main_cat_add_btn" onclick="show_sort_modal(<?php echo $sub_row->category_id ?>);" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
 	                                                        <?php echo $sub_row->category_name ?></button>
 								                            <table id='sub_sub_cats<?php echo $sub_row->category_id ?>' class="table table-striped table-bordered">
 								                              <thead>
@@ -126,4 +131,5 @@
 	       <!-- </div>
 	      </div> -->
          <?php $this->load->view('admin/categories/manage_category_modal'); ?>
+         <?php $this->load->view('admin/categories/sorting_modal'); ?>
         <!-- /page content -->

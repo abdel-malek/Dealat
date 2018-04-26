@@ -180,6 +180,9 @@ $lang['cancel'] = 'Cancel';
 $lang['ad_number'] = 'Ad number';
 $lang['expire_at'] = 'Expires at';
 $lang['published_at'] = 'Published at';
+$lang['rejects_notes'] = 'Rejects Note';
+$lang['edit_status'] = 'Edit status';
+$lang['expiry_edit_note'] = 'This Ad is Expired and edited, if you accepted it will be republish';
 
 
 // new
@@ -231,6 +234,8 @@ $lang['arabic_name'] = "Arabic Name";
 $lang['english_name'] = "English Name";
 $lang['templates'] = 'Templates';
 $lang['fields_status'] = 'Fields status';
+$lang['sort_main_category'] = 'Sort Main Categories';
+$lang['sort'] = 'Sort';
 
 //types manage
 $lang['all_types_list'] = 'All Brands list';
