@@ -19,9 +19,9 @@ class Types extends MY_Model {
 		$q =  parent::get();
 		foreach ($q as  $row) {
 		  $row->models = null;
-          if($row->category_id == 12){ // cars
+          //if($row->category_id == 12){ // cars
            	 $row->models = $this->type_models->get_by_type($lang , $row->type_id);
-          }			
+          //}			
 		}
 		return $q;
 	}
@@ -29,15 +29,16 @@ class Types extends MY_Model {
 	public function get_all_by_tamplate($lang)
 	{
 	    $this->load->model('data_sources/type_models');
-		$this->db->select('types.'.$lang.'_name as name , tamplate_id , category_id , types.type_id');
+		$this->db->select('types.'.$lang.'_name as name , types.tamplate_id , types.category_id , types.type_id,
+		                   CONCAT_WS("-", categories.'.$lang.'_name, types.'.$lang.'_name) AS full_type_name' , false);
+		$this->db->join('categories', 'types.category_id = categories.category_id' , 'left outer');
 		$this->db->where('types.is_active' , 1);
 		$q =  parent::get();
-		//return $q;
 		foreach ($q as  $row) {
 		  $row->models = null;
-          if($row->category_id == 12){ // cars
-           	 $row->models = $this->type_models->get_by_type($lang , $row->type_id);
-          }			
+       //   if($row->category_id == 12){ // cars
+          $row->models = $this->type_models->get_by_type($lang , $row->type_id);
+        //  }			
 		}
 	    $result_array = array();
 		foreach ($q as $row) {

@@ -62,8 +62,13 @@
     
     <!-- datepicker -->
     <link href="<?php echo base_url() ?>admin_assets/datepicker/datepicker.min.css" rel="stylesheet">
+    
+    <!-- sortable -->
+    <link href="<?php echo base_url() ?>admin_assets/css/application.css.sass" rel="stylesheet">
 
     <link href="<?php echo base_url() ?>admin_assets/css/general.css" rel="stylesheet">
+    
+ 
   </head>
 
   <body class="nav-md">
@@ -88,7 +93,7 @@
               </div>
               <div class="profile_info">
                 <span><?php echo $this->lang->line('welcome') ?>,</span>
-                <h2><?php echo $this->session->userdata('USERNAME') ?></h2>
+                <h2><?php echo $this->session->userdata('USERNAME_ADMIN') ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -154,7 +159,7 @@
              <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <?php echo $this->session->userdata('USERNAME') ?>  <span class=" fa fa-angle-down"></span>
+                    <?php echo $this->session->userdata('USERNAME_ADMIN') ?>  <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="<?php echo base_url('index.php/admin/users_manage/logout') ?>"><i class="fa fa-sign-out pull-right"></i><?php echo $this->lang->line('log_out') ?></a></li>

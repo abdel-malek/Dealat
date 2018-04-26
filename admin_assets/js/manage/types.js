@@ -152,6 +152,7 @@ function show_manage_modal (type_id) {
    $('#type_id').val(type_id);
    if(type_id == 0){ // add
    	   $('#template_select_div').css('display' , 'inline');
+   	   $('#type_category_select_div').css('display' , 'inline');
    	   $('#type_delete_btn').css('display' , 'none');
    }else{ // edit
        $.ajax({
@@ -161,6 +162,8 @@ function show_manage_modal (type_id) {
         success: function(response) {
            $('#type_template_label').html(response.data['template_name']);
            $('#template_label_div').css('display' , 'inline');     
+           $('#type_category_label').html(response.data['category_name']);
+           $('#type_category_label_div').css('display' , 'inline'); 
            $('#type_en_name').val(response.data['en_name']);
            $('#type_ar_name').val(response.data['ar_name']);
         },error: function(xhr, status, error){
@@ -183,6 +186,8 @@ function show_manage_modal (type_id) {
  $('.types_manage_modal').on('hidden.bs.modal', function () {
 	   $('#template_label_div').css('display' , 'none');
 	   $('#template_select_div').css('display' , 'none');
+	   $('#type_category_label_div').css('display' , 'none');
+	   $('#type_category_select_div').css('display' , 'none');
 	   $('#type_delete_btn').css('display' , 'inline');
 	   $('#type_en_name').val('');
        $('#type_ar_name').val('');
@@ -212,6 +217,7 @@ function save_type () {
 	   if(type_id == 0){ // add
 	   	   console.log($('#type_template_select').val());
 	       data['tamplate_id'] = $('#type_template_select').val();
+	       data['category_id'] = $('#type_category_select').val();
 	       url = base_url + '/admin/data_manage/add_type/format/json';
 	   }else{
 	   	  data['type_id'] = type_id;

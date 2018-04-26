@@ -181,6 +181,9 @@ $lang['cancel'] = 'تراجع';
 $lang['ad_number'] = 'رقم الإعلان';
 $lang['expire_at'] = 'ينتهي بـ';
 $lang['published_at'] = 'نُشر بـ';
+$lang['rejects_notes'] = 'سبب الرفض';
+$lang['edit_status'] = 'حالة التعديل';
+$lang['expiry_edit_note'] = 'هذا الإعلان منتهي الصلاحية ومعدّل, اذا تم قبوله فسوف يعاد نشره بالمعلومات الحالية';
 
 //commercial ads manage 
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
@@ -226,7 +229,7 @@ $lang['add_main_category'] = " إضافة صنف رئيسي";
 $lang['add_subcategory_for'] = " إضافة صنف فرعي لـ";
 $lang['category_details'] = "تفاصيل الصنف";
 $lang['arabic_name'] = "الاسم العربي";
-$lang['english_name'] = "الاسم الانغليزي ";
+$lang['english_name'] = "الاسم الانجليزي ";
 $lang['templates'] = 'القالب';
 $lang['fields_status'] = 'حالة الحقول';
 
@@ -277,7 +280,7 @@ $lang['send_notification'] = 'إرسال الإشعار';
 //about manage
 $lang['set_about_info'] = 'ضبط معلومات من نحن';
 $lang['about_ar'] = 'من نحن بالعربي';
-$lang['about_en'] = 'من نحن بالانغليزي';
+$lang['about_en'] = 'من نحن بالانجليزي';
 $lang['facebook_link'] = 'رابط فيس بوك';
 $lang['twiter_link'] = 'رابط تويتر';
 $lang['youtube_link'] = 'رابط يوتيوب';

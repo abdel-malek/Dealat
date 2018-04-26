@@ -364,6 +364,35 @@ thead{
  }
  
  
+  body.dragging, body.dragging * {
+  cursor: move !important;
+	}
+	
+	.dragged {
+	  position: absolute;
+	  opacity: 0.5;
+	  z-index: 2000;
+	}
+	
+	ol.sorted_list li.placeholder {
+	  position: relative;
+	  /** More li styles **/
+	}
+	ol.sorted_list li.placeholder:before {
+	  position: absolute;
+	  /** Define arrowhead **/
+	}
+	
+	ol li.sorted_li{
+		padding-top: 10px;
+		padding-bottom: 10px;
+		background-color:#d2cbcb4a;
+		border: 1px solid #FFF;
+		text-align: center;
+		cursor: pointer;
+	}
+ 
+ 
 /*.template_info_cat{
  	position: relative;
     top: 9px;

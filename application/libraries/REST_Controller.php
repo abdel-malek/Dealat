@@ -1316,13 +1316,17 @@ abstract class REST_Controller extends CI_Controller {
             }
         } else {
             $this->load->library('session');
-            if ($this->session->userdata('PHP_AUTH_USER')) {
-                $username = $this->session->userdata('PHP_AUTH_USER');
+            if ($this->session->userdata('PHP_AUTH_USER') || $this->session->userdata('PHP_AUTH_USER_ADMIN')) {
+            	$is_admin = $this->session->userdata('IS_ADMIN');
+				$is_user = $this->session->userdata('IS_USER');
+				if($is_admin){
+					$username = $this->session->userdata('PHP_AUTH_USER_ADMIN');
+				}else if($is_user){
+				    $username = $this->session->userdata('PHP_AUTH_USER');
+				}
                 $password = $this->session->userdata('PHP_AUTH_PW');
-				$is_admin = $this->session->userdata('IS_ADMIN');
             }
         }
-
         if (!$this->_check_login($username, $password , $is_admin)) {
             $this->_force_login();
         }

@@ -70,11 +70,13 @@ class Users extends MY_Model {
         if ($user != NULL) {
             $newdata = array(
                 'PHP_AUTH_USER' => $phone,
+                'PHP_AUTH_USER_ADMIN' => null,
                 'LOGIN_USER_ID' => $user->user_id,
                 'USERNAME' => $user->name,
                 'PHP_AUTH_PW' => md5($password),
                 'IS_LOGGED_IN' => 1,
-                'IS_ADMIN' => 0
+                'IS_ADMIN' => 0,
+                'IS_USER' => 1
             );
             $this->session->set_userdata($newdata);
             return $user;
@@ -87,7 +89,7 @@ class Users extends MY_Model {
    {
    	  $this->load->model('data_sources/user_activation_codes');
    	  // get the user by phone
-   	  $user = $this->get_by(array('phone'=>$phone) , true);
+   	  $user = $this->get_by(array('phone'=>$phone , 'is_deleted' => 0) , true);
 	  if($user){
 	  	$user_id =  $user->user_id;
 		$account_type = $user->account_type;

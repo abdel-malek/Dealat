@@ -58,6 +58,9 @@
     <script src="<?php echo base_url() ?>admin_assets/build/js/moment.min.js"></script>
     <!-- /Datatables -->
     
+    <!-- sortable -->
+    <script src="<?php echo base_url() ?>admin_assets/js/jquery-sortable-min.js"></script>
+    
     
     <!-- bootstrap-daterangepicker -->
     <!-- <script src="<?php echo base_url() ?>Files/js/datepicker/daterangepicker.js"></script>    -->
@@ -114,6 +117,7 @@
        	 lang_array['location_deleted'] = 'Area is Deleted' ;
        	 lang_array['notification_sent'] = 'Notification sent successfully'
        	// lang_array['category_deactivated'] = 'Category and ';
+       	 lang_array['reject_note'] = 'Reject Note';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -155,6 +159,7 @@
        	 lang_array['location_saved'] = 'تم حفظ المنطقة' ;
        	 lang_array['location_deleted'] = 'تم حذف المنطقة'
        	 lang_array['notification_sent'] = 'تم إرسال الإشعار بنجاح'
+       	  lang_array['reject_note'] = 'سبب الرفض';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;

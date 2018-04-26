@@ -28,6 +28,25 @@
 	                </select>
       	         </div>
 	           </div> 
+	           
+	           <div class="form-group" id='type_category_label_div' style="display:none">
+      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('category') ?></label>
+      	         <div class="col-md-6 col-sm-6 col-xs-12">
+      	           <label class="form-control"  id='type_category_label'>Mobiles</label>
+      	         </div>
+               </div> 
+	           
+	           <div class="form-group" id='type_category_select_div' style="display:none">
+      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('category') ?></label>
+      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
+  	                <select class="form-control select2_single" id="type_category_select" tabindex="-1" style="margin-bottom: 10px; !important;">
+                     	<?php if($childs_cats!= null): foreach ($childs_cats as $row): ?>
+                     		  <option value="<?php echo $row->category_id; ?>"><?php echo $row->parent_name .' - ' .$row->category_name ?></option>
+                        <?php  endforeach; ?>
+                        <?php endif; ?> 
+	                </select>
+      	         </div>
+	           </div> 
             	
                <div class="form-group">
       	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('english_name') ?></label>

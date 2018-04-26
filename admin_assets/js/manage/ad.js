@@ -1,10 +1,13 @@
 var ads_table;
 var status_val = $("#status_select").val();
 var status_name = $("#status_select").find("option:selected").text();
+var edit_status_val = $("#edit_status_select").val();
+var edit_status_name = $("#edit_status_select").find("option:selected").text();
 var templates_attrs;
 var status_array;
 var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 var status_array_for_label;
+var edit_status_array;
 var current_pending_count = 0;
 
  $(document).ready(function() {
@@ -18,6 +21,15 @@ var current_pending_count = 0;
 			5 : 'Rejected',
 			6:  'Deleted'
 		};
+		edit_status_array ={
+			0: 'All',
+			7: 'Not edited',
+			1: 'While Waiting' , 
+			2 : 'After Accept' , 
+			5 : 'After Reject',
+			4: 'After Hidden', 
+			3 : 'After Expired'
+		};
 	}else{
 		status_array_for_label ={
 			0 : 'الكل',
@@ -27,7 +39,17 @@ var current_pending_count = 0;
 			5 : 'مرفوضة',
 			6:  'محذوفة'
 		};
+		edit_status_array ={
+			0 : 'الكل',
+			7: 'غير معدّل',
+			1: 'خلال الانتظار' , 
+			2 : 'بعد القبول' , 
+			5 : 'بعد الرفض',
+			4: 'بعد الإخفاء', 
+			3 : 'بعد الانتهاء'
+		};
 	}
+
  	// get templates attrbutes. 
  	$.ajax({
         url: base_url + '/api/items_control/get_data/format/json',
@@ -86,28 +108,9 @@ var current_pending_count = 0;
                     "mRender": function(date, type, full) {
                       // var full9 = full[9].split(" ");
                        //var template_id = full9[0];
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[9] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[10] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         },
-		         // {
-                    // "targets": -2, // status
-                    // "data": null,
-                    // "mRender": function(date, type, full) {
-                       // var full9 = full[9].split(" ");
-                       // console.log(full9);
-                       // var expire_after = full9[1];
-                      // // console.log(expire_after);
-                       // if(expire_after <= 0){
-                       	  // if(lang='en'){
-                       	  	 // return 'Expired';
-                       	  // }else{
-                       	  	  // return 'منتهي';
-                       	  // }
-                       // }else{
-                       	  // return full[8]; // status
-                       // }
-		             // }
-		         // } 
 	          ],
               dom: "Bfrtip",
               buttons: [
@@ -184,13 +187,6 @@ var current_pending_count = 0;
 	// set select to pending 
      $("#status_select").val(PENDING).trigger('change'); 
  });
-
-
- // $('#status_select').change(function(event) {
-  	 // status_val = $("#status_select").val();
-     // ads_table.ajax.url(base_url + '/admin/ads_manage/all_ads/format/json?status='+status_val ).load();
-     // console.log(ads_table.ajax.url());                                                                    
- // });
  
 // filter by status
  $('#status_select').change(function(event) {
@@ -198,20 +194,60 @@ var current_pending_count = 0;
     status_val = $("#status_select").val();
     $('#status_count_label').html(status_array_for_label[status_val]);
     if(status_val == PENDING){
+    	// show count circle 
     	$('.countIcon').css('display' , 'inline');
     }else{
         $('.countIcon').css('display' , 'none');
     }
     if(status_val == 0){
-    	ads_table
+      if(edit_status_val != 0){
+      	ads_table
+		 .search( edit_status_name )
+		// .columns().search( edit_status_name )
+		 .draw();
+      }else{
+      	ads_table
 		 .search( '' )
 		 .columns().search( '' )
 		 .draw();
+      }
+  
     }else{
         status_name = $(this).find("option:selected").text();
-    	ads_table.search( status_name ).draw();
+        if(edit_status_val != 0){
+        	ads_table.search( status_name +' '+edit_status_name).draw();
+        }else{
+        	ads_table.search( status_name).draw();
+        }
+    	
     }
  });
+ 
+ //filter by edit status
+  $('#edit_status_select').change(function(event) {
+    edit_status_val = $("#edit_status_select").val();
+     if(edit_status_val == 0){
+       if(status_val != 0){
+       	 ads_table
+		 .search( status_name )
+	//	 .columns().search( status_name )
+		 .draw();
+       }else{
+       	 ads_table
+		 .search( '' )
+		 .columns().search( '' )
+		 .draw();
+       }
+    }else{
+      edit_status_name = $(this).find("option:selected").text();
+      if(status_val != 0){
+      	ads_table.search( status_name+' '+edit_status_name).draw();
+      }else{
+      	ads_table.search(edit_status_name).draw();
+      }
+	  
+    }
+  });
  
  function show_ad_details (ad_id , tamplate_id) {
  	  $('.ads_details  #post_id').val(ad_id);
@@ -254,9 +290,7 @@ var current_pending_count = 0;
             // image slider 
              var main_image = $item_info['main_image'];
              $('.images-slider').append('<div> <img style="margin: auto; height:100%" src="'+site_url+main_image+'"  alt=""></div>');
-             
              var images = $item_info['images'];
-            // console.log(images);
              if(images.length != 0){ // not empty
              //  $('.images-slider').css('display', 'inline');
                var str ='';
@@ -284,6 +318,7 @@ var current_pending_count = 0;
             $('.ads_details  #ad_category').html($item_info['parent_category_name']+' --> '+$item_info['category_name']);
             $('.ads_details  #ad_location').html($item_info['city_name']+' - '+$item_info['location_name']);
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
+            $('.ads_details  #ad_edit_status').html(edit_status_array[$item_info['edit_status']]);
             $('.ads_details  #ad_price').html($item_info['price']);
             if($item_info['is_negotiable'] == '1'){
             	$('.ads_details  #ad_negotiable').html('Yes');
@@ -340,6 +375,15 @@ var current_pending_count = 0;
             if($item_info['status'] ==  HIDDEN){
             	 $('.ads_details  #show_btn').css('display', 'inline');
             }
+            
+            //fill rejects notes
+            if($item_info['reject_note'] != null  && ($item_info['status'] == 5 || $item_info['edit_status'] == 5)){ // rejected or pending after reject
+            	$('#reject_note_label').css('display' , 'inline');
+            	$('#reject_note_label').html('<b style="color: red">'+ lang_array['reject_note'] + '</b> ' +$item_info['reject_note'] );
+            }
+            if(($item_info['expired_after'] != null && $item_info['expired_after'] <= 0 && $item_info['status'] != 2 )){ // after expired 
+            	$('#expiry_edit_label').css('display' , 'inline');
+            }
             $('.ads_details').modal('show');
             setTimeout(function () {
                 $(".images-slider").slick("refresh");
@@ -364,6 +408,8 @@ var current_pending_count = 0;
  	  $('.ads_details  #accept_btn').css('display', 'none');
       $('.ads_details  #reject_btn').css('display', 'none');
       $('.ads_details  #hide_btn').css('display', 'none');
+      $('.ads_details  #reject_note_label').css('display', 'none');
+      $('#expiry_edit_label').css('display' , 'none');
       $('.ads_details  #show_btn').css('display', 'none');
  });
  

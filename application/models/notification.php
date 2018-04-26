@@ -20,6 +20,24 @@ class Notification extends MY_Model {
         }
     }
 	
+	public function send_action_notification($user_id ,$data , $action_msg_id)
+	{
+		$this->load->helper('notification_messages_helper');
+		$tokens = $this->user_tokens->get_by(array('user_id'=>$user_id));
+		//dump($tokens);
+        $notification_helper = new NotificationHelper();
+        foreach ($tokens as $token) {
+            $sent = $notification_helper->send_notification_to_device(
+                     array($token->token),
+                     NOTIFICATION_MESSAGES::get_action_msg($action_msg_id , $token->lang),
+                     $data,
+                     $token->os ,
+                     NOTIFICATION_MESSAGES::get_action_title($action_msg_id , $token->lang) ,
+                     NotificationHelper::ACTION
+            );
+        }
+	}
+	
 	public function send_notofication_to_group($user_ids , $msg , $data , $title , $type)
 	{
 	    $tokens = $this->user_tokens->get_tokens_by_ids($user_ids);

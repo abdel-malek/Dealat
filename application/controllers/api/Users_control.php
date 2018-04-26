@@ -15,8 +15,7 @@ class Users_control extends REST_Controller {
 	public function index_get() {
 		dump($this->data['city']);
 	}
-	
-	
+
 	
 	// this regiter method is for mobiles platforms
 	public function register_post()
@@ -63,7 +62,8 @@ class Users_control extends REST_Controller {
    public function save_user_token_post()
 	{
         $this->form_validation->set_rules('token', 'lang:token', 'required');
-        $this->form_validation->set_rules('os', 'lang:os', 'required');
+        $this->form_validation->set_rules('os', 'os:os', 'required');
+	    $this->form_validation->set_rules('os', 'lang:lang', 'required');
         if (!$this->form_validation->run()) {
             throw new Validation_Exception(validation_errors());
         } else {
@@ -71,7 +71,8 @@ class Users_control extends REST_Controller {
         	$data = array(
         	 'token'=>$this->input->post('token'),
         	 'os'=> $this->input->post('os'),
-        	 'user_id'=> $this->current_user->user_id
+        	 'user_id'=> $this->current_user->user_id,
+        	 'lang' => $this->input->post('lang')
 			);
 			$check = $this->user_tokens->check($data['user_id']  , $data['token']);
 			$saved_token = $this->user_tokens->save($data  , $check);
@@ -236,6 +237,9 @@ class Users_control extends REST_Controller {
 		   	  $data['whatsup_number'] = $this->input->post('whatsup_number');
 		   }
 	     }
+		 if($this->input->post('visible_phone') != null){
+		 	 $data ['visible_phone'] = $this->input->post('visible_phone');
+		 }
 		 $image_name = date('m-d-Y_hia').'-'.'1';
 	     $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);
 	     if (isset($image['personal_image'])) {
@@ -340,11 +344,35 @@ class Users_control extends REST_Controller {
    {
        $current_user = $this->current_user->user_id;
 	   $this->load->model('data_sources/users');
+	   $this->load->model('data_sources/user_tokens');
 	   $user_id = $this->users->save(array('is_deleted'=>1) , $current_user);
-	   if($user_id){
+	   // delete tokens 
+	   $res = $this->user_tokens->delete_by_user($current_user);
+	   if($user_id && $res){
+	   	   $this->session->sess_destroy();
 	   	   $this->response(array('status' => true, 'data' => $user_id, "message" => $this->lang->line('sucess')));
 	   }else{
 	   	   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 	   }
+   }
+
+   public function update_lang_post()
+   {
+	   $this->form_validation->set_rules('token', 'token', 'required');  
+       $this->form_validation->set_rules('lang', 'lang', 'required');  
+	    if (!$this->form_validation->run()) {
+	       throw new Validation_Exception(validation_errors());
+		}else{
+		   $this->load->model('data_sources/user_tokens');
+		   $current_user = $this->current_user->user_id;
+		   $lang = $this->input->post('lang');
+		   $token = $this->input->post('token');
+		   $update_result = $this->user_tokens->update_token_lang($token , $current_user , $lang);
+		   if($update_result){
+	   	      $this->response(array('status' => true, 'data' => $update_result, "message" => $this->lang->line('sucess')));
+		   }else{
+		   	  $this->response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		   }
+		}
    }
 }

@@ -56,7 +56,7 @@ class TAMPLATES {
         return array(
       	    TAMPLATES::VEHICLES => 'مركبات',
       	    TAMPLATES::MOBILES => 'موبايلات' , 
-      	    TAMPLATES::ELECTRONICS => 'أجهزة الكترونية' , 
+      	    TAMPLATES::ELECTRONICS => 'الكترونيات' , 
 		 );
       }
    }		  

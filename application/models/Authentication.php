@@ -10,9 +10,8 @@ class Authentication extends MY_Model {
 
 	public function check_user($username, $password , $type , $is_admin) {
 		$user = null;
-		if($is_admin == 1){
-		   $user = $this -> admins -> check_authentication($username, $password);
-		}else{
+		$user = $this -> admins -> check_authentication($username, $password);
+		if(!$user){
 		   $user = $this -> users -> check_authentication($username, $password ,$type);
 		}
 		return $user;

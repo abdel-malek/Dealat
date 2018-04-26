@@ -14,6 +14,7 @@ $lang['token'] = 'التوكين';
 $lang['category_id']= 'تصنيف الإعلان';
 $lang['location_id'] ='الموقع';
 $lang['show_period'] = 'مدة ظهور الأعلان';
+$lang['city'] = 'المحافظة';
 $lang['price'] = 'السعر';
 $lang['title'] = 'العنوان';
 $lang['excced_limit'] = 'لقد تخطيت حد الإعلانات التجارية من أجل هذا الموقع وهذا الصنف، يجب ان تخفي إعلانات أخرى ليظهر هذا الإعلان';
@@ -28,7 +29,7 @@ $lang['image_is_requierd'] = "يجب إرفاق صورة للإعلان";
 $lang['change_status_warning'] = "يمكنك فقط ان تحذف الإعلان أو أن تجعله مخفيّاً";
 
 // notifications
-$lang['ad_accepted'] = 'تهانينا! تم قبول إعلانك';
+$lang['ad_accepted'] = 'تم قبول إعلانك';
 $lang['accepted_title'] = 'قبول';
 $lang['ad_rejected'] = 'عذراً! تم رفض إعلانك';
 $lang['rejected_title'] = 'رفض';

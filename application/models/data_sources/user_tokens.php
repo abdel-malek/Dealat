@@ -33,4 +33,22 @@ class User_tokens extends MY_Model {
 		$this->db->where_in('user_id'  , $users_ids);
 	    return parent::get();
 	}
+	
+	public function delete_by_user($user)
+	{
+		$this->db->where('user_id' , $user);
+		if($this->db->delete($this->_table_name)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public function update_token_lang($token , $user , $lang)
+	{
+		$this->db->where('token' , $token);
+		$this->db->where('user_id' , $user);
+		$this->db->set('lang' , $lang);
+		return $this->db->update('user_tokens');
+	}
 }

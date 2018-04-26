@@ -29,6 +29,7 @@ class Ads extends MY_Model {
 		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('categories.is_active' , 1);
         $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
 		return $q; 
@@ -52,6 +53,7 @@ class Ads extends MY_Model {
 		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('categories.is_active' , 1);
     	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
@@ -68,6 +70,7 @@ class Ads extends MY_Model {
 		                   users.name as seller_name,
 		                   users.phone as seller_phone,
 		                   users.whatsup_number,
+		                   users.visible_phone,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
 		                   show_periods.days,
@@ -80,6 +83,8 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
+		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('categories.is_active' , 1);
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
@@ -235,7 +240,6 @@ class Ads extends MY_Model {
 	   	    $data['main_image'] = $this->input->post('main_image');
 	   	}
 	   }
-	   
 	   if ($this->input->post('main_video')!= null) {
 	   	if(trim($this->input->post('main_video')) == -1){
 	   		$data['main_video'] = NULL;
@@ -272,6 +276,9 @@ class Ads extends MY_Model {
 				$this->ad_images->save($data_images);
 			}
           }
+	   }
+	   if($this->input->post('edit_status')){
+	   	  $data['edit_status'] = $this->input->post('edit_status');
 	   }
 	   $data['status'] = STATUS::PENDING;
 	   $edited_ad_id = parent::save($data  , $ad_id);
@@ -382,7 +389,8 @@ class Ads extends MY_Model {
 	 $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())'); 
 	 // the user is not deleted
 	 $this->db->where('users.is_deleted' , 0);
-
+	 // the category is activated. 
+     $this->db->where('c1.is_active' , 1);
 	 if($this->input->get('location_id')){
 	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
 	 }
@@ -416,6 +424,8 @@ class Ads extends MY_Model {
 
    public function check_category_ads_existence($category_id)
 	{
+       $this->db->join('users' , 'users.user_id = ads.user_id', 'left');
+	   $this->db->where('users.is_deleted' , 0);
 	   $ads = parent::get_by(array('category_id' => $category_id), false ,1);
 	   if($ads != null){
 	   	 return true;
@@ -440,9 +450,11 @@ class Ads extends MY_Model {
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
+		$this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
 		if($this->input->get('status')){
 			$this->db->where('status' , $this->input->get('status'));
 		}
+        $this->db->where('users.is_deleted' , 0);
 		return parent::get();
 	}
 	
