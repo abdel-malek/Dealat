@@ -471,7 +471,7 @@
 									</div>
 
 									<div class="form-group field salary">
-										<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
+										<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 									</div>
 								</div>
 
@@ -585,6 +585,7 @@
 
 						<div class="form-group">
 							<label class="">
+							<input type='hidden' value='0' name='visible_phone'>
 								<input type="checkbox" name="visible_phone" value="1"><span class=""> <?php echo $this->lang->line('visible_phone'); ?></span>
 							</label>
 							<div class="visible-phone-note">

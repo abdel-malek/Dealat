@@ -43,9 +43,7 @@ $(function () {
 						data.data[i].main_image = 'assets/images/default_ad/' + data.data[i].tamplate_id + '.png';
 					}
 
-					if (data.data[i].expired_after <= 0 && data.data[i].status === "2") {
-						data.data[i].status = "3";
-					}
+					
 
 					if (data.data[i].status === "1") {
 						if (lang === "ar") {
@@ -55,17 +53,26 @@ $(function () {
 						}
 
 					} else if (data.data[i].status === "2") {
-						if (lang === "ar") {
-							status = "موافق عليه";
-						} else {
-							status = "Accepted";
-						}
-					} else if (data.data[i].status === "3") {
+						if (data.data[i].expired_after <= 0) {
+//						data.data[i].status = "3";
 						if (lang === "ar") {
 							status = "منتهي";
 						} else {
 							status = "Expired";
 						}
+					} else{
+						if (lang === "ar") {
+							status = "موافق عليه";
+						} else {
+							status = "Accepted";
+						}
+					}
+//					} else if (data.data[i].status === "3") {
+//						if (lang === "ar") {
+//							status = "منتهي";
+//						} else {
+//							status = "Expired";
+//						}
 					} else if (data.data[i].status === "4") {
 						if (lang === "ar") {
 							status = "مخفي";
@@ -175,6 +182,7 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {} else {
+				console.log(data);
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -202,6 +210,12 @@ $(function () {
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
 				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
 				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
+				if(data.data.visible_phone === "1"){
+					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
+				} else{
+//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", false);
+				}
+				
 				//personal image
 			}
 		});
@@ -562,13 +576,16 @@ $(function () {
 					}
 					if (data.data.is_automatic) {
 //						$("#edit-ad-modal input[name='is_automatic']").prop("checked", true);
-						$("#edit-ad-modal select[name='is_automatic']").val(data.data.is_automatic);
+						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_automatic']").val(data.data.is_automatic);
 						$("#edit-ad-modal select[name='is_automatic']")[0].sumo.reload();
 					}
 					if (data.data.is_new) {
 //						$("#edit-ad-modal input[name='is_new']").prop("checked", true);
-						$("#edit-ad-modal select[name='is_new']").val(data.data.is_new);
-						$("#edit-ad-modal select[name='is_new']")[0].sumo.reload();
+						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']").val(data.data.is_new);
+						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']")[0].sumo.reload();
+					}else{
+						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']").val("0");
+						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']")[0].sumo.reload();
 					}
 					if (data.data.space) {
 						$("#edit-ad-modal input[name='space']").val(data.data.space);

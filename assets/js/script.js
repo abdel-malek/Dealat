@@ -70,6 +70,8 @@ $(function () {
 			$(this).addClass("d-none");
 		});
 		$('#ad-modal .city-select')[0].sumo.unSelectAll();
+		$('#ad-modal .automatic-select')[0].sumo.unSelectAll();
+		$('#ad-modal .status-select')[0].sumo.unSelectAll();
 		$('#ad-modal .location-select')[0].sumo.unSelectAll();
 		$('#ad-modal .location-select')[0].sumo.disable();
 		$('#ad-modal .period-select')[0].sumo.unSelectAll();
@@ -680,6 +682,9 @@ $(function () {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
 				}
 
+				if (data.data.visible_phone === "0") {
+					$("#card-modal details").addClass("d-none");
+				}
 				$("#card-modal .templates [class*='-val']").each(function () {
 					if ($(this).text() === " ") {
 						$(this).text(" -");
@@ -834,6 +839,8 @@ $(function () {
 
 		$('#ad-modal .schedules-select')[0].sumo.selectItem(0);
 		$('#ad-modal .educations-select')[0].sumo.selectItem(0);
+		$('#ad-modal .automatic-select')[0].sumo.selectItem(0);
+		$('#ad-modal .status-select')[0].sumo.selectItem(0);
 	});
 
 	//view template fields when change category in filter modal
@@ -1099,7 +1106,7 @@ $(function () {
 			secondary_imgs = [];
 
 		data = $(this).serializeArray();
-
+console.log(data);
 		if (adMainImg.length > 0) {
 			data.push({
 				name: "main_image",

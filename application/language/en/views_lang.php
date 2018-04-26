@@ -306,3 +306,5 @@ $lang['activate'] = 'Activate';
 $lang['delete_account'] = 'Delete Account';
 $lang['delete_account_confirm'] = 'Are you sure you want to delete your account permenently?';
 $lang['delete_account_confirm_note'] = 'Note: this step cannot be reversed, all your ads and data in this website will be deleted';
+$lang['visible_phone'] = 'Show phone number';
+$lang['visible_phone_note'] = 'Your phone number will be shown with your ads details';

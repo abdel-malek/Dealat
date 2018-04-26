@@ -677,7 +677,7 @@
 								</div>
 
 								<div class="form-group field salary">
-									<input type="text" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
+									<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
 							</div>
 
