@@ -22,6 +22,9 @@ public class AboutParser implements TradinosParser<About> {
         if (validData(jsonObject.getString("about_us")))
             about.setContent(jsonObject.getString("about_us"));
 
+        if (validData(jsonObject.getString("terms")))
+            about.setTerms(jsonObject.getString("terms"));
+
         if (validData(jsonObject.getString("facebook_link")))
             about.setFacebookLink(jsonObject.getString("facebook_link"));
 

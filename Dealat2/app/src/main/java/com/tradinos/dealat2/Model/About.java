@@ -5,7 +5,8 @@ package com.tradinos.dealat2.Model;
  */
 
 public class About {
-    private String content, facebookLink, linkedInLink, twitterLink, youtubeLink, instagramLink, phone, email;
+    private String facebookLink, linkedInLink, twitterLink, youtubeLink, instagramLink;
+    private String terms, content, phone, email;
 
     public String getContent() {
         return content;
@@ -13,6 +14,14 @@ public class About {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTerms() {
+        return terms;
+    }
+
+    public void setTerms(String terms) {
+        this.terms = terms;
     }
 
     public String getFacebookLink() {

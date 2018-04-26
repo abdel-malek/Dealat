@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.tradinos.dealat2.Model.Message;
 import com.tradinos.dealat2.R;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -47,7 +48,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         Message message = messages.get(position);
-        holder.textViewText.setText(message.getText());
+        holder.textViewText.setText(EmojiParser.parseToUnicode(message.getText()));
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         DateFormat dateInstance = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);

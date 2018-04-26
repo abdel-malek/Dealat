@@ -85,7 +85,7 @@ public class EditAdActivity extends MasterActivity {
 
     private Category currentCategory;
     private Item selectedLocation;
-    private List<Type> templateBrands = new ArrayList<>();
+    private List<Type> categoryBrands = new ArrayList<>();
     private List<Item> years = new ArrayList<>();
 
     private HashMap<String, String> parameters = new HashMap<>();
@@ -185,9 +185,8 @@ public class EditAdActivity extends MasterActivity {
 
                         spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
-                        templateBrands = result.getBrands().get(currentAd.getTemplate());
-                        if (templateBrands != null)
-                            spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+                        categoryBrands = getCategoryBrands(result.getBrands());
+                        spinnerBrand.setAdapter(new TypeAdapter(mContext, categoryBrands));
 
                         result.getEducations().add(Item.getNoItem());
                         spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
@@ -681,8 +680,10 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("experience", stringInput(editEx));
 
-                parameters.put("price", "0");
-                parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
+                if (inputIsEmpty(editSalary))
+                    parameters.put("salary", NULL);
+                else
+                    parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
 
                 parameters.put("education_id", ((Item) spinnerEdu.getSelectedItem()).getId());
 
@@ -784,7 +785,7 @@ public class EditAdActivity extends MasterActivity {
                 break;
 
             case Category.VEHICLES:
-                brand = getItemIndex(new ArrayList<Item>(templateBrands),
+                brand = getItemIndex(new ArrayList<Item>(categoryBrands),
                         ((AdVehicle) currentAd).getTypeId());
                 spinnerBrand.setSelection(brand);
 
@@ -805,7 +806,7 @@ public class EditAdActivity extends MasterActivity {
                 break;
 
             case Category.ELECTRONICS:
-                brand = getItemIndex(new ArrayList<Item>(templateBrands),
+                brand = getItemIndex(new ArrayList<Item>(categoryBrands),
                         ((AdElectronic) currentAd).getTypeId());
                 spinnerBrand.setSelection(brand);
                 editSize.setText(formattedNumber(((AdElectronic) currentAd).getSize()));
@@ -817,7 +818,7 @@ public class EditAdActivity extends MasterActivity {
                 break;
 
             case Category.MOBILES:
-                brand = getItemIndex(new ArrayList<Item>(templateBrands),
+                brand = getItemIndex(new ArrayList<Item>(categoryBrands),
                         ((AdMobile) currentAd).getTypeId());
                 spinnerBrand.setSelection(brand);
 
@@ -976,7 +977,9 @@ public class EditAdActivity extends MasterActivity {
         protected String doInBackground(Image... images) {
 
             final Image image = images[0];
-            AdController.getInstance(mController).uploadImage(new File(image.getPath()), new SuccessCallback<String>() {
+
+            //new File(image.getPath())
+            AdController.getInstance(mController).uploadImage(new ImageDecoder().ConvertBitmapToFile(image.getPath()), new SuccessCallback<String>() {
                 @Override
                 public void OnSuccess(String result) {
                     image.setServerPath(result);
@@ -1004,5 +1007,20 @@ public class EditAdActivity extends MasterActivity {
             });
             return null;
         }
+    }
+
+    private List<Type> getCategoryBrands(HashMap<Integer, List<Type>> brands) {
+        List<Type> templateBrands = brands.get(currentCategory.getTemplateId());
+        List<Type> result = new ArrayList<>();
+
+        result.add(Type.getNoType());
+        if (templateBrands != null) { //if template has types
+            for (int i = 0; i < templateBrands.size(); i++) {
+                if (templateBrands.get(i).getCategoryId().equals(currentCategory.getId()))
+                    result.add(templateBrands.get(i));
+            }
+        }
+
+        return result;
     }
 }

@@ -21,6 +21,8 @@ public class TypeParser implements TradinosParser<Type> {
 
         type.setId(jsonObject.getString("type_id"));
         type.setName(jsonObject.getString("name"));
+        type.setFullName(jsonObject.getString("full_type_name"));
+        type.setCategoryId(jsonObject.getString("category_id"));
 
         type.setTemplateId(jsonObject.getInt("tamplate_id"));
 

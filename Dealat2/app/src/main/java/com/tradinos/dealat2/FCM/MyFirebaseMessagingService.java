@@ -17,7 +17,6 @@ import com.tradinos.dealat2.Parser.Parser.Ad.AdParser;
 import com.tradinos.dealat2.Parser.Parser.Chat.ChatParser;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.View.AdDetailsActivity;
-import com.tradinos.dealat2.View.ChatActivity;
 import com.tradinos.dealat2.View.HomeActivity;
 import com.tradinos.dealat2.View.PublicNotificationActivity;
 
@@ -72,21 +71,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent;
 
         switch (type) {
+            case "1":
+                Chat chat = new ChatParser().Parse(body);
+                chat.setAdTitle(title);
+
+                intent = new Intent("com.dealat.MSG");
+                intent.putExtra("msg", txt);
+                intent.putExtra("chat", chat);
+                sendOrderedBroadcast(intent, null);
+
+                //return because Notification of chats are built in NotificationReceiver
+                return;
+
             case "2":
                 Ad ad = new AdParser().Parse(body);
                 intent = new Intent(this, AdDetailsActivity.class);
                 intent.putExtra("ad", ad);
-                break;
-
-            case "1":
-                Intent intent2 = new Intent("com.dealat.MSG");
-                intent2.putExtra("msg", txt);
-                sendBroadcast(intent2);
-
-                Chat chat = new ChatParser().Parse(body);
-                chat.setAdTitle(title);
-                intent = new Intent(this, ChatActivity.class);
-                intent.putExtra("chat", chat);
                 break;
 
             case "3":

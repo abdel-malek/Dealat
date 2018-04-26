@@ -148,9 +148,8 @@ public class SubmitAdActivity extends MasterActivity {
                 spinnerCity.setAdapter(new CityAdapter(mContext, result.getCities()));
 
                 brands = result.getBrands();
-                List<Type> templateBrands = brands.get(currentTemplate);
-                if (templateBrands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+
+                spinnerBrand.setAdapter(new TypeAdapter(mContext, getCategoryBrands()));
 
                 result.getEducations().add(Item.getNoItem());
                 spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
@@ -470,9 +469,7 @@ public class SubmitAdActivity extends MasterActivity {
 
                 replaceTemplate();
 
-                List<Type> templateBrands = brands.get(currentTemplate);
-                if (templateBrands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+                spinnerBrand.setAdapter(new TypeAdapter(mContext, getCategoryBrands()));
 
             } else if (requestCode == REQUEST_SELECT_IMG) {
                 List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
@@ -928,7 +925,9 @@ public class SubmitAdActivity extends MasterActivity {
         protected String doInBackground(Image... images) {
 
             final Image image = images[0];
-            AdController.getInstance(mController).uploadImage(new File(image.getPath()), new SuccessCallback<String>() {
+
+            //new File(image.getPath())
+            AdController.getInstance(mController).uploadImage(new ImageDecoder().ConvertBitmapToFile(image.getPath()), new SuccessCallback<String>() {
                 @Override
                 public void OnSuccess(String result) {
                     image.setServerPath(result);
@@ -956,5 +955,20 @@ public class SubmitAdActivity extends MasterActivity {
             });
             return null;
         }
+    }
+
+    private List<Type> getCategoryBrands() {
+        List<Type> templateBrands = brands.get(currentTemplate);
+        List<Type> result = new ArrayList<>();
+
+        result.add(Type.getNoType());
+        if (templateBrands != null) { //if template has types
+            for (int i = 0; i < templateBrands.size(); i++) {
+                if (templateBrands.get(i).getCategoryId().equals(selectedCategory.getId()))
+                    result.add(templateBrands.get(i));
+            }
+        }
+
+        return result;
     }
 }

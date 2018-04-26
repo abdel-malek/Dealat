@@ -101,7 +101,6 @@ public class VerificationActivity extends MasterActivity {
                 MyApplication.saveUserState(User.REGISTERED);
                 new CurrentAndroidUser(mContext).Save(result);
 
-
                 final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                 UserController.getInstance(new ParentController(mContext, new FaildCallback() {
                     @Override

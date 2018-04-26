@@ -160,7 +160,6 @@
                     android:id="@+id/autoCompleteLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:completionThreshold="1"
                     android:dropDownHeight="140dp"
                     style="@style/editTextWhite"

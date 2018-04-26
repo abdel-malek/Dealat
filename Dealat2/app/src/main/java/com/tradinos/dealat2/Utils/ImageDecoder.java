@@ -9,8 +9,6 @@ import android.provider.MediaStore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ImageDecoder {
 
-    private final int smallFactor = 150, largeFactor = 300;
+    private final int smallFactor = 150, largeFactor = 500;
 
     public Bitmap decodeLargeImage(String path) {
         //  return BitmapFactory.decodeFile(path);
@@ -50,7 +48,6 @@ public class ImageDecoder {
         return bm;
     }
 
-
     public int calculateInSampleSize(BitmapFactory.Options options, int factor) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -78,13 +75,9 @@ public class ImageDecoder {
         return filePath;
     }
 
-/*
-    public File ConvertBitmapToFile(String path) throws IOException {
+    public File ConvertBitmapToFile(String path) {
 
         File f = new File(path);
-        if (f.exists()) {
-            f.delete();
-        }
 
         ByteArrayOutputStream bmpStream = new ByteArrayOutputStream();
         try {
@@ -102,7 +95,7 @@ public class ImageDecoder {
 
         try {
             fo = new FileOutputStream(f);
-            fo.write(bmpStream.toByteArray());
+            fo.write(bmpPicByteArray);
             fo.flush();
             fo.close();
         } catch (IOException e) {
@@ -111,21 +104,4 @@ public class ImageDecoder {
 
         return f;
     }
-
-    public Bitmap codec(String path){
-        File file = new File(path);
-
-        FileInputStream fileInputStream = null;
-        try {
-             fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Bitmap original = BitmapFactory.decodeStream(fileInputStream);
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        original.compress(Bitmap.CompressFormat.JPEG, 3, os);
-        byte[] array = os.toByteArray();
-        return BitmapFactory.decodeByteArray(array, 0, array.length);
-    }*/
 }

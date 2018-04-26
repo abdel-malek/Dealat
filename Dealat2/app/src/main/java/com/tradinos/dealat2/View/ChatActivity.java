@@ -30,6 +30,7 @@ import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.Model.Message;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class ChatActivity extends MasterActivity {
         super.onResume();
 
         IntentFilter filter = new IntentFilter();
+        // set priority to 1, so ChatReceiver is called before NotificationReceiver
+        filter.setPriority(1);
         filter.addAction("com.dealat.MSG");
 
         receiver = new ChatReceiver();
@@ -188,7 +191,7 @@ public class ChatActivity extends MasterActivity {
                     HashMap<String, String> parameters = new HashMap<>();
 
                     parameters.put("ad_id", currentChat.getAdId());
-                    parameters.put("msg", message.getText());
+                    parameters.put("msg", EmojiParser.parseToAliases(message.getText()));
                     if (amISeller())
                         parameters.put("chat_session_id", currentChat.getChatId());
 
@@ -211,21 +214,30 @@ public class ChatActivity extends MasterActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Message message = new Message();
-            message.setText(intent.getStringExtra("msg"));
+            Chat chat = (Chat) intent.getSerializableExtra("chat");
 
-            // HH gives 24hours but hh give 12hours // so it's formatted back to 12hours in MessageAdapter
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            message.setCreatedAt(dateFormat.format(new Date()));
+            if (chat.getChatId().equals(currentChat.getChatId())){
 
-            if (amISeller())
-                message.setToSeller(true);
+                Message message = new Message();
+                message.setText(intent.getStringExtra("msg"));
 
-            if (adapter == null)
-                adapter = new MessageAdapter(mContext, new ArrayList<Message>(), amISeller());
+                // HH gives 24hours but hh give 12hours // so it's formatted back to 12hours in MessageAdapter
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                message.setCreatedAt(dateFormat.format(new Date()));
 
-            adapter.addMessage(message);
-            recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                if (amISeller())
+                    message.setToSeller(true);
+
+                if (adapter == null)
+                    adapter = new MessageAdapter(mContext, new ArrayList<Message>(), amISeller());
+
+                adapter.addMessage(message);
+                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+
+                // abort sendOrderedBroadcast so NotificationReceiver won't be called
+                // because a notification won't be built when chatting in this session
+                abortBroadcast();
+            }
         }
     }
 

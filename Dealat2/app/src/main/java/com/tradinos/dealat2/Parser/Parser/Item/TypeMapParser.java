@@ -29,15 +29,15 @@ public class TypeMapParser implements TradinosParser<HashMap<Integer, List<Type>
         JSONArray jsonArray;
         JSONObject jsonType;
 
-        for (int i=1; i < 10; i++){ // as we have 10 templates
-            if (jsonObject.has(String.valueOf(i))){ // if template has types
+        for (int i = 1; i < 10; i++) { // as we have 10 templates
+            if (jsonObject.has(String.valueOf(i))) { // if template has types
 
                 typeList = new ArrayList<>();
                 jsonArray = new JSONArray(jsonObject.getString(String.valueOf(i)));
 
-                typeList.add(Type.getNoType());
+                typeList.add(Type.getNoType()); //for filter
 
-                for (int j =0; j< jsonArray.length(); j++){
+                for (int j = 0; j < jsonArray.length(); j++) {
                     jsonType = jsonArray.getJSONObject(j);
                     typeList.add(new TypeParser().Parse(jsonType));
                 }

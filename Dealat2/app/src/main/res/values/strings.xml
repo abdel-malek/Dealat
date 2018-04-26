@@ -81,7 +81,7 @@
     <string name="labelPaidFeature">This feature is paid. If you want your ad to be featured, enable it, and Admin will contact you.</string>
 
     <string name="labelAgree">I have read and agree to the</string>
-    <string name="labelTerms">terms of Dealat</string>
+    <string name="labelTerms">Terms of Dealat</string>
     <string name="labelShowPhone">Show phone number</string>
     <string name="labelOnlyToRegistered">Your phone number will be shown with your ads\' details</string>
 
@@ -206,14 +206,14 @@
 
     <!-- Toasts -->
     <string name="toastAdSubmit">Ad Submitted Successfully</string>
-    <string name="toastFavorite">Ad\'s added to your favorites</string>
-    <string name="toastUnfavorite">Ad\'s removed from your favorites</string>
-    <string name="toastAdReported">Ad\'s been reported</string>
+    <string name="toastFavorite">Ad added to your favorites</string>
+    <string name="toastUnfavorite">Ad removed from your favorites</string>
+    <string name="toastAdReported">Ad reported</string>
     <string name="toastBookmark">Search Saved</string>
     <string name="toastUnBookmark">Search Removed</string>
     <string name="toastSaved">Changes Saved</string>
     <string name="toastAdDeleted">Ad Deleted</string>
-    <string name="toastImageSave">Image\'s saved to gallery</string>
+    <string name="toastImageSave">Image saved to gallery</string>
     <string name="toastThnxRating">Thanx for rating</string>
 
     <string name="toastMaxImages">You can\'t select more images</string>

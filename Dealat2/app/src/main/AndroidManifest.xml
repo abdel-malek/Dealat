@@ -146,6 +146,12 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".Utils.NotificationReceiver">
+            <intent-filter android:priority="0">
+                <action android:name="com.dealat.MSG" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
