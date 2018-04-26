@@ -45,6 +45,8 @@
 		824663DC203084CE00F303EA /* CategoriesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824663DB203084CE00F303EA /* CategoriesVC.swift */; };
 		8267E28020302D43007130A4 /* AdsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267E27F20302D43007130A4 /* AdsListVC.swift */; };
 		8268D474208397AC0090C9EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8268D473208397AC0090C9EF /* GoogleService-Info.plist */; };
+		826A6CC72091B2C8006978B0 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826A6CC62091B2C8006978B0 /* Checkbox.swift */; };
+		826A6CC920920386006978B0 /* TermsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826A6CC820920386006978B0 /* TermsVC.swift */; };
 		8271B9E120888A3700CE86D8 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271B9E020888A3700CE86D8 /* AboutVC.swift */; };
 		8271B9E32088969F00CE86D8 /* AboutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8271B9E22088969F00CE86D8 /* AboutInfo.swift */; };
 		82893DB02032D6F5009151FC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82893DAF2032D6F5009151FC /* Location.swift */; };
@@ -190,6 +192,8 @@
 		824663DB203084CE00F303EA /* CategoriesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesVC.swift; sourceTree = "<group>"; };
 		8267E27F20302D43007130A4 /* AdsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListVC.swift; sourceTree = "<group>"; };
 		8268D473208397AC0090C9EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		826A6CC62091B2C8006978B0 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		826A6CC820920386006978B0 /* TermsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsVC.swift; sourceTree = "<group>"; };
 		8271B9E020888A3700CE86D8 /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		8271B9E22088969F00CE86D8 /* AboutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfo.swift; sourceTree = "<group>"; };
 		8271B9E42088C32B00CE86D8 /* Dealat-iOS_prod.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Dealat-iOS_prod.entitlements"; sourceTree = "<group>"; };
@@ -478,6 +482,7 @@
 				82E56E57205EBDF600938CD7 /* SavedSearchesVC.swift */,
 				82FAFB2E2075F57D004EF09D /* ReportMessagesVC.swift */,
 				8271B9E020888A3700CE86D8 /* AboutVC.swift */,
+				826A6CC820920386006978B0 /* TermsVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -494,6 +499,7 @@
 				82B97A6D20551F1500ADF51B /* ActiveLabel */,
 				824663D62030315200F303EA /* DesignableX */,
 				8226F02720289D1A0077FA74 /* Fonts */,
+				826A6CC62091B2C8006978B0 /* Checkbox.swift */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -828,7 +834,6 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeBack/SwipeBack.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/UICheckbox.Swift/UICheckbox_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/YangMingShan/YangMingShan.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -864,7 +869,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeBack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICheckbox_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YangMingShan.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -886,6 +890,7 @@
 				824663DA203031E000F303EA /* CardView.swift in Sources */,
 				82893DB02032D6F5009151FC /* Location.swift in Sources */,
 				8207D7582090B53300E4E506 /* DLRadioButton.m in Sources */,
+				826A6CC920920386006978B0 /* TermsVC.swift in Sources */,
 				82FEE63F2075068A00D9DB45 /* Period.swift in Sources */,
 				82B97A7C205550C300ADF51B /* EditProfileVC.swift in Sources */,
 				822516EB2029DFF3009FF0DE /* CategoryCell.swift in Sources */,
@@ -945,6 +950,7 @@
 				82EB4803204C134B00D25E1D /* SelectLocationVC.swift in Sources */,
 				82105EF8204D5BD60050DDD8 /* MyFavoritesVC.swift in Sources */,
 				82A09E932042C4A8005E9E90 /* TypesVC.swift in Sources */,
+				826A6CC72091B2C8006978B0 /* Checkbox.swift in Sources */,
 				82ABA87C203AB6F3000627CB /* CategoriesVC2.swift in Sources */,
 				8207D75320909D6600E4E506 /* SelectLangVC.swift in Sources */,
 				8226F017202886D50077FA74 /* Theme.swift in Sources */,

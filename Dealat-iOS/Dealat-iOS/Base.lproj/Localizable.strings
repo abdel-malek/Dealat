@@ -125,6 +125,7 @@
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";
 
+
 //Add status
 "Pending" = "Pending";
 "Accepted" = "Accepted";

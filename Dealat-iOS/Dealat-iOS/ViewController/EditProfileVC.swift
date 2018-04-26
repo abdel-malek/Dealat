@@ -26,6 +26,7 @@ class EditProfileVC: BaseVC {
     @IBOutlet weak var tfWhatsapp: SkyFloatingLabelTextField!
     @IBOutlet weak var tfBirthday: SkyFloatingLabelTextField!
     @IBOutlet weak var tfGender: SkyFloatingLabelTextField!
+    @IBOutlet weak var visible_phoneSwitch: UISwitch!
 
     var genders = [("Male".localized, 1),("Famale".localized,2)]
     
@@ -45,7 +46,8 @@ class EditProfileVC: BaseVC {
     }
     
     var pickerView = UIPickerView()
-    var homeVC : HomeVC!
+    var homeVC : HomeVC?
+    var myProfile : MyProfileVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,6 +164,9 @@ class EditProfileVC: BaseVC {
         self.tfWhatsapp.text = me.whatsup_number
         self.tfBirthday.text = me.birthday
 
+        if let visible_phone = me.visible_phone{
+            self.visible_phoneSwitch.setOn(visible_phone == 1, animated: true)
+        }
         
         if me.personal_image != nil && !me.personal_image.isEmpty{
             Provider.sd_setImage(self.imgProfile, urlString: me.personal_image)
@@ -191,6 +196,8 @@ class EditProfileVC: BaseVC {
         let email = tfEmail.text!
         let whatsapp = tfWhatsapp.text!
         let birthday = self.tfBirthday.text!
+        
+        let visible_phone = self.visible_phoneSwitch.isOn ? "1" : "0"
 
         
         guard !name.isEmpty else {
@@ -234,6 +241,8 @@ class EditProfileVC: BaseVC {
                 multipartFormData.append(email.getData, withName: "email")
                 multipartFormData.append(self.selectedCity.city_id.stringValue.getData, withName: "city_id")
                 multipartFormData.append(whatsapp.getData, withName: "whatsup_number")
+                
+                multipartFormData.append(visible_phone.getData, withName: "visible_phone")
 
                 multipartFormData.append(birthday.getData, withName: "birthday")
                 
@@ -272,7 +281,10 @@ class EditProfileVC: BaseVC {
                                 }
                                 
                                 self.navigationController?.popViewController(animated: true)
-                                    self.homeVC.showErrorMessage(text: value.message)
+                                    self.homeVC?.showErrorMessage(text: value.message)
+                                    
+                                    self.myProfile?.showErrorMessage(text: value.message)
+
                                 }else{
                                     let me = User.getCurrentUser()
                                     me.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue

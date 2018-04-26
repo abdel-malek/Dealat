@@ -251,6 +251,8 @@ class ChatDetailsVC: BaseVC {
                 chat_session_id = self.chat.chat_session_id.intValue
             }
             
+            self.textView.text = nil
+
             Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message.emojiEscapedString, callback: { (res) in
                 
                 self.getRefreshing()

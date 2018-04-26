@@ -55,7 +55,7 @@ class VerificationVC: BaseVC {
     
     func sendVerificationCode(code : String,is_multi : Int){
         self.showLoading()
-        Communication.shared.verify(code : Provider.getEnglishNumber(code),is_multi : is_multi, callback: { (res) in
+        Communication.shared.verify(code : code,is_multi : is_multi, callback: { (res) in
             self.hideLoading()
 //            Provider.goToHome()
             AppDelegate.setupViews()

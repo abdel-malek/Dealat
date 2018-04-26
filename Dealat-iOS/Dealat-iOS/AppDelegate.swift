@@ -34,16 +34,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         
         //UserDefaults.standard.setValue(["en","ar"], forKey: "AppleLanguages")
-        
+
         Provider.isArabic = AppDelegate.isArabic()
         
         AppDelegate.setupViews()
         setupNotification(application)
         
-        Communication.shared.get_about_info { (res) in
-            
+        if User.isRegistered(){
+            Communication.shared.get_my_info { (res) in
+            }
         }
-        
         
         return true
     }
@@ -171,7 +171,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else{
             
             if application.applicationState == .active{
-                PushManager.handleForegroundNotification(userInfo)
+//                PushManager.handleForegroundNotification(userInfo)
+                PushManager.handleNotificationTapping(data: userInfo)
                 completionHandler(.newData)
             }else if application.applicationState != .background{
                 PushManager.handleNotificationTapping(data: userInfo)

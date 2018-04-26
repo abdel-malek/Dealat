@@ -135,6 +135,14 @@
 "deactiveMessage" = "Are you sure you want to delete your account?";
 "featureMessage" = "This feature is paid. If you want your ad to be featured, enable it, and Admin will contact you.";
 
+"termsMessage1" = "I have read and agree to the ";
+"termsMessage2" = "terms of Dealat";
+"termsMessage3" = "Terms of Dealat";
+
+
+"termsValidateMessage" = "You must agree to Dealat terms!";
+
+
 //Add status
 "Pending" = "Pending";
 "Accepted" = "Accepted";

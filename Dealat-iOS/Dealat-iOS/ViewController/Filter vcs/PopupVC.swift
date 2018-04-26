@@ -181,7 +181,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             case 4:
                 if let schedules = self.parentVC.filter.schedule_id{
                     for i in schedules{
-                        if i.schedual_id == self.parentVC.schedules[index].schedual_id{
+                        if i.schedule_id == self.parentVC.schedules[index].schedule_id{
                             cell.accessoryType = .checkmark
                         }
 //                        else{
@@ -251,7 +251,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                     cell.textLabel?.text = c.locations[index].location_name
                 }
             case 2:
-                cell.textLabel?.text = self.parentVC.typesBase[index].name
+                cell.textLabel?.text = self.parentVC.typesBase[index].full_type_name
             case 3:
                 if let type = parentVC.typesBase.filter({$0.type_id == self.parentVC.filter.type_id.type_id}).first{
                     cell.textLabel?.text =  type.models[index].name
@@ -359,7 +359,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 
                 // delete if exist
                 for i in 0..<arr!.count{
-                    if arr![i].schedual_id == self.parentVC.schedules[index].schedual_id{
+                    if arr![i].schedule_id == self.parentVC.schedules[index].schedule_id{
                         deleted = true
                         arr?.remove(at: i)
                         break
@@ -370,6 +370,10 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 if !deleted{
                     arr?.append(self.parentVC.schedules[index])
                 }
+               
+                print("SDFSDF \(arr)")
+
+                
                 
                 // final
                 self.parentVC.filter.schedule_id = arr!.isEmpty ? nil : arr!

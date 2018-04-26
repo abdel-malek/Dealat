@@ -8,10 +8,12 @@
 
 import UIKit
 import XLPagerTabStrip
-
+import KSToastView
 
 class MyProfileVC: ButtonBarPagerTabStripViewController {
 
+    @IBOutlet weak var img : UIImageView!
+    
 //    @IBOutlet weak var shadowView: UIView!
     let blueInstagramColor = Theme.Color.red
 //    UIColor(red: 37/255.0, green: 111/255.0, blue: 206/255.0, alpha: 1.0)
@@ -39,11 +41,26 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.title = "My Profile".localized
+        
+        let me = User.getCurrentUser()
+        if me.personal_image != nil && !me.personal_image.isEmpty{
+            Provider.sd_setImage(img, urlString: me.personal_image)
+        }
+
+        
         configureNavigationBar()
         
         Provider.setScreenName("MyProfileActivity")
-
     }
+    
+    
+    @IBAction func openEditProfile(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
+        vc.myProfile = self
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     
     func configureNavigationBar() {
         //setup back button
@@ -60,6 +77,17 @@ class MyProfileVC: ButtonBarPagerTabStripViewController {
             self.firstTime = false
             self.moveToViewController(at: currentPage, animated: false)
         }
+    }
+    
+    
+    func showErrorMessage(text: String) {
+        KSToastView.ks_showToast(text, duration: 3)
+        
+        let me = User.getCurrentUser()
+        if me.personal_image != nil && !me.personal_image.isEmpty{
+            Provider.sd_setImage(img, urlString: me.personal_image)
+        }
+
     }
     
     // MARK: - PagerTabStripDataSource

@@ -22,8 +22,8 @@ class AboutInfo : BaseEntity {
     
     var phone : String!
     var email : String!
-
     
+    var terms : String!
     
     // Mappable
     override func mapping(map: Map) {
@@ -35,9 +35,10 @@ class AboutInfo : BaseEntity {
         linkedin_link <- map["linkedin_link"]
         instagram_link <- map["instagram_link"]
 
-
         phone <- map["phone"]
         email <- map["email"]
+        
+        terms <- map["terms"]
     }
     
     

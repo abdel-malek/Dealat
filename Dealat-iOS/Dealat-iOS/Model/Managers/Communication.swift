@@ -23,11 +23,11 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
-    let baseImgsURL = "http://192.168.9.17/Dealat/"
+//    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
+//    let baseImgsURL = "http://192.168.9.17/Dealat/"
     
-//    let baseURL = "http://dealat.tradinos.com/index.php/api"
-//    let baseImgsURL = "http://dealat.tradinos.com/"
+    let baseURL = "http://dealat.tradinos.com/index.php/api"
+    let baseImgsURL = "http://dealat.tradinos.com/"
     
     let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
@@ -542,6 +542,7 @@ class Communication: BaseManager {
         params["category_id"] = category_id
         params["title"] = title
         params["description"] = description
+        params["edit_status"] = edit_status
         
         let images2 = images.filter({!$0.isEmpty})
         if !images2.isEmpty {

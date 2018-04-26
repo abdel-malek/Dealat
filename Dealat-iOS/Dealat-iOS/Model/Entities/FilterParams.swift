@@ -71,7 +71,7 @@ class FilterParams{
         }
         
         if let x = filter.schedule_id{
-            params["schedule_id"] = JSON(x.map({$0.schedual_id.intValue})).rawString()
+            params["schedule_id"] = JSON(x.map({$0.schedule_id.intValue})).rawString()
             params["schedule_name"] = JSON(x.map({$0.name})).rawString()
         }
         

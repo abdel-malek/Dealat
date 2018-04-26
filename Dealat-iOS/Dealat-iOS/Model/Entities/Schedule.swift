@@ -13,12 +13,15 @@ import SwiftyJSON
 
 class Schedule : BaseEntity {
     
-    var schedual_id : JSON!
+    var schedule_id : JSON!
     var name : String!
+    
+//    schedule_id
+    
     
     // Mappable
     override func mapping(map: Map) {
-        schedual_id <- map["schedual_id"]
+        schedule_id <- map["schedule_id"]
         name <- map["name"]
     }
 }

@@ -62,6 +62,7 @@ class FilterVC: BaseTVC {
     var cities = [City]()
 
     var locations = [Location]()
+    var typesBase2 = [Type]()
     var typesBase = [Type]()
     var schedules = [Schedule]()
     var educations = [Education]()
@@ -147,7 +148,11 @@ class FilterVC: BaseTVC {
             if let place = i.placeholder{
                 let arr = place.components(separatedBy: "*")
                 if let temp = arr.first{
-                    i.placeholder = temp.localized + "*"
+                    if arr.count == 2{
+                        i.placeholder = temp.localized + "*"
+                    }else{
+                        i.placeholder = temp.localized
+                    }
                 }
             }
         }
@@ -171,15 +176,24 @@ class FilterVC: BaseTVC {
         
         if filter.category != nil{
             self.tfCategory.text = filter.category.category_name
+            
+            self.typesBase = self.typesBase2.filter({ (t) -> Bool in
+                if let c = t.tamplate_id, let c2 = filter.category.tamplate_id{
+                    print("CCC : \(c.intValue) -- CCC2 \(c2.intValue)")
+                    return c.intValue == c2.intValue
+                }
+                return false
+            })
+
         }else{
             self.tfCategory.text = allString
         }
         
-        
+            
         if filter.type_id != nil{
-            self.tfType1.text = filter.type_id.name
-            self.tfType3.text = filter.type_id.name
-            self.tfType4.text = filter.type_id.name
+            self.tfType1.text = filter.type_id.full_type_name
+            self.tfType3.text = filter.type_id.full_type_name
+            self.tfType4.text = filter.type_id.full_type_name
         }else{
             self.tfType1.text = allString
             self.tfType3.text = allString
@@ -216,6 +230,21 @@ class FilterVC: BaseTVC {
         }else{
             self.tfYear.text = allString
         }
+        
+        
+        if filter.education_id != nil{
+            self.tfEducation.text = filter.education_id!.flatMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfEducation.text = allString
+        }
+        
+        if filter.schedule_id != nil{
+            self.tfSchedule.text = filter.schedule_id!.flatMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfSchedule.text = allString
+        }
+
+
 
         self.filter.searchText = self.tfSearch.text
         
@@ -246,6 +275,7 @@ class FilterVC: BaseTVC {
             self.hideLoading()
             
             self.cities = cities
+            self.typesBase2 = types
             self.typesBase = types
             self.locations = locations
             self.educations = educations
@@ -333,10 +363,10 @@ class FilterVC: BaseTVC {
             
         case 8:
             if indexPath.row == 0{
-                vc.type = 4
+                vc.type = 5
                 self.present(vc, animated: true, completion: nil)
             }else if indexPath.row == 1{
-                vc.type = 5
+                vc.type = 4
                 self.present(vc, animated: true, completion: nil)
             }
 

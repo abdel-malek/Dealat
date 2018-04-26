@@ -15,6 +15,9 @@ class SideMenuVC: BaseVC {
     @IBOutlet var btns: [UIButton]!
     @IBOutlet weak var regVV: UIView!
 
+    @IBOutlet weak var nameLbl: UILabel!
+
+    
     var homeVC : HomeVC!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,7 +32,6 @@ class SideMenuVC: BaseVC {
         
         
         if let i = self.btns.first(where: {$0.tag == -1}){
-            print("TAGGGGGGG")
             let tit = User.isRegistered() ? "Logout".localized : "Register".localized
             i.setTitle(tit, for: UIControlState.normal)
         }
@@ -37,18 +39,14 @@ class SideMenuVC: BaseVC {
         
 
         if User.isRegistered(){
-//            self.regVV.isHidden = true
-//
+            
+            self.regVV.isHidden = true
+
         }else{
             for i in btns{
-                
-                if i.tag > 0  && i.tag < 7 {
+                if (i.tag > 0  && i.tag < 7) || (i.tag ==  10) {
                     i.isHidden = true
                 }
-                
-//                if i.tag > 0 && i.tag < 6{
-//                    i.isHidden = true
-//                }
             }
         }
         
@@ -84,24 +82,7 @@ class SideMenuVC: BaseVC {
             if i.tag == -1{
                 if User.isRegistered(){
                 
-                    let alert = UIAlertController.init(title: "Alert!".localized, message: "logoutMessage".localized, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
-                        
-                        self.homeVC.showLoading()
-                        Communication.shared.logout({ (res) in
-                            self.homeVC.hideLoading()
-                            
-                            User.clearMe()
-                            AppDelegate.setupViews()
-                            
-                        })
-                        
-                    }))
-                    alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
-                    
-                    self.homeVC.present(alert, animated: true, completion: nil)
-                    
+                    self.logoutAction()
                 }else{
                     AppDelegate.setupViews()
                 }
@@ -138,8 +119,6 @@ class SideMenuVC: BaseVC {
                 vc.homeVC = self.homeVC
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
-
-            
             if i.tag == 6{
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "SavedSearchesVC") as! SavedSearchesVC
                 vc.homeVC = self.homeVC
@@ -150,6 +129,10 @@ class SideMenuVC: BaseVC {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "AboutVC") as! AboutVC
 //                vc.homeVC = self.homeVC
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
+            
+            if i.tag == 10{
+                self.logoutAction()
             }
 
             
@@ -194,6 +177,27 @@ class SideMenuVC: BaseVC {
         }
     }
     
+    
+    func logoutAction(){
+        let alert = UIAlertController.init(title: "Alert!".localized, message: "logoutMessage".localized, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
+            
+            self.homeVC.showLoading()
+            Communication.shared.logout({ (res) in
+                self.homeVC.hideLoading()
+                
+                User.clearMe()
+                AppDelegate.setupViews()
+                
+            })
+            
+        }))
+        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+        
+        self.homeVC.present(alert, animated: true, completion: nil)
+    }
+    
     func refreshImg(){
         let me = User.getCurrentUser()
         
@@ -201,6 +205,10 @@ class SideMenuVC: BaseVC {
             if let path = me.personal_image{
                 Provider.sd_setImage(self.img, urlString: path)
             }
+            
+            self.nameLbl.text = me.name
+        }else{
+            self.nameLbl.text = nil
         }
     }
     

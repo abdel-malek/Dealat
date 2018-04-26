@@ -190,6 +190,12 @@ class AdDetailsBaseVC: UIViewController {
             self.callBtn.isHidden = same
             self.messageBtn.isHidden = same
             //        self.reportBtn.isHidden = same
+            
+            
+            if !same, let v = self.ad.visible_phone{
+                self.callBtn.isHidden = !v.Boolean
+            }
+            
         }else{
             self.callBtn.isHidden = false
             self.messageBtn.isHidden = false

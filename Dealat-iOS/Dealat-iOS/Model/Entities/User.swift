@@ -30,6 +30,7 @@ class User : NSObject, NSCoding{
     var whatsup_number : String!
     var birthday : String!
     var gender : Int!
+    var visible_phone : Int!
     
     //MARK: Local data
     var statues_key: String? = USER_STATUES.NEW_USER.rawValue
@@ -93,6 +94,7 @@ class User : NSObject, NSCoding{
         self.whatsup_number = decoder.decodeObject(forKey: "whatsup_number") as? String
         self.birthday = decoder.decodeObject(forKey: "birthday") as? String
         self.gender = decoder.decodeObject(forKey: "gender") as? Int
+        self.visible_phone = decoder.decodeObject(forKey: "visible_phone") as? Int
     }
     
     
@@ -116,6 +118,7 @@ class User : NSObject, NSCoding{
         coder.encode(whatsup_number, forKey: "whatsup_number")
         coder.encode(birthday, forKey: "birthday")
         coder.encode(gender, forKey: "gender")
+        coder.encode(visible_phone, forKey: "visible_phone")
     }
     
     
@@ -160,6 +163,17 @@ class User : NSObject, NSCoding{
         if let x = dic["gender"] as? String, let i = Int(x){
             me.gender = i
         }
+        
+        
+        if let x = dic["visible_phone"] as? String, let i = Int(x){
+            me.visible_phone = i
+        }
+        
+        if let x = dic["visible_phone"] as? Int{
+            me.visible_phone = x
+        }
+
+        
 
         return me
     }

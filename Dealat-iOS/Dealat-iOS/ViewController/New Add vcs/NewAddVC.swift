@@ -15,7 +15,6 @@ import KMPlaceholderTextView
 import SkyFloatingLabelTextField
 import SwiftyJSON
 //import IQDropDownTextField
-import UICheckbox_Swift
 
 class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate,UITextFieldDelegate,YMSPhotoPickerViewControllerDelegate {
     
@@ -89,6 +88,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     //9
     @IBOutlet weak var tfStatus9 : SkyFloatingLabelTextField!
     
+    @IBOutlet weak var checkbox2 : CheckBox2!
+    @IBOutlet weak var termsLbl : UILabel!
+
+
     
     var cities = [City]()
     var locations = [Location]()
@@ -126,13 +129,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.tfCategory.adjustsFontSizeToFitWidth = true
                 self.tfCategory.minimumFontSize = 8
                 
-                
                 //new
                 self.videoPathDeleted = self.videoPath
                 self.videoUrl = nil
                 self.videoPath = nil
                 self.collectionView.reloadData()
-                
                 
                 self.setupTypes()
                 self.refreshData()
@@ -318,7 +319,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     func setupTypes(){
-        types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
+//        types = typesBase.filter({$0.tamplate_id.intValue == self.selectedCategory.tamplate_id.intValue})
+        
+        types = typesBase.filter({ (t) -> Bool in
+            if let c = t.category_id{
+                return c.intValue == self.selectedCategory.category_id.intValue
+            }
+            return false
+        })
+        
+//        types = typesBase.filter({$0.category_id.intValue == self.selectedCategory.category_id.intValue})
+
     }
     
     func setupViews(){
@@ -329,6 +340,22 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.title = "Sell".localized
         }
         
+//        checkbox.uncheckedBorderColor = Theme.Color.darkGrey
+//        checkbox.uncheckedBorderColor = Theme.Color.darkGrey
+//        checkbox.borderStyle = .square
+//        checkbox.checkmarkStyle = .tick
+//        checkbox.checkmarkSize = 0.7
+        
+        
+        let arr = NSMutableAttributedString.init()
+        arr.append(NSAttributedString.init(string: "termsMessage1".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri,NSAttributedStringKey.foregroundColor : UIColor.white]))
+        arr.append(NSAttributedString.init(string: "termsMessage2".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri,NSAttributedStringKey.underlineColor : UIColor.blue,NSAttributedStringKey.underlineStyle : 1,  NSAttributedStringKey.foregroundColor : UIColor.blue]))
+        termsLbl.attributedText = arr
+        
+        termsLbl.isUserInteractionEnabled = true
+        
+        termsLbl.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.openTerms)))
+
         
         tfDescription.text = "Description".localized
         tfDescription.delegate = self
@@ -403,31 +430,24 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             if let place = i.placeholder{
                 let arr = place.components(separatedBy: "*")
                 if let temp = arr.first{
-                    i.placeholder = temp.localized + "*"
+                    if arr.count == 2{
+                        i.placeholder = temp.localized + "*"
+                    }else{
+                        i.placeholder = temp.localized
+                    }
                 }
             }
         }
         
-        /*for i in tfields2{
-         if let place = i.placeholder{
-         let arr = place.components(separatedBy: "*")
-         if let temp = arr.first{
-         i.placeholder = temp.localized + "*"
-         i.placeHolderColor = Theme.Color.White
-         
-         }
-         }
-         }*/
-        
-        
     }
     
-    
-    /*func textField(_ textField: IQDropDownTextField, didSelectItem item: String?) {
-     if textField == tfType{
-     self.setupModels()
-     }
-     }*/
+    @objc func openTerms(){
+        print("openTerms")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "TermsVC") as! TermsVC
+        let nv = UINavigationController.init(rootViewController: vc)
+        
+        self.present(nv, animated: true, completion: nil)
+    }
     
     
     func setPickerViewOn(_ textField : UITextField){
@@ -702,7 +722,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 }
             case 8:
                 if let schedule_id = self.ad.job.schedule_id{
-                    if let schedule = self.schedules.first(where: {$0.schedual_id.intValue == schedule_id.intValue}){
+                    if let schedule = self.schedules.first(where: {$0.schedule_id.intValue == schedule_id.intValue}){
                         self.selectedSchedule = schedule
                     }
                 }
@@ -881,6 +901,15 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBAction func submitAction(){
         var params : [String : Any] = [:]
         
+        if !checkbox2.isChecked{
+            self.showErrorMessage(text : "termsValidateMessage".localized)
+            
+//            let y = tableView.contentSize.height - tableView.frame.size.height
+//            self.tableView.setContentOffset(CGPoint.init(x: 0, y: (y < 0) ? 0 : y), animated: false)
+            return
+        }
+        
+        
         resetFields()
         
         guard let titleAd = self.tfTitle.text, !titleAd.isEmpty else {
@@ -940,10 +969,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
-            guard let type = self.selectedType, let type_id = type.type_id else {
-                self.validMessage(tf : self.tfType, message : "Please enter".localized + "TypeName".localized)
-                return
-            }
+//            guard let type = self.selectedType, let type_id = type.type_id else {
+//                self.validMessage(tf : self.tfType, message : "Please enter".localized + "TypeName".localized)
+//                return
+//            }
             guard let model = self.selectedModel, let type_model_id = model.type_model_id else {
                 self.validMessage(tf : self.tfModel, message : "Please enter".localized + "TypeModelName".localized)
                 return
@@ -967,7 +996,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
             
             
-            params["type_id"] = type_id.intValue
+            if let type = self.selectedType, let type_id = type.type_id {
+                params["type_id"] = type_id.intValue
+            }
+
+            
             params["type_model_id"] = type_model_id.intValue
             params["manufacture_date"] = self.years[manufacture_date]
             params["is_automatic"] = is_automatic
@@ -1006,12 +1039,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.validMessage(tf : self.tfStatus3, message : "Please enter".localized + "State".localized)
                 return
             }
-            guard let type = self.selectedType, let type_id = type.type_id else {
-                self.validMessage(tf : self.tfType3, message : "Please enter".localized + "TypeName".localized)
-                return
-            }
+//            guard let type = self.selectedType, let type_id = type.type_id else {
+//                self.validMessage(tf : self.tfType3, message : "Please enter".localized + "TypeName".localized)
+//                return
+//            }
             
-            params["type_id"] = type_id.intValue
+            
+            if let type = self.selectedType, let type_id = type.type_id {
+                params["type_id"] = type_id.intValue
+            }
+
+            
             params["is_new"] = is_new
             
         case 4:
@@ -1041,7 +1079,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             params["is_new"] = is_new
             
         case 8:
-            guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedual_id else {
+            guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedule_id else {
                 self.validMessage(tf : self.tfSchedule, message : "Please enter".localized + "Schedule".localized)
                 return
             }

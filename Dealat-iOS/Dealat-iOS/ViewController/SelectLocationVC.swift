@@ -73,8 +73,11 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         
         if let city = self.selectedCity {
             Provider.setCity(city.city_id.intValue)
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
-            self.navigationController?.pushViewController(vc, animated: true)
+            
+            AppDelegate.setupViews()
+            
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
         
     }
