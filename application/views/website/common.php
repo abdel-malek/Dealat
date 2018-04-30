@@ -1,6 +1,6 @@
 <div class="main-wrapper">
 	<!--  loading -->
-	<!--
+	
 <section class="loading-overlay">
 	<div class="spinner">
 		<div class="sk-circle">
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 </section>
--->
+
 	<section class="loading-overlay1">
 		<div class="spinner">
 			<div class="sk-circle">
@@ -135,14 +135,16 @@
 	<script id="ad-details-template" type="text/template">
 		<div class="card" data-ad-id="{{ad.ad_id}}" data-category-id="{{ad.category_id}}">
 			<div class="card-img-slider slick-slider">
-				<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>
+			{{#ad.main_video}}
+				<div class="card-img-top"><video height="200" controls>
+				  <source src="<?php echo base_url('{{ad.main_video}}'); ?>" type="video/mp4">
+				</video></div>
+				{{/ad.main_video}}
+				{{#ad.main_image}}<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>{{/ad.main_image}}
 				{{#ad.images}}
 				<div class="card-img-top"><img src="<?php echo base_url('{{image}}'); ?>"></div>
-				{{/ad.images}} {{#ad.main_video}}
-				<div class="card-img-top"><video height="200" controls>
-  <source src="<?php echo base_url('{{ad.main_video}}'); ?>" type="video/mp4">
-</video></div>
-				{{/ad.main_video}}
+				{{/ad.images}} 
+				
 			</div>
 			<div class="card-body">
 				<div class="fav">
@@ -154,7 +156,7 @@
 						<div class="details">{{ad.description}}</div>
 					</div>
 
-					<div class="col-4 info-col">
+					<div class="col-sm-4 info-col mb-1">
 						<div class="number"><span class="number-lbl"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val">{{ad.ad_id}}</span></div>
 						<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 						<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
@@ -198,13 +200,13 @@
 
 					</div>
 
-					<div class="col-4 info-col">
+					<div class="col-sm-4 info-col">
 						<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
-						<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
 						<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
+						<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
 					</div>
 
-					<div class="col-4 info-col templates">
+					<div class="col-sm-4 info-col templates">
 						<!--vehicles template-->
 						<div class="template-vehicles template d-none" data-template-id="1">
 							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
@@ -484,10 +486,10 @@
 										{{ #. }}
 										<li>
 											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}" ">{{category_name}}</a>
-									</li>
-									{{ /. }}
-								</ul>
-							</script>
+										</li>
+										{{ /. }}
+									</ul>
+								</script>
 
 							<div class="form-group">
 								<select name="city_id" class="city-select" required>
@@ -537,10 +539,10 @@
 
 							<script id="ad-modal-types-template" type="text/template">
 								{{ #types }}
-								<li class="type-item" data-type-id={{type_id}} data-template-id={{tamplate_id}}><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
+								<li class="type-item" data-type-id="{{type_id}}" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}"><a class="dropdown-item dropdown-toggle type" href="" data-type-id={{type_id}}>{{name}}</a>
 									<ul class="dropdown-menu">
 										{{ #models }}
-										<li><a class="dropdown-item model" href="" data-type-id={{type_id}} data-type-model-id={{type_model_id}}>{{name}}</a></li>
+										<li><a class="dropdown-item model" href="" data-type-id="{{type_id}}" data-type-model-id="{{type_model_id}}">{{name}}</a></li>
 										{{ /models }}
 									</ul>
 								</li>
@@ -616,7 +618,7 @@
 							<div class="template-electronics template d-none" data-template-id="4">
 
 								<div class="form-group field size">
-									<input type="number" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+									<input type="number" step=any class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
 								</div>
 
 								<div class="form-group field is_new">
@@ -707,7 +709,7 @@
 							<div class="">
 								<input id="terms-agree" type="checkbox" name="terms_agree" class="" value="1" required>
 								<label for="terms-agree" class="">
-									<span class=""><?php echo $this->lang->line('agree_policy'); ?> <a href="" target="_blank"><?php echo $this->lang->line('terms'); ?></a></span>
+									<span class=""><?php echo $this->lang->line('agree_policy'); ?> <a href="" class="terms"><?php echo $this->lang->line('terms'); ?></a></span>
 									<span class="d-none text-danger">(required) <i class="fas fa-exclamation"></i></span>
 								</label>
 							</div>
@@ -756,6 +758,36 @@
 									</ul>
 								</nav>
 							</div>
+							
+								<script id="filter-modal-categories-template" type="text/template">
+									{{ #categories }}
+									<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
+										<ul class="dropdown-menu">
+											<li>
+												<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}><?php echo $this->lang->line('all'); ?> {{category_name}}</a>
+											</li>
+											{{ #children }}
+											<li>
+												<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a>
+											</li>
+											{{ /children }}
+										</ul>
+									</li>
+									{{ /categories }}
+								</script>
+
+								<script id="filter-modal-subcategories-template" type="text/template">
+									<ul class="dropdown-menu">
+										<li>
+											<a class="dropdown-item last-subcategory" href="" data-template-id="{{parent.tamplate_id}}" data-category-id="{{parent.category_id}}" "><?php echo $this->lang->line('all'); ?>  {{parent.category_name}}</a>
+										</li>
+										{{ #children }}
+										<li>
+											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}" ">{{category_name}}</a>
+										</li>
+										{{ /children }}
+									</ul>
+								</script>
 
 							<div class="form-group">
 								<select name="city_id" class="city-select">
@@ -896,10 +928,10 @@
 									<label for=""><?php echo $this->lang->line('size'); ?>:</label>
 									<div class="row">
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="size_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+											<input type="number" class="form-control" name="size_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0" step=any>
 										</div>
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="size_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+											<input type="number" class="form-control" name="size_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0" step=any>
 										</div>
 									</div>
 								</div>
@@ -1096,8 +1128,18 @@
 					<input type="hidden" class="is-seller">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">
+<!--
 						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
 						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
+-->
+				<div class="row no-gutters">
+					<div class="col-11">
+						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
+					</div>
+					<div class="col-1">
+						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
+					</div>
+				</div>
 					</div>
 				</form>
 			</div>
@@ -1132,6 +1174,25 @@
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--terms modal-->
+<div id="terms-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body">
+				<h6 class="text"></h6>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
 			</div>
 		</div>
 	</div>

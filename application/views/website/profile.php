@@ -60,27 +60,28 @@
 	<div class="container">
 		<div id="profile-tabs" class="profile-tabs">
 			<ul class='etabs'>
-				<!--
+				
 			<div class="row">
-<div class="col">
-	<li class='tab'><a href="#my-ads">My Ads</a></li>
+<!--<div class="col">-->
+	<li class='col tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
+<!--</div>-->
+<!--<div class="col">-->
+	<li class='col tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
+<!--</div>-->
+<!--<div class="col">-->
+	<li class='col tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
+<!--</div>-->
+<!--<div class="col">-->
+	<li class='col tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
+<!--</div>-->
 </div>
-<div class="col">
-	<li class='tab'><a href="#favorites">Favorites</a></li>
-</div>
-<div class="col">
-	<li class='tab'><a href="#chats">Chats</a></li>
-</div>
-</div>
--->
+
+<!--
 				<li class='tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
 				<li class='tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
-				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?>
-<!--				<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>-->
-				</a>
-
-				</li>
+				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
 				<li class='tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
+-->
 			</ul>
 			<div id="user-ads" class="user-ads">
 				<section class="products">
@@ -109,7 +110,7 @@
 													<div class="card-body">
 														<div class="card-title mb-1">{{ad.title}}</div>
 														<!--<div class="details mb-2">{{ad.description}}</div>-->
-														<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.category_name}}</span></div>
+														<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 
 														{{#publish}}
@@ -170,11 +171,9 @@
 													<div class="card-body">
 														<div class="card-title mb-1">{{ad.title}}</div>
 														<div class="details mb-2">{{ad.description}}</div>
-														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
+														{{#ad.city_name}}<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>{{/ad.city_name}}
 
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{date}}</span></div>
-														<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
-														<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">Jhon Doe</span></div>
 													</div>
 
 												</div>
@@ -199,7 +198,7 @@
 								<div class="row no-gutters">
 									<div class="col-2">
 										<div class="chat-img text-center">
-											<img src="<?php echo base_url('{{image}}'); ?>" width="50px" alt="">
+											<img src="<?php echo base_url('{{image}}'); ?>" height="50px" alt="">
 										</div>
 									</div>
 									<div class="col-3">
@@ -507,8 +506,8 @@
 									{{/main_image}}
 
 									<div class="secondary-imgs">
+										<div class="">Other images:</div>
 										{{#images}}
-										<div class="">Other images:</div>{{/images}} {{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>

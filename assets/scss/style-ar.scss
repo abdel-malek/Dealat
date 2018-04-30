@@ -220,7 +220,7 @@ footer {
 
 .profile-page #profile-tabs .etabs {
 	direction: rtl;
-	text-align: right;
+//	text-align: right;
 }
 
 .profile-page #profile-tabs .chats ul,
@@ -308,4 +308,8 @@ header.home .header-account-logged li a {
 #delete-account-modal .note{
 	direction: rtl;
 	text-align: right !important;
+}
+#terms-modal .text{
+	text-align: right;
+	direction: rtl
 }

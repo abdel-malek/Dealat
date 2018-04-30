@@ -59,7 +59,13 @@
 												</div>
 												<?php endif; ?>
 
-												<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')"></div>
+												<?php if($ad->main_image == null): ?>
+								<div class="card-img-top" style="background-image: url('<?php echo base_url('assets/images/default_ad/' .$ad->tamplate_id. '.png'); ?>')">
+								</div>
+								<?php else: ?>
+								<div class="card-img-top" style="background-image: url('<?php echo base_url($ad->main_image); ?>')">
+								</div>
+								<?php endif; ?>
 
 												<?php if($ad->price != 0): ?>
 												<div class="price">
@@ -79,9 +85,10 @@
 												<div class="card-title mb-1">
 													<?php echo $ad->title ?>
 												</div>
-												<div class="details mb-2">
+												<div class="details mb-1">
 													<?php echo $ad->description ?>
 												</div>
+												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 												<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val"><?php echo $ad->city_name.'-'.$ad->location_name ?></span></div>
 
 												<!--												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->

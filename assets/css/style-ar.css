@@ -171,8 +171,7 @@ footer {
   text-align: right; }
 
 .profile-page #profile-tabs .etabs {
-  direction: rtl;
-  text-align: right; }
+  direction: rtl; }
 
 .profile-page #profile-tabs .chats ul,
 .profile-page #profile-tabs .bookmarks ul {
@@ -243,5 +242,9 @@ header.home .header-account-logged li a {
 #delete-account-modal .note {
   direction: rtl;
   text-align: right !important; }
+
+#terms-modal .text {
+  text-align: right;
+  direction: rtl; }
 
 /*# sourceMappingURL=style-ar.css.map */

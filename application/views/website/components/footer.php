@@ -118,6 +118,7 @@
 </script>
 <!--  slick slider  -->
 <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/slick-lightbox.min.js'); ?>"></script>
 <script>
 	$(document).ready(function() {
 		$('.ads-slider').slick({
@@ -275,7 +276,7 @@
 <script>
 	$(function() {
 		$('#profile-tabs').easytabs({
-			//				tabs: "> ul li"
+			tabs: "> ul li"
 		});
 	});
 

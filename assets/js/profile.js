@@ -43,8 +43,22 @@ $(function () {
 						data.data[i].main_image = 'assets/images/default_ad/' + data.data[i].tamplate_id + '.png';
 					}
 
-					
-
+					if (data.data[i].expired_after <= 0 && data.data[i].status === "2") {
+						data.data[i].status = "3";
+					}
+					//						if (data.data[i].expired_after <= 0) {
+					//						if (lang === "ar") {
+					//							status = "منتهي";
+					//						} else {
+					//							status = "Expired";
+					//						}
+					//					} else{
+					//						if (lang === "ar") {
+					//							status = "موافق عليه";
+					//						} else {
+					//							status = "Accepted";
+					//						}
+					//					}
 					if (data.data[i].status === "1") {
 						if (lang === "ar") {
 							status = "قيد الانتظار";
@@ -53,44 +67,35 @@ $(function () {
 						}
 
 					} else if (data.data[i].status === "2") {
-						if (data.data[i].expired_after <= 0) {
-//						data.data[i].status = "3";
-						if (lang === "ar") {
-							status = "منتهي";
-						} else {
-							status = "Expired";
-						}
-					} else{
 						if (lang === "ar") {
 							status = "موافق عليه";
 						} else {
 							status = "Accepted";
 						}
-					}
-//					} else if (data.data[i].status === "3") {
-//						if (lang === "ar") {
-//							status = "منتهي";
-//						} else {
-//							status = "Expired";
-//						}
-					} else if (data.data[i].status === "4") {
+					} else if (data.data[i].status === "3") {
 						if (lang === "ar") {
-							status = "مخفي";
+							status = "منتهي";
 						} else {
-							status = "Hidden";
+							status = "Expired";
 						}
+						//					} else if (data.data[i].status === "4") {
+						//						if (lang === "ar") {
+						//							status = "مخفي";
+						//						} else {
+						//							status = "Hidden";
+						//						}
 					} else if (data.data[i].status === "5") {
 						if (lang === "ar") {
 							status = "مرفوض";
 						} else {
 							status = "Rejected";
 						}
-					} else if (data.data[i].status === "6") {
-						if (lang === "ar") {
-							status = "محذوف";
-						} else {
-							status = "Deleted";
-						}
+						//					} else if (data.data[i].status === "6") {
+						//						if (lang === "ar") {
+						//							status = "محذوف";
+						//						} else {
+						//							status = "Deleted";
+						//						}
 					}
 
 					if (data.data[i].publish_date) {
@@ -142,6 +147,7 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {} else {
+//				console.log(data);
 				var adData, negotiable, type, i, template, rendered, templateId;
 
 				for (i in data.data) {
@@ -182,7 +188,7 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				console.log(data);
+//				console.log(data);
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -210,12 +216,12 @@ $(function () {
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
 				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
 				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
-				if(data.data.visible_phone === "1"){
+				if (data.data.visible_phone === "1") {
 					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
-				} else{
-//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", false);
+				} else {
+					//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", false);
 				}
-				
+
 				//personal image
 			}
 		});
@@ -519,6 +525,9 @@ $(function () {
 			templateId = $(this).parents(".card").data("templateId");
 			catId = $(this).parents(".card").data("categoryId");
 			adStatus = $(this).parents(".card").data("statusId");
+			if (adStatus == 3) {
+				adStatus = 2;
+			}
 			$("#edit-ad-modal .ad-status").val(adStatus);
 
 			$.ajax({
@@ -531,23 +540,36 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {} else {
-					console.log(data);
-					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
-					$("#edit-ad-modal input[name='title']").val(data.data.title);
-					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
-//					$("#edit-ad-modal .locations-nav .select").text(data.data.location_name);
-					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
-					$("#edit-ad-modal .period-select")[0].sumo.reload();
-					$("#edit-ad-modal input[name='price']").val(data.data.price);
-					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
-					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
-
 					//remove upload video except for properties category
 					if (templateId === 2) {
 						$("#edit-ad-modal #fileuploader-edit-ad-video").removeClass("d-none");
 					} else {
 						$("#edit-ad-modal #fileuploader-edit-ad-video").addClass("d-none");
 					}
+
+					//if category is job remove price and negotiable inputs
+					if (templateId === 8) {
+						$("#edit-ad-modal input[name='price']").closest(".form-group").addClass("d-none");
+						$("#edit-ad-modal input[name='price']").removeAttr("required");
+						$("#edit-ad-modal input[name='price']").val("0");
+						$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
+					} else {
+						$("#edit-ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
+						$("#edit-ad-modal input[name='price']").attr("required", true);
+						$("#edit-ad-modal input[name='price']").val("");
+						$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
+					}
+					
+					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
+					$("#edit-ad-modal input[name='title']").val(data.data.title);
+					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
+					//					$("#edit-ad-modal .locations-nav .select").text(data.data.location_name);
+					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
+					$("#edit-ad-modal .period-select")[0].sumo.reload();
+					$("#edit-ad-modal input[name='price']").val(data.data.price);
+					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
+					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
+
 
 					if (data.data.location_id) {
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
@@ -566,7 +588,7 @@ $(function () {
 					}
 					if (data.data.type_model_id) {
 						$("#edit-ad-modal input[name='type_model_id']").val(data.data.type_model_id);
-						$("#edit-ad-modal .types-nav .select").text(data.data.type_name + " " + data.data.type_model_name);
+						$("#edit-ad-modal .types-nav .select").text(data.data.type_name + "-" + data.data.type_model_name);
 					}
 					if (data.data.manufacture_date) {
 						$("#edit-ad-modal input[name='manufacture_date']").val(data.data.manufacture_date);
@@ -575,17 +597,18 @@ $(function () {
 						$("#edit-ad-modal input[name='kilometer']").val(data.data.kilometer);
 					}
 					if (data.data.is_automatic) {
-//						$("#edit-ad-modal input[name='is_automatic']").prop("checked", true);
-						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_automatic']").val(data.data.is_automatic);
+						//						$("#edit-ad-modal input[name='is_automatic']").prop("checked", true);
+						$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_automatic']").val(data.data.is_automatic);
 						$("#edit-ad-modal select[name='is_automatic']")[0].sumo.reload();
 					}
 					if (data.data.is_new) {
-//						$("#edit-ad-modal input[name='is_new']").prop("checked", true);
-						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']").val(data.data.is_new);
-						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']")[0].sumo.reload();
-					}else{
-						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']").val("0");
-						$("#edit-ad-modal .template[data-template-id="+ templateId +"] select[name='is_new']")[0].sumo.reload();
+						//						$("#edit-ad-modal input[name='is_new']").prop("checked", true);
+						$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").val(data.data.is_new);
+						$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']")[0].sumo.reload();
+						//change all status values from all categories because when submit it takes the last value
+						$('#edit-ad-modal .status-select').each(function () {
+							$(this).val(data.data.is_new);
+						});
 					}
 					if (data.data.space) {
 						$("#edit-ad-modal input[name='space']").val(data.data.space);
@@ -601,6 +624,9 @@ $(function () {
 					}
 					if (data.data.with_furniture === "1") {
 						$("#edit-ad-modal input[name='with_furniture']").prop("checked", true);
+					}
+					if (data.data.size) {
+						$("#edit-ad-modal input[name='size']").val(data.data.size);
 					}
 					if (data.data.schedule_id) {
 						$("#edit-ad-modal select[name='schedule_id']").val(data.data.schedule_id);
@@ -627,11 +653,15 @@ $(function () {
 					Mustache.parse(template);
 					rendered = Mustache.render(template, data.data);
 					$("#edit-ad-modal .ad-images").append(rendered);
+					
+					if(data.data.images.length === 0){
+						$("#edit-ad-modal .ad-images .secondary-imgs").remove();
+					}
 				}
 			});
 
-//			$("#ad-modal .categories-nav a.select").css("color", "#495057");
-			var templateId, subId, has_types = 0;
+			//			$("#ad-modal .categories-nav a.select").css("color", "#495057");
+			var subId, has_types = 0;
 
 			subId = $(this).parents(".card").data("categoryId");
 
@@ -658,13 +688,23 @@ $(function () {
 				}
 			});
 			//only display selected template types
+//			$("#edit-ad-modal .types-nav .type-item").each(function () {
+//				$(this).addClass("d-none");
+//				if ($(this).data("templateId") === templateId) {
+//					has_types = 1;
+//					$(this).removeClass("d-none");
+//				}
+//			});
+			
+			//only display selected template types
 			$("#edit-ad-modal .types-nav .type-item").each(function () {
-				$(this).addClass("d-none");
-				if ($(this).data("templateId") === templateId) {
-					has_types = 1;
-					$(this).removeClass("d-none");
-				}
-			});
+			$(this).addClass("d-none");
+			if ($(this).data("categoryId") === subId) {
+				has_types = 1;
+				$(this).removeClass("d-none");
+			}
+		});
+			
 			//display types select only if category is vehicles, mobiles or electronics
 			if (has_types !== 0) {
 				$("#edit-ad-modal .types-nav").parent(".form-group").removeClass("d-none");
@@ -715,12 +755,11 @@ $(function () {
 		//change all is_new select values if one select is changed
 		$('#edit-ad-modal').on("change", ".status-select", function () {
 			var newVal = $(this).val();
-			console.log($(this).val());
-			$('#edit-ad-modal .status-select').each(function(){
+			$('#edit-ad-modal .status-select').each(function () {
 				$(this).val(newVal);
 			});
 		});
-		
+
 		//submit edit user ad
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
@@ -732,47 +771,47 @@ $(function () {
 
 			adStatus = $(this).find(".ad-status").val();
 			data = $(this).serializeArray();
-			console.log(data);
-
-//			if (adStatus === "1") {
-//				//pending
-//				data.push({
-//					name: "edit_status",
-//					value: 1
-//				});
-//			} else if (adStatus === "2") {
-//				//accepted 
-//				data.push({
-//					name: "edit_status",
-//					value: 2
-//				});
-//			} else if (adStatus === "3") {
-//				//expired 
-//				data.push({
-//					name: "edit_status",
-//					value: 3
-//				});
-//			} else if (adStatus === "4") {
-//				//hidden 
-//				data.push({
-//					name: "edit_status",
-//					value: 4
-//				});
-//			} else if (adStatus === "5") {
-//				//rejected 
-//				data.push({
-//					name: "edit_status",
-//					value: 5
-//				});
-//			} 
 			
+
+			//			if (adStatus === "1") {
+			//				//pending
+			//				data.push({
+			//					name: "edit_status",
+			//					value: 1
+			//				});
+			//			} else if (adStatus === "2") {
+			//				//accepted 
+			//				data.push({
+			//					name: "edit_status",
+			//					value: 2
+			//				});
+			//			} else if (adStatus === "3") {
+			//				//expired 
+			//				data.push({
+			//					name: "edit_status",
+			//					value: 3
+			//				});
+			//			} else if (adStatus === "4") {
+			//				//hidden 
+			//				data.push({
+			//					name: "edit_status",
+			//					value: 4
+			//				});
+			//			} else if (adStatus === "5") {
+			//				//rejected 
+			//				data.push({
+			//					name: "edit_status",
+			//					value: 5
+			//				});
+			//			} 
+
 			if (adStatus) {
 				data.push({
 					name: "edit_status",
 					value: adStatus
 				});
-			} 
-			
+			}
+
 			if (editMainImg.length > 0) {
 				data.push({
 					name: "main_image",
@@ -841,9 +880,7 @@ $(function () {
 				data: $.param(data)
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
 				} else {
-					console.log(data);
 					$("#edit-ad-modal").modal("hide");
 					setTimeout(function () {
 						if (lang === "ar") {
@@ -1090,7 +1127,6 @@ $(function () {
 				dataType: "json"
 			}).done(function (data) {
 				if (data.status === false) {
-					console.log(data);
 				} else {
 					window.location = base_url;
 				}

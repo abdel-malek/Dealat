@@ -489,6 +489,12 @@ summary:focus {
   .home-page .products .card .card-body,
   .category-page .products .card .card-body {
     padding-left: 40px; }
+    .home-page .products .card .card-body .category,
+    .category-page .products .card .card-body .category {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
   .home-page .products .card .price,
   .category-page .products .card .price {
     top: -35px;
@@ -857,15 +863,13 @@ header.home {
   cursor: auto; }
 .profile-page #profile-tabs {
   margin-bottom: 20px; }
-  .profile-page #profile-tabs .tab {
-    padding-right: 10%; }
   .profile-page #profile-tabs .etabs {
     text-align: center;
     border-bottom: solid 1px #c30a30;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    padding: 0; }
   .profile-page #profile-tabs .tab {
-    display: inline-block;
-    width: calc(90% / 4); }
+    display: inline-block; }
   .profile-page #profile-tabs .tab a {
     font-size: .9rem;
     line-height: initial;
@@ -1001,6 +1005,9 @@ select option.placeholder {
         color: #fff;
         font-size: .8rem;
         box-shadow: 2px 1px 10px 0px #a8a8a8; }
+      @media (max-width: 576px) {
+        #card-modal .card .card-body .price {
+          left: -1px; } }
       #card-modal .card .card-body .price-val {
         margin-top: 35%; }
       #card-modal .card .card-body .views-lbl,
@@ -1452,10 +1459,12 @@ label {
     color: #ddd; }
   #chat-modal .send-wrapper {
     position: relative; }
+    #chat-modal .send-wrapper input {
+      border-radius: 0; }
     #chat-modal .send-wrapper .telegram {
       position: absolute;
-      top: 0;
       right: 0;
+      bottom: 0;
       padding: 1px 1px 0 0;
       min-height: 10px;
       height: 30px;
@@ -1521,5 +1530,8 @@ label {
   display: inline-block; }
 #edit-user-info-modal .delete-account:hover {
   text-decoration: underline; }
+
+#terms-modal .text {
+  font-size: .8rem; }
 
 /*# sourceMappingURL=style.css.map */

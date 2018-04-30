@@ -25,14 +25,14 @@ $(function () {
 	category_name = $("body").data("categoryName");
 
 	//    Loading screen
-	//	$(window).on('load', function () {
-	//		$(".loading-overlay .spinner").fadeOut(500, function () {
-	//			$(this).parent().fadeOut(500, function () {
-	//				$("body").removeAttr('style');
-	//				$(this).remove();
-	//			});
-	//		});
-	//	});
+//		$(window).on('load', function () {
+			$(".loading-overlay .spinner").fadeOut(500, function () {
+				$(this).parent().fadeOut(500, function () {
+					$("body").removeAttr('style');
+					$(this).remove();
+				});
+			});
+//		});
 
 	$("button.register").click(function () {
 		$("#register-modal").modal("show");
@@ -77,6 +77,7 @@ $(function () {
 		$('#ad-modal .period-select')[0].sumo.unSelectAll();
 		$('#ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#ad-modal .educations-select')[0].sumo.unSelectAll();
+		$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
 	}
 
 	function resetEditAd() {
@@ -176,7 +177,6 @@ $(function () {
 		}
 	}).done(function (data) {
 		if (data.status === false) {
-			console.log(data);
 		} else {
 			var adData, sliderDefaultImg, sliderImgCount = 0,
 				sideImgCount = 0,
@@ -237,7 +237,6 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {
-			//console.log(data);
 		} else {
 			//save subcategories in array
 			for (i in data.data) {
@@ -250,15 +249,25 @@ $(function () {
 			catData = {
 				categories: data.data
 			};
+			
+			//post ad modal categories
 			template = $('#ad-modal-categories-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, catData);
-			$("#ad-modal .categories-nav .main-categories, #filter-modal .categories-nav .main-categories").append(rendered);
+//			$("#ad-modal .categories-nav .main-categories, #filter-modal .categories-nav .main-categories").append(rendered);
+			$("#ad-modal .categories-nav .main-categories").append(rendered);
 
+			//filter modal categories
+			template = $('#filter-modal-categories-template').html();
+			Mustache.parse(template);
+			rendered = Mustache.render(template, catData);
+			$("#filter-modal .categories-nav .main-categories").append(rendered);
+			
 			for (i in data.data) {
 				for (j in data.data[i].children) {
 
 					if (data.data[i].children[j].children) {
+						//save hidden_fields in array
 						for (k in data.data[i].children[j].children) {
 							if (data.data[i].children[j].children[k].hidden_fields) {
 								hiddenFields.push({
@@ -271,10 +280,20 @@ $(function () {
 						$(".categories-nav .subcategory[data-category-id=" + catId + "]").addClass("dropdown-toggle");
 						$(".categories-nav .subcategory[data-category-id=" + catId + "]").removeClass("last-subcategory");
 
+						//add third level subcategories
 						template = $('#ad-modal-subcategories-template').html();
 						Mustache.parse(template);
 						rendered = Mustache.render(template, data.data[i].children[j].children);
-						$(".categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
+						$("#ad-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
+						
+						var filterSub = {
+							parent: data.data[i].children[j],
+							children: data.data[i].children[j].children
+						};
+						template = $('#filter-modal-subcategories-template').html();
+						Mustache.parse(template);
+						rendered = Mustache.render(template, filterSub);
+						$("#filter-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
 					} else {
 						if (data.data[i].children[j].hidden_fields) {
 							hiddenFields.push({
@@ -285,7 +304,7 @@ $(function () {
 					}
 				}
 			}
-			//			console.log(hiddenFields);
+//						console.log(hiddenFields);
 		}
 	});
 
@@ -364,6 +383,7 @@ $(function () {
 		if (data.status === false) {
 			//console.log(data);
 		} else {
+//			console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -400,7 +420,7 @@ $(function () {
 					if (locData.cities[i].city_id === cityId) {
 						//check if the selected type include models
 						if (locData.cities[i].locations !== null) {
-							//only display selected template types
+							//
 							for (j in locData.cities[i].locations) {
 								$('#ad-modal .location-select , #edit-ad-modal .location-select, #filter-modal .location-select').append($('<option>', {
 									value: locData.cities[i].locations[j].location_id,
@@ -444,13 +464,15 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-
+//console.log(typesData);
+			
+			//post ad and edit ad modals types
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, typesData);
 			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
 
-			//if type with no models don't open a menu and remove arrow 
+			//if type with no models then don't open a menu and remove arrow 
 			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
 				if ($(this).html().trim() === "") {
 					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
@@ -460,7 +482,7 @@ $(function () {
 
 			//filter modal types
 			for (i in typesData.types) {
-				$('#filter-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '">' + typesData.types[i].name + '</option>');
+				$('#filter-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="'+typesData.types[i].category_id+'">' + typesData.types[i].name + '</option>');
 			}
 
 			$('#filter-modal select.type-select')[0].sumo.reload();
@@ -473,7 +495,7 @@ $(function () {
 				for (i in typesData.types) {
 					if (typesData.types[i].type_id === typeId) {
 						//check if the selected type include models
-						if (typesData.types[i].models !== null) {
+						if (typesData.types[i].models.length > 0) {
 							//only display selected template types
 							for (j in typesData.types[i].models) {
 								$('#filter-modal .model-select').append($('<option>', {
@@ -481,10 +503,10 @@ $(function () {
 									text: typesData.types[i].models[j].name
 								}));
 							}
-							$('#filter-modal .model-select').parents(".form-group").removeClass("d-none");
+							$('#filter-modal .model-select').closest(".form-group").removeClass("d-none");
 							$('select.model-select')[0].sumo.reload();
 						} else {
-							$('#filter-modal .model-select').parents(".form-group").addClass("d-none");
+							$('#filter-modal .model-select').closest(".form-group").addClass("d-none");
 						}
 						break;
 					}
@@ -526,30 +548,6 @@ $(function () {
 				$('select.schedules-select')[i].sumo.reload();
 			}
 
-			//change sumo select placeholder color
-			//			$('select').each(function () {
-			//				if ($(this).attr("multiple") !== "multiple") {
-			//					var selected;
-			//					selected = $(this).find('option:selected');
-			//					if (selected.hasClass("placeholder")) {
-			//						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
-			//					} else {
-			//						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
-			//					}
-			//				}
-			//			});
-
-			//			$('select').change(function () {
-			//				if ($(this).attr("multiple") !== "multiple") {
-			//					var selected;
-			//					selected = $(this).find('option:selected');
-			//					if (selected.hasClass("placeholder")) {
-			//						$(this).siblings(".CaptionCont").find("span").css("color", "#6c757d");
-			//					} else {
-			//						$(this).siblings(".CaptionCont").find("span").css("color", "#495057");
-			//					}
-			//				}
-			//			});
 		}
 
 	});
@@ -590,9 +588,7 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {
-				console.log(data);
 			} else {
-				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -652,7 +648,7 @@ $(function () {
 					}
 				}
 
-				if (!data.data.main_image) {
+				if (!data.data.main_image && !data.data.main_video) {
 					data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
 				}
 
@@ -676,6 +672,11 @@ $(function () {
 					swipeToSlide: true
 				});
 
+				$('.card-img-slider').slickLightbox({
+					src: 'src',
+					itemSelector: '.card-img-top img'
+				});
+				
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
@@ -755,14 +756,6 @@ $(function () {
 		var templateId, subId, has_types = 0;
 		templateId = $(this).data("templateId");
 		subId = $(this).data("categoryId");
-		//if category is properties
-		//		if (templateId === 2) {
-		//			$("#ad-modal .location-select").attr("required", "true");
-		//			$('#ad-modal .location-select')[0].sumo.reload();
-		//		} else {
-		//			$("#ad-modal .location-select").removeAttr("required");
-		//			$('#ad-modal .location-select')[0].sumo.reload();
-		//		}
 
 		//only show upload video in properties
 		if (templateId === 2) {
@@ -774,9 +767,13 @@ $(function () {
 		//if category is job remove price and negotiable inputs
 		if (templateId === 8) {
 			$("#ad-modal input[name='price']").closest(".form-group").addClass("d-none");
+			$("#ad-modal input[name='price']").removeAttr("required");
+			$("#ad-modal input[name='price']").val("0");
 			$("#ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
 		} else {
 			$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
+			$("#ad-modal input[name='price']").attr("required", true);
+			$("#ad-modal input[name='price']").val("");
 			$("#ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
 		}
 
@@ -796,6 +793,7 @@ $(function () {
 			}
 		}
 
+		//view the selected category template
 		$("#ad-modal .template").each(function () {
 			$(this).addClass("d-none");
 
@@ -805,9 +803,18 @@ $(function () {
 		});
 
 		//only display selected template types
+//		$("#ad-modal .types-nav .type-item").each(function () {
+//			$(this).addClass("d-none");
+//			if ($(this).data("templateId") === templateId) {
+//				has_types = 1;
+//				$(this).removeClass("d-none");
+//			}
+//		});
+		
+		//only display selected template types
 		$("#ad-modal .types-nav .type-item").each(function () {
 			$(this).addClass("d-none");
-			if ($(this).data("templateId") === templateId) {
+			if ($(this).data("categoryId") === subId) {
 				has_types = 1;
 				$(this).removeClass("d-none");
 			}
@@ -877,13 +884,23 @@ $(function () {
 		});
 
 		//only display selected template types
+//		$("#filter-modal .type-select option").each(function () {
+//			$(this).addClass("d-none");
+//			if ($(this).data("templateId") === templateId) {
+//				has_types = 1;
+//				$(this).removeClass("d-none");
+//			}
+//		});
+		
+		//only display selected template types
 		$("#filter-modal .type-select option").each(function () {
 			$(this).addClass("d-none");
-			if ($(this).data("templateId") === templateId) {
+			if ($(this).data("categoryId") === subId) {
 				has_types = 1;
 				$(this).removeClass("d-none");
 			}
 		});
+		
 		$('#filter-modal select.type-select')[0].sumo.reload();
 		//display types select only if category is vehicles, mobiles or electronics
 		if (has_types !== 0) {
@@ -1106,7 +1123,6 @@ $(function () {
 			secondary_imgs = [];
 
 		data = $(this).serializeArray();
-console.log(data);
 		if (adMainImg.length > 0) {
 			data.push({
 				name: "main_image",
@@ -1156,7 +1172,6 @@ console.log(data);
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				console.log(data);
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
 					if (lang === "ar") {
@@ -1689,7 +1704,6 @@ console.log(data);
 			global: false, // this makes sure ajaxStart is not triggered
 			data: $(this).serialize()
 		}).done(function (data) {
-			console.log(data.data);
 			if (data.status === false) {} else {
 				data.data.time = new Date(data.data.created_at).toLocaleString('en-US', {
 					hour: 'numeric',
@@ -2080,6 +2094,7 @@ console.log(data);
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {} else {
+//			console.log(data);
 			template = $('#footer-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);
@@ -2089,6 +2104,19 @@ console.log(data);
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);
 			$(".social-fixed .icons").append(rendered);
+			
+			//terms of service
+			$("#terms-modal .text").append(data.data.terms);
 		}
 	});
+	
+	$(".terms").click(function(e){
+		e.preventDefault();
+		$("#terms-modal").modal("show");
+	});
+	
+	$("#terms-modal").on("hidden.bs.modal", function(){
+		$("body").addClass("modal-open");
+	});
+	
 });

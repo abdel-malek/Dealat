@@ -553,25 +553,7 @@ summary:focus {
 		}
 		fieldset {
 			font-size: .6rem
-		} //		.featured {
-		//			width: 0;
-		//			height: 0;
-		////			border-left: 50px solid transparent;
-		//			border-right: 45px solid transparent;
-		//			border-top: 35px solid orange;
-		//			position: absolute;
-		//			top: 0;
-		////			z-index: 1;
-		//			z-index: 2
-		//		}
-		//		.featured-icon{
-		//			position: absolute;
-		//			top: 0px;
-		//			left: 5px;
-		//			color: #fff;
-		////			z-index: 1;
-		//			z-index: 2
-		//		}
+		}
 		.feat {
 			position: absolute;
 			top: -1px;
@@ -585,7 +567,6 @@ summary:focus {
 			right: -1px;
 		}
 		.feat-en {
-			//			display: none;
 			left: -1px;
 		}
 	}
@@ -644,6 +625,12 @@ summary:focus {
 		min-height: 320px;
 		.card-body {
 			padding-left: 40px;
+			.category {
+				max-width: 100%;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 		}
 		.price {
 			top: -35px;
@@ -835,52 +822,6 @@ header.home {
 	}
 }
 
-//section.search {
-//	header {
-//		margin-top: 20px;
-//		margin-bottom: 20px;
-//		.download {
-//			//			text-align: left;
-//			//			display: inline-block;
-//			//			.btn {
-//			//				box-shadow: 0px 3px 10px 0px rgba(168, 168, 168, 1);
-//			//			}
-//			img {
-//				height: 45px;
-//				max-width: 153px
-//			}
-//		}
-//		.android {
-//			//			margin-bottom: 8px;
-//			//			margin-right: 25px
-//		}
-//		.search-wrapper {
-//			position: relative;
-//			input[type="search"] {
-//				border-radius: 2em;
-//				min-height: 37px;
-//				padding-top: 0;
-//				padding-bottom: 0
-//			}
-//			.icon {
-//				position: absolute;
-//				right: 20px;
-//				top: 15%;
-//				color: #999
-//			}
-//		}
-//
-//		@media (max-width: 768px) {
-//			.logo {
-//
-//				display: none
-//			}
-//			.download {
-//				text-align: left; //			margin-bottom: 8px
-//			}
-//		}
-//	}
-//}
 //End search section
 //categories slider
 .slider-fixed {
@@ -918,7 +859,6 @@ header.home {
 				margin: auto
 			}
 		}
-
 	}
 	.slick-arrow {
 		top: 35%;
@@ -978,46 +918,7 @@ header.home {
 			}
 		}
 		.main {
-			padding-top: 150px; ////test new sub
-			////test new sub
-			//			.sub-categories {
-			//				margin-bottom: 20px;
-			//				padding-top: 5px;
-			//				padding-bottom: 5px;
-			//				transition: .5s;
-			//				font-size: .9rem;
-			//				color: #666;
-			//
-			//				.container {
-			//					color: #fff;
-			//					background-color: #aaa;
-			//					padding: 8px;
-			//					border-radius: 13px;
-			//					position: relative;
-			//					.row {
-			//						margin-left: 0;
-			//						margin-right: 0
-			//					}
-			//				} //				.container::before {
-			//				//					position: absolute;
-			//				//					content: "";
-			//				//					height: 0;
-			//				//					width: 0;
-			//				//					border-bottom: 16px solid #aaa;
-			//				//					top: -25px;
-			//				//					left: 55px;
-			//				//					margin-left: -15px;
-			//				//					margin-bottom: 15px;
-			//				//				}
-			//				.name {
-			//					cursor: pointer;
-			//					text-decoration: underline;
-			//				}
-			//				.name:hover {
-			//					cursor: pointer;
-			//					color: $main;
-			//				}
-			//			}
+			padding-top: 150px;
 			.left-col {
 				padding-right: 45px;
 				padding-left: 45px;
@@ -1063,13 +964,7 @@ header.home {
 				.banners {
 					display: none
 				}
-			} //			@media (max-width: 480px){
-			//				.right-col {
-			//					.place-ad {
-			//						position: relative
-			//					}
-			//				}
-			//			}
+			}
 		}
 		.category-name {
 			//			padding-left: 15px;
@@ -1103,18 +998,7 @@ header.home {
 			}
 			.nav-scroller.next {
 				right: 0;
-			} //			.category-name {
-			//				position: absolute;
-			//				left: -30px; //				bottom: -90%;
-			//				//				top: -80%;
-			//				bottom: -72%;
-			//				background-color: #eee;
-			//				padding-right: 5px;
-			//				color: $main;
-			//				font-size: .85rem;
-			//				font-weight: bold;
-			//				z-index: 1
-			//			}
+			}
 			ul {
 				list-style: none;
 				margin: 0;
@@ -1122,8 +1006,7 @@ header.home {
 				padding-left: 10px;
 				display: inline;
 				white-space: nowrap;
-				transition: .2s //		flex-wrap: nowrap;
-				//		display: inline-flex
+				transition: .2s
 			}
 			li {
 				display: inline-block;
@@ -1145,8 +1028,7 @@ header.home {
 
 	.products {
 		//		margin-top: 25px;
-		margin-top: 10px;
-		//		margin-bottom: 30px;
+		margin-top: 10px; //		margin-bottom: 30px;
 		margin-bottom: 0;
 		@extend %card-horizontal;
 		.main {
@@ -1235,16 +1117,17 @@ header.home {
 	#profile-tabs {
 		margin-bottom: 20px;
 		.tab {
-			padding-right: 10%
+//			padding-right: 10%
 		}
 		.etabs {
 			text-align: center;
 			border-bottom: solid 1px $main;
 			margin-bottom: 5px;
+			padding: 0
 		}
 		.tab {
 			display: inline-block;
-			width: calc(90% / 4);
+//			width: calc(90% / 4);
 		}
 		.tab a {
 			font-size: .9rem;
@@ -1436,6 +1319,11 @@ select option.placeholder {
 				font-size: .8rem;
 				box-shadow: 2px 1px 10px 0px #a8a8a8;
 
+			}
+			@media(max-width: 576px){
+				.price {
+					left: -1px;
+				}
 			}
 			.price-val {
 				margin-top: 35%
@@ -1783,34 +1671,9 @@ select option.placeholder {
 	//		direction: rtl;
 	//	}
 	.dropdown-toggle::after {
-		color: #000; //		display: none;
-		//		margin-right: .255em;
-		//		margin-left: 0
-	} //	.arrow {
-	//		position: absolute;
-	//		top: 0;
-	//		right: 0;
-	//		bottom: 0;
-	//		width: 30px;
-	//		margin: 0;
-	//		padding: 0;
-	//		i {
-	//			background-image: url(arrow.png);
-	//			background-position: center center;
-	//			width: 16px;
-	//			height: 16px;
-	//			display: block;
-	//			position: absolute;
-	//			top: 0;
-	//			left: 0;
-	//			right: 0;
-	//			bottom: 0;
-	//			margin: auto;
-	//			background-repeat: no-repeat;
-	//			opacity: .8;
-	//		}
-	//	}
-	.featured-note{
+		color: #000;
+	}
+	.featured-note {
 		font-size: .65rem
 	}
 }
@@ -1886,7 +1749,6 @@ label {
 	float: right;
 }
 
-////////////////////////////////////////
 #success-modal p {
 	margin-bottom: 0;
 	padding: 1rem 0;
@@ -1925,42 +1787,30 @@ label {
 		position: relative;
 		display: block;
 		text-align: center;
-		color: #aaa; //		background-color: #e5e5e5;
+		color: #aaa;
 		height: 20px;
 		margin-top: 5px;
 		margin-bottom: 5px;
 		cursor: default;
 	}
 	.other .msg {
-		order: 1; //    border-top-left-radius: 0px;
+		order: 1;
 		box-shadow: -1px 2px 0px #D4D4D4;
 		background-color: $main;
 		color: #fff
-	} //.other:before {
-	//    content: "";
-	//    position: relative;
-	//    top: 0px;
-	//    right: 0px;
-	//    left: 40px;
-	//    width: 0px;
-	//    height: 0px;
-	//    border: 5px solid #fff;
-	//    border-left-color: transparent;
-	//    border-bottom-color: transparent;
-	//}
+	}
 	.self {
 		justify-content: flex-end;
 		align-items: flex-end;
 	}
 	.self .msg {
-		order: 1; //    border-bottom-right-radius: 0px;
+		order: 1;
 		box-shadow: 1px 2px 0px #D4D4D4;
 		background-color: #eee;
 		color: #333
 	}
 
 	.msg {
-		//    background: white;
 		min-width: 50px;
 		padding: 10px;
 		border-radius: 2px;
@@ -1969,7 +1819,7 @@ label {
 	}
 	.msg p {
 		font-size: 0.8rem;
-		margin: 0 0 0.2rem 0; //    color: #777;
+		margin: 0 0 0.2rem 0;
 	}
 
 	.msg time {
@@ -2007,10 +1857,14 @@ label {
 
 	.send-wrapper {
 		position: relative;
+		input{
+			border-radius: 0
+		}
 		.telegram {
 			position: absolute;
-			top: 0;
+//			top: 0;
 			right: 0;
+			bottom: 0;
 			padding: 1px 1px 0 0;
 			min-height: 10px;
 			height: 30px;
@@ -2072,34 +1926,18 @@ label {
 	}
 }
 
-//.profile-page .chat-tab-link {
-//	position: relative;
-//	.new-msg {
-//		position: absolute;
-//		top: -3px;
-//		left: 0;
-//		background-color: #c30a30;
-//		border: 2px solid #fff;
-//		border-radius: 50%;
-//		width: 36px;
-//		height: 24px;
-//		text-align: center;
-//		transition: .15s;
-//		color: #fff;
-//	}
-//}
 #report-form .SumoSelect {
 	text-align: left;
 	width: auto;
 	min-width: 200px;
 }
 
- #delete-account-modal .note {
+#delete-account-modal .note {
 	text-align: left !important;
 }
 
 #edit-user-info-modal {
-	.visible-phone-note{
+	.visible-phone-note {
 		font-size: .65rem;
 		color: #888;
 	}
@@ -2111,4 +1949,8 @@ label {
 	.delete-account:hover {
 		text-decoration: underline;
 	}
+}
+
+#terms-modal .text {
+	font-size: .8rem;
 }

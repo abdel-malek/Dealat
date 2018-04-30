@@ -47,6 +47,7 @@
 	<!--  slick slider  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick.css'); ?>" />
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick-theme.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/slick-lightbox.css'); ?>" />
 
 	<!--  animate  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/animate.css'); ?>" />
