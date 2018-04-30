@@ -310,3 +310,6 @@ $lang['delete_account_confirm'] = 'هل أنت متأكد من حذف حسابك
 $lang['delete_account_confirm_note'] = 'ملاحظة: لا يمكنك التراجع عن هذه الخطوة, كل إعلاناتك وبياناتك على هذا الموقع سيتم حذفها';
 $lang['visible_phone'] = 'إظهار رقم الموبايل';
 $lang['visible_phone_note'] = 'سيظهر رقم موبايلك مع تفاصيل إعلاناتك';
+$lang['video'] = 'فيديو';
+$lang['main_image'] = 'الصورة الأساسية';
+$lang['other_images'] = 'صور إضافية';

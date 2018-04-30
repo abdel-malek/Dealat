@@ -25,14 +25,14 @@ $(function () {
 	category_name = $("body").data("categoryName");
 
 	//    Loading screen
-//		$(window).on('load', function () {
-			$(".loading-overlay .spinner").fadeOut(500, function () {
-				$(this).parent().fadeOut(500, function () {
-					$("body").removeAttr('style');
-					$(this).remove();
-				});
-			});
-//		});
+	//		$(window).on('load', function () {
+	$(".loading-overlay .spinner").fadeOut(500, function () {
+		$(this).parent().fadeOut(500, function () {
+			$("body").removeAttr('style');
+			$(this).remove();
+		});
+	});
+	//		});
 
 	$("button.register").click(function () {
 		$("#register-modal").modal("show");
@@ -176,8 +176,7 @@ $(function () {
 			from_web: 1
 		}
 	}).done(function (data) {
-		if (data.status === false) {
-		} else {
+		if (data.status === false) {} else {
 			var adData, sliderDefaultImg, sliderImgCount = 0,
 				sideImgCount = 0,
 				sideDefaultImg;
@@ -236,8 +235,7 @@ $(function () {
 		url: base_url + '/api/categories_control/get_nested_categories',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {
-		} else {
+		if (data.status === false) {} else {
 			//save subcategories in array
 			for (i in data.data) {
 				subcategories.push({
@@ -249,12 +247,12 @@ $(function () {
 			catData = {
 				categories: data.data
 			};
-			
+
 			//post ad modal categories
 			template = $('#ad-modal-categories-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, catData);
-//			$("#ad-modal .categories-nav .main-categories, #filter-modal .categories-nav .main-categories").append(rendered);
+			//			$("#ad-modal .categories-nav .main-categories, #filter-modal .categories-nav .main-categories").append(rendered);
 			$("#ad-modal .categories-nav .main-categories").append(rendered);
 
 			//filter modal categories
@@ -262,7 +260,7 @@ $(function () {
 			Mustache.parse(template);
 			rendered = Mustache.render(template, catData);
 			$("#filter-modal .categories-nav .main-categories").append(rendered);
-			
+
 			for (i in data.data) {
 				for (j in data.data[i].children) {
 
@@ -285,7 +283,7 @@ $(function () {
 						Mustache.parse(template);
 						rendered = Mustache.render(template, data.data[i].children[j].children);
 						$("#ad-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
-						
+
 						var filterSub = {
 							parent: data.data[i].children[j],
 							children: data.data[i].children[j].children
@@ -304,7 +302,7 @@ $(function () {
 					}
 				}
 			}
-//						console.log(hiddenFields);
+			//						console.log(hiddenFields);
 		}
 	});
 
@@ -383,7 +381,7 @@ $(function () {
 		if (data.status === false) {
 			//console.log(data);
 		} else {
-//			console.log(data);
+			//			console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -439,7 +437,7 @@ $(function () {
 							} else if ($(this).parents("#edit-ad-modal").length > 0) {
 								$('#edit-ad-modal .location-select')[0].sumo.enable();
 							} else if ($(this).parents("#filter-modal").length > 0) {
-								//								$('#filter-modal .location-select')[0].sumo.enable();
+								$('#filter-modal .location-select')[0].sumo.enable();
 							}
 							//							$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.enable();
 
@@ -464,8 +462,8 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-//console.log(typesData);
-			
+			//console.log(typesData);
+
 			//post ad and edit ad modals types
 			template = $('#ad-modal-types-template').html();
 			Mustache.parse(template);
@@ -482,7 +480,7 @@ $(function () {
 
 			//filter modal types
 			for (i in typesData.types) {
-				$('#filter-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="'+typesData.types[i].category_id+'">' + typesData.types[i].name + '</option>');
+				$('#filter-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
 			}
 
 			$('#filter-modal select.type-select')[0].sumo.reload();
@@ -587,8 +585,7 @@ $(function () {
 				template_id: $(this).parents(".card").data("templateId")
 			}
 		}).done(function (data) {
-			if (data.status === false) {
-			} else {
+			if (data.status === false) {} else {
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -676,7 +673,14 @@ $(function () {
 					src: 'src',
 					itemSelector: '.card-img-top img'
 				});
-				
+
+				if (adData.ad.seller_phone) {
+					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
+				}
+				if (adData.ad.whatsup_number) {
+					$("#card-modal .seller-whatsapp").val(adData.ad.whatsup_number);
+				}
+
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
@@ -735,6 +739,18 @@ $(function () {
 			}
 		});
 	}
+
+	$("#card-modal").on("click", ".show-contact", function () {
+		var phone, whatsapp;
+		phone = $(this).parents(".card").find(".seller-phone").val();
+		console.log(phone);
+		whatsapp = $("#card-modal .seller-whatsapp").val();
+		$("#card-modal details .mobile-val a").text(phone);
+		$("#card-modal details .mobile-val a").attr("href", "tel:" + phone);
+		$("#card-modal details .whatsapp-val a").text(whatsapp);
+		$("#card-modal details .whatsapp-val a").attr("href", "tel:" + whatsapp);
+	});
+
 
 	//card modal - view ad details
 	$(".home-page .card .card-img-top,.home-page .card .overlay,.category-page .card .card-img-top,.category-page .card .overlay, .search-page .card-left").click(openCardModal);
@@ -803,14 +819,14 @@ $(function () {
 		});
 
 		//only display selected template types
-//		$("#ad-modal .types-nav .type-item").each(function () {
-//			$(this).addClass("d-none");
-//			if ($(this).data("templateId") === templateId) {
-//				has_types = 1;
-//				$(this).removeClass("d-none");
-//			}
-//		});
-		
+		//		$("#ad-modal .types-nav .type-item").each(function () {
+		//			$(this).addClass("d-none");
+		//			if ($(this).data("templateId") === templateId) {
+		//				has_types = 1;
+		//				$(this).removeClass("d-none");
+		//			}
+		//		});
+
 		//only display selected template types
 		$("#ad-modal .types-nav .type-item").each(function () {
 			$(this).addClass("d-none");
@@ -844,14 +860,20 @@ $(function () {
 		text = catText + "-" + subText;
 		$(this).closest(".categories-nav").find(".select").text(text);
 
-		$('#ad-modal .schedules-select')[0].sumo.selectItem(0);
-		$('#ad-modal .educations-select')[0].sumo.selectItem(0);
-		$('#ad-modal .automatic-select')[0].sumo.selectItem(0);
-		$('#ad-modal .status-select')[0].sumo.selectItem(0);
+		$('#place-ad-form select:not(.city-select, .location-select, .period-select)').each(function () {
+			$(this).prop('selectedIndex', 0);
+			$(this)[0].sumo.reload();
+		});
+
+		//		$('#ad-modal .schedules-select')[0].sumo.selectItem(0);
+		//		$('#ad-modal .educations-select')[0].sumo.selectItem(0);
+		//		$('#ad-modal .automatic-select')[0].sumo.selectItem(0);
+		//		$('#ad-modal .status-select')[0].sumo.selectItem(0);
 	});
 
 	//view template fields when change category in filter modal
 	$("#filter-modal .categories-nav").on("click", ".last-subcategory", function () {
+
 		//		$("#filter-modal .categories-nav a.select").css("color", "#495057");
 		var templateId, subId, subName, has_types = 0;
 		templateId = $(this).data("templateId");
@@ -884,14 +906,14 @@ $(function () {
 		});
 
 		//only display selected template types
-//		$("#filter-modal .type-select option").each(function () {
-//			$(this).addClass("d-none");
-//			if ($(this).data("templateId") === templateId) {
-//				has_types = 1;
-//				$(this).removeClass("d-none");
-//			}
-//		});
-		
+		//		$("#filter-modal .type-select option").each(function () {
+		//			$(this).addClass("d-none");
+		//			if ($(this).data("templateId") === templateId) {
+		//				has_types = 1;
+		//				$(this).removeClass("d-none");
+		//			}
+		//		});
+
 		//only display selected template types
 		$("#filter-modal .type-select option").each(function () {
 			$(this).addClass("d-none");
@@ -900,7 +922,7 @@ $(function () {
 				$(this).removeClass("d-none");
 			}
 		});
-		
+
 		$('#filter-modal select.type-select')[0].sumo.reload();
 		//display types select only if category is vehicles, mobiles or electronics
 		if (has_types !== 0) {
@@ -911,11 +933,11 @@ $(function () {
 			$("#filter-modal .type-select").parents(".form-group").addClass("d-none");
 			$("#filter-modal .model-select").parents(".form-group").addClass("d-none");
 		}
-		if (lang === "ar") {
-			$("#filter-modal .type-select .placeholder").text("اختر الماركة");
-		} else {
-			$("#filter-modal .type-select .placeholder").text("Select type");
-		}
+		//		if (lang === "ar") {
+		//			$("#filter-modal .type-select .placeholder").text("اختر الماركة");
+		//		} else {
+		//			$("#filter-modal .type-select .placeholder").text("Select type");
+		//		}
 
 		$("#filter-form .category-id").val(subId);
 		$("#filter-form input[name='category_name']").val(subName);
@@ -927,13 +949,26 @@ $(function () {
 		text = catText + "-" + subText;
 		$(this).closest(".categories-nav").find(".select").text(text);
 
-		$('#filter-modal .manufacture-date-select')[0].sumo.unSelectAll();
-		$('#filter-modal .type-select')[0].sumo.selectItem(0);
-		$('#filter-modal .model-select')[0].sumo.unSelectAll();
-		$('#filter-modal .automatic-select')[0].sumo.selectItem(0);
-		$('#filter-modal .status-select')[0].sumo.selectItem(0);
-		$('#filter-modal .schedules-select')[0].sumo.unSelectAll();
-		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
+		$('#filter-form select:not(.city-select, .location-select, .multiple)').each(function () {
+			$(this).prop('selectedIndex', 0);
+			$(this)[0].sumo.reload();
+		});
+
+		//		$('#filter-form select.status-select option:first').prop('selected',true);
+		//		$("#filter-form").trigger("reset");
+		//		for (i = 0; i < $('#filter-form select.status-select').length; i += 1) {
+		////				$('#filter-form select.status-select')[i].sumo.reload();
+		//				$('#filter-form select.status-select')[i].sumo.unSelectAll();
+		//			}
+		//		$('#filter-form select.status-select').prop('selectedIndex',0);
+		//		$('#filter-modal .manufacture-date-select')[0].sumo.unSelectAll();
+		//		$('#filter-modal .type-select')[0].sumo.selectItem(0);
+		//		$('#filter-modal .model-select')[0].sumo.unSelectAll();
+		//		$('#filter-modal .automatic-select')[0].sumo.unSelectAll();
+		//		$('#filter-modal .status-select')[0].sumo.unSelectAll();
+		//		$('#filter-modal .schedules-select')[0].sumo.unSelectAll();
+		//		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
+
 	});
 
 	//type model select
@@ -1053,6 +1088,10 @@ $(function () {
 		previewWidth: "100px",
 		uploadStr: upload,
 		returnType: "json",
+//		extraHTML: function () {
+//			var html = '<button class="btn">set as main</button>';
+//			return html;
+//		},
 		onSuccess: function (files, data, xhr, pd) {
 			adImgs.push(data.data);
 		},
@@ -1082,7 +1121,7 @@ $(function () {
 		dragDrop: false,
 		fileName: "video",
 		acceptFiles: "video/*",
-		maxFileSize: 10000 * 1024,
+		maxFileSize: 20000 * 1024,
 		maxFileCount: 1,
 		showDelete: true,
 		dragdropWidth: "100%",
@@ -1534,7 +1573,7 @@ $(function () {
 
 		$("#chat-modal .chat-header .ad-name").text($(this).parents(".modal-content").find(".card-title").text());
 		$("#chat-modal .chat-header .user-name").text($(this).parents(".modal-content").find(".seller-val").text());
-		
+
 		//get chat message
 		$.ajax({
 			type: "get",
@@ -1636,7 +1675,7 @@ $(function () {
 				var msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
 				var startIndex, isSeller;
 				isSeller = $("#chat-modal .is-seller").val();
-				
+
 				if (data.data[data.data.length - 1].message_id != lastMsgId) {
 					//to know last msg index in data.data array
 					for (i = data.data.length - 1; i >= 0; i -= 1) {
@@ -1657,14 +1696,14 @@ $(function () {
 							minute: 'numeric',
 							hour12: true
 						});
-						
-						if((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0") ){
+
+						if ((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0")) {
 							template = $('#chat-other-template').html();
-						} else{
+						} else {
 							template = $('#chat-self-template').html();
 						}
-						
-//						template = $('#chat-other-template').html();
+
+						//						template = $('#chat-other-template').html();
 						Mustache.parse(template);
 						rendered = Mustache.render(template, data.data[i]);
 						$("#chat-modal .chat").append(rendered);
@@ -1840,9 +1879,9 @@ $(function () {
 
 		var data = $(this).serializeArray();
 		data.push({
-					name: "is_multi",
-					value: 1
-				});
+			name: "is_multi",
+			value: 1
+		});
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/users_control/verify',
@@ -2094,7 +2133,7 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {} else {
-//			console.log(data);
+			//			console.log(data);
 			template = $('#footer-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);
@@ -2104,19 +2143,19 @@ $(function () {
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);
 			$(".social-fixed .icons").append(rendered);
-			
+
 			//terms of service
 			$("#terms-modal .text").append(data.data.terms);
 		}
 	});
-	
-	$(".terms").click(function(e){
+
+	$(".terms").click(function (e) {
 		e.preventDefault();
 		$("#terms-modal").modal("show");
 	});
-	
-	$("#terms-modal").on("hidden.bs.modal", function(){
+
+	$("#terms-modal").on("hidden.bs.modal", function () {
 		$("body").addClass("modal-open");
 	});
-	
+
 });

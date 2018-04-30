@@ -487,7 +487,7 @@ $(function () {
 			dragDrop: false,
 			fileName: "video",
 			acceptFiles: "video/*",
-			maxFileSize: 10000 * 1024,
+			maxFileSize: 20000 * 1024,
 			maxFileCount: 1,
 			showDelete: true,
 			dragdropWidth: "100%",

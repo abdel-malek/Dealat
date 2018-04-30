@@ -294,8 +294,9 @@
 								</div>
 
 								<div class="form-group">
-									<select name="city_id" class="city-select" required>
-									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>
+									<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
+<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>-->
+									<option disabled selected value="" class="d-none">
 								</select>
 								</div>
 
@@ -306,9 +307,10 @@
 								</div>
 
 								<div class="form-group">
-									<select name="show_period" class="period-select" required>
-							<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>
-						</select>
+									<select name="show_period" class="period-select" required placeholder="<?php echo $this->lang->line('show_period'); ?>">
+<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>-->
+									<option disabled selected value="" class="d-none">
+								</select>
 								</div>
 
 								<div class="form-group">
@@ -351,19 +353,20 @@
 										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 									</div>
 									<div class="form-group field is_automatic">
-										<select name="is_automatic" class="automatic-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>
+										<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
+<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>-->
+										<option disabled selected value="" class="d-none">
 										<option value="1"><?php echo $this->lang->line('automatic'); ?></option>
 										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
 									</select>
 									</div>
 
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 
 								</div>
@@ -397,11 +400,11 @@
 								<div class="template-mobiles template d-none" data-template-id="3">
 
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--electronics template-->
@@ -413,55 +416,57 @@
 									</div>
 
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--fashion template-->
 								<div class="template-fashion template d-none" data-template-id="5">
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--kids template-->
 								<div class="template-kids template d-none" data-template-id="6">
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--sports template-->
 								<div class="template-sports template d-none" data-template-id="7">
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--job positions template-->
 								<!--schedule id/experience id/education id-->
 								<div class="template-job template d-none" data-template-id="8">
 									<div class="form-group field schedule_name">
-										<select name="schedule_id" class="schedules-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>
+										<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
+<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>-->
+										<option disabled selected value="" class="d-none">
 									</select>
 									</div>
 
 									<div class="form-group field education_name">
-										<select name="education_id" class="educations-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>
+										<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
+<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>-->
+										<option disabled selected value="" class="d-none">
 									</select>
 									</div>
 
@@ -477,11 +482,11 @@
 								<!--industries template-->
 								<div class="template-industries template d-none" data-template-id="9">
 									<div class="form-group field is_new">
-										<select name="is_new" class="status-select">
-										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>
-										<option value="1"><?php echo $this->lang->line('new'); ?></option>
-										<option value="0"><?php echo $this->lang->line('old'); ?></option>
-									</select>
+										<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
+											<option disabled selected value="" class="d-none">
+											<option value="1"><?php echo $this->lang->line('new'); ?></option>
+											<option value="0"><?php echo $this->lang->line('old'); ?></option>
+										</select>
 									</div>
 								</div>
 								<!--services template-->
@@ -497,7 +502,7 @@
 								<script id="ad-edit-images-template" type="text/template">
 									{{#main_image}}
 									<div class="main-img">
-										<div class="">Main image:</div>
+										<div class=""><?php echo $this->lang->line('main_image'); ?>:</div>
 										<div class="image-wrapper main-image" data-url="{{main_image}}">
 											<img src="<?php echo base_url('{{main_image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
@@ -506,7 +511,7 @@
 									{{/main_image}}
 
 									<div class="secondary-imgs">
-										<div class="">Other images:</div>
+										<div class=""><?php echo $this->lang->line('other_images'); ?>:</div>
 										{{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
@@ -517,7 +522,7 @@
 
 									{{#main_video}}
 									<div class="main-video">
-										<div class="">Video:</div>
+										<div class=""><?php echo $this->lang->line('video'); ?>:</div>
 										<div class="image-wrapper video" data-url="{{main_video}}">
 											<img src="<?php echo base_url('assets/images/default_ad/video.png'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button">Delete</button>
