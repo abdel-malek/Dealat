@@ -1,6 +1,7 @@
 package com.tradinos.dealat2.View;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,5 +53,20 @@ public class TermsActivity extends MasterActivity {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    protected void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.parentPanel), message, Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.white))
+                .setAction(getResources().getString(R.string.refresh), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        recreate();
+                    }
+                });
+
+        snackbar.show();
     }
 }

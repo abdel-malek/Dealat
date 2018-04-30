@@ -31,6 +31,8 @@ import java.util.List;
 
 public class MyProfileActivity extends MasterActivity {
 
+    private final int REQUEST_EDIT_PROFILE = 1;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
@@ -81,11 +83,11 @@ public class MyProfileActivity extends MasterActivity {
 
 
                                 User user = new CurrentAndroidUser(mContext).Get();
-                                if (user != null && !TextUtils.isEmpty(user.getImageUrl())){
+                                if (user != null && !TextUtils.isEmpty(user.getImageUrl())) {
                                     ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
                                     mImageLoader.get(MyApplication.getBaseUrl() + user.getImageUrl(),
-                                            ImageLoader.getImageListener(((ImageView)findViewById(R.id.imageView)),
-                                            R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                                            ImageLoader.getImageListener(((ImageView) findViewById(R.id.imageView)),
+                                                    R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
                                 }
                             }
                         });
@@ -112,9 +114,22 @@ public class MyProfileActivity extends MasterActivity {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonTrue){
+        if (view.getId() == R.id.buttonTrue) {
             Intent intent = new Intent(mContext, EditProfileActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_EDIT_PROFILE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_EDIT_PROFILE) {
+            User user = new CurrentAndroidUser(mContext).Get();
+            if (user != null && !TextUtils.isEmpty(user.getImageUrl())) {
+                ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+                mImageLoader.get(MyApplication.getBaseUrl() + user.getImageUrl(),
+                        ImageLoader.getImageListener(((ImageView) findViewById(R.id.imageView)),
+                                R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+            }
         }
     }
 
@@ -141,14 +156,14 @@ public class MyProfileActivity extends MasterActivity {
 
         @Override
         public Fragment getItem(int position) {
-           switch (position){
-               case 0:
-                   return MyAdsFragment.newInstance(myAdsList);
-               case 1:
-                   return FavoritesFragment.newInstance(myFavsList);
-               case 2:
-                   return ChatsFragment.newInstance(chats);
-           }
+            switch (position) {
+                case 0:
+                    return MyAdsFragment.newInstance(myAdsList);
+                case 1:
+                    return FavoritesFragment.newInstance(myFavsList);
+                case 2:
+                    return ChatsFragment.newInstance(chats);
+            }
             return null;
         }
 

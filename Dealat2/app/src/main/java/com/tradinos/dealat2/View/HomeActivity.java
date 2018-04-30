@@ -98,7 +98,6 @@ public class HomeActivity extends DrawerActivity {
             }
         });
 
-
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

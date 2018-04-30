@@ -644,6 +644,7 @@ public class EditAdActivity extends MasterActivity {
 
     private void getTemplateInput() {
 
+        Item item;
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
                 if (inputIsEmpty(editSpace))
@@ -685,9 +686,13 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
 
-                parameters.put("education_id", ((Item) spinnerEdu.getSelectedItem()).getId());
+                item = ((Item) spinnerEdu.getSelectedItem());
+                if (item != null)
+                    parameters.put("education_id", item.getId());
 
-                parameters.put("schedule_id", ((Item) spinnerSch.getSelectedItem()).getId());
+                item = ((Item) spinnerSch.getSelectedItem());
+                if (item != null)
+                    parameters.put("schedule_id", item.getId());
 
                 break;
 
@@ -697,11 +702,17 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("kilometer", String.valueOf(doubleEditText(editKilo)));
 
-                parameters.put("type_id", ((Item) spinnerBrand.getSelectedItem()).getId());
+                item = ((Item) spinnerBrand.getSelectedItem());
+                if (item != null)
+                    parameters.put("type_id", item.getId());
 
-                parameters.put("type_model_id", ((Item) spinnerModel.getSelectedItem()).getId());
+                item = ((Item) spinnerModel.getSelectedItem());
+                if (item != null)
+                    parameters.put("type_model_id", item.getId());
 
-                parameters.put("manufacture_date", ((Item) spinnerYear.getSelectedItem()).getId());
+                item = ((Item) spinnerYear.getSelectedItem());
+                if (item != null)
+                    parameters.put("manufacture_date", item.getId());
 
                 if (switchAutomatic.isChecked())
                     parameters.put("is_automatic", "1");
@@ -724,7 +735,9 @@ public class EditAdActivity extends MasterActivity {
 
             case Category.MOBILES:
 
-                parameters.put("type_id", ((Item) spinnerBrand.getSelectedItem()).getId());
+                item = ((Item) spinnerBrand.getSelectedItem());
+                if (item != null)
+                    parameters.put("type_id", item.getId());
 
             case Category.FASHION:
             case Category.KIDS:

@@ -799,11 +799,11 @@ public class SubmitAdActivity extends MasterActivity {
                     parameters.put("salary", stringInput(editSalary));
 
                 item = ((Item) spinnerEdu.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("education_id", item.getId());
 
                 item = ((Item) spinnerSch.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("schedule_id", item.getId());
 
                 break;
@@ -814,15 +814,15 @@ public class SubmitAdActivity extends MasterActivity {
                     parameters.put("kilometer", stringInput(editKilo));
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("type_id", item.getId());
 
                 item = ((Item) spinnerModel.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("type_model_id", item.getId());
 
                 item = ((Item) spinnerYear.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("manufacture_date", item.getId());
 
                 if (switchAutomatic.isChecked())
@@ -841,7 +841,7 @@ public class SubmitAdActivity extends MasterActivity {
             case Category.MOBILES:
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing())
+                if (item != null && !item.isNothing())
                     parameters.put("type_id", item.getId());
 
             case Category.FASHION:

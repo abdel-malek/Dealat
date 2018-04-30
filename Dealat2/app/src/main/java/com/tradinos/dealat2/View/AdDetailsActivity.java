@@ -183,7 +183,7 @@ public class AdDetailsActivity extends MasterActivity {
                 showTemplate();
 
                 if (user.IsLogged()) {
-                    if (currentAd.isVisiblePhone()){
+                    if (currentAd.isVisiblePhone()) {
                         textViewPhone.setText(getPhoneNumber(result.getSellerPhone()));
                         textViewPhone.setVisibility(View.VISIBLE);
                     }
@@ -218,6 +218,11 @@ public class AdDetailsActivity extends MasterActivity {
                         buttonFav.setVisibility(View.VISIBLE);
 
                         findViewById(R.id.containerContact).setVisibility(View.VISIBLE);
+
+                        if (!currentAd.isVisiblePhone()) { //contact only using Dealat chat
+                            findViewById(R.id.buttonCall).setVisibility(View.GONE);
+                            findViewById(R.id.line20).setVisibility(View.GONE);
+                        }
 
                         buttonReport.setVisibility(View.VISIBLE); // seller cannot report their ad
                     }

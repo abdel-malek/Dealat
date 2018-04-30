@@ -19,10 +19,17 @@ import java.util.List;
 public class TypeAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Type> items;
+    private boolean useFullName;
 
     public TypeAdapter(Context context, List<Type> items){
         this.inflater = LayoutInflater.from(context);
         this.items = items;
+    }
+
+    public TypeAdapter(Context context, List<Type> items, boolean useFullName){
+        this.inflater = LayoutInflater.from(context);
+        this.items = items;
+        this.useFullName = useFullName;
     }
 
     @Override
@@ -46,7 +53,13 @@ public class TypeAdapter extends BaseAdapter {
             view = this.inflater.inflate(R.layout.row_item, null);
         }
 
-        ((TextView) view.findViewById(R.id.textView)).setText(getItem(i).toString());
+        String name;
+        if (useFullName)
+            name = getItem(i).getFullName();
+        else
+            name =getItem(i).getName();
+
+        ((TextView) view.findViewById(R.id.textView)).setText(name);
 
         return view;
     }
@@ -57,7 +70,13 @@ public class TypeAdapter extends BaseAdapter {
             view = this.inflater.inflate(R.layout.row_item_dropdown, null);
         }
 
-        ((TextView) view.findViewById(R.id.textView)).setText(getItem(position).toString());
+        String name;
+        if (useFullName)
+            name = getItem(position).getFullName();
+        else
+            name =getItem(position).getName();
+
+        ((TextView) view.findViewById(R.id.textView)).setText(name);
 
         return view;
     }

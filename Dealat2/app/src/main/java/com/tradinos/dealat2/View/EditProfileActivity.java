@@ -217,6 +217,8 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                             currentAndroidUser.Save(result);
 
                             showMessageInToast(R.string.toastSaved);
+
+                            setResult(RESULT_OK);
                             finish();
                         }
                     });

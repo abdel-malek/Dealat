@@ -136,6 +136,29 @@ public abstract class DrawerActivity extends MasterActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (MyApplication.getUserState() == User.REGISTERED){
+            User user = new CurrentAndroidUser(this).Get();
+            if (user != null){
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
+                ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
+
+                textViewName.setText(user.getName());
+
+                if (!TextUtils.isEmpty(user.getImageUrl())) {
+                    ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
+
+                    mImageLoader.get(MyApplication.getBaseUrl() + user.getImageUrl(), ImageLoader.getImageListener(imageViewUser,
+                            R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                }
+            }
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

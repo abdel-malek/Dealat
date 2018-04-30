@@ -105,7 +105,7 @@ public class FilterActivity extends MasterActivity {
                 brands = result.getBrands();
                 List<Type> templateBrands = brands.get(currentTemplate);
                 if (templateBrands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands, true));
 
                 result.getEducations().add(0, new Item("-1", getString(R.string.all)));
                 spinnerEdu.setAdapter(new CheckableAdapter(mContext, result.getEducations()));
@@ -364,7 +364,7 @@ public class FilterActivity extends MasterActivity {
 
                 List<Type> templateBrands = brands.get(currentTemplate);
                 if (templateBrands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands));
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands, true));
 
             }
         }
@@ -462,21 +462,23 @@ public class FilterActivity extends MasterActivity {
                     parameters.put(getString(R.string.kilometerMin), stringInput(editKilometerMin));
 
                 item = ((Item) spinnerTransmission.getSelectedItem());
-                if (!item.isNothing()) {
+                if (item != null && !item.isNothing()) {
                     parameters.put("is_automatic", item.getId());
                     parameters.put(getString(R.string.automaticName), item.getName());
                 }
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing()) {
+                if (item != null && !item.isNothing()) {
                     parameters.put("type_id", item.getId());
                     parameters.put(getString(R.string.typeName), item.getName());
                 }
 
-                jsonArray = ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0) {
-                    parameters.put("type_model_id", jsonArray.toString());
-                    parameters.put(getString(R.string.modelName), ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedNames());
+                if (spinnerModel.getAdapter() != null) {
+                    jsonArray = ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedItems();
+                    if (jsonArray.length() > 0) {
+                        parameters.put("type_model_id", jsonArray.toString());
+                        parameters.put(getString(R.string.modelName), ((CheckableAdapter) spinnerModel.getAdapter()).getSelectedNames());
+                    }
                 }
 
                 jsonArray = ((CheckableAdapter) spinnerYear.getAdapter()).getSelectedItems();
@@ -486,7 +488,7 @@ public class FilterActivity extends MasterActivity {
                 }
 
                 item = ((Item) spinnerState.getSelectedItem());
-                if (!item.isNothing()) {
+                if (item != null && !item.isNothing()) {
                     parameters.put("is_new", item.getId());
                     parameters.put(getString(R.string.stateName), item.getName());
                 }
@@ -503,7 +505,7 @@ public class FilterActivity extends MasterActivity {
 
             case Category.MOBILES:
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (!item.isNothing()) {
+                if (item != null && !item.isNothing()) {
                     parameters.put("type_id", item.getId());
                     parameters.put(getString(R.string.typeName), item.getName());
                 }
