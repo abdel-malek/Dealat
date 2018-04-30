@@ -26,7 +26,7 @@ class Data_manage extends REST_Controller {
 	public function get_all_types_get()
 	{
 	   $this->load->model('data_sources/types');
-	   $types = $this->types->get();
+	   $types = $this->types->get_by(array('is_active' => 1));
 	   $output = array("aaData" => array());
 	   foreach ($types as $row) {
 			$recorde = array();
@@ -381,6 +381,8 @@ class Data_manage extends REST_Controller {
       'linkedin_link' => $this->input->post('linkedin_link'),
       'twiter_link' => $this->input->post('twiter_link'),
       'instagram_link' => $this->input->post('instagram_link'),
+      'ar_terms' => $this->input->post('ar_terms'),
+      'en_terms' => $this->input->post('en_terms'),
 	);
    $saved = $this->about_info->save($data , 1);
    $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));

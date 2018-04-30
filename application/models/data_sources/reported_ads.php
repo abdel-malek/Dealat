@@ -19,6 +19,9 @@ class Reported_ads extends MY_Model {
 						 );
 	 $this->db->join('ads' , 'ads.ad_id = reported_ads.ad_id' , 'left');
 	 $this->db->join('categories' , 'categories.category_id = ads.category_id' , 'left');
+	 $this->db->join('users' , 'reported_ads.user_id = users.user_id', 'left');
+	 $this->db->where('users.is_deleted' , 0);
+	 $this->db->where('categories.is_active' , 1);
 	 $this->db->group_by('reported_ads.ad_id');
 	 return parent::get();
   }

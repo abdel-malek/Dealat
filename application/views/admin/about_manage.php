@@ -73,6 +73,19 @@
 			      	           <input type='text' class="form-control" name="linkedin_link"   id='linkedin_link' value="<?php echo $about_info->linkedin_link ?>"></input>
 			      	         </div>
 				           </div> 
+				           
+				           <div class="form-group">
+			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('terms_ar') ?></label>
+			      	         <div class="col-md-6 col-sm-6 col-xs-12">
+			      	            <textarea  class="form-control col-md-7 col-xs-12" name="ar_terms" id="ar_terms"><?php echo $about_info->ar_terms ?></textarea>
+			      	         </div>
+			               </div> 
+			               <div class="form-group">
+			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('terms_en') ?></label>
+			      	         <div class="col-md-6 col-sm-6 col-xs-12">
+			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="en_terms" id="en_terms"><?php echo $about_info->en_terms ?></textarea>
+			      	         </div>
+			               </div> 
 			               <div class='pull-right'>
 			               	  <button id="" onclick="save_about()" type="button" class="btn btn-primary"><?php echo $this->lang->line('save') ?></button>
 			               </div>

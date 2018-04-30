@@ -286,6 +286,8 @@ $lang['twiter_link'] = 'رابط تويتر';
 $lang['youtube_link'] = 'رابط يوتيوب';
 $lang['linkedin_link'] = 'رابط لينكدان';
 $lang['instagram_link'] = 'رابط انستغرام';
+$lang['terms_ar'] = 'شروط استخدام ديلات بالعربي';
+$lang['terms_en'] = 'شروط استخدام ديلات بالانجليزي';
 
 // login
 $lang['login_form'] = 'تسجيل الدخول';

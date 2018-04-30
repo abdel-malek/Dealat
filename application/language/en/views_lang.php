@@ -288,6 +288,8 @@ $lang['twiter_link'] = 'Twiter link';
 $lang['youtube_link'] = 'Youtube link';
 $lang['linkedin_link'] = 'LinkedIn link';
 $lang['instagram_link'] = 'Instagram link';
+$lang['terms_en'] = 'Terms and conditions in english';
+$lang['terms_ar'] = 'Terms and conditions in arabic';
 // login
 $lang['login_form'] = 'Login Form';
 $lang['login'] = 'Login';

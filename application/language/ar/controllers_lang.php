@@ -24,7 +24,8 @@ $lang['no_users'] = 'لا يوجد أي مستخدم في هذه المدينة'
 
 
 // sms validation msg 
-$lang['verification_msg'] = '<p> مرحبًا بك في ديلات.</p><p> رمز التفعيل الخاص بك هو</p>';
+//$lang['verification_msg'] = '<p> مرحبًا بك في ديلات.</p><p> رمز التفعيل الخاص بك هو</p>';
+$lang['verification_msg'] = 'مرحبًا بك في ديلات، رمز التفعيل الخاص بك هو: ';
 $lang['image_is_requierd'] = "يجب إرفاق صورة للإعلان";
 $lang['change_status_warning'] = "يمكنك فقط ان تحذف الإعلان أو أن تجعله مخفيّاً";
 
@@ -38,6 +39,9 @@ $lang['hidden_title'] = 'إخفاء';
 $lang['ad_shown'] = 'تم إظهار إعلانك من قبل المدير';
 $lang['shown_title'] = 'إظهار';
 $lang['new_msg'] = 'رسالة جديدة';
+
+//pending email 
+$lang['pending_email'] = '<p> مرحبًا بك في لوحة تحكم ديلات.</p><p>يوجد إعلان جديد بانتظارك</p>';
 
 
 

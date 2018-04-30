@@ -49,13 +49,13 @@ class Users extends MY_Model {
 		    $code = $this->user_activation_codes->generate_activation_code();
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
         }
-	   // $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_sms') . $code);
+	    $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
 	//	send verification code to email.
-	//	$to      = 'dealat.co@gmail.com';
-		// $to      = 'dealat.co@gmail.com';
-        // $subject = 'Message from Dealat';
-        // $message = 'Your Verification Code: '.$code;
-        // mail($to, $subject, $message,  "From: ola@tradinos.com");
+		//$to      = 'dealat.co@gmail.com';
+		$to      = 'dealat.co@gmail.com';
+        $subject = 'Message from Dealat';
+        $message = 'Your Verification Code: '.$code;
+        mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;

@@ -61,6 +61,8 @@
     <!-- sortable -->
     <script src="<?php echo base_url() ?>admin_assets/js/jquery-sortable-min.js"></script>
     
+    <!-- notify sound -->
+    <script src="<?php echo base_url() ?>admin_assets/js/jquery.playSound.js"></script>
     
     <!-- bootstrap-daterangepicker -->
     <!-- <script src="<?php echo base_url() ?>Files/js/datepicker/daterangepicker.js"></script>    -->

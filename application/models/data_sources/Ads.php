@@ -494,7 +494,7 @@ class Ads extends MY_Model {
 
 // not used
   public function get_pending_ads($lang)
-   {
+    {
 	   $this->db->select('ads.* ,
 		                  categories.'.$lang.'_name as category_name ,
 		                  categories.tamplate_id,
@@ -506,7 +506,7 @@ class Ads extends MY_Model {
 		$this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
 	    $this->db->where('status' , STATUS::PENDING);
 		return parent::get();
-   }
+    }
 
   public function get_pending_ads_counts()
    { 
@@ -516,6 +516,14 @@ class Ads extends MY_Model {
 	  $this->db->where('users.is_deleted' , 0);
 	  $q = parent::get();
 	  return $q[0]->pending_count;
+   }
+   
+   public function send_pending_email()
+   {
+		$to      = 'dealat.co@gmail.com';
+	    $subject = 'Message from Dealat';
+	    $message =  $this->lang->line('pending_email');
+	    mail($to, $subject, $message,  "From: ola@tradinos.com");
    }
    
 

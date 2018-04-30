@@ -23,7 +23,8 @@ $lang['incorrect_verfication'] = 'Hmmm, Incorrect verification code, please try 
 $lang['no_users'] = 'There is no any user in this city';
 
 // sms validation msg 
-$lang['verification_msg'] = '<p> Welcome to Dealat! </p><p>Your activation code is </p>';
+//$lang['verification_msg'] = '<p> Welcome to Dealat! </p><p>Your activation code is </p>';
+$lang['verification_msg'] = ' Welcome to Dealat!, Your activation code is: ';
 $lang['image_is_requierd'] = "Ad Image is requierd";
 $lang['change_status_warning'] = "You can only delete or hide the ad";
 
@@ -37,3 +38,7 @@ $lang['hidden_title'] = 'Hidden';
 $lang['ad_shown'] = 'Your ad is Shown by the admin';
 $lang['shown_title'] = 'Shown';
 $lang['new_msg'] = 'New Message';
+
+
+//pending email 
+$lang['pending_email'] = '<p> Welcome to Dealat Cotrol panel! </p><p>you have new pending ad</p>';

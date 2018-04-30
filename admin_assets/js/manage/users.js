@@ -25,13 +25,13 @@ var users_table;
              aaSorting : [[0, 'desc']],
              "sAjaxSource": base_url + '/admin/users_manage/get_all/format/json',
              "columnDefs": [
-                 {
-                    "targets": -1, // details
-                    "data": null,
-                    "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_user_details(\'' + full[0] + '\', \'' + full[8] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
-		             }
-		         },
+                 // {
+                    // "targets": -1, // details
+                    // "data": null,
+                    // "mRender": function(date, type, full) {
+                       // return '<button id="" onclick="show_user_details(\'' + full[0] + '\', \'' + full[8] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+		             // }
+		         // },
 	          ],
               dom: "Bfrtip",
               buttons: [

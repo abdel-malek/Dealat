@@ -223,7 +223,8 @@ class Categories extends MY_Model {
 	   $this->db-> join('categories as child_category' , 'child_category.parent_id = categories.category_id' , 'left outer');
 	   $this->db-> join('categories as parent_category' , 'categories.parent_id = parent_category.category_id' , 'left outer');
 	   $this->db->where('child_category.category_id' , null );
-	    $this->db->where_in('categories.tamplate_id' , array(TAMPLATES::VEHICLES , TAMPLATES::MOBILES ,TAMPLATES::ELECTRONICS));
+	   $this->db->where_in('categories.tamplate_id' , array(TAMPLATES::VEHICLES , TAMPLATES::MOBILES ,TAMPLATES::ELECTRONICS));
+	   $this->db->where('categories.is_active' , 1);
 	   return parent::get();
    }
    

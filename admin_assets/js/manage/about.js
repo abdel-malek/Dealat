@@ -8,7 +8,9 @@ function save_about(){
 	 	'instagram_link' : $('#instagram_link').val(),
 	 	'twiter_link' : $('#twiter_link').val(),
 	 	'youtube_link': $('#youtube_link').val(),
-	 	'linkedin_link': $('#linkedin_link').val()
+	 	'linkedin_link': $('#linkedin_link').val(),
+	 	'ar_terms' : $('#ar_terms').val(),
+	 	'en_terms' : $('#en_terms').val()
 	 };
 	$.ajax({
 	        url: base_url + '/admin/data_manage/save_about/format/json',
@@ -16,7 +18,7 @@ function save_about(){
 	        dataType: "json",
 	        data: data,
 	        success: function(response) {
-	        	location.reload();
+	        //	location.reload();
 	            // if(response.status == false){
 	           	  // new PNotify({
 		                  // title: lang_array['attention'],

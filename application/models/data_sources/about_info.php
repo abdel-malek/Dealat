@@ -17,7 +17,8 @@ class About_info extends MY_Model {
 		     linkedin_link,
 		     instagram_link,
 		     phone , 
-		     email
+		     email, 
+		     about_info.'.$lang.'_terms as terms , 
 		   '
 		);
 		return parent::get(null , true , 1);

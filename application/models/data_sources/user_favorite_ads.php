@@ -33,6 +33,7 @@ class User_favorite_ads extends MY_Model {
 	  $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 	  $this->db->join('users' , 'users.user_id = ads.user_id ' , 'left');
 	  $this->db->where('status' , STATUS::ACCEPTED);
+	  $this->db->where('categories.is_active' , 1);
 	  $this->db->where('users.is_deleted' , 0);
 	  $this->db->where('user_favorite_ads.user_id' , $user_id);
 	  return parent::get();

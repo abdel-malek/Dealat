@@ -9,6 +9,7 @@ var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 var status_array_for_label;
 var edit_status_array;
 var current_pending_count = 0;
+var sound_notify_path = site_url +'admin_assets/definite.mp3';
 
  $(document).ready(function() {
 	 	
@@ -159,6 +160,7 @@ var current_pending_count = 0;
               $(ads_table.rows().nodes()).each(function(index){
             	//console.log(index);
              	if(index < diff){
+             		$.playSound(sound_notify_path);
              		$(this).css("background-color", "#1abb9c63");
                     setTimeout(function () {
                         //$(this).removeAttr("style");

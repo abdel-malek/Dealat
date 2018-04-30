@@ -96,4 +96,14 @@ class Items_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
+	
+	public function send_email_post()
+	{
+		$res = $this->ads->send_pending_email();
+		if($res){
+			 $this -> response(array('status' => true, 'data' =>'', 'message' => $this->lang->line('sucess')));
+		}else{
+			 $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
+		}
+	}
 }

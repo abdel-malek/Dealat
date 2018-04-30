@@ -50,7 +50,7 @@
 	                          <th><?php echo $this->lang->line('city') ?></th>
 	                          <th><?php echo $this->lang->line('ads_num') ?></th>
 	                          <th><?php echo $this->lang->line('user_status') ?></th>
-	                          <th><?php echo $this->lang->line('details') ?></th>
+	                          <!-- <th><?php echo $this->lang->line('details') ?></th> -->
 	                        </tr>
 	                      </thead>
 	                      <tbody>

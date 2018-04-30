@@ -301,7 +301,7 @@ function delete_cat () {
                });
                 // education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
 			    // $('.education_manage_modal').modal('hide');
-			    location.reload();
+			    window.location.reload();
              }
         },error: function(xhr, status, error){
         	new PNotify({
@@ -350,7 +350,7 @@ function activate_cat () {
                });
                 // education_table.ajax.url( base_url + '/admin/data_manage/get_all_educations/format/json').load();
 			    // $('.education_manage_modal').modal('hide');
-			    location.reload();
+			    window.location.reload();
              }
         },error: function(xhr, status, error){
         	new PNotify({
@@ -453,14 +453,15 @@ function save_sorted_categories () {
             }else{
                 new PNotify({
                   title:  lang_array['success'],
-                  text: lang_array['categories_sorted'],
+                  //text: lang_array['categories_sorted'],
+                  text : '',
                   type: 'success',
                   styling: 'bootstrap3',
                   buttons: {
 				        sticker: false
 				 }
                });
-			    location.reload();
+			    window.location.reload();
              }
         },error: function(xhr, status, error){
         	new PNotify({
