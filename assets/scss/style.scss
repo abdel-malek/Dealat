@@ -1496,7 +1496,8 @@ select option.placeholder {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: inline-block;
-		min-height: 180px
+		min-height: 180px;
+		text-align: center
 	}
 	.ajax-file-upload-filename {
 		text-overflow: ellipsis;
@@ -1507,6 +1508,14 @@ select option.placeholder {
 	}
 	.ajax-file-upload-progress {
 		max-width: 100%
+	}
+	.set-main{
+		    padding: 3px 7px;
+    border-radius: 4px;
+    min-height: 10px;
+    color: #fff;
+    background: #7a8;
+    font-weight: normal;
 	}
 }
 

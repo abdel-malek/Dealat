@@ -712,7 +712,7 @@
 							<!--basic template-->
 							<div class="template-basic template d-none" data-template-id="11"></div>
 
-							<div id="fileuploader-ad-main">Upload</div>
+<!--							<div id="fileuploader-ad-main">Upload</div>-->
 							<div id="fileuploader-ad">Upload</div>
 							<div id="fileuploader-ad-video" class="d-none">Upload</div>
 							<label class="featured">

@@ -57,12 +57,18 @@ $(function () {
 			$("#ad-modal .types-nav .select").text("Select type");
 		}
 		$("#ad-modal .ajax-file-upload-container").empty();
-		uploadobjMain.reset();
-		uploadobjOther.reset();
-		uploadobjvideo.reset();
+		//		uploadobjMain.reset();
+		if (uploadobjOther) {
+			uploadobjOther.reset();
+		}
+		if (uploadobjvideo) {
+			uploadobjvideo.reset();
+		}
+		fileIndex = 0;
+
 		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		adImgs = [];
-		adMainImg = [];
+		//		adMainImg = [];
 		adVideo = [];
 		$("#ad-modal .featured .warning").addClass("d-none");
 		$('#ad-modal .error-message').addClass("d-none");
@@ -1023,56 +1029,56 @@ $(function () {
 		adVideo = [];
 	if (lang === "ar") {
 		upload = "اختر صور إضافية";
-		uploadMain = "اختر صورة الإعلان الرئيسية";
+		//		uploadMain = "اختر صورة الإعلان الرئيسية";
 		uploadVideo = "اختر فيديو";
 	} else {
 		upload = "Upload more images";
-		uploadMain = "Upload main ad image";
+		//		uploadMain = "Upload main ad image";
 		uploadVideo = "Upload video";
 	}
 
 	var uploadobjMain, uploadobjOther, uploadobjvideo;
-	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
-		url: base_url + '/api/items_control/item_images_upload',
-		multiple: false,
-		dragDrop: false,
-		fileName: "image",
-		acceptFiles: "image/*",
-		maxFileSize: 10000 * 1024,
-		maxFileCount: 1,
-		showDelete: true,
-		//				statusBarWidth:600,
-		dragdropWidth: "100%",
-		showPreview: true,
-		previewHeight: "100px",
-		previewWidth: "100px",
-		uploadStr: uploadMain,
-		returnType: "json",
-		onSuccess: function (files, data, xhr, pd) {
-			adMainImg.push(data.data);
-		},
-		onError: function (files, status, errMsg, pd) {
-			//console.log("upload failed");
-		},
-		deleteCallback: function (data, pd) {
-			//			console.log(data.data);
-			var arr;
-			arr = [data.data];
-			$.post(base_url + '/api/items_control/delete_images', {
-					images: JSON.stringify(arr)
-				},
-				function (resp, textStatus, jqXHR) {
-					var i, deleted;
-					deleted = data.data;
-					for (i in adMainImg) {
-						if (adMainImg[i] === deleted) {
-							adMainImg.splice(i, 1);
-						}
-					}
-				});
-		}
-	});
-
+	//	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
+	//		url: base_url + '/api/items_control/item_images_upload',
+	//		multiple: false,
+	//		dragDrop: false,
+	//		fileName: "image",
+	//		acceptFiles: "image/*",
+	//		maxFileSize: 10000 * 1024,
+	//		maxFileCount: 1,
+	//		showDelete: true,
+	//		//				statusBarWidth:600,
+	//		dragdropWidth: "100%",
+	//		showPreview: true,
+	//		previewHeight: "100px",
+	//		previewWidth: "100px",
+	//		uploadStr: uploadMain,
+	//		returnType: "json",
+	//		onSuccess: function (files, data, xhr, pd) {
+	//			adMainImg.push(data.data);
+	//		},
+	//		onError: function (files, status, errMsg, pd) {
+	//			//console.log("upload failed");
+	//		},
+	//		deleteCallback: function (data, pd) {
+	//			//			console.log(data.data);
+	//			var arr;
+	//			arr = [data.data];
+	//			$.post(base_url + '/api/items_control/delete_images', {
+	//					images: JSON.stringify(arr)
+	//				},
+	//				function (resp, textStatus, jqXHR) {
+	//					var i, deleted;
+	//					deleted = data.data;
+	//					for (i in adMainImg) {
+	//						if (adMainImg[i] === deleted) {
+	//							adMainImg.splice(i, 1);
+	//						}
+	//					}
+	//				});
+	//		}
+	//	});
+	var fileIndex = 0;
 	uploadobjOther = $("#fileuploader-ad").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
 		multiple: true,
@@ -1084,16 +1090,49 @@ $(function () {
 		showDelete: true,
 		dragdropWidth: "100%",
 		showPreview: true,
+		showProgress: true,
+		showFileSize: false,
 		previewHeight: "100px",
 		previewWidth: "100px",
 		uploadStr: upload,
 		returnType: "json",
-//		extraHTML: function () {
-//			var html = '<button class="btn">set as main</button>';
-//			return html;
-//		},
+		extraHTML: function () {
+			var html = '<button class="btn set-main">set as main</button>';
+			return html;
+		},
+		customProgressBar: function (obj, s) {
+			this.statusbar = $("<div class='ajax-file-upload-statusbar' data-index='" + fileIndex + "'></div>").width(s.statusBarWidth);
+			this.preview = $("<img class='ajax-file-upload-preview' />").width(s.previewWidth).height(s.previewHeight).appendTo(this.statusbar).hide();
+			this.filename = $("<div class='ajax-file-upload-filename'></div>").appendTo(this.statusbar);
+			this.progressDiv = $("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide();
+			this.progressbar = $("<div class='ajax-file-upload-bar'></div>").appendTo(this.progressDiv);
+			this.abort = $("<div>" + s.abortStr + "</div>").appendTo(this.statusbar).hide();
+			this.cancel = $("<div>" + s.cancelStr + "</div>").appendTo(this.statusbar).hide();
+			this.done = $("<div>" + s.doneStr + "</div>").appendTo(this.statusbar).hide();
+			this.download = $("<div>" + s.downloadStr + "</div>").appendTo(this.statusbar).hide();
+			this.del = $("<div>" + s.deleteStr + "</div>").appendTo(this.statusbar).hide();
+
+			this.abort.addClass("ajax-file-upload-red");
+			this.done.addClass("ajax-file-upload-green");
+			this.download.addClass("ajax-file-upload-green");
+			this.cancel.addClass("ajax-file-upload-red");
+			this.del.addClass("ajax-file-upload-red");
+
+			fileIndex += 1;
+			return this;
+		},
 		onSuccess: function (files, data, xhr, pd) {
 			adImgs.push(data.data);
+			console.log(adImgs);
+			//main image
+			$("#ad-modal .ajax-file-upload-statusbar").each(function () {
+				if ($(this).data("index") === 0) {
+					$(this).find(".set-main").text("main image");
+					$(this).find(".set-main").attr("disabled", true);
+				}
+			});
+			//store image source
+			pd.statusbar.data("src", data.data);
 		},
 		onError: function (files, status, errMsg, pd) {},
 		deleteCallback: function (data, pd) {
@@ -1110,7 +1149,45 @@ $(function () {
 							adImgs.splice(i, 1);
 						}
 					}
+				
+					$("#ad-modal .ajax-file-upload-statusbar").each(function () {
+						for (i in adImgs) {
+							if ($(this).data("src") === adImgs[i]) {
+								$(this).data("index", Number(i));
+							}
+						}
+						if ($(this).data("index") === 0) {
+							$(this).find(".set-main").text("main image");
+							$(this).find(".set-main").attr("disabled", true);
+						}
+					});
+				if($("#ad-modal .ajax-file-upload-statusbar").length == 0){
+					fileIndex = 0;
+				}
 				});
+			
+		}
+	});
+
+	$("#ad-modal").on("click", ".set-main", function () {
+		var imgIndex, temp;
+		imgIndex = $(this).closest(".ajax-file-upload-statusbar").data("index");
+		if (imgIndex > 0) {
+			temp = adImgs[imgIndex];
+			adImgs.splice(imgIndex, 1);
+			adImgs.unshift(temp);
+			//change indexes
+			$("#ad-modal .ajax-file-upload-statusbar").each(function () {
+				$(this).find(".set-main").text("set as main");
+				$(this).find(".set-main").attr("disabled", false);
+				for (i in adImgs) {
+					if ($(this).data("src") === adImgs[i]) {
+						$(this).data("index", i)
+					}
+				}
+			});
+			$(this).text("main image");
+			$(this).attr("disabled", true);
 		}
 	});
 
@@ -1162,19 +1239,26 @@ $(function () {
 			secondary_imgs = [];
 
 		data = $(this).serializeArray();
-		if (adMainImg.length > 0) {
-			data.push({
-				name: "main_image",
-				value: adMainImg[0]
-			});
-		}
-		//copy adimgs into uploaded_imgs
+		//		if (adMainImg.length > 0) {
+		//			data.push({
+		//				name: "main_image",
+		//				value: adMainImg[0]
+		//			});
+		//		}
+		//copy adimgs into uploaded_imgs so we don't make any operation on the original adImg array
 		if (adImgs.length > 0) {
+
 			for (i in adImgs) {
 				uploaded_imgs.push(adImgs[i]);
 			}
+			data.push({
+				name: "main_image",
+				value: uploaded_imgs[0]
+			});
+			uploaded_imgs.splice(0, 1);
 			secondary_imgs = uploaded_imgs;
 			secondary_imgs = JSON.stringify(secondary_imgs);
+
 			data.push({
 				name: "images",
 				value: secondary_imgs
@@ -1188,6 +1272,7 @@ $(function () {
 			});
 		}
 
+		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',

@@ -190,6 +190,7 @@
 
 </script>
 <!--  file upload  -->
+<script src="<?php echo base_url('assets/js/jquery.form.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
 <script>
 	$(document).ready(function() {

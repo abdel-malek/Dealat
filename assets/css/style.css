@@ -1158,7 +1158,8 @@ select option.placeholder {
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-  min-height: 180px; }
+  min-height: 180px;
+  text-align: center; }
 .ajax-file-upload-container .ajax-file-upload-filename {
   text-overflow: ellipsis;
   max-width: 100%;
@@ -1167,6 +1168,13 @@ select option.placeholder {
   white-space: nowrap; }
 .ajax-file-upload-container .ajax-file-upload-progress {
   max-width: 100%; }
+.ajax-file-upload-container .set-main {
+  padding: 3px 7px;
+  border-radius: 4px;
+  min-height: 10px;
+  color: #fff;
+  background: #7a8;
+  font-weight: normal; }
 
 #register-modal .social,
 #register-modal #fileuploader-register,
