@@ -713,7 +713,10 @@
 							<div class="template-basic template d-none" data-template-id="11"></div>
 
 <!--							<div id="fileuploader-ad-main">Upload</div>-->
+						
+						<div class="img-upload-note mb-1"><?php echo $this->lang->line('img_upload_note'); ?></div>
 							<div id="fileuploader-ad">Upload</div>
+							
 							<div id="fileuploader-ad-video" class="d-none">Upload</div>
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
@@ -1040,15 +1043,6 @@
 						</div>
 					</div>
 
-					<!--
-					<div class="status form-group">
-						<label class="text-center title">Status</label>
-						<label class="radio-inline new">
-                            <input type="radio" name="status" id="status-new" value="male"> New</label>
-						<label class="radio-inline old">
-                            <input type="radio" name="status" id="status-old" value="female"> Old</label>
-					</div>
--->
 					<div class="modal-footer">
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('search'); ?></button>
 					</div>
@@ -1144,10 +1138,7 @@
 					<input type="hidden" class="is-seller">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">
-<!--
-						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
-						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
--->
+
 				<div class="row no-gutters">
 					<div class="col-11">
 						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">

@@ -104,7 +104,6 @@
 
 								<div class="card-body">
 									<div class="row">
-										<!--										<div class="col-7 mt-2">-->
 										<div class="col-12 mt-2">
 											<div class="card-title">
 												<?php echo $ad->title ?>
@@ -113,11 +112,11 @@
 												<div class="clearfix"></div>
 												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 											</div>
-											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
+											<div class="location"><span class="location-lbl"></span><span class="location-val">
+											      <?php if($ad->location_name != null): echo $ad->city_name .'-'.$ad->location_name ; else: echo $ad->city_name; endif; ?>
+												</span></div>
 										</div>
-										<!--										<div class="col-5 mt-2">-->
 										<div class="col-12">
-											<!--											<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
 											<div class="clearfix"></div>
 											<div class="date"><span class="date-lbl"></span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
 										</div>
@@ -127,13 +126,6 @@
 											<?php echo $ad->price; ?> <?php echo $this->lang->line('sp'); ?>
 										</div>
 									</div>
-<!--									<div class="fav">-->
-										<!--										<span class="text">Add to favorites</span>-->
-										<!--								<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-star fa-2x"></i></span>-->
-<!--
-										<span class="icon" data-added="0" title="Add to favorites"><i class="far fa-heart fa-2x"></i></span>
-									</div>
--->
 								</div>
 							</div>
 						</div>

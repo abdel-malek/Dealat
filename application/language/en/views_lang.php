@@ -313,3 +313,4 @@ $lang['visible_phone_note'] = 'Your phone number will be shown with your ads det
 $lang['video'] = 'Video';
 $lang['main_image'] = 'Main image';
 $lang['other_images'] = 'Other images';
+$lang['img_upload_note'] = 'You can upload up to 8 images';

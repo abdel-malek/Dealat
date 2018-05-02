@@ -15,13 +15,11 @@ $(function () {
 	var typesData, adImgs, mixer, category_id, category_name, i, template, rendered, subcategories = [];
 	adImgs = [];
 	mixer = mixitup('.products');
-	//	category_id = $(".category-page").data("categoryId");
 	category_id = $("body").data("categoryId");
 	if (!category_id) {
 		//home page
 		category_id = 0;
 	}
-	//	category_name = $(".category-page").data("categoryName");
 	category_name = $("body").data("categoryName");
 
 	//    Loading screen
@@ -48,7 +46,6 @@ $(function () {
 
 	function resetPostAd() {
 		$("#place-ad-form").trigger("reset");
-		//		$("#ad-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
 			$("#ad-modal .categories-nav .select").text("اختر صنف");
 			$("#ad-modal .types-nav .select").text("اختر الماركة");
@@ -88,16 +85,13 @@ $(function () {
 
 	function resetEditAd() {
 		$("#edit-ad-form").trigger("reset");
-		//		$("#edit-ad-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
 			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#edit-ad-modal .types-nav .select").text("Select type");
 		}
-		//		$("#edit-ad-modal .ajax-file-upload-container").empty();
 		$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		//		adImgs = [];
-		//		$("#edit-ad-modal .featured .warning").addClass("d-none");
 		$('#edit-ad-modal .error-message').addClass("d-none");
 		$("#edit-ad-modal .template").each(function () {
 			$(this).addClass("d-none");
@@ -116,7 +110,6 @@ $(function () {
 
 	function resetFilter() {
 		$("#filter-form").trigger("reset");
-		//		$("#filter-modal a.select").css("color", "#6c757d");
 		if (lang === "ar") {
 			$("#filter-modal .categories-nav .select").text("اختر صنف");
 		} else {
@@ -145,12 +138,38 @@ $(function () {
 	});
 
 	$("#ad-modal").on("hide.bs.modal", function () {
+		//delete images if user close modal without posting the ad
+		if (adImgs.length > 0) {
+			var deleteImgs = [];
+			for (i in adImgs) {
+				deleteImgs.push(adImgs[i]);
+			}
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/items_control/delete_images',
+				dataType: "json",
+				data: {
+					images: JSON.stringify(deleteImgs)
+				}
+			});
+		}
+		//delete video if user close modal without posting the ad
+		if (adVideo.length > 0) {
+			var deleteVid = [];
+			for (i in adVideo) {
+				deleteVid.push(adVideo[i]);
+			}
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/items_control/delete_vedios',
+				dataType: "json",
+				data: {
+					videos: JSON.stringify(deleteVid)
+				}
+			});
+		}
 		resetPostAd();
 		mixer = mixitup('.products');
-	});
-
-	$("#edit-ad-modal").on("hide.bs.modal", function () {
-		resetEditAd();
 	});
 
 	$("#filter-modal").on("hide.bs.modal", function () {
@@ -158,6 +177,9 @@ $(function () {
 		mixer = mixitup('.products');
 	});
 
+	$("#edit-ad-modal").on("hide.bs.modal", function () {
+		resetEditAd();
+	});
 	$("#register-modal").on("hide.bs.modal", function () {
 		$('#register-modal .error-message').addClass("d-none");
 	});
@@ -196,6 +218,13 @@ $(function () {
 
 			if (data.data.length !== 0) {
 				for (i in data.data) {
+					if(data.data[i].ad_url){
+						var pos = data.data[i].ad_url.search("http");
+						if(pos === -1){
+							data.data[i].ad_url = "http://" + data.data[i].ad_url;
+						}
+
+					}
 					if (data.data[i].position === "2") {
 						//top slider ad
 						sliderImgCount += 1;
@@ -258,7 +287,6 @@ $(function () {
 			template = $('#ad-modal-categories-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, catData);
-			//			$("#ad-modal .categories-nav .main-categories, #filter-modal .categories-nav .main-categories").append(rendered);
 			$("#ad-modal .categories-nav .main-categories").append(rendered);
 
 			//filter modal categories
@@ -308,7 +336,6 @@ $(function () {
 					}
 				}
 			}
-			//						console.log(hiddenFields);
 		}
 	});
 
@@ -384,10 +411,7 @@ $(function () {
 		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {
-			//console.log(data);
-		} else {
-			//			console.log(data);
+		if (data.status === false) {} else {
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -445,11 +469,8 @@ $(function () {
 							} else if ($(this).parents("#filter-modal").length > 0) {
 								$('#filter-modal .location-select')[0].sumo.enable();
 							}
-							//							$('#ad-modal .location-select, #edit-ad-modal .location-select, #filter-modal .location-select')[0].sumo.enable();
 
-						} else {
-							//							$('#filter-modal .model-select').parents(".form-group").addClass("d-none");
-						}
+						} else {}
 						break;
 					}
 				}
@@ -468,7 +489,6 @@ $(function () {
 			typesData = {
 				types: arr2
 			};
-			//console.log(typesData);
 
 			//post ad and edit ad modals types
 			template = $('#ad-modal-types-template').html();
@@ -551,11 +571,9 @@ $(function () {
 			for (i = 0; i < $('select.schedules-select').length; i += 1) {
 				$('select.schedules-select')[i].sumo.reload();
 			}
-
 		}
 
 	});
-
 
 	//filter modal manufacture date
 	var dteNow = new Date();
@@ -714,10 +732,8 @@ $(function () {
 					if (hiddenFields[i].categoryId == subId) {
 						hideArr = hiddenFields[i].hidden;
 						for (j in hideArr) {
-							//						console.log(hideArr[j]);
 							$("#card-modal .field." + hideArr[j]).addClass("d-none");
 						}
-
 					}
 				}
 
@@ -749,7 +765,6 @@ $(function () {
 	$("#card-modal").on("click", ".show-contact", function () {
 		var phone, whatsapp;
 		phone = $(this).parents(".card").find(".seller-phone").val();
-		console.log(phone);
 		whatsapp = $("#card-modal .seller-whatsapp").val();
 		$("#card-modal details .mobile-val a").text(phone);
 		$("#card-modal details .mobile-val a").attr("href", "tel:" + phone);
@@ -774,7 +789,6 @@ $(function () {
 
 	//view template fields when change category in place ad modal
 	$("#ad-modal .categories-nav").on("click", ".last-subcategory", function () {
-		//		$("#ad-modal .categories-nav a.select").css("color", "#495057");
 		var templateId, subId, has_types = 0;
 		templateId = $(this).data("templateId");
 		subId = $(this).data("categoryId");
@@ -871,16 +885,10 @@ $(function () {
 			$(this)[0].sumo.reload();
 		});
 
-		//		$('#ad-modal .schedules-select')[0].sumo.selectItem(0);
-		//		$('#ad-modal .educations-select')[0].sumo.selectItem(0);
-		//		$('#ad-modal .automatic-select')[0].sumo.selectItem(0);
-		//		$('#ad-modal .status-select')[0].sumo.selectItem(0);
 	});
 
 	//view template fields when change category in filter modal
 	$("#filter-modal .categories-nav").on("click", ".last-subcategory", function () {
-
-		//		$("#filter-modal .categories-nav a.select").css("color", "#495057");
 		var templateId, subId, subName, has_types = 0;
 		templateId = $(this).data("templateId");
 		$("#filter-form input.template-id").val(templateId);
@@ -939,11 +947,6 @@ $(function () {
 			$("#filter-modal .type-select").parents(".form-group").addClass("d-none");
 			$("#filter-modal .model-select").parents(".form-group").addClass("d-none");
 		}
-		//		if (lang === "ar") {
-		//			$("#filter-modal .type-select .placeholder").text("اختر الماركة");
-		//		} else {
-		//			$("#filter-modal .type-select .placeholder").text("Select type");
-		//		}
 
 		$("#filter-form .category-id").val(subId);
 		$("#filter-form input[name='category_name']").val(subName);
@@ -959,21 +962,6 @@ $(function () {
 			$(this).prop('selectedIndex', 0);
 			$(this)[0].sumo.reload();
 		});
-
-		//		$('#filter-form select.status-select option:first').prop('selected',true);
-		//		$("#filter-form").trigger("reset");
-		//		for (i = 0; i < $('#filter-form select.status-select').length; i += 1) {
-		////				$('#filter-form select.status-select')[i].sumo.reload();
-		//				$('#filter-form select.status-select')[i].sumo.unSelectAll();
-		//			}
-		//		$('#filter-form select.status-select').prop('selectedIndex',0);
-		//		$('#filter-modal .manufacture-date-select')[0].sumo.unSelectAll();
-		//		$('#filter-modal .type-select')[0].sumo.selectItem(0);
-		//		$('#filter-modal .model-select')[0].sumo.unSelectAll();
-		//		$('#filter-modal .automatic-select')[0].sumo.unSelectAll();
-		//		$('#filter-modal .status-select')[0].sumo.unSelectAll();
-		//		$('#filter-modal .schedules-select')[0].sumo.unSelectAll();
-		//		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
 
 	});
 
@@ -1010,8 +998,6 @@ $(function () {
 			$("#filter-form .type-model-id").val(typeModelId);
 		}
 
-		//		console.log("type: " + $("#place-ad-form .type-id").val());
-		//		console.log("model: " + $("#place-ad-form .type-model-id").val());
 	});
 
 	//featured ad
@@ -1025,59 +1011,26 @@ $(function () {
 
 
 	//upload ad main image
-	var upload, uploadMain, uploadVideo, adMainImg = [],
+	var upload, deleteString, mainImage, setAsMain, uploadMain, uploadVideo, adMainImg = [],
 		adVideo = [];
 	if (lang === "ar") {
-		upload = "اختر صور إضافية";
+		upload = "اختر صور";
 		//		uploadMain = "اختر صورة الإعلان الرئيسية";
 		uploadVideo = "اختر فيديو";
+		deleteString = "حذف";
+		mainImage = "الرئيسية";
+		setAsMain = "تحديد كرئيسية";
 	} else {
-		upload = "Upload more images";
+		upload = "Upload images";
 		//		uploadMain = "Upload main ad image";
 		uploadVideo = "Upload video";
+		deleteString = "Delete";
+		mainImage = "Main image";
+		setAsMain = "Set as main";
 	}
 
 	var uploadobjMain, uploadobjOther, uploadobjvideo;
-	//	uploadobjMain = $("#fileuploader-ad-main").uploadFile({
-	//		url: base_url + '/api/items_control/item_images_upload',
-	//		multiple: false,
-	//		dragDrop: false,
-	//		fileName: "image",
-	//		acceptFiles: "image/*",
-	//		maxFileSize: 10000 * 1024,
-	//		maxFileCount: 1,
-	//		showDelete: true,
-	//		//				statusBarWidth:600,
-	//		dragdropWidth: "100%",
-	//		showPreview: true,
-	//		previewHeight: "100px",
-	//		previewWidth: "100px",
-	//		uploadStr: uploadMain,
-	//		returnType: "json",
-	//		onSuccess: function (files, data, xhr, pd) {
-	//			adMainImg.push(data.data);
-	//		},
-	//		onError: function (files, status, errMsg, pd) {
-	//			//console.log("upload failed");
-	//		},
-	//		deleteCallback: function (data, pd) {
-	//			//			console.log(data.data);
-	//			var arr;
-	//			arr = [data.data];
-	//			$.post(base_url + '/api/items_control/delete_images', {
-	//					images: JSON.stringify(arr)
-	//				},
-	//				function (resp, textStatus, jqXHR) {
-	//					var i, deleted;
-	//					deleted = data.data;
-	//					for (i in adMainImg) {
-	//						if (adMainImg[i] === deleted) {
-	//							adMainImg.splice(i, 1);
-	//						}
-	//					}
-	//				});
-	//		}
-	//	});
+
 	var fileIndex = 0;
 	uploadobjOther = $("#fileuploader-ad").uploadFile({
 		url: base_url + '/api/items_control/item_images_upload',
@@ -1094,10 +1047,12 @@ $(function () {
 		showFileSize: false,
 		previewHeight: "100px",
 		previewWidth: "100px",
+		deleteStr: deleteString,
 		uploadStr: upload,
 		returnType: "json",
 		extraHTML: function () {
-			var html = '<button class="btn set-main">set as main</button>';
+			var html;
+				html = '<button class="btn set-main">' + setAsMain + '</button>';
 			return html;
 		},
 		customProgressBar: function (obj, s) {
@@ -1123,11 +1078,10 @@ $(function () {
 		},
 		onSuccess: function (files, data, xhr, pd) {
 			adImgs.push(data.data);
-			console.log(adImgs);
 			//main image
 			$("#ad-modal .ajax-file-upload-statusbar").each(function () {
 				if ($(this).data("index") === 0) {
-					$(this).find(".set-main").text("main image");
+					$(this).find(".set-main").text(mainImage);
 					$(this).find(".set-main").attr("disabled", true);
 				}
 			});
@@ -1149,7 +1103,7 @@ $(function () {
 							adImgs.splice(i, 1);
 						}
 					}
-				
+
 					$("#ad-modal .ajax-file-upload-statusbar").each(function () {
 						for (i in adImgs) {
 							if ($(this).data("src") === adImgs[i]) {
@@ -1157,15 +1111,14 @@ $(function () {
 							}
 						}
 						if ($(this).data("index") === 0) {
-							$(this).find(".set-main").text("main image");
+							$(this).find(".set-main").text(mainImage);
 							$(this).find(".set-main").attr("disabled", true);
 						}
 					});
-				if($("#ad-modal .ajax-file-upload-statusbar").length == 0){
-					fileIndex = 0;
-				}
+					if ($("#ad-modal .ajax-file-upload-statusbar").length == 0) {
+						fileIndex = 0;
+					}
 				});
-			
 		}
 	});
 
@@ -1178,7 +1131,7 @@ $(function () {
 			adImgs.unshift(temp);
 			//change indexes
 			$("#ad-modal .ajax-file-upload-statusbar").each(function () {
-				$(this).find(".set-main").text("set as main");
+				$(this).find(".set-main").text(setAsMain);
 				$(this).find(".set-main").attr("disabled", false);
 				for (i in adImgs) {
 					if ($(this).data("src") === adImgs[i]) {
@@ -1186,7 +1139,7 @@ $(function () {
 					}
 				}
 			});
-			$(this).text("main image");
+			$(this).text(mainImage);
 			$(this).attr("disabled", true);
 		}
 	});
@@ -1202,9 +1155,12 @@ $(function () {
 		maxFileCount: 1,
 		showDelete: true,
 		dragdropWidth: "100%",
-		showPreview: true,
+		showPreview: false,
+		showProgress: true,
+		showFileSize: false,
 		previewHeight: "100px",
 		previewWidth: "100px",
+		deleteStr: deleteString,
 		uploadStr: uploadVideo,
 		returnType: "json",
 		onSuccess: function (files, data, xhr, pd) {
@@ -1239,15 +1195,9 @@ $(function () {
 			secondary_imgs = [];
 
 		data = $(this).serializeArray();
-		//		if (adMainImg.length > 0) {
-		//			data.push({
-		//				name: "main_image",
-		//				value: adMainImg[0]
-		//			});
-		//		}
+
 		//copy adimgs into uploaded_imgs so we don't make any operation on the original adImg array
 		if (adImgs.length > 0) {
-
 			for (i in adImgs) {
 				uploaded_imgs.push(adImgs[i]);
 			}
@@ -1257,12 +1207,13 @@ $(function () {
 			});
 			uploaded_imgs.splice(0, 1);
 			secondary_imgs = uploaded_imgs;
-			secondary_imgs = JSON.stringify(secondary_imgs);
-
-			data.push({
-				name: "images",
-				value: secondary_imgs
-			});
+			if (secondary_imgs.length > 0) {
+				secondary_imgs = JSON.stringify(secondary_imgs);
+				data.push({
+					name: "images",
+					value: secondary_imgs
+				});
+			}
 		}
 
 		if (adVideo.length > 0) {
@@ -1272,7 +1223,6 @@ $(function () {
 			});
 		}
 
-		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -1296,6 +1246,8 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
+				resetPostAd();
+
 				$("#ad-modal").modal("hide");
 				setTimeout(function () {
 					if (lang === "ar") {
@@ -1307,7 +1259,7 @@ $(function () {
 					$("#success-btn-modal").modal("show");
 				}, 500);
 				//reset
-				resetPostAd();
+				//				resetPostAd();
 			}
 		});
 	});
@@ -1316,7 +1268,6 @@ $(function () {
 		$("#success-btn-modal").modal("hide");
 	});
 
-	//	$(".place-ad").css("width", $(".right-col").width());
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > $(".products").offset().top) {
 			$(".categories").css({
@@ -1338,7 +1289,6 @@ $(function () {
 		if ($(window).innerWidth() > 768) {
 			if ($(".right-col").length > 0 && $(this).scrollTop() > ($(".right-col").offset().top - $(".categories").height())) {
 				$(".place-ad").css({
-					//				width: $(".right-col").width(),
 					top: $(".categories").height(),
 					right: "20px",
 					position: "fixed"
@@ -1451,11 +1401,20 @@ $(function () {
 			};
 
 			sessionStorage.removeItem('bookmark');
-			sessionStorage.setItem('bookmark', $.param({
+			if (category_id) {
+				sessionStorage.setItem('bookmark', $.param({
+				query: query,
+				search: query,
+					category_id: category_id,
+					category_name: category_name
+			}));
+			}else {
+				sessionStorage.setItem('bookmark', $.param({
 				query: query,
 				search: query
 			}));
-
+			}
+			
 			if (category_id) {
 				window.location = base_url + '/search_control?query=' + query + '&category_id=' + category_id + '&category_name=' + category_name;
 			} else {
@@ -1696,7 +1655,6 @@ $(function () {
 		notSeenInterval;
 	//check for not seen messages
 	function checkNewMsgs() {
-		//		console.log("sess");
 		//get chat messages
 		$.ajax({
 			type: "get",
@@ -1716,11 +1674,8 @@ $(function () {
 				}
 				if (notSeenMsgs > 0) {
 					$(".header-account-logged .new-msg").removeClass("d-none");
-					//					$(".profile-page .chat-tab-link .new-msg").removeClass("d-none");
-					//					$(".profile-page .session .new-msg").removeClass("d-none");
 				} else {
 					$(".header-account-logged .new-msg").addClass("d-none");
-					//					$(".profile-page .chat-tab-link .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
 				if ($(".profile-page").length > 0) {
@@ -1741,12 +1696,10 @@ $(function () {
 
 	if (logged) {
 		checkNewMsgs();
-		//		notSeenInterval = setTimeout(checkNewMsgs, 3000);
 	}
 
 	//auto check for new messages for an opened chat session and append it
 	function checkLiveSessionMsg() {
-		//console.log("msg");
 		//get chat messages for a live(opened) chat session
 		$.ajax({
 			type: "get",
@@ -1788,7 +1741,6 @@ $(function () {
 							template = $('#chat-self-template').html();
 						}
 
-						//						template = $('#chat-other-template').html();
 						Mustache.parse(template);
 						rendered = Mustache.render(template, data.data[i]);
 						$("#chat-modal .chat").append(rendered);
@@ -1813,7 +1765,6 @@ $(function () {
 	});
 
 	$('#chat-modal').on('hide.bs.modal', function (e) {
-		//		clearInterval(intervalId);
 		clearTimeout(intervalId);
 	});
 
@@ -1847,7 +1798,6 @@ $(function () {
 			}
 		});
 	});
-
 
 	//language
 	$(".language-switch span").click(function (e) {
@@ -2218,7 +2168,6 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {} else {
-			//			console.log(data);
 			template = $('#footer-template').html();
 			Mustache.parse(template);
 			rendered = Mustache.render(template, data.data);

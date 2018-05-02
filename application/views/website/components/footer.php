@@ -32,48 +32,7 @@
 			</div>
 		</div>
 	</script>
-<!--
-	<div class="container">
-		<div class="row">
-			<div class="col-md-7">
-				<div class="section about">
-					<h3>
-						<?php echo $this->lang->line('about'); ?>
-					</h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima cum ipsum amet id sunt distinctio eos! Impedit dolorum neque alias sequi distinctio nam quas provident? Commodi nesciunt, asperiores! Quis, accusamus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero qui est aperiam accusamus nobis, voluptatibus sapiente fugiat atque ipsam consequatur eius laudantium aliquid quidem hic alias officiis rem praesentium dicta.</div>
-			</div>
-			
-			<div class="col-md-4">
-				<div class="section reviews">
-					<h3>
-						<?php echo $this->lang->line('reviews'); ?>
-					</h3>
-					<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquam adipisci voluptas placeat, dolor, non nemo praesentium eum? Velit necessitatibus vero, earum est quidem, repellat recusandae perspiciatis nemo ad iste!</div>
-					<br>
-					<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus laborum reprehenderit quibusdam veritatis commodi excepturi deserunt sint corporis, ipsum. Nobis architecto inventore, voluptatibus distinctio ratione odio minus quis, amet rerum.</div>
-				</div>
-			</div>
 
-			<div class="col-md-5">
-				<div class="section contact">
-					<h3>
-						<?php echo $this->lang->line('contact_us'); ?>
-					</h3>
-					<div class="social">
-						<span class="icon facebook"><a href=""><i class="fab fa-facebook-square fa-2x"></i></a></span>
-						<span class="icon youtube"><a href=""><i class="fab fa-youtube-square fa-2x"></i></a></span>
-						<span class="icon twitter"><a href=""><i class="fab fa-twitter-square fa-2x"></i></a></span>
-						<span class="icon google"><a href=""><i class="fab fa-google-plus-square fa-2x"></i></a></span>
-					</div>
-					<ul class="info">
-						<li><i class="fas fa-envelope"></i> support@dealat.com</li>
-						<li><i class="fas fa-at"></i> support@dealat.com</li>
-						<li><i class="fas fa-phone" data-fa-transform="flip-h"></i> 13456789132</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
--->
 </footer>
 
 <!--  jQuery library  -->
@@ -85,35 +44,14 @@
 <!--  multi level dropdown  -->
 <script src="<?php echo base_url('assets/js/bootstrap-4-navbar.js'); ?>"></script>
 
-<!--  smooth scroll  -->
-<!--	<script src="js/SmoothScroll.min.js"></script>-->
-<!--	<script src="<?php //echo base_url("assets/js/smooth-scroll.min.js"); ?>"></script>-->
 <script>
-	//		var scroll = new SmoothScroll('a[href*="#"]', {
-	//			speed: 2000
-	//		});
 
 </script>
-<!--  nice scroll  -->
-<!--
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script>
-        $("body").niceScroll({
-            cursorwidth: "9px",
-            cursoropacitymin: .2,
-            scrollspeed: 200,
-            mousescrollstep: 40,
-            nativeparentscrolling: true,
-            enablescrollonselection:true
-        });
-    </script>
--->
 <!--  mustache  -->
 <script src="<?php echo base_url('assets/js/mustache.min.js'); ?>"></script>
 <!--  mixit up  -->
 <script src="<?php echo base_url('assets/js/mixitup.min.js'); ?>"></script>
 <script>
-	//	var mixer = mixitup('.products');
 
 </script>
 <!--  slick slider  -->
@@ -136,13 +74,6 @@
 			cssEase: 'linear',
 			pauseOnHover: false
 		});
-
-		//		$('#card-modal .card-img-slider').slick({
-		//			infinite: true,
-		//			slidesToShow: 1,
-		//			mobileFirst: true,
-		//			swipeToSlide: true
-		//		});
 
 		$('.category-slider').slick({
 			infinite: false,
@@ -192,67 +123,7 @@
 <!--  file upload  -->
 <script src="<?php echo base_url('assets/js/jquery.form.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
-<script>
-	$(document).ready(function() {
-		//		$("#fileuploader-register").uploadFile({
-		//			//				url: base_url + '/api/ads_control/ad_images_upload',
-		//			multiple: false,
-		//			dragDrop: false,
-		//			//				fileName:"myfile"
-		//			acceptFiles: "image/*",
-		//			maxFileSize: 10000 * 1024,
-		//			showDelete: true,
-		//			showPreview: true,
-		//			previewHeight: "100px",
-		//			previewWidth: "100px",
-		//			uploadStr: "Upload Image"
-		//		});
-		//
-		//		$("#fileuploader-ad").uploadFile({
-		//			url: base_url + '/api/ads_control/ad_images_upload',
-		//			multiple: true,
-		//			dragDrop: true,
-		//			fileName: "image",
-		//			acceptFiles: "image/*",
-		//			maxFileSize: 10000 * 1024,
-		//			//see docs for localization(lang)
-		//			showDelete: true,
-		//			//				statusBarWidth:600,
-		//			dragdropWidth: "100%",
-		//			showPreview: true,
-		//			previewHeight: "100px",
-		//			previewWidth: "100px",
-		//			uploadStr: "Upload Images",
-		//			returnType: "json",
-		//			onSuccess: function(files, data, xhr, pd) {
-		//				console.log("success");
-		//				console.log(data);
-		//			},
-		//			onError: function(files, status, errMsg, pd) {
-		//				console.log("fail");
-		//				console.log(data);
-		//			},
-		//			deleteCallback: function(data, pd) {
-		//				console.log(data.data);
-		//				var arr;
-		//				arr=[data.data];
-		////				for (var i = 0; i < data.data.length; i++) {
-		//					$.post(base_url + '/api/ads_control/delete_images', {
-		//							images: arr
-		//						},
-		//						function(resp, textStatus, jqXHR) {
-		//							//Show Message    
-		//							alert("File Deleted");
-		//						});
-		////				}
-		////				pd.statusbar.hide(); 
-		//
-		//			}
-		//		});
 
-	});
-
-</script>
 <!--  datepicker  -->
 <script src="<?php echo base_url('assets/js/datepicker.min.js'); ?>"></script>
 

@@ -5,12 +5,10 @@
 		<div class="container">
 			<header>
 				<div class="row align-items-center text-center">
-					<!--					<div class="col-sm-3"><span class="logo"><img src="<?php echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span></div>-->
 					<div class="col-sm-3">
 						<button class="btn button2 w-75 bookmark mb-1"><?php echo $this->lang->line('save_search'); ?></button>
 					</div>
 					<div class="col-md-3"><button class="btn button2 w-75 filter  mb-1"><?php echo $this->lang->line('filter'); ?></button></div>
-					<!--					<div class="col-md-5 "><input type="search" class="form-control" placeholder="Search"></div>-->
 					<div class="col-md-5 ">
 						<div class="search-wrapper">
 							<input type="search" class="form-control" placeholder="<?php echo $this->lang->line('search'); ?>">
@@ -91,12 +89,7 @@
 												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 												<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val"><?php echo $ad->city_name.'-'.$ad->location_name ?></span></div>
 
-												<!--												<div class="views"><span class="views-val">350 </span><span class="views-lbl">Views</span></div>-->
-												<!--									<div class="rating">stars</div>-->
-
-
 												<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?> </span><span class="date-val"><?php $timestamp = strtotime($ad->publish_date); echo date('d-m-Y',$timestamp); ?></span></div>
-												<!--												<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val"><?php echo $ad->is_negotiable ?></span></div>-->
 												<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val"><?php echo $ad->seller_name ?></span></div>
 											</div>
 										</div>
@@ -115,13 +108,7 @@
 						<!-- ad end -->
 					</div>
 				</div>
-				<!--
-				<div class="col-md-2 right-col">
-					<aside class="banners">
-						
-					</aside>
-				</div>
--->
+			
 			</div>
 		</div>
 	</section>

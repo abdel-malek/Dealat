@@ -12,11 +12,7 @@
 		<div class="container">
 			<header>
 				<div class="row align-items-center">
-					<!--
-					<div class="col-0 col-md-2">
-						<span class="logo"><img src="<?php //echo base_url("assets/images/Dealat%20logo%20white%20background.png"); ?>" width="60px" alt=""></span>
-					</div>
--->
+					
 					<div class="col-sm-12 col-md-4 col-lg-5 offset-lg-1 offset-xl-0 mt-2">
 						<h2 class="text">
 							<?php echo $this->lang->line('download_app'); ?>
@@ -75,11 +71,7 @@
 
 			<div class="row no-gutters">
 				<div class="col-md-10 left-col">
-					<!--
-					<h5 class="recent-txt">
-						<?php echo $this->lang->line('latest_ads'); ?>
-					</h5>
--->
+					
 					<div class="row mb-4 ml-0 mr-0 align-items-center">
 						<div class="col-md-2">
 							<h5 class="recent-txt mb-0">
@@ -131,7 +123,11 @@
 												<div class="clearfix"></div>
 												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 											</div>
-											<div class="location"><span class="location-lbl"></span><span class="location-val"><?php echo $ad->city_name .'-'.$ad->location_name ?></span></div>
+											<div class="location"><span class="location-lbl"></span>
+											   <span class="location-val">
+											      <?php if($ad->location_name != null): echo $ad->city_name .'-'.$ad->location_name ; else: echo $ad->city_name; endif; ?>
+												</span>
+											</div>
 										</div>
 
 										<div class="col-12">

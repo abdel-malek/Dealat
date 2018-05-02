@@ -505,7 +505,7 @@
 										<div class=""><?php echo $this->lang->line('main_image'); ?>:</div>
 										<div class="image-wrapper main-image" data-url="{{main_image}}">
 											<img src="<?php echo base_url('{{main_image}}'); ?>" alt="" width="100px" height="100px">
-											<button class="btn btn-danger delete" type="button">Delete</button>
+											<button class="btn btn-danger delete" type="button"><?php echo $this->lang->line('delete'); ?></button>
 										</div>
 									</div>
 									{{/main_image}}
@@ -515,7 +515,7 @@
 										{{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
-											<button class="btn btn-danger delete" type="button">Delete</button>
+											<button class="btn btn-danger delete" type="button"><?php echo $this->lang->line('delete'); ?></button>
 										</div>
 										{{/images}}
 									</div>
@@ -525,7 +525,7 @@
 										<div class=""><?php echo $this->lang->line('video'); ?>:</div>
 										<div class="image-wrapper video" data-url="{{main_video}}">
 											<img src="<?php echo base_url('assets/images/default_ad/video.png'); ?>" alt="" width="100px" height="100px">
-											<button class="btn btn-danger delete" type="button">Delete</button>
+											<button class="btn btn-danger delete" type="button"><?php echo $this->lang->line('delete'); ?></button>
 										</div>
 									</div>
 									{{/main_video}}
