@@ -702,20 +702,20 @@ $(function () {
 		$("#edit-ad-modal").on("hide.bs.modal", function () {
 			//delete images if user close modal without editing the ad
 			var deleteImgs = [];
-			
+
 			if (editMainImg.length > 0) {
 				for (i in editMainImg) {
 					deleteImgs.push(editMainImg[i]);
 				}
 			}
-			
+
 			if (tempEditAdImgs.length > 0) {
 				for (i in tempEditAdImgs) {
 					deleteImgs.push(tempEditAdImgs[i]);
 				}
 			}
-			
-			if(tempEditAdImgs.length > 0 || editMainImg.length > 0){
+
+			if (tempEditAdImgs.length > 0 || editMainImg.length > 0) {
 				$.ajax({
 					type: "post",
 					url: base_url + '/api/items_control/delete_images',
@@ -889,7 +889,8 @@ $(function () {
 				}
 			});
 		});
-
+		
+		var sound_notify_path = site_url + 'admin_assets/definite.mp3';
 		//get chat sessions
 		$.ajax({
 			type: "get",
@@ -938,6 +939,7 @@ $(function () {
 							if ($(this).data("sessionId") == newMsgSessions[i]) {
 								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
 								$(this).find(".new-msg").removeClass("d-none");
+//								$.playSound(sound_notify_path);
 							}
 						}
 					});

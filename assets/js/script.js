@@ -218,9 +218,9 @@ $(function () {
 
 			if (data.data.length !== 0) {
 				for (i in data.data) {
-					if(data.data[i].ad_url){
+					if (data.data[i].ad_url) {
 						var pos = data.data[i].ad_url.search("http");
-						if(pos === -1){
+						if (pos === -1) {
 							data.data[i].ad_url = "http://" + data.data[i].ad_url;
 						}
 
@@ -1052,7 +1052,7 @@ $(function () {
 		returnType: "json",
 		extraHTML: function () {
 			var html;
-				html = '<button class="btn set-main">' + setAsMain + '</button>';
+			html = '<button class="btn set-main">' + setAsMain + '</button>';
 			return html;
 		},
 		customProgressBar: function (obj, s) {
@@ -1403,18 +1403,18 @@ $(function () {
 			sessionStorage.removeItem('bookmark');
 			if (category_id) {
 				sessionStorage.setItem('bookmark', $.param({
-				query: query,
-				search: query,
+					query: query,
+					search: query,
 					category_id: category_id,
 					category_name: category_name
-			}));
-			}else {
+				}));
+			} else {
 				sessionStorage.setItem('bookmark', $.param({
-				query: query,
-				search: query
-			}));
+					query: query,
+					search: query
+				}));
 			}
-			
+
 			if (category_id) {
 				window.location = base_url + '/search_control?query=' + query + '&category_id=' + category_id + '&category_name=' + category_name;
 			} else {
@@ -1652,7 +1652,9 @@ $(function () {
 	});
 
 	var notSeenMsgs = 0,
+		newNotSeenMsgs = 0,
 		notSeenInterval;
+	var sound_notify_path = site_url + 'admin_assets/definite.mp3';
 	//check for not seen messages
 	function checkNewMsgs() {
 		//get chat messages
@@ -1664,31 +1666,42 @@ $(function () {
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				notSeenMsgs = 0;
+//								notSeenMsgs = 0;
+				newNotSeenMsgs = 0;
 				var newMsgSessions = [];
 				for (i in data.data) {
 					if ((user_id == data.data[i].seller_id && data.data[i].seller_seen == 0) || (user_id == data.data[i].user_id && data.data[i].user_seen == 0)) {
 						newMsgSessions.push(data.data[i].chat_session_id);
-						notSeenMsgs += 1;
+						//						notSeenMsgs += 1;
+						newNotSeenMsgs += 1;
 					}
 				}
-				if (notSeenMsgs > 0) {
+				var diff = newNotSeenMsgs - notSeenMsgs;
+				//				if (notSeenMsgs > 0) {
+				if (diff > 0) {
+					$.playSound(sound_notify_path);
+				}
+				if (newNotSeenMsgs > 0) {
 					$(".header-account-logged .new-msg").removeClass("d-none");
+					
 				} else {
 					$(".header-account-logged .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
 				if ($(".profile-page").length > 0) {
-					$(".profile-page .sessions .session").each(function () {
-						$(this).removeAttr("style");
-						for (i in newMsgSessions) {
-							if ($(this).data("sessionId") == newMsgSessions[i]) {
-								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
-								$(this).find(".new-msg").removeClass("d-none");
+						$(".profile-page .sessions .session").each(function () {
+							$(this).removeAttr("style");
+							$(this).find(".new-msg").addClass("d-none");
+							for (i in newMsgSessions) {
+								if ($(this).data("sessionId") == newMsgSessions[i]) {
+									$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+									$(this).find(".new-msg").removeClass("d-none");
+//									$.playSound(sound_notify_path);
+								}
 							}
-						}
-					});
-				}
+						});
+					}
+				notSeenMsgs = newNotSeenMsgs;
 				notSeenInterval = setTimeout(checkNewMsgs, 3000);
 			}
 		});

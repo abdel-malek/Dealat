@@ -160,6 +160,9 @@
 
 </script>
 
+<!-- notify sound -->
+   <script src="<?php echo base_url() ?>admin_assets/js/jquery.playSound.js"></script>
+   
 <!-- main js file -->
 <script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>
