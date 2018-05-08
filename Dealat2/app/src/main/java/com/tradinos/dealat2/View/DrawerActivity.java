@@ -91,6 +91,7 @@ public abstract class DrawerActivity extends MasterActivity
                 menu.findItem(R.id.nav_Chats).setVisible(true);
                 menu.findItem(R.id.nav_savedSearches).setVisible(true);
                 menu.findItem(R.id.navLogout).setVisible(true);
+                menu.findItem(R.id.nav_qrCode).setVisible(true);
                 buttonRegister.setVisibility(View.GONE);
                 imageViewUser.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_person_48dp));
 
@@ -209,10 +210,10 @@ public abstract class DrawerActivity extends MasterActivity
                 startActivity(intent);
                 break;
 
-          /*  case R.id.nav_qrCode:
+            case R.id.nav_qrCode:
                 intent = new Intent(mContext, QRCodeActivity.class);
                 startActivity(intent);
-                break;*/
+                break;
 
             case R.id.navAr:
                 setLocale("ar");

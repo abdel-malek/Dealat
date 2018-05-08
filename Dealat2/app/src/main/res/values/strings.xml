@@ -10,6 +10,7 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">Ok</string>
 
     <string name="arabic">عربي</string>
     <string name="english">English</string>
@@ -67,8 +68,10 @@
     <string name="labelSelectBrand">Select Brand</string>
     <string name="labelSelectModel">Select Model</string>
     <string name="labelSelectEdu">Select Education</string>
+    <string name="labelSelectCertificate">Select Certificate</string>
     <string name="labelSelectSch">Select Schedule</string>
     <string name="labelSelectManufactureYear">Select Manufacturing Year</string>
+    <string name="labelSelectEngineCapacity">Select Engine Capacity</string>
     <string name="labelShowPeriod">Show Period</string>
     <string name="labelTo">To</string>
     <string name="labelFrom">From</string>
@@ -83,7 +86,7 @@
     <string name="labelAgree">I have read and agree to the</string>
     <string name="labelTerms">Terms of Dealat</string>
     <string name="labelShowPhone">Show phone number</string>
-    <string name="labelOnlyToRegistered">Your phone number will be shown with your ads\' details</string>
+    <string name="labelOnlyToRegistered">Your phone number will be shown with this ad\'s details</string>
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
@@ -96,6 +99,7 @@
     <string name="labelModel">Model</string>
     <string name="labelKilo">Kilometer</string>
     <string name="labelManufactureYear">Manufacturing Year</string>
+    <string name="labelEngineCapacity">Engine Capacity</string>
     <string name="labelTransmission">Transmission Type</string>
     <string name="labelState">State</string>
     <string name="labelPropertyState">Property State</string>
@@ -103,8 +107,10 @@
     <string name="labelSpace">Space</string>
     <string name="labelRoom">Number of Rooms</string>
     <string name="labelFloor">Floor</string>
+    <string name="labelNumberFloors">Number of Floors</string>
 
     <string name="labelEdu">Education</string>
+    <string name="labelCertificate">Certificate</string>
     <string name="labelSchedule">Schedule</string>
     <string name="labelExperience">Experience</string>
     <string name="labelSalary">Salary</string>
@@ -124,6 +130,8 @@
     <string name="labelRoomTo">Number of Rooms: To</string>
     <string name="labelFloorFrom">Floor: From</string>
     <string name="labelFloorTo">Floor: To</string>
+    <string name="labelNumberFloorsFrom">Number of Floors: From</string>
+    <string name="labelNumberFloorsTo">Number of Floors: To</string>
 
     <!-- Jobs -->
     <string name="labelSalaryFrom">Salary: From</string>
@@ -157,6 +165,7 @@
     <string name="hintSpace">Space</string>
     <string name="hintRooms">Number of Rooms</string>
     <string name="hintFloors">Floor</string>
+    <string name="hintNumberFloors">Number of Floors</string>
     <string name="hintState">State</string>
     <string name="hintSalary">Salary</string>
     <string name="hintWriteMsg">Write your message...</string>
@@ -205,7 +214,7 @@
 
 
     <!-- Toasts -->
-    <string name="toastAdSubmit">Ad Submitted Successfully</string>
+    <string name="toastAdSubmit">Ad submitted, and it\'s waiting for admin approval</string>
     <string name="toastFavorite">Ad added to your favorites</string>
     <string name="toastUnfavorite">Ad removed from your favorites</string>
     <string name="toastAdReported">Ad reported</string>

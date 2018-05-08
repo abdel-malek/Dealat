@@ -111,7 +111,7 @@
             android:visibility="invisible"
             android:onClick="onClick"
             android:textAppearance="@style/textNormal"
-            android:textColor="@color/white"
+            android:textColor="@color/blueLight"
             />
 
         <TextView

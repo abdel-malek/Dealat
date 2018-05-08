@@ -41,6 +41,7 @@ import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.AdVehicle;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.City;
@@ -48,6 +49,7 @@ import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.Utils.ScalableImageView;
@@ -92,33 +94,35 @@ public class SubmitAdActivity extends MasterActivity {
     private LinearLayout linearLayout;
     private PopupWindow popupWindow;
 
-    private TextView textBrand, textModel,
+    private TextView textBrand, textModel, textTransmission, textCapacity,
             textDate,
-            textEdu, textSch;
+            textEdu, textSch, textCertificate, textGender,
+            textState,
+            textFurn;
 
     private EditText editTitle, editDesc, editCategory, editPrice, editTextError,
             editKilo,
             editSize,
-            editSpace, editRooms, editFloors, editState,
+            editSpace, editRooms, editFloors, editNumberFloors, editState,
             editEx, editSalary;
 
     private AutoCompleteTextView autoCompleteLocation;
 
     private AppCompatSpinner spinnerPeriod, spinnerCity,
-            spinnerBrand, spinnerModel, spinnerYear,
-            spinnerEdu, spinnerSch;
+            spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission, spinnerCapacity,
+            spinnerEdu, spinnerCertificate, spinnerSch, spinnerGender,
+            spinnerState,
+            spinnerFurn;
 
-    private SwitchCompat switchNegotiable, switchSecondhand, switchFeatured,
-            switchAutomatic,
-            switchFurn;
+    private SwitchCompat switchNegotiable, switchFeatured;
 
     private Button buttonTerms;
-    private CheckBox checkboxTerms;
+    private CheckBox checkboxTerms, checkPhone;
     private TextInputLayout containerPrice, containerKilometer, containerSize,
-            containerSpace, containerRooms, containerFloors, containerState,
+            containerSpace, containerRooms, containerFloors, containerNumberFloors, containerState,
             containerEx, containerSalary;
 
-    private View line1, line2, line3;
+
     // views for upload video
     private ProgressBar progressBarVideo;
     private ImageButton imageButtonCheck, imageButtonVideo;
@@ -151,11 +155,14 @@ public class SubmitAdActivity extends MasterActivity {
 
                 spinnerBrand.setAdapter(new TypeAdapter(mContext, getCategoryBrands()));
 
-                result.getEducations().add(Item.getNoItem());
+                result.getEducations().add(0, Item.getNoItem());
                 spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
 
-                result.getSchedules().add(Item.getNoItem());
+                result.getSchedules().add(0, Item.getNoItem());
                 spinnerSch.setAdapter(new ItemAdapter(mContext, result.getSchedules()));
+
+                result.getCertificates().add(0, Item.getNoItem());
+                spinnerCertificate.setAdapter(new ItemAdapter(mContext, result.getCertificates()));
 
                 showTemplate();
             }
@@ -166,20 +173,54 @@ public class SubmitAdActivity extends MasterActivity {
     public void showData() {
 
         ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
-                " " + getString(R.string.images) + "\n" + getString(R.string.alsoSelectVideo));
+                " " + getString(R.string.images));
+
+        User user = new CurrentAndroidUser(mContext).Get();
+        if (user != null)
+            checkPhone.setText(getString(R.string.labelShowPhone) + " " + user.getPhone());
 
         int startYear = AdVehicle.START_YEAR;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         List<Item> years = new ArrayList<>();
         years.add(Item.getNoItem());
-
         for (int i = currentYear; i >= startYear; i--)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
-
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
 
-        adapter = new HorizontalAdapter(mContext, linearLayout);
 
+        List<Item> capacities = new ArrayList<>();
+        capacities.add(Item.getNoItem());
+        for (int i = AdVehicle.CAPACITY_MIN; i <= AdVehicle.CAPACITY_MAX; i = i + 100)
+            capacities.add(new Item(String.valueOf(i), String.valueOf(i)));
+        spinnerCapacity.setAdapter(new ItemAdapter(mContext, capacities));
+
+
+        List<Item> usageOptions = new ArrayList<>();
+        usageOptions.add(new Item("0", getString(R.string.old)));
+        usageOptions.add(new Item("1", getString(R.string.newU)));
+        spinnerState.setAdapter(new ItemAdapter(mContext, usageOptions));
+
+
+        List<Item> transmissionOptions = new ArrayList<>();
+        transmissionOptions.add(new Item("0", getString(R.string.manual)));
+        transmissionOptions.add(new Item("1", getString(R.string.labelAutomatic)));
+        spinnerTransmission.setAdapter(new ItemAdapter(mContext, transmissionOptions));
+
+
+        List<Item> furnOptions = new ArrayList<>();
+        furnOptions.add(new Item("0", getString(R.string.no)));
+        furnOptions.add(new Item("1", getString(R.string.yes)));
+        spinnerFurn.setAdapter(new ItemAdapter(mContext, furnOptions));
+
+
+        List<Item> genders = new ArrayList<>();
+        genders.add(Item.getNoItem());
+        genders.add(new Item("1", getString(R.string.male)));
+        genders.add(new Item("2", getString(R.string.female)));
+        spinnerGender.setAdapter(new ItemAdapter(mContext, genders));
+
+
+        adapter = new HorizontalAdapter(mContext, linearLayout);
 
         SpannableString content = new SpannableString(getString(R.string.labelTerms));
         content.setSpan(new UnderlineSpan(), 0, getString(R.string.labelTerms).length(), 0);
@@ -193,8 +234,14 @@ public class SubmitAdActivity extends MasterActivity {
         textBrand = (TextView) findViewById(R.id.textBrand);
         textModel = (TextView) findViewById(R.id.textModel);
         textDate = (TextView) findViewById(R.id.textDate);
+        textTransmission = (TextView) findViewById(R.id.textTransmission);
+        textCapacity = findViewById(R.id.textCapacity);
         textEdu = (TextView) findViewById(R.id.textEdu);
+        textCertificate = findViewById(R.id.textCertificate);
         textSch = (TextView) findViewById(R.id.textSch);
+        textGender = findViewById(R.id.textGender);
+        textState = (TextView) findViewById(R.id.textState);
+        textFurn = (TextView) findViewById(R.id.textFurn);
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editCategory = (EditText) findViewById(R.id.editCategory);
@@ -211,6 +258,7 @@ public class SubmitAdActivity extends MasterActivity {
         editSpace = (EditText) findViewById(R.id.editSpace);
         editRooms = (EditText) findViewById(R.id.editRooms);
         editFloors = (EditText) findViewById(R.id.editFloors);
+        editNumberFloors = findViewById(R.id.editNumberFloors);
         editState = (EditText) findViewById(R.id.editState);
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
@@ -221,15 +269,20 @@ public class SubmitAdActivity extends MasterActivity {
         spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
         spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
         spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
+        spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
+        spinnerCapacity = findViewById(R.id.spinnerCapacity);
 
         spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
+        spinnerCertificate = findViewById(R.id.spinnerCertificate);
         spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
+        spinnerGender = findViewById(R.id.spinnerGender);
+
+        spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
+
+        spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
         switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
-        switchSecondhand = (SwitchCompat) findViewById(R.id.switchSecondhand);
-        switchAutomatic = (SwitchCompat) findViewById(R.id.switchAutomatic);
-        switchFurn = (SwitchCompat) findViewById(R.id.switchFurn);
 
         containerPrice = (TextInputLayout) findViewById(R.id.containerPrice);
 
@@ -240,20 +293,18 @@ public class SubmitAdActivity extends MasterActivity {
         containerSpace = (TextInputLayout) findViewById(R.id.containerSpace);
         containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
         containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
+        containerNumberFloors = findViewById(R.id.containerNumberFloors);
         containerState = (TextInputLayout) findViewById(R.id.containerState);
 
         containerEx = (TextInputLayout) findViewById(R.id.containerEx);
         containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
-
-        line1 = findViewById(R.id.line1);
-        line2 = findViewById(R.id.line2);
-        line3 = findViewById(R.id.line3);
 
         progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
         imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
         imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
 
         checkboxTerms = (CheckBox) findViewById(R.id.checkboxTerms);
+        checkPhone = findViewById(R.id.checkPhone);
         buttonTerms = (Button) findViewById(R.id.buttonTerms);
 
         editTextError = (EditText) findViewById(R.id.editTextError);
@@ -387,19 +438,29 @@ public class SubmitAdActivity extends MasterActivity {
 
             if (checkGeneralInput()) {
 
-                getTemplateInput();
-
-                ShowProgressDialog();
-                AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
-                    public void OnSuccess(String result) {
-                        HideProgressDialog();
-                        showMessageInToast(R.string.toastAdSubmit);
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
 
-                        setResult(RESULT_OK);
-                        finish();
+                                getTemplateInput();
+
+                                ShowProgressDialog();
+                                AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
+                                    @Override
+                                    public void OnSuccess(String result) {
+                                        HideProgressDialog();
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+                                });
+                        }
                     }
-                });
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
+                builder.setMessage(R.string.toastAdSubmit).setPositiveButton(getResources().getString(R.string.ok), dialogClickListener).show();
             }
         } else if (view.getId() == R.id.buttonEdit) {
             if (adapter.getCount() >= Image.MAX_IMAGES)
@@ -532,12 +593,15 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideFloor)))
                     containerFloors.setVisibility(visibility);
 
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideNumberFloors)))
+                    containerNumberFloors.setVisibility(visibility);
+
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideState)))
                     containerState.setVisibility(visibility);
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideFurn))) {
-                    switchFurn.setVisibility(visibility);
-                    line3.setVisibility(visibility);
+                    textFurn.setVisibility(visibility);
+                    spinnerFurn.setVisibility(visibility);
                 }
 
                 break;
@@ -553,6 +617,16 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideEducation))) {
                     textEdu.setVisibility(visibility);
                     spinnerEdu.setVisibility(visibility);
+                }
+
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideCertificate))) {
+                    textCertificate.setVisibility(visibility);
+                    spinnerCertificate.setVisibility(visibility);
+                }
+
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideGender))) {
+                    textGender.setVisibility(visibility);
+                    spinnerGender.setVisibility(visibility);
                 }
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideEx)))
@@ -579,17 +653,22 @@ public class SubmitAdActivity extends MasterActivity {
                     spinnerYear.setVisibility(visibility);
                 }
 
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideCapacity))) {
+                    textCapacity.setVisibility(visibility);
+                    spinnerCapacity.setVisibility(visibility);
+                }
+
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideKilo)))
                     containerKilometer.setVisibility(visibility);
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideAutomatic))) {
-                    switchAutomatic.setVisibility(visibility);
-                    line1.setVisibility(visibility);
+                    textTransmission.setVisibility(visibility);
+                    spinnerTransmission.setVisibility(visibility);
                 }
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
-                    switchSecondhand.setVisibility(visibility);
-                    line2.setVisibility(visibility);
+                    textState.setVisibility(visibility);
+                    spinnerState.setVisibility(visibility);
                 }
 
                 break;
@@ -609,8 +688,8 @@ public class SubmitAdActivity extends MasterActivity {
             case Category.SPORTS:
             case Category.INDUSTRIES:
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
-                    line2.setVisibility(visibility);
-                    switchSecondhand.setVisibility(visibility);
+                    textState.setVisibility(visibility);
+                    spinnerState.setVisibility(visibility);
                 }
         }
     }
@@ -633,10 +712,11 @@ public class SubmitAdActivity extends MasterActivity {
                 containerSpace.setVisibility(visibility);
                 containerRooms.setVisibility(visibility);
                 containerFloors.setVisibility(visibility);
+                containerNumberFloors.setVisibility(visibility);
                 containerState.setVisibility(visibility);
 
-                switchFurn.setVisibility(visibility);
-                line3.setVisibility(visibility);
+                textFurn.setVisibility(visibility);
+                spinnerFurn.setVisibility(visibility);
 
                 break;
 
@@ -648,6 +728,12 @@ public class SubmitAdActivity extends MasterActivity {
 
                 textEdu.setVisibility(visibility);
                 spinnerEdu.setVisibility(visibility);
+
+                textCertificate.setVisibility(visibility);
+                spinnerCertificate.setVisibility(visibility);
+
+                textGender.setVisibility(visibility);
+                spinnerGender.setVisibility(visibility);
 
                 containerEx.setVisibility(visibility);
                 containerSalary.setVisibility(visibility);
@@ -664,13 +750,16 @@ public class SubmitAdActivity extends MasterActivity {
                 textDate.setVisibility(visibility);
                 spinnerYear.setVisibility(visibility);
 
+                textCapacity.setVisibility(visibility);
+                spinnerCapacity.setVisibility(visibility);
+
                 containerKilometer.setVisibility(visibility);
 
-                switchAutomatic.setVisibility(visibility);
-                line1.setVisibility(visibility);
+                textTransmission.setVisibility(visibility);
+                spinnerTransmission.setVisibility(visibility);
 
-                switchSecondhand.setVisibility(visibility);
-                line2.setVisibility(visibility);
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
 
                 break;
 
@@ -685,8 +774,8 @@ public class SubmitAdActivity extends MasterActivity {
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
-                line2.setVisibility(visibility);
-                switchSecondhand.setVisibility(visibility);
+                textState.setVisibility(visibility);
+                spinnerState.setVisibility(visibility);
         }
     }
 
@@ -758,6 +847,11 @@ public class SubmitAdActivity extends MasterActivity {
             if (videoServerPath != null)
                 parameters.put("main_video", videoServerPath);
 
+            if (checkPhone.isChecked())
+                parameters.put("ad_visible_phone", "1");
+            else
+                parameters.put("ad_visible_phone", "0");
+
             return true;
         }
 
@@ -779,11 +873,15 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!inputIsEmpty(editFloors))
                     parameters.put("floor", stringInput(editFloors));
 
+                if (!inputIsEmpty(editNumberFloors))
+                    parameters.put("floors_number", stringInput(editNumberFloors));
+
                 if (!inputIsEmpty(editState))
                     parameters.put("state", stringInput(editState));
 
-                if (switchFurn.isChecked())
-                    parameters.put("with_furniture", "1");
+                item = (Item) spinnerFurn.getSelectedItem();
+                if (item != null)
+                    parameters.put("with_furniture", item.getId());
 
                 break;
 
@@ -802,9 +900,17 @@ public class SubmitAdActivity extends MasterActivity {
                 if (item != null && !item.isNothing())
                     parameters.put("education_id", item.getId());
 
+                item = (Item) spinnerCertificate.getSelectedItem();
+                if (item != null && !item.isNothing())
+                    parameters.put("certificate_id", item.getId());
+
                 item = ((Item) spinnerSch.getSelectedItem());
                 if (item != null && !item.isNothing())
                     parameters.put("schedule_id", item.getId());
+
+                item = (Item) spinnerGender.getSelectedItem();
+                if (item != null && !item.isNothing())
+                    parameters.put("gender", item.getId());
 
                 break;
 
@@ -825,11 +931,17 @@ public class SubmitAdActivity extends MasterActivity {
                 if (item != null && !item.isNothing())
                     parameters.put("manufacture_date", item.getId());
 
-                if (switchAutomatic.isChecked())
-                    parameters.put("is_automatic", "1");
+                item = (Item) spinnerCapacity.getSelectedItem();
+                if (item != null && !item.isNothing())
+                    parameters.put("engine_capacity", item.getId());
 
-                if (!switchSecondhand.isChecked())
-                    parameters.put("is_new", "1");
+                item = (Item) spinnerTransmission.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_automatic", item.getId());
+
+                item = (Item) spinnerState.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_new", item.getId());
 
                 break;
 
@@ -849,8 +961,9 @@ public class SubmitAdActivity extends MasterActivity {
             case Category.SPORTS:
             case Category.INDUSTRIES:
 
-                if (!switchSecondhand.isChecked())
-                    parameters.put("is_new", "1");
+                item = (Item) spinnerState.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_new", item.getId());
         }
     }
 

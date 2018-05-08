@@ -207,6 +207,27 @@
                 />
 
             <TextView
+                android:id="@+id/textCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:text="@string/labelSelectEngineCapacity"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
                 android:id="@+id/textTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -235,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
-                android:text="@string/hintState"
+                android:text="@string/labelState"
                 android:textColor="@color/whiteTransparent"
                 style="@style/textNormal"
                 />
@@ -387,6 +408,27 @@
                 />
 
             <TextView
+                android:id="@+id/textCertificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:text="@string/labelSelectCertificate"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerCertificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
                 android:id="@+id/textSch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -399,6 +441,27 @@
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spinnerSch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/textGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:text="@string/labelGender"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -613,7 +676,6 @@
                         />
                     </android.support.design.widget.TextInputLayout>
 
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
@@ -630,7 +692,60 @@
                         android:backgroundTint="@color/white"
                         />
                     </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
+            <TextView
+                android:id="@+id/textNumberFloors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/hintNumberFloors"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerNumberFloors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
+                    >
+                    <EditText
+                        android:id="@+id/editNumberFloorsMin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        style="@style/editTextWhite"
+                        android:backgroundTint="@color/white"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
+                    >
+                    <EditText
+                        android:id="@+id/editNumberFloorsMax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        style="@style/editTextWhite"
+                        android:backgroundTint="@color/white"
+                        />
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <TextView

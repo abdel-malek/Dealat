@@ -5,10 +5,10 @@ package com.tradinos.dealat2.Model;
  */
 
 public class AdVehicle extends Ad  {
-    public static final int START_YEAR = 1970;
+    public static final int START_YEAR = 1970, CAPACITY_MIN = 1100, CAPACITY_MAX = 5400;
 
     private String typeId, modelId;
-    private String typeName, modelName, manufactureYear;
+    private String typeName, modelName, manufactureYear, engineCapacity;
 
     private boolean automatic, secondhand;
     private double kilometer;
@@ -51,6 +51,14 @@ public class AdVehicle extends Ad  {
 
     public void setManufactureYear(String manufactureYear) {
         this.manufactureYear = manufactureYear;
+    }
+
+    public String getEngineCapacity() {
+        return engineCapacity;
+    }
+
+    public void setEngineCapacity(String engineCapacity) {
+        this.engineCapacity = engineCapacity;
     }
 
     public boolean isAutomatic() {

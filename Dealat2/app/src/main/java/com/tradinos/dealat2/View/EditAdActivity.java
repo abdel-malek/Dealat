@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -38,6 +39,7 @@ import com.tradinos.dealat2.Adapter.HorizontalAdapter;
 import com.tradinos.dealat2.Adapter.ItemAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
+import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.AdElectronic;
 import com.tradinos.dealat2.Model.AdFashion;
@@ -54,6 +56,7 @@ import com.tradinos.dealat2.Model.Image;
 import com.tradinos.dealat2.Model.Item;
 import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
+import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ImageDecoder;
@@ -86,7 +89,7 @@ public class EditAdActivity extends MasterActivity {
     private Category currentCategory;
     private Item selectedLocation;
     private List<Type> categoryBrands = new ArrayList<>();
-    private List<Item> years = new ArrayList<>();
+    private List<Item> years = new ArrayList<>(), capacities = new ArrayList<>();
 
     private HashMap<String, String> parameters = new HashMap<>();
 
@@ -99,31 +102,33 @@ public class EditAdActivity extends MasterActivity {
     private LinearLayout linearLayout;
     private PopupWindow popupWindow;
 
-    private TextView textBrand, textModel,
+    private TextView textBrand, textModel, textTransmission, textCapacity,
             textDate,
-            textEdu, textSch;
+            textEdu, textSch, textCertificate, textGender,
+            textState,
+            textFurn;
 
     private EditText editTitle, editDesc, editCategory, editPrice,
             editKilo,
             editSize,
-            editSpace, editRooms, editFloors, editState,
+            editSpace, editRooms, editFloors, editNumberFloors, editState,
             editEx, editSalary;
 
     private AutoCompleteTextView autoCompleteLocation;
 
     private AppCompatSpinner spinnerPeriod, spinnerCity,
-            spinnerBrand, spinnerModel, spinnerYear,
-            spinnerEdu, spinnerSch;
+            spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission, spinnerCapacity,
+            spinnerEdu, spinnerCertificate, spinnerSch, spinnerGender,
+            spinnerState,
+            spinnerFurn;
 
-    private SwitchCompat switchNegotiable, switchSecondhand, switchFeatured,
-            switchAutomatic,
-            switchFurn;
+    private SwitchCompat switchNegotiable, switchFeatured;
+
+    private CheckBox checkPhone;
 
     private TextInputLayout containerPrice, containerKilometer, containerSize,
-            containerSpace, containerRooms, containerFloors, containerState,
+            containerSpace, containerRooms, containerFloors, containerNumberFloors, containerState,
             containerEx, containerSalary;
-
-    private View line1, line2, line3;
 
     // views for upload video
     private ProgressBar progressBarVideo;
@@ -145,6 +150,38 @@ public class EditAdActivity extends MasterActivity {
         for (int i = currentYear; i >= startYear; i--)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
         spinnerYear.setAdapter(new ItemAdapter(mContext, years));
+
+
+        capacities.add(Item.getNoItem());
+        for (int i = AdVehicle.CAPACITY_MIN; i <= AdVehicle.CAPACITY_MAX; i = i + 100)
+            capacities.add(new Item(String.valueOf(i), String.valueOf(i)));
+        spinnerCapacity.setAdapter(new ItemAdapter(mContext, capacities));
+
+
+        List<Item> usageOptions = new ArrayList<>();
+        usageOptions.add(new Item("0", getString(R.string.old)));
+        usageOptions.add(new Item("1", getString(R.string.newU)));
+        spinnerState.setAdapter(new ItemAdapter(mContext, usageOptions));
+
+
+        List<Item> transmissionOptions = new ArrayList<>();
+        transmissionOptions.add(new Item("0", getString(R.string.manual)));
+        transmissionOptions.add(new Item("1", getString(R.string.labelAutomatic)));
+        spinnerTransmission.setAdapter(new ItemAdapter(mContext, transmissionOptions));
+
+
+        List<Item> furnOptions = new ArrayList<>();
+        furnOptions.add(new Item("0", getString(R.string.no)));
+        furnOptions.add(new Item("1", getString(R.string.yes)));
+        spinnerFurn.setAdapter(new ItemAdapter(mContext, furnOptions));
+
+
+        List<Item> genders = new ArrayList<>();
+        genders.add(Item.getNoItem());
+        genders.add(new Item("1", getString(R.string.male)));
+        genders.add(new Item("2", getString(R.string.female)));
+        spinnerGender.setAdapter(new ItemAdapter(mContext, genders));
+
 
         currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
         editCategory.setText(currentCategory.getFullName());
@@ -188,11 +225,14 @@ public class EditAdActivity extends MasterActivity {
                         categoryBrands = getCategoryBrands(result.getBrands());
                         spinnerBrand.setAdapter(new TypeAdapter(mContext, categoryBrands));
 
-                        result.getEducations().add(Item.getNoItem());
+                        result.getEducations().add(0, Item.getNoItem());
                         spinnerEdu.setAdapter(new ItemAdapter(mContext, result.getEducations()));
 
-                        result.getSchedules().add(Item.getNoItem());
+                        result.getSchedules().add(0, Item.getNoItem());
                         spinnerSch.setAdapter(new ItemAdapter(mContext, result.getSchedules()));
+
+                        result.getCertificates().add(0, Item.getNoItem());
+                        spinnerCertificate.setAdapter(new ItemAdapter(mContext, result.getCertificates()));
 
                         HideProgressDialog();
 
@@ -213,7 +253,11 @@ public class EditAdActivity extends MasterActivity {
     @Override
     public void showData() {
         ((TextView) findViewById(R.id.textView)).setText(getString(R.string.selectImages) + " " + String.valueOf(Image.MAX_IMAGES) +
-                " " + getString(R.string.images) + "\n" + getString(R.string.alsoSelectVideo));
+                " " + getString(R.string.images));
+
+        User user = new CurrentAndroidUser(mContext).Get();
+        if (user != null)
+            checkPhone.setText(getString(R.string.labelShowPhone) + " " + user.getPhone());
     }
 
     @Override
@@ -225,8 +269,14 @@ public class EditAdActivity extends MasterActivity {
         textBrand = (TextView) findViewById(R.id.textBrand);
         textModel = (TextView) findViewById(R.id.textModel);
         textDate = (TextView) findViewById(R.id.textDate);
+        textTransmission = (TextView) findViewById(R.id.textTransmission);
+        textCapacity = findViewById(R.id.textCapacity);
         textEdu = (TextView) findViewById(R.id.textEdu);
+        textCertificate = findViewById(R.id.textCertificate);
         textSch = (TextView) findViewById(R.id.textSch);
+        textGender = findViewById(R.id.textGender);
+        textState = (TextView) findViewById(R.id.textState);
+        textFurn = (TextView) findViewById(R.id.textFurn);
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editCategory = (EditText) findViewById(R.id.editCategory);
@@ -243,6 +293,7 @@ public class EditAdActivity extends MasterActivity {
         editSpace = (EditText) findViewById(R.id.editSpace);
         editRooms = (EditText) findViewById(R.id.editRooms);
         editFloors = (EditText) findViewById(R.id.editFloors);
+        editNumberFloors = findViewById(R.id.editNumberFloors);
         editState = (EditText) findViewById(R.id.editState);
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
@@ -253,15 +304,22 @@ public class EditAdActivity extends MasterActivity {
         spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
         spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
         spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
+        spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
+        spinnerCapacity = findViewById(R.id.spinnerCapacity);
 
         spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
+        spinnerCertificate = findViewById(R.id.spinnerCertificate);
         spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
+        spinnerGender = findViewById(R.id.spinnerGender);
+
+        spinnerState = findViewById(R.id.spinnerState);
+
+        spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
         switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
-        switchSecondhand = (SwitchCompat) findViewById(R.id.switchSecondhand);
-        switchAutomatic = (SwitchCompat) findViewById(R.id.switchAutomatic);
-        switchFurn = (SwitchCompat) findViewById(R.id.switchFurn);
+
+        checkPhone = findViewById(R.id.checkPhone);
 
         containerPrice = (TextInputLayout) findViewById(R.id.containerPrice);
 
@@ -272,14 +330,11 @@ public class EditAdActivity extends MasterActivity {
         containerSpace = (TextInputLayout) findViewById(R.id.containerSpace);
         containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
         containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
+        containerNumberFloors = findViewById(R.id.containerNumberFloors);
         containerState = (TextInputLayout) findViewById(R.id.containerState);
 
         containerEx = (TextInputLayout) findViewById(R.id.containerEx);
         containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
-
-        line1 = findViewById(R.id.line1);
-        line2 = findViewById(R.id.line2);
-        line3 = findViewById(R.id.line3);
 
         progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
         imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
@@ -636,6 +691,11 @@ public class EditAdActivity extends MasterActivity {
 
             parameters.put("edit_status", String.valueOf(currentAd.getStatus()));
 
+            if (checkPhone.isChecked())
+                parameters.put("ad_visible_phone", "1");
+            else
+                parameters.put("ad_visible_phone", "0");
+
             return true;
         }
 
@@ -662,15 +722,19 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("floor", String.valueOf(doubleEditText(editFloors)));
 
+                if (inputIsEmpty(editNumberFloors))
+                    parameters.put("floors_number", NULL);
+                else
+                    parameters.put("floors_number", String.valueOf(doubleEditText(editNumberFloors)));
+
                 if (inputIsEmpty(editState))
                     parameters.put("state", NULL);
                 else
                     parameters.put("state", stringInput(editState));
 
-                if (switchFurn.isChecked())
-                    parameters.put("with_furniture", "1");
-                else
-                    parameters.put("with_furniture", "0");
+                item = (Item) spinnerFurn.getSelectedItem();
+                if (item != null)
+                    parameters.put("with_furniture", item.getId());
 
                 break;
 
@@ -690,9 +754,17 @@ public class EditAdActivity extends MasterActivity {
                 if (item != null)
                     parameters.put("education_id", item.getId());
 
+                item = (Item) spinnerCertificate.getSelectedItem();
+                if (item != null)
+                    parameters.put("certificate_id", item.getId());
+
                 item = ((Item) spinnerSch.getSelectedItem());
                 if (item != null)
                     parameters.put("schedule_id", item.getId());
+
+                item = (Item) spinnerGender.getSelectedItem();
+                if (item != null)
+                    parameters.put("gender", item.getId());
 
                 break;
 
@@ -714,15 +786,17 @@ public class EditAdActivity extends MasterActivity {
                 if (item != null)
                     parameters.put("manufacture_date", item.getId());
 
-                if (switchAutomatic.isChecked())
-                    parameters.put("is_automatic", "1");
-                else
-                    parameters.put("is_automatic", "0");
+                item = (Item) spinnerCapacity.getSelectedItem();
+                if (item != null)
+                    parameters.put("engine_capacity", item.getId());
 
-                if (switchSecondhand.isChecked())
-                    parameters.put("is_new", "0");
-                else
-                    parameters.put("is_new", "1");
+                item = (Item) spinnerTransmission.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_automatic", item.getId());
+
+                item = (Item) spinnerState.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_new", item.getId());
 
                 break;
 
@@ -743,10 +817,9 @@ public class EditAdActivity extends MasterActivity {
             case Category.KIDS:
             case Category.SPORTS:
             case Category.INDUSTRIES:
-                if (switchSecondhand.isChecked())
-                    parameters.put("is_new", "0");
-                else
-                    parameters.put("is_new", "1");
+                item = (Item) spinnerState.getSelectedItem();
+                if (item != null)
+                    parameters.put("is_new", item.getId());
         }
     }
 
@@ -764,6 +837,11 @@ public class EditAdActivity extends MasterActivity {
         else
             switchFeatured.setChecked(false);
 
+        if (currentAd.isVisiblePhone())
+            checkPhone.setChecked(true);
+        else
+            checkPhone.setChecked(false);
+
         editDesc.setText(currentAd.getDescription());
 
         int loc = getItemIndex(new ArrayList<Item>(data.getCities()), currentAd.getCityId());
@@ -779,18 +857,19 @@ public class EditAdActivity extends MasterActivity {
                 editSpace.setText(formattedNumber(((AdProperty) currentAd).getSpace()));
                 editRooms.setText(formattedNumber(((AdProperty) currentAd).getRoomNum()));
                 editFloors.setText(formattedNumber(((AdProperty) currentAd).getFloorNum()));
+                editNumberFloors.setText(formattedNumber(((AdProperty) currentAd).getFloorsCount()));
                 editState.setText(((AdProperty) currentAd).getState());
 
                 if (((AdProperty) currentAd).isFurnished())
-                    switchFurn.setChecked(true);
-                else
-                    switchFurn.setChecked(false);
+                    spinnerFurn.setSelection(1);
 
                 break;
 
             case Category.JOBS:
                 spinnerEdu.setSelection(getItemIndex(data.getEducations(), ((AdJob) currentAd).getEducationId()));
+                spinnerCertificate.setSelection(getItemIndex(data.getCertificates(), ((AdJob) currentAd).getCertificateId()));
                 spinnerSch.setSelection(getItemIndex(data.getSchedules(), ((AdJob) currentAd).getScheduleId()));
+                spinnerGender.setSelection(((AdJob) currentAd).getGender());
 
                 editEx.setText(((AdJob) currentAd).getExperience());
                 editSalary.setText(formattedNumber(((AdJob) currentAd).getSalary()));
@@ -803,18 +882,15 @@ public class EditAdActivity extends MasterActivity {
                 spinnerBrand.setSelection(brand);
 
                 spinnerYear.setSelection(getItemIndex(years, ((AdVehicle) currentAd).getManufactureYear()));
+                spinnerCapacity.setSelection(getItemIndex(capacities, ((AdVehicle) currentAd).getEngineCapacity()));
 
                 editKilo.setText(formattedNumber(((AdVehicle) currentAd).getKilometer()));
 
                 if (((AdVehicle) currentAd).isAutomatic())
-                    switchAutomatic.setChecked(true);
-                else
-                    switchAutomatic.setChecked(false);
+                    spinnerTransmission.setSelection(1);
 
-                if (((AdVehicle) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdVehicle) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
 
                 break;
 
@@ -824,10 +900,8 @@ public class EditAdActivity extends MasterActivity {
                 spinnerBrand.setSelection(brand);
                 editSize.setText(formattedNumber(((AdElectronic) currentAd).getSize()));
 
-                if (((AdElectronic) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdElectronic) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
                 break;
 
             case Category.MOBILES:
@@ -835,46 +909,36 @@ public class EditAdActivity extends MasterActivity {
                         ((AdMobile) currentAd).getTypeId());
                 spinnerBrand.setSelection(brand);
 
-                if (((AdMobile) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdMobile) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
 
                 break;
 
             case Category.FASHION:
 
-                if (((AdFashion) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdFashion) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
 
                 break;
 
             case Category.KIDS:
 
-                if (((AdKid) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdKid) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
 
                 break;
 
             case Category.SPORTS:
 
-                if (((AdSport) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdSport) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
 
                 break;
 
             case Category.INDUSTRIES:
 
-                if (((AdIndustry) currentAd).isSecondhand())
-                    switchSecondhand.setChecked(true);
-                else
-                    switchSecondhand.setChecked(false);
+                if (!((AdIndustry) currentAd).isSecondhand())
+                    spinnerState.setSelection(1); // old is first item in usageOptions
         }
     }
 
@@ -895,12 +959,15 @@ public class EditAdActivity extends MasterActivity {
                 if (!currentCategory.shouldHideTag(getString(R.string.hideFloor)))
                     containerFloors.setVisibility(visibility);
 
+                if (!currentCategory.shouldHideTag(getString(R.string.hideNumberFloors)))
+                    containerNumberFloors.setVisibility(visibility);
+
                 if (!currentCategory.shouldHideTag(getString(R.string.hideState)))
                     containerState.setVisibility(visibility);
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideFurn))) {
-                    switchFurn.setVisibility(visibility);
-                    line3.setVisibility(visibility);
+                    textFurn.setVisibility(visibility);
+                    spinnerFurn.setVisibility(visibility);
                 }
 
                 break;
@@ -916,6 +983,16 @@ public class EditAdActivity extends MasterActivity {
                 if (!currentCategory.shouldHideTag(getString(R.string.hideEducation))) {
                     textEdu.setVisibility(visibility);
                     spinnerEdu.setVisibility(visibility);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideCertificate))) {
+                    textCertificate.setVisibility(visibility);
+                    spinnerCertificate.setVisibility(visibility);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideGender))) {
+                    textGender.setVisibility(visibility);
+                    spinnerGender.setVisibility(visibility);
                 }
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideEx)))
@@ -942,17 +1019,22 @@ public class EditAdActivity extends MasterActivity {
                     spinnerYear.setVisibility(visibility);
                 }
 
+                if (!currentCategory.shouldHideTag(getString(R.string.hideCapacity))) {
+                    textCapacity.setVisibility(visibility);
+                    spinnerCapacity.setVisibility(visibility);
+                }
+
                 if (!currentCategory.shouldHideTag(getString(R.string.hideKilo)))
                     containerKilometer.setVisibility(visibility);
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideAutomatic))) {
-                    switchAutomatic.setVisibility(visibility);
-                    line1.setVisibility(visibility);
+                    textTransmission.setVisibility(visibility);
+                    spinnerTransmission.setVisibility(visibility);
                 }
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
-                    switchSecondhand.setVisibility(visibility);
-                    line2.setVisibility(visibility);
+                    textState.setVisibility(visibility);
+                    spinnerState.setVisibility(visibility);
                 }
 
                 break;
@@ -972,8 +1054,8 @@ public class EditAdActivity extends MasterActivity {
             case Category.SPORTS:
             case Category.INDUSTRIES:
                 if (!currentCategory.shouldHideTag(getString(R.string.hideSecondhand))) {
-                    line2.setVisibility(visibility);
-                    switchSecondhand.setVisibility(visibility);
+                    textState.setVisibility(visibility);
+                    spinnerState.setVisibility(visibility);
                 }
         }
     }

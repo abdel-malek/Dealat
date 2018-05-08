@@ -5,9 +5,10 @@ package com.tradinos.dealat2.Model;
  */
 
 public class AdJob extends Ad {
-    private String educationId, ScheduleId;
-    private String educationName, scheduleName, experience;
+    private String educationId, ScheduleId, certificateId;
+    private String educationName, scheduleName, certificateName, experience;
     private double salary;
+    private int gender;
 
     public AdJob(){
         educationName = "";
@@ -31,6 +32,14 @@ public class AdJob extends Ad {
         ScheduleId = scheduleId;
     }
 
+    public String getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(String certificateId) {
+        this.certificateId = certificateId;
+    }
+
     public String getEducationName() {
         return educationName;
     }
@@ -47,6 +56,14 @@ public class AdJob extends Ad {
         this.scheduleName = scheduleName;
     }
 
+    public String getCertificateName() {
+        return certificateName;
+    }
+
+    public void setCertificateName(String certificateName) {
+        this.certificateName = certificateName;
+    }
+
     public String getExperience() {
         return experience;
     }
@@ -61,5 +78,13 @@ public class AdJob extends Ad {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

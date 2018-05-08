@@ -67,17 +67,17 @@ public class AdDetailsActivity extends MasterActivity {
     private TextView textViewId, textViewTitle, textViewTitle2, textViewPrice, textNegotiable, textViewDesc,
             textViewSeller, textViewPhone,
             textViewViews, textViewPublishDate, textViewLocation, textViewCity, textViewExpires,
-            textViewEdu, textViewSch, textViewSalary, textViewEx,
-            textViewSpace, textViewRooms, textViewFloors, textViewFurn, textViewState,
-            textViewBrand, textViewModel, textViewKilo, textViewTransmission, textViewManufactureYear,
+            textViewEdu, textCertificate, textViewSch, textViewSalary, textViewEx, textGender,
+            textViewSpace, textViewRooms, textViewFloors, textViewNumberFloors, textViewFurn, textViewState,
+            textViewBrand, textViewModel, textViewKilo, textViewTransmission, textViewManufactureYear, textCapacity,
             textViewUsage, textViewSize;
 
     private ImageButton buttonFav, buttonReport;
     private RatingBar ratingBar;
 
-    private LinearLayout containerEdu, containerSchedule, containerEx, containerSalary,
-            containerSpace, containerRooms, containerFloors, containerPropertyState, containerFurn,
-            containerBrand, containerModel, containerKilometer, containerYear, containerTransmission,
+    private LinearLayout containerEdu, containerCertificate, containerSchedule, containerEx, containerSalary, containerGender,
+            containerSpace, containerRooms, containerFloors, containerNumberFloors, containerPropertyState, containerFurn,
+            containerBrand, containerModel, containerKilometer, containerYear, containerCapacity, containerTransmission,
             containerUsage, containerSize;
     private View line1, line2, line3;
 
@@ -257,14 +257,16 @@ public class AdDetailsActivity extends MasterActivity {
         textViewPhone = (TextView) findViewById(R.id.textViewPhone);
 
         textViewEdu = (TextView) findViewById(R.id.textEdu);
+        textCertificate = findViewById(R.id.textCertificate);
         textViewSch = (TextView) findViewById(R.id.textSch);
         textViewEx = (TextView) findViewById(R.id.textEx);
         textViewSalary = (TextView) findViewById(R.id.textSalary);
-
+        textGender = findViewById(R.id.textGender);
 
         textViewSpace = (TextView) findViewById(R.id.textSpace);
         textViewRooms = (TextView) findViewById(R.id.textRooms);
         textViewFloors = (TextView) findViewById(R.id.textFloor);
+        textViewNumberFloors = findViewById(R.id.textNumberFloors);
         textViewFurn = (TextView) findViewById(R.id.textFurn);
         textViewState = (TextView) findViewById(R.id.textState);
 
@@ -273,6 +275,7 @@ public class AdDetailsActivity extends MasterActivity {
         textViewModel = (TextView) findViewById(R.id.textModel);
         textViewKilo = (TextView) findViewById(R.id.textKilo);
         textViewManufactureYear = (TextView) findViewById(R.id.textDate);
+        textCapacity = findViewById(R.id.textCapacity);
         textViewTransmission = (TextView) findViewById(R.id.textTransmission);
 
         textViewSize = (TextView) findViewById(R.id.textSize);
@@ -284,17 +287,21 @@ public class AdDetailsActivity extends MasterActivity {
         containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
         containerYear = (LinearLayout) findViewById(R.id.containerYear);
         containerTransmission = (LinearLayout) findViewById(R.id.containerTransmission);
+        containerCapacity = findViewById(R.id.containerCapacity);
 
         containerUsage = (LinearLayout) findViewById(R.id.containerUsage);
 
         containerEdu = (LinearLayout) findViewById(R.id.containerEdu);
+        containerCertificate = findViewById(R.id.containerCertificate);
         containerSchedule = (LinearLayout) findViewById(R.id.containerSchedule);
         containerEx = (LinearLayout) findViewById(R.id.containerEx);
         containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
+        containerGender = findViewById(R.id.containerGender);
 
         containerSpace = (LinearLayout) findViewById(R.id.containerSpace);
         containerRooms = (LinearLayout) findViewById(R.id.containerRooms);
         containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
+        containerNumberFloors = findViewById(R.id.containerNumberFloors);
         containerPropertyState = (LinearLayout) findViewById(R.id.containerPropertyState);
         containerFurn = (LinearLayout) findViewById(R.id.containerFurn);
 
@@ -483,6 +490,7 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewSpace.setText(formattedNumber(((AdProperty) result).getSpace()));
                 textViewRooms.setText(formattedNumber(((AdProperty) result).getRoomNum()));
                 textViewFloors.setText(formattedNumber(((AdProperty) result).getFloorNum()));
+                textViewNumberFloors.setText(formattedNumber(((AdProperty) result).getFloorsCount()));
                 textViewState.setText(((AdProperty) result).getState());
 
                 if (((AdProperty) result).isFurnished())
@@ -495,9 +503,15 @@ public class AdDetailsActivity extends MasterActivity {
             case Category.JOBS:
 
                 textViewEdu.setText(((AdJob) result).getEducationName());
+                textCertificate.setText(((AdJob) result).getCertificateName());
                 textViewSch.setText(((AdJob) result).getScheduleName());
                 textViewEx.setText(((AdJob) result).getExperience());
                 textViewSalary.setText(formattedNumber(((AdJob) result).getSalary()) + " " + getString(R.string.sp));
+
+                if (((AdJob) result).getGender() == 1)
+                    textGender.setText(getString(R.string.male));
+                else if (((AdJob) result).getGender() == 2)
+                    textGender.setText(getString(R.string.female));
 
                 break;
 
@@ -505,6 +519,7 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewBrand.setText(((AdVehicle) result).getTypeName());
                 textViewModel.setText(((AdVehicle) result).getModelName());
                 textViewManufactureYear.setText(((AdVehicle) result).getManufactureYear());
+                textCapacity.setText(((AdVehicle) result).getEngineCapacity());
                 textViewKilo.setText(formattedNumber(((AdVehicle) result).getKilometer()));
 
                 if (((AdVehicle) result).isAutomatic())
@@ -597,6 +612,11 @@ public class AdDetailsActivity extends MasterActivity {
                     findViewById(R.id.line11).setVisibility(View.VISIBLE);
                 }
 
+                if (!currentCategory.shouldHideTag(getString(R.string.hideNumberFloors))) {
+                    containerNumberFloors.setVisibility(View.VISIBLE);
+                    findViewById(R.id.line21).setVisibility(View.VISIBLE);
+                }
+
                 if (!currentCategory.shouldHideTag(getString(R.string.hideState))) {
                     findViewById(R.id.line12).setVisibility(View.VISIBLE);
                     containerPropertyState.setVisibility(View.VISIBLE);
@@ -618,9 +638,19 @@ public class AdDetailsActivity extends MasterActivity {
                     containerEdu.setVisibility(View.VISIBLE);
                 }
 
+                if (!currentCategory.shouldHideTag(getString(R.string.hideCertificate))) {
+                    containerCertificate.setVisibility(View.VISIBLE);
+                    findViewById(R.id.line24).setVisibility(View.VISIBLE);
+                }
+
                 if (!currentCategory.shouldHideTag(getString(R.string.hideSchedule))) {
                     containerSchedule.setVisibility(View.VISIBLE);
                     findViewById(R.id.line7).setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideGender))) {
+                    containerGender.setVisibility(View.VISIBLE);
+                    findViewById(R.id.line23).setVisibility(View.VISIBLE);
                 }
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideEx))) {
@@ -655,6 +685,11 @@ public class AdDetailsActivity extends MasterActivity {
                 if (!currentCategory.shouldHideTag(getString(R.string.hideYear))) {
                     findViewById(R.id.line15).setVisibility(View.VISIBLE);
                     containerYear.setVisibility(View.VISIBLE);
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideCapacity))) {
+                    findViewById(R.id.line22).setVisibility(View.VISIBLE);
+                    containerCapacity.setVisibility(View.VISIBLE);
                 }
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideAutomatic))) {

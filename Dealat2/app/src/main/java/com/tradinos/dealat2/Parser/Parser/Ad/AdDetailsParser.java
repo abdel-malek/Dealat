@@ -47,6 +47,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 if (validData(jsonObject.getString("manufacture_date")))
                     ((AdVehicle) ad).setManufactureYear(jsonObject.getString("manufacture_date"));
 
+                if (validData(jsonObject.getString("engine_capacity")))
+                    ((AdVehicle)ad).setEngineCapacity(jsonObject.getString("engine_capacity"));
+
                 if (validData(jsonObject.getString("kilometer")))
                     ((AdVehicle) ad).setKilometer(jsonObject.getDouble("kilometer"));
 
@@ -71,6 +74,9 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                 if (validData(jsonObject.getString("floor")))
                     ((AdProperty) ad).setFloorNum(jsonObject.getInt("floor"));
 
+                if (validData(jsonObject.getString("floors_number")))
+                    ((AdProperty) ad).setFloorsCount(jsonObject.getInt("floors_number"));
+
                 if (validData(jsonObject.getString("rooms_num")))
                     ((AdProperty) ad).setRoomNum(jsonObject.getInt("rooms_num"));
 
@@ -92,16 +98,24 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                     ((AdJob) ad).setEducationName(jsonObject.getString("education_name"));
                 }
 
-                if (validData(jsonObject.getString("schedule_id"))) {
-                    ((AdJob) ad).setScheduleId(jsonObject.getString("schedule_id"));
-                    ((AdJob) ad).setScheduleName(jsonObject.getString("schedule_name"));
+                if (validData(jsonObject.getString("certificate_id"))) {
+                    ((AdJob) ad).setCertificateId(jsonObject.getString("certificate_id"));
+                    ((AdJob) ad).setCertificateName(jsonObject.getString("certificate_name"));
                 }
 
                 if (validData(jsonObject.getString("experience")))
                     ((AdJob) ad).setExperience(jsonObject.getString("experience"));
 
+                if (validData(jsonObject.getString("schedule_id"))) {
+                    ((AdJob) ad).setScheduleId(jsonObject.getString("schedule_id"));
+                    ((AdJob) ad).setScheduleName(jsonObject.getString("schedule_name"));
+                }
+
                 if (validData(jsonObject.getString("salary")))
                     ((AdJob) ad).setSalary(jsonObject.getDouble("salary"));
+
+                if (validData(jsonObject.getString("gender")))
+                    ((AdJob) ad).setGender(jsonObject.getInt("gender"));
 
                 break;
 
@@ -207,7 +221,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         if (validData(jsonObject.getString("description")))
             ad.setDescription(jsonObject.getString("description"));
 
-        if (jsonObject.getInt("visible_phone") == 1)
+        if (jsonObject.getInt("ad_visible_phone") == 1)
             ad.setVisiblePhone(true);
 
         ad.setPrice(jsonObject.getDouble("price"));

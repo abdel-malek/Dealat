@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatSpinner;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -48,6 +47,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
     private final String NULL = "-1";
 
+    private String action = "finish"; // by default user enter EditProfileActivity from MyProfileActivity
+    private final String HOME = "home"; // after VerificationActivity user will enter their info
+    // and then complete to HomeActivity
     private boolean enabled = false;
     private CurrentAndroidUser currentAndroidUser;
     private File image;
@@ -57,7 +59,6 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
     private AppCompatSpinner spinnerCity, spinnerGender;
     private ImageView imageViewPersonal;
     private Button buttonRemove;
-    private SwitchCompat switchPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
     @Override
     public void getData() {
+        if (getIntent().hasExtra("action"))
+            action = getIntent().getStringExtra("action");
+
         currentAndroidUser = new CurrentAndroidUser(this);
 
         List<Item> genders = new ArrayList<>();
@@ -112,9 +116,6 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                             buttonRemove.setVisibility(View.VISIBLE);
                         }
 
-                        if (result.isVisiblePhone())
-                            switchPhone.setChecked(true);
-
                         if (!TextUtils.isEmpty(result.getImageUrl())) {
                             ImageLoader mImageLoader = InternetManager.getInstance(mContext).getImageLoader();
                             mImageLoader.get(MyApplication.getBaseUrl() + result.getImageUrl(), ImageLoader.getImageListener(imageViewPersonal,
@@ -140,7 +141,6 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
         spinnerGender = (AppCompatSpinner) findViewById(R.id.spinnerGender);
         buttonRemove = (Button) findViewById(R.id.buttonRemove);
-        switchPhone = findViewById(R.id.switchPhone);
 
         findViewById(R.id.buttonEdit).setEnabled(false);
     }
@@ -202,11 +202,6 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                     if (image == null)
                         parameters.put("image", NULL);
 
-                    if (switchPhone.isChecked())
-                        parameters.put("visible_phone", "1");
-                    else
-                        parameters.put("visible_phone", "0");
-
                     ShowProgressDialog();
                     UserController.getInstance(mController).editUserInfo(image, parameters, new SuccessCallback<User>() {
                         @Override
@@ -219,6 +214,8 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                             showMessageInToast(R.string.toastSaved);
 
                             setResult(RESULT_OK);
+
+                            continueToHome();
                             finish();
                         }
                     });
@@ -284,8 +281,16 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                 break;
 
             case R.id.buttonFalse:
+                continueToHome();
                 finish();
                 break;
+        }
+    }
+
+    private void continueToHome() {
+        if (action.equals(HOME)) {
+            Intent intent = new Intent(mContext, HomeActivity.class);
+            startActivity(intent);
         }
     }
 

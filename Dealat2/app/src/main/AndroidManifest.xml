@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- needed for ZXing QR scanner -->
 
     <!-- This tells Android Market (and any other interested parties) that your application makes use of
     the camera and to filter your application accordingly.
@@ -122,6 +123,10 @@
         <activity android:name=".View.PublicNotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent"
+            />
+
+        <activity android:name=".View.QRCodeActivity"
+            android:screenOrientation="portrait"
             />
 
         <provider

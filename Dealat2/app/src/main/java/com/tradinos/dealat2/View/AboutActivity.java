@@ -66,7 +66,7 @@ public class AboutActivity extends MasterActivity {
                     SpannableString content = new SpannableString(about.getPhone());
                     content.setSpan(new UnderlineSpan(), 0, about.getPhone().length(), 0);
 
-                    ((TextView) findViewById(R.id.textViewPhone)).setText(about.getPhone());
+                    ((TextView) findViewById(R.id.textViewPhone)).setText(content);
                     findViewById(R.id.textViewPhone).setVisibility(View.VISIBLE);
                 }
             }

@@ -7,6 +7,7 @@
 
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="ok">موافق</string>
 
     <string name="arabic">عربي</string>
     <string name="english">English</string>
@@ -63,8 +64,10 @@
     <string name="labelSelectBrand">اختر نوع</string>
     <string name="labelSelectModel">اختر موديل</string>
     <string name="labelSelectEdu">اختر نوع التعليم</string>
+    <string name="labelSelectCertificate">اختر الشهادة</string>
     <string name="labelSelectSch">اختر نوع العمل</string>
     <string name="labelSelectManufactureYear">اختر سنة التصنيع</string>
+    <string name="labelSelectEngineCapacity">اختر سعة المحرك</string>
     <string name="labelShowPeriod">فترة عرض الإعلان</string>
     <string name="labelTo">من</string>
     <string name="labelFrom">إلى</string>
@@ -79,7 +82,7 @@
     <string name="labelAgree">لقد قرأت وأوافق على</string>
     <string name="labelTerms">شروط استخدام ديلات</string>
     <string name="labelShowPhone">إظهار رقم الموبايل</string>
-    <string name="labelOnlyToRegistered">سيظهر رقم موبايلك مع تفاصيل إعلاناتك</string>
+    <string name="labelOnlyToRegistered">سيظهر رقم موبايلك مع تفاصيل هذا الإعلان</string>
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
@@ -92,16 +95,19 @@
     <string name="labelModel">الموديل</string>
     <string name="labelKilo">كيلومتراج</string>
     <string name="labelManufactureYear">سنة التصنيع</string>
+    <string name="labelEngineCapacity">سعة المحرك</string>
     <string name="labelTransmission">ناقل الحركة</string>
     <string name="labelState">الحالة</string>
-    <string name="labelPropertyState">حالة العقار</string>
+    <string name="labelPropertyState">نوع الكسوة</string>
 
     <string name="labelSpace">المساحة</string>
     <string name="labelRoom">عدد الغرف</string>
     <string name="labelFloor">الطابق</string>
+    <string name="labelNumberFloors">عدد الطوابق</string>
 
     <string name="labelEdu">نوع التعليم</string>
     <string name="labelSchedule">نوع العمل</string>
+    <string name="labelCertificate">الشهادة</string>
     <string name="labelExperience">الخبرة</string>
     <string name="labelSalary">الراتب</string>
     <string name="labelSize">الحجم</string>
@@ -120,6 +126,8 @@
     <string name="labelRoomTo">عدد الغرف: إلى</string>
     <string name="labelFloorFrom">الطابق: من</string>
     <string name="labelFloorTo">الطابق: إلى</string>
+    <string name="labelNumberFloorsFrom">عدد الطوابق: من</string>
+    <string name="labelNumberFloorsTo">عدد الطوابق: إلى</string>
 
     <!-- Jobs -->
     <string name="labelSalaryFrom">الراتب: من</string>
@@ -153,6 +161,7 @@
     <string name="hintSpace">المساحة</string>
     <string name="hintRooms">عدد الغرف</string>
     <string name="hintFloors">الطابق</string>
+    <string name="hintNumberFloors">عدد الطوابق</string>
     <string name="hintState">الحالة</string>
     <string name="hintSalary">الراتب</string>
     <string name="hintWriteMsg">اكتب رسالتك...</string>
@@ -201,7 +210,7 @@
 
 
     <!-- Toasts -->
-    <string name="toastAdSubmit">تمت إضافة الإعلان بنجاح</string>
+    <string name="toastAdSubmit">تم إرسال الإعلان، بانتظار موافقة الإدارة لعرضه</string>
     <string name="toastFavorite">تمت إضافة الإعلان للمفضلة</string>
     <string name="toastUnfavorite">تمت إزالة الإعلان من المفضلة</string>
     <string name="toastAdReported">تم الإبلاغ عن الإعلان</string>

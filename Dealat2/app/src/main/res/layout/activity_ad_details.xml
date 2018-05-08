@@ -483,6 +483,39 @@
                     android:visibility="gone"
                     android:background="@color/grayLight"/>
 
+            <LinearLayout
+                android:id="@+id/containerCertificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelCertificate"
+                    />
+
+                <TextView
+                    android:id="@+id/textCertificate"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
+            <View
+                android:id="@+id/line24"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHight"
+                android:visibility="gone"
+                android:background="@color/grayLight"/>
+
                 <LinearLayout
                     android:id="@+id/containerSchedule"
                     android:layout_width="match_parent"
@@ -514,7 +547,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/lineHight"
                     android:visibility="gone"
-                    android:background="@color/grayLight"/>
+                    android:background="@color/grayLight"
+                    />
+
+            <LinearLayout
+                android:id="@+id/containerGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelGender"
+                    />
+
+                <TextView
+                    android:id="@+id/textGender"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line23"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHight"
+                android:visibility="gone"
+                android:background="@color/grayLight"/>
 
                 <LinearLayout
                     android:id="@+id/containerEx"
@@ -575,7 +643,6 @@
                         style="@style/textDetail"
                         />
                 </LinearLayout>
-
 
             <!-- **** property *********** -->
 
@@ -684,6 +751,39 @@
                     android:layout_height="@dimen/lineHight"
                     android:visibility="gone"
                     android:background="@color/grayLight"/>
+
+            <LinearLayout
+                android:id="@+id/containerNumberFloors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelNumberFloors"
+                    />
+
+                <TextView
+                    android:id="@+id/textNumberFloors"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
+            <View
+                android:id="@+id/line21"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHight"
+                android:visibility="gone"
+                android:background="@color/grayLight"/>
 
                 <LinearLayout
                     android:id="@+id/containerPropertyState"
@@ -888,6 +988,39 @@
                     android:visibility="gone"
                     android:background="@color/grayLight"/>
 
+            <LinearLayout
+                android:id="@+id/containerCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:padding="@dimen/containerPadding"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/textNormal"
+                    android:textColor="@color/grayTransparent"
+                    android:text="@string/labelEngineCapacity"
+                    />
+
+                <TextView
+                    android:id="@+id/textCapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    style="@style/textDetail"
+                    />
+            </LinearLayout>
+            <View
+                android:id="@+id/line22"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHight"
+                android:visibility="gone"
+                android:background="@color/grayLight"
+                />
 
                 <LinearLayout
                     android:id="@+id/containerTransmission"

@@ -5,7 +5,8 @@ package com.tradinos.dealat2.Model;
  */
 
 public class AdProperty extends Ad {
-    private int roomNum, floorNum;
+    private int roomNum, floorNum, floorsCount; // floorNum indicates in which floor an apartment is
+    // floorsCount indicates how many floors a building has
     private double space;
     private boolean furnished;
     private String state;
@@ -28,6 +29,14 @@ public class AdProperty extends Ad {
 
     public void setFloorNum(int floorNum) {
         this.floorNum = floorNum;
+    }
+
+    public int getFloorsCount() {
+        return floorsCount;
+    }
+
+    public void setFloorsCount(int floorsCount) {
+        this.floorsCount = floorsCount;
     }
 
     public double getSpace() {

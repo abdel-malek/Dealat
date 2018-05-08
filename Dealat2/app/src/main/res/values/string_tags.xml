@@ -6,19 +6,23 @@
     <string name="hideSpace">space</string>
     <string name="hideRoom">rooms_num</string>
     <string name="hideFloor">floor</string>
+    <string name="hideNumberFloors">floors_number</string>
     <string name="hideState">state</string>
     <string name="hideFurn">with_furniture</string>
 
     <!-- Jobs -->
     <string name="hideEducation">education_name</string>
+    <string name="hideCertificate">certificate_name</string>
     <string name="hideSchedule">schedule_name</string>
     <string name="hideEx">experience</string>
     <string name="hideSalary">salary</string>
+    <string name="hideGender">gender</string>
 
     <!-- Vehicles -->
     <string name="hideBrand">type_name</string>
     <string name="hideModel">type_model_name</string>
     <string name="hideYear">manufacture_date</string>
+    <string name="hideCapacity">engine_capacity</string>
     <string name="hideKilo">kilometer</string>
     <string name="hideAutomatic">is_automatic</string>
 
@@ -44,11 +48,15 @@
     <string name="roomsNumMin">rooms_num_min</string>
     <string name="floorMax">floor_max</string>
     <string name="floorMin">floor_min</string>
+    <string name="numberFloorsMin">floors_number_min</string>
+    <string name="numberFloorsMax">floors_number_max</string>
     <string name="furnitureName">furniture_name</string>
 
     <!-- Jobs -->
     <string name="educationName">education_name</string>
+    <string name="certificateName">certificate_name</string>
     <string name="scheduleName">schedule_name</string>
+    <string name="genderName">gender_name</string>
     <string name="salaryMax">salary_max</string>
     <string name="salaryMin">salary_min</string>
 
@@ -59,6 +67,7 @@
     <string name="kilometerMin">kilometer_min</string>
     <string name="automaticName">automatic_name</string>
     <string name="yearsName">years_name</string>
+    <string name="capacityName">capacity_name</string>
 
     <!-- Electronics -->
     <string name="sizeMax">size_max</string>

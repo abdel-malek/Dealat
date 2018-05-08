@@ -323,6 +323,58 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:padding="@dimen/textPadding"
+        android:tag="@string/numberFloorsMin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelNumberFloorsFrom"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
+        android:tag="@string/numberFloorsMax"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelNumberFloorsTo"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
         android:tag="@string/furnitureName"
         >
 
@@ -375,6 +427,32 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:padding="@dimen/textPadding"
+        android:tag="@string/certificateName"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelCertificate"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
         android:tag="@string/scheduleName"
         >
 
@@ -383,6 +461,32 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/marginEnd"
             android:text="@string/labelSchedule"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
+        android:tag="@string/genderName"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelGender"
             android:textColor="@color/grayTransparent"
             />
 
@@ -513,6 +617,32 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/marginEnd"
             android:text="@string/labelManufactureYear"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
+        android:tag="@string/capacityName"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelEngineCapacity"
             android:textColor="@color/grayTransparent"
             />
 

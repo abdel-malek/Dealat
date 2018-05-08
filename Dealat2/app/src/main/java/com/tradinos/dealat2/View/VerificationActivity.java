@@ -107,7 +107,8 @@ public class VerificationActivity extends MasterActivity {
                     public void OnFaild(Code errorCode, String Message, String data) {
                         HideProgressDialog();
 
-                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        Intent intent = new Intent(mContext, EditProfileActivity.class);
+                        intent.putExtra("action", "home");
                         startActivity(intent);
                         finish();
                     }
@@ -116,7 +117,8 @@ public class VerificationActivity extends MasterActivity {
                     public void OnSuccess(String result) {
                         HideProgressDialog();
 
-                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        Intent intent = new Intent(mContext, EditProfileActivity.class);
+                        intent.putExtra("action", "home");
                         startActivity(intent);
                         finish();
                     }

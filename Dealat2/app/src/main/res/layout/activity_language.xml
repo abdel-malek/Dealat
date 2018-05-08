@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_blur"
     >
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/listView"
+        android:layout_centerHorizontal="true"
         android:padding="16dp"
-        android:layout_marginTop="36dp"
         android:text="@string/labelPleaseSelectLang"
         android:textColor="@color/white"
         android:textAppearance="@style/textHeadline"
@@ -22,8 +24,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_below="@+id/textView"
-        android:layout_above="@+id/buttonTrue"
+        android:layout_centerInParent="true"
         android:dividerHeight="@dimen/lineHight"
         android:divider="@color/white"
         android:scrollbars="none"

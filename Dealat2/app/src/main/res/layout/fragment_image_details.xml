@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -8,17 +8,19 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/buttonTrue"
         />
 
     <Button
         android:id="@+id/buttonTrue"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="bottom|center_horizontal"
         android:onClick="onClick"
         android:text="@string/buttonSave"
-        android:textColor="@color/white"
-        android:background="@null"/>
-</RelativeLayout>
+        android:textColor="@color/grayDark"
+        android:background="@drawable/rounded_corner_white"/>
+</FrameLayout>

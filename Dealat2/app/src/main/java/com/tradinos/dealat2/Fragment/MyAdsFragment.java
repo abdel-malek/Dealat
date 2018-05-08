@@ -99,4 +99,15 @@ public class MyAdsFragment extends Fragment {
 
         return rootView;
     }
+
+    private List<Ad> filter(int status) {
+        List<Ad> result = new ArrayList<>();
+
+        for (int i = 0; i < ads.size(); i++) {
+            if (ads.get(i).getStatus() == status)
+                result.add(ads.get(i));
+        }
+
+        return result;
+    }
 }

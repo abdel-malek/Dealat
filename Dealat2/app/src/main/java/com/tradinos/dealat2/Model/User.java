@@ -13,7 +13,6 @@ public class User implements Serializable {
     private String imageUrl;
     private String birthday;
     private int gender;
-    private boolean visiblePhone;
 
     public String getId() {
         return id;
@@ -101,14 +100,6 @@ public class User implements Serializable {
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public boolean isVisiblePhone() {
-        return visiblePhone;
-    }
-
-    public void setVisiblePhone(boolean visiblePhone) {
-        this.visiblePhone = visiblePhone;
     }
 
     @Override
