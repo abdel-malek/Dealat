@@ -51,6 +51,9 @@ $lang['submit_ad'] = "نشر الإعلان";
 $lang['automatic'] = "اوتوماتيكي";
 $lang['new'] = "جديد";
 $lang['negotiable'] = "السعر قابل للتفاوض";
+
+
+
 $lang['week'] = "أسبوع";
 $lang['10_days'] = "عشر أيام";
 $lang['month'] = "شهر";
@@ -151,14 +154,16 @@ $lang['kilometrage'] = 'عدد الكيلوميترات';
 $lang['motion'] = 'ناقل الحركة';
 $lang['automatic'] = 'اوتوماتيكي';
 $lang['manual'] = 'يدوي';
-$lang['manual'] = 'يدوي';
+$lang['engine_capacity'] = 'سعة المحرك';
 $lang['space'] = 'مساحة العقار';
 $lang['rooms_num'] = 'عدد الغرف';
 $lang['floor'] = 'رقم الطابق';
+$lang['floors_number'] = 'عدد الطوابق';
 $lang['state'] = 'حالة العقار';
 $lang['with_furniture'] = 'مع أثاث';
 $lang['size'] = 'الحجم';
 $lang['education'] = 'المستوى التعليمي';
+$lang['certificate'] = 'الشهادة';
 $lang['schedule'] = 'جدول الدوام ';
 $lang['experience'] = 'مستوى الخبرة';
 $lang['salary'] = 'الراتب';
@@ -219,6 +224,12 @@ $lang['city'] = "المدينة";
 $lang['user_status'] = "فعّال؟";
 $lang['none'] = "لا يوجد";
 $lang['ads_num'] = "عدد إعلاناته";
+$lang['chats'] = 'الدردشات';
+$lang['messages'] = 'الرسائل';
+$lang['ad_title'] = 'عنوان الإعلان';
+$lang['chats_list'] = 'قائمة الدردشات';
+$lang['text'] = 'الرسالة'; 
+$lang['send_date'] = 'تاريخ الإرسال';
 
 //categories manages
 $lang['category_name'] = "اسم الصنف";
@@ -276,6 +287,8 @@ $lang['notify_text'] = 'محتوى الإشعار';
 $lang['notify_title'] = 'عنوان الإشعار';
 $lang['select_usres_city'] = 'اختر مدينة المستخدمين';
 $lang['send_notification'] = 'إرسال الإشعار';
+$lang['notification_confirmation'] = 'هل أنت متأكد من أنك تريد إرسال هذا الإشعار العام؟ ';
+$lang['confirmation'] = 'تأكيد';
 
 //about manage
 $lang['set_about_info'] = 'ضبط معلومات من نحن';

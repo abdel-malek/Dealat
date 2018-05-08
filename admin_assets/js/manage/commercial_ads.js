@@ -43,6 +43,15 @@
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Other Commercials Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2 ,3 , 4]
+                  }
+                },
               ],
               initComplete: function(nRow, settings, json){
 	          	 activated_number =0;

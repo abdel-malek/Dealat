@@ -39,10 +39,12 @@ class MY_Model extends CI_Model {
 		else {
 			$method = 'result';
 		}
-	   if($this->is_dec_order){
-	   	  $this->db->order_by($this->_order_by , "desc");
-	   }else{
-	   	  $this->db->order_by($this->_order_by);
+	   if($this->_order_by != ''){
+	   	   if($this->is_dec_order){
+		   	  $this->db->order_by($this->_order_by , "desc");
+		   }else{
+		   	  $this->db->order_by($this->_order_by);
+		   }
 	   }
 	  return $this->db->get($this->_table_name , $limit)->$method();
 	}

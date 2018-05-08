@@ -64,10 +64,10 @@ class TAMPLATES {
 	public static function get_tamplate_attributes($id) {
 		switch($id) {
 			case 1 :
-				return array('type_id', 'type_model_id', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer');
+				return array('type_id', 'type_model_id', 'manufacture_date', 'engine_capacity' , 'is_automatic', 'is_new', 'kilometer');
 		    break;
 			case 2 :
-				return array('space', 'rooms_num', 'floor', 'state', 'with_furniture');
+				return array('space', 'rooms_num', 'floor', 'floors_number' , 'state', 'with_furniture');
 		    break;
 			case 3 :
 				return array('type_id', 'is_new');
@@ -88,7 +88,7 @@ class TAMPLATES {
 				return array('is_new');
 			break;
 			case 8 :
-				return array('schedule_id', 'education_id', 'experience', 'salary');
+				return array('schedule_id', 'education_id', 'experience','gender' , 'certificate_id', 'salary');
 			break;
 			case 10 :
 				return array();
@@ -118,14 +118,14 @@ class TAMPLATES {
    public static function get_tamplate_attributes_array()
 	{
 		return array(
-		  1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'is_new', 'kilometer'),
-		  2 =>  array('space', 'rooms_num', 'floor', 'state', 'with_furniture'),
+		  1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'engine_capacity', 'is_new', 'kilometer'),
+		  2 =>  array('space', 'rooms_num', 'floor','floors_number', 'state', 'with_furniture'),
 		  3 =>  array('type_name', 'is_new'),
 		  4 =>  array('type_name', 'size', 'is_new'),
 		  5 =>  array('is_new'),
 		  6 =>  array('is_new'),
 		  7 =>  array('is_new'), 
-		  8 =>  array('schedule_name', 'education_name', 'experience', 'salary'),
+		  8 =>  array('schedule_name', 'education_name', 'experience','gender', 'certificate_name', 'salary'),
 		  9 =>  array('is_new'),
 		  10 => array(),
 		  11 => array()
@@ -137,13 +137,15 @@ class TAMPLATES {
 	     if($attr_name == 'type_model_id' ||
 	         $attr_name == 'schedule_id' ||
 	         $attr_name=='education_id' ||
-		     $attr_name == 'manufacture_date'){ // array 
+		     $attr_name == 'manufacture_date' ||
+			 $attr_name == 'engine_capacity'){ // array 
 		  	return 'array';
 		  }else if(
 		     $attr_name == 'is_new' ||
              $attr_name == 'with_furniture' ||
              $attr_name == 'is_automatic' ||
-		     $attr_name == 'type_id'){ // single value 
+		     $attr_name == 'type_id'||
+			 $attr_name == 'certificate_id'){ // single value 
 		  	return 'single';
 		  }else{
 		  	return 'range';
@@ -163,7 +165,7 @@ class TAMPLATES {
 			    return array('type');
 			break;
 			case 8 :
-				return array('education' ,'schedule');
+				return array('education' ,'schedule' , 'certificate');
 			break;
 			default :
 				return array();

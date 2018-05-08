@@ -130,6 +130,13 @@ $lang['schedules'] = 'Schedules';
 $lang['cities_and_areas'] = 'Cities and Areas';
 $lang['notifications'] = 'Notifications';
 $lang['about_us_manage'] = 'About us Manage';
+$lang['chats'] = 'Chats';
+$lang['messages'] = 'Messages';
+$lang['ad_title'] = 'Ad title';
+$lang['chats_list'] = 'Chats list';
+$lang['text'] = 'Message'; 
+$lang['send_date'] = 'Send Date';
+
 
 //ads manage
 $lang['users_ads_list'] = "Users' Ads List";
@@ -149,15 +156,18 @@ $lang['type'] = 'Type';
 $lang['type_model'] = 'Type Model';
 $lang['manufacture_date'] = 'Manufacture Year';
 $lang['kilometrage'] = 'Kilometrage';
-$lang['motion'] = 'Motion vector';
+$lang['motion'] = 'Transmission type';
+$lang['engine_capacity'] = 'Engine Capacity';
 $lang['automatic'] = 'Automatic';
 $lang['space'] = 'Property space';
 $lang['rooms_num'] = 'Rooms Number';
 $lang['floor'] = 'Property floor number';
+$lang['floors_number'] = 'Floors number';
 $lang['state'] = 'Property state';
 $lang['with_furniture'] = 'With Furniture';
 $lang['size'] = 'Size';
 $lang['education'] = 'Education Level';
+$lang['certificate'] = 'Certificate';
 $lang['schedule'] = 'Work Time Schedule';
 $lang['experience'] = 'Experience Level';
 $lang['salary'] = 'Salary';
@@ -220,6 +230,9 @@ $lang['user_status'] = "Is Active?";
 $lang['none'] = "None";
 $lang['ads_num'] = "Ads Number";
 
+//new 
+
+
 
 //categories manages
 $lang['category_name'] = "Category name";
@@ -278,6 +291,8 @@ $lang['notify_text'] = 'Notification Message';
 $lang['notify_title'] = 'Notification Title';
 $lang['select_usres_city'] = 'Select User\'s City';
 $lang['send_notification'] = 'Send Notification';
+$lang['notification_confirmation'] = 'Are you sure you want to send this public notification? ';
+$lang['confirmation'] = 'Confirmation';
 
 //about manage
 $lang['set_about_info'] = 'Set About Information';

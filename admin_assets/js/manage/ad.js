@@ -115,6 +115,15 @@ var sound_notify_path = site_url +'admin_assets/definite.mp3';
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Ads Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2,3,4,5,6,7,8,9]
+                  }
+                },
               ],
             });
         };

@@ -172,8 +172,10 @@
                        aria-expanded="false"><?php echo $current_lang; ?><span
                             class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                       <li><a href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=ar') ?>">Arabic</a></li>
-                       <li><a href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=en') ?>">English</a></li>
+                       <!-- <li><a onclick="change_admin_lang('ar')" href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=ar') ?>">Arabic</a></li>
+                       <li><a onclick="change_admin_lang('ar')"  href="<?php echo base_url('index.php/admin/users_manage/change_language?lang=en') ?>">English</a></li> -->
+                       <li><a onclick="change_admin_lang('ar')" >Arabic</a></li>
+                       <li><a onclick="change_admin_lang('en')">English</a></li>
                     </ul>
                 </li>
                 

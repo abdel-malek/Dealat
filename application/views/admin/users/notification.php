@@ -53,7 +53,7 @@
 			      	         </div>
 			               </div> 
 			               <div class='pull-right'>
-			               	  <button onclick="send_notificaion()"  id="" type="button" class="btn btn-primary"><?php echo $this->lang->line('send_notification') ?></button>
+			               	  <button   id="" type="button" class="btn btn-primary"   data-toggle="modal" data-target=".confirm-modal"><?php echo $this->lang->line('send_notification') ?></button>
 			               </div>
 			               
 		                </form>
@@ -63,4 +63,22 @@
 	            </div>
 	          </div>
 	        </div>
+	       <div id="confirm-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		            	<?php echo $this->lang->line('confirmation') ?>
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                  <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body text-center">
+		                <h6><?php echo $this->lang->line('notification_confirmation') ?></h6>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="submit" class="btn button2 submit"  onclick="send_notificaion()"><?php echo $this->lang->line('yes') ?></button>
+		            </div>
+		        </div>
+		    </div>
+         </div>
         <!-- /page content -->

@@ -52,10 +52,10 @@ class Users extends MY_Model {
 	    $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
 	//	send verification code to email.
 		//$to      = 'dealat.co@gmail.com';
-		$to      = 'dealat.co@gmail.com';
-        $subject = 'Message from Dealat';
-        $message = 'Your Verification Code: '.$code;
-        mail($to, $subject, $message,  "From: ola@tradinos.com");
+		// $to      = 'dealat.co@gmail.com';
+        // $subject = 'Message from Dealat';
+        // $message = 'Your Verification Code: '.$code;
+        // mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;
@@ -135,7 +135,7 @@ class Users extends MY_Model {
   
   public function get_with_ads_info($lang)
   {
-      $this->db->select('users.* , cites.'.$lang.'_name as city_name , COUNT(ad_id) ads_num');
+      $this->db->select('users.* , cites.'.$lang.'_name as city_name , COUNT(ad_id) ads_num , cites.country_code');
 	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
 	  $this->db->join('ads', 'users.user_id = ads.user_id', 'left outer');
 	  $this->db->group_by('users.user_id' );

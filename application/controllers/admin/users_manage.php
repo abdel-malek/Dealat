@@ -60,14 +60,17 @@ class Users_manage extends REST_Controller {
 	
 	public function get_all_get()
 	{
-		//dump(user_status_checkbox(0 ,1));
 		$users = $this->users->get_with_ads_info($this->data['lang']);
 		$output = array("aaData" => array());
 		foreach ($users as $row) {
 			$recorde = array();
 			$recorde[] = $row -> user_id;
 			$recorde[] = $row -> name;
-			$recorde[] = $row -> phone;
+			if($row->country_code != null){
+			    $recorde[] = $row->country_code.'-'.$row -> phone;
+			}else{
+				$recorde[] = '0'.$row -> phone;
+			}
 			if($row -> email != null){
 				$recorde[] = $row -> email;
 			}else{
@@ -79,13 +82,7 @@ class Users_manage extends REST_Controller {
 			}else{
 				$recorde[] = $row->ads_num;
 			}
-		    // if($row -> is_active != 1){
-				// $recorde[] = $this->lang->line('inactive'); 
-			// }else{
-				// $recorde[] = $this->lang->line('active'); 
-			// }
 			$recorde[] = user_status_checkbox($row->is_active , $row->user_id);
-			//$recorde[] = '';
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
@@ -95,7 +92,8 @@ class Users_manage extends REST_Controller {
 	{
 	  $current_lang = $this->input->get('lang');
 	  $this->session->set_userdata(array('language' => $current_lang));
-	  redirect('admin/items_manage');
+	  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
+	 // redirect('admin/items_manage');
 	}
 	
 	public function change_status_post()
@@ -148,4 +146,62 @@ class Users_manage extends REST_Controller {
 		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	  }
    }
+   
+   	public function get_user_chat_sessions_get()
+	{
+	       $this->load->model('data_sources/chat_sessions');
+		   $user_id = $this->input->get('user_id');
+		   $chat_sessions = $this->chat_sessions->get_user_chat_sessions($user_id);
+		   $output = array("aaData" => array());
+		   foreach ($chat_sessions as $row) {
+				$recorde = array();
+				$recorde[] = $row -> chat_session_id;
+				$recorde[] = $row -> created_at;
+				$recorde[] = $row->seller_name;
+				$recorde[] = $row->user_name;
+				$recorde[] = $row -> ad_title;
+				$recorde[] = '';
+				$recorde[] = '';
+				$output['aaData'][] = $recorde;
+			}
+			echo json_encode($output);
+	}
+	
+	public function get_chat_messages_get()
+	{
+	    $this->load->model('data_sources/messages');
+	    $chat_id = $this->input->get('chat_session_id');
+		$seller_name = $this->input->get('seller_name');
+		$user_name = $this->input->get('user_name');
+		$chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
+        $output = array("aaData" => array());
+		   foreach ($chat_messages as $row) {
+				$recorde = array();
+				$recorde[] = $row -> message_id;
+				$recorde[] = $row -> created_at;
+		        if($row->to_seller == 1){
+		        	$recorde[]  = $user_name;
+					$recorde[] =  $seller_name;
+		        }else{
+		        	$recorde[] =  $seller_name;
+		        	$recorde[]  = $user_name;
+		        }
+			
+				$recorde[] = $row -> text;
+				$output['aaData'][] = $recorde;
+			}
+			echo json_encode($output);
+	}
+	
+	
+   public function get_user_info_get()
+	{
+	   $user_id = $this->input->get('user_id');
+	   $user_info = $this->users->get_user_info($this->data['lang'] , $user_id); 
+	   if($user_info){
+	   	  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
+	   }else{
+	   	  $this->response(array('status' => false, 'data' => '', "message" => 'No such user!'));
+	   }
+	}
 }

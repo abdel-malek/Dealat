@@ -119,6 +119,18 @@ class Users_control extends REST_Controller {
 	   }
 	}
 	
+	public function get_user_info_get()
+	{
+	   $user_id = $this->input->get('user_id');
+	   $user_info = $this->users->get_user_info($this->data['lang'] , $user_id); 
+	   if($user_info){
+	   	  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
+	   }else{
+	   	  $this->response(array('status' => false, 'data' => '', "message" => 'No such user!'));
+	   }
+		
+	}
+	
 	public function get_my_chat_sessions_get()
 	{
 		$this->load->model('data_sources/chat_sessions');

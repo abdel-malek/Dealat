@@ -70,7 +70,6 @@ class Ads extends MY_Model {
 		                   users.name as seller_name,
 		                   users.phone as seller_phone,
 		                   users.whatsup_number,
-		                   users.visible_phone,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
 		                   show_periods.days,
@@ -247,7 +246,9 @@ class Ads extends MY_Model {
 	   	    $data['main_video'] = $this->input->post('main_video');
 	   	}
 	   }
-	   
+	   if($this->input->post('ad_visible_phone') != NULL){
+	   	  $data['ad_visible_phone'] = $this->input->post('ad_visible_phone');
+	   }
 	   // delete unwanted images
 	   if($this->input->post('deleted_images')){
 	   	  $deleted_images =  json_decode($this -> input -> post('deleted_images'), true);
@@ -505,6 +506,8 @@ class Ads extends MY_Model {
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 		$this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
 	    $this->db->where('status' , STATUS::PENDING);
+		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('categories.is_active'  , 1);
 		return parent::get();
     }
 

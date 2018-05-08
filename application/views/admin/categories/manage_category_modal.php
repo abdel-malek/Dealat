@@ -65,6 +65,10 @@
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_is_automatic"></input>
 	      	            	<?php echo $this->lang->line('motion') ?>
 	      	            </label>
+	      	            <label style="display: none" for="cat_engine_capacity" class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_engine_capacity"></input>
+	      	            	<?php echo $this->lang->line('engine_capacity') ?>
+	      	            </label>
 	      	            <label style="display: none" for="cat_with_furniture" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_with_furniture"></input>
 	      	                <?php echo $this->lang->line('with_furniture') ?>
@@ -81,6 +85,10 @@
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_floor"></input>
 	      	            	<?php echo $this->lang->line('floor') ?>
 	      	            </label>
+	      	            <label style="display: none" for="cat_floors_number" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_floors_number"></input>
+	      	            	<?php echo $this->lang->line('floors_number') ?>
+	      	            </label>
 	      	            <label style="display: none" for="cat_state" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_state"></input>
 	      	            	<?php echo $this->lang->line('state') ?>
@@ -93,6 +101,10 @@
 	      	                <input checked=""  type="checkbox" class="hide_check_box" id="cat_education_name"></input>
 	      	                <?php echo $this->lang->line('education') ?>
 	      	            </label>
+	      	            <label style="display: none" for="cat_certificate_name" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	                <input checked=""  type="checkbox" class="hide_check_box" id="cat_certificate_name"></input>
+	      	                <?php echo $this->lang->line('certificate') ?>
+	      	            </label>
 	      	            <label style="display: none" for="cat_schedule_name" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_schedule_name"></input>
 	      	            	<?php echo $this->lang->line('schedule') ?>
@@ -100,6 +112,10 @@
 	      	            <label style="display: none" for="cat_experience" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_experience"></input>
 	      	            	<?php echo $this->lang->line('experience') ?>
+	      	            </label>
+	      	            <label style="display: none" for="cat_gender" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_gender"></input>
+	      	            	<?php echo $this->lang->line('gender') ?>
 	      	            </label>
 	      	            <label style="display: none" for="cat_salary" class="col-md-6 col-xs-12 template_info_cat 8_info_cat">
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_salary"></input>

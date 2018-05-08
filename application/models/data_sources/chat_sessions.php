@@ -3,7 +3,7 @@
 class Chat_sessions extends MY_Model {
 	protected $_table_name = 'chat_sessions';
 	protected $_primary_key = 'chat_session_id';
-	protected $_order_by = 'created_at';
+	protected $_order_by = 'chat_session_id DESC';
     protected $_timestamps = TRUE;
 	public $rules = array();
 	
@@ -13,11 +13,12 @@ class Chat_sessions extends MY_Model {
 		$this->db->join('users as u' , 'u.user_id = chat_sessions.user_id' , 'left');
 		$this->db->join('users as s' , 's.user_id = chat_sessions.seller_id' , 'left');
 		$this->db->join('ads' , 'chat_sessions.ad_id = ads.ad_id' , 'left');
-		// $this->db->where('chat_sessions.user_id' , $user_id );
-		// $this->db->or_where('chat_sessions.user_id' , $user_id);
+		//$this->db->join('messages' , 'chat_sessions.chat_session_id  = messages.chat_session_id' , 'left');
 		$this->db->where("(chat_sessions.user_id = '$user_id' OR chat_sessions.seller_id = '$user_id')");
 		$this->db->where('u.is_deleted' , 0);
 		$this->db->where('s.is_deleted' , 0);
+		//$this->db->group_by('messages.chat_session_id');
+		//$this->db->order_by('messages.message_id DESC');
 		return parent::get(null , $is_single);
 	}
 	

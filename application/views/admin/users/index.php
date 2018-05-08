@@ -3,7 +3,7 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b id="pending_label"><?php echo $this->lang->line('users_list') ?></b></h3>  
+	                 <h3><b id=""><?php echo $this->lang->line('users_list') ?></b></h3>  
 	              </div>
 	        
 	              	 <!-- filter form -->
@@ -50,7 +50,8 @@
 	                          <th><?php echo $this->lang->line('city') ?></th>
 	                          <th><?php echo $this->lang->line('ads_num') ?></th>
 	                          <th><?php echo $this->lang->line('user_status') ?></th>
-	                          <!-- <th><?php echo $this->lang->line('details') ?></th> -->
+	                          <th><?php echo $this->lang->line('details') ?></th>
+	                          <th><?php echo $this->lang->line('chats') ?></th>
 	                        </tr>
 	                      </thead>
 	                      <tbody>
@@ -62,8 +63,6 @@
 	            </div>
 	          </div>
 	        </div>
-	        <!-- <?php $this->load->view('admin/ads/details_modal') ?> -->
-	       <!-- </div>
-	      </div> -->
-        
+	        <?php $this->load->view('admin/users/user_chats_modal') ?>
+	        <?php $this->load->view('admin/users/details_modal') ?>
         <!-- /page content -->

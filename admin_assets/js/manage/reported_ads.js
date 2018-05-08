@@ -25,13 +25,6 @@ var reports_table;
             "bServerSide": false,
             aaSorting : [[2, 'asc']],
             "sAjaxSource": base_url + '/admin/items_manage/get_all_reported_items/format/json',
-             // "ajax": {
-              // "url": base_url + '/admin/items_manage/all/format/json',
-		      // "type": "GET",
-		       // global: false,     // this makes sure ajaxStart is not triggered
-		       // 'async' : false,
-               // dataType: 'json',
-             // },
              "columnDefs": [
                  {
                     "targets": -1, // reports
@@ -50,6 +43,15 @@ var reports_table;
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Reported Ads Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2]
+                  }
+                },
               ],
             });
         };

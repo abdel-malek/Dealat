@@ -55,7 +55,7 @@
 	                  <div class="x_content">
 	                  	<h2>
 	                  		<span id="status_count_label"> </span>
-	                  		<span class="countIcon"><span class="badge bg-green pending_count">5</span></span>
+	                  		<span class="countIcon"><span class="badge bg-green pending_count"></span></span>
 	                    </h2>
 	                    <table id="ads_table" class="table table-striped table-bordered">
 	                      <thead>

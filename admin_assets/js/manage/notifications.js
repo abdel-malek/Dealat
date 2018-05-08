@@ -58,6 +58,7 @@ function send_notificaion () {
 						 }
 		               });
 		            }
+		       $('.confirm-modal').modal('hide');
 	        },error: function(xhr, status, error){
 	        	new PNotify({
 	                  title: lang_array['attention'],

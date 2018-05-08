@@ -41,6 +41,15 @@ var areas_table;
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Citeis Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2]
+                  }
+                },
               ],
             });
         };

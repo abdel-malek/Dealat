@@ -120,6 +120,7 @@
        	 lang_array['notification_sent'] = 'Notification sent successfully'
        	// lang_array['category_deactivated'] = 'Category and ';
        	 lang_array['reject_note'] = 'Reject Note';
+       	 lang_array['export_to_excel'] = 'Export to Excel';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -161,7 +162,8 @@
        	 lang_array['location_saved'] = 'تم حفظ المنطقة' ;
        	 lang_array['location_deleted'] = 'تم حذف المنطقة'
        	 lang_array['notification_sent'] = 'تم إرسال الإشعار بنجاح'
-       	  lang_array['reject_note'] = 'سبب الرفض';
+       	 lang_array['reject_note'] = 'سبب الرفض';
+       	 lang_array['export_to_excel'] = 'إصدار إلى إكسل';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;

@@ -9,14 +9,14 @@
         </div>
         <div class="modal-body">
                 <form acrion="post" data-parsley-validate class="form-horizontal form-label-left">
-                   <div class="form-group" id='created_div' style="display:none">
-	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('name') ?></label>
+                   <div class="form-group" id='created_div'>
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('username') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	           <label class="form-control"  id='user_name'>=/label>
 	      	         </div>
 	               </div> 
 	               
-	               <div class="form-group" id='created_div' style="display:none">
+	               <div class="form-group" id='created_div'>
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	           <label class="form-control"  id='user_city'>=/label>
@@ -34,6 +34,13 @@
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('whatsup_number') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_whatsup_number" value></textarea>
+	      	         </div>
+	               </div> 
+	               
+	               <div class="form-group">
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('email') ?></label>
+	      	         <div class="col-md-6 col-sm-6 col-xs-12">
+	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_email" value></textarea>
 	      	         </div>
 	               </div> 
 	               

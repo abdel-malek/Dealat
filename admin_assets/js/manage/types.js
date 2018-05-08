@@ -50,6 +50,15 @@ var template = $('#filter_type_template_select').val();
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Brands Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2 ,3]
+                  }
+                },
               ],
             });
         };

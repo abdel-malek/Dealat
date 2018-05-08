@@ -1,5 +1,7 @@
 
 var users_table;
+var user_chats_table;
+var messages_table;
  $(document).ready(function() {
 
  	var users_TableButtons = function() {
@@ -25,16 +27,32 @@ var users_table;
              aaSorting : [[0, 'desc']],
              "sAjaxSource": base_url + '/admin/users_manage/get_all/format/json',
              "columnDefs": [
-                 // {
-                    // "targets": -1, // details
-                    // "data": null,
-                    // "mRender": function(date, type, full) {
-                       // return '<button id="" onclick="show_user_details(\'' + full[0] + '\', \'' + full[8] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
-		             // }
-		         // },
+                 {
+                    "targets": -2, // details
+                    "data": null,
+                    "mRender": function(date, type, full) {
+                       return '<button id="" onclick="show_user_details(\'' + full[0] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+		             }
+		         },
+		         {
+                    "targets": -1, // chats
+                    "data": null,
+                    "mRender": function(date, type, full) {
+                       return '<button id="" onclick="show_user_chats(\'' + full[0] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+		             }
+		         },
 	          ],
               dom: "Bfrtip",
               buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Users Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2, 3, 4, 5]
+                  }
+                },
               ],
             });
         };
@@ -98,3 +116,169 @@ function change_user_status(user_id , is_active){
 	        }
 	     });
 }
+
+function change_admin_lang (lang) {
+	var url = base_url + '/admin/users_manage/change_language/format/json?lang='+lang;
+    $.ajax({
+	        url: url,
+	        type: "get",
+	        dataType: "json",
+	        success: function(response) {
+	            window.location.reload();  
+ 	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	            });
+	        }
+	     });
+}
+
+function show_user_chats (user_id) {
+	var user_chats_TableButtons = function() {
+       users_chat_table = $("#user_chats_table").DataTable({
+            "oLanguage": {
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
+					"sInfoPostFix":  "",
+					"sSearch":       lang_array['sSearch'],
+					"sUrl":          "",
+					"oPaginate": {
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
+				   }
+			 },
+             "bServerSide": false,
+             aaSorting : [[0, 'desc']],
+             "sAjaxSource": base_url + '/admin/users_manage/get_user_chat_sessions/format/json?user_id='+user_id,
+             "columnDefs": [
+                {
+                "targets": -1, // messages
+                "data": null,
+                "mRender": function(date, type, full) {
+                   return '<button id="" onclick="show_chat_messages(\'' + full[0] + '\' ,\'' + full[2] + '\' ,\'' + full[3] + '\'  );" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+	             }
+		        },
+	          ],
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'User chats '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2, 3, 4]
+                  }
+                },
+              ],
+            });
+        };
+        user_chats_TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              user_chats_TableButtons();
+            }
+          };
+        }();
+
+       user_chats_TableManageButtons.init(); 
+    $('.user_chats_modal').modal('show');
+}
+
+ $('.user_chats_modal').on('hidden.bs.modal', function () {
+  	 users_chat_table.destroy();
+ });
+ 
+ 
+function show_chat_messages (chat_id , seller_name , user_name) {
+     var messages_TableButtons = function() {
+       messages_table = $("#messages_table").DataTable({
+            "oLanguage": {
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
+					"sInfoPostFix":  "",
+					"sSearch":       lang_array['sSearch'],
+					"sUrl":          "",
+					"oPaginate": {
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
+				   }
+			 },
+             "bServerSide": false,
+             aaSorting : [[0, 'desc']],
+             "sAjaxSource": base_url + '/admin/users_manage/get_chat_messages/format/json?chat_session_id='+chat_id
+             +'&seller_name='+seller_name+ '&user_name='+user_name,
+             "columnDefs": [
+	          ],
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'messages '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                },
+              ],
+            });
+        };
+        messages_TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+               messages_TableButtons();
+            }
+          };
+        }();
+
+        messages_TableManageButtons.init(); 
+    $('.messages_modal').modal('show');
+}
+
+ $('.messages_modal').on('hidden.bs.modal', function () {
+  	 messages_table.destroy();
+  	 $("body").addClass("modal-open");
+ });
+ 
+ function show_user_details (user_id) {
+       $.ajax({
+        url: base_url + '/admin/users_manage/get_user_info/format/json?user_id='+user_id,
+        type: "get",
+        dataType: "json",
+        success: function(response) {
+              console.log(response.data);
+        },error: function(xhr, status, error){ 
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+            });
+        }
+     });
+    $('.user_details').modal('show');
+ }
+
+
+

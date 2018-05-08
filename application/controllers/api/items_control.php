@@ -71,6 +71,7 @@ class Items_control extends REST_Controller {
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
 		     'is_negotiable' => $this->input->post('is_negotiable'),
+		     'ad_visible_phone' => $this->input->post('ad_visible_phone')
 		   );
 		   if($this->input->post('main_video') && $this->input->post('main_video')!=''){
 		   	  $basic_data['main_video'] = $this->input->post('main_video');
