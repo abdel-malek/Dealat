@@ -60,23 +60,23 @@
 	<div class="container">
 		<div id="profile-tabs" class="profile-tabs">
 			<ul class='etabs'>
-				
-			<div class="row">
-<!--<div class="col">-->
-	<li class='col tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
-<!--</div>-->
-<!--<div class="col">-->
-	<li class='col tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
-<!--</div>-->
-<!--<div class="col">-->
-	<li class='col tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
-<!--</div>-->
-<!--<div class="col">-->
-	<li class='col tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
-<!--</div>-->
-</div>
 
-<!--
+				<div class="row">
+					<!--<div class="col">-->
+					<li class='col tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
+					<!--</div>-->
+					<!--<div class="col">-->
+					<li class='col tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
+					<!--</div>-->
+					<!--<div class="col">-->
+					<li class='col tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
+					<!--</div>-->
+					<!--<div class="col">-->
+					<li class='col tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
+					<!--</div>-->
+				</div>
+
+				<!--
 				<li class='tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
 				<li class='tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
 				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
@@ -85,10 +85,24 @@
 			</ul>
 			<div id="user-ads" class="user-ads">
 				<section class="products">
+					<div class="dropdown filter-dropdown">
+						<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<?php echo $this->lang->line('all'); ?>
+					    </button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<li class="selected filter-item" data-filter="all"><?php echo $this->lang->line('all'); ?></li>
+							<li class="filter-item" data-mixitup-control data-filter=".type2"><?php echo $this->lang->line('accepted'); ?></li>
+							<li class="filter-item" data-mixitup-control data-filter=".type1"><?php echo $this->lang->line('pending'); ?></li>
+							<li class="filter-item" data-mixitup-control data-filter=".type5"><?php echo $this->lang->line('rejected'); ?></li>
+							<li class="filter-item" data-mixitup-control data-filter=".type3"><?php echo $this->lang->line('expired'); ?></li>
+						</div>
+					</div>
+					
 					<div class="container main">
+
 						<div class="row no-gutters first">
 							<script id="user-ads-template" type="text/template">
-								<div class="col-12">
+								<div class="col-12 mix type{{ad.status}}">
 									<div class="card mb-4" data-ad-id="{{ad.ad_id}}" data-template-id="{{ad.tamplate_id}}" data-status-id="{{ad.status}}" data-category-id="{{ad.category_id}}">
 										<div class="container">
 											<div class="overlay">
@@ -171,7 +185,8 @@
 													<div class="card-body">
 														<div class="card-title mb-1">{{ad.title}}</div>
 														<div class="details mb-2">{{ad.description}}</div>
-														{{#ad.city_name}}<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>{{/ad.city_name}}
+														{{#ad.city_name}}
+														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>{{/ad.city_name}}
 
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{date}}</span></div>
 													</div>
@@ -231,7 +246,8 @@
 									<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{query.location_name}}</span></div>{{/query.location_name}} {{#query.price_min}}
 									<div class="price"><span class="price-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="price-val"><?php echo $this->lang->line('from'); ?>: {{query.price_min}}<?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.price_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.price_min}} {{#query.type_name}}
 									<div class="type "><span class="type-lbl"><?php echo $this->lang->line('type'); ?>: </span><span class="type-val">{{query.type_name}}</span></div>{{/query.type_name}} {{#query.type_model_name}}
-									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} {{#query.years_name}}
+									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} {{#query.capacity_name}}
+									<div class="engine_capacity"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>: </span><span class="engine_capacity-val">{{query.capacity_name}}</span></div>{{/query.capacity_name}} {{#query.years_name}}
 									<div class="manufacture_date"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>: </span><span class="manufacture_date-val">{{query.years_name}}</span></div>{{/query.years_name}} {{#query.automatic_name}}
 									<div class="is_automatic"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>: </span><span class="is_automatic-val">{{query.automatic_name}}</span></div>{{/query.automatic_name}} {{#query.state_name}}
 									<div class="is_new"><span class="is_new-lbl"></span>
@@ -240,14 +256,16 @@
 
 									<div class="space"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>: </span><span class="space-val"><?php echo $this->lang->line('from'); ?>: {{query.space_min}} <?php echo $this->lang->line('to'); ?>: {{query.space_max}}</span></div>{{/query.space_min}} {{#query.rooms_num_min}}
 									<div class="rooms_num"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"><?php echo $this->lang->line('from'); ?>: {{query.rooms_num_min}} <?php echo $this->lang->line('to'); ?>: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
-									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.furniture_name}}
+									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.floors_number_min}}
+									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val">from: {{query.floors_number_min}} to: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} {{#query.furniture_name}}
 									<div class="with_furniture"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>: </span><span class="with_furniture-val">{{query.furniture_name}}</span></div>{{/query.furniture_name}} {{#query.size_min}}
 
 									<div class="size"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>: </span><span class="size-val"><?php echo $this->lang->line('from'); ?>: {{query.size_min}} <?php echo $this->lang->line('to'); ?>: {{query.size_max}}</span></div>{{/query.size_min}} {{#query.schedule_name}}
 
 									<div class="schedule schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val">{{query.schedule_name}}</span></div>{{/query.schedule_name}} {{#query.education_name}}
-									<div class="education education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>: </span><span class="education-val">{{query.education_name}}</span></div>{{/query.education_name}} {{#query.salary_min}}
-
+									<div class="education education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>: </span><span class="education-val">{{query.education_name}}</span></div>{{/query.education_name}} {{#query.certificate_name}}
+									<div class="certificate certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>: </span><span class="certificate-val">{{query.certificate_name}}</span></div>{{/query.certificate_name}} {{#query.gender_name}}
+									<div class="education gender"><span class="education-lbl"><?php echo $this->lang->line('gender'); ?>: </span><span class="education-val">{{query.gender_name}}</span></div>{{/query.gender_name}} {{#query.salary_min}}
 									<div class="salary"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>: </span><span class="salary-val"><?php echo $this->lang->line('from'); ?>: {{query.salary_min}} <?php echo $this->lang->line('to'); ?>: {{query.salary_max}}</span></div>{{/query.salary_min}}
 								</div>
 								<div class="col-6 col-sm-2 text-center">
@@ -352,6 +370,11 @@
 									<div class="form-group field kilometer">
 										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 									</div>
+									<div class="form-group field engine_capacity">
+										<select name="engine_capacity" class="engine-capacity-select" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
+									<option disabled selected value="" class="d-none">
+									</select>
+									</div>
 									<div class="form-group field is_automatic">
 										<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
 <!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>-->
@@ -378,6 +401,10 @@
 
 									<div class="form-group field rooms_num">
 										<input type="number" class="form-control" name="rooms_num" placeholder="<?php echo $this->lang->line('rooms'); ?>">
+									</div>
+
+									<div class="form-group field floors_number">
+										<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 									</div>
 
 									<div class="form-group field floor">
@@ -458,20 +485,33 @@
 								<div class="template-job template d-none" data-template-id="8">
 									<div class="form-group field schedule_name">
 										<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 									</select>
 									</div>
 
 									<div class="form-group field education_name">
 										<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>-->
+										<option disabled selected value="" class="d-none">
+									</select>
+									</div>
+
+									<div class="form-group field certificate_name">
+										<select name="certificate_id" class="certificate-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 									</div>
 
 									<div class="form-group field experience">
 										<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
+									</div>
+
+									<div class="form-group field gender">
+										<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
+										<option disabled selected value="" class="d-none">
+<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
+										<option value="1"><?php echo $this->lang->line('male'); ?></option>
+										<option value="2"><?php echo $this->lang->line('female'); ?></option>
+									</select>
 									</div>
 
 									<div class="form-group field salary">
@@ -502,7 +542,8 @@
 								<script id="ad-edit-images-template" type="text/template">
 									{{#main_image}}
 									<div class="main-img">
-										<div class=""><?php echo $this->lang->line('main_image'); ?>:</div>
+										<div class="">
+											<?php echo $this->lang->line('main_image'); ?>:</div>
 										<div class="image-wrapper main-image" data-url="{{main_image}}">
 											<img src="<?php echo base_url('{{main_image}}'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button"><?php echo $this->lang->line('delete'); ?></button>
@@ -511,7 +552,8 @@
 									{{/main_image}}
 
 									<div class="secondary-imgs">
-										<div class=""><?php echo $this->lang->line('other_images'); ?>:</div>
+										<div class="">
+											<?php echo $this->lang->line('other_images'); ?>:</div>
 										{{#images}}
 										<div class="image-wrapper" data-url="{{image}}">
 											<img src="<?php echo base_url('{{image}}'); ?>" alt="" width="100px" height="100px">
@@ -522,7 +564,8 @@
 
 									{{#main_video}}
 									<div class="main-video">
-										<div class=""><?php echo $this->lang->line('video'); ?>:</div>
+										<div class="">
+											<?php echo $this->lang->line('video'); ?>:</div>
 										<div class="image-wrapper video" data-url="{{main_video}}">
 											<img src="<?php echo base_url('assets/images/default_ad/video.png'); ?>" alt="" width="100px" height="100px">
 											<button class="btn btn-danger delete" type="button"><?php echo $this->lang->line('delete'); ?></button>
@@ -533,6 +576,14 @@
 								<div id="fileuploader-edit-ad-main">Upload</div>
 								<div id="fileuploader-edit-ad">Upload</div>
 								<div id="fileuploader-edit-ad-video" class="d-none">Upload</div>
+
+								<div class="">
+									<label class="">
+									<input type='hidden' value='0' name='ad_visible_phone'>
+									<input type="checkbox" name="ad_visible_phone" value="1"><span class=""> <?php echo $this->lang->line('ad_visible_phone'); ?> <?php echo $this->session->userdata('PHP_AUTH_USER')?></span>
+									<div class="visible-phone-note"><?php echo $this->lang->line('ad_visible_phone_note'); ?></div>
+								</label>
+								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -575,8 +626,8 @@
 						</div>
 
 						<div class="form-group">
-							<select name="gender" class="gender-select">
-							<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('gender'); ?></option>
+							<select name="user_gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
+							<option disabled selected value="" class="d-none">
 							<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>
 							<option value="1"><?php echo $this->lang->line('male'); ?></option>
 							<option value="2"><?php echo $this->lang->line('female'); ?></option>
@@ -587,6 +638,7 @@
 							<input type="number" class="form-control whatsup" name="whatsup_number" title="Whatsapp Number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
 						</div>
 
+						<!--
 						<div class="form-group">
 							<label class="">
 							<input type='hidden' value='0' name='visible_phone'>
@@ -596,6 +648,7 @@
 								<?php echo $this->lang->line('visible_phone_note'); ?>
 							</div>
 						</div>
+-->
 
 						<div class="delete-account text-danger">
 							<?php echo $this->lang->line('delete_account'); ?>

@@ -2,6 +2,23 @@
 /*global $, alert,console,lang, Mustache, base_url, logged, user_id, hiddenFields*/
 
 $(function () {
+	
+	//notification
+	
+	var notification = new Notification('Email received', {
+  body: 'You have a total of 3 unread emails'
+});
+	notification.onshow = function() {
+  console.log('Notification shown');
+};
+	
+	if ('Notification' in window) {
+  // API supported
+		console.log('Notification yes');
+} else {
+  // API not supported
+	console.log('Notification no');
+}
 	//css
 	$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
 
@@ -15,6 +32,9 @@ $(function () {
 	var typesData, adImgs, mixer, category_id, category_name, i, template, rendered, subcategories = [];
 	adImgs = [];
 	mixer = mixitup('.products');
+	if ($(".profile-page").length > 0) {
+				mixer.destroy();
+			}
 	category_id = $("body").data("categoryId");
 	if (!category_id) {
 		//home page
@@ -411,7 +431,7 @@ $(function () {
 		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {} else {
+		if (data.status === false) {} else {console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -584,8 +604,18 @@ $(function () {
 			text: i
 		}));
 	}
-
 	$('select.manufacture-date-select')[0].sumo.reload();
+
+	//ad modal engine_capacity
+	for (i = 1000; i <= 5000; i += 1000) {
+		$("#ad-modal .engine-capacity-select,#edit-ad-modal .engine-capacity-select, #filter-modal .engine-capacity-select").append($('<option>', {
+			value: i,
+			text: i
+		}));
+	}
+
+	//reload just for the multiple
+	$('#filter-modal select.engine-capacity-select')[0].sumo.reload();
 
 	var ajaxLoadTimeout;
 	$(document).ajaxStart(function () {
@@ -610,6 +640,7 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
+				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -669,6 +700,21 @@ $(function () {
 					}
 				}
 
+				if (data.data.gender === "1") {
+					if (lang === "ar") {
+						data.data.gender = "ذكر";
+					} else {
+						data.data.gender = "Male";
+					}
+
+				} else if (data.data.gender === "2"){
+					if (lang === "ar") {
+						data.data.gender = "أنثى";
+					} else {
+						data.data.gender = "Female";
+					}
+				}
+
 				if (!data.data.main_image && !data.data.main_video) {
 					data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
 				}
@@ -686,6 +732,7 @@ $(function () {
 				Mustache.parse(template);
 				rendered = Mustache.render(template, adData);
 				$("#card-modal .modal-body").append(rendered);
+
 				$('#card-modal .card-img-slider').slick({
 					infinite: true,
 					slidesToShow: 1,
@@ -701,9 +748,9 @@ $(function () {
 				if (adData.ad.seller_phone) {
 					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
 				}
-				if (adData.ad.whatsup_number) {
-					$("#card-modal .seller-whatsapp").val(adData.ad.whatsup_number);
-				}
+				//				if (adData.ad.whatsup_number) {
+				//					$("#card-modal .seller-whatsapp").val(adData.ad.whatsup_number);
+				//				}
 
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
@@ -711,9 +758,10 @@ $(function () {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
 				}
 
-				if (data.data.visible_phone === "0") {
-					$("#card-modal details").addClass("d-none");
-				}
+				//				if (data.data.visible_phone === "0") {
+				//					$("#card-modal details").addClass("d-none");
+				//				}
+
 				$("#card-modal .templates [class*='-val']").each(function () {
 					if ($(this).text() === " ") {
 						$(this).text(" -");
@@ -765,7 +813,7 @@ $(function () {
 	$("#card-modal").on("click", ".show-contact", function () {
 		var phone, whatsapp;
 		phone = $(this).parents(".card").find(".seller-phone").val();
-		whatsapp = $("#card-modal .seller-whatsapp").val();
+		//		whatsapp = $("#card-modal .seller-whatsapp").val();
 		$("#card-modal details .mobile-val a").text(phone);
 		$("#card-modal details .mobile-val a").attr("href", "tel:" + phone);
 		$("#card-modal details .whatsapp-val a").text(whatsapp);
@@ -874,10 +922,16 @@ $(function () {
 
 
 		//change select placeholder
-		var catText, subText, text;
-		catText = $(this).closest(".dropdown-menu").siblings("a").text();
+		var catText1, catText2, subText, text;
+		catText1 = $(this).closest(".dropdown-menu").siblings("a").text();
+		catText2 = $(this).closest(".dropdown-menu").parents(".dropdown-menu");
 		subText = $(this).text();
-		text = catText + "-" + subText;
+		if(catText2.length > 1){
+			catText2 = catText2.first().siblings("a").text();
+			text = catText2 + " - " + catText1 + " - " + subText;
+		} else{
+			text = catText1 + " - " + subText;
+		}
 		$(this).closest(".categories-nav").find(".select").text(text);
 
 		$('#place-ad-form select:not(.city-select, .location-select, .period-select)').each(function () {
@@ -952,10 +1006,16 @@ $(function () {
 		$("#filter-form input[name='category_name']").val(subName);
 
 		//change select placeholder
-		var catText, subText, text;
-		catText = $(this).closest(".dropdown-menu").siblings("a").text();
+		var catText1, catText2, subText, text;
+		catText1 = $(this).closest(".dropdown-menu").siblings("a").text();
+		catText2 = $(this).closest(".dropdown-menu").parents(".dropdown-menu");
 		subText = $(this).text();
-		text = catText + "-" + subText;
+		if(catText2.length > 1){
+			catText2 = catText2.first().siblings("a").text();
+			text = catText2 + " - " + catText1 + " - " + subText;
+		} else{
+			text = catText1 + " - " + subText;
+		}
 		$(this).closest(".categories-nav").find(".select").text(text);
 
 		$('#filter-form select:not(.city-select, .location-select, .multiple)').each(function () {
@@ -983,7 +1043,7 @@ $(function () {
 			var typeName, modelName, text;
 			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
 			modelName = $(this).text();
-			text = typeName + "-" + modelName;
+			text = typeName + " - " + modelName;
 			$(this).closest(".types-nav").find(".select").text(text);
 		}
 
@@ -1229,6 +1289,7 @@ $(function () {
 			dataType: "json",
 			data: $.param(data)
 		}).done(function (data) {
+			console.log(data);
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
@@ -1302,9 +1363,9 @@ $(function () {
 	});
 
 	//remove aside ads
-	$("aside.banners").on("click", ".close", function () {
-		$(this).parents(".banner").fadeOut();
-	});
+	//	$("aside.banners").on("click", ".close", function () {
+	//		$(this).parents(".banner").fadeOut();
+	//	});
 
 	//display rating in card modal
 	var userRateValue = 2;
@@ -1463,7 +1524,9 @@ $(function () {
 			educationArr = [],
 			educationNameArr = "",
 			manufactureDateArr = [],
-			manufactureDateNameArr = "";
+			manufactureDateNameArr = "",
+			engineCapacityArr = [],
+			engineCapacityNameArr = "";
 		data = $(this).serializeArray();
 
 		if ($('#filter-modal .manufacture-date-select option:selected').length > 0) {
@@ -1478,9 +1541,27 @@ $(function () {
 			data.push({
 				name: "manufacture_date",
 				value: manufactureDateArr
-			}, {
+			}, { //to be written in bookmark search
 				name: "years_name",
 				value: manufactureDateNameArr
+			});
+		}
+
+		if ($('#filter-modal .engine-capacity-select option:selected').length > 0) {
+			$('#filter-modal .engine-capacity-select option:selected').each(function (i) {
+				engineCapacityArr.push($(this).val());
+				engineCapacityNameArr += $(this).text() + ', ';
+				$('#filter-modal .engine-capacity-select')[0].sumo.unSelectItem(i);
+			});
+			engineCapacityArr = JSON.stringify(engineCapacityArr);
+			engineCapacityNameArr = engineCapacityNameArr.slice(0, -2);
+
+			data.push({
+				name: "engine_capacity",
+				value: engineCapacityArr
+			}, { //to be written in bookmark search
+				name: "capacity_name",
+				value: engineCapacityNameArr
 			});
 		}
 
@@ -1537,6 +1618,7 @@ $(function () {
 
 		var templateId = $("#filter-form input.template-id").val();
 
+		//push values as strings for bookmark
 		if ($('#filter-modal .template[data-template-id="' + templateId + '"] .status-select option:selected').val() !== "") {
 			data.push({
 				name: "state_name",
@@ -1575,6 +1657,13 @@ $(function () {
 				value: $('#filter-modal .automatic-select option:selected').text()
 			});
 		}
+		
+		if ($('#filter-modal .gender-select option:selected').val() !== "") {
+			data.push({
+				name: "gender_name",
+				value: $('#filter-modal .gender-select option:selected').text()
+			});
+		}
 
 		query = $(this).find('input.search').val();
 		if (query !== "") {
@@ -1584,6 +1673,7 @@ $(function () {
 			});
 		}
 
+		console.log(data);
 		data1 = $.param(data);
 
 		sessionStorage.removeItem('bookmark');
@@ -1666,7 +1756,7 @@ $(function () {
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
-//								notSeenMsgs = 0;
+				//								notSeenMsgs = 0;
 				newNotSeenMsgs = 0;
 				var newMsgSessions = [];
 				for (i in data.data) {
@@ -1683,24 +1773,24 @@ $(function () {
 				}
 				if (newNotSeenMsgs > 0) {
 					$(".header-account-logged .new-msg").removeClass("d-none");
-					
+
 				} else {
 					$(".header-account-logged .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
 				if ($(".profile-page").length > 0) {
-						$(".profile-page .sessions .session").each(function () {
-							$(this).removeAttr("style");
-							$(this).find(".new-msg").addClass("d-none");
-							for (i in newMsgSessions) {
-								if ($(this).data("sessionId") == newMsgSessions[i]) {
-									$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
-									$(this).find(".new-msg").removeClass("d-none");
-//									$.playSound(sound_notify_path);
-								}
+					$(".profile-page .sessions .session").each(function () {
+						$(this).removeAttr("style");
+						$(this).find(".new-msg").addClass("d-none");
+						for (i in newMsgSessions) {
+							if ($(this).data("sessionId") == newMsgSessions[i]) {
+								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
+								$(this).find(".new-msg").removeClass("d-none");
+								//									$.playSound(sound_notify_path);
 							}
-						});
-					}
+						}
+					});
+				}
 				notSeenMsgs = newNotSeenMsgs;
 				notSeenInterval = setTimeout(checkNewMsgs, 3000);
 			}

@@ -11,7 +11,6 @@
 		var lang = "<?php echo $this->session->userdata('language') ?>";
 		var logged = "<?php echo $this->session->userdata('PHP_AUTH_USER')?>";
 		var user_id = "<?php echo $this->session->userdata('LOGIN_USER_ID') ?>";
-		
 		var hiddenFields = [];
 		var uploadobjEditMain, uploadobjEditOther, uploadobjEditVideo;
 	</script>

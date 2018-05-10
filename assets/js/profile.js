@@ -112,9 +112,17 @@ $(function () {
 						}
 					});
 				});
+//				$("#ads-filter-select")[0].sumo.reload();
+				var mixer2 = mixitup('#user-ads .main',{selectors: {
+    
+    control: '[data-mixitup-control]'
+  }});
 			}
 		});
 
+		$("#user-ads .filter-dropdown .filter-item").click(function(){
+			$(this).closest(".dropdown-menu").siblings(".dropdown-toggle").text($(this).text());
+		});
 		//get my fav ads
 		$.ajax({
 			type: "get",
@@ -160,7 +168,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_info',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {} else {
+			if (data.status === false) {} else {console.log(data);
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
@@ -183,16 +191,16 @@ $(function () {
 				$("#edit-user-info-form input[name='name']").val(data.data.name);
 				$("#edit-user-info-form input[name='location_id']").val(data.data.city_id);
 				$("#edit-user-info-form .city-select").val(data.data.city_id);
-				$("#edit-user-info-form .gender-select").val(data.data.gender);
+				$("#edit-user-info-form .gender-select").val(data.data.user_gender);
 				$("#edit-user-info-form input[name='email']").val(data.data.email);
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
 				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
 				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
-				if (data.data.visible_phone === "1") {
-					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
-				}
+												
+//				if (data.data.visible_phone === "1") {
+//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
+//				}
 
-				//personal image
 			}
 		});
 
@@ -263,7 +271,7 @@ $(function () {
 				return false;
 			}
 			newData = $(this).serializeArray();
-
+console.log(newData);
 			e.preventDefault();
 			e.stopPropagation();
 			data = $(this).serializeArray();
@@ -520,7 +528,7 @@ $(function () {
 					ad_id: adId,
 					template_id: templateId
 				}
-			}).done(function (data) {
+			}).done(function (data) {console.log(data);
 				if (data.status === false) {} else {
 					//remove upload video except for properties category
 					if (templateId === 2) {
@@ -561,6 +569,7 @@ $(function () {
 					if (data.data.is_negotiable === "1") {
 						$("#edit-ad-modal input[name='is_negotiable']").prop("checked", true);
 					}
+					
 					$("#edit-ad-modal textarea[name='description']").val(data.data.description);
 
 					if (data.data.type_id) {
@@ -576,6 +585,12 @@ $(function () {
 					}
 					if (data.data.kilometer) {
 						$("#edit-ad-modal input[name='kilometer']").val(data.data.kilometer);
+					}
+					if (data.data.engine_capacity) {
+						$("#edit-ad-modal select[name='engine_capacity']").val(data.data.engine_capacity);
+						$("#edit-ad-modal select[name='engine_capacity']")[0].sumo.reload();
+					}else{ 
+						$("#edit-ad-modal select[name='engine_capacity']")[0].sumo.unSelectAll();
 					}
 					if (data.data.is_automatic) {
 						$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_automatic']").val(data.data.is_automatic);
@@ -598,6 +613,9 @@ $(function () {
 					if (data.data.floor) {
 						$("#edit-ad-modal input[name='floor']").val(data.data.floor);
 					}
+					if (data.data.floors_number) {
+						$("#edit-ad-modal input[name='floors_number']").val(data.data.floors_number);
+					}
 					if (data.data.state) {
 						$("#edit-ad-modal input[name='state']").val(data.data.state);
 					}
@@ -609,19 +627,29 @@ $(function () {
 					}
 					if (data.data.schedule_id) {
 						$("#edit-ad-modal select[name='schedule_id']").val(data.data.schedule_id);
-						$("#edit-ad-modal .schedule_id")[0].sumo.reload();
+						$("#edit-ad-modal select[name='schedule_id']")[0].sumo.reload();
 					}
 					if (data.data.education_id) {
 						$("#edit-ad-modal select[name='education_id']").val(data.data.education_id);
-						$("#edit-ad-modal .education_id")[0].sumo.reload();
+						$("#edit-ad-modal select[name='education_id']")[0].sumo.reload();
 					}
 					if (data.data.experience) {
 						$("#edit-ad-modal input[name='experience']").val(data.data.experience);
+					}
+					if (data.data.gender) {
+						$("#edit-ad-modal select[name='gender']").val(data.data.gender);
+						$("#edit-ad-modal select[name='gender']")[0].sumo.reload();
+					}else{
+						$("#edit-ad-modal select[name='gender']")[0].sumo.unSelectAll();
 					}
 					if (data.data.salary) {
 						$("#edit-ad-modal input[name='salary']").val(data.data.salary);
 					}
 
+					if (data.data.ad_visible_phone === "1") {
+						$("#edit-ad-modal input[name='ad_visible_phone']").prop("checked", true);
+					}
+					
 					editAdImgs = [];
 					for (i in data.data.images) {
 						editAdImgs.push(data.data.images[i].image);

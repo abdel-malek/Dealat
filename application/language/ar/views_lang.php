@@ -60,7 +60,7 @@ $lang['month'] = "شهر";
 //filter modal
 $lang['old'] = "قديم";
 $lang['select_status'] = "اختر الحالة";
-$lang['select_motion'] = "اختر الحركة";
+$lang['select_motion'] = "اختر ناقل الحركة";
 $lang['manual'] = "يدوي";
 //register/login modal
 $lang['username'] = "اسم المستخدم";
@@ -113,7 +113,7 @@ $lang['all'] = "الكل";
 $lang['sp'] = "ل.س";
 $lang['from']  = "من";
 $lang['to']  = "إلى";
-$lang['ok']  = "حسناً";
+$lang['ok']  = "موافق";
 $lang['save_search']  = "حفظ البحث";
 
 
@@ -159,7 +159,7 @@ $lang['space'] = 'مساحة العقار';
 $lang['rooms_num'] = 'عدد الغرف';
 $lang['floor'] = 'رقم الطابق';
 $lang['floors_number'] = 'عدد الطوابق';
-$lang['state'] = 'حالة العقار';
+$lang['state'] = 'نوع الكسوة';
 $lang['with_furniture'] = 'مع أثاث';
 $lang['size'] = 'الحجم';
 $lang['education'] = 'المستوى التعليمي';
@@ -339,3 +339,9 @@ $lang['video'] = 'فيديو';
 $lang['main_image'] = 'الصورة الأساسية';
 $lang['other_images'] = 'صور إضافية';
 $lang['img_upload_note'] = 'يمكنك رفع 8 صور';
+$lang['ad_visible_phone'] = 'إظهار رقم الهاتف';
+$lang['ad_visible_phone_note'] = 'سيظهر رقم هاتفك مع تفاصيل هذا الإعلان';
+$lang['accepted'] = 'موافق عليه';
+$lang['pending'] = 'قيد الانتظار';
+$lang['rejected'] = 'مرفوض';
+$lang['expired'] = 'منتهي';

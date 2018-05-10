@@ -136,7 +136,6 @@
 	<script id="ad-details-template" type="text/template">
 		<div class="card" data-ad-id="{{ad.ad_id}}" data-category-id="{{ad.category_id}}">
 			<input type="hidden" class="seller-phone">
-			<input type="hidden" class="seller-whatsapp">
 			<div class="card-img-slider slick-slider">
 			{{#ad.main_video}}
 				<div class="card-img-top"><video height="200" controls>
@@ -198,8 +197,6 @@
 						<details>
 							<summary><span class="mb-1 mt-2 show-contact"><?php echo $this->lang->line('contact_info'); ?></span></summary>
 							<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href=""></a></span></div>
-							{{#ad.whatsup_number}}
-							<div class="whatsapp"><span class="whatsapp-lbl"><i class="fab fa-whatsapp fa-fw"></i> </span><span class="whatsapp-val"><a href=""></a></span></div>{{/ad.whatsup_number}}
 						</details>
 					</div>
 
@@ -219,6 +216,7 @@
 							<div class="is_new field"><span class="is_new-lbl"></span>
 								<?php echo $this->lang->line('item_status'); ?>:<span class="is_new-val"> {{status}}</span></div>
 							<div class="kilometer field"><span class="kilometer-lbl"><?php echo $this->lang->line('kilometrage'); ?>:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
+							<div class="engine_capacity field"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>:</span><span class="engine_capacity-val"> {{ad.engine_capacity}}</span></div>
 						</div>
 
 						<!--properties template-->
@@ -226,6 +224,7 @@
 							<div class="space field"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>:</span><span class="space-val"> {{ad.space}}</span></div>
 							<div class="rooms_num field"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
 							<div class="floor field"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
+							<div class="floors_number field"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>:</span><span class="floors_number-val"> {{ad.floors_number}}</span></div>
 							<div class="state field"><span class="state-lbl"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
 							<div class="with_furniture field"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
 						</div>
@@ -267,7 +266,10 @@
 						<div class="template-job template d-none" data-template-id="8">
 							<div class="schedule field schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val"> {{ad.schedule}}</span></div>
 							<div class="education field education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>:</span><span class="education-val"> {{ad.education}}</span></div>
+							<div class="certificate field certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>:</span><span class="certificate-val"> {{ad.certificate}}</span></div>
+							<div class="certificate field certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>:</span><span class="certificate-val"> {{ad.certificate}}</span></div>
 							<div class="experience field experience"><span class="experience-lbl"><?php echo $this->lang->line('experience'); ?>:</span><span class="experience-val"> {{ad.experience}}</span></div>
+							<div class="gender field"><span class="gender-lbl"><?php echo $this->lang->line('gender'); ?>:</span><span class="gender-val"> {{ad.gender}}</span></div>
 							<div class="salary field"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>:</span><span class="salary-val"> {{ad.salary}}</span></div>
 						</div>
 
@@ -363,8 +365,7 @@
 								</div>
 
 								<div class="form-group">
-									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
-<!--							<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('gender'); ?></option>-->
+									<select name="user_gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
 										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>
 										<option value="1"><?php echo $this->lang->line('male'); ?></option>
@@ -498,22 +499,18 @@
 
 							<div class="form-group">
 								<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>-->
-							<option disabled selected value="" class="d-none">
+									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
 
 							<div class="form-group">
-<!--								<select name="location_id" class="location-select" placeholder="<?php echo $this->lang->line('select_location'); ?>">-->
 								<select name="location_id" class="location-select">
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
-<!--									<option disabled selected value="" class="d-none">-->
 								</select>
 							</div>
 
 							<div class="form-group">
 								<select name="show_period" class="period-select" required placeholder="<?php echo $this->lang->line('show_period'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
@@ -565,13 +562,20 @@
 								<div class="form-group field manufacture_date">
 									<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 								</div>
+								
+								
 								<div class="form-group field kilometer">
 									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 								</div>
 
+								<div class="form-group field engine_capacity">
+									<select name="engine_capacity" class="engine-capacity-select" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
+									<option disabled selected value="" class="d-none">
+									</select>
+								</div>
+								
 								<div class="form-group field is_automatic">
 									<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 										<option value="1"><?php echo $this->lang->line('automatic'); ?></option>
 										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
@@ -580,7 +584,6 @@
 
 								<div class="form-group field is_new">
 									<select name="is_new" class="status-select" placeholder="<?php echo $this->lang->line('select_status'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 										<option value="1"><?php echo $this->lang->line('new'); ?></option>
 										<option value="0"><?php echo $this->lang->line('old'); ?></option>
@@ -600,6 +603,10 @@
 
 								<div class="form-group field floor">
 									<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
+								</div>
+								
+								<div class="form-group field floors_number">
+									<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 								</div>
 
 								<div class="form-group field state">
@@ -675,14 +682,18 @@
 							<div class="template-job template d-none" data-template-id="8">
 								<div class="form-group field schedule_name">
 									<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('schedule'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
 
 								<div class="form-group field education_name">
 									<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('education'); ?></option>-->
+										<option disabled selected value="" class="d-none">
+									</select>
+								</div>
+								
+								<div class="form-group field certificate_name">
+									<select name="certificate_id" class="certificate-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
@@ -691,6 +702,14 @@
 									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
 								</div>
 
+							<div class="form-group field gender">
+									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
+										<option disabled selected value="" class="d-none">
+<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
+										<option value="1"><?php echo $this->lang->line('male'); ?></option>
+										<option value="2"><?php echo $this->lang->line('female'); ?></option>
+									</select>
+								</div>
 								<div class="form-group field salary">
 									<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
@@ -718,6 +737,15 @@
 							<div id="fileuploader-ad">Upload</div>
 							
 							<div id="fileuploader-ad-video" class="d-none">Upload</div>
+							
+							<div class="">
+								<label class="">
+									<input type='hidden' value='0' name='ad_visible_phone'>
+									<input type="checkbox" name="ad_visible_phone" value="1"><span class=""> <?php echo $this->lang->line('ad_visible_phone'); ?> <?php echo $this->session->userdata('PHP_AUTH_USER')?></span>
+									<div class="visible-phone-note"><?php echo $this->lang->line('ad_visible_phone_note'); ?></div>
+								</label>
+							</div>
+							
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
 								<div class="warning d-none text-warning featured-note"> <?php echo $this->lang->line('featured_cost'); ?></div>
@@ -851,8 +879,7 @@
 
 								<div class="form-group field manufacture_date">
 									<select multiple name="" class="manufacture-date-select multiple" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>">
-							</select>
-
+									</select>
 								</div>
 								<div class="form-group field kilometer">
 									<label for=""><?php echo $this->lang->line('kilometers'); ?>:</label>
@@ -865,6 +892,12 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="form-group field engine_capacity">
+									<select multiple name="" class="engine-capacity-select multiple" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
+									</select>
+								</div>
+								
 								<div class="form-group field is_automatic">
 									<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -916,6 +949,18 @@
 										</div>
 										<div class="col-sm-6">
 											<input type="number" class="form-control" name="floor_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group field floors_number">
+									<label for=""><?php echo $this->lang->line('floors_number'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="floors_number_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="floors_number_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
 										</div>
 									</div>
 								</div>
@@ -1010,6 +1055,21 @@
 							</select>
 								</div>
 
+						<div class="form-group field certificate_name">
+									<select multiple name="" class="certificate-select multiple" placeholder="<?php echo $this->lang->line('certificate'); ?>">
+									</select>
+								</div>
+								
+							<div class="form-group field gender">
+									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
+										<option disabled selected value="" class="d-none">
+<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
+									<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value="1"><?php echo $this->lang->line('male'); ?></option>
+										<option value="2"><?php echo $this->lang->line('female'); ?></option>
+									</select>
+								</div>
+								
 								<div class="form-group field salary">
 									<label for=""><?php echo $this->lang->line('salary'); ?>:</label>
 									<div class="row">
@@ -1249,9 +1309,6 @@
 <script id="side-commercial-ads-template" type="text/template">
 	{{#.}}
 	<div class="banner">
-		<button type="button" class="close">
-			  <span>&times;</span>
-			</button>
 		<a href="{{ad_url}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}}" title="{{title}}"></a>
 	</div>
 	{{/.}}

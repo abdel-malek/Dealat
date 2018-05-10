@@ -1971,8 +1971,49 @@ label {
 	font-size: .8rem;
 }
 
-.img-upload-note {
+.img-upload-note,
+.visible-phone-note {
 	font-size: .65rem;
 	color: #888;
 	margin: 0 5px 7px 5px;
 }
+
+#user-ads .filter-dropdown {
+	text-align: right;
+	margin-right: 10%;
+	button.dropdown-toggle {
+		background-color: #fff;
+		border-radius: 13px;
+		border-color: #ced4da;
+		color: #333;
+		font-weight: normal;
+		font-size: .9rem
+	}
+	button.dropdown-toggle:hover {
+		border-color: $main
+	}
+	.dropdown-menu {
+		padding: 5px 0;
+		margin: 0.2rem 0 0;
+		min-width: 160px;
+	}
+	.dropdown-menu li {
+		text-decoration: none;
+		color: #333;
+		padding-left: 10px;
+		font-size: .85rem;
+		display: block;
+		cursor: pointer
+	}
+	.dropdown-menu li:hover {
+		color: $main;
+		background-color: #eee;
+		
+	}
+}
+@media(min-width:768px){
+	#user-ads .filter-dropdown {
+		margin-right: 8%
+	}
+}
+
