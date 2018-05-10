@@ -66,6 +66,18 @@ class Categories_manage extends REST_Controller {
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
 	}
+
+   public function delete_cat_post()
+   {
+       	$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
+		if (!$this -> form_validation -> run()) {
+			throw new Validation_Exception(validation_errors());
+		} else {
+			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
+			$this->categories->delete_cats($child_ids);
+			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+		}
+   }
 	
 	
 	public function edit_post()

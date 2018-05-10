@@ -121,6 +121,9 @@
        	// lang_array['category_deactivated'] = 'Category and ';
        	 lang_array['reject_note'] = 'Reject Note';
        	 lang_array['export_to_excel'] = 'Export to Excel';
+       	 lang_array['not_set'] = 'Not set';
+       	 lang_array['admin_saved'] = 'Admin is saved';
+       	 lang_array['admin_saved'] = 'Admin is deleted';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -157,13 +160,16 @@
        	 lang_array['education_saved'] = 'تم حفظ المستوى التعليمي ';
        	 lang_array['education_deleted'] = 'تم حذف المستوى التعليمي ';
        	 lang_array['user_status_changed'] = 'تم تغيير حالة فعالية المستخدم';
-          lang_array['city_saved'] = 'تم حفظ المحافظة' ;
+         lang_array['city_saved'] = 'تم حفظ المحافظة' ;
        	 lang_array['city_deleted'] = 'تم حذف المحافظة' ;
        	 lang_array['location_saved'] = 'تم حفظ المنطقة' ;
        	 lang_array['location_deleted'] = 'تم حذف المنطقة'
        	 lang_array['notification_sent'] = 'تم إرسال الإشعار بنجاح'
        	 lang_array['reject_note'] = 'سبب الرفض';
        	 lang_array['export_to_excel'] = 'إصدار إلى إكسل';
+       	 lang_array['not_set'] = 'غير محدد';
+       	 lang_array['admin_saved'] = 'تم حفظ المدير';
+       	 lang_array['admin_saved'] = 'تم حذف المدير';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -193,6 +199,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/cities.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/notifications.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/about.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/admins.js"></script>
    
   </body>
 </html>

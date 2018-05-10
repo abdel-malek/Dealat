@@ -56,4 +56,37 @@ class Chat_sessions extends MY_Model {
 		$this->db->join('users as s' , 's.user_id = chat_sessions.seller_id' , 'left');
         return parent::get($id , true); 
     }
+
+	
+	public function get_ad_chats_ids($ad_id)
+	{
+		$q = parent::get_by(array('ad_id'=> $ad_id));
+		$result_array = array();
+		foreach ($q as $row) {
+			$result_array[$row->chat_session_id] = $row->chat_session_id;
+ 		}
+		return $result_array;
+	}
+	
+	public function delete_by_ad($ad_id)
+	{
+		//delete messages
+		$chats_ids = $this->get_ad_chats_ids($ad_id);
+		if($chats_ids != null){
+			$this->db->where_in('chat_session_id' , $chats_ids);
+			$deleted_messages = $this->db->delete('messages');
+			$deleted_chats = null;
+			if($deleted_messages){
+				 $this->db->where_in('chat_session_id' , $chats_ids);
+				 $deleted_chats = $this->db->delete('chat_sessions');
+			}
+			if($deleted_messages && $deleted_chats){
+				return true; 
+			}else{
+				return false;
+			}
+		}else{
+		  return true;
+		}
+	}
 }

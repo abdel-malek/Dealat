@@ -205,6 +205,7 @@ class Items_control extends REST_Controller {
 		 $this->load->model('data_sources/schedules');
 		 $this->load->model('data_sources/locations');
 		 $this->load->model('data_sources/show_periods');
+		 $this->load->model('data_sources/certificates');
 		 $locations = $this->locations->get_all($this->data['lang']);
 		 //$cities = $this->locations->get_cities($this->data['lang']);
 		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
@@ -212,7 +213,8 @@ class Items_control extends REST_Controller {
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
 		 $show_periods = $this->show_periods->get_all($this->data['lang']);
-		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods);
+		 $certificates = $this->certificates->get_all($this->data['lang']);
+		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
@@ -276,8 +278,14 @@ class Items_control extends REST_Controller {
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
 			    //$this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_shown') , $ad_info , $this->lang->line('shown_title')  , NotificationHelper::ACTION);
 			    $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::SHOW_MSG);
+		    }else if($action == 'delete'){
+		    	$template_id = $this->input->post('template_id');
+				$result = $this->ads->delete_an_ad($ad_id , $template_id);
+				if(!$result){
+					 throw new Parent_Exception('wrong'); 	 
+				}
 			}else{
-			   throw Parent_Exception('No Such action'); 	
+			   throw new Parent_Exception('No Such action'); 	
 			}
 		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}

@@ -274,6 +274,7 @@
           <div class="pull-left">
           	 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
           </div>
+          <button template_id id="delete_ad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target=".ad-delete-modal"><span class="fa fa-trash"></span></button>
           <button style="display: none" onclick="perform_action('hide')" id="hide_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('hide_ad') ?></button>
           <button style="display: none" onclick="perform_action('show')" id="show_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('show_ad') ?></button>
           <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
@@ -285,3 +286,23 @@
     </div>
   </div>
   <?php $this->load->view('admin/ads/reject_ad_modal') ?>
+  
+   <!-- confirmation modal   -->
+  <div id="ad-delete-modal" class="modal fade ad-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<?php echo $this->lang->line('confirmation') ?>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h6><?php echo $this->lang->line('delete_ad_confirmation') ?></h6>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn button2 submit" onclick="perform_action('delete')"><?php echo $this->lang->line('yes') ?></button>
+            </div>
+        </div>
+    </div>
+  </div>

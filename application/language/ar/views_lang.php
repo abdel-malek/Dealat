@@ -189,6 +189,7 @@ $lang['published_at'] = 'نُشر بـ';
 $lang['rejects_notes'] = 'سبب الرفض';
 $lang['edit_status'] = 'حالة التعديل';
 $lang['expiry_edit_note'] = 'هذا الإعلان منتهي الصلاحية ومعدّل, اذا تم قبوله فسوف يعاد نشره بالمعلومات الحالية';
+$lang['delete_ad_confirmation'] = 'حذف الإعلان سيؤدي إلى حذف كل ما يتعلق به متضمنة التشات والتفضيلات، هل أنت متأكد من أنك تريد المتابعة؟';
 
 //commercial ads manage 
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
@@ -230,6 +231,10 @@ $lang['ad_title'] = 'عنوان الإعلان';
 $lang['chats_list'] = 'قائمة الدردشات';
 $lang['text'] = 'الرسالة'; 
 $lang['send_date'] = 'تاريخ الإرسال';
+$lang['whatsup_number'] = 'رقم الواتس اب ';
+$lang['birthday'] = 'تاريخ الميلاد';
+$lang['user_image']=  'الصورة الشخصيةٍ';
+$lang['user_details']=  'تفاصيل المستخدم';
 
 //categories manages
 $lang['category_name'] = "اسم الصنف";
@@ -243,6 +248,9 @@ $lang['arabic_name'] = "الاسم العربي";
 $lang['english_name'] = "الاسم الانجليزي ";
 $lang['templates'] = 'القالب';
 $lang['fields_status'] = 'حالة الحقول';
+$lang['sort_main_category'] = 'ترتيب الأصناف الرئيسية';
+$lang['sort'] = 'ترتيب';
+$lang['delete_cat_confirmation']= ' هذا سيؤدي إلى حذف هذا الصنف مع جميع أبناءه، هل أنت متأكد من أنك تريد المتابعة؟';
 
 //types manage
 $lang['types'] = 'الماركات';
@@ -289,6 +297,7 @@ $lang['select_usres_city'] = 'اختر مدينة المستخدمين';
 $lang['send_notification'] = 'إرسال الإشعار';
 $lang['notification_confirmation'] = 'هل أنت متأكد من أنك تريد إرسال هذا الإشعار العام؟ ';
 $lang['confirmation'] = 'تأكيد';
+$lang['sender_name'] = 'اسم المرسل';
 
 //about manage
 $lang['set_about_info'] = 'ضبط معلومات من نحن';
@@ -301,6 +310,9 @@ $lang['linkedin_link'] = 'رابط لينكدان';
 $lang['instagram_link'] = 'رابط انستغرام';
 $lang['terms_ar'] = 'شروط استخدام ديلات بالعربي';
 $lang['terms_en'] = 'شروط استخدام ديلات بالانجليزي';
+
+//admin manage
+$lamg['admin_name'] = 'اسم المدير';
 
 // login
 $lang['login_form'] = 'تسجيل الدخول';

@@ -1,54 +1,6 @@
  //var sub_sub_cats_tabel;
  var has_child; 
  $(document).ready(function() {
-   // var sub_sub_cats_TableButtons = function() {
-           // sub_sub_cats_tabel = $(".sub_sub_cats_table").DataTable({
-             // "oLanguage": {
-				  	// "sProcessing":   lang_array['sProcessing'],
-					// "sLengthMenu":   lang_array['sLengthMenu'],
-					// "sZeroRecords":  lang_array['sZeroRecords'],
-					// "sInfo":         lang_array['sInfo'],
-					// "sInfoEmpty":    lang_array['sInfoEmpty'],
-					// "sInfoFiltered": lang_array['sInfoFiltered'],
-					// "sInfoPostFix":  "",
-					// "sSearch":       lang_array['sSearch'],
-					// "sUrl":          "",
-					// "oPaginate": {
-						// "sFirst":    lang_array['sFirst'],
-						// "sPrevious": lang_array['sPrevious'],
-						// "sNext":     lang_array['sNext'],
-						// "sLast":     lang_array['sLast']
-				   // }
-			 // },
-             // "bServerSide": false,
-             // aaSorting : [[0, 'desc']],
-             // "sAjaxSource": base_url + '/admin/categories_manage/get_sub_cats/format/json?category_id='+ 25,
-             // "columnDefs": [
-                 // {
-                    // "targets": -1, // details
-                    // "data": null,
-                    // "mRender": function(date, type, full) {
-                       // return '<button id="" onclick="show_edit_cat_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
-		            // }
-		         // },
-	          // ],
-              // dom: "Bfrtip",
-              // buttons: [
-              // ],
-              // initComplete: function(nRow, settings, json){
-	          	 // activated_number =0;
-	           // },
-            // });
-        // };
-        // sub_sub_cats_TableManageButtons = function() {
-          // "use strict";
-          // return {
-            // init: function() {
-              // sub_sub_cats_TableButtons();
-            // }
-          // };
-        // }();
-       // sub_sub_cats_TableManageButtons.init();
     
    $('#cat_tamplate').change(function(event) {
        var template_id = $(this).val();
@@ -99,16 +51,18 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         dataType: "json",
         success: function(response) {
         	cat_info = response.data;
-            // check the deactivation ability
+            // check the deactivation or deletion ability
         	var has_ads = check_ad_exsistence(cat_info['category_id']);
-        	console.log('check : '+ has_ads);
+        	//console.log('check : '+ has_ads);
         	if(has_ads == 0){
         		// check wich btn to show the deactivate or the activate. 
         		if(cat_info['is_active'] == 0){
         			$('#activate_category_btn').css('display', 'inline');
         		}else{
-        			$('#delete_category_btn').css('display', 'inline');
+        			$('#delete_category_btn').css('background-color','#bdc3c7');
+        			$('#delete_category_btn').css('display', 'inline');// deactivate btn
         		}
+        		$('#final_delete_category_btn').css('display', 'inline');//delete btn
         	}
         	
             $('#cat_arabic_name').val(cat_info['ar_name']);
@@ -179,7 +133,8 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
 	  $('.template_info_cat').css('display' , 'none');
 	  $('.hide_check_box').prop('checked' , true); 
 	  $('#activate_category_btn').css('display', 'none');
-	  $('#deleted_category_btn').css('display', 'none');
+	  $('#delete_category_btn').css('display', 'none');
+	  $('#final_delete_category_btn').css('display', 'none');
  });
 
  
@@ -269,7 +224,7 @@ function save_category(){
 }
 
 
-function delete_cat () {
+function deactivate_cat () {
   var id = $('#cat_id_input').val();
    data = {'category_id' : id};
     $.ajax({
@@ -365,6 +320,54 @@ function activate_cat () {
         }
      });
 }
+
+function delete_cat () {
+  var id = $('#cat_id_input').val();
+   data = {'category_id' : id};
+    $.ajax({
+        url:  base_url + '/admin/categories_manage/delete_cat/format/json',
+        type: "post",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+            if(response.status == false){
+           	  new PNotify({
+	                  title: lang_array['attention'],
+	                  text: response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+            }else{
+                new PNotify({
+                  title:  lang_array['success'],
+                  //text: lang_array['category_deactivated'],
+                  text: '',
+                  type: 'success',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				 }
+               });
+			    window.location.reload();
+             }
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+             });
+        }
+     });
+}
+
+
 
 function check_child_exsistence (cat_id) {
     return $.ajax({

@@ -60,4 +60,5 @@ class Notification extends MY_Model {
 	
 	
 	
+	
 }

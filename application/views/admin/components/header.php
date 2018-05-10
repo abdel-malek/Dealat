@@ -105,43 +105,58 @@
               <div class="menu_section">
                 <h3><?php echo $this->lang->line('management') ?></h3>
  				 <ul class="nav side-menu">
- 				 	
- 				  <!-- ads manage -->
-                  <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('ads_management') ?></a></li>
-                  
+ 				  
+ 				 <!-- ads manage -->
+ 				  <?php if(PERMISSION::Check_permission(PERMISSION::ADS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('ads_management') ?></a></li>
+                  <?php endif; ?>  
                   <!-- reported ads manage -->
-                  <li><a href="<?php echo base_url('index.php/admin/items_manage/load_reported_items_page'); ?>"><i class="fa fa-ban"></i><?php echo $this->lang->line('reported_ads_management') ?></a></li>
+                  <?php if(PERMISSION::Check_permission(PERMISSION::REPORTS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/items_manage/load_reported_items_page'); ?>"><i class="fa fa-ban"></i><?php echo $this->lang->line('reported_ads_management') ?></a></li>
+                  <?php endif; ?> 
                   
                   <!-- user manage  -->
-                  <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
+                  <?php if(PERMISSION::Check_permission(PERMISSION::USERS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                    <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
+                  <?php endif; ?>  
                   
                   <!-- commercial ads -->
-                  <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('commercial_ads_manage') ?><span class="fa fa-chevron-down"></a>
-                 	 <ul id="" class="nav child_menu">
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage/load_main_manage_page'); ?>"><?php echo $this->lang->line('main_ads') ?></a></li>
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><?php echo $this->lang->line('others') ?></a></li>
-                 	 </ul>
-                  </li>
+                  <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+	                  <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('commercial_ads_manage') ?><span class="fa fa-chevron-down"></a>
+	                 	 <ul id="" class="nav child_menu">
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage/load_main_manage_page'); ?>"><?php echo $this->lang->line('main_ads') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><?php echo $this->lang->line('others') ?></a></li>
+	                 	 </ul>
+	                  </li>
+	              <?php endif; ?>  
                   
                   <!-- categories manage -->
-                  <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-tags"></i><?php echo $this->lang->line('categories_management') ?></a></li>
-                  
+                  <?php if(PERMISSION::Check_permission(PERMISSION::CATEGORIES_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/categories_manage'); ?>"><i class="fa fa-tags"></i><?php echo $this->lang->line('categories_management') ?></a></li>
+                  <?php endif; ?>  
                   <!-- data manage -->
-                  <li><a><i class="fa fa-database"></i><?php echo ' ' ?><?php echo $this->lang->line('data_manage') ?><span class="fa fa-chevron-down"></a>
-                 	 <ul id="" class="nav child_menu">
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_educations_page'); ?>"><?php echo $this->lang->line('educations') ?></a></li>
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_schedules_page'); ?>"><?php echo $this->lang->line('schedules') ?></a></li>
-                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_cities_page'); ?>"><?php echo $this->lang->line('cities_and_areas') ?></a></li>
-                 	 </ul>
-                  </li>
-                  
+                   <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+	                  <li><a><i class="fa fa-database"></i><?php echo ' ' ?><?php echo $this->lang->line('data_manage') ?><span class="fa fa-chevron-down"></a>
+	                 	 <ul id="" class="nav child_menu">
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_educations_page'); ?>"><?php echo $this->lang->line('educations') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_schedules_page'); ?>"><?php echo $this->lang->line('schedules') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_cities_page'); ?>"><?php echo $this->lang->line('cities_and_areas') ?></a></li>
+	                 	 </ul>
+	                  </li>
+                   <?php endif; ?>
                   <!-- notification -->
-                  <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-bell"></i><?php echo $this->lang->line('notifications') ?></a></li>
-                  
+                  <?php if(PERMISSION::Check_permission(PERMISSION::NOTIFICATION_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                    <li><a href="<?php echo base_url('index.php/admin/users_manage/load_notification_page'); ?>"><i class="fa fa-bell"></i><?php echo $this->lang->line('notifications') ?></a></li>
+                  <?php endif; ?>
+                  <!-- admins manage -->
+                  <?php if(PERMISSION::Check_permission(PERMISSION::ADMINS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/users_manage/load_admins_page'); ?>"><i class="fa fa-users"></i><?php echo $this->lang->line('admins_manage') ?></a></li>
+                  <?php endif; ?>
                    <!-- about us -->
-                  <li><a href="<?php echo base_url('index.php/admin/data_manage/load_about_manage'); ?>"><i class="fa fa-folder-open"></i><?php echo $this->lang->line('about_us_manage') ?></a></li>
-        
+                  <?php if(PERMISSION::Check_permission(PERMISSION::ABOUT_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/data_manage/load_about_manage'); ?>"><i class="fa fa-folder-open"></i><?php echo $this->lang->line('about_us_manage') ?></a></li>
+                  <?php endif; ?>
                 </ul>
               </div>
             </div>

@@ -12,57 +12,57 @@
                    <div class="form-group" id='created_div'>
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('username') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	           <label class="form-control"  id='user_name'>=/label>
+	      	           <label class="form-control"  id='user_name'></label>
 	      	         </div>
 	               </div> 
 	               
 	               <div class="form-group" id='created_div'>
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	           <label class="form-control"  id='user_city'>=/label>
+	      	           <label class="form-control"  id='user_city'></label>
 	      	         </div>
 	               </div> 
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('phone') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	           <input type='text' class="form-control"  id='user_phone' value></input>
+	      	           <label class="form-control"  id='user_phone' value></label>
 	      	         </div>
 	               </div> 
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('whatsup_number') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_whatsup_number" value></textarea>
+	      	            <label class="form-control"  id='user_whatsup_number' value></label>
 	      	         </div>
 	               </div> 
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('email') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_email" value></textarea>
+	      	            <label class="form-control"  id='user_email' value></label>
 	      	         </div>
 	               </div> 
 	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('gender') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_gender" value></textarea>
+	      	            <label class="form-control"  id='user_gender' value></label>
 	      	         </div>
 	               </div> 
 	               
 	                <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('birthday') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <textarea  class="form-control col-md-7 col-xs-12" id="user_birthday" value></textarea>
+	      	            <label class="form-control"  id='user_birthday' value></label>
 	      	         </div>
 	               </div>
 	               
 	              
 	               <div class="form-group ">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('user_image') ?></label>
-	      	         <div class="col-md-6 col-sm-6 col-xs-12">
-	      	            <img id='user_image' style="margin: auto; height:100%;  width:100%"  src="" />
+	      	         <div class="col-md-6 col-sm-6 col-xs-12" id='user_image'>
+	      	            <img style="margin: auto; height:100%;  width:100%"  src="" />
 	      	         </div>
 	               </div>
 	               

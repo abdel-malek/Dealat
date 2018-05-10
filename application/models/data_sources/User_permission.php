@@ -18,6 +18,7 @@ class User_permission extends MY_Model {
 		return $result_array;
 	}
 
+	// for mobile
 	public function check_permission($permission, $user_permissions, $user_id) {
 		if ($user_permissions)
 			foreach ($user_permissions as $p)
@@ -27,7 +28,8 @@ class User_permission extends MY_Model {
 		throw new Parent_Exception("Permission denied");
 	}
 
-	public function check_permission_web_frontend($permission, $user_permissions, $user_id) {
+	// for web
+	public function check_permission_CMS($permission, $user_permissions, $user_id) {
 		if ($user_permissions)
 			foreach ($user_permissions as $p)
 				if ($p == $permission) {
@@ -36,8 +38,8 @@ class User_permission extends MY_Model {
 		return false;
 	}
 
-	public function delete_user_permissions($user_id, $permission_id = null) {
-		$this -> db -> where('user_id', $user_id);
+	public function delete_user_permissions($admin_id, $permission_id = null) {
+		$this -> db -> where('user_id', $admin_id);
 		if ($permission_id) {
 			$this -> db -> where('permission_id', $permission_id);
 		}

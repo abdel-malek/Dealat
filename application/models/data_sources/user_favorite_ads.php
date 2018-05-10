@@ -48,6 +48,12 @@ class User_favorite_ads extends MY_Model {
 		    return 0; 
 		}
 	}
+    
+	
+	public function delete_by_ad($ad_id)
+	{
+		
+	}
 	
 }
 

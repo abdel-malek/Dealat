@@ -61,6 +61,29 @@
 	                </div>
 	              </div>
 	            </div>
+	            <div class="row">
+	              <div class="col-md-12 col-sm-12 col-xs-12">
+	                <div class="x_panel">
+	                  <div class="x_content">
+	                    <table id="notification_table" class="table table-striped table-bordered">
+	                      <thead>
+	                        <tr>
+	                          <th>#</th>
+	                          <th><?php echo $this->lang->line('send_date') ?></th>
+	                          <th><?php echo $this->lang->line('sender_name') ?></th>
+	                          <th><?php echo $this->lang->line('city') ?></th>
+	                          <th><?php echo $this->lang->line('notify_title') ?></th>
+	                          <th><?php echo $this->lang->line('notify_text') ?></th>
+	                        </tr>
+	                      </thead>
+	                      <tbody>
+	                     </tbody>
+	                    </table>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+
 	          </div>
 	        </div>
 	       <div id="confirm-modal" class="modal fade confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">

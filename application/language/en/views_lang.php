@@ -115,7 +115,7 @@ $lang['to']  = "to";
 $lang['ok']  = "Ok";
 $lang['save_search']  = "Save search";
 
-//admin
+//admin side menu
 $lang['welcome'] = "Welcome";
 $lang['management'] = "Management";
 $lang['categories_management'] = "Categories Manage";
@@ -130,12 +130,8 @@ $lang['schedules'] = 'Schedules';
 $lang['cities_and_areas'] = 'Cities and Areas';
 $lang['notifications'] = 'Notifications';
 $lang['about_us_manage'] = 'About us Manage';
-$lang['chats'] = 'Chats';
-$lang['messages'] = 'Messages';
-$lang['ad_title'] = 'Ad title';
-$lang['chats_list'] = 'Chats list';
-$lang['text'] = 'Message'; 
-$lang['send_date'] = 'Send Date';
+$lang['admins_manage'] = 'Admins Manage';
+
 
 
 //ads manage
@@ -192,10 +188,11 @@ $lang['expire_at'] = 'Expires at';
 $lang['published_at'] = 'Published at';
 $lang['rejects_notes'] = 'Rejects Note';
 $lang['edit_status'] = 'Edit status';
-$lang['expiry_edit_note'] = 'This Ad is Expired and edited, if you accepted it will be republish';
+$lang['expiry_edit_note'] = 'This Ad is Expired and edited, if you accept it will be republished';
+$lang['delete_ad_confirmation'] = 'Delete this ad will delete all that is related to it, including chats and favorites, Are you sure you want to continue?';
 
 
-// new
+
 //commercial ads manage 
 $lang['commercial_ads_list'] = "Commercial Ads";
 $lang['commercial_ads_by_category'] = "Commercial Ads list by category";
@@ -228,10 +225,16 @@ $lang['email'] = "Email";
 $lang['city'] = "City";
 $lang['user_status'] = "Is Active?";
 $lang['none'] = "None";
-$lang['ads_num'] = "Ads Number";
-
-//new 
-
+$lang['chats'] = 'Chats';
+$lang['messages'] = 'Messages';
+$lang['ad_title'] = 'Ad title';
+$lang['chats_list'] = 'Chats list';
+$lang['text'] = 'Message'; 
+$lang['send_date'] = 'Send Date';
+$lang['whatsup_number'] = 'WhatsApp';
+$lang['birthday'] = 'Birthday';
+$lang['user_image']=  'User image';
+$lang['user_details']=  'User Details';
 
 
 //categories manages
@@ -249,6 +252,7 @@ $lang['templates'] = 'Templates';
 $lang['fields_status'] = 'Fields status';
 $lang['sort_main_category'] = 'Sort Main Categories';
 $lang['sort'] = 'Sort';
+$lang['delete_cat_confirmation']= 'This will delete the category and all of its successors , are you sure you want to continue? ';
 
 //types manage
 $lang['all_types_list'] = 'All Brands list';
@@ -293,6 +297,8 @@ $lang['select_usres_city'] = 'Select User\'s City';
 $lang['send_notification'] = 'Send Notification';
 $lang['notification_confirmation'] = 'Are you sure you want to send this public notification? ';
 $lang['confirmation'] = 'Confirmation';
+$lang['sender_name'] = 'Sender name';
+
 
 //about manage
 $lang['set_about_info'] = 'Set About Information';
@@ -305,6 +311,39 @@ $lang['linkedin_link'] = 'LinkedIn link';
 $lang['instagram_link'] = 'Instagram link';
 $lang['terms_en'] = 'Terms and conditions in english';
 $lang['terms_ar'] = 'Terms and conditions in arabic';
+
+//admin manage
+$lang['admin_name'] = 'Admin Name';
+
+//new
+$lang['admins_list']= 'Admins List';
+$lang['admin_username']= 'Username';
+$lang['permissions'] = 'Permissions';
+$lang['admin_info'] = 'Admin Info';
+$lang['add_admin'] = 'Add New Admin';
+$lang['delete_admin_confirmation'] = 'Are you sure you want to delete this admin?';
+
+// permissions
+$lang['admin_permissions']= 'Permissions Granted to this user';
+$lang['ads_manage'] = 'Ads Management';
+$lang['export_ads'] = 'Export Ads';
+$lang['reports_manage'] = 'Reported Ads Management';
+$lang['export_reports'] = 'Export Reported ads';
+$lang['users_manage'] = 'Users Management';
+$lang['export_users'] = 'Export Users info';
+$lang['commercials_manage'] = 'Commercials Manage';
+$lang['export_commercials'] = ' Export Commercials';
+$lang['categories_manage'] = 'Categories Manage';
+$lang['data_manage'] = 'Data Manage';
+$lang['export_data']= 'Export Data';
+$lang['notification_manage'] = 'Notification Manage';
+$lang['export_notification'] = 'Export Notification';
+$lang['admins_manage'] = 'Admins Manage';
+$lang['admins_export'] = 'Export admins info';
+$lang['about_manage'] = 'About Manage';
+
+
+
 // login
 $lang['login_form'] = 'Login Form';
 $lang['login'] = 'Login';

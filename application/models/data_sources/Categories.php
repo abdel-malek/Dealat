@@ -203,6 +203,12 @@ class Categories extends MY_Model {
 	  return $this->db->update('categories');
    }
    
+   public function delete_cats($ids)
+   {
+	  $this->db->where_in('category_id' , $ids);
+	  return $this->db->delete('categories');
+   }
+   
    public function update_queue($parent_id , $cats_queue)
    {
         $queue = 0;

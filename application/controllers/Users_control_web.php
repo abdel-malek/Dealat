@@ -38,8 +38,8 @@ class Users_control_web extends REST_Controller {
              'lang' => $this->input->post('lang') != "" ? strtolower($this->input->post('lang')) : $this->data['lang'],
              'city_id' => $this->input->post('city_id'),
             );
-            if($this->input->post('gender')!= null && $this->input->post('gender')  != ''){
-                $data['gender'] = $this->input->post('gender');
+            if($this->input->post('user_gender')!= null && $this->input->post('user_gender')  != ''){
+                $data['user_gender'] = $this->input->post('user_gender');
             }
             if($this->input->post('birthday')!= null && $this->input->post('birthday')  != ''){
                 $data['birthday'] = $this->input->post('birthday');

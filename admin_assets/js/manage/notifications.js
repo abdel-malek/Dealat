@@ -1,6 +1,51 @@
-var schedules_table;
+var notifications_table;
  $(document).ready(function() {
     
+     	var notify_TableButtons = function() {
+           notifications_table = $("#notification_table").DataTable({
+            "oLanguage": {
+				  	"sProcessing":   lang_array['sProcessing'],
+					"sLengthMenu":   lang_array['sLengthMenu'],
+					"sZeroRecords":  lang_array['sZeroRecords'],
+					"sInfo":         lang_array['sInfo'],
+					"sInfoEmpty":    lang_array['sInfoEmpty'],
+					"sInfoFiltered": lang_array['sInfoFiltered'],
+					"sInfoPostFix":  "",
+					"sSearch":       lang_array['sSearch'],
+					"sUrl":          "",
+					"oPaginate": {
+						"sFirst":    lang_array['sFirst'],
+						"sPrevious": lang_array['sPrevious'],
+						"sNext":     lang_array['sNext'],
+						"sLast":     lang_array['sLast']
+				   }
+			 },
+             "bServerSide": false,
+             aaSorting : [[0, 'desc']],
+             "sAjaxSource": base_url + '/admin/users_manage/get_all_notifications/format/json',
+             "columnDefs": [
+	          ],
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'notifications '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                },
+              ],
+            });
+        };
+        notify_TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              notify_TableButtons();
+            }
+          };
+        }();
+
+       notify_TableManageButtons.init();
  });
  
 function send_notificaion () {
@@ -29,8 +74,6 @@ function send_notificaion () {
 		}else{ //public
 		   url = base_url + '/admin/users_manage/send_public_notification/format/json';
 		}
-		// console.log(url);
-		// console.log(data);
 	   	$.ajax({
 	        url: url,
 	        type: "post",
@@ -58,6 +101,7 @@ function send_notificaion () {
 						 }
 		               });
 		            }
+		       notifications_table.ajax.url(base_url + '/admin/users_manage/get_all_notifications/format/json').load();
 		       $('.confirm-modal').modal('hide');
 	        },error: function(xhr, status, error){
 	        	new PNotify({

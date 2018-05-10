@@ -29,6 +29,7 @@ class Ads extends MY_Model {
 		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
         $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
@@ -53,6 +54,7 @@ class Ads extends MY_Model {
 		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
 		$this->db->where('status' , STATUS::ACCEPTED);
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
     	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
@@ -196,7 +198,58 @@ class Ads extends MY_Model {
 		}
   }
 
- 
+  public function delete_an_ad($ad_id , $tempalte_id)
+   {
+   	  $this -> db -> trans_start();
+   	  // delete from the template table
+   	  if($tempalte_id != TAMPLATES::BASIC){
+   	  	  $ad_template_name = TAMPLATES::get_tamplate_name($tempalte_id);
+		  $table_name = $ad_template_name.'_tamplate';
+		  $deleted = $this->db->delete($table_name , array('ad_id' => $ad_id));
+		  if(!$deleted){
+		    $this -> db -> trans_rollback();
+			return false;
+		  }
+   	  }
+	  //delete from favorate table 
+	  $fav_deleted = $this->db->delete('user_favorite_ads' , array('ad_id' => $ad_id));
+	  if(!$fav_deleted){
+	  	$this -> db -> trans_rollback();
+		return false;
+	  }
+	  //delete chat sessions
+	  $this->load->model('data_sources/chat_sessions');
+	  $chat_deleted = $this->chat_sessions->delete_by_ad($ad_id);
+	  if(!$chat_deleted){
+	  	 $this -> db -> trans_rollback();
+		 return false;
+	  }
+	  
+	  //delete from reported ads
+	  $report_deleted = $this->db->delete('reported_ads' , array('ad_id' => $ad_id));
+	  if(!$report_deleted){
+	  	$this -> db -> trans_rollback();
+		return false;
+	  }
+	  
+	  // delete ad images (the deleted images must be deleted from the server.)
+	  $images_deleted = $this->db->delete('ad_images' , array('ad_id' => $ad_id));
+	  if(!$report_deleted){
+	  	$this -> db -> trans_rollback();
+		return false;
+	  }
+	  
+	  // delete from ads table 
+	  parent::delete($ad_id);
+	  $this -> db -> trans_complete();
+	  if ($this -> db -> trans_status() === FALSE) {
+		  $this -> db -> trans_rollback();
+		  return false;
+	  } else {
+		  $this -> db -> trans_commit();
+		  return true;
+	  } 
+  }
  
   public function edit($ad_id , $category_id)
   {
@@ -425,9 +478,13 @@ class Ads extends MY_Model {
 
    public function check_category_ads_existence($category_id)
 	{
+	   $this->load->model('data_sources/categories');
+	   $nested_ids = $this->categories->get_nested_ids($category_id);
        $this->db->join('users' , 'users.user_id = ads.user_id', 'left');
 	   $this->db->where('users.is_deleted' , 0);
-	   $ads = parent::get_by(array('category_id' => $category_id), false ,1);
+	   $this->db->where_in('category_id'  , $nested_ids);
+	   //$ads = parent::get_by(array('category_id' => $category_id), false ,1);
+	   $ads = parent::get(null, false ,1);
 	   if($ads != null){
 	   	 return true;
 	   }else{
@@ -528,6 +585,9 @@ class Ads extends MY_Model {
 	    $message =  $this->lang->line('pending_email');
 	    mail($to, $subject, $message,  "From: ola@tradinos.com");
    }
+
+
+
    
 
 

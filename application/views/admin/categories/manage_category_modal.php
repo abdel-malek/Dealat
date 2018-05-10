@@ -129,27 +129,30 @@
           </div>
         <div class="modal-footer">
           <button   onclick="save_category()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button  style="display: none"  onclick="delete_cat()" id="delete_category_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('diactivate') ?></button>
+          <button  style="display: none" id="final_delete_category_btn"  type="button" class="btn btn-danger"  data-toggle="modal" data-target=".cat-delete-modal"><?php echo $this->lang->line('delete') ?></button>
+          <button  style="display: none; background-color: #bdc3c7; border-color: #aaafb3;"  onclick="deactivate_cat()" id="delete_category_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('diactivate') ?></button>
           <button  style="display: none"  onclick="activate_cat()" id="activate_category_btn"  type="button" class="btn btn-primary"><?php echo $this->lang->line('activate') ?></button>
-          <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
-          	 data-toggle="modal" data-target=".delete_modal"
-		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		         <span aria-hidden="true">&times;</span>
-		       </button>
-		            </div>
-		            <div class="modal-body text-center">
-		                <h6>Are you sure you want to delete this ad?</h6>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="submit" class="btn button2 submit"  onclick="delete_comm()">Yes</button>
-		            </div>
-		        </div>
-		    </div>
-         </div> -->
         </div>
       </div>
     </div>
   </div>
+ 
+ <!-- confirmation modal   -->
+  <div id="cat-delete-modal" class="modal fade cat-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<?php echo $this->lang->line('confirmation') ?>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h6><?php echo $this->lang->line('delete_cat_confirmation') ?></h6>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn button2 submit"  onclick="delete_cat()"><?php echo $this->lang->line('yes') ?></button>
+            </div>
+        </div>
+    </div>
+ </div>

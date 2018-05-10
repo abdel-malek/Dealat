@@ -2,6 +2,10 @@
 var users_table;
 var user_chats_table;
 var messages_table;
+var gender_array = {
+	1: 'Male',
+	2: 'Female'
+};
  $(document).ready(function() {
 
  	var users_TableButtons = function() {
@@ -265,6 +269,33 @@ function show_chat_messages (chat_id , seller_name , user_name) {
         dataType: "json",
         success: function(response) {
               console.log(response.data);
+              $('.user_details #user_name').html(response.data.name);
+              $('.user_details #user_city').html(response.data.city_name);
+              $('.user_details #user_phone').html(response.data.phone);
+              $('.user_details #user_whatsup_number').html(response.data.whatsup_number);
+              if(response.data.email != null && response.data.email != '' ){
+              	  $('.user_details #user_email').html(response.data.email); 
+              }else{
+              	  $('.user_details #user_email').html(lang_array['not_set']);
+              }
+              if(response.data.gender != null  && response.data.gender != '' ){
+              	  $('.user_details #user_gender').html(gender_array[response.data.gender]);
+              }else{
+              	  $('.user_details #user_gender').html(lang_array['not_set']);
+              }
+              if(response.data.birthday != null && response.data.birthday  != ''){
+              	  $('.user_details #user_birthday').html(response.data.birthday);
+              }else{
+              	  $('.user_details #user_birthday').html(lang_array['not_set']);
+              }
+              var user_image = ''; 
+              if(response.data.personal_image != null){
+              	 user_image = ' <img style="margin: auto; height:100%;  width:100%"';
+              	 user_image += 'src= "'+ site_url+response.data.personal_image +'"/>';
+              }else{
+              	 user_image += '<label class="form-control" value>'+ lang_array['not_set']+'</label>';
+              }
+              $('.user_details #user_image').html(user_image);
         },error: function(xhr, status, error){ 
         	new PNotify({
                   title: lang_array['attention'],

@@ -121,10 +121,21 @@ class Users_manage extends REST_Controller {
 	  	  $city_id = $this->input->post('city_id');
 		  $text = $this->input->post('body');
 		  $title = $this->input->post('title');
+		  $user_id = $this->current_user->user_id;
+		  //save notification 
+		  $this->load->model('data_sources/public_notifications');
+		  $data = array(
+		    'title' => $title,
+		    'body' => $text , 
+		    'city_id' => $city_id , 
+		    'user_id' => $user_id
+		  );
+		  $notification_id = $this->public_notifications->save($data);
 		  $users_ids =  $this->users->get_user_ids_by_city($city_id);
 		  if($users_ids){
 		  	$this->load->model('notification');
 			$this->notification->send_notofication_to_group($users_ids ,$text , null , $title ,  NotificationHelper::PUBLIC_NOTFY);
+			$this->public_notifications->save(array('is_sent' => 1) , $notification_id);
 			$this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 		  }else{
 		  	$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('no_users')));
@@ -142,7 +153,17 @@ class Users_manage extends REST_Controller {
   	 	  $this->load->model('notification');
 		  $text = $this->input->post('body');
 		  $title = $this->input->post('title');
+		  $user_id = $this->current_user->user_id;
+		  //save notification 
+		  $this->load->model('data_sources/public_notifications');
+		  $data = array(
+		    'title' => $title,
+		    'body' => $text , 
+		    'user_id' => $user_id
+		  );
+		  $notification_id = $this->public_notifications->save($data);
 		  $this->notification->send_public_notification($text , null , $title ,  NotificationHelper::PUBLIC_NOTFY);
+		  $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
 		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	  }
    }
@@ -204,4 +225,137 @@ class Users_manage extends REST_Controller {
 	   	  $this->response(array('status' => false, 'data' => '', "message" => 'No such user!'));
 	   }
 	}
+	
+   
+  public function get_all_notifications_get()
+  {
+      $this->load->model('data_sources/public_notifications');
+	  $data = $this->public_notifications->get_all($this->data['lang']);
+	  $output = array("aaData" => array());
+      foreach ($data as $row) {
+			$recorde = array();
+			$recorde[] = $row -> notification_id;
+			$recorde[] = $row -> created_at;
+			$recorde[] = $row -> user_name;
+	        if($row->city_id != null){
+	        	$recorde[] = $row->city_name;
+	        }else{
+	        	$recorde[] = $this->lang->line('all');
+	        }
+		    $recorde[] = $row->title;
+			$recorde[] = $row->body;
+			$output['aaData'][] = $recorde;
+		}
+	 echo json_encode($output);
+  }
+  
+  public function load_admins_page_get()
+  {
+      $this -> data['subview'] = 'admin/admins/index';
+	  $this -> load -> view('admin/_main_layout', $this -> data);
+  }
+  
+  public function get_admins_get()
+  {
+      $admins = $this->admins->get();
+	  $current_admin = $this->current_user->user_id;
+	  $output = array("aaData" => array());
+      foreach ($admins as $row) {
+      	if($row->admin_id != $current_admin){
+      	    $recorde = array();
+			$recorde[] = $row -> admin_id;
+			$recorde[] = $row -> created_at;
+			$recorde[] = $row -> name;
+		    $recorde[] = $row -> username;
+			$recorde[] = '';
+			$recorde[] = '';
+			$output['aaData'][] = $recorde;
+      	}
+	   }
+	  echo json_encode($output);
+  }
+  
+  public function get_admin_info_get()
+  {
+     $id = $this->input->get('admin_id');
+	 $info = $this->admins->get($id);
+	 $this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess')));
+  }
+  
+  public function delete_admin_post()
+  {
+     $id = $this->input->post('admin_id');
+	 $deleted = $this->admins->delete($id);
+	 if($deleted){
+	 	$this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess'))); 
+	 }else{
+	    $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));
+	 }
+  }
+  
+  public function save_admin_post()
+  {
+      $this->form_validation->set_rules('name', 'name', 'required'); 
+	  $this->form_validation->set_rules('username', 'username', 'required'); 
+	  // $this->form_validation->set_rules('password', 'title', 'required');  
+	  if (!$this->form_validation->run()) {
+	  	 throw new Validation_Exception(validation_errors());
+	  }else{
+	  	 $admin_id = $this->input->post('admin_id');
+		 $name = $this->input->post('name');
+		 $user_name = $this->input->post('username');
+		 $data = array(
+		   'name' => $name, 
+		   'username' => $user_name, 
+		 );
+		 if($this->input->post('password')){
+		 	 $data['password']= md5($this->input->post('password'));
+		 }
+		 $saved_id;
+		 if($admin_id != 0){ // edit
+		 	$saved_id = $this->admins->save($data , $admin_id);
+		 }else{
+		 	$saved_id = $this->admins->save($data);
+		 }
+		 $this->response(array('status' => true, 'data' => $saved_id, "message" => $this->lang->line('sucess')));
+	  }
+  }
+  
+  public function get_admin_permissions_get()
+  {
+  	 $this->load->model('data_sources/user_permission');
+  	 $admin_id = $this->input->get('admin_id');
+	 $permissions_ids = $this->user_permission->get_user_permissions_ids($admin_id);
+	 $this->response(array('status' => true, 'data' => $permissions_ids, "message" => $this->lang->line('sucess')));
+  }
+  
+  public function save_admin_permissions_post()
+  {
+      $this->form_validation->set_rules('admin_id', 'admin id', 'required'); 
+	  $this->form_validation->set_rules('permissions', 'permissions', 'required'); 
+	  if (!$this->form_validation->run()) {
+	  	 throw new Validation_Exception(validation_errors());
+	  }else{
+	  	 $this->load->model('data_sources/user_permission');
+	  	 $admin_id = $this->input->post('admin_id');
+		 $permissions_array = $this->input->post('permissions');
+		 // delete all current permissions
+		 $this->user_permission->delete_user_permissions($admin_id);
+		 //save new permissions
+		 $saved;
+		 foreach ($permissions_array as $permission_id) {
+			 $data = array(
+			   'user_id' => $admin_id, 
+			   'permission_id' => $permission_id,
+			 );
+			$saved = $this->user_permission->save($data);
+		 }
+		 if($saved){
+		 	$this->response(array('status' => true, 'data' => $saved, "message" => $this->lang->line('sucess')));
+		 }else{
+		 	$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));
+		 }
+	  }
+  }
+
 }
