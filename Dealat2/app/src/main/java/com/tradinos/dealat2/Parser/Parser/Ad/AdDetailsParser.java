@@ -226,6 +226,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
 
         ad.setPrice(jsonObject.getDouble("price"));
         ad.setStatus(jsonObject.getInt("status"));
+
         ad.setShowPeriod(jsonObject.getInt("show_period"));
 
         if (validData(jsonObject.getString("reject_note")))

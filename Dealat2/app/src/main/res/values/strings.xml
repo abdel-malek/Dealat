@@ -90,6 +90,11 @@
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
+    <string name="labelScanQr">1. Visit dealat.tradinos.com</string>
+    <string name="labelStep2">2. Click "Sign In" and then "Log in using QR Code"</string>
+    <string name="labelStep3">3. Now point your phone to your computer\'s screen</string>
+    <string name="labelStep4">4. Enter \"Verification Code\" on Website</string>
+
     <!-- AdDetails   -->
     <string name="labelAdNumber">Ad Number</string>
     <string name="labelCity">City</string>
@@ -102,7 +107,7 @@
     <string name="labelEngineCapacity">Engine Capacity</string>
     <string name="labelTransmission">Transmission Type</string>
     <string name="labelState">State</string>
-    <string name="labelPropertyState">Property State</string>
+    <string name="labelPropertyState">Finishing type</string>
 
     <string name="labelSpace">Space</string>
     <string name="labelRoom">Number of Rooms</string>
@@ -167,7 +172,7 @@
     <string name="hintFloors">Floor</string>
     <string name="hintNumberFloors">Number of Floors</string>
     <string name="hintState">State</string>
-    <string name="hintSalary">Salary</string>
+    <string name="hintSalary">Salary (SP)</string>
     <string name="hintWriteMsg">Write your message...</string>
 
     <string name="buttonRegister">Register</string>
@@ -203,6 +208,7 @@
     <string name="navLogout">Logout</string>
     <string name="navAbout">About App</string>
     <string name="navHelp">Help</string>
+    <string name="navQr">Scan QR code</string>
 
 
     <!-- Errors -->

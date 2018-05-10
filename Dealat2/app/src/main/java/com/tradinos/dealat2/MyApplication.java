@@ -28,6 +28,7 @@ public class MyApplication extends Application {
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
+     *
      * @return tracker
      */
     synchronized public Tracker getDefaultTracker() {
@@ -36,7 +37,7 @@ public class MyApplication extends Application {
             GoogleAnalytics sAnalytics = GoogleAnalytics.getInstance(this);
             sTracker = sAnalytics.newTracker("UA-117516159-1");
             sTracker.enableExceptionReporting(true);
-          //  sTracker.enableAutoActivityTracking(true);
+            //  sTracker.enableAutoActivityTracking(true);
         }
 
         return sTracker;
@@ -86,14 +87,14 @@ public class MyApplication extends Application {
         return sharedPreferences.getString("cityId", "");
     }
 
-    public static void saveImagePath(String path){
+    public static void saveImagePath(String path) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("path", path);
         editor.commit();
     }
 
-    public static String getImagePath(){
+    public static String getImagePath() {
         return sharedPreferences.getString("path", "");
     }
 
@@ -177,6 +178,36 @@ public class MyApplication extends Application {
     public void setCurrentView(int i) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("view", i);
+        editor.commit();
+    }
+
+    public static List<String> saveAndGetMessages(String chatId, String message) {
+        List<String> messages = new ArrayList<>();
+
+        int size = sharedPreferences.getInt("chat" + chatId + "size", 0);
+        int i = 0;
+        for (; i < size; i++) //get previous messages
+            messages.add(sharedPreferences.getString("chat" + chatId + i, ""));
+
+        messages.add(message);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("chat" + chatId + i, message); // save new message
+        editor.putInt("chat" + chatId + "size", messages.size()); // save new size
+        editor.commit();
+
+        return messages;
+    }
+
+    public static void removeChat(String chatId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int size = sharedPreferences.getInt("chat" + chatId + "size", 0);
+
+        for (int i = 0; i < size; i++)
+            editor.remove("chat" + chatId + i);
+
+        editor.remove("chat" + chatId + "size");
+
         editor.commit();
     }
 

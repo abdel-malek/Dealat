@@ -5,6 +5,7 @@ package com.tradinos.dealat2.API;
  */
 public enum APIModel {
     users,
+    qrUsers,
     ads,
     categories,
     commercialAds,
@@ -15,6 +16,9 @@ public enum APIModel {
         switch (this){
             case users :
                 return "users_control" ;
+
+            case qrUsers:
+                return "QR_users_control";
 
             case ads:
                 return "items_control";

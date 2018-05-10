@@ -29,6 +29,7 @@ import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.Model.Message;
 import com.tradinos.dealat2.Model.User;
+import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.vdurmont.emoji.EmojiParser;
 
@@ -89,6 +90,10 @@ public class ChatActivity extends MasterActivity {
     public void getData() {
         user = new CurrentAndroidUser(mContext).Get();
         currentChat = (Chat) getIntent().getSerializableExtra("chat");
+
+        // messages are brought from sharedPreferences to be displayed together in the same notification
+        // once ChatActivity is opened those messages are removed
+        MyApplication.removeChat(currentChat.getChatId());
 
         String key, value;
 

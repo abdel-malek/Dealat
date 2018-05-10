@@ -195,9 +195,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
                     Item item = (Item) spinnerGender.getSelectedItem();
                     if (item.isNothing())
-                        parameters.put("gender", NULL);
+                        parameters.put("user_gender", NULL);
                     else
-                        parameters.put("gender", item.getId());
+                        parameters.put("user_gender", item.getId());
 
                     if (image == null)
                         parameters.put("image", NULL);

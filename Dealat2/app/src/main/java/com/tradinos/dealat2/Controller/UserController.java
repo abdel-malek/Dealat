@@ -205,6 +205,17 @@ public class UserController extends ParentController {
         request.Call();
     }
 
+    public void sendQrCode(String generatedCode, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.qrUsers, "QR_code_scan").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+
+        request.addParameter("gen_code", generatedCode);
+
+        addToHeader(request);
+        authenticationRequired(request);
+        request.Call();
+    }
+
     public void rateSeller(String sellerId, double rate, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.users, "rate_seller").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());

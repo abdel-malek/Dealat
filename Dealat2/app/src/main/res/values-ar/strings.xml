@@ -69,8 +69,8 @@
     <string name="labelSelectManufactureYear">اختر سنة التصنيع</string>
     <string name="labelSelectEngineCapacity">اختر سعة المحرك</string>
     <string name="labelShowPeriod">فترة عرض الإعلان</string>
-    <string name="labelTo">من</string>
-    <string name="labelFrom">إلى</string>
+    <string name="labelTo">إلى</string>
+    <string name="labelFrom">من</string>
     <string name="labelSelectTransmission">اختر نوع ناقل الحركة</string>
     <string name="labelFurnished">مفروش</string>
     <string name="labelProfileImage">الصورة الشخصية</string>
@@ -85,6 +85,8 @@
     <string name="labelOnlyToRegistered">سيظهر رقم موبايلك مع تفاصيل هذا الإعلان</string>
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
+
+    <string name="labelScanQr">١. قم بزيارة موقعنا dealat.tradinos.com</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
@@ -163,7 +165,7 @@
     <string name="hintFloors">الطابق</string>
     <string name="hintNumberFloors">عدد الطوابق</string>
     <string name="hintState">الحالة</string>
-    <string name="hintSalary">الراتب</string>
+    <string name="hintSalary">الراتب (ل.س)</string>
     <string name="hintWriteMsg">اكتب رسالتك...</string>
 
     <string name="buttonRegister">تسجيل</string>
@@ -199,6 +201,7 @@
     <string name="navHelp">مساعدة</string>
     <string name="navAbout">معلومات عن التطبيق</string>
     <string name="navLogout">تسجيل الخروج</string>
+    <string name="navQr">مسح QR Code</string>
 
 
     <!-- Errors -->

@@ -115,6 +115,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
+        int id = new Random().nextInt();
+        // ids of notification of type 2 and 3 (action, public) are always negative to avoid conflict with msg notification (type 1)
+        // that there Ids are same as chatId which is definitely positive
+        if (id > 0)
+            id = id * -1;
+
+        notificationManager.notify(id, notificationBuilder.build());
     }
 }

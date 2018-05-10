@@ -9,8 +9,10 @@ import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
@@ -51,6 +53,7 @@ import com.tradinos.dealat2.Model.TemplatesData;
 import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.ConfirmDialog;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.Utils.ScalableImageView;
 
@@ -199,7 +202,6 @@ public class SubmitAdActivity extends MasterActivity {
         usageOptions.add(new Item("0", getString(R.string.old)));
         usageOptions.add(new Item("1", getString(R.string.newU)));
         spinnerState.setAdapter(new ItemAdapter(mContext, usageOptions));
-
 
         List<Item> transmissionOptions = new ArrayList<>();
         transmissionOptions.add(new Item("0", getString(R.string.manual)));
@@ -438,29 +440,27 @@ public class SubmitAdActivity extends MasterActivity {
 
             if (checkGeneralInput()) {
 
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                getTemplateInput();
+
+                ShowProgressDialog();
+                AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
+                    public void OnSuccess(String result) {
+                        HideProgressDialog();
 
-                                getTemplateInput();
+                        ConfirmDialog dialog = new ConfirmDialog(mContext);
+                        dialog.show();
 
-                                ShowProgressDialog();
-                                AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
-                                    @Override
-                                    public void OnSuccess(String result) {
-                                        HideProgressDialog();
-                                        setResult(RESULT_OK);
-                                        finish();
-                                    }
-                                });
-                        }
+                        dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+                        });
+
                     }
-                };
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
-                builder.setMessage(R.string.toastAdSubmit).setPositiveButton(getResources().getString(R.string.ok), dialogClickListener).show();
+                });
             }
         } else if (view.getId() == R.id.buttonEdit) {
             if (adapter.getCount() >= Image.MAX_IMAGES)
@@ -517,6 +517,7 @@ public class SubmitAdActivity extends MasterActivity {
             }
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

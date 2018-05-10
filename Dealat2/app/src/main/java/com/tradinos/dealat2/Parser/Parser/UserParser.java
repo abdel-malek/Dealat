@@ -27,8 +27,8 @@ public class UserParser implements TradinosParser<User> {
         if (validData(jsonObject.getString("birthday")))
             user.setBirthday(jsonObject.getString("birthday"));
 
-        if (validData(jsonObject.getString("gender")))
-            user.setGender(jsonObject.getInt("gender"));
+        if (validData(jsonObject.getString("user_gender")))
+            user.setGender(jsonObject.getInt("user_gender"));
 
         if (validData(jsonObject.getString("whatsup_number")))
             user.setWhatsAppNumber(jsonObject.getString("whatsup_number"));

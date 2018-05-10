@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.zxing.Result;
+import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.R;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -19,7 +21,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * Created by developer on 16.04.18.
  */
 
-public class QRCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class QRCodeActivity extends MasterActivity implements ZXingScannerView.ResultHandler {
 
     private final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
@@ -28,12 +30,8 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void onCreate(Bundle state) {
 
-        super.onCreate(state);
-
         setContentView(R.layout.activity_qr);
-
-        mScannerView = findViewById(R.id.imageView);
-        textViewCode = findViewById(R.id.textView);
+        super.onCreate(state);
 
         // Programmatically initialize the scanner view
         //  mScannerView = new ZXingScannerView(this);
@@ -46,6 +44,27 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
                     new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
         } else
             mScannerView.startCamera();
+    }
+
+    @Override
+    public void getData() {
+
+    }
+
+    @Override
+    public void showData() {
+
+    }
+
+    @Override
+    public void assignUIReferences() {
+        mScannerView = findViewById(R.id.imageView);
+        textViewCode = findViewById(R.id.textView);
+    }
+
+    @Override
+    public void assignActions() {
+
     }
 
 
@@ -76,7 +95,16 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
         // Do something with the result here
-         textViewCode.setText(result.getText());
+
+        ShowProgressDialog();
+        UserController.getInstance(mController).sendQrCode(result.getText(), new SuccessCallback<String>() {
+            @Override
+            public void OnSuccess(String result) {
+                HideProgressDialog();
+                textViewCode.setText(result);
+                textViewCode.setVisibility(View.VISIBLE);
+            }
+        });
 
         // Prints the scan format (qrcode, pdf417 etc.)
         // Logger.verbose("result", result.getBarcodeFormat().toString());
@@ -87,5 +115,10 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
         //  intent.putExtra(AppConstants.KEY_QR_CODE, result.getText());
         //  setResult(RESULT_OK, intent);
         //  finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }

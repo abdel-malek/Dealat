@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.MyAdAdapter;
+import com.tradinos.dealat2.Adapter.StatusAdapter;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.R;
@@ -52,11 +54,13 @@ public class MyAdsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_my_profile, null);
+        View rootView = inflater.inflate(R.layout.fragment_my_ads, null);
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
         listView = rootView.findViewById(R.id.listView);
+        final AppCompatSpinner spinnerStatus = rootView.findViewById(R.id.spinner);
+        spinnerStatus.setAdapter(new StatusAdapter(getContext()));
 
         if (ads.isEmpty())
             layoutEmpty.setVisibility(View.VISIBLE);
@@ -67,8 +71,10 @@ public class MyAdsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
+                Ad ad = (Ad) adapterView.getItemAtPosition(i);
+
                 Intent intent = new Intent(getContext(), AdDetailsActivity.class);
-                intent.putExtra("ad", ads.get(i));
+                intent.putExtra("ad", ad);
                 getContext().startActivity(intent);
             }
         });
@@ -92,8 +98,29 @@ public class MyAdsFragment extends Fragment {
 
                         setAds(result);
                         listView.setAdapter(new MyAdAdapter(getContext(), ads));
+                        spinnerStatus.setSelection(0);
                     }
                 });
+            }
+        });
+
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                List<Ad> result = filter(i);
+
+                if (result.isEmpty())
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                else
+                    layoutEmpty.setVisibility(View.GONE);
+
+                listView.setAdapter(new MyAdAdapter(getContext(), result));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -101,13 +128,17 @@ public class MyAdsFragment extends Fragment {
     }
 
     private List<Ad> filter(int status) {
-        List<Ad> result = new ArrayList<>();
 
-        for (int i = 0; i < ads.size(); i++) {
-            if (ads.get(i).getStatus() == status)
-                result.add(ads.get(i));
+        if (status == 0) // All
+            return ads;
+        else {
+            List<Ad> result = new ArrayList<>();
+
+            for (int i = 0; i < ads.size(); i++) {
+                if (ads.get(i).getStatus() == status)
+                    result.add(ads.get(i));
+            }
+            return result;
         }
-
-        return result;
     }
 }

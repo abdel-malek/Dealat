@@ -35,8 +35,7 @@ public class TemplatesDataParser implements TradinosParser<TemplatesData> {
 
         data.setShowPeriods(new ItemListParser("show_period_id").Parse(jsonObject.getString("show_periods")));
 
-        //just for now
-        data.setCertificates(new ArrayList<Item>());
+        data.setCertificates(new ItemListParser("certificate_id").Parse(jsonObject.getString("certificates")));
 
         return data;
     }
