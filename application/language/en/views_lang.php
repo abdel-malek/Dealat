@@ -118,6 +118,7 @@ $lang['save_search']  = "Save search";
 //admin side menu
 $lang['welcome'] = "Welcome";
 $lang['management'] = "Management";
+$lang['home']= 'Home';
 $lang['categories_management'] = "Categories Manage";
 $lang['ads_management'] = "Users Ads Manage";
 $lang['commercial_ads_manage'] = "Commercials Manage";

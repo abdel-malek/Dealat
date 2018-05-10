@@ -120,6 +120,7 @@ $lang['save_search']  = "حفظ البحث";
 //admin
 $lang['welcome'] = "مرحبًا";
 $lang['management'] = "الإدارة";
+$lang['home']= 'الرئيسية';
 $lang['categories_management'] = "إدارة الأصناف";
 $lang['ads_management'] = "إدارة إعلانات المستخدمين";
 $lang['commercial_ads_manage'] = "إدارة الإعلانات التجارية";

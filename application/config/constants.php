@@ -44,6 +44,7 @@ define('PERSONAL_IMAGES_PATH', '/personal_images/');
 define('COMMERCIAL_IMAGES_PATH', '/commercial_items_images/');
 define('CATEGORIES_IMAGES_WEB_PATH', '/assets/images/Categories/web/');
 define('CATEGORIES_IMAGES_MOBILE_PATH', '/assets/images/Categories/mobile/');
+define('QR_CODES_PATH', '/QR_codes/');
 
 
 /* End of file constants.php */

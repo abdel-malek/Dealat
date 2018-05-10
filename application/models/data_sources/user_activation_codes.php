@@ -36,7 +36,6 @@ class User_activation_codes extends MY_Model {
 	}
 	
 	public function generate_activation_code() {
-
         $digites = '0123456789';
         $randomString = $digites[rand(0, strlen($digites) - 1)]
                 . $digites[rand(0, strlen($digites) - 1)]

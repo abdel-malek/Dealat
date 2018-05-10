@@ -40,7 +40,8 @@ class Users_manage extends REST_Controller {
 			$password = $this -> input -> post('admin_password');
 			$user = $this -> admins -> login($username, $password);
 			if ($user) {
-				redirect('admin/items_manage');
+				//redirect('admin/items_manage');
+				redirect('admin/dashboard');
 			} else {
 				redirect('admin/users_manage/load_login_page');
 			 //   $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
