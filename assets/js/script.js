@@ -1738,19 +1738,30 @@ $(function () {
 		}).done(function (data) {
 			if (data.status === false) {} else {
 				$("#chat-modal .chat").empty();
+				var msgDate = data.data[0].created_at.split(' ')[0];
+				$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 				for (i in data.data) {
 					if (data.data[i].to_seller === "1") {
 						// message from me to seller
 						template = $('#chat-self-template').html();
-						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i]);
-						$("#chat-modal .chat").append(rendered);
 					} else {
 						template = $('#chat-other-template').html();
-						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i]);
-						$("#chat-modal .chat").append(rendered);
 					}
+					//check msg date
+					if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+						//update msg date
+						msgDate = data.data[i].created_at.split(' ')[0];
+						$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+					}
+
+					data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+						hour: 'numeric',
+						minute: 'numeric',
+						hour12: true
+					});
+					Mustache.parse(template);
+					rendered = Mustache.render(template, data.data[i]);
+					$("#chat-modal .chat").append(rendered);
 				}
 				$("#card-modal").modal("hide");
 				setTimeout(function () {
@@ -1831,47 +1842,50 @@ $(function () {
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				lastMsgId = $('#chat-modal .chat li').last().data("msgId");
-				var msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
-				var startIndex, isSeller;
-				isSeller = $("#chat-modal .is-seller").val();
+				//there are previous chat messages
+				if ($('#chat-modal .chat li').length > 0 && data.data.length > 0) {
+					var lastMsgId, msgDate, startIndex, isSeller;
+					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
+					msgDate = data.data[data.data.length - 1].created_at.split(' ')[0];
+					isSeller = $("#chat-modal .is-seller").val();
 
-				if (data.data[data.data.length - 1].message_id != lastMsgId) {
-					//to know last msg index in data.data array
-					for (i = data.data.length - 1; i >= 0; i -= 1) {
-						if (data.data[i].message_id == lastMsgId) {
-							startIndex = i;
-							break;
+					if (data.data[data.data.length - 1].message_id != lastMsgId) {
+						//to know last msg index in data.data array
+						for (i = data.data.length - 1; i >= 0; i -= 1) {
+							if (data.data[i].message_id == lastMsgId) {
+								startIndex = i;
+								break;
+							}
 						}
+						for (i = startIndex + 1; i < data.data.length; i += 1) {
+							//check msg date
+							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+								//update msg date
+								msgDate = data.data[i].created_at.split(' ')[0];
+								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+							}
+							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+								hour: 'numeric',
+								minute: 'numeric',
+								hour12: true
+							});
+
+							if ((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0")) {
+								template = $('#chat-other-template').html();
+							} else {
+								template = $('#chat-self-template').html();
+							}
+
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$("#chat-modal .chat").append(rendered);
+						}
+						$("#chat-modal .chat").stop().animate({
+							scrollTop: $("#chat-modal .chat")[0].scrollHeight
+						}, 300);
 					}
-					for (i = startIndex + 1; i < data.data.length; i += 1) {
-						//check msg date
-						if (data.data[i].created_at.split(' ')[0] !== msgDate) {
-							//update msg date
-							msgDate = data.data[i].created_at.split(' ')[0];
-							$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
-						}
-						data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
-							hour: 'numeric',
-							minute: 'numeric',
-							hour12: true
-						});
-
-						if ((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0")) {
-							template = $('#chat-other-template').html();
-						} else {
-							template = $('#chat-self-template').html();
-						}
-
-						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i]);
-						$("#chat-modal .chat").append(rendered);
-					}
-					$("#chat-modal .chat").stop().animate({
-						scrollTop: $("#chat-modal .chat")[0].scrollHeight
-					}, 300);
+					intervalId = setTimeout(checkLiveSessionMsg, 100);
 				}
-				intervalId = setTimeout(checkLiveSessionMsg, 100);
 			}
 		});
 	}
@@ -1882,7 +1896,7 @@ $(function () {
 			scrollTop: $("#chat-modal .chat")[0].scrollHeight
 		}, 300);
 		$("#chat-modal input[name='msg']").focus();
-		var lastMsgId;
+		//		var lastMsgId;
 		intervalId = setTimeout(checkLiveSessionMsg);
 	});
 
@@ -2314,6 +2328,7 @@ $(function () {
 		$("body").addClass("modal-open");
 	});
 
+	var generatedQR;
 	$("#login-modal .qr-login").click(function () {
 		$.ajax({
 			type: "post",
@@ -2322,7 +2337,9 @@ $(function () {
 		}).done(function (data) {
 			console.log(data);
 			if (data.status === false) {} else {
-				var img = data.data;
+				var img;
+				img = data.data.QR_path;
+				generatedQR = data.data.gen_code;
 				$("#qr-modal .qr-img img").attr("src", site_url + img);
 				$("#login-modal").modal("hide");
 				setTimeout(function () {
@@ -2331,6 +2348,36 @@ $(function () {
 			}
 		});
 
+	});
+	$("#qr-form input[name=\"secret_code\"]").keyup(function(){
+		if($(this).val().length === 6){
+			$("#qr-modal .submit").removeAttr("disabled");
+		} else{
+			$("#qr-modal .submit").attr("disabled", true);
+		}
+	});
+	
+	
+	$("#qr-form").submit(function (e) {
+		e.preventDefault();
+		
+		var data = $(this).serializeArray();
+		data.push({
+			name: "gen_code",
+			value: generatedQR
+		});
+		$.ajax({
+			type: "post",
+			url: base_url + '/api/QR_users_control/login_by_qr_code',
+			dataType: "json",
+			data: $.param(data)
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {} else {
+			
+			}
+		});
+		
 	});
 
 });

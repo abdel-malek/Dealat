@@ -1279,7 +1279,7 @@
 			<div class="modal-body text-center">
 				<div class="qr-img"><img src="" width="220px" alt="QR code image"></div>
 				<form id="qr-form">
-					<input type="text" class="form-control" name="" placeholder="Enter 4 digits">
+					<input type="number" class="form-control" name="secret_code" placeholder="Enter 6 digits number">
 				</form>
 				
 			</div>
