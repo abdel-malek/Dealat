@@ -8,6 +8,7 @@ class Categories_manage extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('data_sources/categories');
+	    $this->load->model('data_sources/admin_actions_log');
 		$this->data['lang']=  $this->response->lang;
 		if($this->data['lang'] == 'en'){
 			$this -> data['current_lang'] = 'English';
@@ -35,6 +36,7 @@ class Categories_manage extends REST_Controller {
 		} else {
 		   $create_result = $this->categories->create_category();
 		   if($create_result != false){
+		   	 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CATEGORY , $create_result); 
 		   	 $this->response(array('status' => true, 'data' =>$create_result, 'message' => $this->lang->line('sucess')));
 		   }else{
 		   	 $this->response(array('status' => false, 'data' =>$create_result, 'message' => $this->lang->line('failed'))); 
@@ -50,7 +52,8 @@ class Categories_manage extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
-			$this->categories->diactivate($child_ids);
+			$category_id = $this->categories->diactivate($child_ids);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_CATEGORY_STATUS , $this->input->post('category_id'));
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
 	}
@@ -62,25 +65,27 @@ class Categories_manage extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
-			$this->categories->activate($child_ids);
+			$category_id = $this->categories->activate($child_ids);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_CATEGORY_STATUS , $this->input->post('category_id'));
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
 	}
 
    public function delete_cat_post()
    {
-       	$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
-		if (!$this -> form_validation -> run()) {
+        $this -> form_validation -> set_rules('category_id', 'category_id', 'required');
+	    if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
 			$child_ids = $this->categories-> get_nested_ids($this->input->post('category_id'));
-			$this->categories->delete_cats($child_ids);
+			$category_id = $this->categories->delete_cats($child_ids);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_CATEGORY , $this->input->post('category_id'));
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
    }
 	
 	
-	public function edit_post()
+   public function edit_post()
 	{
 		$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
 		if (!$this -> form_validation -> run()) {
@@ -104,6 +109,7 @@ class Categories_manage extends REST_Controller {
 		   $edit_cat_id = $this-> categories->save($data ,$cat_id );
 		   if($edit_cat_id ){
 		   	 $this->response(array('status' => true, 'data' =>$edit_cat_id, 'message' => $this->lang->line('sucess')));
+			 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CATEGORY , $edit_cat_id);
 		   }else{
 		   	 $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('failed'))); 
 		   }
@@ -156,6 +162,7 @@ class Categories_manage extends REST_Controller {
 			$categories_queue = $this -> input -> post('categories_queue');
 			$result = $this->categories->update_queue($parent_id , $categories_queue);
 			if($result){
+				$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_CATEGORIES_ORDER );
 				$this->response(array('status' => true, 'data' =>$result, 'message' => $this->lang->line('sucess'))); 
 			}else{
 				$this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('failed')));

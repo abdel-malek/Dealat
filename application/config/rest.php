@@ -220,52 +220,16 @@ $config['auth_override_class_method']['data_control']['get_type_model_info'] = '
 $config['auth_override_class_method']['data_control']['get_education_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_schedule_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_about_info'] = 'none';
-
+$config['auth_override_class_method']['QR_users_control']['generate_QR_code'] = 'none';
+$config['auth_override_class_method']['QR_users_control']['login_by_qr_code'] = 'none';
 
 
 //admin
-// $config['auth_override_class_method']['categories_manage']['index'] = 'none';
-// $config['auth_override_class_method']['categories_manage']['get_sub_cats'] = 'none';
-// $config['auth_override_class_method']['categories_manage']['add'] = 'none';
-// $config['auth_override_class_method']['categories_manage']['edit'] = 'none';
-// $config['auth_override_class_method']['categories_manage']['check_child_exsist'] = 'none';
-// $config['auth_override_class_method']['items_manage']['index'] = 'none';
-// $config['auth_override_class_method']['items_manage']['all'] = 'none';
-// $config['auth_override_class_method']['items_manage']['get_all_reported_items'] = 'none';
-// $config['auth_override_class_method']['items_manage']['load_reported_items_page'] = 'none';
-// $config['auth_override_class_method']['items_manage']['get_item_reports'] = 'none';
-// $config['auth_override_class_method']['commercial_items_manage']['index'] = 'none';
-// $config['auth_override_class_method']['commercial_items_manage']['load_main_manage_page'] = 'none';
-// $config['auth_override_class_method']['commercial_items_manage']['get_main'] = 'none';
-// $config['auth_override_class_method']['commercial_items_manage']['get_without_main'] = 'none';
-// $config['auth_override_class_method']['commercial_items_control']['get_info'] = 'none';
-//$config['auth_override_class_method']['commercial_items_control']['item_images_upload'] = 'none';
-// $config['auth_override_class_method']['commercial_items_control']['delete_image'] = 'none';
-// $config['auth_override_class_method']['commercial_items_control']['save'] = 'none';
-// $config['auth_override_class_method']['commercial_items_control']['delete'] = 'none';
-// $config['auth_override_class_method']['commercial_items_control']['change_status'] = 'none';
-// $config['auth_override_class_method']['users_manage']['get_all'] = 'none';
-// $config['auth_override_class_method']['users_manage']['index'] = 'none';
+
 $config['auth_override_class_method']['users_manage']['change_language'] = 'none';
 $config['auth_override_class_method']['users_manage']['change_status'] = 'none';
 $config['auth_override_class_method']['users_manage']['load_login_page'] = 'none';
 $config['auth_override_class_method']['users_manage']['login'] = 'none';
-// $config['auth_override_class_method']['data_manage']['load_types_page'] = 'none';
-// $config['auth_override_class_method']['data_manage']['get_all_types'] = 'none';
-// $config['auth_override_class_method']['data_manage']['get_types_models'] = 'none';
-// $config['auth_override_class_method']['data_manage']['add_type'] = 'none';
-// $config['auth_override_class_method']['data_manage']['edit_type'] = 'none';
-// $config['auth_override_class_method']['data_manage']['delete_type'] = 'none';
-// $config['auth_override_class_method']['data_manage']['save_type_model'] = 'none';
-// $config['auth_override_class_method']['data_manage']['delete_type_model'] = 'none';
-// $config['auth_override_class_method']['data_manage']['get_all_educations'] = 'none';
-// $config['auth_override_class_method']['data_manage']['load_educations_page'] = 'none';
-// $config['auth_override_class_method']['data_manage']['save_education'] = 'none';
-// $config['auth_override_class_method']['data_manage']['delete_education'] = 'none';
-// $config['auth_override_class_method']['data_manage']['load_schedules_page'] = 'none';
-// $config['auth_override_class_method']['data_manage']['save_schedule'] = 'none';
-// $config['auth_override_class_method']['data_manage']['delete_schedule'] = 'none';
-// $config['auth_override_class_method']['data_manage']['get_all_schedules'] = 'none';
 
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';

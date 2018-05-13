@@ -138,14 +138,15 @@ class TAMPLATES {
 	         $attr_name == 'schedule_id' ||
 	         $attr_name=='education_id' ||
 		     $attr_name == 'manufacture_date' ||
-			 $attr_name == 'engine_capacity'){ // array 
+			 $attr_name == 'engine_capacity'||
+			 $attr_name == 'certificate_id'){ // array 
 		  	return 'array';
 		  }else if(
 		     $attr_name == 'is_new' ||
              $attr_name == 'with_furniture' ||
              $attr_name == 'is_automatic' ||
-		     $attr_name == 'type_id'||
-			 $attr_name == 'certificate_id'){ // single value 
+		     $attr_name == 'type_id'
+			 ){ // single value 
 		  	return 'single';
 		  }else{
 		  	return 'range';

@@ -7,6 +7,7 @@ class Data_manage extends REST_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->model('data_sources/admin_actions_log');
 		$this->data['lang']=  $this->response->lang;
 		if($this->data['lang'] == 'en'){
 			$this -> data['current_lang'] = 'English';
@@ -73,6 +74,7 @@ class Data_manage extends REST_Controller {
 			   'category_id' => $this->input->post('category_id')
 			);
 			$type_id = $this->types->save($data);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_BRAND , $type_id);
 			$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));
 		}
    }
@@ -89,6 +91,7 @@ class Data_manage extends REST_Controller {
 			   'ar_name' => $this->input->post('ar_name'),
 			);
 			$type_id = $this->types->save($data , $this->input->post('type_id'));
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_BRAND , $type_id);
 			$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));
 		}
    }
@@ -100,7 +103,8 @@ class Data_manage extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 	    	$this->load->model('data_sources/types');
-			$this->types->save(array('is_active' => 0) ,$this->input->post('type_id'));
+			$type_id = $this->types->save(array('is_active' => 0) ,$this->input->post('type_id'));
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_BRAND , $type_id);
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
    }
@@ -122,8 +126,10 @@ class Data_manage extends REST_Controller {
 			$type_model_id = $this->input->post('type_model_id');
 			if($type_model_id != 0){ // edit
 			   $type_model_id = $this->type_models->save($data , $type_model_id);
+			   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_BRAND_MODEL , $type_model_id);
 			}else{ // add
 			   $type_model_id = $this->type_models->save($data);	
+			   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_BRAND_MODEL , $type_model_id);
 			}
 			$this->response(array('status' => true, 'data' =>$type_model_id, 'message' => ''));
 		}
@@ -136,8 +142,10 @@ class Data_manage extends REST_Controller {
 			throw new Validation_Exception(validation_errors());
 		} else {
 	    	$this->load->model('data_sources/type_models');
-			$this->type_models->save(array('is_active' => 0) ,$this->input->post('type_model_id'));
+			$type_model_id = $this->type_models->save(array('is_active' => 0) ,$this->input->post('type_model_id'));
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_BRAND_MODEL , $type_model_id);
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+			
 		}
   }
 
@@ -177,8 +185,10 @@ class Data_manage extends REST_Controller {
 		$id = $this->input->post('education_id');
 		if($id != 0){ // edit
 		   $new_id = $this->educations->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_EDUCATION , $new_id);
 		}else{ // add
-		   $new_id = $this->educations->save($data);	
+		   $new_id = $this->educations->save($data);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_EDUCATION , $new_id);	
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
@@ -191,7 +201,8 @@ class Data_manage extends REST_Controller {
 		throw new Validation_Exception(validation_errors());
 	} else {
     	$this->load->model('data_sources/educations');
-		$this->educations->save(array('is_active' => 0) ,$this->input->post('education_id'));
+		$id = $this->educations->save(array('is_active' => 0) ,$this->input->post('education_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_EDUCATION , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 	}
  }
@@ -233,8 +244,10 @@ class Data_manage extends REST_Controller {
 		$id = $this->input->post('schedule_id');
 		if($id != 0){ // edit
 		   $new_id = $this->schedules->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_SCHEDUAL , $new_id);
 		}else{ // add
 		   $new_id = $this->schedules->save($data);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_SCHEDUAL , $new_id);
 		}
       $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
     }
@@ -247,7 +260,8 @@ class Data_manage extends REST_Controller {
 		throw new Validation_Exception(validation_errors());
 	} else {
     	$this->load->model('data_sources/schedules');
-		$this->schedules->save(array('is_active' => 0) ,$this->input->post('schedule_id'));
+		$id = $this->schedules->save(array('is_active' => 0) ,$this->input->post('schedule_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_SCHEDUAL , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 	} 
  }
@@ -304,8 +318,10 @@ class Data_manage extends REST_Controller {
 		$id = $this->input->post('city_id');
 		if($id != 0){ // edit
 		   $new_id = $this->cities->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CITY , $new_id);
 		}else{ // add
 		   $new_id = $this->cities->save($data);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CITY , $new_id);
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
@@ -318,7 +334,8 @@ class Data_manage extends REST_Controller {
 		throw new Validation_Exception(validation_errors());
 	}else {
     	$this->load->model('data_sources/cities');
-		$this->cities->save(array('is_active' => 0) ,$this->input->post('city_id'));
+		$id = $this->cities->save(array('is_active' => 0) ,$this->input->post('city_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_CITY , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 	}  
  }
@@ -340,8 +357,10 @@ class Data_manage extends REST_Controller {
 		$id = $this->input->post('location_id');
 		if($id != 0){ // edit
 		   $new_id = $this->locations->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_LOCATION , $new_id);
 		}else{ // add
 		   $new_id = $this->locations->save($data);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_LOCATION , $new_id);
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
@@ -354,7 +373,8 @@ class Data_manage extends REST_Controller {
 		throw new Validation_Exception(validation_errors());
 	}else {
     	$this->load->model('data_sources/locations');
-		$this->locations->save(array('is_active' => 0) ,$this->input->post('location_id'));
+		$id = $this->locations->save(array('is_active' => 0) ,$this->input->post('location_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_LOCATION , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 	}  
  }
@@ -385,6 +405,7 @@ class Data_manage extends REST_Controller {
       'en_terms' => $this->input->post('en_terms'),
 	);
    $saved = $this->about_info->save($data , 1);
+   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ABOUT_INFO);
    $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
  }
  

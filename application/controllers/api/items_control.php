@@ -229,7 +229,7 @@ class Items_control extends REST_Controller {
 	public function action_post()
 	{
 		$this->load->model('notification');
-		//$this->load->helper('notification');
+		$this->load->model('data_sources/admin_actions_log');
 		$this->load->helper('notification_messages_helper');
 		if(!$this->input->post('ad_id')){
 		  	throw Parent_Exception('you have to provide an id');
@@ -253,37 +253,38 @@ class Items_control extends REST_Controller {
 				   if(!isset($ad_info->publish_date)){
 				   	 $data['publish_date'] = $this->input->post('publish_date');
 				   }else{
-				   	  if($ad_info->edit_status ==  EDIT_STATUS::AFTER_EXPIRE){
+				   	  if($ad_info->edit_status ==  EDIT_STATUS::AFTER_EXPIRE){ // this must changed!
 				   	  	  $data['publish_date'] = $this->input->post('publish_date');
 				   	  }
 				   }
 				   $ad_id = $this->ads->save($data , $ad_id);
 				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
-				  // $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_accepted') , $ad_info ,$this->lang->line('accepted_title')  , NotificationHelper::ACTION);
 				   $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::ACCEPTED_MSG);
+				   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ACCEPT_AD , $ad_id);
 				}
 			}else if($action == 'reject'){
 			    $note = $this->input->post('reject_note');
 			    $this->ads->save(array('status'=>STATUS::REJECTED , 'reject_note' => $note ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-				//$this->notification->send_notification($ad_info->user_id , $this->lang->line('ad_rejected') , $ad_info , $this->lang->line('rejected_title') , NotificationHelper::ACTION);
 				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::REJECTED_MSG);
+				$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::REJECT_AD , $ad_id);
 			}else if($action == 'hide'){
 			    $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-			   // $this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_hidden'), $ad_info , $this->lang->line('hidden_title') , NotificationHelper::ACTION);
 				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::HIDE_MSG);
+			    $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::HIDE_AD , $ad_id);
 			}else if($action == 'show'){
 			    $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
-			    //$this->notification->send_notification($ad_info->user_id ,  $this->lang->line('ad_shown') , $ad_info , $this->lang->line('shown_title')  , NotificationHelper::ACTION);
 			    $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::SHOW_MSG);
-		    }else if($action == 'delete'){
+		        $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SHOW_AD , $ad_id);
+			}else if($action == 'delete'){
 		    	$template_id = $this->input->post('template_id');
 				$result = $this->ads->delete_an_ad($ad_id , $template_id);
 				if(!$result){
-					 throw new Parent_Exception('wrong'); 	 
+					 throw new Parent_Exception('Some thing wrong'); 	 
 				}
+			    $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_AD , $ad_id);
 			}else{
 			   throw new Parent_Exception('No Such action'); 	
 			}

@@ -8,6 +8,7 @@ class Users_manage extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/users');
 		$this->load->model('data_sources/admins');
+		$this->load->model('data_sources/admin_actions_log');
 		$this->data['lang']=  $this->response->lang;
 		 if($this->data['lang'] == 'en'){
 		  $this -> data['current_lang'] = 'English';
@@ -102,6 +103,7 @@ class Users_manage extends REST_Controller {
 		$user_id = $this->input->post('user_id');
 		$active_status = $this->input->post('is_active');
 		$updated_user_id = $this->users->save(array('is_active'=> !$active_status) , $user_id);
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_USER_STATUS , $updated_user_id);
 		$this -> response(array('status' => true, 'data' => $updated_user_id, 'message' => $this->lang->line('sucess')));
 	}
 	
@@ -136,7 +138,8 @@ class Users_manage extends REST_Controller {
 		  if($users_ids){
 		  	$this->load->model('notification');
 			$this->notification->send_notofication_to_group($users_ids ,$text , null , $title ,  NotificationHelper::PUBLIC_NOTFY);
-			$this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+			$saved_note = $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SEND_PUBLIC_NOTIFICATION , $saved_note);
 			$this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 		  }else{
 		  	$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('no_users')));
@@ -164,12 +167,13 @@ class Users_manage extends REST_Controller {
 		  );
 		  $notification_id = $this->public_notifications->save($data);
 		  $this->notification->send_public_notification($text , null , $title ,  NotificationHelper::PUBLIC_NOTFY);
-		  $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+		  $saved_note = $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+		  $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SEND_PUBLIC_NOTIFICATION , $saved_note);
 		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	  }
    }
    
-   	public function get_user_chat_sessions_get()
+ public function get_user_chat_sessions_get()
 	{
 	       $this->load->model('data_sources/chat_sessions');
 		   $user_id = $this->input->get('user_id');
@@ -282,17 +286,7 @@ class Users_manage extends REST_Controller {
 	 $info = $this->admins->get($id);
 	 $this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess')));
   }
-  
-  public function delete_admin_post()
-  {
-     $id = $this->input->post('admin_id');
-	 $deleted = $this->admins->delete($id);
-	 if($deleted){
-	 	$this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess'))); 
-	 }else{
-	    $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));
-	 }
-  }
+
   
   public function save_admin_post()
   {
@@ -315,11 +309,25 @@ class Users_manage extends REST_Controller {
 		 $saved_id;
 		 if($admin_id != 0){ // edit
 		 	$saved_id = $this->admins->save($data , $admin_id);
+		    $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ADMIN_INFO , $saved_id);
 		 }else{
 		 	$saved_id = $this->admins->save($data);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_ADMIN , $saved_id);
 		 }
 		 $this->response(array('status' => true, 'data' => $saved_id, "message" => $this->lang->line('sucess')));
 	  }
+  }
+  
+  public function delete_admin_post()
+  {
+     $id = $this->input->post('admin_id');
+	 $deleted = $this->admins->delete($id);
+	 if($deleted){
+	 	$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_ADMIN , $this->input->post('admin_id'));
+	 	$this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess'))); 
+	 }else{
+	    $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));
+	 }
   }
   
   public function get_admin_permissions_get()
@@ -352,6 +360,7 @@ class Users_manage extends REST_Controller {
 			$saved = $this->user_permission->save($data);
 		 }
 		 if($saved){
+		 	$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ADMIN_PERMISSIONS , $this->input->post('admin_id'));
 		 	$this->response(array('status' => true, 'data' => $saved, "message" => $this->lang->line('sucess')));
 		 }else{
 		 	$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));

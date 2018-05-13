@@ -7,6 +7,7 @@ class Commercial_items_control extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('data_sources/commercial_ads');
+		$this->load->model('data_sources/admin_actions_log');
 		$this->data['lang']=  $this->response->lang;
 	}
 	
@@ -102,9 +103,11 @@ class Commercial_items_control extends REST_Controller {
 	        throw new Parent_Exception($this->lang->line('image_is_requierd'));
 	     }else{
 	     	$comm_id = $this->commercial_ads->save($data);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_COMMERCIAL , $comm_id);
 	     }
 	  }else{ // edit 
 	  	 $comm_id = $this->commercial_ads->save($data, $comm_id);
+		 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_COMMERCIAL , $comm_id);
 	  }
 	  $this -> response(array('status' => true, 'data' => $comm_id, 'message' => $this->lang->line('sucess')));
   }
@@ -115,6 +118,7 @@ class Commercial_items_control extends REST_Controller {
       	 throw new Parent_Exception('comm_id is requierd');
       }else{
       	 $deleted = $this->commercial_ads->delete($this->input->post('comm_ad_id'));
+		 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_COMMERCIAL , $this->input->post('comm_ad_id'));
 		 $this -> response(array('status' => true, 'data' => $deleted, 'message' => $this->lang->line('sucess')));
       }
   }
@@ -136,6 +140,7 @@ class Commercial_items_control extends REST_Controller {
 		  $current_comm = $this->commercial_ads->get($id);
 		  $active_status = $current_comm->is_active;
 		  $edited_id = $this->commercial_ads->save(array('is_active' => !$active_status),$id);
+		  $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_COMMERCIAL_SHOW_STATUS , $edited_id);
 		  $this -> response(array('status' => true, 'data' => $edited_id, 'message' => $this->lang->line('sucess')));
 	  }
   }
