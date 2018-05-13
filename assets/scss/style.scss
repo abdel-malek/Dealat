@@ -359,6 +359,13 @@ body {
 	border: 2px solid $main;
 }
 
+.button2:disabled:hover {
+	cursor: default;
+	background-color: $main;
+	color: #fff;
+	border: 2px solid $main;
+}
+
 .button2:hover {
 	background-color: #fff;
 	color: $main;
@@ -1605,6 +1612,16 @@ select option.placeholder {
 	.modal-body {
 		text-align: center
 	}
+	.qr-login {
+		color: #0075b4;
+		margin-bottom: 10px;
+		text-align: left;
+		text-decoration: underline
+	}
+	.qr-login:hover {
+		color: #125b82;
+		cursor: pointer;
+	}
 }
 
 #register-modal {
@@ -2008,12 +2025,12 @@ label {
 	.dropdown-menu li:hover {
 		color: $main;
 		background-color: #eee;
-		
+
 	}
 }
-@media(min-width:768px){
+
+@media(min-width:768px) {
 	#user-ads .filter-dropdown {
 		margin-right: 8%
 	}
 }
-

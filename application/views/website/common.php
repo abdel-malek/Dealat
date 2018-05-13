@@ -419,6 +419,8 @@
 						<div class="form-group">
 							<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
 						</div>
+						
+						<div class="qr-login">Log in using QR code</div>
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 					</form>
 					<!--
@@ -1260,6 +1262,29 @@
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--qr modal-->
+<div id="qr-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<div class="qr-img"><img src="" width="220px" alt="QR code image"></div>
+				<form id="qr-form">
+					<input type="text" class="form-control" name="" placeholder="Enter 4 digits">
+				</form>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn button2 submit" form="qr-form" disabled><?php echo $this->lang->line('ok'); ?></button>
 			</div>
 		</div>
 	</div>

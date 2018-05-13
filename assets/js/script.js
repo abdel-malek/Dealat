@@ -2,23 +2,41 @@
 /*global $, alert,console,lang, Mustache, base_url, logged, user_id, hiddenFields*/
 
 $(function () {
-	
-	//notification
-	
-	var notification = new Notification('Email received', {
-  body: 'You have a total of 3 unread emails'
-});
-	notification.onshow = function() {
-  console.log('Notification shown');
-};
-	
-	if ('Notification' in window) {
-  // API supported
-		console.log('Notification yes');
-} else {
-  // API not supported
-	console.log('Notification no');
-}
+
+	//notification demo
+	//	if (!('Notification' in window)) {
+	//		// API not supported
+	//		console.log('Notification not supported');
+	//	} else {
+	//		var notificationEvents = ['onclick', 'onshow', 'onerror', 'onclose'];
+	//
+	//		function notifyUser(event) {
+	//			var title;
+	//			var options;
+	//
+	//			event.preventDefault();
+	//
+	//			title = 'Email received';
+	//			options = {
+	//				body: 'You have a total of 3 unread emails',
+	//				tag: 'preset',
+	//				icon: 'http://www.audero.it/favicon.ico'
+	//			};
+	//
+	//			Notification.requestPermission(function () {
+	//				var notification = new Notification(title, options);
+	//
+	//				notificationEvents.forEach(function (eventName) {
+	//					notification[eventName] = function (event) {
+	//						console.log('Event "' + event.type + '" triggered for notification "' + notification.tag);
+	//					};
+	//				});
+	//			});
+	//		}
+	//		window.addEventListener('click', notifyUser);
+	//	}
+
+
 	//css
 	$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
 
@@ -33,8 +51,8 @@ $(function () {
 	adImgs = [];
 	mixer = mixitup('.products');
 	if ($(".profile-page").length > 0) {
-				mixer.destroy();
-			}
+		mixer.destroy();
+	}
 	category_id = $("body").data("categoryId");
 	if (!category_id) {
 		//home page
@@ -431,7 +449,8 @@ $(function () {
 		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {} else {console.log(data);
+		if (data.status === false) {} else {
+			console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -707,7 +726,7 @@ $(function () {
 						data.data.gender = "Male";
 					}
 
-				} else if (data.data.gender === "2"){
+				} else if (data.data.gender === "2") {
 					if (lang === "ar") {
 						data.data.gender = "أنثى";
 					} else {
@@ -926,10 +945,10 @@ $(function () {
 		catText1 = $(this).closest(".dropdown-menu").siblings("a").text();
 		catText2 = $(this).closest(".dropdown-menu").parents(".dropdown-menu");
 		subText = $(this).text();
-		if(catText2.length > 1){
+		if (catText2.length > 1) {
 			catText2 = catText2.first().siblings("a").text();
 			text = catText2 + " - " + catText1 + " - " + subText;
-		} else{
+		} else {
 			text = catText1 + " - " + subText;
 		}
 		$(this).closest(".categories-nav").find(".select").text(text);
@@ -1010,10 +1029,10 @@ $(function () {
 		catText1 = $(this).closest(".dropdown-menu").siblings("a").text();
 		catText2 = $(this).closest(".dropdown-menu").parents(".dropdown-menu");
 		subText = $(this).text();
-		if(catText2.length > 1){
+		if (catText2.length > 1) {
 			catText2 = catText2.first().siblings("a").text();
 			text = catText2 + " - " + catText1 + " - " + subText;
-		} else{
+		} else {
 			text = catText1 + " - " + subText;
 		}
 		$(this).closest(".categories-nav").find(".select").text(text);
@@ -1657,7 +1676,7 @@ $(function () {
 				value: $('#filter-modal .automatic-select option:selected').text()
 			});
 		}
-		
+
 		if ($('#filter-modal .gender-select option:selected').val() !== "") {
 			data.push({
 				name: "gender_name",
@@ -2293,6 +2312,25 @@ $(function () {
 
 	$("#terms-modal").on("hidden.bs.modal", function () {
 		$("body").addClass("modal-open");
+	});
+
+	$("#login-modal .qr-login").click(function () {
+		$.ajax({
+			type: "post",
+			url: base_url + '/api/QR_users_control/generate_QR_code',
+			dataType: "json"
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {} else {
+				var img = data.data;
+				$("#qr-modal .qr-img img").attr("src", site_url + img);
+				$("#login-modal").modal("hide");
+				setTimeout(function () {
+					$("#qr-modal").modal("show");
+				}, 500);
+			}
+		});
+
 	});
 
 });

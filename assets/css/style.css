@@ -243,6 +243,12 @@ body {
   color: #fff;
   border: 2px solid #c30a30; }
 
+.button2:disabled:hover {
+  cursor: default;
+  background-color: #c30a30;
+  color: #fff;
+  border: 2px solid #c30a30; }
+
 .button2:hover {
   background-color: #fff;
   color: #c30a30;
@@ -1251,6 +1257,14 @@ select option.placeholder {
 
 #login-modal .modal-body {
   text-align: center; }
+#login-modal .qr-login {
+  color: #0075b4;
+  margin-bottom: 10px;
+  text-align: left;
+  text-decoration: underline; }
+#login-modal .qr-login:hover {
+  color: #125b82;
+  cursor: pointer; }
 
 #register-modal .lines:first-child {
   margin-top: 0px; }
