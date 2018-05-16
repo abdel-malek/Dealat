@@ -65,7 +65,7 @@
 								</li>
 								<?php if($subcategories!= null && count($subcategories) > 1):?>
 								<?php foreach ($subcategories as $key => $category): ?>
-								<li data-filter=".<?php echo str_replace(' ','',$category->category_name); ?>">
+								<li data-mixitup-control data-filter=".<?php echo str_replace(' ','',$category->category_name); ?>">
 									<?php echo $category->category_name ?>
 								</li>
 								<?php endforeach; ?>
@@ -105,7 +105,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 mt-2">
-											<div class="card-title">
+											<div class="card-title mb-1">
 												<?php echo $ad->title ?>
 											</div>
 											<div>
@@ -113,7 +113,7 @@
 												<div class="category"><span class="category-lbl"></span><span class="category-val"><?php echo $ad->parent_category_name .' - '.$ad->category_name ?></span></div>
 											</div>
 											<div class="location"><span class="location-lbl"></span><span class="location-val">
-											      <?php if($ad->location_name != null): echo $ad->city_name .'-'.$ad->location_name ; else: echo $ad->city_name; endif; ?>
+											      <?php if($ad->location_name != null): echo $ad->city_name .' - '.$ad->location_name ; else: echo $ad->city_name; endif; ?>
 												</span></div>
 										</div>
 										<div class="col-12">

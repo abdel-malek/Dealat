@@ -60,7 +60,7 @@ $lang['month'] = "شهر";
 //filter modal
 $lang['old'] = "قديم";
 $lang['select_status'] = "اختر الحالة";
-$lang['select_motion'] = "اختر ناقل الحركة";
+$lang['select_motion'] = "اختر نوع ناقل الحركة";
 $lang['manual'] = "يدوي";
 //register/login modal
 $lang['username'] = "اسم المستخدم";
@@ -170,7 +170,7 @@ $lang['education'] = 'المستوى التعليمي';
 $lang['certificate'] = 'الشهادة';
 $lang['schedule'] = 'جدول الدوام ';
 $lang['experience'] = 'مستوى الخبرة';
-$lang['salary'] = 'الراتب';
+$lang['salary'] = 'الراتب (ل.س)';
 $lang['ad_details']= 'تفاصيل الإعلان';
 $lang['basic_info']= 'المعلومات الرئيسية';
 $lang['detailed_info']= 'المعلومات التفصيلية';
@@ -387,3 +387,6 @@ $lang['accepted'] = 'موافق عليه';
 $lang['pending'] = 'قيد الانتظار';
 $lang['rejected'] = 'مرفوض';
 $lang['expired'] = 'منتهي';
+$lang['qr_login'] = 'تسجيل الدخول باستخدام رمز QR';
+$lang['enter_digits'] = 'أدخل 6 أرقام';
+$lang['qr_note'] = 'الرقم الذي سيظهر على هاتفك عند مسح هذا الرمز صالح لمدة 15 دقيقة';

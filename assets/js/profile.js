@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global $, alert,console,lang, Mustache, base_url, user_id*/
+/*global $, alert, console,lang, Mustache, base_url, user_id*/
 
 //constants
 //Ad Status: 
@@ -112,15 +112,16 @@ $(function () {
 						}
 					});
 				});
-//				$("#ads-filter-select")[0].sumo.reload();
-				var mixer2 = mixitup('#user-ads .main',{selectors: {
-    
-    control: '[data-mixitup-control]'
-  }});
+				//				$("#ads-filter-select")[0].sumo.reload();
+				var mixer2 = mixitup('#user-ads .main', {
+					selectors: {
+						control: '[data-mixitup-control]'
+					}
+				});
 			}
 		});
 
-		$("#user-ads .filter-dropdown .filter-item").click(function(){
+		$("#user-ads .filter-dropdown .filter-item").click(function () {
 			$(this).closest(".dropdown-menu").siblings(".dropdown-toggle").text($(this).text());
 		});
 		//get my fav ads
@@ -168,11 +169,12 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_info',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {} else {console.log(data);
+			if (data.status === false) {} else {
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
-					userInfo.personal_image = '/assets/images/Dealat%20logo%20red.png';
+//					userInfo.personal_image = '/assets/images/Dealat%20logo%20red.png';
+					userInfo.personal_image = '/assets/images/user2.jpg';
 				}
 				template = $('#user-info-template').html();
 				Mustache.parse(template);
@@ -196,10 +198,10 @@ $(function () {
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
 				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
 				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
-												
-//				if (data.data.visible_phone === "1") {
-//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
-//				}
+
+				//				if (data.data.visible_phone === "1") {
+				//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
+				//				}
 
 			}
 		});
@@ -271,7 +273,7 @@ $(function () {
 				return false;
 			}
 			newData = $(this).serializeArray();
-console.log(newData);
+			console.log(newData);
 			e.preventDefault();
 			e.stopPropagation();
 			data = $(this).serializeArray();
@@ -528,7 +530,8 @@ console.log(newData);
 					ad_id: adId,
 					template_id: templateId
 				}
-			}).done(function (data) {console.log(data);
+			}).done(function (data) {
+				console.log(data);
 				if (data.status === false) {} else {
 					//remove upload video except for properties category
 					if (templateId === 2) {
@@ -569,7 +572,7 @@ console.log(newData);
 					if (data.data.is_negotiable === "1") {
 						$("#edit-ad-modal input[name='is_negotiable']").prop("checked", true);
 					}
-					
+
 					$("#edit-ad-modal textarea[name='description']").val(data.data.description);
 
 					if (data.data.type_id) {
@@ -589,7 +592,7 @@ console.log(newData);
 					if (data.data.engine_capacity) {
 						$("#edit-ad-modal select[name='engine_capacity']").val(data.data.engine_capacity);
 						$("#edit-ad-modal select[name='engine_capacity']")[0].sumo.reload();
-					}else{ 
+					} else {
 						$("#edit-ad-modal select[name='engine_capacity']")[0].sumo.unSelectAll();
 					}
 					if (data.data.is_automatic) {
@@ -633,13 +636,17 @@ console.log(newData);
 						$("#edit-ad-modal select[name='education_id']").val(data.data.education_id);
 						$("#edit-ad-modal select[name='education_id']")[0].sumo.reload();
 					}
+					if (data.data.certificate_id) {
+						$("#edit-ad-modal select[name='certificate_id']").val(data.data.certificate_id);
+						$("#edit-ad-modal select[name='certificate_id']")[0].sumo.reload();
+					}
 					if (data.data.experience) {
 						$("#edit-ad-modal input[name='experience']").val(data.data.experience);
 					}
 					if (data.data.gender) {
 						$("#edit-ad-modal select[name='gender']").val(data.data.gender);
 						$("#edit-ad-modal select[name='gender']")[0].sumo.reload();
-					}else{
+					} else {
 						$("#edit-ad-modal select[name='gender']")[0].sumo.unSelectAll();
 					}
 					if (data.data.salary) {
@@ -649,7 +656,7 @@ console.log(newData);
 					if (data.data.ad_visible_phone === "1") {
 						$("#edit-ad-modal input[name='ad_visible_phone']").prop("checked", true);
 					}
-					
+
 					editAdImgs = [];
 					for (i in data.data.images) {
 						editAdImgs.push(data.data.images[i].image);
@@ -917,7 +924,7 @@ console.log(newData);
 				}
 			});
 		});
-		
+
 		var sound_notify_path = site_url + 'admin_assets/definite.mp3';
 		//get chat sessions
 		$.ajax({
@@ -938,7 +945,8 @@ console.log(newData);
 						username = data.data[i].seller_name;
 					}
 					if (!sessionImage) {
-						sessionImage = '/assets/images/Dealat%20logo%20red.png';
+//						sessionImage = '/assets/images/Dealat%20logo%20red.png';
+						sessionImage = '/assets/images/user1.jpg';
 					}
 					sessionData = {
 						image: sessionImage,
@@ -967,7 +975,7 @@ console.log(newData);
 							if ($(this).data("sessionId") == newMsgSessions[i]) {
 								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
 								$(this).find(".new-msg").removeClass("d-none");
-//								$.playSound(sound_notify_path);
+								//								$.playSound(sound_notify_path);
 							}
 						}
 					});

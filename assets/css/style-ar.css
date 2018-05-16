@@ -1,5 +1,7 @@
+body {
+  font-size: 18px; }
+
 .btn {
-  font-size: .95rem;
   padding-top: 3px;
   padding-bottom: 3px; }
 
@@ -16,7 +18,7 @@ header.home .language-wrapper .language-switch span {
   border-left: 1px solid #fff; }
 
 .categories .category-slider .slick-slide h6 {
-  font-size: .8rem;
+  font-size: .7rem;
   font-weight: bold; }
 
 .search-page .products .card,
@@ -29,7 +31,7 @@ header.home .language-wrapper .language-switch span {
 .profile-page .products .card .overlay .text,
 .home-page .products .card .overlay .text,
 .category-page .products .card .overlay .text {
-  font-size: 1rem; }
+  direction: ltr; }
 
 section.search {
   direction: rtl; }
@@ -137,11 +139,16 @@ section.search {
   direction: rtl;
   text-align: right; }
 
+#login-modal .qr-login {
+  direction: rtl;
+  text-align: right; }
+
+.border-middle {
+  border-right: none;
+  border-left: 1px solid #dee2e6; }
+
 #register-form {
   direction: rtl; }
-  #register-form .border-middle {
-    border-right: none;
-    border-left: 1px solid #dee2e6; }
   #register-form .phone-wrapper {
     direction: ltr; }
     #register-form .phone-wrapper input {
@@ -154,12 +161,13 @@ section.search {
 #fileuploader-register .ajax-upload-dragdrop {
   text-align: right; }
 
-#card-modal .card {
-  font-size: .9rem; }
 #card-modal .card-body .row {
   direction: rtl; }
 #card-modal .info-col {
   text-align: right; }
+
+#card-modal .card .card-body .label, #card-modal .card .show-contact {
+  font-size: .8rem; }
 
 footer {
   direction: rtl; }
@@ -187,12 +195,15 @@ footer {
 
 .search-page .products .card .container, .profile-page .products .card .container {
   padding-right: 0;
-  padding-left: auto; }
+  padding-left: 15px; }
 
 .search-page .products .card .price,
 .profile-page .products .card .price {
   left: auto;
   right: -35px; }
+
+#card-modal .card .card-body .price {
+  direction: rtl; }
 
 .search-page .products .card .card-body,
 .profile-page .products .card .card-body {

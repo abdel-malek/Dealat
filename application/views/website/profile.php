@@ -131,8 +131,8 @@
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{publish}}</span></div>{{/publish}} {{#expiry}}
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('expiry_date'); ?>: </span><span class="date-val">{{expiry}}</span></div>{{/expiry}} {{#reject_note}}
 														<div class="reject"><span class="reject-lbl"><?php echo $this->lang->line('rejection_reason'); ?>: </span><span class="reject-val">{{reject_note}}</span></div>{{/reject_note}}
-														<div class="btn button2 delete-ad mt-2 mr-2"><span><?php echo $this->lang->line('delete'); ?> </span><i class="far fa-trash-alt fa-lg"></i></div>
-														<div class="btn button2 edit-ad mt-2"><span><?php echo $this->lang->line('edit'); ?> </span><i class="fas fa-pencil-alt fa-lg"></i></div>
+														<div class="btn button2 delete-ad mt-2 mr-2"><span><?php echo $this->lang->line('delete'); ?> </span><i class="far fa-trash-alt "></i></div>
+														<div class="btn button2 edit-ad mt-2"><span><?php echo $this->lang->line('edit'); ?> </span><i class="fas fa-pencil-alt "></i></div>
 													</div>
 													<div class="status"><span class="status-val">{{status}} </span>
 														<span class="status-icon d-none" data-status-id="1"><i class="far fa-pause-circle"></i></span>
@@ -300,7 +300,7 @@
 					<div class="error-message full d-none"></div>
 					<form id="edit-ad-form">
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-6 border-middle">
 								<input type="hidden" name="ad_id" class="ad-id">
 								<input type="hidden" name="location_id" class="location-id">
 								<input type="hidden" name="type_id" class="type-id">
@@ -483,12 +483,6 @@
 								<!--job positions template-->
 								<!--schedule id/experience id/education id-->
 								<div class="template-job template d-none" data-template-id="8">
-									<div class="form-group field schedule_name">
-										<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
-										<option disabled selected value="" class="d-none">
-									</select>
-									</div>
-
 									<div class="form-group field education_name">
 										<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -496,22 +490,28 @@
 									</div>
 
 									<div class="form-group field certificate_name">
-										<select name="certificate_id" class="certificate-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
+										<select name="certificate_id" class="certificates-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
+										<option disabled selected value="" class="d-none">
+									</select>
+									</div>
+									
+									<div class="form-group field schedule_name">
+										<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 									</div>
 
-									<div class="form-group field experience">
-										<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
-									</div>
-
-									<div class="form-group field gender">
+								<div class="form-group field gender">
 										<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
 <!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
 										<option value="1"><?php echo $this->lang->line('male'); ?></option>
 										<option value="2"><?php echo $this->lang->line('female'); ?></option>
 									</select>
+									</div>
+									
+									<div class="form-group field experience">
+										<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
 									</div>
 
 									<div class="form-group field salary">

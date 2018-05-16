@@ -5,6 +5,17 @@ $background: rgb(238, 238, 238);
 $font: #333;
 $grey: #aaa;
 $grey-hover: #999;
+$placeholder: #6c757d;
+	
+@font-face {
+	font-family: "calibri";
+	src: url("../fonts/calibri.ttf");
+}
+
+@font-face {
+	font-family: "gothic";
+	src: url("../fonts/CenturyGothic.ttf")
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -20,8 +31,9 @@ input[type=number] {
 
 html,
 body {
-	font-family: sans-serif;
-	font-size: 18px;
+	font-family: "calibri", sans-serif;
+	font-size: 20px;
+	line-height: 1.35;
 	color: $font;
 	padding: 0px;
 	margin: 0px;
@@ -337,6 +349,7 @@ body {
 	padding-bottom: 5px;
 	font-size: .8rem;
 	font-weight: bold; //	box-shadow: 0px 6px 20px 0px rgba(168, 168, 168, 1);
+	line-height: inherit
 }
 
 .btn:focus {
@@ -383,6 +396,8 @@ form .form-control:not(textarea) {
 	font-size: .9rem;
 	padding-bottom: 2px;
 	padding-left: 5px;
+	border-radius: 0;
+	    padding-bottom: 0;
 }
 
 textarea.form-control {
@@ -406,11 +421,13 @@ button.close {
 	background-color: rgba(255, 255, 255, 1);
 	padding: 0px;
 	width: 27px;
-	height: 25px;
+	height: 27px;
 	border-radius: 50%;
 	opacity: 1;
 	color: $main;
 	box-shadow: 2px 2px 12px 0px #aaa;
+	font-size: 1rem;
+	line-height: 27px;
 }
 
 button.close:hover {
@@ -508,7 +525,7 @@ summary:focus {
 			text-align: center;
 			z-index: 1;
 			color: #fff;
-			font-size: .85rem;
+			font-size: .8rem;
 			box-shadow: 2px 1px 10px 0px #a8a8a8;
 
 		}
@@ -552,6 +569,7 @@ summary:focus {
 			transition: .2s
 		}
 		.card-title {
+			font-family: "gothic";
 			font-weight: bold;
 			margin-bottom: 0;
 			overflow: hidden;
@@ -674,6 +692,7 @@ summary:focus {
 		border-top-right-radius: 10px;
 		cursor: pointer;
 		color: #eee;
+		font-size: .8rem;
 	}
 	.icons {
 		position: relative;
@@ -859,10 +878,11 @@ header.home {
 				transform: scale(1.1)
 			}
 			h6 {
+				font-family: "gothic";
 				color: #444;
-				font-size: .7rem;
+				font-size: .6rem;
 				padding-top: 8px;
-				width: 70%;
+				width: 80%;
 				margin: auto
 			}
 		}
@@ -1139,7 +1159,7 @@ header.home {
 			font-size: .9rem;
 			line-height: initial;
 			display: block;
-			padding: 0 10px;
+			padding: 5px 10px;
 			outline: none;
 			color: $grey;
 			text-decoration: none
@@ -1151,7 +1171,7 @@ header.home {
 			color: $grey-hover
 		}
 		.tab.active {
-			padding-top: 6px;
+			//			padding-top: 6px;
 			position: relative;
 			top: 1px;
 
@@ -1281,7 +1301,7 @@ footer {
 }
 
 select option.placeholder {
-	color: #6c757d
+	color: $placeholder
 }
 
 //End global
@@ -1289,10 +1309,16 @@ select option.placeholder {
 #card-modal {
 	.modal-header {
 		//		padding: 0
+		position: relative
 	}
 	.modal-body {
 		padding: 0;
-	} //	@extend %card;
+	} 
+	.modal-footer {
+		padding-top: 7px;
+		padding-bottom: 15px
+	}
+	//	@extend %card;
 	.card {
 		font-size: .8rem;
 		border: none;
@@ -1331,8 +1357,15 @@ select option.placeholder {
 					left: -1px;
 				}
 			}
+
+			.label {
+				//				font-weight: bold;
+								font-size: .7rem;
+				font-family: "gothic";
+				color: #888
+			}
 			.price-val {
-				margin-top: 35%
+				margin-top: 38%
 			}
 			.views-lbl,
 			.likes-lbl {
@@ -1342,29 +1375,62 @@ select option.placeholder {
 				position: absolute;
 				text-align: center;
 				top: 0px;
-				right: 10px;
+				right: 20px;
 				z-index: 3;
-				color: #999;
-				font-size: .9rem;
+				color: #bbb;
+				font-size: .7rem;
 				.icon {
 					transition: .1s
 				}
 				.icon:hover {
-					font-size: .95rem;
-					color: orange;
+					font-size: .75rem;
+					//					color: orange;
+					cursor: pointer
+				}
+			}
+			.report {
+				position: absolute;
+				text-align: center;
+				top: 0px;
+				right: 70px;
+				z-index: 3;
+				color: #bbb;
+				font-size: .65rem;
+				.icon {
+					transition: .1s
+				}
+				.icon:hover {
+					font-size: .7rem;
+					color: #FF87A0;
 					cursor: pointer
 				}
 			}
 		}
 		.card-title {
+			font-family: "gothic";
 			font-weight: bold;
 			margin-bottom: 0;
 			color: $main;
 			font-size: .9rem
 		}
 		.details {
-			width: 70%;
-			margin: auto;
+			//			width: 70%;
+			//			margin: auto;
+		}
+		.show-contact {
+			//			min-height: 28px;
+			//			padding: 3px 6px;
+						font-size: .7rem;
+			//			letter-spacing: .5px;
+			//			font-weight: normal;
+			//			margin: 5px 0;
+			color: $main;
+			text-decoration: underline;
+			font-family: "gothic";
+		}
+		.show-contact:hover {
+			cursor: pointer;
+			color: #8e0c28
 		}
 	}
 	.card-img-slider {
@@ -1425,10 +1491,6 @@ select option.placeholder {
 	/* Selected state of the stars */
 	.rating-stars ul > li.star.selected > svg {
 		color: #FF912C;
-	}
-
-	.modal-header {
-		position: relative
 	}
 
 	.btn.report {
@@ -1624,17 +1686,43 @@ select option.placeholder {
 	}
 }
 
+.border-middle {
+	border-right: 1px solid #dee2e6;
+}
+
+@media(max-width: 768px) {
+	.border-middle {
+		border: none
+	}
+}
+
 #register-modal {
 	.lines:first-child {
 		margin-top: 0px;
 	}
-	.border-middle {
-		border-right: 1px solid #dee2e6;
+	//	.border-middle {
+	//		border-right: 1px solid #dee2e6;
+	//	}
+	//	@media(max-width: 768px) {
+	//		.border-middle {
+	//			border: none
+	//		}
+	//	}
+}
+
+#qr-modal {
+	.qr-img {
+		margin-bottom: 15px
 	}
-	@media(max-width: 768px) {
-		.border-middle {
-			border: none
-		}
+	.note {
+		font-size: 0.7rem;
+		margin-bottom: 15px;
+		color: #888;
+	}
+	input[name="secret_code"] {
+		max-width: 200px;
+		margin: auto;
+		text-align: center;
 	}
 }
 
@@ -1645,7 +1733,7 @@ select option.placeholder {
 }
 
 .SumoSelect > .CaptionCont > span.placeholder {
-	color: #6c757d;
+	color: $placeholder;
 	font-style: normal
 }
 
@@ -1959,6 +2047,11 @@ label {
 	}
 }
 
+.SumoSelect {
+	width: auto;
+	min-width: 200px;
+}
+
 #report-form .SumoSelect {
 	text-align: left;
 	width: auto;
@@ -2033,4 +2126,8 @@ label {
 	#user-ads .filter-dropdown {
 		margin-right: 8%
 	}
+}
+
+.btn.place-ad .fa-plus{
+	font-size: .7rem 
 }

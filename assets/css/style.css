@@ -1,4 +1,10 @@
 /*Main Rules*/
+@font-face {
+  font-family: "calibri";
+  src: url("../fonts/calibri.ttf"); }
+@font-face {
+  font-family: "gothic";
+  src: url("../fonts/CenturyGothic.ttf"); }
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -11,8 +17,9 @@ input[type=number] {
 
 html,
 body {
-  font-family: sans-serif;
-  font-size: 18px;
+  font-family: "calibri", sans-serif;
+  font-size: 20px;
+  line-height: 1.35;
   color: #333;
   padding: 0px;
   margin: 0px;
@@ -225,7 +232,8 @@ body {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: .8rem;
-  font-weight: bold; }
+  font-weight: bold;
+  line-height: inherit; }
 
 .btn:focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0); }
@@ -263,7 +271,9 @@ form .form-control:not(textarea) {
   border-bottom: 1px solid #ced4da;
   font-size: .9rem;
   padding-bottom: 2px;
-  padding-left: 5px; }
+  padding-left: 5px;
+  border-radius: 0;
+  padding-bottom: 0; }
 
 textarea.form-control {
   font-size: .9rem;
@@ -284,11 +294,13 @@ button.close {
   background-color: white;
   padding: 0px;
   width: 27px;
-  height: 25px;
+  height: 27px;
   border-radius: 50%;
   opacity: 1;
   color: #c30a30;
-  box-shadow: 2px 2px 12px 0px #aaa; }
+  box-shadow: 2px 2px 12px 0px #aaa;
+  font-size: 1rem;
+  line-height: 27px; }
 
 button.close:hover {
   background-color: white;
@@ -376,7 +388,7 @@ summary:focus {
     text-align: center;
     z-index: 1;
     color: #fff;
-    font-size: .85rem;
+    font-size: .8rem;
     box-shadow: 2px 1px 10px 0px #a8a8a8; }
   .search-page .products .card .price-val,
   .profile-page .products .card .price-val, .home-page .products .card .price-val,
@@ -424,6 +436,7 @@ summary:focus {
   .search-page .products .card .card-title,
   .profile-page .products .card .card-title, .home-page .products .card .card-title,
   .category-page .products .card .card-title {
+    font-family: "gothic";
     font-weight: bold;
     margin-bottom: 0;
     overflow: hidden;
@@ -529,7 +542,8 @@ summary:focus {
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
     cursor: pointer;
-    color: #eee; }
+    color: #eee;
+    font-size: .8rem; }
   .social-fixed .icons {
     position: relative;
     left: 0;
@@ -656,10 +670,11 @@ header.home {
       cursor: pointer;
       transform: scale(1.1); }
     .categories .category-slider .slick-slide h6 {
+      font-family: "gothic";
       color: #444;
-      font-size: .7rem;
+      font-size: .6rem;
       padding-top: 8px;
-      width: 70%;
+      width: 80%;
       margin: auto; }
   .categories .slick-arrow {
     top: 35%; }
@@ -880,7 +895,7 @@ header.home {
     font-size: .9rem;
     line-height: initial;
     display: block;
-    padding: 0 10px;
+    padding: 5px 10px;
     outline: none;
     color: #aaa;
     text-decoration: none; }
@@ -889,7 +904,6 @@ header.home {
   .profile-page #profile-tabs .tab a:hover {
     color: #999; }
   .profile-page #profile-tabs .tab.active {
-    padding-top: 6px;
     position: relative;
     top: 1px; }
   .profile-page #profile-tabs .tab a.active {
@@ -979,8 +993,13 @@ select option.placeholder {
   /* Idle State of the stars */
   /* Hover state of the stars */
   /* Selected state of the stars */ }
+  #card-modal .modal-header {
+    position: relative; }
   #card-modal .modal-body {
     padding: 0; }
+  #card-modal .modal-footer {
+    padding-top: 7px;
+    padding-bottom: 15px; }
   #card-modal .card {
     font-size: .8rem;
     border: none;
@@ -1014,8 +1033,12 @@ select option.placeholder {
       @media (max-width: 576px) {
         #card-modal .card .card-body .price {
           left: -1px; } }
+      #card-modal .card .card-body .label {
+        font-size: .7rem;
+        font-family: "gothic";
+        color: #888; }
       #card-modal .card .card-body .price-val {
-        margin-top: 35%; }
+        margin-top: 38%; }
       #card-modal .card .card-body .views-lbl,
       #card-modal .card .card-body .likes-lbl {
         padding-right: 20px; }
@@ -1023,24 +1046,43 @@ select option.placeholder {
         position: absolute;
         text-align: center;
         top: 0px;
-        right: 10px;
+        right: 20px;
         z-index: 3;
-        color: #999;
-        font-size: .9rem; }
+        color: #bbb;
+        font-size: .7rem; }
         #card-modal .card .card-body .fav .icon {
           transition: 0.1s; }
         #card-modal .card .card-body .fav .icon:hover {
-          font-size: .95rem;
-          color: orange;
+          font-size: .75rem;
+          cursor: pointer; }
+      #card-modal .card .card-body .report {
+        position: absolute;
+        text-align: center;
+        top: 0px;
+        right: 70px;
+        z-index: 3;
+        color: #bbb;
+        font-size: .65rem; }
+        #card-modal .card .card-body .report .icon {
+          transition: 0.1s; }
+        #card-modal .card .card-body .report .icon:hover {
+          font-size: .7rem;
+          color: #FF87A0;
           cursor: pointer; }
     #card-modal .card .card-title {
+      font-family: "gothic";
       font-weight: bold;
       margin-bottom: 0;
       color: #c30a30;
       font-size: 0.9rem; }
-    #card-modal .card .details {
-      width: 70%;
-      margin: auto; }
+    #card-modal .card .show-contact {
+      font-size: .7rem;
+      color: #c30a30;
+      text-decoration: underline;
+      font-family: "gothic"; }
+    #card-modal .card .show-contact:hover {
+      cursor: pointer;
+      color: #8e0c28; }
   #card-modal .card-img-slider .slick-slide img {
     margin: auto;
     height: inherit; }
@@ -1075,8 +1117,6 @@ select option.placeholder {
     color: #FFCC36; }
   #card-modal .rating-stars ul > li.star.selected > svg {
     color: #FF912C; }
-  #card-modal .modal-header {
-    position: relative; }
   #card-modal .btn.report {
     width: 30px;
     height: 30px;
@@ -1266,13 +1306,25 @@ select option.placeholder {
   color: #125b82;
   cursor: pointer; }
 
+.border-middle {
+  border-right: 1px solid #dee2e6; }
+
+@media (max-width: 768px) {
+  .border-middle {
+    border: none; } }
 #register-modal .lines:first-child {
   margin-top: 0px; }
-#register-modal .border-middle {
-  border-right: 1px solid #dee2e6; }
-@media (max-width: 768px) {
-  #register-modal .border-middle {
-    border: none; } }
+
+#qr-modal .qr-img {
+  margin-bottom: 15px; }
+#qr-modal .note {
+  font-size: 0.7rem;
+  margin-bottom: 15px;
+  color: #888; }
+#qr-modal input[name="secret_code"] {
+  max-width: 200px;
+  margin: auto;
+  text-align: center; }
 
 .SumoSelect > .CaptionCont {
   border-radius: 13px;
@@ -1542,6 +1594,10 @@ label {
     transition: .15s;
     color: #fff; }
 
+.SumoSelect {
+  width: auto;
+  min-width: 200px; }
+
 #report-form .SumoSelect {
   text-align: left;
   width: auto;
@@ -1599,5 +1655,7 @@ label {
 @media (min-width: 768px) {
   #user-ads .filter-dropdown {
     margin-right: 8%; } }
+.btn.place-ad .fa-plus {
+  font-size: 0.7rem; }
 
 /*# sourceMappingURL=style.css.map */

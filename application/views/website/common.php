@@ -104,7 +104,11 @@
 								</li>
 							</ul>
 						</div>
-						<div class="new-msg d-none"><a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>"><i class="fas fa-envelope"></i></a></div>
+						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>" class="new-msg d-none">
+<!--						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>">-->
+						<i class="fas fa-envelope"></i>
+<!--						</a>-->
+						</a>
 					</div>
 				</div>
 				<?php } ?>
@@ -125,8 +129,10 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>
-					<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>
+<!--					<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>-->
+					<button type="button" class="btn button2 chat"><i class="far fa-comment-alt fa-lg"></i></button>
+<!--					<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>-->
+<!--					<div class="report" title="<?php echo $this->lang->line('report_ad'); ?>"><span><i class="far fa-flag fa-2x"></i></span></div>-->
 				</div>
 			</div>
 		</div>
@@ -149,20 +155,22 @@
 				
 			</div>
 			<div class="card-body">
+			<div class="report" title="<?php echo $this->lang->line('report_ad'); ?>"><span class="icon"><i class="far fa-flag fa-2x"></i></span></div>
 				<div class="fav">
 					<span class="icon" data-added="{{ad.is_favorite}}" title="<?php echo $this->lang->line('add_fav'); ?>"><i class="far fa-heart fa-2x"></i></span>
 				</div>
+				
 				<div class="row">
 					<div class="col-12 mb-4 text-center">
 						<div class="card-title">{{ad.title}}</div>
 						<div class="details">{{ad.description}}</div>
 					</div>
 
-					<div class="col-sm-4 info-col mb-1">
-						<div class="number"><span class="number-lbl"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val">{{ad.ad_id}}</span></div>
-						<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
-						<div class="seller"><span class="seller-lbl"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
-						<!--<div class="seller"><span class="rating-lbl"><?php echo $this->lang->line('seller_rating'); ?>: </span>
+					<div class="col-sm-4 info-col mb-1 border-middle">
+						<div class="number"><span class="number-lbl label"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val"><b>{{ad.ad_id}}</b></span></div>
+						<div class="category"><span class="category-lbl label"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
+						<div class="seller"><span class="seller-lbl label"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
+						<!--<div class="seller"><span class="rating-lbl label"><?php echo $this->lang->line('seller_rating'); ?>: </span>
 						<span class="rating-val">
 							<fieldset class="rating">
 								<span class="rate-group" data-value="5">
@@ -194,88 +202,89 @@
 						</span>
 					</div>-->
 						
-						<details>
-							<summary><span class="mb-1 mt-2 show-contact"><?php echo $this->lang->line('contact_info'); ?></span></summary>
-							<div class="mobile"><span class="mobile-lbl"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href=""></a></span></div>
-						</details>
+						<!-- <button class=" btn button2 show-contact">
+							<div><span class="mb-1 mt-2 show-contact"><?php echo $this->lang->line('contact_info'); ?></span></div></button> -->
+							<div class="show-contact"><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></div>
+							<div class="mobile details d-none"><span class="mobile-lbl label"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href=""></a></span></div>
+						
 					</div>
 
-					<div class="col-sm-4 info-col">
-						<div class="location"><span class="location-lbl"></span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
-						<div class="date"><span class="date-lbl"></span><span class="date-val">{{date}}</span></div>
-						<div class="negotiable"><span class="negotiable-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
+					<div class="col-sm-4 info-col border-middle">
+						<div class="location"><span class="location-lbl label"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
+						<div class="date"><span class="date-lbl label"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{date}}</span></div>
+						<div class="negotiable"><span class="negotiable-lbl label"><?php echo $this->lang->line('price'); ?>: </span><span class="negotiable-val">{{negotiable}}</span></div>
 					</div>
 
 					<div class="col-sm-4 info-col templates">
+						
 						<!--vehicles template-->
 						<div class="template-vehicles template d-none" data-template-id="1">
-							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-							<div class="manufacture_date field"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>:</span><span class="manufacture_date-val"> {{ad.manufacture_date}}</span></div>
-							<div class="is_automatic field"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>:</span><span class="is_automatic-val"> {{automatic}}</span></div>
-							<div class="is_new field"><span class="is_new-lbl"></span>
-								<?php echo $this->lang->line('item_status'); ?>:<span class="is_new-val"> {{status}}</span></div>
-							<div class="kilometer field"><span class="kilometer-lbl"><?php echo $this->lang->line('kilometrage'); ?>:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
-							<div class="engine_capacity field"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>:</span><span class="engine_capacity-val"> {{ad.engine_capacity}}</span></div>
+							<div class="type field type_name"><span class="type-lbl label"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl label"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="manufacture_date field"><span class="manufacture_date-lbl label"><?php echo $this->lang->line('manufacture_date'); ?>:</span><span class="manufacture_date-val"> {{ad.manufacture_date}}</span></div>
+							<div class="is_automatic field"><span class="is_automatic-lbl label"><?php echo $this->lang->line('motion'); ?>:</span><span class="is_automatic-val"> {{automatic}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label">
+								<?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="kilometer field"><span class="kilometer-lbl label"><?php echo $this->lang->line('kilometrage'); ?>:</span><span class="kilometer-val"> {{ad.kilometer}}</span></div>
+							<div class="engine_capacity field"><span class="engine_capacity-lbl label"><?php echo $this->lang->line('engine_capacity'); ?>:</span><span class="engine_capacity-val"> {{ad.engine_capacity}}</span></div>
 						</div>
 
 						<!--properties template-->
 						<div class="template-properties template d-none" data-template-id="2">
-							<div class="space field"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>:</span><span class="space-val"> {{ad.space}}</span></div>
-							<div class="rooms_num field"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
-							<div class="floor field"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
-							<div class="floors_number field"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>:</span><span class="floors_number-val"> {{ad.floors_number}}</span></div>
-							<div class="state field"><span class="state-lbl"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
-							<div class="with_furniture field"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
+							<div class="space field"><span class="space-lbl label"><?php echo $this->lang->line('space'); ?>:</span><span class="space-val"> {{ad.space}}</span></div>
+							<div class="rooms_num field"><span class="rooms_num-lbl label"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
+							<div class="floor field"><span class="floor-lbl label"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
+							<div class="floors_number field"><span class="floors_number-lbl label"><?php echo $this->lang->line('floors_number'); ?>:</span><span class="floors_number-val"> {{ad.floors_number}}</span></div>
+							<div class="state field"><span class="state-lbl label"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
+							<div class="with_furniture field"><span class="with_furniture-lbl label"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
 						</div>
 
 						<!--mobiles template-->
 						<!--type id-->
 						<div class="template-mobiles template d-none" data-template-id="3">
-							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="type field type_name"><span class="type-lbl label"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl label"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--electronics template-->
 						<!--type id-->
 						<div class="template-electronics template d-none" data-template-id="4">
-							<div class="type field type_name"><span class="type-lbl"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
-							<div class="model field type_model_name"><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
-							<div class="size field"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>:</span><span class="size-val"> {{ad.size}}</span></div>
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="type field type_name"><span class="type-lbl label"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
+							<div class="model field type_model_name"><span class="model-lbl label"><?php echo $this->lang->line('type_model'); ?>:</span><span class="model-val"> {{ad.type_model_name}}</span></div>
+							<div class="size field"><span class="size-lbl label"><?php echo $this->lang->line('size'); ?>:</span><span class="size-val"> {{ad.size}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--fashion template-->
 						<div class="template-fashion template d-none" data-template-id="5">
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--kids template-->
 						<div class="template-kids template d-none" data-template-id="6">
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--sports template-->
 						<div class="template-sports template d-none" data-template-id="7">
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--job positions template-->
 						<!--schedule id/experience id/education id-->
 						<div class="template-job template d-none" data-template-id="8">
-							<div class="schedule field schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val"> {{ad.schedule}}</span></div>
-							<div class="education field education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>:</span><span class="education-val"> {{ad.education}}</span></div>
-							<div class="certificate field certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>:</span><span class="certificate-val"> {{ad.certificate}}</span></div>
-							<div class="certificate field certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>:</span><span class="certificate-val"> {{ad.certificate}}</span></div>
-							<div class="experience field experience"><span class="experience-lbl"><?php echo $this->lang->line('experience'); ?>:</span><span class="experience-val"> {{ad.experience}}</span></div>
-							<div class="gender field"><span class="gender-lbl"><?php echo $this->lang->line('gender'); ?>:</span><span class="gender-val"> {{ad.gender}}</span></div>
-							<div class="salary field"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>:</span><span class="salary-val"> {{ad.salary}}</span></div>
+							<div class="schedule field schedule_name"><span class="schedule-lbl label"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val"> {{ad.schedule_name}}</span></div>
+							<div class="education field education_name"><span class="education-lbl label"><?php echo $this->lang->line('education'); ?>:</span><span class="education-val"> {{ad.education_name}}</span></div>
+							<div class="certificate field certificate_name"><span class="certificate-lbl label"><?php echo $this->lang->line('certificate'); ?>:</span><span class="certificate-val"> {{ad.certificate_name}}</span></div>
+							<div class="experience field experience"><span class="experience-lbl label"><?php echo $this->lang->line('experience'); ?>:</span><span class="experience-val"> {{ad.experience}}</span></div>
+							<div class="gender field"><span class="gender-lbl label"><?php echo $this->lang->line('gender'); ?>:</span><span class="gender-val"> {{ad.gender}}</span></div>
+							<div class="salary field"><span class="salary-lbl label"><?php echo $this->lang->line('salary'); ?>:</span><span class="salary-val"> {{ad.salary}}</span></div>
 						</div>
 
 						<!--industries template-->
 						<div class="template-industries template d-none" data-template-id="9">
-							<div class="is_new field"><span class="is_new-lbl"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
+							<div class="is_new field"><span class="is_new-lbl label"><?php echo $this->lang->line('item_status'); ?>:</span><span class="is_new-val"> {{status}}</span></div>
 						</div>
 
 						<!--services template-->
@@ -420,7 +429,7 @@
 							<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
 						</div>
 						
-						<div class="qr-login">Log in using QR code</div>
+						<div class="qr-login"><?php echo $this->lang->line('qr_login'); ?></div>
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 					</form>
 					<!--
@@ -454,7 +463,7 @@
 					<div class="error-message full d-none"></div>
 					<form id="place-ad-form">
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-6  border-middle">
 								<input type="hidden" name="category_id" class="category-id">
 								<input type="hidden" name="type_id" class="type-id">
 								<input type="hidden" name="type_model_id" class="type-model-id">
@@ -682,12 +691,6 @@
 							<!--job positions template-->
 							<!--schedule id/experience id/education id-->
 							<div class="template-job template d-none" data-template-id="8">
-								<div class="form-group field schedule_name">
-									<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
-										<option disabled selected value="" class="d-none">
-									</select>
-								</div>
-
 								<div class="form-group field education_name">
 									<select name="education_id" class="educations-select" placeholder="<?php echo $this->lang->line('education'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -695,16 +698,18 @@
 								</div>
 								
 								<div class="form-group field certificate_name">
-									<select name="certificate_id" class="certificate-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
+									<select name="certificate_id" class="certificates-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-
-								<div class="form-group field experience">
-									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
+								
+								<div class="form-group field schedule_name">
+									<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
+										<option disabled selected value="" class="d-none">
+									</select>
 								</div>
-
-							<div class="form-group field gender">
+								
+								<div class="form-group field gender">
 									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
 <!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
@@ -712,6 +717,11 @@
 										<option value="2"><?php echo $this->lang->line('female'); ?></option>
 									</select>
 								</div>
+
+								<div class="form-group field experience">
+									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
+								</div>
+							
 								<div class="form-group field salary">
 									<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
@@ -784,7 +794,7 @@
 				<form id="filter-form">
 
 					<div class="row">
-						<div class="col-sm-6">
+						<div class="col-sm-6  border-middle">
 							<input type="hidden" class="template-id">
 							<input type="hidden" name="category_id" class="category-id">
 							<input type="hidden" name="category_name">
@@ -1047,21 +1057,21 @@
 							<!--job positions template-->
 							<!--schedule id/experience id/education id-->
 							<div class="template-job template d-none" data-template-id="8">
-								<div class="form-group field schedule_name">
-									<select multiple name="" class="schedules-select multiple" placeholder="<?php echo $this->lang->line('schedule'); ?>">
-							</select>
-								</div>
-
 								<div class="form-group field education_name">
 									<select multiple name="" class="educations-select multiple" placeholder="<?php echo $this->lang->line('education'); ?>">
 							</select>
 								</div>
 
 						<div class="form-group field certificate_name">
-									<select multiple name="" class="certificate-select multiple" placeholder="<?php echo $this->lang->line('certificate'); ?>">
+									<select multiple name="" class="certificates-select multiple" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 									</select>
 								</div>
 								
+								<div class="form-group field schedule_name">
+									<select multiple name="" class="schedules-select multiple" placeholder="<?php echo $this->lang->line('schedule'); ?>">
+							</select>
+								</div>
+
 							<div class="form-group field gender">
 									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -1169,6 +1179,7 @@
 				<div class="chat-header">
 					<div class="ad-name"></div>
 					<div class="user-name"></div>
+					<input type="hidden" class="session-id">
 				</div>
 			</div>
 			<div class="modal-body">
@@ -1277,9 +1288,13 @@
         </button>
 			</div>
 			<div class="modal-body text-center">
+			<div class="error-message d-none"></div>
 				<div class="qr-img"><img src="" width="220px" alt="QR code image"></div>
+				<div class="note"><?php echo $this->lang->line('qr_note'); ?></div>
 				<form id="qr-form">
-					<input type="number" class="form-control" name="secret_code" placeholder="Enter 6 digits number">
+				<div class="form-group">
+					<input type="number" class="form-control" name="secret_code" placeholder="<?php echo $this->lang->line('enter_digits'); ?>">
+					</div>
 				</form>
 				
 			</div>

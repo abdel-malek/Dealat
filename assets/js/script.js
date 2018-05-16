@@ -49,7 +49,11 @@ $(function () {
 	//global variables
 	var typesData, adImgs, mixer, category_id, category_name, i, template, rendered, subcategories = [];
 	adImgs = [];
-	mixer = mixitup('.products');
+	mixer = mixitup('.products', {
+		selectors: {
+			control: '[data-mixitup-control]'
+		}
+	});
 	if ($(".profile-page").length > 0) {
 		mixer.destroy();
 	}
@@ -118,6 +122,7 @@ $(function () {
 		$('#ad-modal .period-select')[0].sumo.unSelectAll();
 		$('#ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#ad-modal .educations-select')[0].sumo.unSelectAll();
+		$('#ad-modal .certificates-select')[0].sumo.unSelectAll();
 		$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
 	}
 
@@ -144,6 +149,7 @@ $(function () {
 		$('#edit-ad-modal .period-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .educations-select')[0].sumo.unSelectAll();
+		$('#edit-ad-modal .certificates-select')[0].sumo.unSelectAll();
 	}
 
 	function resetFilter() {
@@ -169,6 +175,7 @@ $(function () {
 		$('#filter-modal .status-select')[0].sumo.unSelectAll();
 		$('#filter-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#filter-modal .educations-select')[0].sumo.unSelectAll();
+		$('#filter-modal .certificates-select')[0].sumo.unSelectAll();
 	}
 
 	$("#ad-modal, #filter-modal").on("show.bs.modal", function () {
@@ -207,12 +214,20 @@ $(function () {
 			});
 		}
 		resetPostAd();
-		mixer = mixitup('.products');
+		mixer = mixitup('.products', {
+			selectors: {
+				control: '[data-mixitup-control]'
+			}
+		});
 	});
 
 	$("#filter-modal").on("hide.bs.modal", function () {
 		resetFilter();
-		mixer = mixitup('.products');
+		mixer = mixitup('.products', {
+			selectors: {
+				control: '[data-mixitup-control]'
+			}
+		});
 	});
 
 	$("#edit-ad-modal").on("hide.bs.modal", function () {
@@ -443,7 +458,7 @@ $(function () {
 		}
 	});
 
-	//get cities and areas - types - educations - schedules
+	//get cities and areas - types - educations - schedules - certificates
 	$.ajax({
 		type: "get",
 		url: base_url + '/api/items_control/get_data_lists',
@@ -599,10 +614,22 @@ $(function () {
 				$('select.educations-select')[i].sumo.reload();
 			}
 
+			//certificates
+			for (i in data.data.certificates) {
+				$('#ad-modal .certificates-select,#edit-ad-modal .certificates-select, #filter-modal .certificates-select').append($('<option>', {
+					value: data.data.certificates[i].certificate_id,
+					text: data.data.certificates[i].name
+				}));
+			}
+
+			for (i = 0; i < $('select.certificates-select').length; i += 1) {
+				$('select.certificates-select')[i].sumo.reload();
+			}
+
 			//schedules
 			for (i in data.data.schedules) {
 				$('#ad-modal .schedules-select,#edit-ad-modal .schedules-select, #filter-modal .schedules-select').append($('<option>', {
-					value: data.data.schedules[i].education_id,
+					value: data.data.schedules[i].schedule_id,
 					text: data.data.schedules[i].name
 				}));
 			}
@@ -777,6 +804,18 @@ $(function () {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
 				}
 
+				//category job then remove price circle
+				if (data.data.tamplate_id === "8") {
+					$("#card-modal .price").addClass("d-none");
+					$("#card-modal .negotiable").addClass("d-none");
+				} else {
+					$("#card-modal .price").removeClass("d-none");
+					$("#card-modal .negotiable").removeClass("d-none");
+				}
+
+				if (!logged) {
+					$("#card-modal .fav .icon").data("added", 0);
+				}
 				//				if (data.data.visible_phone === "0") {
 				//					$("#card-modal details").addClass("d-none");
 				//				}
@@ -814,7 +853,7 @@ $(function () {
 
 				if ($(".card .fav .icon").data("added") === 0) {
 					$(".card .fav .icon").html('<i class="far fa-heart fa-2x"></i>');
-					$(".card .fav .icon").css("color", "#999");
+					$(".card .fav .icon").css("color", "#bbb");
 				} else if ($(".card .fav .icon").data("added") === 1) {
 					$(".card .fav .icon").html('<i class="fas fa-heart fa-2x"></i>');
 					$(".card .fav .icon").css("color", "#FF87A0");
@@ -833,10 +872,11 @@ $(function () {
 		var phone, whatsapp;
 		phone = $(this).parents(".card").find(".seller-phone").val();
 		//		whatsapp = $("#card-modal .seller-whatsapp").val();
-		$("#card-modal details .mobile-val a").text(phone);
-		$("#card-modal details .mobile-val a").attr("href", "tel:" + phone);
-		$("#card-modal details .whatsapp-val a").text(whatsapp);
-		$("#card-modal details .whatsapp-val a").attr("href", "tel:" + whatsapp);
+		$("#card-modal .details .mobile-val a").text(phone);
+		$("#card-modal .details .mobile-val a").attr("href", "tel:" + phone);
+		$("#card-modal .details").removeClass("d-none");
+		//		$("#card-modal .details .whatsapp-val a").text(whatsapp);
+		//		$("#card-modal .details .whatsapp-val a").attr("href", "tel:" + whatsapp);
 	});
 
 
@@ -1358,9 +1398,9 @@ $(function () {
 
 			$(".category-slider img").css("width", "30%");
 			if (lang === "ar") {
-				$(".category-slider h6").css("font-size", ".7rem");
-			} else {
 				$(".category-slider h6").css("font-size", ".6rem");
+			} else {
+				$(".category-slider h6").css("font-size", ".5rem");
 			}
 
 		} else {
@@ -1542,6 +1582,8 @@ $(function () {
 			schedulesNameArr = "",
 			educationArr = [],
 			educationNameArr = "",
+			certificateArr = [],
+			certificateNameArr = "",
 			manufactureDateArr = [],
 			manufactureDateNameArr = "",
 			engineCapacityArr = [],
@@ -1635,6 +1677,23 @@ $(function () {
 			});
 		}
 
+		if ($('#filter-modal .certificates-select option:selected').length > 0) {
+			$('#filter-modal .certificates-select option:selected').each(function (i) {
+				certificateArr.push($(this).val());
+				certificateNameArr += $(this).text() + ', ';
+				$('#filter-modal .certificates-select')[0].sumo.unSelectItem(i);
+			});
+			certificateArr = JSON.stringify(certificateArr);
+			certificateNameArr = certificateNameArr.slice(0, -2);
+			data.push({
+				name: "certificate_id",
+				value: certificateArr
+			}, {
+				name: "certificate_name",
+				value: certificateNameArr
+			});
+		}
+
 		var templateId = $("#filter-form input.template-id").val();
 
 		//push values as strings for bookmark
@@ -1692,7 +1751,6 @@ $(function () {
 			});
 		}
 
-		console.log(data);
 		data1 = $.param(data);
 
 		sessionStorage.removeItem('bookmark');
@@ -1723,6 +1781,8 @@ $(function () {
 		var adId;
 		adId = $("#card-modal").find(".card").data("adId");
 		$("#chat-form .ad-id").val(adId);
+		$("#chat-modal .is-seller").val("0");
+
 
 		$("#chat-modal .chat-header .ad-name").text($(this).parents(".modal-content").find(".card-title").text());
 		$("#chat-modal .chat-header .user-name").text($(this).parents(".modal-content").find(".seller-val").text());
@@ -1737,31 +1797,45 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
+				//				console.log(data);
 				$("#chat-modal .chat").empty();
-				var msgDate = data.data[0].created_at.split(' ')[0];
-				$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
-				for (i in data.data) {
-					if (data.data[i].to_seller === "1") {
-						// message from me to seller
-						template = $('#chat-self-template').html();
-					} else {
-						template = $('#chat-other-template').html();
-					}
-					//check msg date
-					if (data.data[i].created_at.split(' ')[0] !== msgDate) {
-						//update msg date
-						msgDate = data.data[i].created_at.split(' ')[0];
-						$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
-					}
+				//				$("#chat-modal .session-id").val(data.data[0]);
+				var msgDate
+				//if there are previous chat messages
+				if (data.data.length > 0) {
+					//					$("#chat-modal .session-id").val(data.data[0].chat_session_id);
+					msgDate = data.data[0].created_at.split(' ')[0];
+					$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+					for (i in data.data) {
+						if (data.data[i].to_seller === "1") {
+							// message from me to seller
+							template = $('#chat-self-template').html();
+						} else {
+							template = $('#chat-other-template').html();
+						}
+						//check msg date
+						if (data.data[i].created_at.split(' ')[0] !== msgDate) {
+							//update msg date
+							msgDate = data.data[i].created_at.split(' ')[0];
+							$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
+						}
 
-					data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
-						hour: 'numeric',
-						minute: 'numeric',
-						hour12: true
-					});
-					Mustache.parse(template);
-					rendered = Mustache.render(template, data.data[i]);
-					$("#chat-modal .chat").append(rendered);
+						data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
+							hour: 'numeric',
+							minute: 'numeric',
+							hour12: true
+						});
+						Mustache.parse(template);
+						rendered = Mustache.render(template, data.data[i]);
+						$("#chat-modal .chat").append(rendered);
+					}
+				} else {
+					msgDate = new Date();
+					year = msgDate.getFullYear();
+					month = msgDate.getMonth() + 1;
+					day = msgDate.getDate();
+					msgDate = year + "-" + month + "-" + day;
+					$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 				}
 				$("#card-modal").modal("hide");
 				setTimeout(function () {
@@ -1786,6 +1860,7 @@ $(function () {
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
+				//				console.log(data);
 				//								notSeenMsgs = 0;
 				newNotSeenMsgs = 0;
 				var newMsgSessions = [];
@@ -1808,18 +1883,59 @@ $(function () {
 					$(".header-account-logged .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
+				var existingSessionID = [];
 				if ($(".profile-page").length > 0) {
-					$(".profile-page .sessions .session").each(function () {
+					$(".profile-page .sessions .session").each(function (i) {
+						existingSessionID.push($(this).data("sessionId"));
 						$(this).removeAttr("style");
 						$(this).find(".new-msg").addClass("d-none");
 						for (i in newMsgSessions) {
 							if ($(this).data("sessionId") == newMsgSessions[i]) {
 								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
 								$(this).find(".new-msg").removeClass("d-none");
-								//									$.playSound(sound_notify_path);
 							}
 						}
 					});
+
+					//if new chat session created
+					if ($(".profile-page .sessions .session").length > 0 && $(".profile-page .sessions .session").length < data.data.length) {
+						var sessionData, sessionImage, username, existed;
+
+						for (i in data.data) {
+							existed = 0;
+							for (j in existingSessionID) {
+								if (data.data[i].chat_session_id == existingSessionID[j]) {
+									existed = 1;
+									break;
+								}
+							}
+
+							if (existed === 0) {
+								//add new session
+								sessionData = [];
+								if (data.data[i].seller_id == user_id) {
+									sessionImage = data.data[i].user_pic;
+									username = data.data[i].user_name;
+								} else {
+									sessionImage = data.data[i].seller_pic;
+									username = data.data[i].seller_name;
+								}
+								if (!sessionImage) {
+//									sessionImage = '/assets/images/Dealat%20logo%20red.png';
+									sessionImage = '/assets/images/user1.jpg';
+								}
+								sessionData = {
+									image: sessionImage,
+									username: username,
+									details: data.data[i]
+								};
+								template = $('#chat-sessions-template').html();
+								Mustache.parse(template);
+								rendered = Mustache.render(template, sessionData);
+								$(".profile-page .chats ul.sessions").append(rendered);
+							}
+						}
+					}
 				}
 				notSeenMsgs = newNotSeenMsgs;
 				notSeenInterval = setTimeout(checkNewMsgs, 3000);
@@ -1870,9 +1986,12 @@ $(function () {
 								hour12: true
 							});
 
+							//							console.log(data.data[i]);
+
 							if ((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0")) {
 								template = $('#chat-other-template').html();
 							} else {
+								//already viewed with send_msg service
 								template = $('#chat-self-template').html();
 							}
 
@@ -1925,9 +2044,11 @@ $(function () {
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
-				$("#chat-modal .chat").append(rendered);
+				//				$("#chat-modal .chat").append(rendered);
 
 				$("#chat-form input[name='msg']").val("");
+				$("#chat-form input[name='msg']").focus();
+
 				$("#chat-modal .chat").stop().animate({
 					scrollTop: $("#chat-modal .chat")[0].scrollHeight
 				}, 300);
@@ -2187,7 +2308,7 @@ $(function () {
 
 	$("#card-modal").on("mouseleave", ".card .fav .icon", function () {
 		if ($(this).data("added") === 0) {
-			$(this).css("color", "#999");
+			$(this).css("color", "#bbb");
 		} else if ($(this).data("added") === 1) {
 			$(this).css("color", "#FF87A0");
 		}
@@ -2212,7 +2333,7 @@ $(function () {
 			url = base_url + '/api/items_control/set_as_favorite';
 		} else if ($(this).data("added") === 1) {
 			$(this).html('<i class="far fa-heart fa-2x"></i>');
-			$(this).css("color", "#999");
+			$(this).css("color", "#bbb");
 			$(this).data("added", 0);
 			$(this).attr("title", "Add to favorites");
 			url = base_url + '/api/items_control/remove_from_favorite';
@@ -2255,7 +2376,7 @@ $(function () {
 		}
 	});
 
-	$("#card-modal .report").click(function () {
+	$("#card-modal").on("click",".report",function () {
 		$("#report-form .ad-id").val($("#card-modal .card").data("adId"));
 		$("#card-modal").modal("hide");
 		setTimeout(function () {
@@ -2349,18 +2470,18 @@ $(function () {
 		});
 
 	});
-	$("#qr-form input[name=\"secret_code\"]").keyup(function(){
-		if($(this).val().length === 6){
+	$("#qr-form input[name=\"secret_code\"]").keyup(function () {
+		if ($(this).val().length === 6) {
 			$("#qr-modal .submit").removeAttr("disabled");
-		} else{
+		} else {
 			$("#qr-modal .submit").attr("disabled", true);
 		}
 	});
-	
-	
+
+
 	$("#qr-form").submit(function (e) {
 		e.preventDefault();
-		
+
 		var data = $(this).serializeArray();
 		data.push({
 			name: "gen_code",
@@ -2373,11 +2494,37 @@ $(function () {
 			data: $.param(data)
 		}).done(function (data) {
 			console.log(data);
-			if (data.status === false) {} else {
-			
+			if (data.status === false) {
+				var errorMessage = $.parseHTML(data.message),
+					node,
+					wholeMessage = '';
+				for (node in errorMessage) {
+					if (errorMessage[node].nodeName === 'P') {
+						wholeMessage += errorMessage[node].textContent;
+					} else {
+						if (node === "0") {
+							wholeMessage = errorMessage[node].textContent;
+						} else {
+							wholeMessage += '<br>';
+						}
+					}
+				}
+				$('#qr-modal .error-message').html(wholeMessage);
+				$('#qr-modal .error-message').removeClass("d-none");
+				$("#qr-modal").animate({
+					scrollTop: $("body").offset().top
+				}, 500);
+			} else {
+				if(data.data.cms_logged === "1"){
+					window.location = base_url + "/admin/dashboard";
+				}else{
+					window.location = base_url;
+				}
+				
 			}
+
 		});
-		
+
 	});
 
 });

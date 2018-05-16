@@ -116,7 +116,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 mt-2">
-											<div class="card-title">
+											<div class="card-title mb-1">
 												<?php echo $ad->title ?>
 											</div>
 											<div>
@@ -125,7 +125,7 @@
 											</div>
 											<div class="location"><span class="location-lbl"></span>
 											   <span class="location-val">
-											      <?php if($ad->location_name != null): echo $ad->city_name .'-'.$ad->location_name ; else: echo $ad->city_name; endif; ?>
+											      <?php if($ad->location_name != null): echo $ad->city_name .' - '.$ad->location_name ; else: echo $ad->city_name; endif; ?>
 												</span>
 											</div>
 										</div>
