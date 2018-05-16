@@ -1,7 +1,21 @@
 var reported_ads_table;
 var reports_table;
-
+var reports_buttons = [];
  $(document).ready(function() {
+ 	
+ 	if($.inArray(EXPORT_REPORTS, permissions) != -1){
+		  reports_buttons.push( 
+		  	 {
+              extend: "excel",
+              text: lang_array['export_to_excel'],
+              title : 'Reported Ads Report '+ moment().format('YYYY-MM-DD'),
+              className: "btn-sm",
+              exportOptions: {
+                 columns: [0,1,2]
+              }
+            }
+		 );
+ 	}
  	
  	var reported_ads_TableButtons = function() {
            reported_ads_table = $("#reported_ads_table").DataTable({
@@ -42,17 +56,7 @@ var reports_table;
 		         }  
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Reported Ads Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2]
-                  }
-                },
-              ],
+              buttons: reports_buttons
             });
         };
         reported_ads_TableManageButtons = function() {

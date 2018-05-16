@@ -171,6 +171,13 @@
 		      	         </div>
 		             </div>
 		             
+		             <div class="form-group template_info 1_info">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('engine_capacity') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_engine_capacity'><?php echo $this->lang->line('engine_capacity') ?></label>
+		      	         </div>
+		             </div>
+		             
 		             <!-- propertis --> 
 		             
 		             <div class="form-group template_info 2_info">
@@ -201,6 +208,13 @@
 		      	         </div>
 		             </div>
 		             
+		             <div class="form-group template_info 2_info">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('floors_number') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_floors_number'><?php echo $this->lang->line('not_set') ?></label>
+		      	         </div>
+		             </div>
+		             
 		            <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('state') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -224,6 +238,13 @@
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('education') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_education_name'><?php echo $this->lang->line('not_set') ?></label>
+		      	         </div>
+		             </div>
+		             
+		             <div class="form-group template_info 8_info">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('certificate') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <label class="form-control"  id='ad_certificate_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
 		             

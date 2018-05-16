@@ -1,6 +1,21 @@
  var main_ads_table;
+ var main_comm_buttons = [];
  $(document).ready(function() {
  	var main_comm_TableButtons = function() {
+ 		
+ 		if($.inArray(EXPORT_COMMERCIALS, permissions) != -1){
+		  main_comm_buttons.push( 
+		  	 {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Main Commercials Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2 ,3]
+                  }
+            }
+		 );
+ 	   }
            main_ads_table = $("#main_commercials_table").DataTable({
              "oLanguage": {
 				  	"sProcessing":   lang_array['sProcessing'],
@@ -45,17 +60,7 @@
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Main Commercials Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2 ,3]
-                  }
-                },
-              ],
+              buttons: main_comm_buttons,
               initComplete: function(nRow, settings, json){
 	          	 activated_number =0;
 	           },

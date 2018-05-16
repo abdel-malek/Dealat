@@ -8,6 +8,8 @@ class Users_control_web extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('data_sources/users');
+		$this->data['lang']=  $this->response->lang;
+		$this->data['city'] = $this->response->city;
 	}
 
 	public function index_get() {
@@ -17,7 +19,6 @@ class Users_control_web extends REST_Controller {
 	{
 	  $current_lang = $this->input->get('language');
 	  $this->session->set_userdata(array('language' => $current_lang));
-//	  redirect('home_control');
 	}
 	
     public function register_post()
@@ -57,21 +58,22 @@ class Users_control_web extends REST_Controller {
     }
 
    public function login_post() {
-		$this -> form_validation -> set_rules('phone', 'lang:phone', 'required');
-		$this -> form_validation -> set_rules('password', 'lang:password', 'required|max_length[32]');
-		if (!$this -> form_validation -> run()) {
-			throw new Validation_Exception(validation_errors());
-		} else {
-			$phone = $this -> input -> post('phone');
-			$password = $this -> input -> post('password');
-			$user = $this -> users -> login($phone, $password);
-			if ($user) {
-				 $this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('sucess')));	
-				//redirect('home_control');
+   	    if($this->session->userdata('IS_LOGGED_IN')!= null && $this->session->userdata('IS_ADMIN') == 1){
+   	    	$this->response(array('status' => true, 'data' => array('cms_logged' => 1), "message" => $this->lang->line('sucess')));
+   	    }else{
+   	        $this -> form_validation -> set_rules('phone', 'lang:phone', 'required');
+			$this -> form_validation -> set_rules('password', 'lang:password', 'required|max_length[32]');
+			if (!$this -> form_validation -> run()) {
+				throw new Validation_Exception(validation_errors());
 			} else {
-				 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
-				//$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
-				//redirect('users');
+				$phone = $this -> input -> post('phone');
+				$password = $this -> input -> post('password');
+				$user = $this -> users -> login($phone, $password);
+				if ($user) {
+					 $this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('sucess')));	
+				} else {
+					 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
+				}
 			}
 		}
 	}
@@ -89,5 +91,34 @@ class Users_control_web extends REST_Controller {
        // Redirect to login page
        redirect('home_control');
     }
+	
+	public function get_notifications_for_me_get()
+	{
+		$this->load->model('data_sources/public_notifications' );
+		$user_id = $this->current_user->user_id;
+		$city_id = $this->data['city'];
+		$data = $this->public_notifications->get_user_notifications($user_id , $city_id);
+		// change seen status
+		$this->public_notifications->change_to_seen($user_id);
+	    $this->response(array('status' => true, 'data' => $data, "message" => $this->lang->line('sucess')));
+	}
+
+    public function get_my_notifications_count_get()
+    {
+       $this->load->model('data_sources/public_notifications');
+	   $user_id = $this->current_user->user_id;  
+	   $count = $this->public_notifications->get_not_seen_count($user_id);
+	   $this->response(array('status' => true, 'data' => $count, "message" => $this->lang->line('sucess')));
+    }
+	
+	
+	// not used
+	public function get_my_pending_ads_get()
+	{
+		$this->load->model('data_sources/ads');
+		$user_id = $this->current_user->user_id;
+		$ads = $this->ads->get_user_pending_ads($user_id);
+		$this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
+	}
 
 } 

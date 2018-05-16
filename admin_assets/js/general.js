@@ -40,15 +40,34 @@
 
  
  
-   //datepicker
-
-    $(document).ready(function() {
-    $('[data-toggle="datepicker"]').datepicker({
+  
+   var permissions;
+   $(document).ready(function() {
+   	  //datepicker
+      $('[data-toggle="datepicker"]').datepicker({
         format: 'yyyy-mm-dd',
         autoHide: true,
         zIndex: 2000
       });
-    });
-    
-  //image slider
+      
+     //get user permissions
+      var admin_id = $('#admin_id').val();
+      $.ajax({
+        url: base_url + '/admin/users_manage/get_admin_permissions/format/json?admin_id='+admin_id,
+        type: "get",
+        dataType: "json",
+        async : false,
+        success: function(response) {
+        	permissions = response.data;
+           // console.log(permissions);
+        },error: function(xhr, status, error){
+        }
+     });
+      
+   });
+  
+
+
+  
+  
   

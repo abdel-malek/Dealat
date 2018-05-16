@@ -70,7 +70,7 @@ class Users extends MY_Model {
         if ($user != NULL) {
             $newdata = array(
                 'PHP_AUTH_USER' => $phone,
-                'PHP_AUTH_USER_ADMIN' => null,
+                //'PHP_AUTH_USER_ADMIN' => null,
                 'LOGIN_USER_ID' => $user->user_id,
                 'USERNAME' => $user->name,
                 'PHP_AUTH_PW' => md5($password),
@@ -152,5 +152,11 @@ class Users extends MY_Model {
 		}
 	  }
 	  return $ids_array;
+  }
+  
+  public function get_users()
+  {
+     $q = parent::get_by(array('is_active' => 1 , 'is_deleted' =>0));
+	 return $q;
   }
 }

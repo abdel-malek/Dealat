@@ -67,4 +67,11 @@ class Data_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
 	
+	public function get_certificate_info_get()
+	{
+		$this->load->model('data_sources/certificates');
+		$info = $this->certificates->get($this->input->get('certificate_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
 }

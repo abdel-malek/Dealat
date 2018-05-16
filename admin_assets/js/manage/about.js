@@ -19,29 +19,19 @@ function save_about(){
 	        data: data,
 	        success: function(response) {
 	        //	location.reload();
-	            // if(response.status == false){
-	           	  // new PNotify({
-		                  // title: lang_array['attention'],
-		                  // text: response.message,
-		                  // type: 'error',
-		                  // styling: 'bootstrap3',
-		                  // buttons: {
-						        // sticker: false
-						// }
-		          // });
-	            // }else{
-	                // new PNotify({
-	                  // title:  lang_array['success'],
-	                  // text: lang_array['ad_saved'],
-	                  // type: 'success',
-	                  // styling: 'bootstrap3',
-	                  // buttons: {
-					        // sticker: false
-					 // }
-	               // });
-	                 // window.location.reload();
-			         // $('.manage_cat').modal('hide');
-	             // }
+	            if(response.status == false){
+	           	  new PNotify({
+		                  title: lang_array['attention'],
+		                  text: response.message,
+		                  type: 'error',
+		                  styling: 'bootstrap3',
+		                  buttons: {
+						        sticker: false
+						}
+		          });
+	            }else{
+	                 window.location.reload();
+	             }
 	        },error: function(xhr, status, error){
 	        	new PNotify({
 	                  title: lang_array['attention'],

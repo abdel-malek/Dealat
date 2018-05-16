@@ -1,5 +1,21 @@
 var education_table;
+var edu_buttons =[];
  $(document).ready(function() {
+ 	
+ 	if($.inArray(EXPORT_DATA, permissions) != -1){
+		  edu_buttons.push( 
+		  	    {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Educations Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2]
+                  }
+                }
+		 );
+ 	}
+ 	
  	var educations_TableButtons = function() {
            education_table = $("#educations_table").DataTable({
              "oLanguage": {
@@ -32,17 +48,7 @@ var education_table;
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                 {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Educations Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2]
-                  }
-                },
-              ],
+              buttons: edu_buttons,
             });
         };
         educations_TableManageButtons = function() {
@@ -84,7 +90,13 @@ function show_education_manage_modal (id) {
      });
    }
    $('.education_manage_modal').modal('show');
- }
+}
+
+$('.education_manage_modal').on('hidden.bs.modal', function () {
+  	    $('#education_en_name').val('');
+        $('#education_ar_name').val('');
+        $('#education_delete_btn').css('display' , 'none');
+});
  
 function save_education () {
   var id = $('#education_id').val();

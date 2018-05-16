@@ -32,22 +32,26 @@ class Users_manage extends REST_Controller {
 	
 	public function login_post()
 	{
-	    $this -> form_validation -> set_rules('admin_username', 'username', 'required');
-		$this -> form_validation -> set_rules('admin_password', 'password', 'required|max_length[32]');
-		if (!$this -> form_validation -> run()) {
-			throw new Validation_Exception(validation_errors());
-		} else {
-			$username = $this -> input -> post('admin_username');
-			$password = $this -> input -> post('admin_password');
-			$user = $this -> admins -> login($username, $password);
-			if ($user) {
-				//redirect('admin/items_manage');
-				redirect('admin/dashboard');
+		if($this->session->userdata('IS_LOGGED_IN')!= null && $this->session->userdata('IS_USER') == 1){
+   	    	redirect('home_control');
+   	    }else{
+		    $this -> form_validation -> set_rules('admin_username', 'username', 'required');
+			$this -> form_validation -> set_rules('admin_password', 'password', 'required|max_length[32]');
+			if (!$this -> form_validation -> run()) {
+				throw new Validation_Exception(validation_errors());
 			} else {
-				redirect('admin/users_manage/load_login_page');
-			 //   $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
-			   //$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
-			   //redirect('users');
+				$username = $this -> input -> post('admin_username');
+				$password = $this -> input -> post('admin_password');
+				$user = $this -> admins -> login($username, $password);
+				if ($user) {
+					//redirect('admin/items_manage');
+					redirect('admin/dashboard');
+				} else {
+					redirect('admin/users_manage/load_login_page');
+				 //   $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
+				   //$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
+				   //redirect('users');
+				}
 			}
 		}
 	}
@@ -172,6 +176,35 @@ class Users_manage extends REST_Controller {
 		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	  }
    }
+
+ public function send_notification_to_user_post()
+ {
+     $this->form_validation->set_rules('body', 'body', 'required'); 
+	 $this->form_validation->set_rules('title', 'title', 'required');  
+	 $this->form_validation->set_rules('to_user_id', 'user_id', 'required');
+	  if (!$this->form_validation->run()) {
+	 	 throw new Validation_Exception(validation_errors());
+	  }else{
+  	 	  $this->load->model('notification');
+		  $text = $this->input->post('body');
+		  $title = $this->input->post('title');
+		  $user_id = $this->current_user->user_id;
+		  $to_user_id = $this->input->post('to_user_id');
+		  //save notification 
+		  $this->load->model('data_sources/public_notifications');
+		  $data = array(
+		    'title' => $title,
+		    'body' => $text , 
+		    'user_id' => $user_id,
+		    'to_user_id' => $to_user_id
+		  );
+		  $notification_id = $this->public_notifications->save($data);
+		  $this->notification->send_notification($to_user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
+		  $saved_note = $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+		  $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SEND_PUBLIC_NOTIFICATION , $saved_note);
+		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
+	  }
+ }
    
  public function get_user_chat_sessions_get()
 	{
@@ -244,6 +277,11 @@ class Users_manage extends REST_Controller {
 			$recorde[] = $row -> user_name;
 	        if($row->city_id != null){
 	        	$recorde[] = $row->city_name;
+	        }else{
+	        	$recorde[] = $this->lang->line('all');
+	        }
+			if($row->to_user_id != null){
+	        	$recorde[] = $row->to_user_name;
 	        }else{
 	        	$recorde[] = $this->lang->line('all');
 	        }
@@ -367,5 +405,27 @@ class Users_manage extends REST_Controller {
 		 }
 	  }
   }
+
+  public function load_actions_page_get()
+  {
+      $this -> data['subview'] = 'admin/admins/actions_log';
+	  $this -> load -> view('admin/_main_layout', $this -> data);
+  }
+  
+  public function get_admins_log_get()
+  {
+      $actions = $this->admin_actions_log->get_log($this->data['lang']);
+	  $output = array("aaData" => array());
+      foreach ($actions as $row) {
+      	    $recorde = array();
+			$recorde[] = $row -> admin_action_log_id;
+			$recorde[] = $row -> created_at;
+			$recorde[] = $row -> admin_name;
+		    $recorde[] = $row -> action;
+			$output['aaData'][] = $recorde;
+	   }
+	  echo json_encode($output);
+  }
+  
 
 }

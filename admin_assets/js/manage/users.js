@@ -2,11 +2,26 @@
 var users_table;
 var user_chats_table;
 var messages_table;
+var users_buttons = [];
 var gender_array = {
 	1: 'Male',
 	2: 'Female'
 };
  $(document).ready(function() {
+ 	
+ 	if($.inArray(EXPORT_USERS, permissions) != -1){
+		  users_buttons.push( 
+		  	 {
+              extend: "excel",
+              text: lang_array['export_to_excel'],
+              title : 'Users Report '+ moment().format('YYYY-MM-DD'),
+              className: "btn-sm",
+              exportOptions: {
+                 columns: [0,1,2, 3, 4, 5]
+              }
+            }
+		 );
+ 	}
 
  	var users_TableButtons = function() {
            users_table = $("#users_table").DataTable({
@@ -47,17 +62,7 @@ var gender_array = {
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Users Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2, 3, 4, 5]
-                  }
-                },
-              ],
+              buttons:users_buttons
             });
         };
         users_TableManageButtons = function() {
@@ -287,6 +292,11 @@ function show_chat_messages (chat_id , seller_name , user_name) {
               	  $('.user_details #user_birthday').html(response.data.birthday);
               }else{
               	  $('.user_details #user_birthday').html(lang_array['not_set']);
+              }
+              if(response.data.is_deleted == 1){
+              	  $('.user_details #user_is_deleted').html(lang_array['yes']);
+              }else{
+              	  $('.user_details #user_is_deleted').html(lang_array['no']);
               }
               var user_image = ''; 
               if(response.data.personal_image != null){

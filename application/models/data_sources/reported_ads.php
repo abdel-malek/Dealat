@@ -37,4 +37,13 @@ class Reported_ads extends MY_Model {
 	 $this->db->where('reported_ads.ad_id'  , $ad_id);
 	 return parent::get();
  }
+
+ public function send_email($ad_id , $report_message)
+ {
+    $to = 'dealat.co@gmail.com';
+    $subject = 'Message from Dealat';
+	$message =  $this->lang->line('reported_ad_email');
+	$message .= $this->lang->line('report_message') . $report_message;
+    mail($to, $subject, $message,  "From: ola@tradinos.com");
+ }
 }

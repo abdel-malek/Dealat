@@ -1,5 +1,17 @@
 var notifications_table;
+var noti_buttons = [];
  $(document).ready(function() {
+ 	
+ 	  if($.inArray(EXPORT_NOTIFICATIONS, permissions) != -1){
+		  noti_buttons.push( 
+		  	    {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'notifications '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                }
+	 	 );
+ 	  }
     
      	var notify_TableButtons = function() {
            notifications_table = $("#notification_table").DataTable({
@@ -26,14 +38,7 @@ var notifications_table;
              "columnDefs": [
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'notifications '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                },
-              ],
+              buttons: noti_buttons,
             });
         };
         notify_TableManageButtons = function() {
@@ -52,10 +57,11 @@ function send_notificaion () {
 	var title = $('#notify_title').val();
 	var body = $('#notify_body').val();
 	var city_id = $('#cities_select').val();
+	var to_user_id = $('#noti_users_select').val();
 	if(title == '' || body == ''){
 	  	new PNotify({
               title: lang_array['attention'],
-              text: 'You have to provide title and body',
+              text: lang_array['body_and_title'],
               type: 'error',
               styling: 'bootstrap3',
               buttons: {
@@ -71,6 +77,9 @@ function send_notificaion () {
 		if(city_id != 0){ // by city
 			data['city_id'] = city_id;
 		  	url = base_url + '/admin/users_manage/send_notifications_by_city/format/json'; 
+		}else if(to_user_id != 0){
+			data['to_user_id'] = to_user_id;
+			url = base_url + '/admin/users_manage/send_notification_to_user/format/json';
 		}else{ //public
 		   url = base_url + '/admin/users_manage/send_public_notification/format/json';
 		}

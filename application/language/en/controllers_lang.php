@@ -20,6 +20,7 @@ $lang['title'] = 'Ad Title';
 $lang['excced_limit'] = 'You have exceeded the limit of the ads that must appears in this category and position, you have to hide other ad to show this one. ';
 $lang['not_a_user'] = 'Oh sorry! Incorrect phone or password, please try again.';
 $lang['incorrect_verfication'] = 'Hmmm, Incorrect verification code, please try again.';
+$lang['not_a_qr_user'] = 'Oh sorry! Incorrect Pin code or the allowed period has expired, please try again.';
 $lang['no_users'] = 'There is no any user in this city';
 
 // sms validation msg 
@@ -40,5 +41,12 @@ $lang['shown_title'] = 'Shown';
 $lang['new_msg'] = 'New Message';
 
 
-//pending email 
-$lang['pending_email'] = '<p> Welcome to Dealat Cotrol panel! </p><p>you have new pending ad</p>';
+//email 
+$lang['pending_email'] = 'Welcome to Dealat Control panel!' ."\n" .' There is a new ad waiting for your approval.'."\n" .' The ad number : ';
+$lang['pending_after_edit_email'] = 'Welcome to Dealat Control panel!' ."\n" .'An ad is edited and waiting for your approval.' ."\n" .' The ad number : ';
+$lang['reported_ad_email'] = 'Welcome to Dealat Control panel!' ."\n" .'An ad has been reported!' ."\n" .'The ad number : ';
+$lang['report_message'] = '' ."\n" .'The report cuase is: ';
+
+
+
+

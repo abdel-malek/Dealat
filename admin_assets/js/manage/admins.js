@@ -1,5 +1,18 @@
 var admins_tabel;
+var admins_buttons = [];
  $(document).ready(function() {
+ 	
+ 	 if($.inArray(EXPORT_ADMINS, permissions) != -1){
+		  admins_buttons.push( 
+		  	    {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Admins Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                }
+	 	  );
+ 	  }
+ 	
  	var admins_TableButtons = function() {
            admins_tabel = $("#admins_table").DataTable({
             "oLanguage": {
@@ -39,14 +52,7 @@ var admins_tabel;
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Admins Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                },
-              ],
+              buttons:admins_buttons,
             });
         };
         admins_TableManageButtons = function() {
@@ -201,6 +207,11 @@ function delete_admin (id) {
       });
     $('.permissions_modal').modal('show');
  }
+ 
+ $('.permissions_modal').on('hidden.bs.modal', function () {
+  	  $('.permission_check').prop("checked", false);
+      $('.permission_check').parent("div").removeClass("checked");
+});
  
  //save user permissions 
  $("#permissions_form").submit(function(event) {

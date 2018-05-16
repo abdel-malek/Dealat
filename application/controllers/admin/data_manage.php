@@ -409,5 +409,63 @@ class Data_manage extends REST_Controller {
    $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
  }
  
+ public function load_certificates_page_get()
+ {
+    $this -> data['subview'] = 'admin/certificates/index';
+    $this -> load -> view('admin/_main_layout', $this -> data); 
+ }
+
+ public function get_all_certificates_get()
+ {
+    $this->load->model('data_sources/certificates');
+	$data = $this->certificates->get_by(array('is_active'=>1));
+    $output = array("aaData" => array());
+	foreach ($data as $row) {
+			$recorde = array();
+			$recorde[] = $row -> certificate_id;
+			$recorde[] = $row -> en_name;
+			$recorde[] = $row -> ar_name;
+			$output['aaData'][] = $recorde;
+		}
+	echo json_encode($output);  
+ }
+ 
+ public function save_certificate_post()
+ {
+     $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+     $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+	 if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	 } else {
+		$this->load->model('data_sources/certificates');
+		$data = array(
+		   'en_name' => $this->input->post('en_name'),
+		   'ar_name' => $this->input->post('ar_name'),
+		);
+		$id = $this->input->post('certificate_id');
+		if($id != 0){ // edit
+		   $new_id = $this->certificates->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CERTIFICATE , $new_id);
+		}else{ // add
+		   $new_id = $this->certificates->save($data);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CERTIFICATE , $new_id);
+		}
+      $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+    }
+  }
+ 
+ public function delete_certificate_post()
+ {
+    $this -> form_validation -> set_rules('certificate_id', 'certificate_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+    	$this->load->model('data_sources/certificates');
+		$id = $this->certificates->save(array('is_active' => 0) ,$this->input->post('certificate_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_CERTIFICATE , $id);
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	} 
+ }
+ 
  
 }

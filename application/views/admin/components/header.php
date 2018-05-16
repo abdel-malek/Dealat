@@ -46,6 +46,9 @@
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
     
+    <!-- datepicker -->
+    <link href="<?php echo base_url() ?>admin_assets/datepicker/datepicker.min.css" rel="stylesheet">
+    
     <!--  file upload  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/uploadfile.css'); ?>" />
     <!--  slick slider  -->
@@ -72,7 +75,6 @@
   </head>
 
   <body class="nav-md">
-  	     <!-- <?php dump($this->session->userdata) ?> -->
   <div class="dim-overlay"></div>
   	<div class="loader" id="loading-image"></div>
     <div class="container body">
@@ -142,6 +144,7 @@
 	                 	 <ul id="" class="nav child_menu">
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_types_page'); ?>"><?php echo $this->lang->line('types') ?></a></li>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_educations_page'); ?>"><?php echo $this->lang->line('educations') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_certificates_page'); ?>"><?php echo $this->lang->line('certificates') ?></a></li>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_schedules_page'); ?>"><?php echo $this->lang->line('schedules') ?></a></li>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_cities_page'); ?>"><?php echo $this->lang->line('cities_and_areas') ?></a></li>
 	                 	 </ul>
@@ -155,6 +158,12 @@
                   <?php if(PERMISSION::Check_permission(PERMISSION::ADMINS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                      <li><a href="<?php echo base_url('index.php/admin/users_manage/load_admins_page'); ?>"><i class="fa fa-users"></i><?php echo $this->lang->line('admins_manage') ?></a></li>
                   <?php endif; ?>
+                  
+                   <!-- actions manage -->
+                   <?php if(PERMISSION::Check_permission(PERMISSION::VIEW_ADMINS_ACTIONS , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/users_manage/load_actions_page'); ?>"><i class="fa fa-align-justify"></i><?php echo $this->lang->line('admins_log') ?></a></li>
+                   <?php endif; ?>
+                  
                    <!-- about us -->
                   <?php if(PERMISSION::Check_permission(PERMISSION::ABOUT_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                      <li><a href="<?php echo base_url('index.php/admin/data_manage/load_about_manage'); ?>"><i class="fa fa-folder-open"></i><?php echo $this->lang->line('about_us_manage') ?></a></li>
@@ -213,4 +222,5 @@
             </nav>
           </div>
         </div>
+        <input type="hidden"  id='admin_id' value="<?php echo $this->session->userdata('LOGIN_USER_ID_ADMIN') ?>"/>
         <!-- /top navigation -->

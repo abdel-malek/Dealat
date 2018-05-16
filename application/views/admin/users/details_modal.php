@@ -10,6 +10,13 @@
         <div class="modal-body">
                 <form acrion="post" data-parsley-validate class="form-horizontal form-label-left">
                    <div class="form-group" id='created_div'>
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_deleted') ?></label>
+	      	         <div class="col-md-6 col-sm-6 col-xs-12">
+	      	           <label class="form-control"  id='user_is_deleted'></label>
+	      	         </div>
+	               </div> 	
+	               
+                   <div class="form-group" id='created_div'>
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('username') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	           <label class="form-control"  id='user_name'></label>

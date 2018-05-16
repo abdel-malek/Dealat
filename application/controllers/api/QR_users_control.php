@@ -58,19 +58,23 @@ class QR_users_control extends REST_Controller {
 
    public function login_by_qr_code_post()
    {
-   	  	$this -> form_validation -> set_rules('gen_code', 'generated code', 'required');
-		$this -> form_validation -> set_rules('secret_code', 'secret code', 'required|max_length[32]');
-		if (!$this -> form_validation -> run()) {
-		   throw new Validation_Exception(validation_errors());
+   	    if($this->session->userdata('IS_LOGGED_IN')!= null && $this->session->userdata('IS_ADMIN') == 1){
+		   	 $this->response(array('status' => true, 'data' => array('cms_logged' => 1), "message" => $this->lang->line('sucess')));
 		}else{
-		   $gen_code = $this->input->post('gen_code');
-		   $secret_code = $this->input->post('secret_code');
-		   $user = $this->qr_code_users->login($gen_code , $secret_code);
-		   if($user){
-		   	 $this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('sucess')));
-		   }else{
-		   	 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
-		   }
+		    $this -> form_validation -> set_rules('gen_code', 'generated code', 'required');
+			$this -> form_validation -> set_rules('secret_code', 'secret code', 'required|max_length[32]');
+			if (!$this -> form_validation -> run()) {
+			   throw new Validation_Exception(validation_errors());
+			}else{
+			   $gen_code = $this->input->post('gen_code');
+			   $secret_code = $this->input->post('secret_code');
+			   $user = $this->qr_code_users->login($gen_code , $secret_code);
+			   if($user){
+			   	 $this->response(array('status' => true, 'data' => $user, "message" => $this->lang->line('sucess')));
+			   }else{
+			   	 $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_qr_user')));
+			   }
+			}	    	
 		}
    }
 	

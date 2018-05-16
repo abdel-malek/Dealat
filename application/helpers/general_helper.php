@@ -76,3 +76,16 @@ function get_cities_array($lang){
 	$CI->load->model('data_sources/locations');
 	return $CI->locations->get_cities($lang);
 }
+
+function get_admins()
+{
+	$CI =& get_instance();
+	$CI->load->model('data_sources/admins');
+	return $CI->admins->get();
+}
+
+function get_users(){
+	$CI =& get_instance();
+	$CI->load->model('data_sources/users');
+	return $CI->users->get_users();
+}

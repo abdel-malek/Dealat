@@ -118,12 +118,19 @@
        	 lang_array['location_saved'] = 'Area is saved' ;
        	 lang_array['location_deleted'] = 'Area is Deleted' ;
        	 lang_array['notification_sent'] = 'Notification sent successfully'
+       	
        	// lang_array['category_deactivated'] = 'Category and ';
        	 lang_array['reject_note'] = 'Reject Note';
        	 lang_array['export_to_excel'] = 'Export to Excel';
        	 lang_array['not_set'] = 'Not set';
        	 lang_array['admin_saved'] = 'Admin is saved';
        	 lang_array['admin_saved'] = 'Admin is deleted';
+       	 lang_array['bad_date_entry'] = 'From date should be earler than to date';
+       	 lang_array['certificate_saved'] = 'Certificate is saved';
+       	 lang_array['certificate_deleted'] = 'Certificate is deleted';
+       	 lang_array['body_and_title'] = 'You have to provide title and body';
+       	 lang_array['yes'] = 'Yes'
+       	 lang_array['no'] = 'No';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -170,6 +177,12 @@
        	 lang_array['not_set'] = 'غير محدد';
        	 lang_array['admin_saved'] = 'تم حفظ المدير';
        	 lang_array['admin_saved'] = 'تم حذف المدير';
+       	 lang_array['bad_date_entry'] = 'يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء';
+       	 lang_array['certificate_saved'] = 'تم حفظ الشهادة';
+       	 lang_array['certificate_deleted'] = 'تم حذف الشهادة';
+       	 lang_array['body_and_title'] = 'يجب إدخال العنوان والرسالة';
+       	 lang_array['yes'] = 'نعم'
+       	 lang_array['no'] = 'كلا'
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -183,6 +196,16 @@
        	 lang_array['sNext'] = "التالي" ;
        	 lang_array['sLast'] = "الأخير" ;
        }
+       
+       const EXPORT_ADS = "2",
+             EXPORT_REPORTS = "4",
+             EXPORT_USERS = "6",
+             EXPORT_COMMERCIALS = "8",
+             EXPORT_CATEGORIES = "10",
+             EXPORT_DATA = "12",
+             EXPORT_NOTIFICATIONS = "14",
+             EXPORT_ADMINS = "16",
+             EXPORT_ACTIONS_LOG = "19";
     </script>
     
     <!-- my js -->
@@ -200,6 +223,8 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/notifications.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/about.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/admins.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/actions_log.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/certificates.js"></script>
    
   </body>
 </html>

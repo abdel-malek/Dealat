@@ -7,10 +7,13 @@
  */
 class NotificationHelper {
 	
+	// types
 	const MSG = 1; 
 	const ACTION = 2;
 	const PUBLIC_NOTFY = 3;
+	const ADMIN_TO_USER = 4;
 	
+	// topics
 	const IOS_TOPIC = '/topics/all_ios';
 	const ANDROID_TOPIC = '/topics/all_android';
 

@@ -1,7 +1,22 @@
 var types_table;
 var type_models_table;
 var template = $('#filter_type_template_select').val();
+var types_buttons = [];
  $(document).ready(function() {
+ 	
+ 	if($.inArray(EXPORT_DATA, permissions) != -1){
+		  types_buttons.push( 
+		  	 {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Brands Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2 ,3]
+                  }
+             }
+		 );
+ 	}
 
  	var types_TableButtons = function() {
            types_table = $("#types_table").DataTable({
@@ -49,17 +64,7 @@ var template = $('#filter_type_template_select').val();
 		         } 
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Brands Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2 ,3]
-                  }
-                },
-              ],
+              buttons: types_buttons,
             });
         };
         types_TableManageButtons = function() {

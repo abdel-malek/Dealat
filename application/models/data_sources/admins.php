@@ -13,10 +13,10 @@ class Admins extends MY_Model {
         if ($admin != NULL) {
             $newdata = array(
                 'PHP_AUTH_USER_ADMIN' => $user_name,
-                'PHP_AUTH_USER' => null,
+                //'PHP_AUTH_USER' => null,
                 'LOGIN_USER_ID_ADMIN' => $admin->admin_id,
                 'USERNAME_ADMIN' => $admin->name,
-                'PHP_AUTH_PW' => md5($password),
+                'PHP_AUTH_PW_ADMIN' => md5($password),
                 'IS_LOGGED_IN' => 1,
                 'IS_ADMIN' => 1,
                 'IS_USER' => 0
@@ -37,4 +37,5 @@ class Admins extends MY_Model {
 				   -> get() 
 				   -> row();
    }
+   
 }

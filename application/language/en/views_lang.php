@@ -132,6 +132,7 @@ $lang['cities_and_areas'] = 'Cities and Areas';
 $lang['notifications'] = 'Notifications';
 $lang['about_us_manage'] = 'About us Manage';
 $lang['admins_manage'] = 'Admins Manage';
+$lang['admins_log'] = 'Admins Log';
 
 
 
@@ -236,6 +237,7 @@ $lang['whatsup_number'] = 'WhatsApp';
 $lang['birthday'] = 'Birthday';
 $lang['user_image']=  'User image';
 $lang['user_details']=  'User Details';
+$lang['is_deleted'] = 'Account is Deleted ?';
 
 
 //categories manages
@@ -246,7 +248,6 @@ $lang['empty_table'] = "None";
 $lang['add_main_category'] = " Add Main Category";
 $lang['add_subcategory_for'] = " Add Subcategory for";
 $lang['category_details'] = "Category Details";
-//new
 $lang['arabic_name'] = "Arabic Name";
 $lang['english_name'] = "English Name";
 $lang['templates'] = 'Templates';
@@ -291,14 +292,16 @@ $lang['locations_list'] = 'Areas List';
 $lang['locations_details'] = 'Area Deatils';
 
 //notification 
-$lang['send_public_notification'] = 'Send Public Notification';
+$lang['send_public_notification'] = 'Send Notification';
 $lang['notify_text'] = 'Notification Message';
 $lang['notify_title'] = 'Notification Title';
 $lang['select_usres_city'] = 'Select User\'s City';
 $lang['send_notification'] = 'Send Notification';
-$lang['notification_confirmation'] = 'Are you sure you want to send this public notification? ';
+$lang['notification_confirmation'] = 'Are you sure you want to send this notification? ';
 $lang['confirmation'] = 'Confirmation';
 $lang['sender_name'] = 'Sender name';
+$lang['to_user_name'] = 'Sended to user';
+$lang['send_to_user'] = 'Or Send To one user';
 
 
 //about manage
@@ -315,14 +318,14 @@ $lang['terms_ar'] = 'Terms and conditions in arabic';
 
 //admin manage
 $lang['admin_name'] = 'Admin Name';
-
-//new
 $lang['admins_list']= 'Admins List';
 $lang['admin_username']= 'Username';
 $lang['permissions'] = 'Permissions';
 $lang['admin_info'] = 'Admin Info';
 $lang['add_admin'] = 'Add New Admin';
 $lang['delete_admin_confirmation'] = 'Are you sure you want to delete this admin?';
+$lang['admins_actions'] = 'All Admins Actions';
+$lang['action'] = 'Action';
 
 // permissions
 $lang['admin_permissions']= 'Permissions Granted to this user';
@@ -342,7 +345,15 @@ $lang['export_notification'] = 'Export Notification';
 $lang['admins_manage'] = 'Admins Manage';
 $lang['admins_export'] = 'Export admins info';
 $lang['about_manage'] = 'About Manage';
+$lang['view_actions_log'] = 'View Actions Log';
+$lang['export_actions'] = 'Export Actions Log';
 
+
+//certificates manage
+$lang['certificates'] = 'Certificates';
+$lang['certificates_list'] = 'Certificates List';
+$lang['add_certificate'] = 'Add Certificate';
+$lang['certificate_details'] = 'Certificate Details';
 
 
 // login

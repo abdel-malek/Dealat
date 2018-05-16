@@ -3,7 +3,7 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b id="pending_label"><?php echo $this->lang->line('users_ads_list') ?></b></h3>  
+	                 <h3><b><?php echo $this->lang->line('users_ads_list') ?></b></h3>  
 	              </div>
 	        
 	              	 <!-- filter form -->

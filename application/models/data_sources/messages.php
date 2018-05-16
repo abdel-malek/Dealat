@@ -30,15 +30,15 @@ class Messages extends MY_Model {
 			    $this->chat_sessions->save(array('seller_seen' => 0) , $chat_session_id);
 			}
 			$msg_id = parent::save($data);
-		}else if( $ad_id != null){  // from user to seller 
+		}else if( $ad_id != null){ 
 			$check_exist_result = $this->chat_sessions->check_by_ad_and_user($ad_id , $user_id , $seller_id);
 			$msg_id = null;
 			if($check_exist_result){ // there is already chat session for this ad and user and seller
 			    $data['chat_session_id'] = $check_exist_result->chat_session_id;
 			    $chat_session_id = $data['chat_session_id'];
-		        $msg_id = parent::save($data);
 				// chane seller seen status to 0 
 				$this->chat_sessions->save(array('seller_seen' => 0) , $check_exist_result->chat_session_id);
+				$msg_id = parent::save($data);
 			}else{ // no chat session so create new one 
 			    if($seller_id == $user_id){ // the seller is sending msg to his self so we can not create a chat session!!
 			    	 $this->db->trans_rollback();
@@ -49,6 +49,7 @@ class Messages extends MY_Model {
 						  'user_id' => $user_id , 
 						  'seller_id' => $seller_id , 
 						  'ad_id' => $ad_id , 
+						  'user_seen' => 1 // the user is sending to seller so he have seen the last message. 
 						);
 						$chat_session_id = $this->chat_sessions->save($chat_data);
 						if($chat_session_id){
@@ -82,7 +83,7 @@ class Messages extends MY_Model {
 			}
 			return $msg_id;
 		}
-	}
+  }
 
   public function send_msg_notification($user_id , $msg , $chat_session_info , $ad_title)
   {

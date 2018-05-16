@@ -393,6 +393,17 @@ thead{
 	}
  
  
+ .home_card {
+ 	width: 300px;
+    max-width: 350px;
+    min-height: 120px;
+    cursor: pointer;
+ }
+ 
+ .home_header {
+ 	margin-top: 37px !important;
+ }
+ 
 /*.template_info_cat{
  	position: relative;
     top: 9px;

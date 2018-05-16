@@ -10,8 +10,23 @@ var status_array_for_label;
 var edit_status_array;
 var current_pending_count = 0;
 var sound_notify_path = site_url +'admin_assets/definite.mp3';
+var test = 0;
+var ads_buttons =[];
 
  $(document).ready(function() {
+ 	if($.inArray(EXPORT_ADS, permissions) != -1){
+		  ads_buttons.push( 
+		  	 {
+              extend: "excel",
+              text: lang_array['export_to_excel'],
+              title : 'Ads Report '+ moment().format('YYYY-MM-DD'),
+              className: "btn-sm",
+              exportOptions: {
+                 columns: [0,1,2,3,4,5,6,7,8,9]
+              }
+             }
+		 );
+ 	}
 	 	
 	if(lang == 'en'){
 	   status_array_for_label ={
@@ -114,17 +129,10 @@ var sound_notify_path = site_url +'admin_assets/definite.mp3';
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Ads Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2,3,4,5,6,7,8,9]
-                  }
-                },
-              ],
+              buttons: ads_buttons,
+              "initComplete": function(settings, json) {
+			      
+			  }
             });
         };
         ads_TableManageButtons = function() {
@@ -137,7 +145,8 @@ var sound_notify_path = site_url +'admin_assets/definite.mp3';
         }();
 
        ads_TableManageButtons.init();  
-   
+       
+      
   
   // get penind count
      $.ajax({
@@ -199,7 +208,7 @@ var sound_notify_path = site_url +'admin_assets/definite.mp3';
      $("#status_select").val(PENDING).trigger('change'); 
  });
  
-// filter by status
+// filter by status 
  $('#status_select').change(function(event) {
  	
     status_val = $("#status_select").val();

@@ -94,6 +94,8 @@ class Items_control extends REST_Controller {
 		   $tamplate_id = $category_info->tamplate_id;
 		   $save_result = $this->ads->create_an_ad($basic_data, $main_image , $ads_images_paths , $tamplate_id);
 		   if($save_result != false){
+		   	 // send an email 
+		   	 //$this->ads->send_pending_email($save_result);
 		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => $this->lang->line('sucess')));
 		   }else{
 		   	 $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
@@ -114,6 +116,8 @@ class Items_control extends REST_Controller {
 		   $category_id  = $ad_info->category_id;
 		   $edit_result = $this->ads->edit($ad_id , $category_id );
 		   if($edit_result){
+		   	 // send an email
+		   	 // $this->ads->send_pending_email($edit_result , true);
 		   	  $this -> response(array('status' => true, 'data' => $edit_result, 'message' => $this->lang->line('sucess')));
 		   }else{
 		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
@@ -244,6 +248,7 @@ class Items_control extends REST_Controller {
 				if(!$this->input->post('publish_date')){
 				  throw new Parent_Exception('you have to provide a publish date');	
 				}else{
+				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
 				   $data = array(
 				     //'publish_date'=>$this->input->post('publish_date'),
 				     'is_featured' => $this->input->post('is_featured'),
@@ -253,12 +258,11 @@ class Items_control extends REST_Controller {
 				   if(!isset($ad_info->publish_date)){
 				   	 $data['publish_date'] = $this->input->post('publish_date');
 				   }else{
-				   	  if($ad_info->edit_status ==  EDIT_STATUS::AFTER_EXPIRE){ // this must changed!
+				   	  if($ad_info->expired_after <= 0){ //if the ad is expired
 				   	  	  $data['publish_date'] = $this->input->post('publish_date');
 				   	  }
 				   }
 				   $ad_id = $this->ads->save($data , $ad_id);
-				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
 				   $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::ACCEPTED_MSG);
 				   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ACCEPT_AD , $ad_id);
 				}
@@ -376,6 +380,9 @@ class Items_control extends REST_Controller {
 			$data = array('ad_id' => $ad_id , 'report_message_id' =>$message , 'user_id'=> $user_id );
 			$repored_ad_id = $this->reported_ads->save($data);
 			if($repored_ad_id){
+			   $this->load->model('data_sources/report_messages');
+			   $message_info = $this->report_messages->get_info($this->input->post('report_message_id'), $this->data['lang']);
+			   $this->reported_ads->send_email($this->input->post('ad_id') , $message_info->msg);
 			   $this -> response(array('status' => true, 'data' => $repored_ad_id, 'message' => $this->lang->line('sucess')));	
 			}else{
 			   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));

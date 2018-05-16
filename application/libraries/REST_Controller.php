@@ -1321,10 +1321,11 @@ abstract class REST_Controller extends CI_Controller {
 				$is_user = $this->session->userdata('IS_USER');
 				if($is_admin){
 					$username = $this->session->userdata('PHP_AUTH_USER_ADMIN');
+					$password = $this->session->userdata('PHP_AUTH_PW_ADMIN');
 				}else if($is_user){
 				    $username = $this->session->userdata('PHP_AUTH_USER');
+					$password = $this->session->userdata('PHP_AUTH_PW');
 				}
-                $password = $this->session->userdata('PHP_AUTH_PW');
             }
         }
         if (!$this->_check_login($username, $password , $is_admin)) {

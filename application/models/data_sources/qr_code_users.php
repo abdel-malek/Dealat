@@ -59,7 +59,7 @@ class Qr_code_users extends MY_Model {
 	public function check_authentication($gen_code , $sec_code)
 	{
 		// check if we passed the allowed period. 
-		$this->db->where('(TIMESTAMPDIFF(MINUTE, modified_at, NOW()) < 10)');
+		$this->db->where('(TIMESTAMPDIFF(MINUTE, modified_at, NOW()) < 16)');
 		return parent::get_by(array('generated_code' => $gen_code , 'secret_code' => $sec_code) , true);
 	}
 	
@@ -70,18 +70,26 @@ class Qr_code_users extends MY_Model {
 			$this->load->model('data_sources/users');
 			$user = $this->users->get_by(array('user_id' => $qr_user_row->user_id, 'is_active' => 1 , 'is_deleted' => 0) , true);
 			if($user != null){
+		   	     $user_password = md5($sec_code);
+				 if(isset($user->password) && $user->password != null){ // check if users already have a password
+				 	$user_password =  $user->password;
+				 }else{
+				 	$this->users->save(array('password'=>$user_password ) , $user->user_id); // if he don't make the secret code his password. 
+				 }
 				 $newdata = array(
 	                'PHP_AUTH_USER' => $user->phone,
-	                'PHP_AUTH_USER_ADMIN' => null,
+	               // 'PHP_AUTH_USER_ADMIN' => null,
 	                'LOGIN_USER_ID' => $user->user_id,
 	                'USERNAME' => $user->name,
-	                'PHP_AUTH_PW' => md5($sec_code),
+	                'PHP_AUTH_PW' => $user_password,
 	                'IS_LOGGED_IN' => 1,
 	                'IS_ADMIN' => 0,
 	                'IS_USER' => 1
 	            );
 	            $this->session->set_userdata($newdata);
-				// we must delete the qr row here. 
+				// delete this row and all without user is before 15 minutes
+				parent::delete($qr_user_row->qr_code_user_id);
+				$this->delete_old();
 	            return $user; 
 			}else{
 			  return false;
@@ -89,5 +97,12 @@ class Qr_code_users extends MY_Model {
 		}else{
 			return false;
 		}
+	}
+	
+	public function delete_old()
+	{
+		$this->db->where('(TIMESTAMPDIFF(MINUTE, modified_at, NOW()) > 15)');
+		$this->db->where('user_id' , NULL);
+		$this->db->delete($this->_table_name);
 	}
 }

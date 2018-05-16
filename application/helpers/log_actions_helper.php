@@ -141,7 +141,7 @@ class LOG_ACTIONS {
 			  return array('ar_action' => 'تعديل معلومات حول '.$exstrainfo , 'en_action' => 'Edit the about info'.$exstrainfo);
               break;
 		  case LOG_ACTIONS::SEND_PUBLIC_NOTIFICATION:
-			  return array('ar_action' => 'إرسال الإشعار العام رقم '.$exstrainfo , 'en_action' => 'Send the public notification #'.$exstrainfo);
+			  return array('ar_action' => 'إرسال الإشعار رقم '.$exstrainfo , 'en_action' => 'Send the notification #'.$exstrainfo);
               break;
 		  case LOG_ACTIONS::ADD_CERTIFICATE:
 			  return array('ar_action' => 'إضافة الشهادة رقم '.$exstrainfo , 'en_action' => ' Add the certificate #'.$exstrainfo);

@@ -132,6 +132,9 @@ $lang['schedules'] = 'جداول الدوام';
 $lang['cities_and_areas'] = 'المحافظات والمناطق';
 $lang['notifications'] = 'الإشعارات';
 $lang['about_us_manage'] = 'إدارة معلومات حول';
+$lang['admins_manage'] = 'إدارة مستخدمي لوحة التحكم';
+$lang['admins_log'] = 'سجل الإجراءات';
+
 
 
 //ads manage
@@ -236,6 +239,7 @@ $lang['whatsup_number'] = 'رقم الواتس اب ';
 $lang['birthday'] = 'تاريخ الميلاد';
 $lang['user_image']=  'الصورة الشخصيةٍ';
 $lang['user_details']=  'تفاصيل المستخدم';
+$lang['is_deleted'] = 'الحساب محذوف؟';
 
 //categories manages
 $lang['category_name'] = "اسم الصنف";
@@ -291,14 +295,16 @@ $lang['locations_list'] = 'قائمة المناطق';
 $lang['locations_details'] = 'تفاصيل المنطقة';
 
 //notification 
-$lang['send_public_notification'] = 'إرسال الإشعارات العامة';
+$lang['send_public_notification'] = 'إرسال الإشعارات ';
 $lang['notify_text'] = 'محتوى الإشعار';
 $lang['notify_title'] = 'عنوان الإشعار';
 $lang['select_usres_city'] = 'اختر مدينة المستخدمين';
 $lang['send_notification'] = 'إرسال الإشعار';
-$lang['notification_confirmation'] = 'هل أنت متأكد من أنك تريد إرسال هذا الإشعار العام؟ ';
+$lang['notification_confirmation'] = 'هل أنت متأكد من أنك تريد إرسال هذا الإشعار؟ ';
 $lang['confirmation'] = 'تأكيد';
 $lang['sender_name'] = 'اسم المرسل';
+$lang['to_user_name'] = 'اسم المرسل له';
+$lang['send_to_user'] = 'أو أرسل لمستخدم محدد';
 
 //about manage
 $lang['set_about_info'] = 'ضبط معلومات من نحن';
@@ -313,7 +319,42 @@ $lang['terms_ar'] = 'شروط استخدام ديلات بالعربي';
 $lang['terms_en'] = 'شروط استخدام ديلات بالانجليزي';
 
 //admin manage
-$lamg['admin_name'] = 'اسم المدير';
+$lang['admin_name'] = 'اسم مستخدم لوحة التحكم';
+$lang['admins_list']= 'قائمة مستخدمي لوحة التحكم';
+$lang['admin_username']= 'اسم المستخدم';
+$lang['permissions'] = 'الصلاحيات';
+$lang['admin_info'] = 'معلومات مستخدم لوحة التحكم';
+$lang['add_admin'] = 'إضافة مستخدم';
+$lang['delete_admin_confirmation'] = 'هل أنت متأكد من أنك تريد حذف هذا المستخدم؟';
+$lang['admins_actions'] = 'كل إجراءات المستخدمين';
+$lang['action'] = 'الإجراء';
+
+// permissions
+$lang['admin_permissions']= 'الصلاحيات المعطاة لهذا المستخدم';
+$lang['ads_manage'] = 'إدارة إعلانات المستخدمين';
+$lang['export_ads'] = 'تصدير إعلانات المستخدمين';
+$lang['reports_manage'] = 'إدارة التبليغات';
+$lang['export_reports'] = 'تصدير الإعلانات المبلغ عنها';
+$lang['users_manage'] = 'إدارة المستخدمين';
+$lang['export_users'] = 'تصدير معلومات المستخدمين';
+$lang['commercials_manage'] = 'إدارة الإعلانات التجارية';
+$lang['export_commercials'] = 'تصدير معلومات الإعلانات التجارية';
+$lang['categories_manage'] = 'إدارة الأصناف';
+$lang['data_manage'] = 'إدارة البيانات';
+$lang['export_data']= 'تصدير البيانات';
+$lang['notification_manage'] = 'إدارة الإشعارات';
+$lang['export_notification'] = 'تصدير الإشعارات';
+$lang['admins_manage'] = 'إدارة مستخدمي لوحة التحكم';
+$lang['admins_export'] = 'تصدير معلومات مستخدمي لوحة التحكم';
+$lang['about_manage'] = 'إدارة معلومات حول';
+$lang['view_actions_log'] = 'عرض إجراءات مستخدمي لوحة التحكم';
+$lang['export_actions'] = 'تصدير الإجراءات';
+
+//certificates manage
+$lang['certificates'] = 'الشهادات';
+$lang['certificates_list'] = 'قائمة الشهادات';
+$lang['add_certificate'] = 'إضافة شهادة';
+$lang['certificate_details'] = 'تفاصيل الشهادة';
 
 // login
 $lang['login_form'] = 'تسجيل الدخول';

@@ -1,6 +1,22 @@
 var cities_table;
 var areas_table;
+var city_buttons = [];
  $(document).ready(function() {
+ 	
+ 	if($.inArray(EXPORT_DATA, permissions) != -1){
+		  city_buttons.push( 
+		  	    {
+                  extend: "excel",
+                  text: lang_array['export_to_excel'],
+                  title : 'Citeis Report '+ moment().format('YYYY-MM-DD'),
+                  className: "btn-sm",
+                  exportOptions: {
+                     columns: [0,1,2]
+                  }
+                }
+		 );
+ 	}
+ 	
  	var cities_TableButtons = function() {
            cities_table = $("#cities_table").DataTable({
              "oLanguage": {
@@ -40,17 +56,7 @@ var areas_table;
 		         },
 	          ],
               dom: "Bfrtip",
-              buttons: [
-                {
-                  extend: "excel",
-                  text: lang_array['export_to_excel'],
-                  title : 'Citeis Report '+ moment().format('YYYY-MM-DD'),
-                  className: "btn-sm",
-                  exportOptions: {
-                     columns: [0,1,2]
-                  }
-                },
-              ],
+              buttons: city_buttons,
             });
         };
         cities_TableManageButtons = function() {

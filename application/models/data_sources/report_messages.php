@@ -11,4 +11,11 @@ class Report_messages extends MY_Model {
 	   $this->db->select('report_messages.'.$lang.'_text as msg , report_message_id');
 	   return $this->db->get('report_messages')->result_array();
 	}
+	
+	public function get_info($id , $lang)
+	{
+	   $this->db->select('report_messages.'.$lang.'_text as msg');
+	   $this->db->where('report_message_id' , $id);
+	   return $this->db->get('report_messages')->row();
+	}
 }

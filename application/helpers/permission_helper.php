@@ -17,7 +17,9 @@ class PERMISSION {
 	      EXPORT_NOTIFICATIONS = 14, 
 	      ADMINS_MANAGE = 15, 
 	      EXPORT_ADMINS = 16, 
-	      ABOUT_MANAGE = 17;
+	      ABOUT_MANAGE = 17,
+		  VIEW_ADMINS_ACTIONS = 18,
+		  EXPORT_ACTIONS_LOG = 19;
 		  
 
 	public static function Check_permission($permission, $user_id) {

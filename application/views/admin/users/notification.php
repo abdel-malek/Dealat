@@ -24,6 +24,18 @@
 		                            <?php endif; ?> 
 		                          </select>
 		                        </div>
+		                        
+		                        <div class="col-md-4">
+		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('send_to_user') ?></label>
+		                         <select class="form-control select2_single" id="noti_users_select" tabindex="-1">
+		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
+		                        	<?php $users = get_users();?>
+		                         	<?php if($users!= null): foreach ($users as $key => $value): ?>
+		                         		  <option value="<?php echo $value->user_id; ?>"><?php echo $value->name ?></option>
+		                            <?php  endforeach; ?>
+		                            <?php endif; ?> 
+		                          </select>
+		                        </div>
 		                     </div>
 		                    </div>
 		                  </div>
@@ -72,6 +84,7 @@
 	                          <th><?php echo $this->lang->line('send_date') ?></th>
 	                          <th><?php echo $this->lang->line('sender_name') ?></th>
 	                          <th><?php echo $this->lang->line('city') ?></th>
+	                          <th><?php echo $this->lang->line('to_user_name') ?></th>
 	                          <th><?php echo $this->lang->line('notify_title') ?></th>
 	                          <th><?php echo $this->lang->line('notify_text') ?></th>
 	                        </tr>

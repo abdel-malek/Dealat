@@ -35,6 +35,7 @@ class User_favorite_ads extends MY_Model {
 	  $this->db->where('status' , STATUS::ACCEPTED);
 	  $this->db->where('categories.is_active' , 1);
 	  $this->db->where('users.is_deleted' , 0);
+	  $this->db->where('users.is_active' , 0);
 	  $this->db->where('user_favorite_ads.user_id' , $user_id);
 	  return parent::get();
 	}

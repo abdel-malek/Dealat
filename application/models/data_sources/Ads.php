@@ -31,6 +31,7 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_deleted' , 0);
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
+		$this->db->where('categories.is_deleted' , 0);
         $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');                              
         $q = parent::get(null , false, 12);
 		return $q; 
@@ -56,6 +57,7 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_deleted' , 0);
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
+		$this->db->where('categories.is_deleted' , 0);
     	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
@@ -85,7 +87,9 @@ class Ads extends MY_Model {
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
+		$this->db->where('categories.is_deleted' , 0);
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
@@ -115,11 +119,13 @@ class Ads extends MY_Model {
 		                  categories.tamplate_id,
 		                  locations.'.$lang.'_name as location_name ,
 		                  cites.'.$lang.'_name as  city_name,
-		                 ');
+		                  timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
+		                 ', false);
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		return parent::get($ad_id , true);
     }
 	
@@ -513,6 +519,9 @@ class Ads extends MY_Model {
 			$this->db->where('status' , $this->input->get('status'));
 		}
         $this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
+		$this->db->where('categories.is_deleted' , 0);
+		$this->db->where('categories.is_active' , 1);
 		return parent::get();
 	}
 	
@@ -564,6 +573,7 @@ class Ads extends MY_Model {
 		$this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
 	    $this->db->where('status' , STATUS::PENDING);
 		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active'  , 1);
 		return parent::get();
     }
@@ -572,18 +582,33 @@ class Ads extends MY_Model {
    { 
    	  $this->db->select('count(ad_id) as pending_count');
 	  $this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
+	  $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
 	  $this->db->where('status' , STATUS::PENDING);
 	  $this->db->where('users.is_deleted' , 0);
+	  $this->db->where('users.is_active' , 1);
+	  $this->db->where('categories.is_active'  , 1);
 	  $q = parent::get();
 	  return $q[0]->pending_count;
    }
    
-   public function send_pending_email()
+   public function send_pending_email($ad_id , $after_edit = false)
    {
 		$to      = 'dealat.co@gmail.com';
 	    $subject = 'Message from Dealat';
-	    $message =  $this->lang->line('pending_email');
+		if($after_edit){
+		   $message =  $this->lang->line('pending_after_edit_email') . $ad_id;
+		}else{
+		   $message =  $this->lang->line('pending_email') . $ad_id;	
+		}
 	    mail($to, $subject, $message,  "From: ola@tradinos.com");
+   }
+   
+   
+   public function get_user_pending_ads($user_id)
+   {
+       $this->db->where('ads.user_id'  ,$user_id);
+	   $this->db->where('status' , STATUS::PENDING);
+	   return parent::get();
    }
 
 
