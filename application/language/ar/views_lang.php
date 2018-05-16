@@ -356,6 +356,13 @@ $lang['certificates_list'] = 'قائمة الشهادات';
 $lang['add_certificate'] = 'إضافة شهادة';
 $lang['certificate_details'] = 'تفاصيل الشهادة';
 
+//show periods 
+$lang['show_periods'] = 'مدة الظهور';
+$lang['periods_list'] = 'قائمة فترات الظهور';
+$lang['add_period'] = 'إضافة فترة';
+$lang['days'] = 'عدد الأيام';
+$lang['period_details'] = 'تفاصيل الفترة';
+
 // login
 $lang['login_form'] = 'تسجيل الدخول';
 $lang['login'] = 'سجل الدخول';

@@ -19,6 +19,7 @@ $lang['price'] = 'Ad Price';
 $lang['title'] = 'Ad Title';
 $lang['excced_limit'] = 'You have exceeded the limit of the ads that must appears in this category and position, you have to hide other ad to show this one. ';
 $lang['not_a_user'] = 'Oh sorry! Incorrect phone or password, please try again.';
+$lang['not_an_admin'] = 'Oh sorry! Incorrect username or password, please try again.';
 $lang['incorrect_verfication'] = 'Hmmm, Incorrect verification code, please try again.';
 $lang['not_a_qr_user'] = 'Oh sorry! Incorrect Pin code or the allowed period has expired, please try again.';
 $lang['no_users'] = 'There is no any user in this city';

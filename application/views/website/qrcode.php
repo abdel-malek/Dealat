@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Generate QRcode in codeigniter with demo By TangleSkills</title>
+	<title>Dealat</title>
 </head>
 <body>
 <div align="center">
-	<form action="" method="post">
-	 <span>Enter your raw text to generate QRCode</span><br><br>
-	 <input type="text" name="qr_text" required="required" placeholder="">
-	 <input type="hidden" name="action" value="generate_qrcode"><input type="submit" name="" value="Generate">
-	</form>
 	<?php
-	if($img_url)
+	if($QR_path)
 	{
 	?>
-		<br><br>Your QRcode Image here. Scan this to get result<br>
-		<img src="<?php echo base_url('QR_codes/'.$img_url); ?>" alt="QRCode Image">
+		<br><br>Your QRcode Image here. Scan this to login<br>
+		<img src="<?php echo base_url($QR_path); ?>" alt="QRCode Image">
+		<input type='hidden'  id = 'qr_gen_code'  value=<?php echo $gen_code ?>/>
 	<?php
 	}
 	?>

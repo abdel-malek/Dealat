@@ -467,5 +467,67 @@ class Data_manage extends REST_Controller {
 	} 
  }
  
+ public function load_periods_page_get()
+ {
+    $this -> data['subview'] = 'admin/show_periods/index';
+    $this -> load -> view('admin/_main_layout', $this -> data);  
+ }
+ 
+ public function get_show_periods_get()
+ {
+ 	$this->load->model('data_sources/show_periods');
+	$data = $this->show_periods->get_by(array('is_active' => 1));
+	$output = array("aaData" => array());
+	foreach ($data as $row) {
+			$recorde = array();
+			$recorde[] = $row -> show_period_id;
+			$recorde[] = $row -> en_name;
+			$recorde[] = $row -> ar_name;
+			$recorde[] = $row->days;
+			$output['aaData'][] = $recorde;
+		}
+	echo json_encode($output);
+     
+ }
+ 
+ public function save_period_post()
+ {
+    $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+    $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+	$this -> form_validation -> set_rules('days', 'days', 'required');
+	 if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	 } else {
+		$this->load->model('data_sources/show_periods');
+		$data = array(
+		   'en_name' => $this->input->post('en_name'),
+		   'ar_name' => $this->input->post('ar_name'),
+		   'days' => $this->input->post('days')
+		);
+		$id = $this->input->post('period_id');
+		if($id != 0){ // edit
+		   $new_id = $this->show_periods->save($data , $id);
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_PERIOD , $new_id);
+		}else{ // add
+		   $new_id = $this->show_periods->save($data);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_PERIOD , $new_id);
+		}
+      $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+    } 
+ }
+
+ public function delete_period_post()
+ {
+    $this -> form_validation -> set_rules('period_id', 'period_id', 'required');
+	if (!$this -> form_validation -> run()) {
+		throw new Validation_Exception(validation_errors());
+	} else {
+    	$this->load->model('data_sources/show_periods');
+		$id = $this->show_periods->save(array('is_active' => 0) ,$this->input->post('period_id'));
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_PERIOD , $id);
+		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
+	} 
+ }
+ 
  
 }

@@ -10,7 +10,7 @@ class Show_periods extends MY_Model {
     public function get_all($lang)
 	{
 	    $this->db->select('show_periods.'.$lang.'_name as name , show_period_id , days');
-		//$this->db->where('is_active' , 1);
+		$this->db->where('is_active' , 1);
 		return $this->db->get('show_periods')->result_array();
 	}
 }

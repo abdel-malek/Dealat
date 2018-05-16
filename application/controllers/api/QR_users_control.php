@@ -54,7 +54,7 @@ class QR_users_control extends REST_Controller {
 		   	 $this->response(array('status' => false, 'data' =>'', "message" => $this->lang->line('failed')));
 		   }
 		}
-	}
+   }
 
    public function login_by_qr_code_post()
    {

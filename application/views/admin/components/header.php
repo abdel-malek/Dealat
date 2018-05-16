@@ -147,6 +147,7 @@
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_certificates_page'); ?>"><?php echo $this->lang->line('certificates') ?></a></li>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_schedules_page'); ?>"><?php echo $this->lang->line('schedules') ?></a></li>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_cities_page'); ?>"><?php echo $this->lang->line('cities_and_areas') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/data_manage/load_periods_page'); ?>"><?php echo $this->lang->line('show_periods') ?></a></li>
 	                 	 </ul>
 	                  </li>
                    <?php endif; ?>

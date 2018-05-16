@@ -355,6 +355,13 @@ $lang['certificates_list'] = 'Certificates List';
 $lang['add_certificate'] = 'Add Certificate';
 $lang['certificate_details'] = 'Certificate Details';
 
+//show periods 
+$lang['show_periods'] = 'Show Periods';
+$lang['periods_list'] = 'Show Periods List';
+$lang['add_period'] = 'Add Period';
+$lang['days'] = 'Days';
+$lang['period_details'] = 'Period Details';
+
 
 // login
 $lang['login_form'] = 'Login Form';

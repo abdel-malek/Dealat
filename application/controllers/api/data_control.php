@@ -74,4 +74,11 @@ class Data_control extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
 	
+	public function get_period_info_get()
+	{
+		$this->load->model('data_sources/show_periods');
+		$info = $this->show_periods->get($this->input->get('period_id'));
+		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+	}
+	
 }

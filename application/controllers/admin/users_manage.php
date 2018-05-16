@@ -44,13 +44,10 @@ class Users_manage extends REST_Controller {
 				$password = $this -> input -> post('admin_password');
 				$user = $this -> admins -> login($username, $password);
 				if ($user) {
-					//redirect('admin/items_manage');
 					redirect('admin/dashboard');
 				} else {
+					$this -> session -> set_flashdata('error', $this -> lang -> line('not_an_admin'));
 					redirect('admin/users_manage/load_login_page');
-				 //   $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('not_a_user')));
-				   //$this -> session -> set_flashdata('error', $this -> lang -> line('incorrect_credentials'));
-				   //redirect('users');
 				}
 			}
 		}

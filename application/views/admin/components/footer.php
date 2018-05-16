@@ -108,6 +108,7 @@
        	 lang_array['schedule_deleted'] = 'Work Schedule is deleted' ;
        	 lang_array['show_status_changed'] = 'Ad show status has been changed' ;
        	 lang_array['names_validation'] = 'English and arabic names ara requierd.' ;
+       	 lang_array['names_days_validation'] = 'English and arabic names and days ara requierd.' ;
        	 lang_array['note'] = 'Please Note' ;
        	 lang_array['new_pending'] = 'A new pending ad is added' ;
        	 lang_array['education_saved'] = 'Education is saved';
@@ -128,6 +129,8 @@
        	 lang_array['bad_date_entry'] = 'From date should be earler than to date';
        	 lang_array['certificate_saved'] = 'Certificate is saved';
        	 lang_array['certificate_deleted'] = 'Certificate is deleted';
+       	 lang_array['period_saved'] = 'Period is saved';
+       	 lang_array['period_deleted'] = 'Period is deleted';
        	 lang_array['body_and_title'] = 'You have to provide title and body';
        	 lang_array['yes'] = 'Yes'
        	 lang_array['no'] = 'No';
@@ -161,7 +164,8 @@
        	 lang_array['schedule_saved'] = 'تم حفظ دوام العمل' ;
        	 lang_array['schedule_deleted'] = 'تم حذف دوام العمل' ;
          lang_array['show_status_changed'] = 'تم تغيير حالة ظهور الإعلان بنجاح' ;
-       	 lang_array['names_validation'] = 'يجب إدخال الاسم العربي والاسم الانغليزي' ;
+       	 lang_array['names_validation'] = 'يجب إدخال الاسم العربي والاسم الانجليزي' ;
+       	 lang_array['names_days_validation'] = ' يجب إدخال الاسم العربي والاسم الانجليزي والأيام' ;
        	 lang_array['note'] = 'ملاحظة' ;
        	 lang_array['new_pending'] = "يوجد لديك إعلان قيد الانتظار جديد" ;
        	 lang_array['education_saved'] = 'تم حفظ المستوى التعليمي ';
@@ -180,6 +184,8 @@
        	 lang_array['bad_date_entry'] = 'يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء';
        	 lang_array['certificate_saved'] = 'تم حفظ الشهادة';
        	 lang_array['certificate_deleted'] = 'تم حذف الشهادة';
+       	 lang_array['period_saved'] = 'تم حفظ الفترة';
+       	 lang_array['period_deleted'] = 'تم حذف الفترة';
        	 lang_array['body_and_title'] = 'يجب إدخال العنوان والرسالة';
        	 lang_array['yes'] = 'نعم'
        	 lang_array['no'] = 'كلا'
@@ -225,6 +231,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/admins.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/actions_log.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/certificates.js"></script>
+     <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
    
   </body>
 </html>
