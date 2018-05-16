@@ -1384,10 +1384,6 @@ $(function () {
 		});
 	});
 
-	$("#success-btn-modal .submit").click(function () {
-		$("#success-btn-modal").modal("hide");
-	});
-
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > $(".products").offset().top) {
 			$(".categories").css({
@@ -1877,10 +1873,10 @@ $(function () {
 					$.playSound(sound_notify_path);
 				}
 				if (newNotSeenMsgs > 0) {
-					$(".header-account-logged .new-msg").removeClass("d-none");
+					$("header .new-msg").removeClass("d-none");
 
 				} else {
-					$(".header-account-logged .new-msg").addClass("d-none");
+					$("header .new-msg").addClass("d-none");
 					$(".profile-page .session .new-msg").addClass("d-none");
 				}
 				var existingSessionID = [];
@@ -2276,7 +2272,7 @@ $(function () {
 			url: base_url + '/users_control_web/login',
 			dataType: "json",
 			data: $(this).serialize()
-		}).done(function (data) {
+		}).done(function (data) {console.log(data);
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
@@ -2295,7 +2291,11 @@ $(function () {
 				$('#login-modal .error-message').html(wholeMessage);
 				$('#login-modal .error-message').removeClass("d-none");
 			} else {
-				window.location = base_url;
+				if(data.data.cms_logged === 1){
+					window.location = base_url + "/admin/dashboard";
+				}else{
+					window.location = base_url;
+				}
 			}
 		});
 
@@ -2352,9 +2352,6 @@ $(function () {
 
 	});
 
-	$("#notification-modal .submit").click(function () {
-		$("#notification-modal").modal("hide");
-	});
 	$("#notification-modal").on("hidden.bs.modal", function () {
 		location.reload();
 	});
@@ -2470,6 +2467,7 @@ $(function () {
 		});
 
 	});
+	
 	$("#qr-form input[name=\"secret_code\"]").keyup(function () {
 		if ($(this).val().length === 6) {
 			$("#qr-modal .submit").removeAttr("disabled");
@@ -2515,16 +2513,65 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				if(data.data.cms_logged === "1"){
+				if(data.data.cms_logged === 1){
 					window.location = base_url + "/admin/dashboard";
 				}else{
 					window.location = base_url;
-				}
-				
+				}	
 			}
-
 		});
-
+	});
+	
+	//notifications
+	$("header .bell-icon").click(function(){
+		$.ajax({
+			type: "get",
+			url: base_url + '/users_control_web/get_notifications_for_me',
+			dataType: "json"
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {
+			} else {
+				$("header .notifications-dropdown .dropdown-menu").empty();
+				
+				for(i in data.data){
+					if(data.data[i].to_user_id && data.data[i].seen === "0"){
+						data.data[i].new = "1";
+					}else{
+						data.data[i].new = "0";
+					}
+				}
+				console.log(data);
+				template = $('#notifications-template').html();
+				Mustache.parse(template);
+				rendered = Mustache.render(template, data.data);
+				$("header .notifications-dropdown .dropdown-menu").append(rendered);
+				
+				$(".notifications-dropdown .number").text("0");
+			}
+		});
+	});
+	
+	//notifications count for user
+	$.ajax({
+			type: "get",
+			url: base_url + '/users_control_web/get_my_notifications_count',
+			dataType: "json"
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {
+			} else {
+				$(".notifications-dropdown .number").text(data.data);
+			}
+		});
+	
+	$("header").on("click",".notification",function () {
+		var title, body;
+		title = $(this).find(".title").text();
+		body = $(this).find(".body").text();
+		
+		$("#success-btn-modal .text").html(title + "<br>" + body);
+		$("#success-btn-modal").modal("show");
 	});
 
 });

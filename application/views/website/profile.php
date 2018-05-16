@@ -86,15 +86,16 @@
 			<div id="user-ads" class="user-ads">
 				<section class="products">
 					<div class="dropdown filter-dropdown">
-						<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<?php echo $this->lang->line('all'); ?>
 					    </button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<div class="dropdown-menu">
 							<li class="selected filter-item" data-filter="all"><?php echo $this->lang->line('all'); ?></li>
 							<li class="filter-item" data-mixitup-control data-filter=".type2"><?php echo $this->lang->line('accepted'); ?></li>
 							<li class="filter-item" data-mixitup-control data-filter=".type1"><?php echo $this->lang->line('pending'); ?></li>
 							<li class="filter-item" data-mixitup-control data-filter=".type5"><?php echo $this->lang->line('rejected'); ?></li>
 							<li class="filter-item" data-mixitup-control data-filter=".type3"><?php echo $this->lang->line('expired'); ?></li>
+							<li class="filter-item" data-mixitup-control data-filter=".type4"><?php echo $this->lang->line('hidden'); ?></li>
 						</div>
 					</div>
 					

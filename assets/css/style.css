@@ -39,7 +39,8 @@ body {
   white-space: pre-line;
   font-family: monospace;
   display: block;
-  width: 100%; }
+  width: 100%;
+  text-align: left; }
 
 .error-message p,
 .success-message p {
@@ -621,6 +622,71 @@ header.home {
   header.home .header-account-logged li a:hover {
     color: #c30a30;
     background-color: #eee; }
+  header.home .notifications-dropdown .bell-icon {
+    position: relative; }
+  header.home .notifications-dropdown .bell-icon:hover {
+    cursor: pointer; }
+  header.home .notifications-dropdown .dropdown-toggle {
+    padding: 5px; }
+  header.home .notifications-dropdown .dropdown-toggle::after {
+    display: none; }
+  header.home .notifications-dropdown .dropdown-menu {
+    padding: 5px 0;
+    margin: 0.2rem 0 0;
+    width: 160px;
+    max-height: 250px;
+    overflow-y: auto; }
+  header.home .notifications-dropdown .dropdown-menu li {
+    text-decoration: none;
+    color: #333;
+    padding: 0 10px;
+    font-size: .85rem;
+    display: block;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd; }
+  header.home .notifications-dropdown .dropdown-menu li[data-new="1"] {
+    background-color: rgba(195, 10, 48, 0.22); }
+  header.home .notifications-dropdown .dropdown-menu li:hover {
+    color: #c30a30;
+    background-color: #eee; }
+  header.home .notifications-dropdown .body {
+    font-size: .75rem;
+    width: 100%;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  header.home .notifications-dropdown .number {
+    position: absolute;
+    right: -12px;
+    top: -2px;
+    min-height: 17px;
+    min-width: 17px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #c30a30;
+    padding: 0;
+    text-align: center;
+    line-height: 17px;
+    font-size: .7rem; }
+
+.qr-page .language-wrapper {
+  cursor: default;
+  text-align: left !important; }
+  .qr-page .language-wrapper .language-switch {
+    text-transform: uppercase; }
+  .qr-page .language-wrapper .language-switch span {
+    color: #000;
+    border-right: 1px solid #000;
+    padding: 0 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: .8rem; }
+  .qr-page .language-wrapper .language-switch span.selected {
+    font-weight: bold; }
+  .qr-page .language-wrapper .language-switch a:hover {
+    color: #eee; }
+  .qr-page .language-wrapper .language-switch span:last-of-type {
+    border: none; }
 
 .ads-slider {
   height: 300px; }
@@ -1315,13 +1381,13 @@ select option.placeholder {
 #register-modal .lines:first-child {
   margin-top: 0px; }
 
-#qr-modal .qr-img {
+#qr-modal .qr-img, .qr-page .qr-img {
   margin-bottom: 15px; }
-#qr-modal .note {
+#qr-modal .note, .qr-page .note {
   font-size: 0.7rem;
   margin-bottom: 15px;
   color: #888; }
-#qr-modal input[name="secret_code"] {
+#qr-modal input[name="secret_code"], .qr-page input[name="secret_code"] {
   max-width: 200px;
   margin: auto;
   text-align: center; }
@@ -1551,14 +1617,11 @@ label {
       height: 30px;
       width: 30px; }
 
-.header-account-logged {
+header {
   position: relative; }
-  .header-account-logged .new-msg {
-    position: absolute;
-    top: 2px;
-    left: -40px;
+  header .new-msg {
+    display: inline-block;
     background-color: #c30a30;
-    border: 2px solid #fff;
     border-radius: 50%;
     width: 36px;
     height: 30px;
@@ -1566,15 +1629,11 @@ label {
     cursor: pointer;
     transition: .15s;
     color: #fff; }
-    .header-account-logged .new-msg a {
+    header .new-msg .fa-envelope {
+      vertical-align: middle; }
+    header .new-msg a {
       text-decoration: none;
       color: #fff; }
-  .header-account-logged .new-msg:hover {
-    background-color: #fff;
-    color: #c30a30; }
-    .header-account-logged .new-msg:hover a {
-      text-decoration: none;
-      color: #c30a30; }
 
 .profile-page .sessions {
   margin-bottom: 0; }
@@ -1583,13 +1642,12 @@ label {
   position: relative; }
   .profile-page .session .new-msg {
     position: absolute;
-    top: 21%;
+    top: 29%;
     left: 5px;
-    background-color: #c30a30;
-    border: 2px solid #fff;
     border-radius: 50%;
     width: 36px;
     height: 30px;
+    line-height: 30px;
     text-align: center;
     transition: .15s;
     color: #fff; }

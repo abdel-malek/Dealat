@@ -85,8 +85,30 @@
 				</div>
 				<?php  }else{?>
 				<!--if logged-->
-				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2">
+				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2 text-right">
+				<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>" class="new-msg d-none">
+<!--						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>">-->
+						<i class="fas fa-envelope"></i>
+<!--						</a>-->
+						</a>
+					<span class="dropdown notifications-dropdown">
+						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell fa-lg"></i> <span class="number"></span></span>
 
+						<div class="dropdown-menu">
+							
+
+						</div>
+						<script id="notifications-template" type="text/template">
+								{{#.}}
+								<li class="notification" data-new="{{new}}" data-notification-id="{{notification_id}}">
+									<div class="title">{{title}}</div>
+									<div class="body">{{body}}</div>
+								</li>
+								{{/.}}
+							</script>
+					</span>
+					
+					
 				</div>
 				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
 
@@ -104,11 +126,7 @@
 								</li>
 							</ul>
 						</div>
-						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>" class="new-msg d-none">
-<!--						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>">-->
-						<i class="fas fa-envelope"></i>
-<!--						</a>-->
-						</a>
+						
 					</div>
 				</div>
 				<?php } ?>
@@ -420,7 +438,7 @@
 						<span class="text">Sign in with:</span>
 					</div>
 -->
-					<div class="error-message d-none text-left"></div>
+					<div class="error-message d-none"></div>
 					<form id="login-form">
 						<div class="form-group">
 							<input type="number" class="form-control phone" name="phone" placeholder="<?php echo $this->lang->line('phone'); ?>" required>
@@ -1138,7 +1156,7 @@
 				<h6 class="text"></h6>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button>
+				<button type="submit" class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
 			</div>
 		</div>
 	</div>
@@ -1253,7 +1271,7 @@
 				<h6 class="text"></h6>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button>
+				<button type="submit" class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
 			</div>
 		</div>
 	</div>

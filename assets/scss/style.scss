@@ -6,7 +6,7 @@ $font: #333;
 $grey: #aaa;
 $grey-hover: #999;
 $placeholder: #6c757d;
-	
+
 @font-face {
 	font-family: "calibri";
 	src: url("../fonts/calibri.ttf");
@@ -56,6 +56,7 @@ body {
 	font-family: monospace;
 	display: block;
 	width: 100%;
+	text-align: left
 }
 
 .error-message p,
@@ -397,7 +398,7 @@ form .form-control:not(textarea) {
 	padding-bottom: 2px;
 	padding-left: 5px;
 	border-radius: 0;
-	    padding-bottom: 0;
+	padding-bottom: 0;
 }
 
 textarea.form-control {
@@ -809,8 +810,101 @@ header.home {
 		color: $main;
 		background-color: #eee;
 	}
+	
+
+	.notifications-dropdown {
+		//	text-align: right;
+		//	margin-right: 10%;
+		.bell-icon {
+			position: relative
+		}
+	.bell-icon:hover {
+		cursor: pointer
+	}
+		.dropdown-toggle {
+			padding: 5px
+		}
+		.dropdown-toggle::after {
+			display: none
+		}
+
+		.dropdown-menu {
+			padding: 5px 0;
+			margin: 0.2rem 0 0;
+			width: 160px;
+			max-height: 250px;
+			overflow-y: auto;
+		}
+		.dropdown-menu li {
+			text-decoration: none;
+			color: #333;
+			padding: 0 10px;
+			font-size: .85rem;
+			display: block;
+			cursor: pointer;
+			border-bottom: 1px solid #ddd;
+			   
+		}
+		.dropdown-menu li[data-new="1"] {
+			background-color: rgba(195, 10, 48, 0.22);
+		}
+		.dropdown-menu li:hover {
+			color: $main;
+			background-color: #eee;
+
+		}
+
+		.title {}
+
+		.body {
+			font-size: .75rem;
+			 width: 100%;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+		}
+		.number {
+			position: absolute;
+			right: -12px;
+			top: -2px;
+			min-height: 17px;
+			min-width: 17px;
+			border-radius: 50%;
+			background-color: #fff;
+			color: $main;
+			padding: 0;
+			text-align: center;
+			line-height: 17px;
+//			padding: 3px;
+			font-size: .7rem;
+		}
+	}
 }
 
+.qr-page .language-wrapper {
+	cursor: default;
+	text-align: left !important;
+		.language-switch {
+			text-transform: uppercase; 
+		} 
+		.language-switch span {
+			color: #000;
+			border-right: 1px solid #000;
+			padding: 0 4px;
+			cursor: pointer;
+			text-decoration: none;
+			font-size: .8rem;
+		} 
+		.language-switch span.selected {
+			font-weight: bold
+		}
+		.language-switch a:hover {
+			color: #eee
+		} 
+		.language-switch span:last-of-type {
+			border: none;
+		}
+	}
 //End header
 .ads-slider {
 	height: 300px;
@@ -1313,12 +1407,11 @@ select option.placeholder {
 	}
 	.modal-body {
 		padding: 0;
-	} 
+	}
 	.modal-footer {
 		padding-top: 7px;
 		padding-bottom: 15px
-	}
-	//	@extend %card;
+	} //	@extend %card;
 	.card {
 		font-size: .8rem;
 		border: none;
@@ -1360,7 +1453,7 @@ select option.placeholder {
 
 			.label {
 				//				font-weight: bold;
-								font-size: .7rem;
+				font-size: .7rem;
 				font-family: "gothic";
 				color: #888
 			}
@@ -1383,8 +1476,7 @@ select option.placeholder {
 					transition: .1s
 				}
 				.icon:hover {
-					font-size: .75rem;
-					//					color: orange;
+					font-size: .75rem; //					color: orange;
 					cursor: pointer
 				}
 			}
@@ -1420,8 +1512,7 @@ select option.placeholder {
 		.show-contact {
 			//			min-height: 28px;
 			//			padding: 3px 6px;
-						font-size: .7rem;
-			//			letter-spacing: .5px;
+			font-size: .7rem; //			letter-spacing: .5px;
 			//			font-weight: normal;
 			//			margin: 5px 0;
 			color: $main;
@@ -1699,8 +1790,7 @@ select option.placeholder {
 #register-modal {
 	.lines:first-child {
 		margin-top: 0px;
-	}
-	//	.border-middle {
+	} //	.border-middle {
 	//		border-right: 1px solid #dee2e6;
 	//	}
 	//	@media(max-width: 768px) {
@@ -1710,7 +1800,7 @@ select option.placeholder {
 	//	}
 }
 
-#qr-modal {
+#qr-modal, .qr-page {
 	.qr-img {
 		margin-bottom: 15px
 	}
@@ -1995,14 +2085,15 @@ label {
 }
 
 //new msg notification
-.header-account-logged {
+header {
 	position: relative;
 	.new-msg {
-		position: absolute;
-		top: 2px;
-		left: -40px;
+//		position: absolute;
+//		top: 2px;
+//		left: -40px;
+		display: inline-block;
 		background-color: $main;
-		border: 2px solid #fff;
+//		border: 2px solid #fff;
 		border-radius: 50%;
 		width: 36px;
 		height: 30px;
@@ -2010,20 +2101,23 @@ label {
 		cursor: pointer;
 		transition: .15s;
 		color: #fff;
+		.fa-envelope{
+			vertical-align: middle;
+		}
 		a {
 			text-decoration: none;
 			color: #fff
 		}
 
 	}
-	.new-msg:hover {
-		background-color: #fff;
-		color: $main;
-		a {
-			text-decoration: none;
-			color: $main
-		}
-	}
+//	.new-msg:hover {
+//		background-color: #fff;
+//		color: $main;
+//		a {
+//			text-decoration: none;
+//			color: $main
+//		}
+//	}
 }
 
 .profile-page .sessions {
@@ -2034,13 +2128,14 @@ label {
 	position: relative;
 	.new-msg {
 		position: absolute;
-		top: 21%;
+		top: 29%;
 		left: 5px;
-		background-color: #c30a30;
-		border: 2px solid #fff;
+//		background-color: #c30a30;
+//		border: 2px solid #fff;
 		border-radius: 50%;
 		width: 36px;
 		height: 30px;
+		line-height: 30px;
 		text-align: center;
 		transition: .15s;
 		color: #fff;
@@ -2128,6 +2223,6 @@ label {
 	}
 }
 
-.btn.place-ad .fa-plus{
-	font-size: .7rem 
+.btn.place-ad .fa-plus {
+	font-size: .7rem
 }

@@ -65,6 +65,12 @@ $(function () {
 						} else {
 							status = "Expired";
 						}
+					} else if (data.data[i].status === "4") {
+						if (lang === "ar") {
+							status = "مخفي";
+						} else {
+							status = "Hidden";
+						}
 					} else if (data.data[i].status === "5") {
 						if (lang === "ar") {
 							status = "مرفوض";
@@ -893,7 +899,7 @@ $(function () {
 					data[i].value = "-1";
 				}
 			}
-
+console.log(data);
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',

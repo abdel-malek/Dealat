@@ -23,7 +23,10 @@ header.home .language-wrapper .language-switch span{
 	border: none;
 	    border-left: 1px solid #fff;
 }
-
+.qr-page .language-wrapper .language-switch span{
+	border: none;
+	    border-left: 1px solid #000;
+}
 
 .categories .category-slider .slick-slide h6 {
 	font-size: .7rem;
@@ -311,6 +314,7 @@ header.home .header-account-logged li a {
 
 .error-message{
 	direction: rtl;
+	text-align: right;
 	border-right: 2px solid transparent;
 	border-left: none;
 	border-color: #fa7751;
