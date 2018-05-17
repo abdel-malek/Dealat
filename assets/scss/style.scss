@@ -1626,13 +1626,13 @@ select option.placeholder {
 		min-height: 35px; //		padding-top: 5px;
 		//		padding-bottom: 5px;
 		padding: 5px 3px;
-		font-size: .65rem;
+		font-size: .58rem;
 		font-weight: bold;
 		border: none;
 		box-shadow: 0px 1px 10px 0px #a8a8a8;
 		background-color: #fff;
 		color: $main;
-		width: 40%;
+		min-width: 40%;
 		text-align: center; //		z-index: 100000;
 		cursor: grab !important
 	}

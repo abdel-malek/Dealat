@@ -398,5 +398,5 @@ $lang['hidden'] = 'Hidden';
 $lang['qr_login'] = 'Log in using QR code';
 $lang['enter_digits'] = 'Enter 6 digits number';
 $lang['qr_note'] = 'This code you will recieve on your phone once you scan this QR code is only valid for 15 minutes';
-$lang['confirm_edit'] = '';
+$lang['confirm_edit'] = 'Your ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?';
 $lang['qr_page_note'] = 'Your QRcode Image here. Scan this to login';

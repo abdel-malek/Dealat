@@ -110,6 +110,10 @@ $(function () {
 				}
 				$(".profile-page .user-ads .card").each(function () {
 					statusId1 = $(this).data("statusId");
+					var temp = $(this).data("templateId");
+					if (temp === 8) {
+					 $(this).find(".price").addClass("d-none");
+				}
 					$(this).find(".status-icon").each(function () {
 						statusId2 = $(this).data("statusId");
 						if (statusId1 === statusId2) {
@@ -279,7 +283,7 @@ $(function () {
 				return false;
 			}
 			newData = $(this).serializeArray();
-			console.log(newData);
+			
 			e.preventDefault();
 			e.stopPropagation();
 			data = $(this).serializeArray();
@@ -362,6 +366,8 @@ $(function () {
 				}
 			}).done(function (data) {
 				if (data.status === false) {} else {
+					$(".profile-page .user-ads .card[data-ad-id=\""+data.data+"\"]").parent(".col-12").remove();
+					
 					$("#delete-modal").modal("hide");
 					setTimeout(function () {
 						if (lang === "ar") {
@@ -373,7 +379,7 @@ $(function () {
 					}, 500);
 					setTimeout(function () {
 						$("#success-modal").modal("hide");
-						location.reload();
+//						location.reload();
 					}, 3000);
 				}
 			});
@@ -382,6 +388,7 @@ $(function () {
 		var uploadEdit, uploadMainEdit, uploadVideoEdit, editAdImgs = [],
 			tempEditAdImgs = [],
 			editMainImg = [],
+			tempEditMainImg = [],
 			editAdVideo = [];
 		if (lang === "ar") {
 			uploadEdit = "اختر صور إضافية";
@@ -537,7 +544,7 @@ $(function () {
 					template_id: templateId
 				}
 			}).done(function (data) {
-				console.log(data);
+//				console.log(data);
 				if (data.status === false) {} else {
 					//remove upload video except for properties category
 					if (templateId === 2) {
@@ -561,7 +568,7 @@ $(function () {
 
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
-					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
+//					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
 					$("#edit-ad-modal .period-select")[0].sumo.reload();
 					$("#edit-ad-modal input[name='price']").val(data.data.price);
@@ -664,10 +671,16 @@ $(function () {
 					}
 
 					editAdImgs = [];
+					
 					for (i in data.data.images) {
 						editAdImgs.push(data.data.images[i].image);
 					}
 
+					tempEditMainImg = [];
+					if (data.data.main_image) {
+						tempEditMainImg.push(data.data.main_image);
+					}
+					
 					$("#edit-ad-modal .ad-images").empty();
 					template = $('#ad-edit-images-template').html();
 					Mustache.parse(template);
@@ -739,7 +752,6 @@ $(function () {
 			$("#edit-ad-modal").modal("show");
 		});
 
-
 		$("#edit-ad-modal").on("hide.bs.modal", function () {
 			//delete images if user close modal without editing the ad
 			var deleteImgs = [];
@@ -798,6 +810,7 @@ $(function () {
 			if ($(this).parents(".image-wrapper").hasClass("main-image")) {
 				deleteMainImgArr.push(url);
 				deleteImgArr.push(url);
+				tempEditMainImg = [];
 			} else if ($(this).parents(".image-wrapper").hasClass("video")) {
 				deleteVideoArr.push(url);
 			} else {
@@ -820,46 +833,60 @@ $(function () {
 			});
 		});
 
+		var editAdData;
 		//submit edit user ad
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 
-			var data, i,
+			var i,
 				secondary_imgs = [],
 				adStatus;
 
 			adStatus = $(this).find(".ad-status").val();
-			data = $(this).serializeArray();
+			editAdData = $(this).serializeArray();
 
 			if (adStatus) {
-				data.push({
+				editAdData.push({
 					name: "edit_status",
 					value: adStatus
 				});
 			}
 
 			if (editMainImg.length > 0) {
-				data.push({
+				editAdData.push({
 					name: "main_image",
 					value: editMainImg[0]
 				});
+			} 
+			
+			if(tempEditMainImg.length === 0 && editMainImg.length === 0){
+				if (lang === "ar") {
+					$('#edit-ad-modal .error-message').text("الرجاء رفع صورة رئيسية للإعلان");
+				} else {
+					$('#edit-ad-modal .error-message').text("Please upload main ad image");
+				}
+				$('#edit-ad-modal .error-message').removeClass("d-none");
+				$("#edit-ad-modal").animate({
+					scrollTop: $("body").offset().top
+				}, 500);
+				return false;
 			}
-
+			
 			if (editAdImgs.length > 0) {
 				//copy adimgs into uploaded_imgs
 				for (i in editAdImgs) {
 					secondary_imgs.push(editAdImgs[i]);
 				}
 				secondary_imgs = JSON.stringify(secondary_imgs);
-				data.push({
+				editAdData.push({
 					name: "images",
 					value: secondary_imgs
 				});
 			}
 
 			if (editAdVideo.length > 0) {
-				data.push({
+				editAdData.push({
 					name: "main_video",
 					value: editAdVideo[0]
 				});
@@ -868,23 +895,23 @@ $(function () {
 			if (deleteImgArr.length > 0) {
 				deleteImgArr = JSON.stringify(deleteImgArr);
 
-				data.push({
+				editAdData.push({
 					name: "deleted_images",
 					value: deleteImgArr
 				});
 			}
 
-			if (deleteMainImgArr.length > 0) {
-				data.push({
-					name: "main_image",
-					value: "-1"
-				});
-			}
+//			if (deleteMainImgArr.length > 0) {
+//				editAdData.push({
+//					name: "main_image",
+//					value: "-1"
+//				});
+//			}
 
 			if (deleteVideoArr.length > 0) {
 				deleteVideoArr = JSON.stringify(deleteVideoArr);
 
-				data.push({
+				editAdData.push({
 					name: "deleted_videos",
 					value: deleteVideoArr
 				}, {
@@ -893,19 +920,28 @@ $(function () {
 				});
 			}
 
-			for (i in data) {
+			for (i in editAdData) {
 				//send -1 for empty values
-				if (data[i].value === "") {
-					data[i].value = "-1";
+				if (editAdData[i].value === "") {
+					editAdData[i].value = "-1";
 				}
 			}
-console.log(data);
-			$.ajax({
+//			console.log(editAdData);
+			$("#confirm-edit-modal").modal("show");
+		});
+
+		$("#confirm-edit-modal").on("hidden.bs.modal", function () {
+			$("body").addClass("modal-open");
+		});
+		
+		$("#confirm-edit-modal .submit").click(function(){
+				$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',
 				dataType: "json",
-				data: $.param(data)
+				data: $.param(editAdData)
 			}).done(function (data) {
+//					console.log(data);
 				if (data.status === false) {} else {
 					//reset edit arrays
 					editMainImg = [];
@@ -916,6 +952,7 @@ console.log(data);
 					deleteVideoArr = [];
 					tempEditAdImgs = [];
 
+					$("#confirm-edit-modal").modal("hide");
 					$("#edit-ad-modal").modal("hide");
 					setTimeout(function () {
 						if (lang === "ar") {
@@ -926,11 +963,10 @@ console.log(data);
 
 						$("#notification-modal").modal("show");
 					}, 500);
-
 				}
 			});
 		});
-
+		
 		var sound_notify_path = site_url + 'admin_assets/definite.mp3';
 		//get chat sessions
 		$.ajax({

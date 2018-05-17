@@ -124,6 +124,7 @@ $(function () {
 		$('#ad-modal .educations-select')[0].sumo.unSelectAll();
 		$('#ad-modal .certificates-select')[0].sumo.unSelectAll();
 		$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
+		$("#ad-modal input[name='category_id']").val("");
 	}
 
 	function resetEditAd() {
@@ -465,7 +466,6 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {} else {
-			console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -667,7 +667,7 @@ $(function () {
 	$(document).ajaxStart(function () {
 		ajaxLoadTimeout = setTimeout(function () {
 			$(".loading-overlay1").fadeIn("fast");
-		}, 1000);
+		}, 100);
 
 	}).ajaxComplete(function () {
 		clearTimeout(ajaxLoadTimeout);
@@ -686,7 +686,7 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				console.log(data);
+//				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -1220,6 +1220,7 @@ $(function () {
 					for (i in adImgs) {
 						if (adImgs[i] === deleted) {
 							adImgs.splice(i, 1);
+//							console.log(adImgs);
 						}
 					}
 
@@ -1234,9 +1235,10 @@ $(function () {
 							$(this).find(".set-main").attr("disabled", true);
 						}
 					});
-					if ($("#ad-modal .ajax-file-upload-statusbar").length == 0) {
-						fileIndex = 0;
-					}
+//					if ($("#ad-modal .ajax-file-upload-statusbar").length == 0) {
+//						fileIndex = 0;
+//					}
+				fileIndex = $("#ad-modal .ajax-file-upload-statusbar").length;
 				});
 		}
 	});
@@ -1244,7 +1246,9 @@ $(function () {
 	$("#ad-modal").on("click", ".set-main", function () {
 		var imgIndex, temp;
 		imgIndex = $(this).closest(".ajax-file-upload-statusbar").data("index");
+		
 		if (imgIndex > 0) {
+			//not main
 			temp = adImgs[imgIndex];
 			adImgs.splice(imgIndex, 1);
 			adImgs.unshift(temp);
@@ -1253,8 +1257,9 @@ $(function () {
 				$(this).find(".set-main").text(setAsMain);
 				$(this).find(".set-main").attr("disabled", false);
 				for (i in adImgs) {
+//					console.log($(this).data("src"));
 					if ($(this).data("src") === adImgs[i]) {
-						$(this).data("index", i)
+						$(this).data("index", Number(i))
 					}
 				}
 			});
@@ -1320,6 +1325,7 @@ $(function () {
 			for (i in adImgs) {
 				uploaded_imgs.push(adImgs[i]);
 			}
+			
 			data.push({
 				name: "main_image",
 				value: uploaded_imgs[0]
@@ -1348,7 +1354,6 @@ $(function () {
 			dataType: "json",
 			data: $.param(data)
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
@@ -1793,7 +1798,6 @@ $(function () {
 			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				//				console.log(data);
 				$("#chat-modal .chat").empty();
 				//				$("#chat-modal .session-id").val(data.data[0]);
 				var msgDate
@@ -1840,7 +1844,7 @@ $(function () {
 			}
 		});
 	});
-
+	
 	var notSeenMsgs = 0,
 		newNotSeenMsgs = 0,
 		notSeenInterval;
@@ -1856,7 +1860,6 @@ $(function () {
 			data: $("#chat-form").serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				//				console.log(data);
 				//								notSeenMsgs = 0;
 				newNotSeenMsgs = 0;
 				var newMsgSessions = [];
@@ -2272,7 +2275,7 @@ $(function () {
 			url: base_url + '/users_control_web/login',
 			dataType: "json",
 			data: $(this).serialize()
-		}).done(function (data) {console.log(data);
+		}).done(function (data) {
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
@@ -2453,7 +2456,6 @@ $(function () {
 			url: base_url + '/api/QR_users_control/generate_QR_code',
 			dataType: "json"
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {} else {
 				var img;
 				img = data.data.QR_path;
@@ -2491,7 +2493,6 @@ $(function () {
 			dataType: "json",
 			data: $.param(data)
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
@@ -2529,7 +2530,6 @@ $(function () {
 			url: base_url + '/users_control_web/get_notifications_for_me',
 			dataType: "json"
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {
 			} else {
 				$("header .notifications-dropdown .dropdown-menu").empty();
@@ -2541,7 +2541,6 @@ $(function () {
 						data.data[i].new = "0";
 					}
 				}
-				console.log(data);
 				template = $('#notifications-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
@@ -2553,17 +2552,18 @@ $(function () {
 	});
 	
 	//notifications count for user
+	if (logged) {		
 	$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_my_notifications_count',
 			dataType: "json"
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {
 			} else {
 				$(".notifications-dropdown .number").text(data.data);
 			}
 		});
+	}
 	
 	$("header").on("click",".notification",function () {
 		var title, body;

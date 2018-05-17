@@ -623,7 +623,7 @@
 							<!--properties template-->
 							<div class="template-properties template d-none" data-template-id="2">
 								<div class="form-group field space">
-									<input type="text" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
+									<input type="number" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 								</div>
 
 								<div class="form-group field rooms_num">

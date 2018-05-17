@@ -397,7 +397,7 @@
 								<!--properties template-->
 								<div class="template-properties template d-none" data-template-id="2">
 									<div class="form-group field space">
-										<input type="text" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
+										<input type="number" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 									</div>
 
 									<div class="form-group field rooms_num">
@@ -665,6 +665,28 @@
 		</div>
 	</div>
 
+	<!--confirm edit ad modal modal-->
+	<div id="confirm-edit-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body text-center">
+					<h6 class="text">
+						<?php echo $this->lang->line('confirm_edit'); ?>
+					</h6>
+					<div class="modal-footer">
+						<button class="btn button2 submit"><?php echo $this->lang->line('yes'); ?></button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
 	<!--delete modal-->
 	<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">

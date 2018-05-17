@@ -28,7 +28,6 @@ var generatedQR = $("#qr-form .qr_gen_code").val();
 			dataType: "json",
 			data: $.param(data)
 		}).done(function (data) {
-			console.log(data);
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
 					node,
