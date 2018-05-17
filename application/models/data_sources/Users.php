@@ -42,14 +42,16 @@ class Users extends MY_Model {
 		    if($user->account_type != $account_type && $user->account_type !=  ACCOUNT_TYPE::BOTH){
 		    	$data['account_type'] = ACCOUNT_TYPE::BOTH;
 		    }
-            $new_user_id = $this->save($data , $user_id);			
+            $new_user_id = $this->save($data , $user_id);	
+			$this->user_activation_codes->send_code_SMS($user->phone, $this->lang->line('verification_msg') . $code);		
         } else {
 			$data['account_type'] = $account_type;
             $new_user_id = $this->save($data);
 		    $code = $this->user_activation_codes->generate_activation_code();
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
+			$this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
         }
-	    $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
+	   // $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
 	//	send verification code to email.
 		//$to      = 'dealat.co@gmail.com';
 		// $to      = 'dealat.co@gmail.com';

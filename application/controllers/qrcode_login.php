@@ -5,6 +5,15 @@ require APPPATH . '/libraries/REST_Controller.php';
 
 class Qrcode_login extends CI_Controller {
 	
+	function __construct() {
+		parent::__construct();
+		if (!$this->session->userdata('language')) {
+            $this->session->set_userdata(array('language' => 'en'));
+        }
+		$lang = $this->session->userdata('language');
+		$this->load->language(array('controllers', 'views','form_validation'),  $lang);
+	}
+	
 	//generate qr code. 
 	public function index()
 	{

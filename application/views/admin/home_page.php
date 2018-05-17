@@ -3,7 +3,7 @@
             <div class="row top_tiles">
             
              <?php if(PERMISSION::Check_permission(PERMISSION::ADS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-	             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	             <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon col-md-3"><i class="fa fa-gears"></i></div>
 	                   <h3 class='home_header col-md-9'><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><?php echo $this->lang->line('ads_management') ?></a></h3>
@@ -12,7 +12,7 @@
              <?php endif; ?> 
             
              <?php if(PERMISSION::Check_permission(PERMISSION::REPORTS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-	             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+	             <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon col-md-3"><i class="fa fa-ban"></i></div>
 	                   <h3 class='home_header col-md-9'><a href="<?php echo base_url('index.php/admin/items_manage/load_reported_items_page'); ?>"><?php echo $this->lang->line('reported_ads_management') ?></a></h3>
@@ -20,7 +20,7 @@
 	             </div>
              <?php endif; ?> 
              <?php if(PERMISSION::Check_permission(PERMISSION::USERS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon col-md-3"><i class="fa fa-group"></i></div>
 	                   <h3 class='home_header col-md-9'><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><?php echo $this->lang->line('users_manage') ?></a></h3>
@@ -29,7 +29,7 @@
 	         <?php endif; ?> 
 	         
 	         <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-money"></i></div>
 	                   <div class="count"></div>
@@ -38,7 +38,7 @@
 	             </div>
 	         <?php endif; ?> 
 	         <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6  col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-money"></i></div>
 	                   <div class="count"></div>
@@ -47,7 +47,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::CATEGORIES_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-tags"></i></div>
 	                   <div class="count"></div>
@@ -56,7 +56,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -65,7 +65,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -74,7 +74,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -83,7 +83,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -92,7 +92,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -101,7 +101,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::DATA_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-database"></i></div>
 	                   <div class="count"></div>
@@ -110,7 +110,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::NOTIFICATION_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-bell"></i></div>
 	                   <div class="count"></div>
@@ -119,7 +119,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::ADMINS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon col-md-3"><i class="fa fa-users"></i></div>
 	                   <div class="count"></div>
@@ -128,7 +128,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::VIEW_ADMINS_ACTIONS , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-align-justify"></i></div>
 	                   <div class="count"></div>
@@ -137,7 +137,7 @@
 	             </div>
 	         <?php endif; ?>
 	         <?php if(PERMISSION::Check_permission(PERMISSION::ABOUT_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
-                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-folder-open"></i></div>
 	                   <div class="count"></div>

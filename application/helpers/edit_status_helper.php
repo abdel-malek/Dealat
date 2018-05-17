@@ -71,7 +71,7 @@ class EDIT_STATUS{
    	  	  EDIT_STATUS::WHILE_PENDING => 'While Waiting',
    	  	  EDIT_STATUS::AFTER_ACCEPT => 'After Accept',
    	  	  EDIT_STATUS::AFTER_REJECT => 'After Reject' ,
-   	  	 // EDIT_STATUS::AFTER_EXPIRE => 'After Expired',
+   	  	  EDIT_STATUS::AFTER_EXPIRE => 'After Expired',
    	  	  EDIT_STATUS::AFTER_HIDDEN => 'After Hidden'
 		 );
    	  }else{
@@ -80,7 +80,7 @@ class EDIT_STATUS{
    	  	  EDIT_STATUS::WHILE_PENDING => 'خلال الانتظار',
    	  	  EDIT_STATUS::AFTER_ACCEPT => 'بعد القبول',
    	  	  EDIT_STATUS::AFTER_REJECT => 'بعد الرفض' ,
-   	  	//  EDIT_STATUS::AFTER_EXPIRE => 'بعد الانتهاء',
+   	  	  EDIT_STATUS::AFTER_EXPIRE => 'بعد الانتهاء',
    	  	  EDIT_STATUS::AFTER_HIDDEN => 'بعد الإخفاء'
 		 );
    	  }

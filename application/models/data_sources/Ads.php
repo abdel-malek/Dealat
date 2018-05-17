@@ -403,7 +403,8 @@ class Ads extends MY_Model {
 		                       users.name as seller_name,
 		                       locations.'.$lang.'_name as location_name ,
 		                       cites.'.$lang.'_name as  city_name,
-					           tamplate.*
+					           tamplate.*,
+					           show_periods.days,
 		                      ');
 			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');	
 		}else{
@@ -414,6 +415,7 @@ class Ads extends MY_Model {
 		                       users.name as seller_name,
 		                       locations.'.$lang.'_name as location_name ,
 		                       cites.'.$lang.'_name as  city_name,
+		                       show_periods.days,
 		                      ');
 		}
 		//$this->db->where('ads.category_id' , $category_id);
@@ -426,18 +428,20 @@ class Ads extends MY_Model {
 	                       users.name as seller_name,
 	                       locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
+		                   show_periods.days,
                           ');
 	 }
 	 $this->db->where('status' , STATUS::ACCEPTED );
 	//serach
 	 if($query_string != null){
-	     if(strlen($query_string) < 3){
-		 	$this->db->like('ads.title', $query_string); 
-			$this->db->or_like('ads.description', $query_string); 
-	   	}else{
+	      if(strlen($query_string) < 3){
+	        $this->db->where("(ads.title LIKE '%".$query_string."%' OR ads.description LIKE '%".$query_string."%' )",NULL, FALSE);	
+		 	// $this->db->like('ads.title', $query_string); 
+			// $this->db->or_like('ads.description', $query_string); 
+	   	 }else{
 		 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
 		 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
-		}
+		 }
 	 }
 	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
