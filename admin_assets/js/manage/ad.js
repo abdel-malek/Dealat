@@ -162,48 +162,48 @@ var ads_buttons =[];
      });
      
  // reload to get new pending ads.      
-   // setInterval(function() {
-		// ads_table.ajax.reload( null, false );
-		// $.ajax({
-        // url: base_url + '/api/items_control/get_pending_count/format/json',
-        // type: "get",
-        // dataType: "json",
-        // global: false,     // this makes sure ajaxStart is not triggered
-        // success: function(response) {
-            // // highlight the new pendeing rows. 
-            // var new_count = response.data;
-            // var diff = new_count - current_pending_count;
-            // console.log(diff);
-            // if(diff > 0){
-              // $(ads_table.rows().nodes()).each(function(index){
-            	// //console.log(index);
-             	// if(index < diff){
-             		// $.playSound(sound_notify_path);
-             		// $(this).css("background-color", "#1abb9c63");
-                    // setTimeout(function () {
-                        // //$(this).removeAttr("style");
-                        // $(this).css("background-color", "#fff");
-                    // }, 2500);
-             	// }else{
-             	   // return false;
-             	// }
-             // });
-	          // new PNotify({
-	              // title: lang_array['note'],
-	              // text: lang_array['new_pending'],
-	              // type: 'info',
-	              // styling: 'bootstrap3',
-	              // buttons: {
-				        // sticker: false
-				   // }
-	          // });
-            // }
-            // $('.pending_count').html(response.data);
-            // current_pending_count = response.data;
-        // },error: function(xhr, status, error){
-        // }
-     // });
-	 // }, 6000 );  // 4000
+   setInterval(function() {
+		ads_table.ajax.reload( null, false );
+		$.ajax({
+        url: base_url + '/api/items_control/get_pending_count/format/json',
+        type: "get",
+        dataType: "json",
+        global: false,     // this makes sure ajaxStart is not triggered
+        success: function(response) {
+            // highlight the new pendeing rows. 
+            var new_count = response.data;
+            var diff = new_count - current_pending_count;
+            console.log(diff);
+            if(diff > 0){
+              $(ads_table.rows().nodes()).each(function(index){
+            	//console.log(index);
+             	if(index < diff){
+             		$.playSound(sound_notify_path);
+             		$(this).css("background-color", "#1abb9c63");
+                    setTimeout(function () {
+                        //$(this).removeAttr("style");
+                        $(this).css("background-color", "#fff");
+                    }, 2500);
+             	}else{
+             	   return false;
+             	}
+             });
+	          new PNotify({
+	              title: lang_array['note'],
+	              text: lang_array['new_pending'],
+	              type: 'info',
+	              styling: 'bootstrap3',
+	              buttons: {
+				        sticker: false
+				   }
+	          });
+            }
+            $('.pending_count').html(response.data);
+            current_pending_count = response.data;
+        },error: function(xhr, status, error){
+        }
+     });
+	 }, 6000 );  // 4000
 	// set select to pending 
      $("#status_select").val(PENDING).trigger('change'); 
  });
@@ -400,7 +400,7 @@ var ads_buttons =[];
             //fill rejects notes
             if($item_info['reject_note'] != null  && ($item_info['status'] == REJECTED|| $item_info['edit_status'] == REJECTED)){ // rejected or pending after reject
             	$('#reject_note_label').css('display' , 'inline');
-            	$('#reject_note_label').html('<b style="color: red">'+ lang_array['reject_note'] + '</b> ' +$item_info['reject_note'] );
+            	$('#reject_note_label').html('<b style="color: red">'+ lang_array['reject_note'] + ':</b>' +$item_info['reject_note'] +'</br>');
             }
             if(($item_info['expired_after'] != null && $item_info['expired_after'] <= 0 && $item_info['status'] == PENDING )){ //  the ad is expired and pending.
             	$('#expiry_edit_label').css('display' , 'inline');

@@ -255,6 +255,7 @@ $lang['fields_status'] = 'Fields status';
 $lang['sort_main_category'] = 'Sort Main Categories';
 $lang['sort'] = 'Sort';
 $lang['delete_cat_confirmation']= 'This will delete the category and all of its successors , are you sure you want to continue? ';
+$lang['has_ads_note'] = 'This category has ads related to it, you can not deactivate it or delete it';
 
 //types manage
 $lang['all_types_list'] = 'All Brands list';

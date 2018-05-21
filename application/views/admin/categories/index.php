@@ -31,7 +31,7 @@
 	                        	   <li class="li-row">
 	                        	    <!-- <ul> -->
 	                        	    	<div class="row">
-	                        	    		<div class="col-sm-10"><a  class="cat_tap" href="#<?php echo $row->category_id ?> " data-toggle="tab"><?php echo $row->category_name ?></a></div>
+	                        	    		<div class="col-sm-10"><a  class="cat_tap" href="#<?php echo $row->category_id ?> " data-toggle="tab"><span id="cat<?php echo $row->category_id ?>"><?php echo $row->category_name ?> </span></a></div>
 	                        	    		<div class="col-sm-2"><span onclick="show_manage_cat_modal(<?php echo $row->category_id  ?> , 1 ,0 , <?php echo $row->tamplate_id  ?> );" class="icon-edit"><i class="fa fa-edit"></i></span></div>
 	                        	    	</div>
 	                        	    <!-- <a  class="" href="#<?php echo $row->category_id ?> " data-toggle="tab"><?php echo $row->category_name ?></a> -->
@@ -54,7 +54,8 @@
 	                              <?php endif; ?>
 	                                  <!-- sub add -->
 	                                    <button id="main_cat_add_btn" onclick="show_manage_cat_modal(0 ,0 ,<?php echo $row->category_id ?> , <?php echo $row->tamplate_id ?>  );" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_subcategory_for') ?>
-	                                     <?php echo $row->category_name ?></button>
+	                                     <?php echo $row->category_name ?>
+	                                     </button>
 	                                     <button id="main_cat_add_btn" onclick="show_sort_modal(<?php echo $row->category_id ?> );" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
 			                             <!-- start accordion -->
 						                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -79,8 +80,8 @@
 								                          <div class="panel-body">
 								                          	<!-- sub sub add -->
 								                          	<button id="main_cat_add_btn" onclick="show_manage_cat_modal(0, 0 , <?php echo $sub_row->category_id ?>  , <?php echo $sub_row->tamplate_id ?> );" type="button" class="btn btn-primary" ><li class="fa fa-plus"></li><?php echo $this->lang->line('add_subcategory_for') ?>
-								                          	 <button id="main_cat_add_btn" onclick="show_sort_modal(<?php echo $sub_row->category_id ?>);" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
-	                                                        <?php echo $sub_row->category_name ?></button>
+								                          	<?php echo $sub_row->category_name ?></button>
+								                          	<button id="main_cat_add_btn" onclick="show_sort_modal(<?php echo $sub_row->category_id ?>);" type="button" class="btn btn-primary" ><li class="fa fa-sort-amount-asc"></li>  <?php echo $this->lang->line('sort') ?></button>
 								                            <table id='sub_sub_cats<?php echo $sub_row->category_id ?>' class="table table-striped table-bordered">
 								                              <thead>
 								                                <tr>

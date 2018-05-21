@@ -147,6 +147,8 @@ class Categories extends MY_Model {
 	   	  $parent_info = parent::get($parent_id);
 	   	  $category_data['is_active'] = $parent_info->is_active;
 	   }
+	   // set the new category order. 
+	   $category_data['queue'] = $this->max_queue($parent_id);
 	   $new_subcategory = $this->save($category_data);
        $this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
@@ -242,6 +244,15 @@ class Categories extends MY_Model {
 	   $this->db-> join('categories as parent_category' , 'categories.parent_id = parent_category.category_id' , 'left outer');
 	   $this->db->where('categories.category_id' , $cat_id);
 	   return parent::get(null , true);
+   }
+
+   public function max_queue($parent_id) {
+        $res = $this->db->select('max(queue) as queue')
+                        ->from('categories')
+                        ->where('parent_id', $parent_id)
+                        ->where('is_deleted', 0)
+                        ->get()->row();
+        return $res ? $res->queue : 0;
    }
    
    

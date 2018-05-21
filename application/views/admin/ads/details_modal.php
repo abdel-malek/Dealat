@@ -295,13 +295,13 @@
           <div class="pull-left">
           	 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
           </div>
+          <label  style="display: none" id="reject_note_label"></label>
+          <label  style="display: none" id="expiry_edit_label"><?php echo $this->lang->line('expiry_edit_note') ?></label>
           <button template_id id="delete_ad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target=".ad-delete-modal"><span class="fa fa-trash"></span></button>
           <button style="display: none" onclick="perform_action('hide')" id="hide_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('hide_ad') ?></button>
           <button style="display: none" onclick="perform_action('show')" id="show_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('show_ad') ?></button>
           <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
           <button style="display: none"  onclick="perform_action('accept')"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('accept_ad') ?></button>
-          <label  style="display: none" id="reject_note_label"></label>
-          <label  style="display: none" id="expiry_edit_label"><?php echo $this->lang->line('expiry_edit_note') ?></label>
         </div>
       </div>
     </div>

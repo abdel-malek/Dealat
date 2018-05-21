@@ -58,8 +58,12 @@ class QR_users_control extends REST_Controller {
 
    public function login_by_qr_code_post()
    {
-   	    if($this->session->userdata('IS_LOGGED_IN')!= null && $this->session->userdata('IS_ADMIN') == 1){
-		   	 $this->response(array('status' => true, 'data' => array('cms_logged' => 1), "message" => $this->lang->line('sucess')));
+   	    if($this->session->userdata('IS_LOGGED_IN')!= null){
+   	    	if( $this->session->userdata('IS_ADMIN') == 1){
+   	    		$this->response(array('status' => true, 'data' => array('cms_logged' => 1), "message" => $this->lang->line('sucess')));
+   	    	}else if($this->session->userdata('IS_USER') == 1){
+   	    		$this->response(array('status' => true, 'data' => array('cms_logged' => 0), "message" => $this->lang->line('sucess')));
+   	    	}
 		}else{
 		    $this -> form_validation -> set_rules('gen_code', 'generated code', 'required');
 			$this -> form_validation -> set_rules('secret_code', 'secret code', 'required|max_length[32]');

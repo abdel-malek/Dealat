@@ -111,13 +111,20 @@ class Users_control_web extends REST_Controller {
 	   $this->response(array('status' => true, 'data' => $count, "message" => $this->lang->line('sucess')));
     }
 	
+	public function get_my_items_unseen_count_get()
+	{
+	   $this->load->model('data_sources/ads');
+	   $user_id = $this->current_user->user_id;  
+	   $count = $this->ads->get_user_unseen_count($user_id);
+	   $this->response(array('status' => true, 'data' => $count, "message" => $this->lang->line('sucess')));
+	}
 	
-	// not used
-	public function get_my_pending_ads_get()
+	
+	public function get_my_items_get()
 	{
 		$this->load->model('data_sources/ads');
 		$user_id = $this->current_user->user_id;
-		$ads = $this->ads->get_user_pending_ads($user_id);
+		$ads = $this->ads->get_user_ads_without_details($user_id);
 		$this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 

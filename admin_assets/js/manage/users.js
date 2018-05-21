@@ -132,7 +132,8 @@ function change_admin_lang (lang) {
 	        url: url,
 	        type: "get",
 	        dataType: "json",
-	        success: function(response) {
+	        async : false,
+	        complete: function(response) {
 	            window.location.reload();  
  	        },error: function(xhr, status, error){
 	        	new PNotify({

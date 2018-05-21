@@ -67,7 +67,7 @@ class TAMPLATES {
 				return array('type_id', 'type_model_id', 'manufacture_date', 'engine_capacity' , 'is_automatic', 'is_new', 'kilometer');
 		    break;
 			case 2 :
-				return array('space', 'rooms_num', 'floor', 'floors_number' , 'state', 'with_furniture');
+				return array('space', 'rooms_num', 'floor', 'floors_number' , 'state_id', 'with_furniture');
 		    break;
 			case 3 :
 				return array('type_id', 'is_new');
@@ -119,7 +119,7 @@ class TAMPLATES {
 	{
 		return array(
 		  1 =>  array('type_name', 'type_model_name', 'manufacture_date', 'is_automatic', 'engine_capacity', 'is_new', 'kilometer'),
-		  2 =>  array('space', 'rooms_num', 'floor','floors_number', 'state', 'with_furniture'),
+		  2 =>  array('space', 'rooms_num', 'floor','floors_number', 'state_name', 'with_furniture'),
 		  3 =>  array('type_name', 'is_new'),
 		  4 =>  array('type_name', 'size', 'is_new'),
 		  5 =>  array('is_new'),
@@ -139,6 +139,7 @@ class TAMPLATES {
 	         $attr_name=='education_id' ||
 		     $attr_name == 'manufacture_date' ||
 			 $attr_name == 'engine_capacity'||
+			 $attr_name == 'state_id' ||
 			 $attr_name == 'certificate_id'){ // array 
 		  	return 'array';
 		  }else if(

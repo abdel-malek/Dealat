@@ -551,6 +551,21 @@ class Ads extends MY_Model {
 	  $this->db->where('ads.status != ' , STATUS::DELETED);
 	  return parent::get();
 	}
+  
+  public function get_user_ads_without_details($user_id)
+   {
+       $this->db->where('ads.user_id'  ,$user_id);
+	  // $this->db->where('status' , STATUS::PENDING);
+	   return parent::get();
+   }
+
+  public function get_user_unseen_count($user_id)
+  {
+      $this->db->select('COUNT(ad_id) as unssen_count');
+	  $this->db->where('user_seen' , 0);
+	  $q = parent::get();
+	  return $q[0]->unssen_count;
+  }
 
   public function get_seller_id($ad_id)
     {
@@ -608,12 +623,6 @@ class Ads extends MY_Model {
    }
    
    
-   public function get_user_pending_ads($user_id)
-   {
-       $this->db->where('ads.user_id'  ,$user_id);
-	   $this->db->where('status' , STATUS::PENDING);
-	   return parent::get();
-   }
 
 
 

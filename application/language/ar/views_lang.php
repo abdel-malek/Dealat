@@ -256,6 +256,7 @@ $lang['fields_status'] = 'حالة الحقول';
 $lang['sort_main_category'] = 'ترتيب الأصناف الرئيسية';
 $lang['sort'] = 'ترتيب';
 $lang['delete_cat_confirmation']= ' هذا سيؤدي إلى حذف هذا الصنف مع جميع أبناءه، هل أنت متأكد من أنك تريد المتابعة؟';
+$lang['has_ads_note'] = 'لهذا الصنف إعلانات مرتبطة به, لا يمكنك إلغاء تفعيله أو حذفه';
 
 //types manage
 $lang['types'] = 'الماركات';

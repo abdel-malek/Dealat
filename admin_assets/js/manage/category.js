@@ -63,6 +63,8 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         			$('#delete_category_btn').css('display', 'inline');// deactivate btn
         		}
         		$('#final_delete_category_btn').css('display', 'inline');//delete btn
+        	}else{
+        		$('#has_ads_note').css('display' , 'inline');
         	}
         	
             $('#cat_arabic_name').val(cat_info['ar_name']);
@@ -135,6 +137,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
 	  $('#activate_category_btn').css('display', 'none');
 	  $('#delete_category_btn').css('display', 'none');
 	  $('#final_delete_category_btn').css('display', 'none');
+	  $('#has_ads_note').css('display' , 'none');
  });
 
  

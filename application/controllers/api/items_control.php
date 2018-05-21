@@ -210,6 +210,7 @@ class Items_control extends REST_Controller {
 		 $this->load->model('data_sources/locations');
 		 $this->load->model('data_sources/show_periods');
 		 $this->load->model('data_sources/certificates');
+		 $this->load->model('data_sources/property_states');
 		 $locations = $this->locations->get_all($this->data['lang']);
 		 //$cities = $this->locations->get_cities($this->data['lang']);
 		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
@@ -218,7 +219,8 @@ class Items_control extends REST_Controller {
 		 $schedules = $this->schedules->get_all($this->data['lang']);
 		 $show_periods = $this->show_periods->get_all($this->data['lang']);
 		 $certificates = $this->certificates->get_all($this->data['lang']);
-		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates);
+		 $property_states = $this->property_states->get_all($this->data['lang']);
+		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates , 'states' => $property_states);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
@@ -252,7 +254,8 @@ class Items_control extends REST_Controller {
 				   $data = array(
 				     //'publish_date'=>$this->input->post('publish_date'),
 				     'is_featured' => $this->input->post('is_featured'),
-				     'status' => STATUS::ACCEPTED 
+				     'status' => STATUS::ACCEPTED ,
+				     'user_seen' => 0
 				   );
 				   $current_info = $this->ads->get($ad_id);
 				   if(!isset($ad_info->publish_date)){
@@ -268,17 +271,17 @@ class Items_control extends REST_Controller {
 				}
 			}else if($action == 'reject'){
 			    $note = $this->input->post('reject_note');
-			    $this->ads->save(array('status'=>STATUS::REJECTED , 'reject_note' => $note ) , $ad_id);
+			    $this->ads->save(array('status'=>STATUS::REJECTED , 'reject_note' => $note , 'user_seen' => 0 ) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
 				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::REJECTED_MSG);
 				$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::REJECT_AD , $ad_id);
 			}else if($action == 'hide'){
-			    $this->ads->save(array('status'=>STATUS::HIDDEN ) , $ad_id);
+			    $this->ads->save(array('status'=>STATUS::HIDDEN ,'user_seen' => 0) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
 				$this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::HIDE_MSG);
 			    $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::HIDE_AD , $ad_id);
 			}else if($action == 'show'){
-			    $this->ads->save(array('status'=>STATUS::ACCEPTED ) , $ad_id);
+			    $this->ads->save(array('status'=>STATUS::ACCEPTED ,'user_seen' => 0) , $ad_id);
 				$ad_info = $this->ads->get_info($ad_id ,  $this->data['lang']);
 			    $this->notification-> send_action_notification($ad_info->user_id , $ad_info , NOTIFICATION_MESSAGES::SHOW_MSG);
 		        $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SHOW_AD , $ad_id);
