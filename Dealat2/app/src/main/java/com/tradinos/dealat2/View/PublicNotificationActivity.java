@@ -48,6 +48,7 @@ public class PublicNotificationActivity extends MasterActivity {
         switch (view.getId()){
             case R.id.buttonTrue:
                 Intent intent = new Intent(mContext, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 break;

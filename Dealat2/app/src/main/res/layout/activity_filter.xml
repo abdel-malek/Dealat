@@ -207,27 +207,6 @@
                 />
 
             <TextView
-                android:id="@+id/textCapacity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                android:text="@string/labelSelectEngineCapacity"
-                android:textColor="@color/whiteTransparent"
-                style="@style/textNormal"
-                />
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinnerCapacity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="gone"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-                android:backgroundTint="@color/white"
-                />
-
-            <TextView
                 android:id="@+id/textTransmission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,6 +251,60 @@
                 />
 
             <!-- -->
+
+            <TextView
+                android:id="@+id/textCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/labelEngineCapacity"
+                style="@style/textNormal"
+                android:textColor="@color/whiteTransparent"
+                />
+
+            <LinearLayout
+                android:id="@+id/containerCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                >
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/labelFrom"
+                    android:textColorHint="@color/whiteTransparent"
+                    >
+                    <EditText
+                        android:id="@+id/editCapacityMin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        style="@style/editTextWhite"
+                        android:backgroundTint="@color/white"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/labelTo"
+                    android:textColorHint="@color/whiteTransparent"
+                    >
+
+                    <EditText
+                        android:id="@+id/editCapacityMax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        style="@style/editTextWhite"
+                        android:backgroundTint="@color/white"
+                        />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textKilo"
@@ -747,6 +780,27 @@
                         />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textPropertyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:text="@string/labelPropertyState"
+                android:textColor="@color/whiteTransparent"
+                style="@style/textNormal"
+                />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinnerPropertyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                android:backgroundTint="@color/white"
+                />
 
             <TextView
                 android:id="@+id/textFurn"

@@ -57,25 +57,25 @@ public class FilterActivity extends MasterActivity {
             textBrand, textModel, textTransmission, textKilo, textCapacity,
             textDate,
             textEdu, textCertificate, textSch, textSalary, textGender,
-            textFurn, textSpace, textRooms, textFloor, textNumberFloors,
+            textFurn, textSpace, textRooms, textFloor, textNumberFloors, textPropertyState,
             textSize,
             textState;
 
     private EditText editQuery, editCategory, editPriceMin, editPriceMax,
-            editKilometerMin, editKilometerMax,
+            editKilometerMin, editKilometerMax, editCapacityMin, editCapacityMax,
             editSizeMin, editSizeMax,
             editSpaceMin, editSpaceMax, editRoomsMin, editRoomsMax, editFloorsMin, editFloorsMax, editNumberFloorsMin, editNumberFloorsMax,
             editSalaryMin, editSalaryMax;
 
     private AutoCompleteTextView autoCompleteLocation;
 
-    private AppCompatSpinner spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission, spinnerCapacity,
+    private AppCompatSpinner spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission,
             spinnerEdu, spinnerCertificate, spinnerSch, spinnerGender,
-            spinnerFurn,
+            spinnerFurn, spinnerPropertyState,
             spinnerState,
             spinnerCity;
 
-    private LinearLayout containerKilometer, containerSize,
+    private LinearLayout containerKilometer, containerSize, containerCapacity,
             containerSalary, containerSpace, containerRooms, containerFloors, containerNumberFloors, containerPrice;
 
     @Override
@@ -116,6 +116,9 @@ public class FilterActivity extends MasterActivity {
                 result.getSchedules().add(0, new Item("-1", getString(R.string.all)));
                 spinnerSch.setAdapter(new CheckableAdapter(mContext, result.getSchedules()));
 
+                result.getPropertyStates().add(0, Item.getNoItem());
+                spinnerPropertyState.setAdapter(new CheckableAdapter(mContext, result.getPropertyStates()));
+
                 showTemplate();
             }
         });
@@ -134,13 +137,6 @@ public class FilterActivity extends MasterActivity {
         for (int i = currentYear; i >= startYear; i--)
             years.add(new Item(String.valueOf(i), String.valueOf(i)));
         spinnerYear.setAdapter(new CheckableAdapter(mContext, years));
-
-
-        List<Item> capacities = new ArrayList<>();
-        capacities.add(new Item("-1", getString(R.string.all)));
-        for (int i = AdVehicle.CAPACITY_MIN; i <= AdVehicle.CAPACITY_MAX; i = i + 100)
-            capacities.add(new Item(String.valueOf(i), String.valueOf(i)));
-        spinnerCapacity.setAdapter(new CheckableAdapter(mContext, capacities));
 
 
         List<Item> genders = new ArrayList<>();
@@ -192,7 +188,9 @@ public class FilterActivity extends MasterActivity {
         textFloor = (TextView) findViewById(R.id.textFloor);
         textNumberFloors = findViewById(R.id.textNumberFloors);
         textFurn = (TextView) findViewById(R.id.textFurn);
+        textPropertyState = findViewById(R.id.textPropertyState);
         textSpace = (TextView) findViewById(R.id.textSpace);
+
 
         textSize = (TextView) findViewById(R.id.textSize);
 
@@ -205,6 +203,8 @@ public class FilterActivity extends MasterActivity {
 
         editKilometerMax = (EditText) findViewById(R.id.editKilometerMax);
         editKilometerMin = (EditText) findViewById(R.id.editKilometerMin);
+        editCapacityMin = findViewById(R.id.editCapacityMin);
+        editCapacityMax = findViewById(R.id.editCapacityMax);
 
         editSizeMax = (EditText) findViewById(R.id.editSizeMax);
         editSizeMin = (EditText) findViewById(R.id.editSizeMin);
@@ -230,7 +230,6 @@ public class FilterActivity extends MasterActivity {
         spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
         spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
         spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
-        spinnerCapacity = findViewById(R.id.spinnerCapacity);
         spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
 
         spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
@@ -239,6 +238,7 @@ public class FilterActivity extends MasterActivity {
         spinnerGender = findViewById(R.id.spinnerGender);
 
         spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
+        spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
 
         spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
 
@@ -252,6 +252,7 @@ public class FilterActivity extends MasterActivity {
         containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
         containerPrice = (LinearLayout) findViewById(R.id.containerPrice);
+        containerCapacity = findViewById(R.id.containerCapacity);
     }
 
     @Override
@@ -455,6 +456,12 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editNumberFloorsMax))
                     parameters.put(getString(R.string.numberFloorsMax), stringInput(editNumberFloorsMax));
 
+                jsonArray = ((CheckableAdapter) spinnerPropertyState.getAdapter()).getSelectedItems();
+                if (jsonArray.length() > 0) {
+                    parameters.put("property_state_id", jsonArray.toString());
+                    parameters.put(getString(R.string.propertyStateName), ((CheckableAdapter) spinnerPropertyState.getAdapter()).getSelectedNames());
+                }
+
                 item = ((Item) spinnerFurn.getSelectedItem());
                 if (!item.isNothing()) {
                     parameters.put("with_furniture", item.getId());
@@ -505,6 +512,12 @@ public class FilterActivity extends MasterActivity {
                 if (!inputIsEmpty(editKilometerMin))
                     parameters.put(getString(R.string.kilometerMin), stringInput(editKilometerMin));
 
+                if (!inputIsEmpty(editCapacityMin))
+                    parameters.put(getString(R.string.capacityMin), stringInput(editCapacityMin));
+
+                if (!inputIsEmpty(editCapacityMax))
+                    parameters.put(getString(R.string.capacityMax), stringInput(editCapacityMax));
+
                 item = ((Item) spinnerTransmission.getSelectedItem());
                 if (item != null && !item.isNothing()) {
                     parameters.put("is_automatic", item.getId());
@@ -529,12 +542,6 @@ public class FilterActivity extends MasterActivity {
                 if (jsonArray.length() > 0) {
                     parameters.put("manufacture_date", jsonArray.toString());
                     parameters.put(getString(R.string.yearsName), ((CheckableAdapter) spinnerYear.getAdapter()).getSelectedNames());
-                }
-
-                jsonArray = ((CheckableAdapter) spinnerCapacity.getAdapter()).getSelectedItems();
-                if (jsonArray.length() > 0) {
-                    parameters.put("engine_capacity", jsonArray.toString());
-                    parameters.put(getString(R.string.capacityName), ((CheckableAdapter) spinnerCapacity.getAdapter()).getSelectedNames());
                 }
 
                 item = ((Item) spinnerState.getSelectedItem());
@@ -604,6 +611,11 @@ public class FilterActivity extends MasterActivity {
                     containerNumberFloors.setVisibility(visibility);
                 }
 
+                if (!selectedCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
+                    textPropertyState.setVisibility(visibility);
+                    spinnerPropertyState.setVisibility(visibility);
+                }
+
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideFurn))) {
                     textFurn.setVisibility(visibility);
                     spinnerFurn.setVisibility(visibility);
@@ -660,7 +672,7 @@ public class FilterActivity extends MasterActivity {
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideCapacity))) {
                     textCapacity.setVisibility(visibility);
-                    spinnerCapacity.setVisibility(visibility);
+                    containerCapacity.setVisibility(visibility);
                 }
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideKilo))) {
@@ -720,6 +732,9 @@ public class FilterActivity extends MasterActivity {
                 textNumberFloors.setVisibility(visibility);
                 containerNumberFloors.setVisibility(visibility);
 
+                textPropertyState.setVisibility(visibility);
+                spinnerPropertyState.setVisibility(visibility);
+
                 textFurn.setVisibility(visibility);
                 spinnerFurn.setVisibility(visibility);
 
@@ -757,7 +772,7 @@ public class FilterActivity extends MasterActivity {
                 spinnerYear.setVisibility(visibility);
 
                 textCapacity.setVisibility(visibility);
-                spinnerCapacity.setVisibility(visibility);
+                containerCapacity.setVisibility(visibility);
 
                 textKilo.setVisibility(visibility);
                 containerKilometer.setVisibility(visibility);

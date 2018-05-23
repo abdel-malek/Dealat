@@ -73,8 +73,11 @@ public class TradinosRequest<T> extends Request<JSONObject> {
         this.faildCallback = faildCallback;
         this.parser = parser;
 
-        this.parser = parser;
-        this.setRetryPolicy(new DefaultRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        if (this.getMethod() == Method.POST)
+            this.setRetryPolicy(new VolleyRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        else
+            this.setRetryPolicy(new DefaultRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
     @Override
@@ -203,5 +206,18 @@ public class TradinosRequest<T> extends Request<JSONObject> {
 
     public void setAuthenticationRequired(boolean authenticationRequired) {
         this.authenticationRequired = authenticationRequired;
+    }
+
+
+    public class VolleyRetryPolicy extends DefaultRetryPolicy {
+
+        public VolleyRetryPolicy(int initialTimeoutMs, int maxNumRetries, float backoffMultiplier) {
+            super(initialTimeoutMs, maxNumRetries, backoffMultiplier);
+        }
+
+        @Override
+        protected boolean hasAttemptRemaining() {
+            return false;
+        }
     }
 }

@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.zxing.Result;
+import com.tradinos.core.network.Code;
+import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.dealat2.Controller.ParentController;
 import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.R;
 
@@ -97,11 +100,22 @@ public class QRCodeActivity extends MasterActivity implements ZXingScannerView.R
         // Do something with the result here
 
         ShowProgressDialog();
-        UserController.getInstance(mController).sendQrCode(result.getText(), new SuccessCallback<String>() {
+        UserController.getInstance(new ParentController(mContext, new FaildCallback() {
+            @Override
+            public void OnFaild(Code errorCode, String Message, String data) {
+
+                HideProgressDialog();
+
+                showMessageInToast(Message);
+                //If you would like to resume scanning, call this method below:
+                mScannerView.resumeCameraPreview(QRCodeActivity.this);
+            }
+        })).sendQrCode(result.getText(), new SuccessCallback<String>() {
             @Override
             public void OnSuccess(String result) {
                 HideProgressDialog();
                 textViewCode.setText(result);
+
                 textViewCode.setVisibility(View.VISIBLE);
             }
         });
@@ -109,8 +123,6 @@ public class QRCodeActivity extends MasterActivity implements ZXingScannerView.R
         // Prints the scan format (qrcode, pdf417 etc.)
         // Logger.verbose("result", result.getBarcodeFormat().toString());
 
-        //If you would like to resume scanning, call this method below:
-        //mScannerView.resumeCameraPreview(this);
         //   Intent intent = new Intent();
         //  intent.putExtra(AppConstants.KEY_QR_CODE, result.getText());
         //  setResult(RESULT_OK, intent);

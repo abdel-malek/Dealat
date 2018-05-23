@@ -79,7 +79,7 @@ public class MyAdAdapter extends BaseAdapter {
 
             // only published ads their expiry dates are calculated
             String text;
-            if (item.getExpiresAfter() < 0) {
+            if (item.getStatus() == Ad.ACCEPTED && item.getExpiresAfter() < 0) {
                 text = context.getString(R.string.expired);
                 item.setStatus(Ad.EXPIRED); // we need to change it to filter in MyAdsFragment
                 //holder.textViewExpires.setTextColor(ContextCompat.getColor(context, R.color.red));

@@ -89,7 +89,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra("ad", ad);
                 break;
 
-            case "3":
+            case "3": //Public Notification
+            case "4": // Notification to certain user
                 intent = new Intent(this, PublicNotificationActivity.class);
                 intent.putExtra("title", title);
                 intent.putExtra("txt", txt);

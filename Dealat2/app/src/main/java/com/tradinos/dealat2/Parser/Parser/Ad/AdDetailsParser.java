@@ -48,7 +48,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
                     ((AdVehicle) ad).setManufactureYear(jsonObject.getString("manufacture_date"));
 
                 if (validData(jsonObject.getString("engine_capacity")))
-                    ((AdVehicle)ad).setEngineCapacity(jsonObject.getString("engine_capacity"));
+                    ((AdVehicle) ad).setEngineCapacity(jsonObject.getString("engine_capacity"));
 
                 if (validData(jsonObject.getString("kilometer")))
                     ((AdVehicle) ad).setKilometer(jsonObject.getDouble("kilometer"));
@@ -68,8 +68,10 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             case Category.PROPERTIES:
                 ad = new AdProperty();
 
-                if (validData(jsonObject.getString("state")))
-                    ((AdProperty) ad).setState(jsonObject.getString("state"));
+                if (validData(jsonObject.getString("property_state_id"))) {
+                    ((AdProperty) ad).setStateId(jsonObject.getString("property_state_id"));
+                    ((AdProperty) ad).setStateName(jsonObject.getString("property_state_name"));
+                }
 
                 if (validData(jsonObject.getString("floor")))
                     ((AdProperty) ad).setFloorNum(jsonObject.getInt("floor"));

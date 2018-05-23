@@ -86,7 +86,12 @@
 
     <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
 
-    <string name="labelScanQr">١. قم بزيارة موقعنا dealat.tradinos.com</string>
+    <string name="labelGoTo">١. اذهب إلى الرابط</string>
+    <string name="labelVisit">على جهاز الكومبيوتر الخاص بك، وامسح الرمز الظاهر</string>
+    <string name="labelScanQr">٢. ادخل الرقم الذي سيظهر على موبايلك</string>
+
+    <string name="labelRegister">أنت غير مسجل، هل تريد التسجيل؟</string>
+    <string name="labelVerify">لم تقم بتفعيل حسابك، هل تريد تفعيله؟</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>
@@ -138,6 +143,8 @@
     <!-- Vehicles -->
     <string name="labelKiloFrom">كيلومتراج: من</string>
     <string name="labelKiloTo">كيلومتراج: إلى</string>
+    <string name="labelCapacityFrom">سعة المحرك: من</string>
+    <string name="labelCapacityTo">سعة المحرك: إلى</string>
 
     <!-- Electronics -->
     <string name="labelSizeFrom">الحجم: من</string>
@@ -227,6 +234,7 @@
     <string name="toastMaxImages">لايمكنك اختيار صور أكثر</string>
     <string name="toastWaitTillUploading">يرجى الانتظار حتى يتم تحميل الصور!</string>
     <string name="toastWaitTillVideoUploading">يرجى الانتظار حتى يتم تحميل الفيديو!</string>
+    <string name="toastSelectImage">يرجى إرفاق صورة واحدة على الأقل</string>
     <string name="toastRegister">يجب تسجيل الدخول أولاً!</string>
     <string name="toastVerify">يجب أن تفعّل حسابك أولاً!</string>
     <string name="toastSelectReport">من فضلك، اختر سبب الإبلاغ</string>

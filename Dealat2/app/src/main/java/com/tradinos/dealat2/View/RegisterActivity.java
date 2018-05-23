@@ -5,18 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
 import com.tradinos.dealat2.Controller.UserController;
@@ -24,10 +12,6 @@ import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -35,18 +19,17 @@ import java.util.HashMap;
  */
 
 public class RegisterActivity extends MasterActivity {
-
-
+/*
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
-    private ProfileTracker profileTracker;
+    private ProfileTracker profileTracker;*/
 
     private EditText editTextPhone, editTextName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register);
-      //  FacebookSdk.sdkInitialize(this);
+        //  FacebookSdk.sdkInitialize(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -75,11 +58,11 @@ public class RegisterActivity extends MasterActivity {
     public void onClick(View view) {
         Intent intent;
 
-        switch (view.getId()){
+        switch (view.getId()) {
 
             case R.id.buttonTrue: //Register
 
-                if (isNetworkAvailable() && checkInput()){
+                if (isNetworkAvailable() && checkInput()) {
                     HashMap<String, String> parameters = new HashMap<>();
 
                     parameters.put("phone", stringInput(editTextPhone));
@@ -106,6 +89,7 @@ public class RegisterActivity extends MasterActivity {
 
             case R.id.buttonFalse: //Skip
                 intent = new Intent(mContext, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 break;
@@ -199,7 +183,7 @@ public class RegisterActivity extends MasterActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-     //   callbackManager.onActivityResult(requestCode, resultCode, data);
+        //   callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -207,30 +191,27 @@ public class RegisterActivity extends MasterActivity {
     public void onStop() {
         super.onStop();
 //        accessTokenTracker.stopTracking();
-    //    profileTracker.stopTracking();
+        //    profileTracker.stopTracking();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-   //     Profile profile = Profile.getCurrentProfile();
+        //     Profile profile = Profile.getCurrentProfile();
 
     }
 
-    private boolean checkInput(){
-        if (inputIsEmpty(editTextName)){
+    private boolean checkInput() {
+        if (inputIsEmpty(editTextName)) {
             editTextName.setError(getString(R.string.errorRequired));
             editTextName.requestFocus();
-        }
-        else if (inputIsEmpty(editTextPhone)){
+        } else if (inputIsEmpty(editTextPhone)) {
             editTextPhone.setError(getString(R.string.errorRequired));
             editTextPhone.requestFocus();
-        }
-        else if (stringInput(editTextPhone).length() != 9){
+        } else if (stringInput(editTextPhone).length() != 9) {
             editTextPhone.setError(getString(R.string.errorPhoneLength));
             editTextPhone.requestFocus();
-        }
-        else
+        } else
             return true;
 
         return false;

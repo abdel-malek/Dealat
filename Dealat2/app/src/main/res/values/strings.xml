@@ -90,11 +90,15 @@
 
     <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
 
-    <string name="labelScanQr">1. Visit dealat.tradinos.com</string>
-    <string name="labelStep2">2. Click "Sign In" and then "Log in using QR Code"</string>
-    <string name="labelStep3">3. Now point your phone to your computer\'s screen</string>
-    <string name="labelStep4">4. Enter \"Verification Code\" on Website</string>
+    <string name="labelGoTo">1. Go to</string>
+    <string name="labelQrUrl">dealat.tradinos.com/index.php/qrcode_login</string>
+    <string name="labelVisit">on your computer, and scan the QR code</string>
+    <string name="labelScanQr">2. Enter PIN that will be shown on your mobile</string>
+    
+    <string name="labelRegister">You\'re not registered yet, Would you like to register?</string>
+    <string name="labelVerify">Your account isn\'t verified, Would you like to verify it?</string>
 
+    
     <!-- AdDetails   -->
     <string name="labelAdNumber">Ad Number</string>
     <string name="labelCity">City</string>
@@ -145,6 +149,8 @@
     <!-- Vehicles -->
     <string name="labelKiloFrom">Kilometer: From</string>
     <string name="labelKiloTo">Kilometer: To</string>
+    <string name="labelCapacityFrom">Engine Capacity: From</string>
+    <string name="labelCapacityTo">Engine Capacity: To</string>
 
     <!-- Electronics -->
     <string name="labelSizeFrom">Size: From</string>
@@ -234,6 +240,7 @@
     <string name="toastMaxImages">You can\'t select more images</string>
     <string name="toastWaitTillUploading">Please wait till images are uploaded!</string>
     <string name="toastWaitTillVideoUploading">Please wait till video is uploaded</string>
+    <string name="toastSelectImage">Please, select one image at least</string>
     <string name="toastRegister">You need to register first!</string>
     <string name="toastVerify">You need to verify your number first!</string>
     <string name="toastSelectReport">Please, Select reporting reason</string>
@@ -242,7 +249,7 @@
     <!-- Alert Dialog -->
     <string name="areYouSureDiscard">Are you sure you want to discard this ad?</string>
     <string name="areYouSureRegister">You\'ve registered from a different device previously, Do you want to keep registration from both devices?</string>
-    <string name="areYouSureEdit">You\'re ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
+    <string name="areYouSureEdit">Your ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?</string>
     <string name="areYouSureDeleteAd">Are you sure you want to delete this ad?</string>
     <string name="areYouSureDeleteSearch">Are you sure you want to delete this search?</string>
     <string name="areYouSureDeactivate">Are you sure you want to deactivate your account?</string>

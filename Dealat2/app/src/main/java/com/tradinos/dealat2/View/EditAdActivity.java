@@ -106,12 +106,12 @@ public class EditAdActivity extends MasterActivity {
             textDate,
             textEdu, textSch, textCertificate, textGender,
             textState,
-            textFurn;
+            textFurn, textPropertyState;
 
     private EditText editTitle, editDesc, editCategory, editPrice,
             editKilo,
             editSize,
-            editSpace, editRooms, editFloors, editNumberFloors, editState,
+            editSpace, editRooms, editFloors, editNumberFloors,
             editEx, editSalary;
 
     private AutoCompleteTextView autoCompleteLocation;
@@ -120,14 +120,14 @@ public class EditAdActivity extends MasterActivity {
             spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission, spinnerCapacity,
             spinnerEdu, spinnerCertificate, spinnerSch, spinnerGender,
             spinnerState,
-            spinnerFurn;
+            spinnerFurn, spinnerPropertyState;
 
     private SwitchCompat switchNegotiable, switchFeatured;
 
     private CheckBox checkPhone;
 
     private TextInputLayout containerPrice, containerKilometer, containerSize,
-            containerSpace, containerRooms, containerFloors, containerNumberFloors, containerState,
+            containerSpace, containerRooms, containerFloors, containerNumberFloors,
             containerEx, containerSalary;
 
     // views for upload video
@@ -237,6 +237,9 @@ public class EditAdActivity extends MasterActivity {
                         result.getCertificates().add(0, Item.getNoItem());
                         spinnerCertificate.setAdapter(new ItemAdapter(mContext, result.getCertificates()));
 
+                        result.getPropertyStates().add(0, Item.getNoItem());
+                        spinnerPropertyState.setAdapter(new ItemAdapter(mContext, result.getPropertyStates()));
+
                         HideProgressDialog();
 
                         showTemplate();
@@ -280,6 +283,7 @@ public class EditAdActivity extends MasterActivity {
         textGender = findViewById(R.id.textGender);
         textState = (TextView) findViewById(R.id.textState);
         textFurn = (TextView) findViewById(R.id.textFurn);
+        textPropertyState = findViewById(R.id.textPropertyState);
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editCategory = (EditText) findViewById(R.id.editCategory);
@@ -297,7 +301,6 @@ public class EditAdActivity extends MasterActivity {
         editRooms = (EditText) findViewById(R.id.editRooms);
         editFloors = (EditText) findViewById(R.id.editFloors);
         editNumberFloors = findViewById(R.id.editNumberFloors);
-        editState = (EditText) findViewById(R.id.editState);
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
 
@@ -317,6 +320,7 @@ public class EditAdActivity extends MasterActivity {
 
         spinnerState = findViewById(R.id.spinnerState);
 
+        spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
         spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
@@ -334,7 +338,6 @@ public class EditAdActivity extends MasterActivity {
         containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
         containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
-        containerState = (TextInputLayout) findViewById(R.id.containerState);
 
         containerEx = (TextInputLayout) findViewById(R.id.containerEx);
         containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
@@ -469,32 +472,31 @@ public class EditAdActivity extends MasterActivity {
             case R.id.buttonTrue: // Save
                 parameters.clear();
 
-                if (checkGeneralInput()) {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
+                if (checkGeneralInput())
+                    if (checkTemplateInput()) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
 
-                                    getTemplateInput();
-
-                                    ShowProgressDialog();
-                                    AdController.getInstance(mController).editAd(parameters, new SuccessCallback<String>() {
-                                        @Override
-                                        public void OnSuccess(String result) {
-                                            HideProgressDialog();
-                                            showMessageInToast(getString(R.string.toastSaved));
-                                            finish();
-                                        }
-                                    });
+                                        ShowProgressDialog();
+                                        AdController.getInstance(mController).editAd(parameters, new SuccessCallback<String>() {
+                                            @Override
+                                            public void OnSuccess(String result) {
+                                                HideProgressDialog();
+                                                showMessageInToast(getString(R.string.toastSaved));
+                                                finish();
+                                            }
+                                        });
+                                }
                             }
-                        }
-                    };
+                        };
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-                    builder.setMessage(R.string.areYouSureEdit).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                            .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
-                }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+                        builder.setMessage(R.string.areYouSureEdit).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+                    }
                 break;
 
             case R.id.buttonEdit: // Select Images
@@ -630,18 +632,23 @@ public class EditAdActivity extends MasterActivity {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
 
-        } else if (adapter.isLoading())
+        } else if (inputIsEmpty(editDesc)) {
+            editDesc.setError(getString(R.string.errorRequired));
+            editDesc.requestFocus();
+
+        } else if (currentAd.getTemplate() == Category.VEHICLES && adapter.getCount() == 0)
+            showMessageInToast(getString(R.string.toastSelectImage));
+
+        else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
+        else if (progressBarVideo.getVisibility() == View.VISIBLE)
+            showMessageInToast(R.string.toastWaitTillVideoUploading);
         else {
 
             parameters.put("ad_id", currentAd.getId());
 
-            if (inputIsEmpty(editDesc))
-                parameters.put("description", NULL);
-            else
-                parameters.put("description", stringInput(editDesc));
-
             parameters.put("title", stringInput(editTitle));
+            parameters.put("description", stringInput(editDesc));
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
 
@@ -705,35 +712,62 @@ public class EditAdActivity extends MasterActivity {
         return false;
     }
 
-    private void getTemplateInput() {
+    private boolean checkTemplateInput() {
+        boolean result = true; // nothing is required by default
 
         Item item;
         switch (currentAd.getTemplate()) {
+            // only check visible fields
+            // if field is hidden so obviously it's not required
+
             case Category.PROPERTIES:
-                if (inputIsEmpty(editSpace))
-                    parameters.put("space", NULL);
-                else
-                    parameters.put("space", String.valueOf(doubleEditText(editSpace)));
 
-                if (inputIsEmpty(editRooms))
-                    parameters.put("rooms_num", NULL);
-                else
-                    parameters.put("rooms_num", String.valueOf(doubleEditText(editRooms)));
+                item = (Item) spinnerPropertyState.getSelectedItem();
+                if (!currentCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerPropertyState);
+                            result = false;
+                        } else
+                            parameters.put("property_state_id", item.getId());
+                    }
+                }
 
-                if (inputIsEmpty(editFloors))
-                    parameters.put("floor", NULL);
-                else
-                    parameters.put("floor", String.valueOf(doubleEditText(editFloors)));
+                if (!currentCategory.shouldHideTag(getString(R.string.hideNumberFloors))) {
+                    if (inputIsEmpty(editNumberFloors)) {
+                        editNumberFloors.setError(getString(R.string.errorRequired));
+                        editNumberFloors.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("floors_number", stringInput(editNumberFloors));
+                }
 
-                if (inputIsEmpty(editNumberFloors))
-                    parameters.put("floors_number", NULL);
-                else
-                    parameters.put("floors_number", String.valueOf(doubleEditText(editNumberFloors)));
+                if (!currentCategory.shouldHideTag(getString(R.string.hideFloor))) {
+                    if (inputIsEmpty(editFloors)) {
+                        editFloors.setError(getString(R.string.errorRequired));
+                        editFloors.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("floor", stringInput(editFloors));
+                }
 
-                if (inputIsEmpty(editState))
-                    parameters.put("state", NULL);
-                else
-                    parameters.put("state", stringInput(editState));
+                if (!currentCategory.shouldHideTag(getString(R.string.hideRoom))) {
+                    if (inputIsEmpty(editRooms)) {
+                        editRooms.setError(getString(R.string.errorRequired));
+                        editRooms.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("rooms_num", stringInput(editRooms));
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideSpace))) {
+                    if (inputIsEmpty(editSpace)) {
+                        editSpace.setError(getString(R.string.errorRequired));
+                        editSpace.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("space", stringInput(editSpace));
+                }
 
                 item = (Item) spinnerFurn.getSelectedItem();
                 if (item != null)
@@ -753,13 +787,27 @@ public class EditAdActivity extends MasterActivity {
                 else
                     parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
 
-                item = ((Item) spinnerEdu.getSelectedItem());
-                if (item != null)
-                    parameters.put("education_id", item.getId());
-
                 item = (Item) spinnerCertificate.getSelectedItem();
-                if (item != null)
-                    parameters.put("certificate_id", item.getId());
+                if (!currentCategory.shouldHideTag(getString(R.string.hideCertificate))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerCertificate);
+                            result = false;
+                        } else
+                            parameters.put("certificate_id", item.getId());
+                    }
+                }
+
+                item = ((Item) spinnerEdu.getSelectedItem());
+                if (!currentCategory.shouldHideTag(getString(R.string.hideEducation))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerEdu);
+                            result = false;
+                        } else
+                            parameters.put("education_id", item.getId());
+                    }
+                }
 
                 item = ((Item) spinnerSch.getSelectedItem());
                 if (item != null)
@@ -772,22 +820,40 @@ public class EditAdActivity extends MasterActivity {
                 break;
 
             case Category.VEHICLES:
-                if (inputIsEmpty(editKilo))
-                    parameters.put("kilometer", NULL);
-                else
-                    parameters.put("kilometer", String.valueOf(doubleEditText(editKilo)));
+                item = ((Item) spinnerYear.getSelectedItem());
+                if (!currentCategory.shouldHideTag(getString(R.string.hideYear))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerYear);
+                            result = false;
+                        } else
+                            parameters.put("manufacture_date", item.getId());
+                    }
+                }
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (item != null)
-                    parameters.put("type_id", item.getId());
+                if (!currentCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerBrand);
+                            result = false;
+                        } else
+                            parameters.put("type_id", item.getId());
+                    }
+                }
+
+                if (!currentCategory.shouldHideTag(getString(R.string.hideKilo))) {
+                    if (inputIsEmpty(editKilo)) {
+                        editKilo.setError(getString(R.string.errorRequired));
+                        editKilo.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("kilometer", stringInput(editKilo));
+                }
 
                 item = ((Item) spinnerModel.getSelectedItem());
                 if (item != null)
                     parameters.put("type_model_id", item.getId());
-
-                item = ((Item) spinnerYear.getSelectedItem());
-                if (item != null)
-                    parameters.put("manufacture_date", item.getId());
 
                 item = (Item) spinnerCapacity.getSelectedItem();
                 if (item != null)
@@ -824,6 +890,7 @@ public class EditAdActivity extends MasterActivity {
                 if (item != null)
                     parameters.put("is_new", item.getId());
         }
+        return result;
     }
 
     private void fillTemplate(TemplatesData data) {
@@ -861,7 +928,7 @@ public class EditAdActivity extends MasterActivity {
                 editRooms.setText(formattedNumber(((AdProperty) currentAd).getRoomNum()));
                 editFloors.setText(formattedNumber(((AdProperty) currentAd).getFloorNum()));
                 editNumberFloors.setText(formattedNumber(((AdProperty) currentAd).getFloorsCount()));
-                editState.setText(((AdProperty) currentAd).getState());
+                spinnerPropertyState.setSelection(getItemIndex(data.getPropertyStates(), ((AdProperty) currentAd).getStateId()));
 
                 if (((AdProperty) currentAd).isFurnished())
                     spinnerFurn.setSelection(1);
@@ -965,8 +1032,10 @@ public class EditAdActivity extends MasterActivity {
                 if (!currentCategory.shouldHideTag(getString(R.string.hideNumberFloors)))
                     containerNumberFloors.setVisibility(visibility);
 
-                if (!currentCategory.shouldHideTag(getString(R.string.hideState)))
-                    containerState.setVisibility(visibility);
+                if (!currentCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
+                    textPropertyState.setVisibility(visibility);
+                    spinnerPropertyState.setVisibility(visibility);
+                }
 
                 if (!currentCategory.shouldHideTag(getString(R.string.hideFurn))) {
                     textFurn.setVisibility(visibility);

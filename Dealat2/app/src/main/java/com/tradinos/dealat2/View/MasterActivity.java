@@ -9,13 +9,17 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -31,6 +35,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.SplashActivity;
 import com.tradinos.dealat2.Utils.CustomProgressDialog;
+import com.tradinos.dealat2.Utils.RegisterDialog;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -304,11 +309,34 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         switch (MyApplication.getUserState()) {
             case User.REGISTERED:
                 return true;
+
             case User.PENDING:
-                showMessageInToast(getString(R.string.toastVerify));
+                RegisterDialog dialog = new RegisterDialog(mContext);
+                dialog.show();
+
+                dialog.setText(getString(R.string.labelVerify));
+                dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, VerificationActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 break;
             default:
-                showMessageInToast(getString(R.string.toastRegister));
+
+                RegisterDialog dialog2 = new RegisterDialog(mContext);
+                dialog2.show();
+
+                dialog2.setText(getString(R.string.labelRegister));
+                dialog2.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, RegisterActivity.class);
+                        startActivity(intent);
+                    }
+                });
         }
         return false;
     }
@@ -339,6 +367,22 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             number = "963" + number;
 
         return number;
+    }
+
+    protected void setSpinnerError(final AppCompatSpinner spinner) {
+
+        TextView textView = (TextView) spinner.getSelectedView();
+        textView.setError("");
+        textView.setText(getString(R.string.errorRequired));
+
+        final ScrollView scrollView = findViewById(R.id.scrollView);
+        if (scrollView != null)
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.scrollTo(0, spinner.getBottom());
+                }
+            });
     }
 
     public String formattedDate(String stringDate) {

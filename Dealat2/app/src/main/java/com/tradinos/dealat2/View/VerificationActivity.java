@@ -60,6 +60,7 @@ public class VerificationActivity extends MasterActivity {
     public void onClick(View view) {
         if (view.getId() == R.id.buttonFalse) { // Skip
             Intent intent = new Intent(mContext, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
 

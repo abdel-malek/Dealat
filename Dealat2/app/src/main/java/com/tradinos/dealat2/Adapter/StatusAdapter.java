@@ -93,9 +93,4 @@ public class StatusAdapter extends BaseAdapter {
 
         return view;
     }
-
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return super.getDropDownView(position, convertView, parent);
-    }
 }

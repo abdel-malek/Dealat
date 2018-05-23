@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
@@ -101,12 +100,12 @@ public class SubmitAdActivity extends MasterActivity {
             textDate,
             textEdu, textSch, textCertificate, textGender,
             textState,
-            textFurn;
+            textFurn, textPropertyState;
 
     private EditText editTitle, editDesc, editCategory, editPrice, editTextError,
             editKilo,
             editSize,
-            editSpace, editRooms, editFloors, editNumberFloors, editState,
+            editSpace, editRooms, editFloors, editNumberFloors,
             editEx, editSalary;
 
     private AutoCompleteTextView autoCompleteLocation;
@@ -115,14 +114,14 @@ public class SubmitAdActivity extends MasterActivity {
             spinnerBrand, spinnerModel, spinnerYear, spinnerTransmission, spinnerCapacity,
             spinnerEdu, spinnerCertificate, spinnerSch, spinnerGender,
             spinnerState,
-            spinnerFurn;
+            spinnerFurn, spinnerPropertyState;
 
     private SwitchCompat switchNegotiable, switchFeatured;
 
     private Button buttonTerms;
     private CheckBox checkboxTerms, checkPhone;
     private TextInputLayout containerPrice, containerKilometer, containerSize,
-            containerSpace, containerRooms, containerFloors, containerNumberFloors, containerState,
+            containerSpace, containerRooms, containerFloors, containerNumberFloors,
             containerEx, containerSalary;
 
 
@@ -166,6 +165,9 @@ public class SubmitAdActivity extends MasterActivity {
 
                 result.getCertificates().add(0, Item.getNoItem());
                 spinnerCertificate.setAdapter(new ItemAdapter(mContext, result.getCertificates()));
+
+                result.getPropertyStates().add(0, Item.getNoItem());
+                spinnerPropertyState.setAdapter(new ItemAdapter(mContext, result.getPropertyStates()));
 
                 showTemplate();
             }
@@ -244,6 +246,7 @@ public class SubmitAdActivity extends MasterActivity {
         textGender = findViewById(R.id.textGender);
         textState = (TextView) findViewById(R.id.textState);
         textFurn = (TextView) findViewById(R.id.textFurn);
+        textPropertyState = findViewById(R.id.textPropertyState);
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editCategory = (EditText) findViewById(R.id.editCategory);
@@ -261,7 +264,6 @@ public class SubmitAdActivity extends MasterActivity {
         editRooms = (EditText) findViewById(R.id.editRooms);
         editFloors = (EditText) findViewById(R.id.editFloors);
         editNumberFloors = findViewById(R.id.editNumberFloors);
-        editState = (EditText) findViewById(R.id.editState);
 
         autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
 
@@ -282,6 +284,7 @@ public class SubmitAdActivity extends MasterActivity {
         spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
 
         spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
+        spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
 
         switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
         switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
@@ -296,7 +299,6 @@ public class SubmitAdActivity extends MasterActivity {
         containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
         containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
-        containerState = (TextInputLayout) findViewById(R.id.containerState);
 
         containerEx = (TextInputLayout) findViewById(R.id.containerEx);
         containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
@@ -438,30 +440,29 @@ public class SubmitAdActivity extends MasterActivity {
 
             parameters.clear();
 
-            if (checkGeneralInput()) {
+            if (checkGeneralInput())
+                if (checkTemplateInput()) {
 
-                getTemplateInput();
+                    ShowProgressDialog();
+                    AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
+                        @Override
+                        public void OnSuccess(String result) {
+                            HideProgressDialog();
 
-                ShowProgressDialog();
-                AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
-                    @Override
-                    public void OnSuccess(String result) {
-                        HideProgressDialog();
+                            ConfirmDialog dialog = new ConfirmDialog(mContext);
+                            dialog.show();
 
-                        ConfirmDialog dialog = new ConfirmDialog(mContext);
-                        dialog.show();
+                            dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+                            });
 
-                        dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        });
-
-                    }
-                });
-            }
+                        }
+                    });
+                }
         } else if (view.getId() == R.id.buttonEdit) {
             if (adapter.getCount() >= Image.MAX_IMAGES)
                 showMessageInToast(R.string.toastMaxImages);
@@ -597,8 +598,10 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideNumberFloors)))
                     containerNumberFloors.setVisibility(visibility);
 
-                if (!selectedCategory.shouldHideTag(getString(R.string.hideState)))
-                    containerState.setVisibility(visibility);
+                if (!selectedCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
+                    textPropertyState.setVisibility(visibility);
+                    spinnerPropertyState.setVisibility(visibility);
+                }
 
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideFurn))) {
                     textFurn.setVisibility(visibility);
@@ -714,7 +717,9 @@ public class SubmitAdActivity extends MasterActivity {
                 containerRooms.setVisibility(visibility);
                 containerFloors.setVisibility(visibility);
                 containerNumberFloors.setVisibility(visibility);
-                containerState.setVisibility(visibility);
+
+                textPropertyState.setVisibility(visibility);
+                spinnerPropertyState.setVisibility(visibility);
 
                 textFurn.setVisibility(visibility);
                 spinnerFurn.setVisibility(visibility);
@@ -793,6 +798,7 @@ public class SubmitAdActivity extends MasterActivity {
         } else if (selectedCategory.isMain()) {
             editCategory.setError(getString(R.string.errorRequired));
             editCategory.requestFocus();
+
         } else if (currentTemplate == Category.PROPERTIES && selectedLocation == null) {
             autoCompleteLocation.setError(getString(R.string.errorRequired));
             autoCompleteLocation.requestFocus();
@@ -801,13 +807,18 @@ public class SubmitAdActivity extends MasterActivity {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
 
-        } else if (adapter.isLoading())
+        } else if (inputIsEmpty(editDesc)) {
+            editDesc.setError(getString(R.string.errorRequired));
+            editDesc.requestFocus();
+
+        } else if (currentTemplate == Category.VEHICLES && adapter.getCount() == 0)
+            showMessageInToast(getString(R.string.toastSelectImage));
+
+        else if (adapter.isLoading())
             showMessageInToast(getString(R.string.toastWaitTillUploading));
         else if (progressBarVideo.getVisibility() == View.VISIBLE)
             showMessageInToast(R.string.toastWaitTillVideoUploading);
         else {
-            if (!inputIsEmpty(editDesc))
-                parameters.put("description", stringInput(editDesc));
 
             if (currentTemplate != Category.JOBS)
                 parameters.put("price", stringInput(editPrice));
@@ -819,6 +830,7 @@ public class SubmitAdActivity extends MasterActivity {
                 parameters.put("is_featured", "1");
 
             parameters.put("title", stringInput(editTitle));
+            parameters.put("description", stringInput(editDesc));
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
@@ -859,26 +871,60 @@ public class SubmitAdActivity extends MasterActivity {
         return false;
     }
 
-    private void getTemplateInput() {
+    private boolean checkTemplateInput() {
+        boolean result = true; // nothing is required by default
         Item item;
         switch (currentTemplate) {
-
+            // only check visible fields
+            // if field is hidden so obviously it's not required
             case Category.PROPERTIES:
 
-                if (!inputIsEmpty(editSpace))
-                    parameters.put("space", stringInput(editSpace));
+                item = (Item) spinnerPropertyState.getSelectedItem();
+                if (!selectedCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerPropertyState);
+                            result = false;
+                        } else
+                            parameters.put("property_state_id", item.getId());
+                    }
+                }
 
-                if (!inputIsEmpty(editRooms))
-                    parameters.put("rooms_num", stringInput(editRooms));
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideNumberFloors))) {
+                    if (inputIsEmpty(editNumberFloors)) {
+                        editNumberFloors.setError(getString(R.string.errorRequired));
+                        editNumberFloors.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("floors_number", stringInput(editNumberFloors));
+                }
 
-                if (!inputIsEmpty(editFloors))
-                    parameters.put("floor", stringInput(editFloors));
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideFloor))) {
+                    if (inputIsEmpty(editFloors)) {
+                        editFloors.setError(getString(R.string.errorRequired));
+                        editFloors.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("floor", stringInput(editFloors));
+                }
 
-                if (!inputIsEmpty(editNumberFloors))
-                    parameters.put("floors_number", stringInput(editNumberFloors));
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideRoom))) {
+                    if (inputIsEmpty(editRooms)) {
+                        editRooms.setError(getString(R.string.errorRequired));
+                        editRooms.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("rooms_num", stringInput(editRooms));
+                }
 
-                if (!inputIsEmpty(editState))
-                    parameters.put("state", stringInput(editState));
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideSpace))) {
+                    if (inputIsEmpty(editSpace)) {
+                        editSpace.setError(getString(R.string.errorRequired));
+                        editSpace.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("space", stringInput(editSpace));
+                }
 
                 item = (Item) spinnerFurn.getSelectedItem();
                 if (item != null)
@@ -897,17 +943,32 @@ public class SubmitAdActivity extends MasterActivity {
                 if (!inputIsEmpty(editSalary))
                     parameters.put("salary", stringInput(editSalary));
 
-                item = ((Item) spinnerEdu.getSelectedItem());
-                if (item != null && !item.isNothing())
-                    parameters.put("education_id", item.getId());
-
                 item = (Item) spinnerCertificate.getSelectedItem();
-                if (item != null && !item.isNothing())
-                    parameters.put("certificate_id", item.getId());
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideCertificate))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerCertificate);
+                            result = false;
+                        } else
+                            parameters.put("certificate_id", item.getId());
+                    }
+                }
+
+                item = ((Item) spinnerEdu.getSelectedItem());
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideEducation))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerEdu);
+                            result = false;
+                        } else
+                            parameters.put("education_id", item.getId());
+                    }
+                }
 
                 item = ((Item) spinnerSch.getSelectedItem());
                 if (item != null && !item.isNothing())
                     parameters.put("schedule_id", item.getId());
+
 
                 item = (Item) spinnerGender.getSelectedItem();
                 if (item != null && !item.isNothing())
@@ -917,20 +978,41 @@ public class SubmitAdActivity extends MasterActivity {
 
             case Category.VEHICLES:
 
-                if (!inputIsEmpty(editKilo))
-                    parameters.put("kilometer", stringInput(editKilo));
+                item = ((Item) spinnerYear.getSelectedItem());
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideYear))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerYear);
+                            result = false;
+                        } else
+                            parameters.put("manufacture_date", item.getId());
+                    }
+                }
 
                 item = ((Item) spinnerBrand.getSelectedItem());
-                if (item != null && !item.isNothing())
-                    parameters.put("type_id", item.getId());
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideBrand))) {
+                    if (item != null) {
+                        if (item.isNothing()) {
+                            setSpinnerError(spinnerBrand);
+                            result = false;
+                        } else
+                            parameters.put("type_id", item.getId());
+                    }
+                }
+
+                if (!selectedCategory.shouldHideTag(getString(R.string.hideKilo))) {
+                    if (inputIsEmpty(editKilo)) {
+                        editKilo.setError(getString(R.string.errorRequired));
+                        editKilo.requestFocus();
+                        result = false;
+                    } else
+                        parameters.put("kilometer", stringInput(editKilo));
+                }
 
                 item = ((Item) spinnerModel.getSelectedItem());
                 if (item != null && !item.isNothing())
                     parameters.put("type_model_id", item.getId());
 
-                item = ((Item) spinnerYear.getSelectedItem());
-                if (item != null && !item.isNothing())
-                    parameters.put("manufacture_date", item.getId());
 
                 item = (Item) spinnerCapacity.getSelectedItem();
                 if (item != null && !item.isNothing())
@@ -966,6 +1048,8 @@ public class SubmitAdActivity extends MasterActivity {
                 if (item != null)
                     parameters.put("is_new", item.getId());
         }
+
+        return result;
     }
 
     @Override

@@ -375,6 +375,32 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:padding="@dimen/textPadding"
+        android:tag="@string/propertyStateName"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelPropertyState"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
         android:tag="@string/furnitureName"
         >
 
@@ -635,14 +661,40 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:padding="@dimen/textPadding"
-        android:tag="@string/capacityName"
+        android:tag="@string/capacityMin"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/marginEnd"
-            android:text="@string/labelEngineCapacity"
+            android:text="@string/labelCapacityFrom"
+            android:textColor="@color/grayTransparent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/textNormal"
+            android:textColor="@color/grayDark"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/textPadding"
+        android:tag="@string/capacityMax"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/labelCapacityTo"
             android:textColor="@color/grayTransparent"
             />
 

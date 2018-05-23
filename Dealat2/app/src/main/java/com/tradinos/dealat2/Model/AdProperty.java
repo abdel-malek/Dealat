@@ -9,11 +9,7 @@ public class AdProperty extends Ad {
     // floorsCount indicates how many floors a building has
     private double space;
     private boolean furnished;
-    private String state;
-
-    public AdProperty(){
-        state = "";
-    }
+    private String stateId, stateName;
 
     public int getRoomNum() {
         return roomNum;
@@ -55,11 +51,19 @@ public class AdProperty extends Ad {
         this.furnished = furnished;
     }
 
-    public String getState() {
-        return state;
+    public String getStateId() {
+        return stateId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStateId(String stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
     }
 }

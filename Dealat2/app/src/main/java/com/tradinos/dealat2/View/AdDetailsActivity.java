@@ -491,7 +491,7 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewRooms.setText(formattedNumber(((AdProperty) result).getRoomNum()));
                 textViewFloors.setText(formattedNumber(((AdProperty) result).getFloorNum()));
                 textViewNumberFloors.setText(formattedNumber(((AdProperty) result).getFloorsCount()));
-                textViewState.setText(((AdProperty) result).getState());
+                textViewState.setText(((AdProperty) result).getStateName());
 
                 if (((AdProperty) result).isFurnished())
                     textViewFurn.setText(getString(R.string.yes));
@@ -617,7 +617,7 @@ public class AdDetailsActivity extends MasterActivity {
                     findViewById(R.id.line21).setVisibility(View.VISIBLE);
                 }
 
-                if (!currentCategory.shouldHideTag(getString(R.string.hideState))) {
+                if (!currentCategory.shouldHideTag(getString(R.string.hidePropertyState))) {
                     findViewById(R.id.line12).setVisibility(View.VISIBLE);
                     containerPropertyState.setVisibility(View.VISIBLE);
                 }
