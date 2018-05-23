@@ -64,6 +64,7 @@ class Items_manage extends REST_Controller {
 	{
 		$this->load->model('data_sources/reported_ads');
 		$ads = $this->reported_ads-> get_reported_ads();
+		//dump($ads);
 		$output = array("aaData" => array());
 		foreach ($ads as $row) {
 			$recorde = array();
@@ -72,6 +73,7 @@ class Items_manage extends REST_Controller {
 	        $recorde[] = STATUS::get_name($row -> status  , $this->data['lang']);
 			$recorde[] = $row->tamplate_id; // for details: 2
 		    $recorde[] = $row->reports_count; // for reports: 3
+		    $recorde[] = $row->report_seen;
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
@@ -96,6 +98,23 @@ class Items_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
+	
+	public function set_reports_to_seen_post()
+	{
+	   $this->load->model('data_sources/reported_ads');
+	   $this->reported_ads->set_to_seen();
+	   $this -> response(array('status' => true, 'data' =>'', 'message' => $this->lang->line('sucess')));
+	}
+	
+	
+   public function get_not_seen_reported_get()
+    {
+      $this->load->model('data_sources/reported_ads');
+	  $ads = $this->reported_ads->get_not_seen();
+	  // set to seen 
+	  $this->reported_ads->set_to_seen();
+	  $this -> response(array('status' => true, 'data' =>$ads, 'message' => $this->lang->line('sucess')));
+    }
 	
 	public function send_email_post()
 	{

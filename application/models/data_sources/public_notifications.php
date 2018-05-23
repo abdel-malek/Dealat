@@ -16,13 +16,25 @@ class Public_notifications extends MY_Model {
 		return parent::get();
 	}
 	
-	public function get_user_notifications($user_id , $city_id)
+	public function get_user_notifications($user_id , $city_id , $gender , $birthday)
 	{
-		$this->db->where("(city_id = $city_id AND  to_user_id IS NULL )");
-		$this->db->or_where("(city_id IS NULL AND  to_user_id IS NULL )");
-		$this->db->or_where("(city_id IS NULL AND  to_user_id = $user_id )");
+		$this->db->where("(to_user_id = $user_id )"); // to this user
+		$this->db->or_where("(city_id IS NULL AND notification_gender IS NULL AND from_birthday IS NULL AND to_birthday IS NULL AND  to_user_id IS NULL )"); // the public
+		$this->db->or_where("(city_id = $city_id AND  to_user_id IS NULL )");
+		$this->db->or_where("(notification_gender = $gender AND  to_user_id IS NULL )");
+		$this->db->or_where("(from_birthday <=  $birthday AND  to_user_id IS NULL )");
+		$this->db->or_where("(to_birthday >=  $birthday AND  to_user_id IS NULL )");
 		return parent::get();
 	}
+	
+	// public function get_user_notifications($user_id , $city_id , $gender , $birthday)
+	// {
+		// $this->db->where("(city_id = $city_id AND  to_user_id IS NULL )");
+		// $this->db->or_where("(city_id IS NULL AND notification_gender IS NULL AND from_birthday IS NULL AND to_birthday IS NULL AND  to_user_id IS NULL )"); // the public
+		// $this->db->or_where("(city_id IS NULL AND  to_user_id = $user_id )");
+		// $this->db->or_where("(city_id = $city_id AND  to_user_id IS NULL )");
+		// return parent::get();
+	// }
 	
     public function get_not_seen_count($current_user)
     {

@@ -96,8 +96,12 @@ class Users_control_web extends REST_Controller {
 	{
 		$this->load->model('data_sources/public_notifications' );
 		$user_id = $this->current_user->user_id;
-		$city_id = $this->data['city'];
-		$data = $this->public_notifications->get_user_notifications($user_id , $city_id);
+		$user_info = $this->users->get($user_id);
+		$city_id = $user_info->city_id;
+		$user_gender = $user_info->user_gender;
+		$birthday = $user_info->birthday;
+		//$city_id = $this->data['city'];
+		$data = $this->public_notifications->get_user_notifications($user_id , $city_id , $user_gender , $birthday);
 		// change seen status
 		$this->public_notifications->change_to_seen($user_id);
 	    $this->response(array('status' => true, 'data' => $data, "message" => $this->lang->line('sucess')));

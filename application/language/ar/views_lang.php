@@ -306,6 +306,8 @@ $lang['confirmation'] = 'تأكيد';
 $lang['sender_name'] = 'اسم المرسل';
 $lang['to_user_name'] = 'اسم المرسل له';
 $lang['send_to_user'] = 'أو أرسل لمستخدم محدد';
+$lang['from_birthday'] = 'من تاريخ ميلاد';
+$lang['to_birthday'] = 'إلى تاريخ ميلاد';
 
 //about manage
 $lang['set_about_info'] = 'ضبط معلومات من نحن';

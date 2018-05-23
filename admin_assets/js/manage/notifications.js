@@ -58,6 +58,10 @@ function send_notificaion () {
 	var body = $('#notify_body').val();
 	var city_id = $('#cities_select').val();
 	var to_user_id = $('#noti_users_select').val();
+	var from_birthday = $('#birthday_from').val();
+	var to_birthday = $('#birthday_to').val();
+	var gender = $('#noti_gender_select').val();
+	
 	if(title == '' || body == ''){
 	  	new PNotify({
               title: lang_array['attention'],
@@ -74,15 +78,35 @@ function send_notificaion () {
 			'title' : title
 		};
 		var url;
-		if(city_id != 0){ // by city
-			data['city_id'] = city_id;
-		  	url = base_url + '/admin/users_manage/send_notifications_by_city/format/json'; 
-		}else if(to_user_id != 0){
+		if(to_user_id != 0){ // to user
 			data['to_user_id'] = to_user_id;
 			url = base_url + '/admin/users_manage/send_notification_to_user/format/json';
-		}else{ //public
+		}else if(city_id != 0 || gender != 0 || from_birthday != '' || to_birthday != ''){ // tp group
+			if(city_id != 0){
+				data['city_id'] = city_id;
+			}
+			if(gender != 0){
+				data['gender'] = gender;
+			}
+			if(from_birthday != ''){
+				data['from_birthday'] = from_birthday;
+			}
+			if(to_birthday != ''){
+				data['to_birthday'] = to_birthday;
+			}
+			url =  base_url + '/admin/users_manage/send_notifications_to_group/format/json'; 
+		}else{ // public
 		   url = base_url + '/admin/users_manage/send_public_notification/format/json';
 		}
+		// if(city_id != 0){ // by city
+			// data['city_id'] = city_id;
+		  	// url = base_url + '/admin/users_manage/send_notifications_by_city/format/json'; 
+		// }else if(to_user_id != 0){
+			// data['to_user_id'] = to_user_id;
+			// url = base_url + '/admin/users_manage/send_notification_to_user/format/json';
+		// }else{ //public
+		   // url = base_url + '/admin/users_manage/send_public_notification/format/json';
+		// }
 	   	$.ajax({
 	        url: url,
 	        type: "post",

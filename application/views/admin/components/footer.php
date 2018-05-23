@@ -134,6 +134,7 @@
        	 lang_array['body_and_title'] = 'You have to provide title and body';
        	 lang_array['yes'] = 'Yes'
        	 lang_array['no'] = 'No';
+       	 lang_array['new_reported_ad'] = 'There is a new report on the ad: ';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -189,6 +190,7 @@
        	 lang_array['body_and_title'] = 'يجب إدخال العنوان والرسالة';
        	 lang_array['yes'] = 'نعم'
        	 lang_array['no'] = 'كلا'
+       	 lang_array['new_reported_ad'] = 'تم التبليغ عن الإعلان : ';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;

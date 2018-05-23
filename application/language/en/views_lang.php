@@ -303,6 +303,9 @@ $lang['confirmation'] = 'Confirmation';
 $lang['sender_name'] = 'Sender name';
 $lang['to_user_name'] = 'Sended to user';
 $lang['send_to_user'] = 'Or Send To one user';
+$lang['from_birthday'] = 'From Birthday';
+$lang['to_birthday'] = 'To Birthday';
+
 
 
 //about manage

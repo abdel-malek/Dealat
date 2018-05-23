@@ -41,7 +41,6 @@ class Notification extends MY_Model {
 	public function send_notofication_to_group($user_ids , $msg , $data , $title , $type)
 	{
 	    $tokens = $this->user_tokens->get_tokens_by_ids($user_ids);
-		//dump($tokens);
         $notification_helper = new NotificationHelper();
         foreach ($tokens as $token) {
             $sent = $notification_helper->send_notification_to_device(

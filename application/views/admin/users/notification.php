@@ -13,7 +13,7 @@
 		                    </br>
 		                     </br>
 		                     <div class='row'>
-			                   <div class="col-md-4">
+			                   <div class="col-md-6">
 		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('select_usres_city') ?></label>
 		                         <select class="form-control select2_single" id="cities_select" tabindex="-1">
 		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
@@ -24,8 +24,30 @@
 		                            <?php endif; ?> 
 		                          </select>
 		                        </div>
-		                        
-		                        <div class="col-md-4">
+		                        <div class="col-md-6">
+		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('gender') ?></label>
+		                         <select class="form-control select2_single" id="noti_gender_select" tabindex="-1">
+		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
+		                           <option value =<?php echo GENDER::MALE ?>><?php echo $this->lang->line('male') ?></option>
+		                           <option value =<?php echo GENDER::FEMALE ?>><?php echo $this->lang->line('female') ?></option>  
+		                          </select>
+		                        </div>
+		                     </div>
+		                    </br>
+		                    <div class="row">
+		                      <div class="col-md-6">
+		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('from_birthday') ?></label>
+		                         <input name="from" type="text" id="birthday_from" class="form-control " style="width: 316px  !important;"  data-toggle="datepicker">
+		                      </div>
+		                       
+		                      <div class="col-md-6">
+		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('to_birthday') ?></label>
+		                         <input name="to" type="text" id="birthday_to" class="form-control " style="width: 316px  !important;"  data-toggle="datepicker">
+		                      </div> 	
+		                    </div>
+		                    </br>
+		                    <div class="row">
+		                      <div class="col-md-6">
 		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('send_to_user') ?></label>
 		                         <select class="form-control select2_single" id="noti_users_select" tabindex="-1">
 		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
@@ -36,8 +58,8 @@
 		                            <?php endif; ?> 
 		                          </select>
 		                        </div>
-		                     </div>
 		                    </div>
+		                   </div>
 		                  </div>
 		                </div>
 		              </div>
@@ -84,6 +106,9 @@
 	                          <th><?php echo $this->lang->line('send_date') ?></th>
 	                          <th><?php echo $this->lang->line('sender_name') ?></th>
 	                          <th><?php echo $this->lang->line('city') ?></th>
+	                          <th><?php echo $this->lang->line('gender') ?></th>
+	                          <th><?php echo $this->lang->line('from_birthday') ?></th>
+	                          <th><?php echo $this->lang->line('to_birthday') ?></th>
 	                          <th><?php echo $this->lang->line('to_user_name') ?></th>
 	                          <th><?php echo $this->lang->line('notify_title') ?></th>
 	                          <th><?php echo $this->lang->line('notify_text') ?></th>

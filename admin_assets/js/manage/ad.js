@@ -113,8 +113,8 @@ var ads_buttons =[];
              "ajax": {
               "url": base_url + '/admin/items_manage/all/format/json',
 		      "type": "GET",
-		       global: false,     // this makes sure ajaxStart is not triggered
-		       'async' : false,
+		      global: false,     // this makes sure ajaxStart is not triggered
+		      'async' : false,
                dataType: 'json',
              },
              "columnDefs": [

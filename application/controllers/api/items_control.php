@@ -380,17 +380,16 @@ class Items_control extends REST_Controller {
 	        else if($this->response->is_auth){
 	            $user_id = $this->response->is_auth;
 	        }
-			$data = array('ad_id' => $ad_id , 'report_message_id' =>$message , 'user_id'=> $user_id );
+			$data = array('ad_id' => $ad_id , 'report_message_id' =>$message , 'user_id'=> $user_id ,'report_seen' =>0 );
 			$repored_ad_id = $this->reported_ads->save($data);
 			if($repored_ad_id){
 			   $this->load->model('data_sources/report_messages');
 			   $message_info = $this->report_messages->get_info($this->input->post('report_message_id'), $this->data['lang']);
-			   $this->reported_ads->send_email($this->input->post('ad_id') , $message_info->msg);
+			  // $this->reported_ads->send_email($this->input->post('ad_id') , $message_info->msg);
 			   $this -> response(array('status' => true, 'data' => $repored_ad_id, 'message' => $this->lang->line('sucess')));	
 			}else{
 			   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 			}
 		}
    	}
-
 }

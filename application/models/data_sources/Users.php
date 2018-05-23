@@ -51,7 +51,6 @@ class Users extends MY_Model {
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
 			$this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
         }
-	   // $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
 	//	send verification code to email.
 		//$to      = 'dealat.co@gmail.com';
 		// $to      = 'dealat.co@gmail.com';
@@ -148,6 +147,30 @@ class Users extends MY_Model {
   {
       $users = parent::get_by(array('city_id' => $city_id));
 	  $ids_array = array();
+	  if($users){
+	  	foreach ($users as $row) {
+			$ids_array[] = $row->user_id;  
+		}
+	  }
+	  return $ids_array;
+  }
+  
+  public function get_users_ids()
+  {
+ 	 if($this->input->post('city_id') != null){
+	  	$this->db->where('city_id'  , $this->input->post('city_id'));
+	 }
+	 if($this->input->post('gender') != null){
+	  	$this->db->where('user_gender'  , $this->input->post('gender'));
+	 }
+     if($this->input->post('from_birthday') != null){
+     	$this->db->where('birthday >=' , $this->input->post('from_birthday')  );
+     }
+	 if($this->input->post('to_birthday') != null){
+     	$this->db->where('birthday >=' , $this->input->post('to_birthday') );
+     }
+	 $users = parent::get_by(array('is_active' => 1 , 'is_deleted' => 0));
+	 $ids_array = array();
 	  if($users){
 	  	foreach ($users as $row) {
 			$ids_array[] = $row->user_id;  

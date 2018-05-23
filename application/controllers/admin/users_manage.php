@@ -114,6 +114,7 @@ class Users_manage extends REST_Controller {
 	   $this -> load -> view('admin/_main_layout', $this -> data);
 	}
 	
+	// not used
     public function send_notifications_by_city_post()
     {
    	  $this->form_validation->set_rules('city_id', 'city_id', 'required'); 
@@ -147,6 +148,49 @@ class Users_manage extends REST_Controller {
 		  }
 	  }
     }
+
+   public function send_notifications_to_group_post()
+    {
+	  $this->form_validation->set_rules('body', 'body', 'required'); 
+	  $this->form_validation->set_rules('title', 'title', 'required');  
+	  if (!$this->form_validation->run()) {
+	 	 throw new Validation_Exception(validation_errors());
+	  }else{
+		  $text = $this->input->post('body');
+		  $title = $this->input->post('title');
+		  $user_id = $this->current_user->user_id;
+		  //save notification 
+		  $this->load->model('data_sources/public_notifications');
+		  $data = array(
+		    'title' => $title,
+		    'body' => $text , 
+		    'user_id' => $user_id
+		  );
+		  if($this->input->post('city_id') != null){
+		  	$data['city_id'] = $this->input->post('city_id');
+		  }
+		  if($this->input->post('gender') != null){
+		  	$data['notification_gender'] = $this->input->post('gender');
+		  }
+		  if($this->input->post('from_birthday') != null){
+		  	$data['from_birthday'] = $this->input->post('from_birthday');
+		  }
+		  if($this->input->post('to_birthday') != null){
+		  	$data['to_birthday'] = $this->input->post('to_birthday');
+		  }
+		  $notification_id = $this->public_notifications->save($data);
+		  $users_ids =  $this->users->get_users_ids();
+		  if($users_ids){
+		  	$this->load->model('notification');
+			$this->notification->send_notofication_to_group($users_ids ,$text , null , $title ,  NotificationHelper::PUBLIC_NOTFY);
+			$saved_note = $this->public_notifications->save(array('is_sent' => 1) , $notification_id);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::SEND_PUBLIC_NOTIFICATION , $saved_note);
+			$this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
+		  }else{
+		  	$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('no_users')));
+		  }
+	  }
+   }
 	
    public function send_public_notification_post()
    {
@@ -274,6 +318,21 @@ class Users_manage extends REST_Controller {
 			$recorde[] = $row -> user_name;
 	        if($row->city_id != null){
 	        	$recorde[] = $row->city_name;
+	        }else{
+	        	$recorde[] = $this->lang->line('all');
+	        }
+			if($row->notification_gender != null){
+	        	$recorde[] = GENDER::get_name($row->notification_gender , $this->data['lang']);
+	        }else{
+	        	$recorde[] = $this->lang->line('all');
+	        }
+			if($row->from_birthday != null){
+	        	$recorde[] = $row->from_birthday;
+	        }else{
+	        	$recorde[] = $this->lang->line('all');
+	        }
+			if($row->to_birthday != null){
+	        	$recorde[] = $row->to_birthday;
 	        }else{
 	        	$recorde[] = $this->lang->line('all');
 	        }

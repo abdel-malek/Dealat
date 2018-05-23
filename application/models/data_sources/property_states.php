@@ -8,7 +8,7 @@ class Property_states extends MY_Model {
 	
 	public function get_all($lang)
 	{
-	   $this->db->select('property_states.'.$lang.'_name as name , state_id');
+	   $this->db->select('property_states.'.$lang.'_name as name , property_state_id');
 	   $this->db->where('is_active' , 1);
 	   return $this->db->get('property_states')->result_array();
 	}
