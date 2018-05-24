@@ -20,7 +20,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_items',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {} else {
+			if (data.status === false) {} else {console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -544,7 +544,7 @@ $(function () {
 					template_id: templateId
 				}
 			}).done(function (data) {
-//				console.log(data);
+				console.log(data);
 				if (data.status === false) {} else {
 					//remove upload video except for properties category
 					if (templateId === 2) {
@@ -588,14 +588,25 @@ $(function () {
 
 					$("#edit-ad-modal textarea[name='description']").val(data.data.description);
 
+//					if (data.data.type_id) {
+//						$("#edit-ad-modal input[name='type_id']").val(data.data.type_id);
+//						$("#edit-ad-modal .types-nav .select").text(data.data.type_name);
+//					}
+//					if (data.data.type_model_id) {
+//						$("#edit-ad-modal input[name='type_model_id']").val(data.data.type_model_id);
+//						$("#edit-ad-modal .types-nav .select").text(data.data.type_name + "-" + data.data.type_model_name);
+//					}
 					if (data.data.type_id) {
-						$("#edit-ad-modal input[name='type_id']").val(data.data.type_id);
-						$("#edit-ad-modal .types-nav .select").text(data.data.type_name);
+//						$("#edit-ad-modal input[name='type_id']").val(data.data.type_id);
+						$("#edit-ad-modal select[name='type_id']").val(data.data.type_id).change();
+						$("#edit-ad-modal select[name='type_id']")[0].sumo.reload();
+						if (data.data.type_model_id) {
+							$("#edit-ad-modal select[name='type_model_id']").closest(".form-group").removeClass("d-none");
+							$("#edit-ad-modal select[name='type_model_id']").val(data.data.type_model_id);
+							$("#edit-ad-modal select[name='type_model_id']")[0].sumo.reload();
+						}
 					}
-					if (data.data.type_model_id) {
-						$("#edit-ad-modal input[name='type_model_id']").val(data.data.type_model_id);
-						$("#edit-ad-modal .types-nav .select").text(data.data.type_name + "-" + data.data.type_model_name);
-					}
+					
 					if (data.data.manufacture_date) {
 						$("#edit-ad-modal input[name='manufacture_date']").val(data.data.manufacture_date);
 					}
@@ -632,8 +643,9 @@ $(function () {
 					if (data.data.floors_number) {
 						$("#edit-ad-modal input[name='floors_number']").val(data.data.floors_number);
 					}
-					if (data.data.state) {
-						$("#edit-ad-modal input[name='state']").val(data.data.state);
+					if (data.data.property_state_id) {
+						$("#edit-ad-modal select[name='property_state_id']").val(data.data.property_state_id);
+						$("#edit-ad-modal select[name='property_state_id']")[0].sumo.reload();
 					}
 					if (data.data.with_furniture === "1") {
 						$("#edit-ad-modal input[name='with_furniture']").prop("checked", true);
@@ -729,26 +741,46 @@ $(function () {
 			//			});
 
 			//only display selected template types
-			$("#edit-ad-modal .types-nav .type-item").each(function () {
-				$(this).addClass("d-none");
-				if ($(this).data("categoryId") === subId) {
-					has_types = 1;
-					$(this).removeClass("d-none");
-				}
-			});
+//			$("#edit-ad-modal .types-nav .type-item").each(function () {
+//				$(this).addClass("d-none");
+//				if ($(this).data("categoryId") === subId) {
+//					has_types = 1;
+//					$(this).removeClass("d-none");
+//				}
+//			});
 
 			//display types select only if category is vehicles, mobiles or electronics
-			if (has_types !== 0) {
-				$("#edit-ad-modal .types-nav").parent(".form-group").removeClass("d-none");
-			} else {
-				$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
-			}
-			if (lang === "ar") {
-				$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
-			} else {
-				$("#edit-ad-modal .types-nav .select").text("Select type");
-			}
+//			if (has_types !== 0) {
+//				$("#edit-ad-modal .types-nav").parent(".form-group").removeClass("d-none");
+//			} else {
+//				$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
+//			}
+//			if (lang === "ar") {
+//				$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
+//			} else {
+//				$("#edit-ad-modal .types-nav .select").text("Select type");
+//			}
 
+			//only display selected template types
+		$("#edit-ad-modal .type-select option").each(function () {
+			$(this).addClass("d-none");
+			if ($(this).data("categoryId") === subId) {
+				has_types = 1;
+				$(this).removeClass("d-none");
+			}
+		});
+
+		$('#edit-ad-modal select.type-select')[0].sumo.reload();
+		//display types select only if category is vehicles, mobiles or electronics
+		if (has_types !== 0) {
+			//		if (templateId === 1 || templateId === 3 || templateId===4) {
+			$("#edit-ad-modal .type-select").parents(".form-group").removeClass("d-none");
+			$("#edit-ad-modal .model-select").parents(".form-group").addClass("d-none");
+		} else {
+			$("#edit-ad-modal .type-select").parents(".form-group").addClass("d-none");
+			$("#edit-ad-modal .model-select").parents(".form-group").addClass("d-none");
+		}
+			
 			$("#edit-ad-modal").modal("show");
 		});
 
@@ -860,8 +892,17 @@ $(function () {
 				});
 			} 
 			
+						if (deleteMainImgArr.length > 0 && editMainImg.length === 0 && editAdImgs.length === 0) {
+							//to keep default image
+				editAdData.push({
+					name: "main_image",
+					value: "-1"
+				});
+			}
+			
 			if(tempEditMainImg.length === 0 && editMainImg.length === 0){
-				if (lang === "ar") {
+				if(editAdImgs.length > 0){
+					if (lang === "ar") {
 					$('#edit-ad-modal .error-message').text("الرجاء رفع صورة رئيسية للإعلان");
 				} else {
 					$('#edit-ad-modal .error-message').text("Please upload main ad image");
@@ -871,6 +912,8 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 				return false;
+				}
+				
 			}
 			
 			if (editAdImgs.length > 0) {
@@ -900,13 +943,6 @@ $(function () {
 					value: deleteImgArr
 				});
 			}
-
-//			if (deleteMainImgArr.length > 0) {
-//				editAdData.push({
-//					name: "main_image",
-//					value: "-1"
-//				});
-//			}
 
 			if (deleteVideoArr.length > 0) {
 				deleteVideoArr = JSON.stringify(deleteVideoArr);

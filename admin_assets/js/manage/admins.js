@@ -251,8 +251,31 @@ function delete_admin (id) {
           });
      event.preventDefault(); 
   });
- 
- 
+
+function check () {
+console.log("s");
+	if ($(this).find("input").prop('checked') !== true) {	
+		$(this).closest(".main").siblings(".sub").removeClass("hidden");
+		
+	} else{	
+		$(this).closest(".main").siblings(".sub").addClass("hidden");
+		$(this).closest(".main").siblings(".sub").find("input").each(function(){
+			$(this).prop("checked", true);
+		});
+	}
+}
+
+$('.permissions_modal .checkbox.main input:checkbox').on('ifClicked', function() {
+	if ($(this).prop('checked') !== true) {
+		$(this).closest(".main").siblings(".sub").removeClass("hidden");
+		
+	} else{
+		$(this).closest(".main").siblings(".sub").addClass("hidden");
+		$(this).closest(".main").siblings(".sub").find("input").each(function(){
+			$(this).iCheck('uncheck');
+		});
+	}
+});
  
  
  

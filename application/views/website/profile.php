@@ -247,8 +247,10 @@
 									<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{query.location_name}}</span></div>{{/query.location_name}} {{#query.price_min}}
 									<div class="price"><span class="price-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="price-val"><?php echo $this->lang->line('from'); ?>: {{query.price_min}}<?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.price_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.price_min}} {{#query.type_name}}
 									<div class="type "><span class="type-lbl"><?php echo $this->lang->line('type'); ?>: </span><span class="type-val">{{query.type_name}}</span></div>{{/query.type_name}} {{#query.type_model_name}}
-									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} {{#query.capacity_name}}
-									<div class="engine_capacity"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>: </span><span class="engine_capacity-val">{{query.capacity_name}}</span></div>{{/query.capacity_name}} {{#query.years_name}}
+									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} 
+									{{#query.engine_capacity_min}}
+									<div class="engine_capacity"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>: </span><span class="engine_capacity-val"><?php echo $this->lang->line('from'); ?>: {{query.engine_capacity_min}}<?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.engine_capacity_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.engine_capacity_min}} 
+									{{#query.years_name}}
 									<div class="manufacture_date"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>: </span><span class="manufacture_date-val">{{query.years_name}}</span></div>{{/query.years_name}} {{#query.automatic_name}}
 									<div class="is_automatic"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>: </span><span class="is_automatic-val">{{query.automatic_name}}</span></div>{{/query.automatic_name}} {{#query.state_name}}
 									<div class="is_new"><span class="is_new-lbl"></span>
@@ -258,7 +260,10 @@
 									<div class="space"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>: </span><span class="space-val"><?php echo $this->lang->line('from'); ?>: {{query.space_min}} <?php echo $this->lang->line('to'); ?>: {{query.space_max}}</span></div>{{/query.space_min}} {{#query.rooms_num_min}}
 									<div class="rooms_num"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"><?php echo $this->lang->line('from'); ?>: {{query.rooms_num_min}} <?php echo $this->lang->line('to'); ?>: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
 									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.floors_number_min}}
-									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val">from: {{query.floors_number_min}} to: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} {{#query.furniture_name}}
+									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val">from: {{query.floors_number_min}} to: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} 
+									{{#query.property_state_name}}
+									<div class="education property_state_name"><span class="education-lbl"><?php echo $this->lang->line('state'); ?>: </span><span class="education-val">{{query.property_state_name}}</span></div>{{/query.property_state_name}}
+									{{#query.furniture_name}}
 									<div class="with_furniture"><span class="with_furniture-lbl"><?php echo $this->lang->line('with_furniture'); ?>: </span><span class="with_furniture-val">{{query.furniture_name}}</span></div>{{/query.furniture_name}} {{#query.size_min}}
 
 									<div class="size"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>: </span><span class="size-val"><?php echo $this->lang->line('from'); ?>: {{query.size_min}} <?php echo $this->lang->line('to'); ?>: {{query.size_max}}</span></div>{{/query.size_min}} {{#query.schedule_name}}
@@ -304,8 +309,8 @@
 							<div class="col-sm-6 border-middle">
 								<input type="hidden" name="ad_id" class="ad-id">
 								<input type="hidden" name="location_id" class="location-id">
-								<input type="hidden" name="type_id" class="type-id">
-								<input type="hidden" name="type_model_id" class="type-model-id">
+<!--								<input type="hidden" name="type_id" class="type-id">-->
+<!--								<input type="hidden" name="type_model_id" class="type-model-id">-->
 								<input type="hidden" class="ad-status">
 
 								<div class="form-group">
@@ -349,6 +354,7 @@
 
 							</div>
 							<div class="col-sm-6">
+<!--
 								<div class="form-group d-none field type_name">
 									<nav class="navbar navbar-expand-md navbar-light types-nav">
 										<ul class="navbar-nav">
@@ -360,6 +366,25 @@
 										</ul>
 									</nav>
 								</div>
+-->
+							<div class="form-group d-none field type_name">
+								<select name="type_id" class="type-select" placeholder="<?php echo $this->lang->line('select_type'); ?>">
+									<option disabled selected value="" class="d-none">
+								</select>
+							</div>
+
+							<div class="form-group d-none field type_model_name">
+								<select name="type_model_id" class="model-select" placeholder="<?php echo $this->lang->line('select_model'); ?>">
+									<option disabled selected value="" class="d-none">
+								</select>
+							</div>
+<!--
+							<div class="form-group d-none field type_model_name">
+								<select name="type_model_id" class="model-select">
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_model'); ?></option>
+								</select>
+							</div>
+-->
 
 								<!--vehicles template-->
 								<!--type id/ type model id-->
@@ -412,8 +437,10 @@
 										<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
 									</div>
 
-									<div class="form-group field state">
-										<input type="text" class="form-control" name="state" placeholder="<?php echo $this->lang->line('state'); ?>">
+									<div class="form-group field property_state_id">
+										<select name="property_state_id" class="property-state-select" placeholder="<?php echo $this->lang->line('state'); ?>">
+											<option disabled selected value="" class="d-none">
+										</select>
 									</div>
 
 									<div class="form-group field with_furniture">

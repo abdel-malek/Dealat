@@ -90,10 +90,10 @@ $(function () {
 		$("#place-ad-form").trigger("reset");
 		if (lang === "ar") {
 			$("#ad-modal .categories-nav .select").text("اختر صنف");
-			$("#ad-modal .types-nav .select").text("اختر الماركة");
+//			$("#ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#ad-modal .categories-nav .select").text("Select Category");
-			$("#ad-modal .types-nav .select").text("Select type");
+//			$("#ad-modal .types-nav .select").text("Select type");
 		}
 		$("#ad-modal .ajax-file-upload-container").empty();
 		//		uploadobjMain.reset();
@@ -105,12 +105,14 @@ $(function () {
 		}
 		fileIndex = 0;
 
-		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+//		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		adImgs = [];
 		//		adMainImg = [];
 		adVideo = [];
 		$("#ad-modal .featured .warning").addClass("d-none");
 		$('#ad-modal .error-message').addClass("d-none");
+		$("#ad-modal .type-select").parents(".form-group").addClass("d-none");
+		$("#ad-modal .model-select").parents(".form-group").addClass("d-none");
 		$("#ad-modal .template").each(function () {
 			$(this).addClass("d-none");
 		});
@@ -123,6 +125,8 @@ $(function () {
 		$('#ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#ad-modal .educations-select')[0].sumo.unSelectAll();
 		$('#ad-modal .certificates-select')[0].sumo.unSelectAll();
+		$('#ad-modal .model-select')[0].sumo.unSelectAll();
+		$('#ad-modal .type-select')[0].sumo.unSelectAll();
 		$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
 		$("#ad-modal input[name='category_id']").val("");
 	}
@@ -130,13 +134,15 @@ $(function () {
 	function resetEditAd() {
 		$("#edit-ad-form").trigger("reset");
 		if (lang === "ar") {
-			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
+//			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
-			$("#edit-ad-modal .types-nav .select").text("Select type");
+//			$("#edit-ad-modal .types-nav .select").text("Select type");
 		}
-		$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
+//		$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		//		adImgs = [];
 		$('#edit-ad-modal .error-message').addClass("d-none");
+		$("#edit-ad-modal .type-select").parents(".form-group").addClass("d-none");
+		$("#edit-ad-modal .model-select").parents(".form-group").addClass("d-none");
 		$("#edit-ad-modal .template").each(function () {
 			$(this).addClass("d-none");
 		});
@@ -151,6 +157,8 @@ $(function () {
 		$('#edit-ad-modal .schedules-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .educations-select')[0].sumo.unSelectAll();
 		$('#edit-ad-modal .certificates-select')[0].sumo.unSelectAll();
+		$('#edit-ad-modal .model-select')[0].sumo.unSelectAll();
+		$('#edit-ad-modal .type-select')[0].sumo.unSelectAll();
 	}
 
 	function resetFilter() {
@@ -459,13 +467,13 @@ $(function () {
 		}
 	});
 
-	//get cities and areas - types - educations - schedules - certificates
+	//get cities and areas - types - educations - schedules - certificates - property_state
 	$.ajax({
 		type: "get",
 		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {} else {
+		if (data.status === false) {} else {console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -545,30 +553,35 @@ $(function () {
 			};
 
 			//post ad and edit ad modals types
-			template = $('#ad-modal-types-template').html();
-			Mustache.parse(template);
-			rendered = Mustache.render(template, typesData);
-			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
+//			template = $('#ad-modal-types-template').html();
+//			Mustache.parse(template);
+//			rendered = Mustache.render(template, typesData);
+//			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
 
 			//if type with no models then don't open a menu and remove arrow 
-			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
-				if ($(this).html().trim() === "") {
-					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
-					$(this).remove();
-				}
-			});
+//			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
+//				if ($(this).html().trim() === "") {
+//					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
+//					$(this).remove();
+//				}
+//			});
 
-			//filter modal types
+			// types
 			for (i in typesData.types) {
-				$('#filter-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
+				$('#filter-modal .type-select, #ad-modal .type-select, #edit-ad-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
 			}
 
 			$('#filter-modal select.type-select')[0].sumo.reload();
-
-			$('#filter-modal .type-select').change(function () {
+			$('#ad-modal select.type-select')[0].sumo.reload();
+			
+			if ($(".profile-page").length > 0) {
+				$('#edit-ad-modal select.type-select')[0].sumo.reload();
+			}
+											
+			$('.type-select').change(function () {
 				var typeId, i, j;
 				typeId = $(this).find('option:selected').val();
-				$('#filter-modal .model-select option').remove();
+				$(this).closest(".modal-body").find('.model-select option').remove();
 				//				$('select.model-select')[0].sumo.reload();
 				for (i in typesData.types) {
 					if (typesData.types[i].type_id === typeId) {
@@ -576,15 +589,15 @@ $(function () {
 						if (typesData.types[i].models.length > 0) {
 							//only display selected template types
 							for (j in typesData.types[i].models) {
-								$('#filter-modal .model-select').append($('<option>', {
+								$(this).closest(".modal-body").find('.model-select').append($('<option>', {
 									value: typesData.types[i].models[j].type_model_id,
 									text: typesData.types[i].models[j].name
 								}));
 							}
-							$('#filter-modal .model-select').closest(".form-group").removeClass("d-none");
-							$('select.model-select')[0].sumo.reload();
+							$(this).closest(".modal-body").find('.model-select').closest(".form-group").removeClass("d-none");
+							$(this).closest(".modal-body").find('select.model-select')[0].sumo.reload();
 						} else {
-							$('#filter-modal .model-select').closest(".form-group").addClass("d-none");
+							$(this).closest(".modal-body").find('.model-select').closest(".form-group").addClass("d-none");
 						}
 						break;
 					}
@@ -637,6 +650,18 @@ $(function () {
 			for (i = 0; i < $('select.schedules-select').length; i += 1) {
 				$('select.schedules-select')[i].sumo.reload();
 			}
+											
+			//property states
+			for (i in data.data.states) {
+				$('#ad-modal .property-state-select,#edit-ad-modal .property-state-select, #filter-modal .property-state-select').append($('<option>', {
+					value: data.data.states[i].property_state_id,
+					text: data.data.states[i].name
+				}));
+			}
+
+			for (i = 0; i < $('select.property-state-select').length; i += 1) {
+				$('select.property-state-select')[i].sumo.reload();
+			}
 		}
 
 	});
@@ -653,15 +678,15 @@ $(function () {
 	$('select.manufacture-date-select')[0].sumo.reload();
 
 	//ad modal engine_capacity
-	for (i = 1000; i <= 5000; i += 1000) {
-		$("#ad-modal .engine-capacity-select,#edit-ad-modal .engine-capacity-select, #filter-modal .engine-capacity-select").append($('<option>', {
+	for (i = 1100; i <= 5400; i += 100) {
+		$("#ad-modal .engine-capacity-select, #edit-ad-modal .engine-capacity-select").append($('<option>', {
 			value: i,
 			text: i
 		}));
 	}
 
 	//reload just for the multiple
-	$('#filter-modal select.engine-capacity-select')[0].sumo.reload();
+//	$('#filter-modal select.engine-capacity-select')[0].sumo.reload();
 
 	var ajaxLoadTimeout;
 	$(document).ajaxStart(function () {
@@ -684,9 +709,9 @@ $(function () {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
 			}
-		}).done(function (data) {
+		}).done(function (data) {console.log(data);
 			if (data.status === false) {} else {
-//				console.log(data);
+				//				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
 				if (data.data.is_negotiable === "0") {
@@ -888,10 +913,28 @@ $(function () {
 	//post ad modal
 	$("button.place-ad").click(function () {
 		if (!logged) {
-			$("#login-modal").modal("show");
+			$("#ask-register-modal").modal("show");
 			return;
 		}
 		$("#ad-modal").modal("show");
+	});
+
+
+	$("#ad-modal .categories-nav .select").click(function () {
+		$("#ad-modal .SumoSelect").each(function (i) {
+			if ($(this).hasClass("open")) {
+				$(this).removeClass("open");
+				return false;
+			}
+		});
+	});
+	$("#filter-modal .categories-nav .select").click(function () {
+		$("#filter-modal .SumoSelect").each(function (i) {
+			if ($(this).hasClass("open")) {
+				$(this).removeClass("open");
+				return false;
+			}
+		});
 	});
 
 	//view template fields when change category in place ad modal
@@ -955,7 +998,28 @@ $(function () {
 		//		});
 
 		//only display selected template types
-		$("#ad-modal .types-nav .type-item").each(function () {
+//		$("#ad-modal .types-nav .type-item").each(function () {
+//			$(this).addClass("d-none");
+//			if ($(this).data("categoryId") === subId) {
+//				has_types = 1;
+//				$(this).removeClass("d-none");
+//			}
+//		});
+
+//		display types select only if category is vehicles, mobiles or electronics
+//		if (has_types !== 0) {
+			//			if (templateId === 1 || templateId === 3 || templateId===4) {
+//			$("#ad-modal .types-nav").parent(".form-group").removeClass("d-none");
+//		} else {
+//			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+//		}
+//		if (lang === "ar") {
+//			$("#ad-modal .types-nav .select").text("اختر الماركة");
+//		} else {
+//			$("#ad-modal .types-nav .select").text("Select type");
+//		}
+		//only display selected template types
+		$("#ad-modal .type-select option").each(function () {
 			$(this).addClass("d-none");
 			if ($(this).data("categoryId") === subId) {
 				has_types = 1;
@@ -963,20 +1027,18 @@ $(function () {
 			}
 		});
 
+		$('#ad-modal select.type-select')[0].sumo.reload();
 		//display types select only if category is vehicles, mobiles or electronics
 		if (has_types !== 0) {
-			//			if (templateId === 1 || templateId === 3 || templateId===4) {
-			$("#ad-modal .types-nav").parent(".form-group").removeClass("d-none");
+			//		if (templateId === 1 || templateId === 3 || templateId===4) {
+			$("#ad-modal .type-select").parents(".form-group").removeClass("d-none");
+			$("#ad-modal .model-select").parents(".form-group").addClass("d-none");
 		} else {
-			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+			$("#ad-modal .type-select").parents(".form-group").addClass("d-none");
+			$("#ad-modal .model-select").parents(".form-group").addClass("d-none");
 		}
-		if (lang === "ar") {
-			$("#ad-modal .types-nav .select").text("اختر الماركة");
-		} else {
-			$("#ad-modal .types-nav .select").text("Select type");
-		}
-		$("#place-ad-form .type-model-id").val("");
-		$("#place-ad-form .type-id").val("");
+//		$("#place-ad-form .type-model-id").val("");
+//		$("#place-ad-form .type-id").val("");
 		$("#place-ad-form .category-id").val(subId);
 
 
@@ -993,6 +1055,7 @@ $(function () {
 		}
 		$(this).closest(".categories-nav").find(".select").text(text);
 
+		//reset select
 		$('#place-ad-form select:not(.city-select, .location-select, .period-select)').each(function () {
 			$(this).prop('selectedIndex', 0);
 			$(this)[0].sumo.reload();
@@ -1085,39 +1148,39 @@ $(function () {
 	});
 
 	//type model select
-	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".dropdown-item", function () {
-		var typeId, typeModelId;
-
-		$("#place-ad-form .type-model-id").val("");
-		$("#place-ad-form .type-id").val("");
-
-		if ($(this).hasClass("type")) {
-			typeId = $(this).data("typeId");
-			//change select placeholder
-			$(this).closest(".types-nav").find(".select").text($(this).text());
-		} else if ($(this).hasClass("model")) {
-			typeId = $(this).data("typeId");
-			typeModelId = $(this).data("typeModelId");
-			//change select placeholder
-			var typeName, modelName, text;
-			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
-			modelName = $(this).text();
-			text = typeName + " - " + modelName;
-			$(this).closest(".types-nav").find(".select").text(text);
-		}
-
-		if ($(this).parents("#ad-modal").length > 0) {
-			$("#place-ad-form .type-id").val(typeId);
-			$("#place-ad-form .type-model-id").val(typeModelId);
-		} else if ($(this).parents("#edit-ad-modal").length > 0) {
-			$("#edit-ad-form .type-id").val(typeId);
-			$("#edit-ad-form .type-model-id").val(typeModelId);
-		} else if ($(this).parents("#filter-modal").length > 0) {
-			$("#filter-form .type-id").val(typeId);
-			$("#filter-form .type-model-id").val(typeModelId);
-		}
-
-	});
+//	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".dropdown-item", function () {
+//		var typeId, typeModelId;
+//
+//		$("#place-ad-form .type-model-id").val("");
+//		$("#place-ad-form .type-id").val("");
+//
+//		if ($(this).hasClass("type")) {
+//			typeId = $(this).data("typeId");
+//			//change select placeholder
+//			$(this).closest(".types-nav").find(".select").text($(this).text());
+//		} else if ($(this).hasClass("model")) {
+//			typeId = $(this).data("typeId");
+//			typeModelId = $(this).data("typeModelId");
+//			//change select placeholder
+//			var typeName, modelName, text;
+//			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
+//			modelName = $(this).text();
+//			text = typeName + " - " + modelName;
+//			$(this).closest(".types-nav").find(".select").text(text);
+//		}
+//
+//		if ($(this).parents("#ad-modal").length > 0) {
+//			$("#place-ad-form .type-id").val(typeId);
+//			$("#place-ad-form .type-model-id").val(typeModelId);
+//		} else if ($(this).parents("#edit-ad-modal").length > 0) {
+//			$("#edit-ad-form .type-id").val(typeId);
+//			$("#edit-ad-form .type-model-id").val(typeModelId);
+//		} else if ($(this).parents("#filter-modal").length > 0) {
+//			$("#filter-form .type-id").val(typeId);
+//			$("#filter-form .type-model-id").val(typeModelId);
+//		}
+//
+//	});
 
 	//featured ad
 	$("#ad-modal .featured").click(function () {
@@ -1220,7 +1283,7 @@ $(function () {
 					for (i in adImgs) {
 						if (adImgs[i] === deleted) {
 							adImgs.splice(i, 1);
-//							console.log(adImgs);
+							//							console.log(adImgs);
 						}
 					}
 
@@ -1235,10 +1298,10 @@ $(function () {
 							$(this).find(".set-main").attr("disabled", true);
 						}
 					});
-//					if ($("#ad-modal .ajax-file-upload-statusbar").length == 0) {
-//						fileIndex = 0;
-//					}
-				fileIndex = $("#ad-modal .ajax-file-upload-statusbar").length;
+					//					if ($("#ad-modal .ajax-file-upload-statusbar").length == 0) {
+					//						fileIndex = 0;
+					//					}
+					fileIndex = $("#ad-modal .ajax-file-upload-statusbar").length;
 				});
 		}
 	});
@@ -1246,7 +1309,7 @@ $(function () {
 	$("#ad-modal").on("click", ".set-main", function () {
 		var imgIndex, temp;
 		imgIndex = $(this).closest(".ajax-file-upload-statusbar").data("index");
-		
+
 		if (imgIndex > 0) {
 			//not main
 			temp = adImgs[imgIndex];
@@ -1257,7 +1320,7 @@ $(function () {
 				$(this).find(".set-main").text(setAsMain);
 				$(this).find(".set-main").attr("disabled", false);
 				for (i in adImgs) {
-//					console.log($(this).data("src"));
+					//					console.log($(this).data("src"));
 					if ($(this).data("src") === adImgs[i]) {
 						$(this).data("index", Number(i))
 					}
@@ -1325,7 +1388,7 @@ $(function () {
 			for (i in adImgs) {
 				uploaded_imgs.push(adImgs[i]);
 			}
-			
+
 			data.push({
 				name: "main_image",
 				value: uploaded_imgs[0]
@@ -1547,7 +1610,7 @@ $(function () {
 	//bookmark search
 	$(".search-page .bookmark").click(function () {
 		if (!logged) {
-			$("#login-modal").modal("show");
+			$("#ask-register-modal").modal("show");
 			return;
 		}
 		var data = sessionStorage.getItem('bookmark');
@@ -1587,8 +1650,8 @@ $(function () {
 			certificateNameArr = "",
 			manufactureDateArr = [],
 			manufactureDateNameArr = "",
-			engineCapacityArr = [],
-			engineCapacityNameArr = "";
+			propertStateArr = [],
+			propertStateNameArr = "";
 		data = $(this).serializeArray();
 
 		if ($('#filter-modal .manufacture-date-select option:selected').length > 0) {
@@ -1609,24 +1672,6 @@ $(function () {
 			});
 		}
 
-		if ($('#filter-modal .engine-capacity-select option:selected').length > 0) {
-			$('#filter-modal .engine-capacity-select option:selected').each(function (i) {
-				engineCapacityArr.push($(this).val());
-				engineCapacityNameArr += $(this).text() + ', ';
-				$('#filter-modal .engine-capacity-select')[0].sumo.unSelectItem(i);
-			});
-			engineCapacityArr = JSON.stringify(engineCapacityArr);
-			engineCapacityNameArr = engineCapacityNameArr.slice(0, -2);
-
-			data.push({
-				name: "engine_capacity",
-				value: engineCapacityArr
-			}, { //to be written in bookmark search
-				name: "capacity_name",
-				value: engineCapacityNameArr
-			});
-		}
-
 		if ($('#filter-modal .model-select option:selected').length > 0) {
 			$('#filter-modal .model-select option:selected').each(function (i) {
 				typeModelArr.push($(this).val());
@@ -1644,6 +1689,23 @@ $(function () {
 			});
 		}
 
+		if ($('#filter-modal .property-state-select option:selected').length > 0) {
+			$('#filter-modal .property-state-select option:selected').each(function (i) {
+				propertStateArr.push($(this).val());
+				propertStateNameArr += $(this).text() + ', ';
+				$('#filter-modal .property-state-select')[0].sumo.unSelectItem(i);
+			});
+			propertStateArr = JSON.stringify(propertStateArr);
+			propertStateNameArr = propertStateNameArr.slice(0, -2);
+			data.push({
+				name: "property_state_id",
+				value: propertStateArr
+			}, {
+				name: "property_state_name",
+				value: propertStateNameArr
+			});
+		}
+		
 		if ($('#filter-modal .schedules-select option:selected').length > 0) {
 			$('#filter-modal .schedules-select option:selected').each(function (i) {
 				schedulesArr.push($(this).val());
@@ -1775,7 +1837,7 @@ $(function () {
 			$("#card-modal").modal("hide");
 
 			setTimeout(function () {
-				$("#login-modal").modal("show");
+				$("#ask-register-modal").modal("show");
 			}, 500);
 			return;
 		}
@@ -1844,7 +1906,7 @@ $(function () {
 			}
 		});
 	});
-	
+
 	var notSeenMsgs = 0,
 		newNotSeenMsgs = 0,
 		notSeenInterval;
@@ -1896,7 +1958,7 @@ $(function () {
 						}
 					});
 
-					//if new chat session created
+					//if new chat session created append it instantly in profile page
 					if ($(".profile-page .sessions .session").length > 0 && $(".profile-page .sessions .session").length < data.data.length) {
 						var sessionData, sessionImage, username, existed;
 
@@ -1920,7 +1982,7 @@ $(function () {
 									username = data.data[i].seller_name;
 								}
 								if (!sessionImage) {
-//									sessionImage = '/assets/images/Dealat%20logo%20red.png';
+									//									sessionImage = '/assets/images/Dealat%20logo%20red.png';
 									sessionImage = '/assets/images/user1.jpg';
 								}
 								sessionData = {
@@ -1931,13 +1993,13 @@ $(function () {
 								template = $('#chat-sessions-template').html();
 								Mustache.parse(template);
 								rendered = Mustache.render(template, sessionData);
-								$(".profile-page .chats ul.sessions").append(rendered);
+								$(".profile-page .chats ul.sessions").prepend(rendered);
 							}
 						}
 					}
 				}
 				notSeenMsgs = newNotSeenMsgs;
-				notSeenInterval = setTimeout(checkNewMsgs, 3000);
+				notSeenInterval = setTimeout(checkNewMsgs, 1000);
 			}
 		});
 	}
@@ -1965,15 +2027,18 @@ $(function () {
 					isSeller = $("#chat-modal .is-seller").val();
 
 					if (data.data[data.data.length - 1].message_id != lastMsgId) {
+						//if there are new msgs not displayed yet
 						//to know last msg index in data.data array
 						for (i = data.data.length - 1; i >= 0; i -= 1) {
 							if (data.data[i].message_id == lastMsgId) {
 								startIndex = i;
+								msgDate = data.data[i].created_at.split(' ')[0];
 								break;
 							}
 						}
 						for (i = startIndex + 1; i < data.data.length; i += 1) {
 							//check msg date
+
 							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
 								//update msg date
 								msgDate = data.data[i].created_at.split(' ')[0];
@@ -2002,8 +2067,9 @@ $(function () {
 							scrollTop: $("#chat-modal .chat")[0].scrollHeight
 						}, 300);
 					}
-					intervalId = setTimeout(checkLiveSessionMsg, 100);
+
 				}
+				intervalId = setTimeout(checkLiveSessionMsg, 100);
 			}
 		});
 	}
@@ -2043,7 +2109,10 @@ $(function () {
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
-				//				$("#chat-modal .chat").append(rendered);
+				//always rely on checkLiveSessionMsg() function to append msgs even the send ones except if there is no previous msgs (new chat session) then display only the first send
+				if ($('#chat-modal .chat li').length === 0) {
+					$("#chat-modal .chat").append(rendered);
+				}
 
 				$("#chat-form input[name='msg']").val("");
 				$("#chat-form input[name='msg']").focus();
@@ -2294,9 +2363,9 @@ $(function () {
 				$('#login-modal .error-message').html(wholeMessage);
 				$('#login-modal .error-message').removeClass("d-none");
 			} else {
-				if(data.data.cms_logged === 1){
+				if (data.data.cms_logged === 1) {
 					window.location = base_url + "/admin/dashboard";
-				}else{
+				} else {
 					window.location = base_url;
 				}
 			}
@@ -2322,7 +2391,7 @@ $(function () {
 		if (!logged) {
 			$("#card-modal").modal("hide");
 			setTimeout(function () {
-				$("#login-modal").modal("show");
+				$("#ask-register-modal").modal("show");
 			}, 500);
 			return;
 		}
@@ -2376,7 +2445,7 @@ $(function () {
 		}
 	});
 
-	$("#card-modal").on("click",".report",function () {
+	$("#card-modal").on("click", ".report", function () {
 		$("#report-form .ad-id").val($("#card-modal .card").data("adId"));
 		$("#card-modal").modal("hide");
 		setTimeout(function () {
@@ -2469,7 +2538,7 @@ $(function () {
 		});
 
 	});
-	
+
 	$("#qr-form input[name=\"secret_code\"]").keyup(function () {
 		if ($(this).val().length === 6) {
 			$("#qr-modal .submit").removeAttr("disabled");
@@ -2514,30 +2583,29 @@ $(function () {
 					scrollTop: $("body").offset().top
 				}, 500);
 			} else {
-				if(data.data.cms_logged === 1){
+				if (data.data.cms_logged === 1) {
 					window.location = base_url + "/admin/dashboard";
-				}else{
+				} else {
 					window.location = base_url;
-				}	
+				}
 			}
 		});
 	});
-	
-	//notifications
-	$("header .bell-icon").click(function(){
+
+	//admin notifications
+	$("header .bell-icon").click(function () {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_notifications_for_me',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-			} else {
+			if (data.status === false) {} else {
 				$("header .notifications-dropdown .dropdown-menu").empty();
-				
-				for(i in data.data){
-					if(data.data[i].to_user_id && data.data[i].seen === "0"){
+
+				for (i in data.data) {
+					if (data.data[i].to_user_id && data.data[i].seen === "0") {
 						data.data[i].new = "1";
-					}else{
+					} else {
 						data.data[i].new = "0";
 					}
 				}
@@ -2545,33 +2613,113 @@ $(function () {
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
 				$("header .notifications-dropdown .dropdown-menu").append(rendered);
-				
+
 				$(".notifications-dropdown .number").text("0");
 			}
 		});
 	});
-	
-	//notifications count for user
-	if (logged) {		
-	$.ajax({
+
+	//admin notifications count for user
+	if (logged) {
+		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_my_notifications_count',
 			dataType: "json"
 		}).done(function (data) {
-			if (data.status === false) {
-			} else {
+			if (data.status === false) {} else {
 				$(".notifications-dropdown .number").text(data.data);
 			}
 		});
 	}
-	
-	$("header").on("click",".notification",function () {
+
+	$("header").on("click", ".notification", function () {
 		var title, body;
 		title = $(this).find(".title").text();
 		body = $(this).find(".body").text();
-		
+
 		$("#success-btn-modal .text").html(title + "<br>" + body);
 		$("#success-btn-modal").modal("show");
 	});
 
+	//ads notifications
+	$("header .notes-icon").click(function () {
+		$.ajax({
+			type: "get",
+			url: base_url + '/users_control_web/get_my_items',
+			dataType: "json"
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {} else {
+				$("header .notes-dropdown .dropdown-menu").empty();
+				template = $('#notes-template').html();
+				Mustache.parse(template);
+				for (i in data.data) {
+					if (data.data[i].user_seen === "0") {
+						data.data[i].new = "1";
+					} else {
+						data.data[i].new = "0";
+					}
+//					if (data.data[i].user_seen === "0") {
+						if (data.data[i].status === "1") {
+							if (lang === "ar") {
+								data.data[i].status = "قيد الانتظار";
+							} else {
+								data.data[i].status = "Pending";
+							}
+
+						} else if (data.data[i].status === "2") {
+							if (lang === "ar") {
+								data.data[i].status = "موافق عليه";
+							} else {
+								data.data[i].status = "Accepted";
+							}
+						} else if (data.data[i].status === "3") {
+							if (lang === "ar") {
+								data.data[i].status = "منتهي";
+							} else {
+								data.data[i].status = "Expired";
+							}
+						} else if (data.data[i].status === "4") {
+							if (lang === "ar") {
+								data.data[i].status = "مخفي";
+							} else {
+								data.data[i].status = "Hidden";
+							}
+						} else if (data.data[i].status === "5") {
+							if (lang === "ar") {
+								data.data[i].status = "مرفوض";
+							} else {
+								data.data[i].status = "Rejected";
+							}
+						}
+						rendered = Mustache.render(template, data.data[i]);
+						$("header .notes-dropdown .dropdown-menu").append(rendered);
+//					}
+				}
+				$(".notes-dropdown .number").text("0");
+			}
+		});
+	});
+
+	//ads notifications count
+	if (logged) {
+		$.ajax({
+			type: "get",
+			url: base_url + '/users_control_web/get_my_items_unseen_count',
+			dataType: "json"
+		}).done(function (data) {
+			console.log(data);
+			if (data.status === false) {} else {
+				$(".notes-dropdown .number").text(data.data);
+			}
+		});
+	}
+
+	//ask-register-modal
+	$("#ask-register-modal .submit").click(function () {
+		$("#ask-register-modal").modal("hide");
+		setTimeout(function () {
+			$("#register-modal").modal("show");
+		}, 500)
+	});
 });

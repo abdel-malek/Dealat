@@ -55,7 +55,7 @@
 
 	<header class="home">
 		<div class="container">
-			<div class="row align-items-center">
+			<div class="row align-items-center main-row">
 
 				<div class="col-6 col-sm-3 col-lg-2 offset-sm-0 offset-md-1 offset-lg-0">
 					<span class="logo"><a href="<?php echo base_url() ?>"><img class="" src="<?php echo base_url("assets/images/Dealat%20logo%20Red%20background-lined.png"); ?>" width="150px" alt=""></a></span>
@@ -105,6 +105,23 @@
 									<div class="body">{{body}}</div>
 								</li>
 								{{/.}}
+							</script>
+					</span>
+					
+					<span class="dropdown notes-dropdown">
+						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-clipboard fa-lg"></i> <span class="number"></span></span>
+
+						<div class="dropdown-menu">
+
+						</div>
+						<script id="notes-template" type="text/template">
+								<li class="note" data-new="{{new}}">
+									<div class="row no-gutters">
+										<div class="col-3">{{ad_id}}</div>
+										<div class="col-5">{{title}}</div>
+										<div class="col-4">{{status}}</div>
+									</div>
+								</li>
 							</script>
 					</span>
 					
@@ -253,7 +270,7 @@
 							<div class="rooms_num field"><span class="rooms_num-lbl label"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"> {{ad.rooms_num}}</span></div>
 							<div class="floor field"><span class="floor-lbl label"><?php echo $this->lang->line('floor'); ?>:</span><span class="floor-val"> {{ad.floor}}</span></div>
 							<div class="floors_number field"><span class="floors_number-lbl label"><?php echo $this->lang->line('floors_number'); ?>:</span><span class="floors_number-val"> {{ad.floors_number}}</span></div>
-							<div class="state field"><span class="state-lbl label"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.state}}</span></div>
+							<div class="state field property_state_id"><span class="state-lbl label"><?php echo $this->lang->line('state'); ?>:</span><span class="state-val"> {{ad.property_state_name}}</span></div>
 							<div class="with_furniture field"><span class="with_furniture-lbl label"><?php echo $this->lang->line('with_furniture'); ?>:</span><span class="with_furniture-val"> {{furniture}}</span></div>
 						</div>
 
@@ -483,8 +500,8 @@
 						<div class="row">
 							<div class="col-sm-6  border-middle">
 								<input type="hidden" name="category_id" class="category-id">
-								<input type="hidden" name="type_id" class="type-id">
-								<input type="hidden" name="type_model_id" class="type-model-id">
+<!--								<input type="hidden" name="type_id" class="type-id">-->
+<!--								<input type="hidden" name="type_model_id" class="type-model-id">-->
 
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
@@ -560,6 +577,7 @@
 
 						</div>
 						<div class="col-sm-6">
+<!--
 							<div class="form-group d-none field type_name">
 								<nav class="navbar navbar-expand-md navbar-light types-nav">
 									<ul class="navbar-nav">
@@ -570,6 +588,26 @@
 										</li>
 									</ul>
 								</nav>
+							</div>
+-->
+							<div class="form-group d-none field type_name">
+								<select name="type_id" class="type-select" placeholder="<?php echo $this->lang->line('select_type'); ?>">
+									<option disabled selected value="" class="d-none">
+								</select>
+							</div>
+
+<!--
+							<div class="form-group d-none field type_model_name">
+								<select name="type_model_id" class="model-select" placeholder="<?php echo $this->lang->line('select_model'); ?>">
+									<option disabled selected value="" class="d-none">
+								</select>
+							</div>
+-->
+						
+							<div class="form-group d-none field type_model_name">
+								<select name="type_model_id" class="model-select">
+									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_model'); ?></option>
+								</select>
 							</div>
 
 							<script id="ad-modal-types-template" type="text/template">
@@ -638,10 +676,12 @@
 									<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 								</div>
 
-								<div class="form-group field state">
-									<input type="text" class="form-control" name="state" placeholder="<?php echo $this->lang->line('state'); ?>">
+								<div class="form-group field property_state_id">
+									<select name="property_state_id" class="property-state-select" placeholder="<?php echo $this->lang->line('state'); ?>">
+										<option disabled selected value="" class="d-none">
+									</select>
 								</div>
-
+								
 								<div class="form-group field with_furniture">
 									<label class="">
 								<input type="checkbox" name="with_furniture" value="1"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
@@ -771,7 +811,7 @@
 							<div class="">
 								<label class="">
 									<input type='hidden' value='0' name='ad_visible_phone'>
-									<input type="checkbox" name="ad_visible_phone" value="1"><span class=""> <?php echo $this->lang->line('ad_visible_phone'); ?> <?php echo $this->session->userdata('PHP_AUTH_USER')?></span>
+									<input type="checkbox" name="ad_visible_phone" value="1" checked><span class=""> <?php echo $this->lang->line('ad_visible_phone'); ?> <?php echo $this->session->userdata('PHP_AUTH_USER')?></span>
 									<div class="visible-phone-note"><?php echo $this->lang->line('ad_visible_phone_note'); ?></div>
 								</label>
 							</div>
@@ -894,7 +934,6 @@
 						<div class="col-sm-6">
 							<div class="form-group d-none field type_name">
 								<select name="type_id" class="type-select" placeholder="<?php echo $this->lang->line('select_type'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_type'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
@@ -924,8 +963,15 @@
 								</div>
 								
 								<div class="form-group field engine_capacity">
-									<select multiple name="" class="engine-capacity-select multiple" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
-									</select>
+									<label for=""><?php echo $this->lang->line('engine_capacity'); ?>:</label>
+									<div class="row">
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="engine_capacity_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+										</div>
+										<div class="col-sm-6">
+											<input type="number" class="form-control" name="engine_capacity_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+										</div>
+									</div>
 								</div>
 								
 								<div class="form-group field is_automatic">
@@ -995,6 +1041,11 @@
 									</div>
 								</div>
 
+							<div class="form-group field property_state_id">
+									<select multiple name="" class="property-state-select multiple" placeholder="<?php echo $this->lang->line('state'); ?>">
+									</select>
+								</div>
+								
 								<select name="with_furniture" class="status-select field with_furniture" placeholder="<?php echo $this->lang->line('select_status'); ?>">
 <!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>-->
 									<option disabled selected value="" class="d-none">
@@ -1077,7 +1128,7 @@
 							<div class="template-job template d-none" data-template-id="8">
 								<div class="form-group field education_name">
 									<select multiple name="" class="educations-select multiple" placeholder="<?php echo $this->lang->line('education'); ?>">
-							</select>
+									</select>
 								</div>
 
 						<div class="form-group field certificate_name">
@@ -1247,6 +1298,30 @@
 	</div>
 </div>
 
+<!--ask register modal-->
+<div id="ask-register-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered " role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<h6 class="text"><?php echo $this->lang->line('ask_register'); ?></h6>
+			</div>
+			<div class="modal-footer">
+			<div class="container">
+			<div class="row">
+				<div class="col-6 col-sm-3 offset-sm-3"><button class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button></div>
+				<div class="col-6 col-sm-3"><button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('cancel'); ?></button></div>
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--success modal-->
 <div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-sm">
@@ -1271,7 +1346,7 @@
 				<h6 class="text"></h6>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
+				<button class="btn button2 submit" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
 			</div>
 		</div>
 	</div>
