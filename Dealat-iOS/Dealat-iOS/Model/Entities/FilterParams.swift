@@ -22,19 +22,26 @@ class FilterParams{
     
     var schedule_id : [Schedule]!
     var education_id : [Education]!
+    var certificate_id : [Certificate]!
+    var propertyStates : [PropertyState]!
     var manufacture_date : [String]!
+
     
     var is_new : Int!
     var is_automatic : Int!
     var with_furniture : Int!
+    var gender : Int!
+
     
     var price = range_value()
     var size = range_value()
     var kilometer = range_value()
     var rooms_num = range_value()
+    var floors_number = range_value()
     var space = range_value()
     var floor = range_value()
     var salary = range_value()
+    var engine_capacity = range_value()
     
     static var shared = FilterParams()
     
@@ -80,10 +87,24 @@ class FilterParams{
             params["education_name"] = JSON(x.map({$0.name})).rawString()
         }
         
+        if let x = filter.certificate_id{
+            params["certificate_id"] = JSON(x.map({$0.certificate_id.intValue})).rawString()
+            params["certificate_name"] = JSON(x.map({$0.name})).rawString()
+        }
+
+        
+        
         if let x = filter.manufacture_date{
             params["manufacture_date"] = JSON(x).rawString()
             params["years_name"] = JSON(x).rawString()
         }
+        
+        
+        if let x = filter.gender{
+            params["gender"] = JSON(x).rawString()
+            params["gender_name"] = (x == 1) ? "Male".localized : "Famale".localized
+        }
+
         
         if let x = filter.searchText{
             params["query"] = x
@@ -128,6 +149,13 @@ class FilterParams{
         if let x = filter.rooms_num.max{
             params["rooms_num_max"] = x
         }
+        if let x = filter.floors_number.min{
+            params["floors_number_min"] = x
+        }
+        if let x = filter.floors_number.max{
+            params["floors_number_max"] = x
+        }
+
         if let x = filter.space.min{
             params["space_min"] = x
         }
@@ -146,6 +174,14 @@ class FilterParams{
         if let x = filter.salary.max{
             params["salary_max"] = x
         }
+        
+        if let x = filter.engine_capacity.min{
+            params["engine_capacity_min"] = x
+        }
+        if let x = filter.engine_capacity.max{
+            params["engine_capacity_max"] = x
+        }
+
         
         return params
     }

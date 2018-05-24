@@ -44,7 +44,7 @@ class AD : BaseEntity {
     var is_favorite : JSON!
     var expiry_date : String!
     var expired_after : JSON!
-    var visible_phone : JSON!
+    var ad_visible_phone : JSON!
     
     var vehicle = Vehicle()
     var property = Property()
@@ -66,16 +66,19 @@ class AD : BaseEntity {
         var type_model_name : String!
         var type_id : JSON!
         var type_model_id : JSON!
+        var engine_capacity : String!
     }
 
     
     // 2 Properties
     class Property : BaseEntity{
-        var state : String!
+        var property_state_id : JSON!
+        var property_state_name : String!
         var rooms_num : String!
         var floor : String!
         var with_furniture : JSON!
         var space : String!
+        var floors_number : String!
     }
     
     // 3 Mobiles
@@ -119,7 +122,9 @@ class AD : BaseEntity {
         var salary : String!
         var schedule_id : JSON!
         var education_id : JSON!
-
+        var certificate_id : JSON!
+        var certificate_name : String!
+        var gender : JSON!
     }
     
     // 9 Industry
@@ -127,7 +132,6 @@ class AD : BaseEntity {
         var is_new : JSON!
     }
 
-    
     
     // Mappable
     override func mapping(map: Map) {
@@ -164,7 +168,7 @@ class AD : BaseEntity {
         is_favorite <- map["is_favorite"]
         expiry_date <- map["expiry_date"]
         expired_after <- map["expired_after"]
-        visible_phone <- map["visible_phone"]
+        ad_visible_phone <- map["ad_visible_phone"]
         
         // 1 Vehicle
         vehicle.manufacture_date <- map["manufacture_date"]
@@ -175,13 +179,17 @@ class AD : BaseEntity {
         vehicle.type_model_name <- map["type_model_name"]
         vehicle.type_id <- map["type_id"]
         vehicle.type_model_id <- map["type_model_id"]
+        vehicle.engine_capacity <- map["engine_capacity"]
+        
         
         // 2 property
-        property.state <- map["state"]
+        property.property_state_id <- map["property_state_id"]
+        property.property_state_name <- map["property_state_name"]
         property.rooms_num <- map["rooms_num"]
         property.floor <- map["floor"]
         property.with_furniture <- map["with_furniture"]
         property.space <- map["space"]
+        property.floors_number <- map["floors_number"]
         
         // 3 Mobile
         mobile.is_new <- map["is_new"]
@@ -208,6 +216,9 @@ class AD : BaseEntity {
         job.schedule_name <- map["schedule_name"]
         job.experience <- map["experience"]
         job.salary <- map["salary"]
+        job.certificate_id <- map["certificate_id"]
+        job.certificate_name <- map["certificate_name"]
+        job.gender <- map["gender"]
 
         
         // 6 industry

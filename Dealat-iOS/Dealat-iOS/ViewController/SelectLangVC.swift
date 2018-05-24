@@ -13,7 +13,7 @@ class SelectLangVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var tableView : UITableView!
     @IBOutlet weak var okBtn: UIButton!
 
-    var langs = ["EN".localized,"AR".localized]
+    var langs = ["AR".localized,"EN".localized]
     var selected : Int!
 
     
@@ -52,11 +52,15 @@ class SelectLangVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     @IBAction func okAction(){
         
         if let i = self.selected {
 
-            let lang = (i == 0) ?  "en" : "ar"
+            let lang = (i == 0) ? "ar" : "en"
             
             UserDefaults.standard.setValue([lang], forKey: "AppleLanguages")
             UserDefaults.standard.synchronize()

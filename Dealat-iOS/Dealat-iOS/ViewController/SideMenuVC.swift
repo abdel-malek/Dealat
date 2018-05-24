@@ -44,7 +44,7 @@ class SideMenuVC: BaseVC {
 
         }else{
             for i in btns{
-                if (i.tag > 0  && i.tag < 7) || (i.tag ==  10) {
+                if (i.tag > 0  && i.tag < 7) || (i.tag ==  10) || (i.tag ==  11) {
                     i.isHidden = true
                 }
             }
@@ -134,6 +134,12 @@ class SideMenuVC: BaseVC {
             if i.tag == 10{
                 self.logoutAction()
             }
+            
+            if i.tag == 11{
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScanQRCodeVC") as! ScanQRCodeVC
+                vc.homeVC = self.homeVC
+                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+            }
 
             
             
@@ -146,31 +152,33 @@ class SideMenuVC: BaseVC {
                  }
                  UserDefaults.standard.synchronize()*/
                 
-                let alert = UIAlertController.init(title: "ChangeLangTitle".localized, message: "ChangeLangMessage".localized, preferredStyle: .actionSheet)
+                let alert = UIAlertController.init(title: "ChangeLangTitle".localized, message: "ChangeLangMessage".localized, preferredStyle: .alert)
                 
                 if AppDelegate.isArabic(){
+                    let ac = UIAlertAction.init(title: "AR".localized, style: .default, handler: nil)
+                    ac.setValue(#imageLiteral(resourceName: "checkmark"), forKey: "image")
+                    alert.addAction(ac)
+                    
                     alert.addAction(UIAlertAction.init(title: "EN".localized, style: .default, handler: { (ac) in
                         UserDefaults.standard.setValue(["en"], forKey: "AppleLanguages")
                         UserDefaults.standard.synchronize()
                         self.restartHome()
                     }))
-                    
-                    let ac = UIAlertAction.init(title: "AR".localized, style: .default, handler: nil)
-                    ac.setValue(#imageLiteral(resourceName: "checkmark"), forKey: "image")
-                    alert.addAction(ac)
+
                 }else{
-                    let ac = UIAlertAction.init(title: "EN".localized, style: .default, handler: nil)
-                    ac.setValue(#imageLiteral(resourceName: "checkmark"), forKey: "image")
-                    alert.addAction(ac)
-                    
                     alert.addAction(UIAlertAction.init(title: "AR".localized, style: .default, handler: { (ac) in
                         UserDefaults.standard.setValue(["ar"], forKey: "AppleLanguages")
                         UserDefaults.standard.synchronize()
                         self.restartHome()
                     }))
+                    
+                    let ac = UIAlertAction.init(title: "EN".localized, style: .default, handler: nil)
+                    ac.setValue(#imageLiteral(resourceName: "checkmark"), forKey: "image")
+                    alert.addAction(ac)
                 }
                 
                 alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+                
                 
                 self.homeVC.present(alert, animated: true, completion: nil)
             }

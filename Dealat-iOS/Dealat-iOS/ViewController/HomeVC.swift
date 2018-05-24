@@ -136,6 +136,7 @@ class HomeVC: BaseVC {
         //        }
     }
     
+    
     @IBAction func sellAction(){
         //TODO
         //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
@@ -146,7 +147,19 @@ class HomeVC: BaseVC {
         vc.homeVC = self
         self.navigationController?.pushViewController(vc, animated: true)
         }else{
-            self.showErrorMessage(text: "need_register".localized)
+            let me = User.getCurrentUser()
+            let txt = me.statues_key == (User.USER_STATUES.NEW_USER.rawValue) ? "needRegister1".localized : "needRegister2".localized
+            
+            let alert = UIAlertController.init(title: txt, message: nil, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
+                AppDelegate.setupViews()
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+
+            self.present(alert, animated: true, completion: nil)
+//            self.showErrorMessage(text: "need_register".localized)
         }
         
         

@@ -20,11 +20,49 @@ class MessageCell: BaseCell {
     @IBOutlet weak var text2Lbl : ActiveLabel!
     @IBOutlet weak var date2Lbl : ActiveLabel!
     
+    var chat : Chat!
+    var chat_session_id : Int!
+    
+    func sendMaessage(){
+        if let m = self.message{
+            self.vv1.backgroundColor = Theme.Color.red.withAlphaComponent(0.5)
+            self.vv2.backgroundColor = Theme.Color.White.withAlphaComponent(0.5)
+
+            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: m.text.emojiEscapedString, callback: { (res) in
+                if let i = ChatDetailsVC.messagesRT.index(where: {$0.0 == m.timeStamp}){
+                    ChatDetailsVC.messagesRT[i].1 = true
+                    self.vv1.backgroundColor = Theme.Color.red
+                    self.vv2.backgroundColor = Theme.Color.White
+                }
+            })
+        }
+    }
     
     var message : Message!{
         didSet{
             
             if let m = message{
+                
+                if m.isNew{
+                    if let i = ChatDetailsVC.messagesRT.first(where: {$0.0 == m.timeStamp}){
+                        if i.1{
+                            self.vv1.backgroundColor = Theme.Color.red
+                            self.vv2.backgroundColor = Theme.Color.White
+                        }else{
+//                            self.vv1.backgroundColor = Theme.Color.red.withAlphaComponent(0.5)
+//                            self.vv2.backgroundColor = Theme.Color.White.withAlphaComponent(0.5)
+                        }
+                    }else{
+                        ChatDetailsVC.messagesRT.append((m.timeStamp,false))
+                        self.sendMaessage()
+                    }
+                }
+                else{
+                    self.vv1.backgroundColor = Theme.Color.red
+                    self.vv2.backgroundColor = Theme.Color.White
+                }
+                
+                
                 if !m.to_seller.Boolean{
                     self.vv1.isHidden = false
                     self.vv2.isHidden = true
@@ -35,7 +73,7 @@ class MessageCell: BaseCell {
                             self.date1Lbl.text = d.toString(dateStyle: .none, timeStyle: .short, isRelative: false)
                         }
                     }
-//                    self.date1Lbl.text = m.created_at
+                    //                    self.date1Lbl.text = m.created_at
                     
                 }else{
                     self.vv2.isHidden = false
@@ -46,14 +84,14 @@ class MessageCell: BaseCell {
                             self.date2Lbl.text = d.toString(dateStyle: .none, timeStyle: .short, isRelative: false)
                         }
                     }
-
-//                    self.date2Lbl.text = m.created_at
+                    
+                    //                    self.date2Lbl.text = m.created_at
                 }
             }
             
             self.text1Lbl.decideTextDirection()
             self.text2Lbl.decideTextDirection()
-
+            
         }
     }
     
@@ -90,7 +128,7 @@ extension UILabel {
         tagger.string = self.text
         let lang = tagger.tag(at: 0, scheme: NSLinguisticTagScheme.language,
                               tokenRange: nil, sentenceRange: nil)
-
+        
         if let kk = lang{
             if kk.rawValue.contains("ar") {
                 self.textAlignment = NSTextAlignment.right

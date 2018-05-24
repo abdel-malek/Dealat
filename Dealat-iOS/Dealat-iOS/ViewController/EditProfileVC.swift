@@ -26,7 +26,7 @@ class EditProfileVC: BaseVC {
     @IBOutlet weak var tfWhatsapp: SkyFloatingLabelTextField!
     @IBOutlet weak var tfBirthday: SkyFloatingLabelTextField!
     @IBOutlet weak var tfGender: SkyFloatingLabelTextField!
-    @IBOutlet weak var visible_phoneSwitch: UISwitch!
+//    @IBOutlet weak var visible_phoneSwitch: UISwitch!
 
     var genders = [("Male".localized, 1),("Famale".localized,2)]
     
@@ -72,7 +72,7 @@ class EditProfileVC: BaseVC {
                 if let f = res.filter({$0.city_id.intValue == Provider.getCity()}).first{
                     self.selectedCity = f
                 }
-                if let f = self.genders.index(where: {res2.gender == $0.1}){
+                if let f = self.genders.index(where: {res2.user_gender == $0.1}){
                     self.selectedGenderIndex = f
                 }
 
@@ -164,9 +164,9 @@ class EditProfileVC: BaseVC {
         self.tfWhatsapp.text = me.whatsup_number
         self.tfBirthday.text = me.birthday
 
-        if let visible_phone = me.visible_phone{
-            self.visible_phoneSwitch.setOn(visible_phone == 1, animated: true)
-        }
+//        if let visible_phone = me.visible_phone{
+//            self.visible_phoneSwitch.setOn(visible_phone == 1, animated: true)
+//        }
         
         if me.personal_image != nil && !me.personal_image.isEmpty{
             Provider.sd_setImage(self.imgProfile, urlString: me.personal_image)
@@ -197,7 +197,7 @@ class EditProfileVC: BaseVC {
         let whatsapp = tfWhatsapp.text!
         let birthday = self.tfBirthday.text!
         
-        let visible_phone = self.visible_phoneSwitch.isOn ? "1" : "0"
+//        let visible_phone = self.visible_phoneSwitch.isOn ? "1" : "0"
 
         
         guard !name.isEmpty else {
@@ -242,12 +242,12 @@ class EditProfileVC: BaseVC {
                 multipartFormData.append(self.selectedCity.city_id.stringValue.getData, withName: "city_id")
                 multipartFormData.append(whatsapp.getData, withName: "whatsup_number")
                 
-                multipartFormData.append(visible_phone.getData, withName: "visible_phone")
+//                multipartFormData.append(visible_phone.getData, withName: "visible_phone")
 
                 multipartFormData.append(birthday.getData, withName: "birthday")
                 
                 if let g = self.selectedGenderIndex{
-                    multipartFormData.append("\(self.genders[g].1)".getData, withName: "gender")
+                    multipartFormData.append("\(self.genders[g].1)".getData, withName: "user_gender")
                 }
                 
         },
@@ -402,7 +402,7 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
             self.SelectCamera()
         }))
         
-        alert.addAction(UIAlertAction.init(title: "Choose an Image".localized, style: .default, handler: { (ac) in
+        alert.addAction(UIAlertAction.init(title: "Choose an image".localized, style: .default, handler: { (ac) in
             self.SelectPhoto()
         }))
         

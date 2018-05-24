@@ -35,6 +35,34 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         self.ref.addTarget(self, action: #selector(getRefreshing), for: .valueChanged)
     }
     
+    @objc func getNewMessage(_ not : Notification){
+    
+
+        print("getNewMessage")
+        
+        if self.restorationIdentifier != "ChatDetailsVC"{
+            let n = UILocalNotification.init()
+            n.userInfo = not.userInfo
+            
+            if let aps = not.userInfo!["aps"] as? [String: AnyObject]{
+                if let msg = aps["alert"] as? [String: AnyObject]
+                {
+                    n.alertTitle = ((msg["title"] as? String) != nil) ? msg["title"] as! String : "Dealat"
+                    n.alertBody = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
+                }
+            }
+            
+            n.fireDate = Date()
+            n.soundName = UILocalNotificationDefaultSoundName
+            
+            if !PushManager.LocalSchedules.contains(n.userInfo!["gcm.message_id"] as! String){
+                PushManager.LocalSchedules.append(n.userInfo!["gcm.message_id"] as! String)
+                UIApplication.shared.scheduleLocalNotification(n)
+            }
+        }
+        
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -58,6 +86,9 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         notific.addObserver(self, selector: #selector(self.connectionErrorNotificationReceived(_:)), name: _ConnectionErrorNotification.not, object: nil)
         
         notific.addObserver(self, selector: #selector(self.RequestErrorNotificationRecived(_:)), name: _RequestErrorNotificationReceived.not, object: nil)
+        
+        notific.addObserver(self, selector: #selector(self.getNewMessage(_:)), name: "refreshChats".not, object: nil)
+
     }
     
     func unregisterReceivers()
@@ -65,6 +96,8 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         notific.removeObserver(self, name: _ConnectionErrorNotification.not, object: nil)
         
         notific.removeObserver(self, name: _RequestErrorNotificationReceived.not, object: nil)
+        
+        notific.removeObserver(self, name: "refreshChats".not, object: nil)
     }
     
     

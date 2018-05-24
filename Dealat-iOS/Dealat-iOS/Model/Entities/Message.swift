@@ -20,6 +20,10 @@ class Message : BaseEntity {
     var created_at : String!
     var modified_at : String!
     
+    var isNew : Bool = false
+    var timeStamp : TimeInterval!
+
+    
     //    var date : Date!
     //    var dateFull : Date!
     
@@ -31,6 +35,9 @@ class Message : BaseEntity {
         chat_session_id <- map["chat_session_id"]
         created_at <- map["created_at"]
         modified_at <- map["modified_at"]
+        
+        timeStamp <- map["timeStamp"]
+        isNew <- map["isNew"]
         
         //        date <- map["date"]
         //        dateFull <- map["dateFull"]

@@ -71,10 +71,13 @@ class Communication: BaseManager {
     var get_about_infoURL  = "/data_control/get_about_info/format/json"
     let delete_my_accountURL = "/users_control/delete_my_account/format/json"
     
+    let QR_code_scanURL = "/QR_users_control/QR_code_scan/format/json"
+    
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
             
             self.output(response)
             
@@ -168,7 +171,7 @@ class Communication: BaseManager {
         }
     }
     
-    func get_data_lists(_ callback :  @escaping (_ cities : [City], _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule], _ periods : [Period]) -> Void){
+    func get_data_lists(_ callback :  @escaping (_ cities : [City], _ locations : [Location], _ types : [Type], _ educations : [Education] , _ schedules : [Schedule], _ periods : [Period], _ certificates : [Certificate], _ states : [PropertyState]) -> Void){
         let url = URL(string: baseURL + get_data_listsURL)!
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
@@ -186,7 +189,9 @@ class Communication: BaseManager {
                     var educations = [Education]()
                     var schedules = [Schedule]()
                     var periods = [Period]()
-                    
+                    var certificates = [Certificate]()
+                    var states = [PropertyState]()
+
                     
                     for i in value.data["nested_locations"].arrayValue{
                         if let obj = i.dictionaryObject, let a = City(JSON: obj){
@@ -229,9 +234,21 @@ class Communication: BaseManager {
                         }
                     }
 
+                    for i in value.data["certificates"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = Certificate(JSON: obj){
+                            certificates.append(a)
+                        }
+                    }
+                    for i in value.data["states"].arrayValue{
+                        if let obj = i.dictionaryObject, let a = PropertyState(JSON: obj){
+                            states.append(a)
+                        }
+                    }
+
                     
                     
-                    callback(cities,locations,types,educations,schedules,periods)
+                    
+                    callback(cities,locations,types,educations,schedules,periods,certificates,states)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -1265,6 +1282,35 @@ class Communication: BaseManager {
                 if value.status{
                     
                     callback(true)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
+    
+    func QR_code_scan(gen_code : String, callback : @escaping (String) -> Void){
+        
+        let url = URL(string: baseURL + QR_code_scanURL)!
+        let params = ["gen_code" : gen_code]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    callback(value.data.stringValue)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)

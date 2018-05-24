@@ -88,16 +88,25 @@ class RegisterVC: BaseVC {
         }else if phone.count != 10 {
             self.showErrorMessage(text: "Please enter valid phone number")
         }else{
-            phone.removeFirst()
             
-            self.showLoading()
-            Communication.shared.users_register(phone: Provider.getEnglishNumber(phone), name: name, callback: { (res) in
-                self.hideLoading()
+            let alert = UIAlertController.init(title: phone, message: "numberConfirmation".localized, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
-                self.navigationController?.pushViewController(vc, animated: true)
-            })
+                phone.removeFirst()
+
+                self.showLoading()
+                Communication.shared.users_register(phone: Provider.getEnglishNumber(phone), name: name, callback: { (res) in
+                    self.hideLoading()
+                    
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "VerificationVC") as! VerificationVC
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
+            }))
             
+            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
         }
         
     }

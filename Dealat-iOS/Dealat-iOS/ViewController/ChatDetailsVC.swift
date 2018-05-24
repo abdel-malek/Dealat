@@ -11,6 +11,9 @@ import GrowingTextView
 import IQKeyboardManagerSwift
 import SwiftyJSON
 import AFDateHelper
+import Foundation
+import AVFoundation
+
 
 class ChatDetailsVC: BaseVC {
 
@@ -23,10 +26,15 @@ class ChatDetailsVC: BaseVC {
     var messages = [Message]()
     
     var messages2 = [(Date,[Message])]()
+    
+    static var messagesRT = [(TimeInterval,Bool)]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ChatDetailsVC.messagesRT.removeAll()
+        
         if Provider.isArabic{
 //            sendBtn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 //            sendBtn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -46,46 +54,68 @@ class ChatDetailsVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        notific.addObserver(self, selector: #selector(self.getNewMessage(_:)), name: "refreshChats".not, object: nil)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        notific.removeObserver(self, name: "refreshChats".not, object: nil)
     }
 
-    @objc func getNewMessage(_ not : Notification){
+    @objc override func getNewMessage(_ not : Notification){
+        var isHere = false
+        
         
         if let notification = not.userInfo {
             print("handleNotificationTapping: \(notification)")
             
             do{
                 let not = JSON(notification["ntf_type"])
-                
                 print("TTT : \(not.intValue)")
-                
                 let type = not.intValue
-                
                 print("TYPE : \(type)")
-                
                 if type == 1{
                     print("BODY : \(notification["ntf_body"])")
                     
                     if let payload = notification["ntf_body"]
                     {
                         print("ntf_body: \(payload)")
-                        
                         let bod = JSON(payload)
                         do{
                             let dd = bod.stringValue.data(using: String.Encoding.utf8)
                             let ii = try JSONSerialization.jsonObject(with: dd!, options: JSONSerialization.ReadingOptions.mutableLeaves)
                             let tt  = JSON(ii)
-                            
                             if let obj = tt.dictionaryObject{
                                 if let chat = Chat(JSON: obj){
                                     if let id1 = chat.chat_session_id, let id2 = self.chat.chat_session_id{
+                                        print("IDDD1 : \(id1.intValue) -- IDDDD2 \(id2.intValue)")
                                         if id1.intValue == id2.intValue{
-                                            self.getRefreshing()
+                                            isHere = true
+                                            
+                                            var body = ""
+                                            
+                                            if let aps = notification["aps"] as? [String: AnyObject]{
+                                                if let msg = aps["alert"] as? [String: AnyObject]
+                                                {
+                                                    body = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
+                                                }
+                                            }
+
+                                            let msg = Message(JSON: ["text" : body.emojiEscapedString,"to_seller" : JSON(false),"chat_session_id" : id1.intValue, "created_at" : chat.modified_at])
+
+                                            self.messages.append(msg!)
+                                            
+                                            var soundId: SystemSoundID = 0
+                                            let bundle = Bundle.main
+                                            guard let soundUrl = bundle.url(forResource: "sms", withExtension: "wav") else{
+                                                return
+                                            }
+                                            AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundId)
+                                            AudioServicesPlayAlertSound(1007)
+
+                                            
+                                            self.fixMessages()
+
+//                                          self.getRefreshing()
                                         }
                                     }
                                 }
@@ -95,9 +125,30 @@ class ChatDetailsVC: BaseVC {
                             print(err.localizedDescription)
                         }
                     }
-                    
                 }
             }catch let err{ print("ERROR: \(err.localizedDescription)")}
+            
+            
+            if !isHere{
+                let n = UILocalNotification.init()
+                n.userInfo = not.userInfo
+                if let aps = not.userInfo!["aps"] as? [String: AnyObject]{
+                    if let msg = aps["alert"] as? [String: AnyObject]
+                    {
+                        n.alertTitle = ((msg["title"] as? String) != nil) ? msg["title"] as! String : "Dealat"
+                        n.alertBody = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
+                    }
+                }
+                n.fireDate = Date()
+                n.soundName = UILocalNotificationDefaultSoundName
+                
+                if !PushManager.LocalSchedules.contains(n.userInfo!["gcm.message_id"] as! String){
+                    PushManager.LocalSchedules.append(n.userInfo!["gcm.message_id"] as! String)
+                    UIApplication.shared.scheduleLocalNotification(n)
+                }
+
+            }
+            
         }
     }
     
@@ -148,49 +199,50 @@ class ChatDetailsVC: BaseVC {
             self.hideLoading()
             self.textView.text = nil
 
-           
             self.messages = res
-            
-            var messagesTemp = [Message]()
-            var messages3 =  [(Date,[Message])]()
-
-            
-            for i in self.messages{
-                messagesTemp.append(Message.init(JSON : i.toJSON())!)
-            }
-            
-            
-            var temp = [Message]()
-            
-            for i in messagesTemp{
-                if !temp.contains(where: {$0.getDate() == i.getDate()}){
-                    temp.append(Message.init(JSON : i.toJSON())!)
-                }
-            }
-            
-            for i in temp{
-                let mesgs = messagesTemp.filter({$0.getDate() == i.getDate()}).sorted(by: { (m1, m2) -> Bool in
-                   return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
-                })
-                
-                messages3.append((i.getDate(), mesgs))
-            }
-            
-
-            self.messages2 = messages3
-            
-                self.tableView.reloadData()
-
-
-            if let m = messages3.last{
-                self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
-            }
-            
+            self.fixMessages()
         }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    func fixMessages(){
+        var messagesTemp = [Message]()
+        var messages3 =  [(Date,[Message])]()
+        
+        for i in self.messages{
+            messagesTemp.append(Message.init(JSON : i.toJSON())!)
+        }
+        
+        
+        var temp = [Message]()
+        
+        for i in messagesTemp{
+            if !temp.contains(where: {$0.getDate() == i.getDate()}){
+                temp.append(Message.init(JSON : i.toJSON())!)
+            }
+        }
+        
+        for i in temp{
+            let mesgs = messagesTemp.filter({$0.getDate() == i.getDate()}).sorted(by: { (m1, m2) -> Bool in
+                return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
+            })
+            
+            messages3.append((i.getDate(), mesgs))
+        }
+        
+        
+        self.messages2 = messages3
+        
+        self.tableView.reloadData()
+        
+        
+        if let m = messages3.last{
+            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+        }
     }
     
     @objc private func keyboardWillChangeFrame(_ notification: Notification) {
@@ -252,11 +304,29 @@ class ChatDetailsVC: BaseVC {
             }
             
             self.textView.text = nil
+            
+            let timeStamp = Date().timeIntervalSince1970
+            print("Date.init().timeIntervalSinceNow : \(timeStamp)")
 
-            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message.emojiEscapedString, callback: { (res) in
-                
-                self.getRefreshing()
-            })
+            let msg = Message(JSON: ["text" : message.emojiEscapedString,"to_seller" : JSON(true),"chat_session_id" : chat_session_id,"isNew" : true,"timeStamp" : timeStamp, "created_at" : Date().toString(format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss"))])
+            
+            self.messages.append(msg!)
+            
+            self.fixMessages()
+            
+            
+//            var message_id : JSON!
+//            var text : String!
+//            var to_seller : JSON!
+//            var chat_session_id : JSON!
+//            var created_at : String!
+//            var modified_at : String!
+
+            
+//            Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: message.emojiEscapedString, callback: { (res) in
+//
+//                self.getRefreshing()
+//            })
             
         }
     }
@@ -279,9 +349,18 @@ extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MessageCell
         
+        var chat_session_id : Int!
+        if self.chat.chat_session_id != nil {
+            chat_session_id = self.chat.chat_session_id.intValue
+        }
+
+        cell.chat = self.chat
+        cell.chat_session_id = chat_session_id
         cell.message = self.messages2[indexPath.section].1[indexPath.row]
         return cell
     }
+    
+    
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.messages2[section].0.toString()

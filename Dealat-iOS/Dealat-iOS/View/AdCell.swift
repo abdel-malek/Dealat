@@ -66,13 +66,17 @@ class AdCell : UICollectionViewCell{
             self.imgStatus.image = self.ad.getStatus().1
             self.priceLbl.text = self.ad.getStatus().0
             
+            
             self.expiry_date.text = nil
             
             if let date = self.ad.expiry_date, !date.isEmpty{
                 if let d = Date.init(fromString: date, format: .custom("yyyy-MM-dd hh:mm:ss")){
                     
-                    if let af = self.ad.expired_after, af.intValue < 0{
+                    if self.ad.status.intValue == 2, let af = self.ad.expired_after, af.intValue < 0{
                         self.expiry_date.text = "AdExpired".localized + " \(d.toString(format: DateFormatType.isoDate))"
+                        
+                        self.imgStatus.image = #imageLiteral(resourceName: "expired_copy")
+                        self.priceLbl.text = "Expired".localized
                     }else{
                         self.expiry_date.text = "AdExpires".localized + " \(d.toString(format: DateFormatType.isoDate))"
                     }

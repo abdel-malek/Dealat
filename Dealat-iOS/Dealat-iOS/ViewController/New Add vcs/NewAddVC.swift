@@ -36,6 +36,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
     
+    @IBOutlet weak var phoneLbl1 : UILabel!
+    @IBOutlet weak var phoneLbl2 : UILabel!
+
     @IBOutlet weak var tfTitle : SkyFloatingLabelTextField!
     @IBOutlet weak var tfCity : SkyFloatingLabelTextField!
     @IBOutlet weak var tfLocation : SkyFloatingLabelTextField!
@@ -53,10 +56,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     @IBOutlet weak var tfTrans : SkyFloatingLabelTextField!
     @IBOutlet weak var tfStatus : SkyFloatingLabelTextField!
     @IBOutlet weak var tfKilometers : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfEngineCapacity : SkyFloatingLabelTextField!
+    
     
     // 2
     @IBOutlet weak var tfStatus2 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfRooms_num : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfFloors_number : SkyFloatingLabelTextField!
     @IBOutlet weak var tfFloor : SkyFloatingLabelTextField!
     @IBOutlet weak var tfWith_furniture : UISwitch!
     @IBOutlet weak var tfSpace : SkyFloatingLabelTextField!
@@ -82,12 +88,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     //8
     @IBOutlet weak var tfSchedule : SkyFloatingLabelTextField!
     @IBOutlet weak var tfEducation : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCertificate : SkyFloatingLabelTextField!
     @IBOutlet weak var tfExperince : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSalary : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfGender : SkyFloatingLabelTextField!
+
+
     
     //9
     @IBOutlet weak var tfStatus9 : SkyFloatingLabelTextField!
     
+    @IBOutlet weak var checkboxPhone : CheckBox2!
+
     @IBOutlet weak var checkbox2 : CheckBox2!
     @IBOutlet weak var termsLbl : UILabel!
 
@@ -100,13 +112,31 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var schedules = [Schedule]()
     var educations = [Education]()
     var periods = [Period]()
-    
+    var certificates = [Certificate]()
+    var propertyStates = [PropertyState]()
+
+
     
     var years : [String] {
         var arr = [String]()
         for i in 1970...2018{
             arr.append("\(i)")
         }
+        return arr
+    }
+    
+    var capacities : [String] {
+        var arr = [String]()
+        for i in stride(from: 1100, to: 5400, by: 100) {
+            arr.append("\(i)")
+        }
+        return arr
+    }
+    
+    var genders : [String]{
+        var arr = [String]()
+        arr.append("Male".localized)
+        arr.append("Famale".localized)
         return arr
     }
     
@@ -193,6 +223,18 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.tfYear.text = (selectedYear != nil) ? self.years[selectedYear] : nil
         }
     }
+    var selectedCapacity : Int!{
+        didSet{
+            self.tfEngineCapacity.text = (selectedCapacity != nil) ? self.capacities[selectedCapacity] : nil
+        }
+    }
+    
+    var selectedGender : Int!{
+        didSet{
+            self.tfGender.text = (selectedGender != nil) ? self.genders[selectedGender] : nil
+        }
+    }
+    
     var selectedTransmission : Int!{
         didSet{
             self.tfTrans.text = (selectedTransmission != nil) ? self.transmission[selectedTransmission] : nil
@@ -211,6 +253,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
     }
     
+    var selectedPropertyStatus : PropertyState!{
+        didSet{
+            self.tfStatus2.text = (selectedPropertyStatus != nil) ? selectedPropertyStatus.name : nil
+        }
+    }
+
+    
     var selectedSchedule : Schedule!{
         didSet{
             self.tfSchedule.text = (selectedSchedule != nil) ? selectedSchedule.name : nil
@@ -220,6 +269,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     var selectedEducation : Education!{
         didSet{
             self.tfEducation.text = (selectedEducation != nil) ? selectedEducation.name : nil
+        }
+    }
+    
+    var selectedCertificate : Certificate!{
+        didSet{
+            self.tfCertificate.text = (selectedCertificate != nil) ? selectedCertificate.name : nil
         }
     }
     
@@ -237,12 +292,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             case (1,3): return cat.hidden_fields.contains("is_automatic")
             case (1,4): return cat.hidden_fields.contains("is_new")
             case (1,5): return cat.hidden_fields.contains("kilometer")
+            case (1,6): return cat.hidden_fields.contains("engine_capacity")
                 
             case (2,0): return cat.hidden_fields.contains("space")
             case (2,1): return cat.hidden_fields.contains("rooms_num")
-            case (2,2): return cat.hidden_fields.contains("floor")
-            case (2,3): return cat.hidden_fields.contains("state")
-            case (2,4): return cat.hidden_fields.contains("furniture")
+            case (2,2): return cat.hidden_fields.contains("floors_number")
+            case (2,3): return cat.hidden_fields.contains("floor")
+            case (2,4): return cat.hidden_fields.contains("state")
+            case (2,5): return cat.hidden_fields.contains("furniture")
                 
             case (3,0): return cat.hidden_fields.contains("type_name")
             case (3,1): return cat.hidden_fields.contains("state")
@@ -256,9 +313,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             case (7,0): return cat.hidden_fields.contains("state")
                 
             case (8,0): return cat.hidden_fields.contains("education")
-            case (8,1): return cat.hidden_fields.contains("schedule")
-            case (8,2): return cat.hidden_fields.contains("experience")
-            case (8,3): return cat.hidden_fields.contains("salary")
+            case (8,1): return cat.hidden_fields.contains("certificate_name")
+            case (8,2): return cat.hidden_fields.contains("schedule")
+            case (8,3): return cat.hidden_fields.contains("gender")
+            case (8,4): return cat.hidden_fields.contains("experience")
+            case (8,5): return cat.hidden_fields.contains("salary")
+
                 
             case (9,0): return cat.hidden_fields.contains("state")
                 
@@ -286,7 +346,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (cities ,locations, types, educations, schedules, periods) in
+        Communication.shared.get_data_lists { (cities ,locations, types, educations, schedules, periods,certificates,states) in
             
             self.cities = cities
             self.typesBase = types
@@ -294,6 +354,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.educations = educations
             self.schedules = schedules
             self.periods = periods
+            self.certificates = certificates
+            self.propertyStates = states
+
             
             if self.editMode{
                 //                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue, callback: { (res) in
@@ -338,7 +401,12 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.title = "SellEdit".localized
         }else{
             self.title = "Sell".localized
+            
+            self.checkboxPhone.isChecked = true
         }
+        
+        self.phoneLbl1.text = "showPhone".localized + " " + User.getCurrentUser().phone!
+        self.phoneLbl2.text = "showPhone2".localized
         
 //        checkbox.uncheckedBorderColor = Theme.Color.darkGrey
 //        checkbox.uncheckedBorderColor = Theme.Color.darkGrey
@@ -348,8 +416,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         
         let arr = NSMutableAttributedString.init()
-        arr.append(NSAttributedString.init(string: "termsMessage1".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri,NSAttributedStringKey.foregroundColor : UIColor.white]))
-        arr.append(NSAttributedString.init(string: "termsMessage2".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri,NSAttributedStringKey.underlineColor : UIColor.blue,NSAttributedStringKey.underlineStyle : 1,  NSAttributedStringKey.foregroundColor : UIColor.blue]))
+        arr.append(NSAttributedString.init(string: "termsMessage1".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri.withSize(15),NSAttributedStringKey.foregroundColor : UIColor.white]))
+        arr.append(NSAttributedString.init(string: "termsMessage2".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri.withSize(15),NSAttributedStringKey.underlineColor : UIColor.blue,NSAttributedStringKey.underlineStyle : 1,  NSAttributedStringKey.foregroundColor : UIColor.blue]))
         termsLbl.attributedText = arr
         
         termsLbl.isUserInteractionEnabled = true
@@ -392,8 +460,11 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         self.setPickerViewOn(self.tfType)
         self.setPickerViewOn(self.tfModel)
         self.setPickerViewOn(self.tfYear)
+        self.setPickerViewOn(self.tfEngineCapacity)
         self.setPickerViewOn(self.tfTrans)
         self.setPickerViewOn(self.tfStatus)
+        //2
+        self.setPickerViewOn(self.tfStatus2)
         //3
         self.setPickerViewOn(self.tfType3)
         self.setPickerViewOn(self.tfStatus3)
@@ -409,6 +480,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         //8
         self.setPickerViewOn(self.tfSchedule)
         self.setPickerViewOn(self.tfEducation)
+        self.setPickerViewOn(self.tfCertificate)
+        self.setPickerViewOn(self.tfGender)
+
         
         //9
         self.setPickerViewOn(self.tfStatus9)
@@ -485,11 +559,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfType.text = nil
         tfModel.text = nil
         tfYear.text = nil
+        tfEngineCapacity.text = nil
         tfTrans.text = nil
         tfStatus.text = nil
         tfKilometers.text = nil
         tfStatus2.text = nil
         tfRooms_num.text = nil
+        tfFloors_number.text = nil
         tfFloor.text = nil
         tfSpace.text = nil
         tfStatus3.text = nil
@@ -502,6 +578,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfStatus7.text = nil
         tfSchedule.text = nil
         tfEducation.text = nil
+        tfCertificate.text = nil
         tfExperince.text = nil
         tfSalary.text = nil
         tfStatus9.text = nil
@@ -509,11 +586,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfType.isEnabled = false
         tfModel.isEnabled = false
         tfYear.isEnabled = false
+        tfEngineCapacity.isEnabled = false
         tfTrans.isEnabled = false
         tfStatus.isEnabled = false
         tfKilometers.isEnabled = false
         tfStatus2.isEnabled = false
         tfRooms_num.isEnabled = false
+        tfFloors_number.isEnabled = false
         tfFloor.isEnabled = false
         tfSpace.isEnabled = false
         tfStatus3.isEnabled = false
@@ -526,7 +605,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         tfStatus7.isEnabled = false
         tfSchedule.isEnabled = false
         tfEducation.isEnabled = false
+        tfCertificate.isEnabled = false
         tfExperince.isEnabled = false
+        tfGender.isEnabled = false
         tfSalary.isEnabled = false
         tfStatus9.isEnabled = false
         
@@ -537,12 +618,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             tfType.isEnabled = true
             tfModel.isEnabled = true
             tfYear.isEnabled = true
+            tfEngineCapacity.isEnabled = true
             tfTrans.isEnabled = true
             tfStatus.isEnabled = true
             tfKilometers.isEnabled = true
         case 2:
             tfStatus2.isEnabled = true
             tfRooms_num.isEnabled = true
+            tfFloors_number.isEnabled = true
             tfFloor.isEnabled = true
             tfSpace.isEnabled = true
         case 3:
@@ -561,8 +644,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         case 8:
             tfSchedule.isEnabled = true
             tfEducation.isEnabled = true
+            tfCertificate.isEnabled = true
             tfExperince.isEnabled = true
             tfSalary.isEnabled = true
+            tfGender.isEnabled = true
         case 9:
             tfStatus9.isEnabled = true
         default:
@@ -572,6 +657,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         selectedType = nil
         selectedModel = nil
         selectedYear = nil
+        selectedCapacity = nil
         selectedTransmission = nil
         selectedStatus = nil
         selectedSchedule = nil
@@ -589,6 +675,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     func setDataForEdit(){
         if self.editMode{
+            
+            if self.ad.ad_visible_phone != nil{
+                self.checkboxPhone.isChecked = self.ad.ad_visible_phone.Boolean
+            }
             
             self.tfTitle.text = ad.title
             if let categoty_id = self.ad.category_id{
@@ -651,11 +741,15 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             case 1:
                 self.selectedYear =  self.years.index(where: {$0 == self.ad.vehicle.manufacture_date})
                 
+                self.selectedCapacity =  self.capacities.index(where: {$0 == self.ad.vehicle.engine_capacity})
+                
                 self.selectedTransmission = self.ad.vehicle.is_automatic.intValue
                 
                 self.selectedStatus = self.ad.vehicle.is_new.intValue
                 
-                self.tfKilometers.text = self.ad.vehicle.kilometer.stringValue
+                if let kilometer = self.ad.vehicle.kilometer{
+                    self.tfKilometers.text = kilometer.stringValue
+                }
                 
                 if let type_id = self.ad.vehicle.type_id{
                     if let type = self.typesBase.first(where: {$0.type_id.intValue == type_id.intValue}){
@@ -671,8 +765,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 
             case 2:
                 
-                self.tfStatus2.text = self.ad.property.state
+                if let s = self.ad.property.property_state_id{
+                    if let st = self.propertyStates.first(where: {$0.property_state_id.intValue == s.intValue}){
+                        self.selectedPropertyStatus = st
+                    }
+                }
                 self.tfRooms_num.text = self.ad.property.rooms_num
+                self.tfFloors_number.text = self.ad.property.floors_number
                 self.tfFloor.text = self.ad.property.floor
                 self.tfSpace.text = self.ad.property.space
 
@@ -969,140 +1068,168 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         switch self.selectedCategory.tamplate_id.intValue {
         case 1:
-//            guard let type = self.selectedType, let type_id = type.type_id else {
-//                self.validMessage(tf : self.tfType, message : "Please enter".localized + "TypeName".localized)
-//                return
-//            }
-            guard let model = self.selectedModel, let type_model_id = model.type_model_id else {
-                self.validMessage(tf : self.tfModel, message : "Please enter".localized + "TypeModelName".localized)
+
+            if let model = self.selectedModel, let type_model_id = model.type_model_id{
+                params["type_model_id"] = type_model_id.intValue
+            }
+            
+            if let manufacture_date = self.selectedYear{
+                params["manufacture_date"] = self.years[manufacture_date]
+            }else{
+                self.validMessage(tf : tfYear, message : "Please enter".localized +  "Year".localized)
                 return
             }
-            guard let manufacture_date = self.selectedYear else {
-                self.validMessage(tf : self.tfYear, message : "Please enter".localized + "Year".localized)
+
+            if let is_automatic = self.selectedTransmission{
+                params["is_automatic"] = is_automatic
+            }
+
+            if let is_new = self.selectedStatus{
+                params["is_new"] = is_new
+            }else{
+                self.validMessage(tf : tfStatus, message : "Please enter".localized +  "State".localized)
                 return
             }
-            guard let is_automatic = self.selectedTransmission else {
-                self.validMessage(tf : self.tfTrans, message : "Please enter".localized + "IsAutomatic".localized)
-                return
-            }
-            guard let is_new = self.selectedStatus else {
-                self.validMessage(tf : self.tfStatus, message : "Please enter".localized + "State".localized)
+
+            if let kilometer = self.tfKilometers.text, !kilometer.isEmpty{
+                params["kilometer"] = kilometer
+            }else{
+                self.validMessage(tf : tfKilometers, message : "Please enter".localized +  "Kilometer".localized)
                 return
             }
             
-            guard let kilometer = self.tfKilometers.text, !kilometer.isEmpty else {
-                self.validMessage(tf : self.tfKilometers, message : "Please enter".localized + "Kilometer".localized)
-                return
+            if let capacity = self.selectedCapacity {
+                params["engine_capacity"] = self.capacities[capacity]
             }
-            
             
             if let type = self.selectedType, let type_id = type.type_id {
                 params["type_id"] = type_id.intValue
+            }else{
+                self.validMessage(tf : tfType, message : "Please enter".localized +  "TypeName".localized)
+                return
             }
-
-            
-            params["type_model_id"] = type_model_id.intValue
-            params["manufacture_date"] = self.years[manufacture_date]
-            params["is_automatic"] = is_automatic
-            params["is_new"] = is_new
-            params["kilometer"] = kilometer
             
             
         case 2:
-            guard let status = self.tfStatus2.text, !status.isEmpty else {
-                self.validMessage(tf : self.tfStatus2, message : "Please enter".localized + "State".localized)
+            
+            if let status = self.tfStatus2.text, !status.isEmpty{
+                params["state"] = status
+            }
+            
+            if let rooms = self.tfRooms_num.text, !rooms.isEmpty{
+                params["rooms_num"] = rooms
+            }else{
+                self.validMessage(tf : tfRooms_num, message : "Please enter".localized +  "Rooms".localized)
+                return
+            }
+
+            if let floor = self.tfFloor.text, !floor.isEmpty{
+                params["floor"] = floor
+            }else{
+                self.validMessage(tf : tfFloor, message : "Please enter".localized +  "Floor".localized)
+                return
+            }
+
+            if let space = self.tfSpace.text, !space.isEmpty{
+                params["space"] = space
+            }else{
+                self.validMessage(tf : tfSpace, message : "Please enter".localized +  "Space".localized)
+                return
+            }
+
+            
+            if let floors_number = self.tfFloors_number.text, !floors_number.isEmpty{
+                params["floors_number"] = floors_number
+            }else{
+                self.validMessage(tf : tfFloor, message : "Please enter".localized +  "floors_number".localized)
                 return
             }
             
-            guard let rooms = self.tfRooms_num.text, !rooms.isEmpty else {
-                self.validMessage(tf : self.tfRooms_num, message : "Please enter".localized + "Rooms".localized)
-                return
-            }
-            guard let floor = self.tfFloor.text, !floor.isEmpty else {
-                self.validMessage(tf : self.tfFloor, message : "Please enter".localized + "Floor".localized)
-                return
-            }
-            guard let space = self.tfSpace.text, !space.isEmpty else {
-                self.validMessage(tf : self.tfSpace, message : "Please enter".localized + "Space".localized)
-                return
-            }
             
-            params["state"] = status
-            params["rooms_num"] = rooms
-            params["floor"] = floor
-            params["space"] = space
-            //            params["is_new"] = is_new
+            //params["is_new"] = is_new
             params["with_furniture"] = tfWith_furniture.isOn ? 1 : 0
             
-        case 3:
-            guard let is_new = self.selectedStatus else {
-                self.validMessage(tf : self.tfStatus3, message : "Please enter".localized + "State".localized)
+            
+            if let s = self.selectedPropertyStatus, let state = s.property_state_id {
+                params["property_state_id"] = state.intValue
+            }else{
+                self.validMessage(tf : tfStatus2, message : "Please enter".localized +  "PropertyState".localized)
                 return
             }
-//            guard let type = self.selectedType, let type_id = type.type_id else {
-//                self.validMessage(tf : self.tfType3, message : "Please enter".localized + "TypeName".localized)
-//                return
-//            }
+
+
             
+        case 3:
+            
+            if let  is_new = self.selectedStatus{
+                params["is_new"] = is_new
+            }else{
+                self.validMessage(tf : tfStatus3, message : "Please enter".localized +  "State".localized)
+                return
+            }
             
             if let type = self.selectedType, let type_id = type.type_id {
                 params["type_id"] = type_id.intValue
             }
 
-            
-            params["is_new"] = is_new
             
         case 4:
-            guard let is_new = self.selectedStatus else {
-                self.validMessage(message : "Please enter".localized + "State".localized)
+
+            if let is_new = self.selectedStatus{
+                params["is_new"] = is_new
+            }else{
+                self.validMessage(tf : tfStatus4, message : "Please enter".localized +  "State".localized)
                 return
             }
-
-//            guard let type = self.selectedType, let type_id = type.type_id else {
-//                self.validMessage(tf : self.tfType4, message : "Please enter".localized + "TypeName".localized)
-//                return
-//            }
             
             if let type = self.selectedType, let type_id = type.type_id {
-//                self.validMessage(tf : self.tfType4, message : "Please enter".localized + "TypeName".localized)
                 params["type_id"] = type_id.intValue
             }
 
-            params["is_new"] = is_new
             params["size"] = self.tfSize.text!
         case 5,6,7,9:
-            guard let is_new = self.selectedStatus else {
-                self.validMessage(message : "Please enter".localized + "State".localized)
-                return
+            
+            if let is_new = self.selectedStatus{
+                params["is_new"] = is_new
             }
             
-            params["is_new"] = is_new
             
         case 8:
-            guard let schedule = self.selectedSchedule, let schedule_id = schedule.schedule_id else {
-                self.validMessage(tf : self.tfSchedule, message : "Please enter".localized + "Schedule".localized)
+            
+            if let schedule = self.selectedSchedule, let schedule_id = schedule.schedule_id{
+                params["schedule_id"] = schedule_id.intValue
+            }else{
+                self.validMessage(tf : tfSchedule, message : "Please enter".localized +  "Schedule".localized)
                 return
             }
             
-            guard let education = self.selectedEducation, let education_id = education.education_id else {
-                self.validMessage(tf : self.tfEducation, message : "Please enter".localized + "Education".localized)
+            if let education = self.selectedEducation, let education_id = education.education_id{
+                params["education_id"] = education_id.intValue
+            }else{
+                self.validMessage(tf : tfEducation, message : "Please enter".localized +  "Education".localized)
                 return
             }
             
-            guard let experience = self.tfExperince.text, !experience.isEmpty else {
-                self.validMessage(tf : self.tfExperince, message : "Please enter".localized + "Experience".localized)
+            if let certificate = self.selectedCertificate, let certificate_id = certificate.certificate_id{
+                params["certificate_id"] = certificate_id.intValue
+            }else{
+                self.validMessage(tf : tfCertificate, message : "Please enter".localized +  "Certificate".localized)
                 return
             }
             
-            guard let salary = self.tfSalary.text, !salary.isEmpty else {
-                self.validMessage(tf : self.tfSalary, message : "Please enter".localized + "Salary".localized)
-                return
+            if let experience = self.tfExperince.text, !experience.isEmpty{
+                params["experience"] = experience
+            }
+
+            if let salary = self.tfSalary.text, !salary.isEmpty{
+                params["salary"] = salary
             }
             
-            params["schedule_id"] = schedule_id.intValue
-            params["education_id"] = education_id.intValue
-            params["experience"] = experience
-            params["salary"] = salary
+            
+            
+            params["gender"] = selectedGender
+
+            
             
         default:
             break
@@ -1132,46 +1259,20 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         }
         
         
-//        print("STATUSSS : \(self.ad.status.intValue)")
-//        return
-        
         if self.editMode{
             
-            self.showLoading()
-            Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
-                self.hideLoading()
-                
-                self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
-                
-                
-                /*self.navigationController?.popViewController(animated: true)
-                if let vcs = self.navigationController?.viewControllers{
-                    for i in vcs{
-                        if i.isKind(of: AdDetailsBaseVC.self){
-                            if let vc = i as? AdDetailsBaseVC{
-                                //                                vc.adDetailsVC.getRefreshing()
-                                
-                                Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue) { (res) in
-                                    vc.adDetailsVC.hideLoading()
-                                    vc.adDetailsVC.ad = res
-                                    vc.ad = res
-                                    
-                                    let im = IMG()
-                                    im.image = self.ad.main_image
-                                    self.ad.images.insert(im, at: 0)
-                                    
-                                    vc.refreshBar()
-                                    vc.adDetailsVC.refreshData()
-                                }
-                                
-                                vc.showErrorMessage(text: res.message)
-                            }
-                        }
-                    }
-                }*/
-                
-            }
+            params["ad_visible_phone"] = self.checkboxPhone.isChecked ? "1" : "0"
             
+            let alert  = UIAlertController.init(title: "Alert!".localized, message: "AdDone2".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
+                self.showLoading()
+                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
+                    self.hideLoading()
+                    self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
+                }
+            }))
+            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
         }else{
             self.showLoading()
@@ -1179,7 +1280,13 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.hideLoading()
                 
                 self.navigationController?.popViewController(animated: true)
-                self.homeVC?.showErrorMessage(text: res.message)
+                
+                
+                let alert = UIAlertController.init(title: "Successful".localized, message: "AdDone".localized, preferredStyle: .alert)
+                alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: nil))
+                self.homeVC?.present(alert, animated: true, completion: nil)
+
+//                self.homeVC?.showErrorMessage(text: res.message)
             }
         }
         
@@ -1491,7 +1598,15 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
                 cnt =  0
             }
         case 4: // Years
-            cnt =  self.self.years.count
+            cnt =  self.years.count
+        case 8: // Years
+            cnt =  self.propertyStates.count
+        case 50: // Capacities
+            cnt =  self.capacities.count
+        case 51: // Capacities
+            cnt =  self.genders.count
+        case 52: // Certificates
+            cnt =  self.certificates.count
         case 5: // Transmission
             cnt =  self.transmission.count
         case 6,14,16,17,18,19,20: // Status
@@ -1527,18 +1642,26 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
         case 2,13,15: // Types
             return self.types[row - 1].name
         case 3: // Models
-            return self.self.selectedType.models[row - 1].name
+            return self.selectedType.models[row - 1].name
         case 4: // Years
-            return self.self.years[row - 1]
+            return self.years[row - 1]
         case 5: // Transmission
             return self.transmission[row - 1]
         case 6,14,16,17,18,19,20: // Status
             return self.status[row - 1]
+        case 8:
+            return self.propertyStates[row - 1].name
         case 21:
             return self.schedules[row - 1].name
         case 22:
             return self.educations[row - 1].name
-            
+        case 50:
+            return self.capacities[row - 1]
+        case 51:
+            return self.genders[row - 1]
+        case 52:
+            return self.certificates[row - 1].name
+
         default:
             return ""
         }
@@ -1594,6 +1717,31 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
                 return
             }
             self.selectedYear = row - 1
+        case 8: // PropertyStates
+            if row == 0{
+                self.selectedPropertyStatus = nil
+                return
+            }
+            self.selectedPropertyStatus = self.propertyStates[row - 1]
+        case 50: // Capacities
+            if row == 0{
+                self.selectedCapacity = nil
+                return
+            }
+            self.selectedCapacity = row - 1
+        case 51: // Genders
+            if row == 0{
+                self.selectedGender = nil
+                return
+            }
+            self.selectedGender = row - 1
+        case 52: // Certificates
+            if row == 0{
+                self.selectedCertificate = nil
+                return
+            }
+            self.selectedCertificate = self.certificates[row - 1]
+
         case 5: // Transmission
             if row == 0{
                 self.selectedTransmission = nil

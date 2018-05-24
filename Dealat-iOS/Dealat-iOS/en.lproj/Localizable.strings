@@ -51,7 +51,7 @@
 "Favorites" = "Favorites";
 "My Chats" = "My Chats";
 "showPhone" = "Show phone number";
-"showPhone2" = "Your phone number will be shown with your ads's details";
+"showPhone2" = "Your phone number will be shown with this ad's details";
 
 
 
@@ -95,14 +95,15 @@
 "TypeModelName" = "Model";
 "Automatic" = "Automatic";
 "Manual" = "Manual";
-
+"EngineCapacity" = "Engine Capacity";
 
 
 //Properties
 "Space" = "Space";
 "Rooms" = "Rooms";
+"floors_number" = "Floors number";
 "Floor" = "Floor";
-"PropertyState" = "Property state";
+"PropertyState" = "Finishing type";
 "State" = "State";
 "Furniture" = "Furnitured";
 
@@ -111,9 +112,10 @@
 
 //Job
 "Education" = "Education";
+"Certificate" = "Certificate";
 "Schedule" = "Schedule";
 "Experience" = "Experience";
-"Salary" = "Salary";
+"Salary" = "Salary (S.P)";
 
 "Save" = "Save";
 "Submit" = "Submit";
@@ -121,6 +123,7 @@
 "Search" = "Search";
 "OK" = "OK";
 "Cancel" = "Cancel";
+"Continue" = "Continue";
 "View" = "View";
 "AR" = "العربية";
 "EN" = "English";
@@ -149,6 +152,7 @@
 "Hidden" = "Hidden";
 "Rejected" = "Rejected";
 "Deleted" = "Deleted";
+"Expired" = "Expired";
 
 "Please enter" = "Please enter ";
 "Please add images" = "Please add images";
@@ -169,3 +173,24 @@
 "Capture video" = "Capture video";
 "Choose video" = "Choose video";
 "Make as Main" = "Make as Main";
+
+
+"Take a picture" = "Take a picture";
+"Choose an image" = "Choose an image";
+
+"AdDone" = "Your ad has been added successfully and it is now waiting for approval";
+"AdDone2" = "You're ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?";
+"Successful" = "Successful";
+"Changes Saved" = "Changes Saved";
+
+
+"Scan QRcode" = "Scan QR code";
+"QRCodeMessage" = "1- Go to http://dealat.tradinos.com/index.php/qrcode_login on your computer and scan the QR code.\n2- Enter PIN that will be shown on your mobile.";
+
+"pinLbl" = "PIN Number";
+
+
+"needRegister1" = "You're not registered yet, Would you like to register?";
+"needRegister2" = "Your account isn't verified, Would you like to verify it?";
+
+"numberConfirmation" = "Is your phone correct?";

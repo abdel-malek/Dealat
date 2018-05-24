@@ -22,21 +22,28 @@ class BookmarkQuery : BaseEntity {
     var space_min : String!
     var rooms_num_min : String!
     var rooms_num_max : String!
+    var floors_number_min : String!
+    var floors_number_max : String!
     var floor_min : String!
     var floor_max : String!
     var furniture_name : String!
     
     var education_name : String!
+    var certificate_name : String!
     var schedule_name : String!
     var salary_min : String!
     var salary_max : String!
-    
+    var gender_name : String!
+
     var type_name : String!
     var model_name : String!
     var kilometer_min : String!
     var kilometer_max : String!
     var automatic_name : String!
     var years_name : String!
+    
+    var engine_capacity_min : String!
+    var engine_capacity_max : String!
     
     var size_min : String!
     var size_max : String!
@@ -56,14 +63,18 @@ class BookmarkQuery : BaseEntity {
         space_min <- map["space_min"]
         rooms_num_min <- map["rooms_num_min"]
         rooms_num_max <- map["rooms_num_max"]
+        floors_number_min <- map["floors_number_min"]
+        floors_number_max <- map["floors_number_max"]
         floor_min <- map["floor_min"]
         floor_max <- map["floor_max"]
         furniture_name <- map["furniture_name"]
         
+        certificate_name <- map["certificate_name"]
         education_name <- map["education_name"]
         schedule_name <- map["schedule_name"]
         salary_min <- map["salary_min"]
         salary_max <- map["salary_max"]
+        gender_name <- map["gender_name"]
         
         type_name <- map["type_name"]
         model_name <- map["model_name"]
@@ -71,6 +82,10 @@ class BookmarkQuery : BaseEntity {
         kilometer_max <- map["kilometer_max"]
         automatic_name <- map["automatic_name"]
         years_name <- map["years_name"]
+        
+        engine_capacity_min <- map["engine_capacity_min"]
+        engine_capacity_max <- map["engine_capacity_max"]
+
         
         size_min <- map["size_min"]
         size_max <- map["size_max"]
@@ -111,6 +126,13 @@ class BookmarkQuery : BaseEntity {
         keys += (isNotNull(rooms_num_max)) ? ("Rooms".localized + " " + "To".localized + ":\n") : ""
         values += (isNotNull(rooms_num_max)) ? (rooms_num_max! + "\n") : ""
         
+        keys += (isNotNull(floors_number_min)) ? ("floors_number".localized + " " + "From".localized + ":\n") : ""
+        values += (isNotNull(floors_number_min)) ? (floors_number_min! + "\n") : ""
+        
+        keys += (isNotNull(floors_number_max)) ? ("floors_number".localized + " " + "To".localized + ":\n") : ""
+        values += (isNotNull(floors_number_max)) ? (floors_number_max! + "\n") : ""
+
+        
         keys += (isNotNull(floor_min)) ? ("Floor".localized + " " + "From".localized + ":\n") : ""
         values += (isNotNull(floor_min)) ? (floor_min! + "\n") : ""
         
@@ -123,9 +145,15 @@ class BookmarkQuery : BaseEntity {
         keys += (isNotNull(education_name)) ? ("Education".localized + ":\n") : ""
         values += (isNotNull(education_name)) ? (education_name! + "\n") : ""
         
+        keys += (isNotNull(certificate_name)) ? ("Certificate".localized + ":\n") : ""
+        values += (isNotNull(certificate_name)) ? (certificate_name! + "\n") : ""
+        
         keys += (isNotNull(schedule_name)) ? ("Schedule".localized + ":\n") : ""
         values += (isNotNull(schedule_name)) ? (schedule_name! + "\n") : ""
         
+        keys += (isNotNull(gender_name)) ? ("Gender".localized + ":\n") : ""
+        values += (isNotNull(gender_name)) ? (gender_name! + "\n") : ""
+
         keys += (isNotNull(salary_min)) ? ("Salary".localized + " " + "From".localized + ":\n") : ""
         values += (isNotNull(salary_min)) ? (salary_min! + "\n") : ""
         
@@ -150,6 +178,12 @@ class BookmarkQuery : BaseEntity {
         keys += (isNotNull(years_name)) ? ("Year".localized + ":\n") : ""
         values += (isNotNull(years_name)) ? (years_name! + "\n") : ""
         
+        keys += (isNotNull(engine_capacity_min)) ? ("EngineCapacity".localized + " " + "From".localized + ":\n") : ""
+        values += (isNotNull(engine_capacity_min)) ? (engine_capacity_min! + "\n") : ""
+
+        keys += (isNotNull(engine_capacity_max)) ? ("EngineCapacity".localized + " " + "To".localized + ":\n") : ""
+        values += (isNotNull(engine_capacity_max)) ? (engine_capacity_max! + "\n") : ""
+
         
         keys += (isNotNull(size_min)) ? ("Size".localized + " " + "From".localized + ":\n") : ""
         values += (isNotNull(size_min)) ? (size_min! + "\n") : ""

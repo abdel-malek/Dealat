@@ -58,11 +58,13 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var kilometerLbl : UILabel!
     @IBOutlet weak var type_nameLbl : UILabel!
     @IBOutlet weak var type_model_nameLbl : UILabel!
-    
+    @IBOutlet weak var engine_capacityLbl : UILabel!
+
     
     // 2 Property
     @IBOutlet weak var stateLbl : UILabel!
     @IBOutlet weak var rooms_numLbl : UILabel!
+    @IBOutlet weak var floors_numberLbl : UILabel!
     @IBOutlet weak var floorLbl : UILabel!
     @IBOutlet weak var with_furnitureLbl : UILabel!
     @IBOutlet weak var spaceLbl : UILabel!
@@ -89,7 +91,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     // 8 Job
     @IBOutlet weak var education_nameLbl : UILabel!
+    @IBOutlet weak var certificate_nameLbl : UILabel!
     @IBOutlet weak var schedule_nameLbl : UILabel!
+    @IBOutlet weak var genderLbl : UILabel!
     @IBOutlet weak var experienceLbl : UILabel!
     @IBOutlet weak var salaryLbl : UILabel!
 
@@ -113,12 +117,14 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             case (1,3): return cat.hidden_fields.contains("is_automatic")
             case (1,4): return cat.hidden_fields.contains("is_new")
             case (1,5): return cat.hidden_fields.contains("kilometer")
-                
+            case (1,6): return cat.hidden_fields.contains("engine_capacity")
+
             case (2,0): return cat.hidden_fields.contains("space")
             case (2,1): return cat.hidden_fields.contains("rooms_num")
-            case (2,2): return cat.hidden_fields.contains("floor")
-            case (2,3): return cat.hidden_fields.contains("state")
-            case (2,4): return cat.hidden_fields.contains("furniture")
+            case (2,2): return cat.hidden_fields.contains("floors_number")
+            case (2,3): return cat.hidden_fields.contains("floor")
+            case (2,4): return cat.hidden_fields.contains("state")
+            case (2,5): return cat.hidden_fields.contains("furniture")
                 
             case (3,0): return cat.hidden_fields.contains("type_name")
             case (3,1): return cat.hidden_fields.contains("state")
@@ -132,9 +138,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             case (7,0): return cat.hidden_fields.contains("state")
                 
             case (8,0): return cat.hidden_fields.contains("education")
-            case (8,1): return cat.hidden_fields.contains("schedule")
-            case (8,2): return cat.hidden_fields.contains("experience")
-            case (8,3): return cat.hidden_fields.contains("salary")
+            case (8,1): return cat.hidden_fields.contains("certificate_name")
+            case (8,2): return cat.hidden_fields.contains("schedule")
+            case (8,3): return cat.hidden_fields.contains("gender")
+            case (8,4): return cat.hidden_fields.contains("experience")
+            case (8,5): return cat.hidden_fields.contains("salary")
+                
                 
             case (9,0): return cat.hidden_fields.contains("state")
                 
@@ -203,6 +212,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 
                 self.adStatusLbl.text = self.ad.getStatus().0
                 self.adCreatedDatebl.text = self.ad.created_at
+                
+                if let ea = self.ad.expired_after{
+                    if self.ad.status.intValue == 2 && ea.intValue < 0 {
+                        self.adStatusLbl.text = "Expired".localized
+                    }
+                }
                 
                 self.adExpiresDatebl.text = nil
                 
@@ -283,13 +298,16 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             }
             self.type_nameLbl.text = ad.vehicle.type_name
             self.type_model_nameLbl.text = ad.vehicle.type_model_name
+            self.engine_capacityLbl.text = ad.vehicle.engine_capacity
         }
         
         
         //2 Properties
         if self.ad.tamplate_id.intValue == 2{
-            self.stateLbl.text = ad.property.state
+            // TODO STATE
+            self.stateLbl.text = ad.property.property_state_name
             self.rooms_numLbl.text = ad.property.rooms_num
+            self.floors_numberLbl.text = ad.property.floors_number
             self.floorLbl.text = ad.property.floor
             if ad.property.with_furniture != nil{
                 self.with_furnitureLbl.text = ad.property.with_furniture.Boolean ? "yes".localized : "no".localized
@@ -339,7 +357,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         //8 Job
         if self.ad.tamplate_id.intValue == 8{
             self.schedule_nameLbl.text = ad.job.schedule_name
+            if ad.job.gender != nil{
+                self.genderLbl.text = (ad.job.gender.intValue == 1) ? "Male".localized : "Famale".localized
+            }
             self.education_nameLbl.text = ad.job.education_name
+            self.certificate_nameLbl.text = ad.job.certificate_name
             self.experienceLbl.text = ad.job.experience
             self.salaryLbl.text = ad.job.salary
             self.vvPrice.isHidden = true

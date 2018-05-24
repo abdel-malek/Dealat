@@ -51,8 +51,8 @@
 "My Ads" = "إعلاناتي";
 "Favorites" = "المفضلة";
 "My Chats" = "المحادثات";
-"showPhone" = "إظهار رقم الهاتف";
-"showPhone2" = "رقمك سوف يظهر ضمن إعلاناتك";
+"showPhone" = "إظهار رقم الموبايل";
+"showPhone2" = "سيظهر رقم موبايلك مع تفاصيل هذا الإعلان";
 
 
 
@@ -99,13 +99,15 @@
 "TypeModelName" = "الموديل";
 "Automatic" = "أوتوماتيك";
 "Manual" = "عادي";
+"EngineCapacity" = "سعة المحرك";
 
 
 //Properties
 "Space" = "المساحة";
 "Rooms" = "عدد الغرف";
+"floors_number" = "عدد الطوابق";
 "Floor" = "الطابق";
-"PropertyState" = "حالة العقار";
+"PropertyState" = "نوع الكسوة";
 "State" = "الحالة";
 "Furniture" = "مفروش";
 
@@ -114,9 +116,10 @@
 
 //Job
 "Education" = "المستوى التعليمي";
+"Certificate" = "الشهادة";
 "Schedule" = "نوع العمل";
 "Experience" = "مستوى الخبرة";
-"Salary" = "الراتب";
+"Salary" = "الراتب (ل.س)";
 
 
 "Save" = "حفظ";
@@ -125,6 +128,7 @@
 "Search" = "بحث";
 "OK" = "موافق";
 "Cancel" = "إلغاء";
+"Continue" = "متابعة";
 "View" = "عرض";
 "AR" = "العربية";
 "EN" = "English";
@@ -150,9 +154,11 @@
 //Add status
 "Pending" = "قيد الانتظار";
 "Accepted" = "مقبول";
-"Hidden" = "محفي";
+"Hidden" = "مخفي";
 "Rejected" = "مرفوض";
 "Deleted" = "محذوف";
+"Expired" = "منتهي";
+
 
 "Please enter" = "يرجى إدخال ";
 "Please add images" = "يرجى إضافة صور";
@@ -172,3 +178,21 @@
 "Choose video" = "اختيار مقطع فيديو";
 "Make as Main" = "وضع الصورة في المقدمة";
 
+"Take a picture" = "إلتقاط صورة";
+"Choose an image" = "اختيار صورة";
+
+"AdDone" = "تم إنشاء إعلانك بنجاح وهو الآن بانتظار الموافقة عليه";
+"AdDone2" = "هذا الإعلان سيكون قيد الانتظار حتى يوافق المدير على التعديلات، هل أنت متأكد أنك تريد تعديله؟";
+"Successful" = "تم بنجاح";
+"Changes Saved" = "تم حفظ التغييرات";
+
+
+"Scan QRcode" = "مسح QR code";
+"QRCodeMessage" = "1- اذهب إلى الرابط\nhttp://dealat.tradinos.com/index.php/qrcode_login\nعلى جهاز الكمبيوتر الخاص بك واسمح الرمز الظاهر.\n2- أدخل الرقم الذي سيظهر على موبايلك.";
+
+"pinLbl" = "الرقم السري";
+
+"needRegister1" = "أنت غير مسجل، هل تريد التسجيل؟";
+"needRegister2" = "لم تقم بتفعيل حسابك، هل تريد تفعيله؟";
+
+"numberConfirmation" = "هل أنت متأكد من الرقم؟";

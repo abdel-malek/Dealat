@@ -75,7 +75,7 @@ class SavedSearchesVC: BaseVC, UITableViewDelegate,UITableViewDataSource {
     func deleteBookmark(_ bookmark : UserBookmark){
         let alert = UIAlertController.init(title: "Alert".localized, message: "DeleteBookmark".localized, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { (ac) in
+        alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
             self.showLoading()
             Communication.shared.delete_bookmark(user_bookmark_id: bookmark.user_bookmark_id.intValue) { (res) in
 

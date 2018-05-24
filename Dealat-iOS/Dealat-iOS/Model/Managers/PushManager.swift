@@ -15,6 +15,8 @@ class PushManager{
     
     static let LN_KEY = "mobifone"
     
+    static var LocalSchedules = [String]()
+    
     static var token : String?
     static var storyBoard = UIStoryboard(name: "Main", bundle: nil)
     

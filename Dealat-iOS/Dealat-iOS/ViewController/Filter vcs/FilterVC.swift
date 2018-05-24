@@ -32,15 +32,24 @@ class FilterVC: BaseTVC {
     @IBOutlet weak var tfYear : SkyFloatingLabelTextField!
     @IBOutlet weak var tfKilometers1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfKilometers2 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCapacity1 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCapacity2 : SkyFloatingLabelTextField!
+
+//    @IBOutlet weak var tfCapacity : SkyFloatingLabelTextField!
+
     
     // 2
     @IBOutlet weak var tfRooms_num1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfRooms_num2 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfFloors_number1 : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfFloors_number2 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfFloor1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfFloor2 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSpace1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSpace2 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfWith_furniture : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfPropertyName : SkyFloatingLabelTextField!
+
 
     //3
     @IBOutlet weak var tfType3 : SkyFloatingLabelTextField!
@@ -50,7 +59,9 @@ class FilterVC: BaseTVC {
     
     //8
     @IBOutlet weak var tfSchedule : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfGender: SkyFloatingLabelTextField!
     @IBOutlet weak var tfEducation : SkyFloatingLabelTextField!
+    @IBOutlet weak var tfCertificate : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSalary1 : SkyFloatingLabelTextField!
     @IBOutlet weak var tfSalary2 : SkyFloatingLabelTextField!
 
@@ -66,6 +77,8 @@ class FilterVC: BaseTVC {
     var typesBase = [Type]()
     var schedules = [Schedule]()
     var educations = [Education]()
+    var certificates = [Certificate]()
+    var states = [PropertyState]()
 
     
     weak var filterBaseVC : FilterBaseVC!
@@ -87,19 +100,23 @@ class FilterVC: BaseTVC {
             case (1,2): return cat.hidden_fields.contains("is_automatic")
             case (1,3): return cat.hidden_fields.contains("manufacture_date")
             case (1,4): return cat.hidden_fields.contains("kilometer")
-                
+            case (1,5): return cat.hidden_fields.contains("engine_capacity")
+
             case (2,0): return cat.hidden_fields.contains("space")
             case (2,1): return cat.hidden_fields.contains("rooms_num")
-            case (2,2): return cat.hidden_fields.contains("floor")
-            case (2,3): return cat.hidden_fields.contains("furniture")
+            case (2,2): return cat.hidden_fields.contains("floors_number")
+            case (2,3): return cat.hidden_fields.contains("floor")
+            case (2,4): return cat.hidden_fields.contains("furniture")
                 
             case (3,0): return cat.hidden_fields.contains("type_name")
                 
             case (4,0): return cat.hidden_fields.contains("type_name")
                 
             case (8,0): return cat.hidden_fields.contains("education")
-            case (8,1): return cat.hidden_fields.contains("schedule")
-            case (8,2): return cat.hidden_fields.contains("salary")
+            case (8,1): return cat.hidden_fields.contains("certificate_name")
+            case (8,2): return cat.hidden_fields.contains("schedule")
+            case (8,3): return cat.hidden_fields.contains("gender")
+            case (8,4): return cat.hidden_fields.contains("salary")
                 
             default:
                 break
@@ -208,7 +225,7 @@ class FilterVC: BaseTVC {
 
         
         if filter.type_model_id != nil{
-            self.tfModel.text = filter.type_model_id!.flatMap({$0.name}).joined(separator: ",")
+            self.tfModel.text = filter.type_model_id!.compactMap({$0.name}).joined(separator: ",")
         }else{
             self.tfModel.text = allString
         }
@@ -226,24 +243,60 @@ class FilterVC: BaseTVC {
         }
         
         if filter.manufacture_date != nil{
-            self.tfYear.text = filter.manufacture_date!.flatMap({$0}).joined(separator: ",")
+            self.tfYear.text = filter.manufacture_date!.compactMap({$0}).joined(separator: ",")
         }else{
             self.tfYear.text = allString
         }
         
         
+        
+        
+//        if filter.engine_capacity != nil{
+//            self.tfCapacity.text = filter.engine_capacity!.compactMap({$0}).joined(separator: ",")
+//        }else{
+//            self.tfCapacity.text = allString
+//        }
+        
+        
         if filter.education_id != nil{
-            self.tfEducation.text = filter.education_id!.flatMap({$0.name}).joined(separator: ",")
+            self.tfEducation.text = filter.education_id!.compactMap({$0.name}).joined(separator: ",")
         }else{
             self.tfEducation.text = allString
         }
         
+        if filter.certificate_id != nil{
+            self.tfCertificate.text = filter.certificate_id!.compactMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfCertificate.text = allString
+        }
+
+        
+        
         if filter.schedule_id != nil{
-            self.tfSchedule.text = filter.schedule_id!.flatMap({$0.name}).joined(separator: ",")
+            self.tfSchedule.text = filter.schedule_id!.compactMap({$0.name}).joined(separator: ",")
         }else{
             self.tfSchedule.text = allString
         }
 
+        if filter.gender != nil{
+            self.tfGender.text = (filter.gender! == 1) ? "Male".localized : "Famale".localized
+        }else{
+            self.tfGender.text = allString
+        }
+
+        
+        if filter.with_furniture != nil{
+            self.tfWith_furniture.text = (filter.with_furniture == 0) ? "no".localized : "yes".localized
+        }else{
+            self.tfWith_furniture.text = allString
+        }
+
+        
+        if filter.propertyStates != nil{
+            self.tfPropertyName.text = filter.propertyStates!.compactMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfPropertyName.text = allString
+        }
 
 
         self.filter.searchText = self.tfSearch.text
@@ -257,6 +310,10 @@ class FilterVC: BaseTVC {
         self.filter.rooms_num.min = self.tfRooms_num1.text
         self.filter.rooms_num.max = self.tfRooms_num2.text
 
+        self.filter.floors_number.min = self.tfFloors_number1.text
+        self.filter.floors_number.max = self.tfFloors_number2.text
+
+        
         self.filter.space.min = self.tfSpace1.text
         self.filter.space.max = self.tfSpace2.text
 
@@ -265,13 +322,16 @@ class FilterVC: BaseTVC {
 
         self.filter.salary.min = self.tfSalary1.text
         self.filter.salary.max = self.tfSalary2.text
+        
+        self.filter.engine_capacity.min = self.tfCapacity1.text
+        self.filter.engine_capacity.max = self.tfCapacity2.text
 
         self.tableView.reloadData()
     }
     
     
     override func getRefreshing() {
-        Communication.shared.get_data_lists { (cities,locations, types, educations, schedules, periods ) in
+        Communication.shared.get_data_lists { (cities,locations, types, educations, schedules, periods,certificates,states) in
             self.hideLoading()
             
             self.cities = cities
@@ -280,6 +340,8 @@ class FilterVC: BaseTVC {
             self.locations = locations
             self.educations = educations
             self.schedules = schedules
+            self.certificates = certificates
+            self.states = states
         }
     }
     
@@ -353,7 +415,20 @@ class FilterVC: BaseTVC {
             case 3:
                 vc.type = 6
                 self.present(vc, animated: true, completion: nil)
-                
+//            case 5:
+//                vc.type = 9
+//                self.present(vc, animated: true, completion: nil)
+            default: break
+            }
+        case 2:
+            switch indexPath.row{
+            case 4:
+                vc.type = 12
+                self.present(vc, animated: true, completion: nil)
+            case 5:
+                vc.type = 13
+                self.present(vc, animated: true, completion: nil)
+
             default: break
             }
             
@@ -366,7 +441,14 @@ class FilterVC: BaseTVC {
                 vc.type = 5
                 self.present(vc, animated: true, completion: nil)
             }else if indexPath.row == 1{
+                vc.type = 11
+                self.present(vc, animated: true, completion: nil)
+            }
+            else if indexPath.row == 2{
                 vc.type = 4
+                self.present(vc, animated: true, completion: nil)
+            }else if indexPath.row == 3{
+                vc.type = 10
                 self.present(vc, animated: true, completion: nil)
             }
 
@@ -427,7 +509,7 @@ class FilterVC: BaseTVC {
             
             if self.filter.category != nil{
                 if self.filter.category.tamplate_id.intValue == indexPath.section{
-                    if [(0,3),(1,4),(2,0),(2,1),(2,2),(8,2)].contains(where: ({$0.0 == indexPath.section && $0.1 == indexPath.row})){
+                    if [(0,3),(1,4),(1,5),(2,0),(2,1),(2,2),(8,4)].contains(where: ({$0.0 == indexPath.section && $0.1 == indexPath.row})){
                         return h2
                     }else{
                         return h

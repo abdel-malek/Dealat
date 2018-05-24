@@ -26,6 +26,12 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
      6 -> manufacture_date
      7 -> transmission
      8 -> status
+     9 -> engine_capacity
+     10 -> genders
+     11 -> certificates
+     12 -> with_furniture
+     13 -> property state
+
      */
     
     var years : [String] {
@@ -35,6 +41,15 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         }
         return arr
     }
+    
+    var capacities : [String] {
+        var arr = [String]()
+        for i in stride(from: 1100, to: 5400, by: 100) {
+            arr.append("\(i)")
+        }
+        return arr
+    }
+
     var transmission : [String] {
         return ["Manual".localized,"Automatic".localized]
     }
@@ -42,6 +57,14 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         return ["old".localized,"new".localized]
     }
     
+    var genders : [String] {
+        return ["Male".localized,"Famale".localized]
+    }
+
+//    var yesno : [String] {
+//        return ["yes".localized,"no".localized]
+//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +120,17 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             cnt = transmission.count
         case 8:
             cnt = status.count
+//        case 9:
+//            cnt = capacities.count
+        case 10:
+            cnt = genders.count
+        case 11:
+            cnt = parentVC.certificates.count
+        case 12:
+            cnt = 2
+        case 13:
+            cnt = parentVC.states.count
+
         default:
             cnt = 0
         }
@@ -128,7 +162,16 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 cell.accessoryType = self.parentVC.filter.is_automatic == nil ? .checkmark : .none
             case 8:
                 cell.accessoryType = self.parentVC.filter.is_new == nil ? .checkmark : .none
-
+//            case 9:
+//                cell.accessoryType = self.parentVC.filter.engine_capacity. == nil ? .checkmark : .none
+            case 10:
+                cell.accessoryType = self.parentVC.filter.gender == nil ? .checkmark : .none
+            case 11:
+                cell.accessoryType = self.parentVC.filter.certificate_id == nil ? .checkmark : .none
+            case 12:
+                cell.accessoryType = self.parentVC.filter.with_furniture == nil ? .checkmark : .none
+            case 13:
+                cell.accessoryType = self.parentVC.filter.propertyStates == nil ? .checkmark : .none
             default:
                 break
             }
@@ -227,7 +270,50 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                         cell.accessoryType = .none
                     }
                 }
+//            case 9:
+//                if let capacities = self.parentVC.filter.engine_capacity{
+//                    for i in capacities{
+//                        if i == self.capacities[index]{
+//                            cell.accessoryType = .checkmark
+//                        }
+//                    }
+//                }
+            case 10:
+                if let gender = self.parentVC.filter.gender{
+                    for i in genders{
+                        if i == self.genders[gender - 1]{
+                            cell.accessoryType = .checkmark
+                        }
+                    }
+                }
+            case 11:
+                if let certificates = self.parentVC.filter.certificate_id{
+                    for i in certificates{
+                        if i.certificate_id.intValue == self.parentVC.certificates[index].certificate_id.intValue{
+                            cell.accessoryType = .checkmark
+                        }
+                    }
+                }
+            case 12:
+                if let f = self.parentVC.filter.with_furniture{
+                    if f == index{
+                        cell.accessoryType = .checkmark
+                    }
+                }
+                
+            case 13:
+                if let states = self.parentVC.filter.propertyStates{
+                    for i in states{
+                        if i.property_state_id == self.parentVC.states[index].property_state_id{
+                            cell.accessoryType = .checkmark
+                        }
+                        //                        else{
+                        //                            cell.accessoryType = .none
+                        //                        }
+                    }
+                }
 
+                
             default: break
             }
         }
@@ -268,6 +354,17 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.text = self.transmission[index]
             case 8:
                 cell.textLabel?.text = self.status[index]
+//            case 9:
+//                cell.textLabel?.text = self.capacities[index]
+            case 10:
+                cell.textLabel?.text = self.genders[index]
+            case 11:
+                cell.textLabel?.text = self.parentVC.certificates[index].name
+            case 12:
+                cell.textLabel?.text = (index == 0) ? "no".localized : "yes".localized
+            case 13:
+                cell.textLabel?.text = self.parentVC.states[index].name
+                
             default:
                 break
             }
@@ -302,6 +399,17 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 self.parentVC.filter.is_automatic = nil
             case 8:
                 self.parentVC.filter.is_new = nil
+//            case 9:
+//                self.parentVC.filter.engine_capacity = nil
+            case 10:
+                self.parentVC.filter.gender = nil
+            case 11:
+                self.parentVC.filter.certificate_id = nil
+            case 12:
+                self.parentVC.filter.with_furniture = nil
+            case 13:
+                self.parentVC.filter.propertyStates = nil
+
             default:
                 break
             }
@@ -429,6 +537,81 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 self.parentVC.filter.is_automatic = index
             case 8:
                 self.parentVC.filter.is_new = index
+            /*case 9:
+                var arr = self.parentVC.filter.engine_capacity
+                var deleted = false
+                if arr == nil{
+                    arr = [String]()
+                }
+                
+                // delete if exist
+                for i in 0..<arr!.count{
+                    if arr![i] == self.capacities[index]{
+                        deleted = true
+                        arr?.remove(at: i)
+                        break
+                    }
+                }
+                
+                // add if new
+                if !deleted{
+                    arr?.append(self.capacities[index])
+                }
+                
+                // final
+                self.parentVC.filter.engine_capacity = arr!.isEmpty ? nil : arr!*/
+            case 10:
+                self.parentVC.filter.gender = index + 1
+            case 11:
+                var arr = self.parentVC.filter.certificate_id
+                var deleted = false
+                if arr == nil{
+                    arr = [Certificate]()
+                }
+                
+                // delete if exist
+                for i in 0..<arr!.count{
+                    if arr![i].certificate_id == self.parentVC.certificates[index].certificate_id{
+                        deleted = true
+                        arr?.remove(at: i)
+                        break
+                    }
+                }
+                
+                // add if new
+                if !deleted{
+                    arr?.append(self.parentVC.certificates[index])
+                }
+                
+                // final
+                self.parentVC.filter.certificate_id = arr!.isEmpty ? nil : arr!
+            case 12:
+                self.parentVC.filter.with_furniture = index
+
+            case 13:
+                var arr = self.parentVC.filter.propertyStates
+                var deleted = false
+                if arr == nil{
+                    arr = [PropertyState]()
+                }
+                
+                // delete if exist
+                for i in 0..<arr!.count{
+                    if arr![i].property_state_id == self.parentVC.states[index].property_state_id{
+                        deleted = true
+                        arr?.remove(at: i)
+                        break
+                    }
+                }
+                
+                // add if new
+                if !deleted{
+                    arr?.append(self.parentVC.states[index])
+                }
+                
+                // final
+                self.parentVC.filter.propertyStates = arr!.isEmpty ? nil : arr!
+
             default:
                 break
             }

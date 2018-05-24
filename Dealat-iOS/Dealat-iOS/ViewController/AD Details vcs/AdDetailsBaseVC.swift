@@ -50,7 +50,8 @@ class AdDetailsBaseVC: UIViewController {
     @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
         print("unwindToVC1")
         
-        self.showErrorMessage(text: self.msg)
+        self.showErrorMessage(text: "Changes Saved".localized)        
+        
         self.adDetailsVC.refreshData()
         self.adDetailsVC.getData()
     }
@@ -191,14 +192,16 @@ class AdDetailsBaseVC: UIViewController {
             self.messageBtn.isHidden = same
             //        self.reportBtn.isHidden = same
             
-            
-            if !same, let v = self.ad.visible_phone{
+            if !same, let v = self.ad.ad_visible_phone{
                 self.callBtn.isHidden = !v.Boolean
             }
-            
         }else{
             self.callBtn.isHidden = false
             self.messageBtn.isHidden = false
+            
+            if let v = self.ad.ad_visible_phone{
+                self.callBtn.isHidden = !v.Boolean
+            }
         }
     }
     

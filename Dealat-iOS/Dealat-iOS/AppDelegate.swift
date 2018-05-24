@@ -12,7 +12,7 @@ import Firebase
 import FirebaseMessaging
 import UserNotifications
 import Google
-
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -163,10 +163,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print(userInfo)
         
-        notific.post(name: "refreshChats".not, object: nil,userInfo : userInfo)
+        print("new didReceive 0")
+
+        
         
         if #available(iOS 10, *){
-            
+
         }
         else{
             
@@ -185,6 +187,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        
+        print("new didReceive 1")
+        
         if #available(iOS 10, *) {
             
         }else
@@ -253,7 +258,32 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         
         print(userInfo)
         
-        completionHandler([.alert, .sound,.badge])
+        var isHere = false
+        
+         let notification = userInfo
+            do{
+                let not = JSON(notification["ntf_type"])
+                let type = not.intValue
+                if type == 1{
+                    isHere = true
+                }
+            }catch let err{ print("ERROR: \(err.localizedDescription)")}
+
+        print("isHere :\(isHere) - \(userInfo["gcm.message_id"] as! String)")
+        
+        if isHere{
+            
+            if PushManager.LocalSchedules.contains(userInfo["gcm.message_id"] as! String){
+                print("CONTAINS ")
+                completionHandler([.alert,.badge,.sound])
+            }else{
+                print("NOT CONTAINS ")
+                notific.post(name: "refreshChats".not, object: nil,userInfo : userInfo)
+            }
+        }else{
+            print("ELSEE ")
+            completionHandler([.alert,.badge,.sound])
+        }
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -261,7 +291,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
-        print("didReceive")
+        print("new didReceive 2")
         
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID userNotificationCenter didReceive: \(messageID)")
@@ -292,6 +322,9 @@ extension AppDelegate : MessagingDelegate {
     
     // Receive data message on iOS 10 devices while app is in the foreground.
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("new didReceive 3")
+
+        
         print("applicationReceivedRemoteMessage10")
         print(remoteMessage.appData)
     }
