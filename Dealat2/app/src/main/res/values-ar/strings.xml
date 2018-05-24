@@ -92,6 +92,7 @@
 
     <string name="labelRegister">أنت غير مسجل، هل تريد التسجيل؟</string>
     <string name="labelVerify">لم تقم بتفعيل حسابك، هل تريد تفعيله؟</string>
+    <string name="labelNumberConfirm">هل رقمك المذكور صحيح؟</string>
 
     <!-- AdDetails   -->
     <string name="labelAdNumber">رقم الإعلان</string>

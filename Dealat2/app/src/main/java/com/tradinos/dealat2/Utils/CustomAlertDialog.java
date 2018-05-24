@@ -12,21 +12,24 @@ import android.widget.TextView;
 
 import com.tradinos.dealat2.R;
 
-public class RegisterDialog extends Dialog {
+public class CustomAlertDialog extends Dialog {
 
-    TextView textView;
-    Button buttonOk;
+    String alertText;
+    Button buttonTrue;
 
-    public RegisterDialog(@NonNull Context context) {
+    public CustomAlertDialog(@NonNull Context context, String alertText) {
         super(context);
+        this.alertText = alertText;
     }
 
-    public Button getButtonOk() {
-        return buttonOk;
+    public Button getButtonTrue() {
+        return buttonTrue;
     }
 
-    public void setText(String text){
-        textView.setText(text);
+    public void setExtraText(String extraText) { // call it after show
+        TextView textView = findViewById(R.id.text);
+        textView.setText(extraText);
+        textView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -35,13 +38,16 @@ public class RegisterDialog extends Dialog {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        setContentView(R.layout.dialog_register);
+        setContentView(R.layout.dialog_custom_alert);
 
         //setCancelable(false);
-        textView = findViewById(R.id.textView);
-        buttonOk = findViewById(R.id.buttonTrue);
+        TextView textView = findViewById(R.id.textView);
+        Button buttonFalse = findViewById(R.id.buttonFalse);
+        buttonTrue = findViewById(R.id.buttonTrue);
 
-        findViewById(R.id.buttonFalse).setOnClickListener(new View.OnClickListener() {
+        textView.setText(alertText);
+
+        buttonFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancel();

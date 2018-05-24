@@ -37,6 +37,5 @@ public class ConfirmDialog extends Dialog {
         setCancelable(false);
 
         buttonOk = findViewById(R.id.buttonTrue);
-
     }
 }

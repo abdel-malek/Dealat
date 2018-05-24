@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +34,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.SplashActivity;
 import com.tradinos.dealat2.Utils.CustomProgressDialog;
-import com.tradinos.dealat2.Utils.RegisterDialog;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -311,30 +310,30 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
                 return true;
 
             case User.PENDING:
-                RegisterDialog dialog = new RegisterDialog(mContext);
+                final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.labelVerify));
                 dialog.show();
 
-                dialog.setText(getString(R.string.labelVerify));
-                dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, VerificationActivity.class);
                         startActivity(intent);
+                        dialog.cancel();
                     }
                 });
 
                 break;
             default:
 
-                RegisterDialog dialog2 = new RegisterDialog(mContext);
+                final CustomAlertDialog dialog2 = new CustomAlertDialog(mContext, getString(R.string.labelRegister));
                 dialog2.show();
 
-                dialog2.setText(getString(R.string.labelRegister));
-                dialog2.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                dialog2.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(mContext, RegisterActivity.class);
                         startActivity(intent);
+                        dialog2.cancel();
                     }
                 });
         }

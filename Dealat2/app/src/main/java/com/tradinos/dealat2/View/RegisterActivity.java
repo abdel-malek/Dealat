@@ -11,6 +11,7 @@ import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
 import java.util.HashMap;
 
@@ -63,24 +64,34 @@ public class RegisterActivity extends MasterActivity {
             case R.id.buttonTrue: //Register
 
                 if (isNetworkAvailable() && checkInput()) {
-                    HashMap<String, String> parameters = new HashMap<>();
 
-                    parameters.put("phone", stringInput(editTextPhone));
-                    parameters.put("name", stringInput(editTextName));
-                    parameters.put("lang", MyApplication.getLocale().toString());
-                    parameters.put("city_id", MyApplication.getCity());
+                    CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.labelNumberConfirm));
+                    dialog.show();
+                    dialog.setExtraText(getPhoneNumber(stringInput(editTextPhone)));
 
-                    ShowProgressDialog();
-                    UserController.getInstance(mController).registerUser(parameters, new SuccessCallback<User>() {
+                    dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void OnSuccess(User result) {
-                            HideProgressDialog();
-                            MyApplication.saveUserState(User.PENDING);
-                            new CurrentAndroidUser(mContext).Save(result);
+                        public void onClick(View view) {
+                            HashMap<String, String> parameters = new HashMap<>();
 
-                            Intent intent = new Intent(mContext, VerificationActivity.class);
-                            startActivity(intent);
-                            finish();
+                            parameters.put("phone", stringInput(editTextPhone));
+                            parameters.put("name", stringInput(editTextName));
+                            parameters.put("lang", MyApplication.getLocale().toString());
+                            parameters.put("city_id", MyApplication.getCity());
+
+                            ShowProgressDialog();
+                            UserController.getInstance(mController).registerUser(parameters, new SuccessCallback<User>() {
+                                @Override
+                                public void OnSuccess(User result) {
+                                    HideProgressDialog();
+                                    MyApplication.saveUserState(User.PENDING);
+                                    new CurrentAndroidUser(mContext).Save(result);
+
+                                    Intent intent = new Intent(mContext, VerificationActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
                         }
                     });
                 }

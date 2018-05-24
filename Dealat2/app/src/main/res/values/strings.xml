@@ -97,6 +97,7 @@
     
     <string name="labelRegister">You\'re not registered yet, Would you like to register?</string>
     <string name="labelVerify">Your account isn\'t verified, Would you like to verify it?</string>
+    <string name="labelNumberConfirm">Is your phone number correct?</string>
 
     
     <!-- AdDetails   -->
