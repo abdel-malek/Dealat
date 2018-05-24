@@ -92,7 +92,7 @@
 <!--						</a>-->
 						</a>
 					<span class="dropdown notifications-dropdown">
-						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bell fa-lg"></i> <span class="number"></span></span>
+						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"><i class="fas fa-bell fa-lg"></i> <span class="number"></span></span>
 
 						<div class="dropdown-menu">
 							
@@ -109,7 +109,7 @@
 					</span>
 					
 					<span class="dropdown notes-dropdown">
-						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-clipboard fa-lg"></i> <span class="number"></span></span>
+						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ads status"><i class="far fa-clipboard fa-lg"></i> <span class="number"></span></span>
 
 						<div class="dropdown-menu">
 
@@ -117,9 +117,9 @@
 						<script id="notes-template" type="text/template">
 								<li class="note" data-new="{{new}}">
 									<div class="row no-gutters">
-										<div class="col-3">{{ad_id}}</div>
-										<div class="col-5">{{title}}</div>
-										<div class="col-4">{{status}}</div>
+										<!-- <div class="col-3">#{{ad_id}}</div> -->
+										<div class="col-6">{{title}}</div>
+										<div class="col-6">{{status}}</div>
 									</div>
 								</li>
 							</script>
@@ -572,7 +572,7 @@
 							</div>
 
 							<div class="form-group">
-								<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>"></textarea>
+								<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>" required></textarea>
 							</div>
 
 						</div>
@@ -626,15 +626,6 @@
 							<!--type id/ type model id-->
 							<div class="template-vehicles template d-none" data-template-id="1">
 
-								<div class="form-group field manufacture_date">
-									<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
-								</div>
-								
-								
-								<div class="form-group field kilometer">
-									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
-								</div>
-
 								<div class="form-group field engine_capacity">
 									<select name="engine_capacity" class="engine-capacity-select" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
 									<option disabled selected value="" class="d-none">
@@ -656,6 +647,15 @@
 										<option value="0"><?php echo $this->lang->line('old'); ?></option>
 									</select>
 								</div>
+								
+								<div class="form-group field manufacture_date">
+									<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
+								</div>
+								
+								
+								<div class="form-group field kilometer">
+									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
+								</div>
 
 							</div>
 							<!--properties template-->
@@ -676,7 +676,7 @@
 									<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 								</div>
 
-								<div class="form-group field property_state_id">
+								<div class="form-group field property_state_name">
 									<select name="property_state_id" class="property-state-select" placeholder="<?php echo $this->lang->line('state'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
@@ -1314,7 +1314,7 @@
 			<div class="container">
 			<div class="row">
 				<div class="col-6 col-sm-3 offset-sm-3"><button class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button></div>
-				<div class="col-6 col-sm-3"><button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('cancel'); ?></button></div>
+				<div class="col-6 col-sm-3"><button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('cancel_1'); ?></button></div>
 			</div>
 			</div>
 			</div>

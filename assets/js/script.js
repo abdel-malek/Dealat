@@ -90,10 +90,10 @@ $(function () {
 		$("#place-ad-form").trigger("reset");
 		if (lang === "ar") {
 			$("#ad-modal .categories-nav .select").text("اختر صنف");
-//			$("#ad-modal .types-nav .select").text("اختر الماركة");
+			//			$("#ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
 			$("#ad-modal .categories-nav .select").text("Select Category");
-//			$("#ad-modal .types-nav .select").text("Select type");
+			//			$("#ad-modal .types-nav .select").text("Select type");
 		}
 		$("#ad-modal .ajax-file-upload-container").empty();
 		//		uploadobjMain.reset();
@@ -105,7 +105,7 @@ $(function () {
 		}
 		fileIndex = 0;
 
-//		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+		//		$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		adImgs = [];
 		//		adMainImg = [];
 		adVideo = [];
@@ -134,11 +134,11 @@ $(function () {
 	function resetEditAd() {
 		$("#edit-ad-form").trigger("reset");
 		if (lang === "ar") {
-//			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
+			//			$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
 		} else {
-//			$("#edit-ad-modal .types-nav .select").text("Select type");
+			//			$("#edit-ad-modal .types-nav .select").text("Select type");
 		}
-//		$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
+		//		$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
 		//		adImgs = [];
 		$('#edit-ad-modal .error-message').addClass("d-none");
 		$("#edit-ad-modal .type-select").parents(".form-group").addClass("d-none");
@@ -473,7 +473,8 @@ $(function () {
 		url: base_url + '/api/items_control/get_data_lists',
 		dataType: "json"
 	}).done(function (data) {
-		if (data.status === false) {} else {console.log(data);
+		if (data.status === false) {} else {
+			console.log(data);
 			var j, locData, arr1 = [],
 				arr2 = [];
 			//locations
@@ -553,18 +554,18 @@ $(function () {
 			};
 
 			//post ad and edit ad modals types
-//			template = $('#ad-modal-types-template').html();
-//			Mustache.parse(template);
-//			rendered = Mustache.render(template, typesData);
-//			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
+			//			template = $('#ad-modal-types-template').html();
+			//			Mustache.parse(template);
+			//			rendered = Mustache.render(template, typesData);
+			//			$("#ad-modal .types-nav .types, #edit-ad-modal .types-nav .types").append(rendered);
 
 			//if type with no models then don't open a menu and remove arrow 
-//			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
-//				if ($(this).html().trim() === "") {
-//					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
-//					$(this).remove();
-//				}
-//			});
+			//			$("#ad-modal .types-nav ul.dropdown-menu, #edit-ad-modal .types-nav ul.dropdown-menu").each(function () {
+			//				if ($(this).html().trim() === "") {
+			//					$(this).siblings(".dropdown-item").removeClass("dropdown-toggle");
+			//					$(this).remove();
+			//				}
+			//			});
 
 			// types
 			for (i in typesData.types) {
@@ -573,15 +574,15 @@ $(function () {
 
 			$('#filter-modal select.type-select')[0].sumo.reload();
 			$('#ad-modal select.type-select')[0].sumo.reload();
-			
+
 			if ($(".profile-page").length > 0) {
 				$('#edit-ad-modal select.type-select')[0].sumo.reload();
 			}
-											
+
 			$('.type-select').change(function () {
 				var typeId, i, j;
 				typeId = $(this).find('option:selected').val();
-				$(this).closest(".modal-body").find('.model-select option').remove();
+				$(this).closest(".modal-body").find('.model-select option:not(.placeholder)').remove();
 				//				$('select.model-select')[0].sumo.reload();
 				for (i in typesData.types) {
 					if (typesData.types[i].type_id === typeId) {
@@ -650,7 +651,7 @@ $(function () {
 			for (i = 0; i < $('select.schedules-select').length; i += 1) {
 				$('select.schedules-select')[i].sumo.reload();
 			}
-											
+
 			//property states
 			for (i in data.data.states) {
 				$('#ad-modal .property-state-select,#edit-ad-modal .property-state-select, #filter-modal .property-state-select').append($('<option>', {
@@ -686,7 +687,10 @@ $(function () {
 	}
 
 	//reload just for the multiple
-//	$('#filter-modal select.engine-capacity-select')[0].sumo.reload();
+	$('#ad-modal select.engine-capacity-select')[0].sumo.reload();
+	if ($(".profile-page").length > 0) {
+		$('#edit-ad-modal select.engine-capacity-select')[0].sumo.reload();
+	}
 
 	var ajaxLoadTimeout;
 	$(document).ajaxStart(function () {
@@ -709,7 +713,8 @@ $(function () {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
 			}
-		}).done(function (data) {console.log(data);
+		}).done(function (data) {
+			console.log(data);
 			if (data.status === false) {} else {
 				//				console.log(data);
 				var adData, negotiable, automatic, status, furniture, type, templateId;
@@ -943,25 +948,8 @@ $(function () {
 		templateId = $(this).data("templateId");
 		subId = $(this).data("categoryId");
 
-		//only show upload video in properties
-		if (templateId === 2) {
-			$("#ad-modal #fileuploader-ad-video").removeClass("d-none");
-		} else {
-			$("#ad-modal #fileuploader-ad-video").addClass("d-none");
-		}
-
-		//if category is job remove price and negotiable inputs
-		if (templateId === 8) {
-			$("#ad-modal input[name='price']").closest(".form-group").addClass("d-none");
-			$("#ad-modal input[name='price']").removeAttr("required");
-			$("#ad-modal input[name='price']").val("0");
-			$("#ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
-		} else {
-			$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
-			$("#ad-modal input[name='price']").attr("required", true);
-			$("#ad-modal input[name='price']").val("");
-			$("#ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
-		}
+		console.log(hiddenFields);
+		
 
 		//put all fields as shown
 		$("#ad-modal .field").each(function () {
@@ -978,7 +966,87 @@ $(function () {
 				}
 			}
 		}
+console.log(hideArr);
+		//vehicles
+		if (templateId === 1) {
+			if($.inArray("manufacture_date", hideArr) === -1){
+				$("#ad-modal input[name='manufacture_date']").attr("required", true);
+			}
+			if($.inArray("kilometer", hideArr) === -1){
+				$("#ad-modal input[name='kilometer']").attr("required", true);
+			}
+			if($.inArray("is_automatic", hideArr) === -1){
+				$("#ad-modal select[name='is_automatic']").attr("required", true);
+			}
+//			if($.inArray("type_id", hideArr) === -1){
+//				$("#ad-modal select[name='type_id']").attr("required", true);
+//			}
+		} else {
+			$("#ad-modal input[name='manufacture_date']").removeAttr("required");
+			$("#ad-modal input[name='kilometer']").removeAttr("required");
+			$("#ad-modal select[name='is_automatic']").removeAttr("required");
+//			$("#ad-modal select[name='type_id']").removeAttr("required");
+		}
 
+		if (templateId === 1 || templateId === 3 || templateId === 4 || templateId === 5 || templateId === 6 || templateId === 7 || templateId === 9) {
+			if($.inArray("is_new", hideArr) === -1){
+				$("#ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").attr("required", true);
+			}
+		} else {
+			$("#ad-modal select[name='is_new']").each(function () {
+				$(this).removeAttr("required");
+			});
+		}
+
+		//only show upload video in properties
+		if (templateId === 2) {
+			$("#ad-modal #fileuploader-ad-video").removeClass("d-none");
+
+			if($.inArray("space", hideArr) === -1){
+				$("#ad-modal input[name='space']").attr("required", true);
+			}
+			if($.inArray("rooms_num", hideArr) === -1){
+				$("#ad-modal input[name='rooms_num']").attr("required", true);
+			}
+			if($.inArray("floor", hideArr) === -1){
+				$("#ad-modal input[name='floor']").attr("required", true);
+			}
+			if($.inArray("property_state_name", hideArr) === -1){
+				$("#ad-modal select[name='property_state_id']").attr("required", true);
+			}
+		} else {
+			$("#ad-modal #fileuploader-ad-video").addClass("d-none");
+
+			$("#ad-modal input[name='space']").removeAttr("required");
+			$("#ad-modal input[name='rooms_num']").removeAttr("required");
+			$("#ad-modal input[name='floor']").removeAttr("required");
+			$("#ad-modal select[name='property_state_id']").removeAttr("required");
+		}
+
+		//if category is job remove price and negotiable inputs
+		if (templateId === 8) {
+			$("#ad-modal input[name='price']").closest(".form-group").addClass("d-none");
+			$("#ad-modal input[name='price']").removeAttr("required");
+			$("#ad-modal input[name='price']").val("0");
+			$("#ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
+
+			if($.inArray("education_name", hideArr) === -1){
+				$("#ad-modal select[name='education_id']").attr("required", true);
+			}
+			if($.inArray("certificate_name", hideArr) === -1){
+				$("#ad-modal select[name='certificate_id']").attr("required", true);
+			}
+			//gender
+		} else {
+			$("#ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
+			$("#ad-modal input[name='price']").attr("required", true);
+			$("#ad-modal input[name='price']").val("");
+			$("#ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
+
+			$("#ad-modal select[name='education_id']").removeAttr("required");
+			$("#ad-modal select[name='certificate_id']").removeAttr("required");
+			//gender
+		}
 		//view the selected category template
 		$("#ad-modal .template").each(function () {
 			$(this).addClass("d-none");
@@ -998,26 +1066,26 @@ $(function () {
 		//		});
 
 		//only display selected template types
-//		$("#ad-modal .types-nav .type-item").each(function () {
-//			$(this).addClass("d-none");
-//			if ($(this).data("categoryId") === subId) {
-//				has_types = 1;
-//				$(this).removeClass("d-none");
-//			}
-//		});
+		//		$("#ad-modal .types-nav .type-item").each(function () {
+		//			$(this).addClass("d-none");
+		//			if ($(this).data("categoryId") === subId) {
+		//				has_types = 1;
+		//				$(this).removeClass("d-none");
+		//			}
+		//		});
 
-//		display types select only if category is vehicles, mobiles or electronics
-//		if (has_types !== 0) {
-			//			if (templateId === 1 || templateId === 3 || templateId===4) {
-//			$("#ad-modal .types-nav").parent(".form-group").removeClass("d-none");
-//		} else {
-//			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
-//		}
-//		if (lang === "ar") {
-//			$("#ad-modal .types-nav .select").text("اختر الماركة");
-//		} else {
-//			$("#ad-modal .types-nav .select").text("Select type");
-//		}
+		//		display types select only if category is vehicles, mobiles or electronics
+		//		if (has_types !== 0) {
+		//			if (templateId === 1 || templateId === 3 || templateId===4) {
+		//			$("#ad-modal .types-nav").parent(".form-group").removeClass("d-none");
+		//		} else {
+		//			$("#ad-modal .types-nav").parent(".form-group").addClass("d-none");
+		//		}
+		//		if (lang === "ar") {
+		//			$("#ad-modal .types-nav .select").text("اختر الماركة");
+		//		} else {
+		//			$("#ad-modal .types-nav .select").text("Select type");
+		//		}
 		//only display selected template types
 		$("#ad-modal .type-select option").each(function () {
 			$(this).addClass("d-none");
@@ -1037,8 +1105,8 @@ $(function () {
 			$("#ad-modal .type-select").parents(".form-group").addClass("d-none");
 			$("#ad-modal .model-select").parents(".form-group").addClass("d-none");
 		}
-//		$("#place-ad-form .type-model-id").val("");
-//		$("#place-ad-form .type-id").val("");
+		//		$("#place-ad-form .type-model-id").val("");
+		//		$("#place-ad-form .type-id").val("");
 		$("#place-ad-form .category-id").val(subId);
 
 
@@ -1148,39 +1216,39 @@ $(function () {
 	});
 
 	//type model select
-//	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".dropdown-item", function () {
-//		var typeId, typeModelId;
-//
-//		$("#place-ad-form .type-model-id").val("");
-//		$("#place-ad-form .type-id").val("");
-//
-//		if ($(this).hasClass("type")) {
-//			typeId = $(this).data("typeId");
-//			//change select placeholder
-//			$(this).closest(".types-nav").find(".select").text($(this).text());
-//		} else if ($(this).hasClass("model")) {
-//			typeId = $(this).data("typeId");
-//			typeModelId = $(this).data("typeModelId");
-//			//change select placeholder
-//			var typeName, modelName, text;
-//			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
-//			modelName = $(this).text();
-//			text = typeName + " - " + modelName;
-//			$(this).closest(".types-nav").find(".select").text(text);
-//		}
-//
-//		if ($(this).parents("#ad-modal").length > 0) {
-//			$("#place-ad-form .type-id").val(typeId);
-//			$("#place-ad-form .type-model-id").val(typeModelId);
-//		} else if ($(this).parents("#edit-ad-modal").length > 0) {
-//			$("#edit-ad-form .type-id").val(typeId);
-//			$("#edit-ad-form .type-model-id").val(typeModelId);
-//		} else if ($(this).parents("#filter-modal").length > 0) {
-//			$("#filter-form .type-id").val(typeId);
-//			$("#filter-form .type-model-id").val(typeModelId);
-//		}
-//
-//	});
+	//	$("#ad-modal .types-nav,#edit-ad-modal .types-nav, #filter-modal .types-nav").on("click", ".dropdown-item", function () {
+	//		var typeId, typeModelId;
+	//
+	//		$("#place-ad-form .type-model-id").val("");
+	//		$("#place-ad-form .type-id").val("");
+	//
+	//		if ($(this).hasClass("type")) {
+	//			typeId = $(this).data("typeId");
+	//			//change select placeholder
+	//			$(this).closest(".types-nav").find(".select").text($(this).text());
+	//		} else if ($(this).hasClass("model")) {
+	//			typeId = $(this).data("typeId");
+	//			typeModelId = $(this).data("typeModelId");
+	//			//change select placeholder
+	//			var typeName, modelName, text;
+	//			typeName = $(this).closest(".dropdown-menu").siblings(".type").text();
+	//			modelName = $(this).text();
+	//			text = typeName + " - " + modelName;
+	//			$(this).closest(".types-nav").find(".select").text(text);
+	//		}
+	//
+	//		if ($(this).parents("#ad-modal").length > 0) {
+	//			$("#place-ad-form .type-id").val(typeId);
+	//			$("#place-ad-form .type-model-id").val(typeModelId);
+	//		} else if ($(this).parents("#edit-ad-modal").length > 0) {
+	//			$("#edit-ad-form .type-id").val(typeId);
+	//			$("#edit-ad-form .type-model-id").val(typeModelId);
+	//		} else if ($(this).parents("#filter-modal").length > 0) {
+	//			$("#filter-form .type-id").val(typeId);
+	//			$("#filter-form .type-model-id").val(typeModelId);
+	//		}
+	//
+	//	});
 
 	//featured ad
 	$("#ad-modal .featured").click(function () {
@@ -1705,7 +1773,7 @@ $(function () {
 				value: propertStateNameArr
 			});
 		}
-		
+
 		if ($('#filter-modal .schedules-select option:selected').length > 0) {
 			$('#filter-modal .schedules-select option:selected').each(function (i) {
 				schedulesArr.push($(this).val());
@@ -2659,42 +2727,42 @@ $(function () {
 					} else {
 						data.data[i].new = "0";
 					}
-//					if (data.data[i].user_seen === "0") {
-						if (data.data[i].status === "1") {
-							if (lang === "ar") {
-								data.data[i].status = "قيد الانتظار";
-							} else {
-								data.data[i].status = "Pending";
-							}
-
-						} else if (data.data[i].status === "2") {
-							if (lang === "ar") {
-								data.data[i].status = "موافق عليه";
-							} else {
-								data.data[i].status = "Accepted";
-							}
-						} else if (data.data[i].status === "3") {
-							if (lang === "ar") {
-								data.data[i].status = "منتهي";
-							} else {
-								data.data[i].status = "Expired";
-							}
-						} else if (data.data[i].status === "4") {
-							if (lang === "ar") {
-								data.data[i].status = "مخفي";
-							} else {
-								data.data[i].status = "Hidden";
-							}
-						} else if (data.data[i].status === "5") {
-							if (lang === "ar") {
-								data.data[i].status = "مرفوض";
-							} else {
-								data.data[i].status = "Rejected";
-							}
+					//					if (data.data[i].user_seen === "0") {
+					if (data.data[i].status === "1") {
+						if (lang === "ar") {
+							data.data[i].status = "قيد الانتظار";
+						} else {
+							data.data[i].status = "Pending";
 						}
-						rendered = Mustache.render(template, data.data[i]);
-						$("header .notes-dropdown .dropdown-menu").append(rendered);
-//					}
+
+					} else if (data.data[i].status === "2") {
+						if (lang === "ar") {
+							data.data[i].status = "موافق عليه";
+						} else {
+							data.data[i].status = "Accepted";
+						}
+					} else if (data.data[i].status === "3") {
+						if (lang === "ar") {
+							data.data[i].status = "منتهي";
+						} else {
+							data.data[i].status = "Expired";
+						}
+					} else if (data.data[i].status === "4") {
+						if (lang === "ar") {
+							data.data[i].status = "مخفي";
+						} else {
+							data.data[i].status = "Hidden";
+						}
+					} else if (data.data[i].status === "5") {
+						if (lang === "ar") {
+							data.data[i].status = "مرفوض";
+						} else {
+							data.data[i].status = "Rejected";
+						}
+					}
+					rendered = Mustache.render(template, data.data[i]);
+					$("header .notes-dropdown .dropdown-menu").append(rendered);
+					//					}
 				}
 				$(".notes-dropdown .number").text("0");
 			}

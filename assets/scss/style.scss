@@ -812,7 +812,8 @@ header.home {
 	}
 
 
-	.notifications-dropdown, .notes-dropdown {
+	.notifications-dropdown,
+	.notes-dropdown {
 		//	text-align: right;
 		//	margin-right: 10%;
 		.bell-icon {
@@ -865,7 +866,7 @@ header.home {
 		}
 		.number {
 			position: absolute;
-			right: -12px;
+			right: -9px;
 			top: -2px;
 			min-height: 17px;
 			min-width: 17px;
@@ -874,9 +875,26 @@ header.home {
 			color: $main;
 			padding: 0;
 			text-align: center;
-			line-height: 17px;
-			//			padding: 3px;
+			line-height: 17px; //			padding: 3px;
 			font-size: .7rem;
+		}
+	}
+	.notifications-dropdown {
+		margin-right: 5px;
+	}
+	.notes-dropdown {
+		.dropdown-menu {
+			overflow-x: hidden;
+			text-align: center;
+			min-width: 230px;
+			li {
+				padding: 2px 10px;
+				cursor: default
+			}
+		}
+		.number {
+			top: -4px;
+			right: -12px;
 		}
 	}
 }
@@ -2104,8 +2122,7 @@ header {
 		//		top: 2px;
 		//		left: -40px;
 		display: inline-block;
-		background-color: $main;
-		//		border: 2px solid #fff;
+		background-color: $main; //		border: 2px solid #fff;
 		border-radius: 50%;
 		width: 36px;
 		height: 30px;
@@ -2121,8 +2138,7 @@ header {
 			color: #fff
 		}
 
-	}
-	//	.new-msg:hover {
+	} //	.new-msg:hover {
 	//		background-color: #fff;
 	//		color: $main;
 	//		a {
@@ -2141,8 +2157,7 @@ header {
 	.new-msg {
 		position: absolute;
 		top: 29%;
-		left: 5px;
-		//		background-color: #c30a30;
+		left: 5px; //		background-color: #c30a30;
 		//		border: 2px solid #fff;
 		border-radius: 50%;
 		width: 36px;
@@ -2238,9 +2253,10 @@ header {
 .btn.place-ad .fa-plus {
 	font-size: .7rem
 }
-#ask-register-modal{
-	.modal-footer{
-		.button2{
+
+#ask-register-modal {
+	.modal-footer {
+		.button2 {
 			width: 100%
 		}
 	}

@@ -349,7 +349,7 @@
 								</div>
 
 								<div class="form-group">
-									<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>"></textarea>
+									<textarea class="form-control" name="description" rows="4" placeholder="<?php echo $this->lang->line('add_description'); ?>" required></textarea>
 								</div>
 
 							</div>
@@ -373,29 +373,23 @@
 								</select>
 							</div>
 
+<!--
 							<div class="form-group d-none field type_model_name">
 								<select name="type_model_id" class="model-select" placeholder="<?php echo $this->lang->line('select_model'); ?>">
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
-<!--
+-->
 							<div class="form-group d-none field type_model_name">
 								<select name="type_model_id" class="model-select">
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_model'); ?></option>
 								</select>
 							</div>
--->
 
 								<!--vehicles template-->
 								<!--type id/ type model id-->
 								<div class="template-vehicles template d-none" data-template-id="1">
 
-									<div class="form-group field manufacture_date">
-										<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
-									</div>
-									<div class="form-group field kilometer">
-										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
-									</div>
 									<div class="form-group field engine_capacity">
 										<select name="engine_capacity" class="engine-capacity-select" placeholder="<?php echo $this->lang->line('engine_capacity'); ?>">
 									<option disabled selected value="" class="d-none">
@@ -417,6 +411,13 @@
 											<option value="0"><?php echo $this->lang->line('old'); ?></option>
 										</select>
 									</div>
+									
+									<div class="form-group field manufacture_date">
+										<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
+									</div>
+									<div class="form-group field kilometer">
+										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
+									</div>
 
 								</div>
 								<!--properties template-->
@@ -428,16 +429,16 @@
 									<div class="form-group field rooms_num">
 										<input type="number" class="form-control" name="rooms_num" placeholder="<?php echo $this->lang->line('rooms'); ?>">
 									</div>
-
+								
+									<div class="form-group field floor">
+										<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
+									</div>
+									
 									<div class="form-group field floors_number">
 										<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 									</div>
 
-									<div class="form-group field floor">
-										<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
-									</div>
-
-									<div class="form-group field property_state_id">
+									<div class="form-group field property_state_name">
 										<select name="property_state_id" class="property-state-select" placeholder="<?php echo $this->lang->line('state'); ?>">
 											<option disabled selected value="" class="d-none">
 										</select>
