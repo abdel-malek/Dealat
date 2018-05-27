@@ -1,24 +1,24 @@
 <div class="main-wrapper">
 	<!--  loading -->
-	
-<section class="loading-overlay">
-	<div class="spinner">
-		<div class="sk-circle">
-			<div class="sk-circle1 sk-child"></div>
-			<div class="sk-circle2 sk-child"></div>
-			<div class="sk-circle3 sk-child"></div>
-			<div class="sk-circle4 sk-child"></div>
-			<div class="sk-circle5 sk-child"></div>
-			<div class="sk-circle6 sk-child"></div>
-			<div class="sk-circle7 sk-child"></div>
-			<div class="sk-circle8 sk-child"></div>
-			<div class="sk-circle9 sk-child"></div>
-			<div class="sk-circle10 sk-child"></div>
-			<div class="sk-circle11 sk-child"></div>
-			<div class="sk-circle12 sk-child"></div>
+
+	<section class="loading-overlay">
+		<div class="spinner">
+			<div class="sk-circle">
+				<div class="sk-circle1 sk-child"></div>
+				<div class="sk-circle2 sk-child"></div>
+				<div class="sk-circle3 sk-child"></div>
+				<div class="sk-circle4 sk-child"></div>
+				<div class="sk-circle5 sk-child"></div>
+				<div class="sk-circle6 sk-child"></div>
+				<div class="sk-circle7 sk-child"></div>
+				<div class="sk-circle8 sk-child"></div>
+				<div class="sk-circle9 sk-child"></div>
+				<div class="sk-circle10 sk-child"></div>
+				<div class="sk-circle11 sk-child"></div>
+				<div class="sk-circle12 sk-child"></div>
+			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
 	<section class="loading-overlay1">
 		<div class="spinner">
@@ -86,46 +86,46 @@
 				<?php  }else{?>
 				<!--if logged-->
 				<div class="col-6 col-sm-3 col-lg-2 offset-md-0 offset-lg-3 mt-2 mb-2 text-right">
-				<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>" class="new-msg d-none">
+					<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>" class="new-msg d-none">
 <!--						<a href="<?php echo base_url('index.php/users_control_web/load_profile#chats') ?>">-->
 						<i class="fas fa-envelope"></i>
 <!--						</a>-->
-						</a>
+					</a>
 					<span class="dropdown notifications-dropdown">
 						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"><i class="fas fa-bell fa-lg"></i> <span class="number"></span></span>
 
-						<div class="dropdown-menu">
-							
+					<div class="dropdown-menu">
 
-						</div>
-						<script id="notifications-template" type="text/template">
-								{{#.}}
-								<li class="notification" data-new="{{new}}" data-notification-id="{{notification_id}}">
-									<div class="title">{{title}}</div>
-									<div class="body">{{body}}</div>
-								</li>
-								{{/.}}
-							</script>
+
+					</div>
+					<script id="notifications-template" type="text/template">
+						{{#.}}
+						<li class="notification" data-new="{{new}}" data-notification-id="{{notification_id}}">
+							<div class="title">{{title}}</div>
+							<div class="body">{{body}}</div>
+						</li>
+						{{/.}}
+					</script>
 					</span>
-					
+
 					<span class="dropdown notes-dropdown">
 						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ads status"><i class="far fa-clipboard fa-lg"></i> <span class="number"></span></span>
 
-						<div class="dropdown-menu">
+					<div class="dropdown-menu">
 
-						</div>
-						<script id="notes-template" type="text/template">
-								<li class="note" data-new="{{new}}">
-									<div class="row no-gutters">
-										<!-- <div class="col-3">#{{ad_id}}</div> -->
-										<div class="col-6">{{title}}</div>
-										<div class="col-6">{{status}}</div>
-									</div>
-								</li>
-							</script>
+					</div>
+					<script id="notes-template" type="text/template">
+						<li class="note" data-new="{{new}}">
+							<div class="row no-gutters">
+								<!-- <div class="col-3">#{{ad_id}}</div> -->
+								<div class="col-6">{{title}}</div>
+								<div class="col-6">{{status}}</div>
+							</div>
+						</li>
+					</script>
 					</span>
-					
-					
+
+
 				</div>
 				<div class="col-6 col-sm-3 col-lg-2 mt-2 mb-2">
 
@@ -143,7 +143,7 @@
 								</li>
 							</ul>
 						</div>
-						
+
 					</div>
 				</div>
 				<?php } ?>
@@ -164,37 +164,33 @@
 
 				</div>
 				<div class="modal-footer">
-<!--					<button type="button" class="btn button2 chat"><?php echo $this->lang->line('chat_seller'); ?></button>-->
 					<button type="button" class="btn button2 chat"><i class="far fa-comment-alt fa-lg"></i></button>
-<!--					<button type="button" class="btn button2 report" title="<?php echo $this->lang->line('report_ad'); ?>"><i class="far fa-flag"></i></button>-->
-<!--					<div class="report" title="<?php echo $this->lang->line('report_ad'); ?>"><span><i class="far fa-flag fa-2x"></i></span></div>-->
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 
 	<script id="ad-details-template" type="text/template">
 		<div class="card" data-ad-id="{{ad.ad_id}}" data-category-id="{{ad.category_id}}">
 			<input type="hidden" class="seller-phone">
 			<div class="card-img-slider slick-slider">
-			{{#ad.main_video}}
+				{{#ad.main_video}}
 				<div class="card-img-top"><video height="200" controls>
 				  <source src="<?php echo base_url('{{ad.main_video}}'); ?>" type="video/mp4">
 				</video></div>
-				{{/ad.main_video}}
-				{{#ad.main_image}}<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>{{/ad.main_image}}
-				{{#ad.images}}
+				{{/ad.main_video}} {{#ad.main_image}}
+				<div class="card-img-top"><img src="<?php echo base_url('{{ad.main_image}}'); ?>"></div>{{/ad.main_image}} {{#ad.images}}
 				<div class="card-img-top"><img src="<?php echo base_url('{{image}}'); ?>"></div>
-				{{/ad.images}} 
-				
+				{{/ad.images}}
+
 			</div>
 			<div class="card-body">
-			<div class="report" title="<?php echo $this->lang->line('report_ad'); ?>"><span class="icon"><i class="far fa-flag fa-2x"></i></span></div>
+				<div class="report" title="<?php echo $this->lang->line('report_ad'); ?>"><span class="icon"><i class="far fa-flag fa-2x"></i></span></div>
 				<div class="fav">
 					<span class="icon" data-added="{{ad.is_favorite}}" title="<?php echo $this->lang->line('add_fav'); ?>"><i class="far fa-heart fa-2x"></i></span>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-12 mb-4 text-center">
 						<div class="card-title">{{ad.title}}</div>
@@ -205,43 +201,9 @@
 						<div class="number"><span class="number-lbl label"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val"><b>{{ad.ad_id}}</b></span></div>
 						<div class="category"><span class="category-lbl label"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 						<div class="seller"><span class="seller-lbl label"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
-						<!--<div class="seller"><span class="rating-lbl label"><?php echo $this->lang->line('seller_rating'); ?>: </span>
-						<span class="rating-val">
-							<fieldset class="rating">
-								<span class="rate-group" data-value="5">
-									<input type="radio" id="star5" name="rating" value="5" />
-									<label class="full" for="star5" title="Awesome - 5 stars"></label>
-								</span>
 
-						<div class="rate-group" data-value="4">
-							<input type="radio" id="star4" name="rating" value="4" />
-							<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-						</div>
-
-						<div class="rate-group" data-value="3">
-							<input type="radio" id="star3" name="rating" value="3" />
-							<label class="full" for="star3" title="Meh - 3 stars"></label>
-						</div>
-
-						<div class="rate-group" data-value="2">
-							<input type="radio" id="star2" name="rating" value="2" />
-							<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-						</div>
-
-						<div class="rate-group" data-value="1">
-							<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-						</div>
-
-						</fieldset>
-						<div class="clearfix"></div>
-						</span>
-					</div>-->
-						
-						<!-- <button class=" btn button2 show-contact">
-							<div><span class="mb-1 mt-2 show-contact"><?php echo $this->lang->line('contact_info'); ?></span></div></button> -->
-							<div class="show-contact"><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></div>
-							<div class="mobile details d-none"><span class="mobile-lbl label"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href=""></a></span></div>
-						
+						<div class="show-contact"><span class="mb-1 mt-2"><?php echo $this->lang->line('contact_info'); ?></span></div>
+						<div class="mobile details d-none"><span class="mobile-lbl label"><i class="fas fa-mobile-alt fa-fw"></i> </span><span class="mobile-val"><a href=""></a></span></div>
 					</div>
 
 					<div class="col-sm-4 info-col border-middle">
@@ -251,7 +213,7 @@
 					</div>
 
 					<div class="col-sm-4 info-col templates">
-						
+
 						<!--vehicles template-->
 						<div class="template-vehicles template d-none" data-template-id="1">
 							<div class="type field type_name"><span class="type-lbl label"><?php echo $this->lang->line('type'); ?>:</span><span class="type-val"> {{ad.type_name}}</span></div>
@@ -351,32 +313,12 @@
 				</div>
 				<div class="modal-body">
 					<div class="error-message d-none"></div>
-					<!--
-					<button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Sign up with Facebook</button>
-					<button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Sign up with Google</button>
--->
-					<!--
-				<div class="title lines">
-					<span class="text"><?php echo $this->lang->line('create_account1'); ?></span>
-				</div>
-				<div class="container social">
-					<div class="row">
-						<div class="col-sm-6"><button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Facebook</button></div>
-						<div class="col-sm-6"><button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Google</button></div>
-					</div>
-				</div>
-				<div class="title lines">
-					<span class="text"><?php echo $this->lang->line('create_account2'); ?></span>
-				</div>
--->
 					<form id="register-form">
-						<!--					<div id="fileuploader-register">Upload</div>-->
 						<input type="hidden" name="lang" class="lang">
 						<div class="row">
 							<div class="col-sm-6 border-middle">
 								<div class="form-group">
 									<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-<!--										<option value="" class="placeholder d-none" selected><?php echo $this->lang->line('select_city'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
@@ -450,11 +392,6 @@
 							<?php echo $this->lang->line('log_into_account'); ?>
 						</h5>
 					</div>
-					<!--
-					<div class="title lines">
-						<span class="text">Sign in with:</span>
-					</div>
--->
 					<div class="error-message d-none"></div>
 					<form id="login-form">
 						<div class="form-group">
@@ -463,21 +400,15 @@
 						<div class="form-group">
 							<input type="password" class="form-control" name="password" placeholder="<?php echo $this->lang->line('password'); ?>" required>
 						</div>
-						
-						<div class="qr-login"><?php echo $this->lang->line('qr_login'); ?></div>
+
+						<div class="qr-login">
+							<?php echo $this->lang->line('qr_login'); ?>
+						</div>
+						<div class="verify-registered">
+							<?php echo $this->lang->line('verify_registered'); ?>
+						</div>
 						<button type="submit" class="btn button2 submit"><?php echo $this->lang->line('sign_in'); ?></button>
 					</form>
-					<!--
-				<div class="title lines">
-					<span class="text"><?php echo $this->lang->line('signin_with'); ?></span>
-				</div>
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-6"><button class="btn facebook"><i class="fab fa-facebook-f fa-lg"></i> Facebook</button></div>
-						<div class="col-sm-6"><button class="btn google"><i class="fab fa-google-plus-g fa-lg"></i> Google</button></div>
-					</div>
-				</div>
--->
 				</div>
 				<div class="modal-footer">
 				</div>
@@ -500,8 +431,7 @@
 						<div class="row">
 							<div class="col-sm-6  border-middle">
 								<input type="hidden" name="category_id" class="category-id">
-<!--								<input type="hidden" name="type_id" class="type-id">-->
-<!--								<input type="hidden" name="type_model_id" class="type-model-id">-->
+								<input type="hidden" class="template-id">
 
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
@@ -543,10 +473,10 @@
 									</ul>
 								</script>
 
-							<div class="form-group">
-								<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-									<option disabled selected value="" class="d-none">
-								</select>
+							<div class="form-group ">
+								<select name="city_id " class="city-select " required placeholder="<?php echo $this->lang->line('select_city'); ?>">
+											<option disabled selected value="" class="d-none">
+												</select>
 							</div>
 
 							<div class="form-group">
@@ -577,33 +507,12 @@
 
 						</div>
 						<div class="col-sm-6">
-<!--
-							<div class="form-group d-none field type_name">
-								<nav class="navbar navbar-expand-md navbar-light types-nav">
-									<ul class="navbar-nav">
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_type'); ?></a>
-											<ul class="dropdown-menu types main-dropdown">
-											</ul>
-										</li>
-									</ul>
-								</nav>
-							</div>
--->
 							<div class="form-group d-none field type_name">
 								<select name="type_id" class="type-select" placeholder="<?php echo $this->lang->line('select_type'); ?>">
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
 
-<!--
-							<div class="form-group d-none field type_model_name">
-								<select name="type_model_id" class="model-select" placeholder="<?php echo $this->lang->line('select_model'); ?>">
-									<option disabled selected value="" class="d-none">
-								</select>
-							</div>
--->
-						
 							<div class="form-group d-none field type_model_name">
 								<select name="type_model_id" class="model-select">
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_model'); ?></option>
@@ -631,7 +540,7 @@
 									<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-								
+
 								<div class="form-group field is_automatic">
 									<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -647,12 +556,12 @@
 										<option value="0"><?php echo $this->lang->line('old'); ?></option>
 									</select>
 								</div>
-								
+
 								<div class="form-group field manufacture_date">
 									<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 								</div>
-								
-								
+
+
 								<div class="form-group field kilometer">
 									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 								</div>
@@ -671,7 +580,7 @@
 								<div class="form-group field floor">
 									<input type="number" class="form-control" name="floor" placeholder="<?php echo $this->lang->line('floor'); ?>">
 								</div>
-								
+
 								<div class="form-group field floors_number">
 									<input type="number" class="form-control" name="floors_number" placeholder="<?php echo $this->lang->line('floors_number'); ?>">
 								</div>
@@ -681,7 +590,7 @@
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-								
+
 								<div class="form-group field with_furniture">
 									<label class="">
 								<input type="checkbox" name="with_furniture" value="1"><span class=""> <?php echo $this->lang->line('with_furniture'); ?></span>
@@ -754,23 +663,23 @@
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-								
+
 								<div class="form-group field certificate_name">
 									<select name="certificate_id" class="certificates-select" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-								
+
 								<div class="form-group field schedule_name">
 									<select name="schedule_id" class="schedules-select" placeholder="<?php echo $this->lang->line('schedule'); ?>">
 										<option disabled selected value="" class="d-none">
 									</select>
 								</div>
-								
+
 								<div class="form-group field gender">
 									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
-<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
 										<option value="1"><?php echo $this->lang->line('male'); ?></option>
 										<option value="2"><?php echo $this->lang->line('female'); ?></option>
 									</select>
@@ -779,7 +688,7 @@
 								<div class="form-group field experience">
 									<input type="text" class="form-control" name="experience" placeholder="<?php echo $this->lang->line('experience'); ?>">
 								</div>
-							
+
 								<div class="form-group field salary">
 									<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
@@ -801,13 +710,13 @@
 							<!--basic template-->
 							<div class="template-basic template d-none" data-template-id="11"></div>
 
-<!--							<div id="fileuploader-ad-main">Upload</div>-->
-						
-						<div class="img-upload-note mb-1"><?php echo $this->lang->line('img_upload_note'); ?></div>
-							<div id="fileuploader-ad">Upload</div>
-							
-							<div id="fileuploader-ad-video" class="d-none">Upload</div>
-							
+							<div class="img-upload-note mb-1">
+								<?php echo $this->lang->line('img_upload_note'); ?>
+							</div>
+							<div id="fileuploader-ad"></div>
+
+							<div id="fileuploader-ad-video" class="d-none"></div>
+
 							<div class="">
 								<label class="">
 									<input type='hidden' value='0' name='ad_visible_phone'>
@@ -815,7 +724,7 @@
 									<div class="visible-phone-note"><?php echo $this->lang->line('ad_visible_phone_note'); ?></div>
 								</label>
 							</div>
-							
+
 							<label class="featured">
 								<input id="featured-ad" type="checkbox" name="is_featured" value="1"><span class=""> <?php echo $this->lang->line('set_as_featured'); ?></span>
 								<div class="warning d-none text-warning featured-note"> <?php echo $this->lang->line('featured_cost'); ?></div>
@@ -872,40 +781,39 @@
 									</ul>
 								</nav>
 							</div>
-							
-								<script id="filter-modal-categories-template" type="text/template">
-									{{ #categories }}
-									<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
-										<ul class="dropdown-menu">
-											<li>
-												<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}><?php echo $this->lang->line('all'); ?> {{category_name}}</a>
-											</li>
-											{{ #children }}
-											<li>
-												<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a>
-											</li>
-											{{ /children }}
-										</ul>
-									</li>
-									{{ /categories }}
-								</script>
 
-								<script id="filter-modal-subcategories-template" type="text/template">
+							<script id="filter-modal-categories-template" type="text/template">
+								{{ #categories }}
+								<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
 									<ul class="dropdown-menu">
 										<li>
-											<a class="dropdown-item last-subcategory" href="" data-template-id="{{parent.tamplate_id}}" data-category-id="{{parent.category_id}}" "><?php echo $this->lang->line('all'); ?>  {{parent.category_name}}</a>
+											<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}><?php echo $this->lang->line('all'); ?> {{category_name}}</a>
 										</li>
 										{{ #children }}
 										<li>
-											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}" ">{{category_name}}</a>
+											<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}>{{category_name}}</a>
 										</li>
 										{{ /children }}
 									</ul>
-								</script>
+								</li>
+								{{ /categories }}
+							</script>
+
+							<script id="filter-modal-subcategories-template" type="text/template">
+								<ul class="dropdown-menu">
+									<li>
+										<a class="dropdown-item last-subcategory" href="" data-template-id="{{parent.tamplate_id}}" data-category-id="{{parent.category_id}}" "><?php echo $this->lang->line('all'); ?>  {{parent.category_name}}</a>
+										</li>
+										{{ #children }}
+										<li>
+											<a class="dropdown-item last-subcategory " href=" " data-template-id="{{tamplate_id}} " data-category-id="{{category_id}} " ">{{category_name}}</a>
+									</li>
+									{{ /children }}
+								</ul>
+							</script>
 
 							<div class="form-group">
 								<select name="city_id" class="city-select" placeholder="<?php echo $this->lang->line('select_city'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
@@ -917,7 +825,6 @@
 							</div>
 
 							<div class="form-group">
-								<!--todo display currency/ take only numbers-->
 								<label for=""><?php echo $this->lang->line('price'); ?>:</label>
 								<div class="row">
 									<div class="col-sm-6">
@@ -961,7 +868,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="form-group field engine_capacity">
 									<label for=""><?php echo $this->lang->line('engine_capacity'); ?>:</label>
 									<div class="row">
@@ -973,7 +880,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="form-group field is_automatic">
 									<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
 										<option disabled selected value="" class="d-none">
@@ -1028,7 +935,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="form-group field floors_number">
 									<label for=""><?php echo $this->lang->line('floors_number'); ?>:</label>
 									<div class="row">
@@ -1041,13 +948,12 @@
 									</div>
 								</div>
 
-							<div class="form-group field property_state_id">
+								<div class="form-group field property_state_id">
 									<select multiple name="" class="property-state-select multiple" placeholder="<?php echo $this->lang->line('state'); ?>">
 									</select>
 								</div>
-								
+
 								<select name="with_furniture" class="status-select field with_furniture" placeholder="<?php echo $this->lang->line('select_status'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_status'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 									<option value=""><?php echo $this->lang->line('all'); ?></option>
 									<option value="1"><?php echo $this->lang->line('with_furniture'); ?></option>
@@ -1131,26 +1037,25 @@
 									</select>
 								</div>
 
-						<div class="form-group field certificate_name">
+								<div class="form-group field certificate_name">
 									<select multiple name="" class="certificates-select multiple" placeholder="<?php echo $this->lang->line('certificate'); ?>">
 									</select>
 								</div>
-								
+
 								<div class="form-group field schedule_name">
 									<select multiple name="" class="schedules-select multiple" placeholder="<?php echo $this->lang->line('schedule'); ?>">
 							</select>
 								</div>
 
-							<div class="form-group field gender">
+								<div class="form-group field gender">
 									<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
-<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
-									<option value=""><?php echo $this->lang->line('all'); ?></option>
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
 										<option value="1"><?php echo $this->lang->line('male'); ?></option>
 										<option value="2"><?php echo $this->lang->line('female'); ?></option>
 									</select>
 								</div>
-								
+
 								<div class="form-group field salary">
 									<label for=""><?php echo $this->lang->line('salary'); ?>:</label>
 									<div class="row">
@@ -1281,14 +1186,14 @@
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">
 
-				<div class="row no-gutters">
-					<div class="col-11">
-						<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
-					</div>
-					<div class="col-1">
-						<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
-					</div>
-				</div>
+						<div class="row no-gutters">
+							<div class="col-11">
+								<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
+							</div>
+							<div class="col-1">
+								<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -1308,15 +1213,17 @@
         </button>
 			</div>
 			<div class="modal-body text-center">
-				<h6 class="text"><?php echo $this->lang->line('ask_register'); ?></h6>
+				<h6 class="text">
+					<?php echo $this->lang->line('ask_register'); ?>
+				</h6>
 			</div>
 			<div class="modal-footer">
-			<div class="container">
-			<div class="row">
-				<div class="col-6 col-sm-3 offset-sm-3"><button class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button></div>
-				<div class="col-6 col-sm-3"><button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('cancel_1'); ?></button></div>
-			</div>
-			</div>
+				<div class="container">
+					<div class="row">
+						<div class="col-6 col-sm-3 offset-sm-3"><button class="btn button2 submit"><?php echo $this->lang->line('ok'); ?></button></div>
+						<div class="col-6 col-sm-3"><button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('cancel_1'); ?></button></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -1381,15 +1288,17 @@
         </button>
 			</div>
 			<div class="modal-body text-center">
-			<div class="error-message d-none"></div>
+				<div class="error-message d-none"></div>
 				<div class="qr-img"><img src="" width="220px" alt="QR code image"></div>
-				<div class="note"><?php echo $this->lang->line('qr_note'); ?></div>
+				<div class="note">
+					<?php echo $this->lang->line('qr_note'); ?>
+				</div>
 				<form id="qr-form">
-				<div class="form-group">
-					<input type="number" class="form-control" name="secret_code" placeholder="<?php echo $this->lang->line('enter_digits'); ?>">
+					<div class="form-group">
+						<input type="number" class="form-control" name="secret_code" placeholder="<?php echo $this->lang->line('enter_digits'); ?>">
 					</div>
 				</form>
-				
+
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn button2 submit" form="qr-form" disabled><?php echo $this->lang->line('ok'); ?></button>
@@ -1400,7 +1309,7 @@
 
 <!--verify registration modal-->
 <div class="modal fade" id="verify-modal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-sm">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -1,9 +1,10 @@
 //home page
-body{
+body {
 	font-size: 18px;
 }
+
 .btn {
-//	font-size: .95rem;
+	//	font-size: .95rem;
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
@@ -13,19 +14,19 @@ body{
 	font-size: .8rem
 }
 
-header.home .home-icon{
+header.home .home-icon {
 	display: inline-block;
 	vertical-align: middle;
 }
 
-//header.home .language-wrapper .language-switch a{
-header.home .language-wrapper .language-switch span{
+header.home .language-wrapper .language-switch span {
 	border: none;
-	    border-left: 1px solid #fff;
+	border-left: 1px solid #fff;
 }
-.qr-page .language-wrapper .language-switch span{
+
+.qr-page .language-wrapper .language-switch span {
 	border: none;
-	    border-left: 1px solid #000;
+	border-left: 1px solid #000;
 }
 
 .categories .category-slider .slick-slide h6 {
@@ -44,7 +45,7 @@ header.home .language-wrapper .language-switch span{
 .profile-page .products .card .overlay .text,
 .home-page .products .card .overlay .text,
 .category-page .products .card .overlay .text {
-direction: ltr;
+	direction: ltr;
 }
 
 section.search {
@@ -79,7 +80,6 @@ section.search {
 
 .home-page .products .main .sub-categories,
 .category-page .products .main .sub-categories {
-	//	    text-align: right;
 	direction: rtl;
 }
 
@@ -135,7 +135,7 @@ section.search {
 }
 
 //post ad modal
-#ad-modal .modal-content ,
+#ad-modal .modal-content,
 #edit-ad-modal .modal-content,
 #filter-modal .modal-content {
 	direction: rtl;
@@ -165,7 +165,7 @@ section.search {
 }
 
 #filter-modal .multiple .options {
-	    direction: ltr;
+	direction: ltr;
 }
 
 #register-modal .form-group,
@@ -174,27 +174,28 @@ section.search {
 	text-align: right
 }
 
-#login-modal{
-	.qr-login {
+#login-modal {
+	.qr-login,.verify-registered {
 		direction: rtl;
 		text-align: right;
 	}
 }
 
-.border-middle{
-		border-right: none;
-		border-left: 1px solid #dee2e6;
-	}
+.border-middle {
+	border-right: none;
+	border-left: 1px solid #dee2e6;
+}
 
-#register-form{
-    direction: rtl;
-	.phone-wrapper{
+#register-form {
+	direction: rtl;
+	.phone-wrapper {
 		direction: ltr;
-		input{
+		input {
 			direction: rtl;
 		}
 	}
 }
+
 #fileuploader-edit-ad,
 #fileuploader-ad,
 #fileuploader-edit-ad-main,
@@ -208,7 +209,7 @@ section.search {
 //card modal
 #card-modal {
 	.card {
-//		font-size: .9rem;
+		//		font-size: .9rem;
 	}
 	.card-body .row {
 		direction: rtl;
@@ -217,9 +218,12 @@ section.search {
 		text-align: right;
 	}
 }
-#card-modal .card .card-body .label,#card-modal .card .show-contact{
+
+#card-modal .card .card-body .label,
+#card-modal .card .show-contact {
 	font-size: .8rem;
 }
+
 //footer
 footer {
 	direction: rtl;
@@ -236,7 +240,6 @@ footer {
 
 .profile-page #profile-tabs .etabs {
 	direction: rtl;
-//	text-align: right;
 }
 
 .profile-page #profile-tabs .chats ul,
@@ -253,18 +256,23 @@ footer {
 .profile-page .products .main {
 	direction: rtl
 }
-.search-page .products .card .container, .profile-page .products .card .container{
+
+.search-page .products .card .container,
+.profile-page .products .card .container {
 	padding-right: 0;
 	padding-left: 15px
 }
+
 .search-page .products .card .price,
 .profile-page .products .card .price {
 	left: auto;
 	right: -35px
 }
-#card-modal .card .card-body .price{
+
+#card-modal .card .card-body .price {
 	direction: rtl
 }
+
 .search-page .products .card .card-body,
 .profile-page .products .card .card-body {
 	text-align: right
@@ -291,53 +299,53 @@ header.home .header-account-logged li a {
 #success-modal .text,
 #success-btn-modal .text,
 #verify-modal .text,
-#delete-modal .text{
+#delete-modal .text {
 	direction: rtl
 }
 
-#verify-modal .code{
+#verify-modal .code {
 	direction: rtl;
-}
-.profile-page .session .new-msg{
-		left: auto;
-	right: 5px;
-//	right: -28px
-}
-//.profile-page .chat-tab-link .new-msg{
-//	left: auto;
-//	right: -28px
-//}
-#report-form .SumoSelect{
-	direction: rtl;
-    text-align: right;
 }
 
-.error-message{
+.profile-page .session .new-msg {
+	left: auto;
+	right: 5px;
+}
+
+#report-form .SumoSelect {
+	direction: rtl;
+	text-align: right;
+}
+
+.error-message {
 	direction: rtl;
 	text-align: right;
 	border-right: 2px solid transparent;
 	border-left: none;
 	border-color: #fa7751;
 }
-.search-result-label{
+
+.search-result-label {
 	direction: rtl;
 	text-align: right
 }
 
-#delete-account-modal .note{
+#delete-account-modal .note {
 	direction: rtl;
 	text-align: right !important;
 }
-#terms-modal .text{
+
+#terms-modal .text {
 	text-align: right;
 	direction: rtl
 }
 
-#user-ads .filter-dropdown .dropdown-menu li{
-	    text-align: right;
-    padding-right: 10px;
-    padding-left: 0;
+#user-ads .filter-dropdown .dropdown-menu li {
+	text-align: right;
+	padding-right: 10px;
+	padding-left: 0;
 }
-header.home .notes-dropdown .dropdown-menu{
+
+header.home .notes-dropdown .dropdown-menu {
 	direction: rtl
 }

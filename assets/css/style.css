@@ -1385,12 +1385,12 @@ select option.placeholder {
 
 #login-modal .modal-body {
   text-align: center; }
-#login-modal .qr-login {
+#login-modal .qr-login, #login-modal .verify-registered {
   color: #0075b4;
   margin-bottom: 10px;
   text-align: left;
   text-decoration: underline; }
-#login-modal .qr-login:hover {
+#login-modal .qr-login:hover, #login-modal .verify-registered:hover {
   color: #125b82;
   cursor: pointer; }
 

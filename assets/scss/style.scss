@@ -104,69 +104,12 @@ body {
 }
 
 .spinner {
-	margin: auto; //	width: 60px;
-	//	height: 60px;
+	margin: auto; 
 	position: relative;
-	top: 25%; //	top: 40%;
-	text-align: center; //	-webkit-animation: sk-rotate 2.0s infinite linear;
-	//	animation: sk-rotate 2.0s infinite linear;
+	top: 25%;
+	text-align: center; 
 }
 
-//
-//.dot1,
-//.dot2 {
-//	width: 60%;
-//	height: 60%;
-//	display: inline-block;
-//	position: absolute;
-//	top: 0;
-//	background-color: $main;
-//	border-radius: 100%;
-//	-webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-//	animation: sk-bounce 2.0s infinite ease-in-out;
-//}
-//
-//.dot2 {
-//	top: auto;
-//	bottom: 0;
-//	-webkit-animation-delay: -1.0s;
-//	animation-delay: -1.0s;
-//}
-//
-//@-webkit-keyframes sk-rotate {
-//	100% {
-//		-webkit-transform: rotate(360deg)
-//	}
-//}
-//
-//@keyframes sk-rotate {
-//	100% {
-//		transform: rotate(360deg);
-//		-webkit-transform: rotate(360deg)
-//	}
-//}
-//
-//@-webkit-keyframes sk-bounce {
-//	0%,
-//	100% {
-//		-webkit-transform: scale(0.0)
-//	}
-//	50% {
-//		-webkit-transform: scale(1.0)
-//	}
-//}
-//
-//@keyframes sk-bounce {
-//	0%,
-//	100% {
-//		transform: scale(0.0);
-//		-webkit-transform: scale(0.0);
-//	}
-//	50% {
-//		transform: scale(1.0);
-//		-webkit-transform: scale(1.0);
-//	}
-//}
 .sk-circle {
 	margin: 100px auto;
 	width: 80px;
@@ -349,7 +292,7 @@ body {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	font-size: .8rem;
-	font-weight: bold; //	box-shadow: 0px 6px 20px 0px rgba(168, 168, 168, 1);
+	font-weight: bold; 
 	line-height: inherit
 }
 
@@ -359,7 +302,7 @@ body {
 
 .button1 {
 	background-color: #fff;
-	color: $main; //	box-shadow: 0px 6px 20px 0px rgba(168, 168, 168, 1);
+	color: $main;
 }
 
 .button1:hover {
@@ -444,8 +387,6 @@ summary:focus {
 
 //slick slider
 .slick-slider {
-	//		width: 100%; 
-	//	background-color: #fff;
 	margin: auto;
 	width: 100%;
 	margin-top: 0px;
@@ -466,7 +407,6 @@ summary:focus {
 	.slick-slide:focus {
 		outline: none;
 	}
-
 }
 
 .slick-arrow {
@@ -561,7 +501,7 @@ summary:focus {
 			}
 		}
 		.card-img-top {
-			background: no-repeat center; //				background-size: cover;
+			background: no-repeat center; 
 			background-size: contain;
 			display: block;
 			height: 200px;
@@ -607,14 +547,11 @@ summary:focus {
 			padding-left: 0;
 		}
 		.card-left {
-			//				position: relative;
 			height: 100%;
 			min-height: 200px;
 
 		}
 		.card-img-top {
-			//height: 200px;
-			//			height: 100%;
 		}
 		.price {
 			bottom: 5%;
@@ -626,7 +563,7 @@ summary:focus {
 			height: 100%;
 			.details {
 				max-height: 55px;
-				max-width: 100%; //				overflow: auto; 
+				max-width: 100%; 
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -672,7 +609,6 @@ summary:focus {
 			cursor: pointer;
 		}
 		.card-img-top {
-			//							transform: scale(.9);
 			transform: translateY(30px);
 			cursor: pointer;
 		}
@@ -687,7 +623,7 @@ summary:focus {
 	z-index: 100;
 	.show-social {
 		padding: 3px 5px;
-		padding-left: 4px; //		background-color: #eee;
+		padding-left: 4px;
 		background-color: $main;
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
@@ -710,7 +646,6 @@ summary:focus {
 			img {
 				width: 35px
 			}
-
 		}
 		.icon:hover {
 			transform: scale(1.1);
@@ -735,20 +670,17 @@ header.home {
 	min-height: 60px;
 	.main-row {
 		min-height: 60px
-	} //	justify-content: center;
+	} 
 	.logo {
 		background: $main;
 		img {
-			//			width: 50px;
-			//			width: 150px
 			width: 100%
 		}
 	}
 	.language-wrapper {
 		.language-switch {
-			text-transform: uppercase; //			padding: 0 2.4rem;
-			//			justify-content: center;
-		} //		.language-switch a {
+			text-transform: uppercase;
+		} 
 		.language-switch span {
 			color: #fff;
 			border-right: 1px solid #fff;
@@ -756,19 +688,18 @@ header.home {
 			cursor: pointer;
 			text-decoration: none;
 			font-size: .8rem;
-		} //		.language-switch a.selected {
+		}
 		.language-switch span.selected {
 			font-weight: bold
-		} //		.language-switch a:hover {
+		}
 		.language-switch a:hover {
 			color: #eee
-		} //		.language-switch a:last-of-type {
+		}
 		.language-switch span:last-of-type {
 			border: none;
 		}
 	}
 	@media(max-width: 768px) {
-		//		.language-wrapper .language-switch a,
 		.language-wrapper .language-switch span,
 		.home-icon {
 			font-size: .7rem
@@ -814,8 +745,6 @@ header.home {
 
 	.notifications-dropdown,
 	.notes-dropdown {
-		//	text-align: right;
-		//	margin-right: 10%;
 		.bell-icon {
 			position: relative
 		}
@@ -855,8 +784,6 @@ header.home {
 
 		}
 
-		.title {}
-
 		.body {
 			font-size: .75rem;
 			width: 100%;
@@ -875,7 +802,7 @@ header.home {
 			color: $main;
 			padding: 0;
 			text-align: center;
-			line-height: 17px; //			padding: 3px;
+			line-height: 17px;
 			font-size: .7rem;
 		}
 	}
@@ -975,8 +902,6 @@ header.home {
 	position: absolute;
 	top: 0;
 	.category-slider {
-		//		width: 100%; 
-		//	background-color: #fff;
 		width: 91%;
 		.slick-slide {
 			img {
@@ -1066,11 +991,10 @@ header.home {
 				margin-right: auto
 			}
 			.right-col {
-				padding-right: 20px; //				padding-top: 70px;//padding top equal to post ad btn height
+				padding-right: 20px; 
 				text-align: center;
 				position: relative;
 				.place-ad {
-					//					width: calc(100% - 20px);
 					width: 190.5px;
 					position: absolute;
 					z-index: 3;
@@ -1091,14 +1015,13 @@ header.home {
 			}
 			@media (max-width: 768px) {
 				.right-col {
-					//					padding-left: 20px;
 					padding-right: 45px;
 					padding-left: 45px;
 					text-align: left;
 					.place-ad {
 						margin-bottom: 10px;
 						position: relative;
-						right: auto; //						width: 75%
+						right: auto;
 					}
 				}
 				.banners {
@@ -1107,14 +1030,12 @@ header.home {
 			}
 		}
 		.category-name {
-			//			padding-left: 15px;
-			//			margin-left: 7px;
 			padding-top: 3px;
 			color: $main;
 			font-weight: bold;
 			font-size: 1rem;
 			text-transform: capitalize
-		} //		@media (max-width: 768px)
+		}
 		.controls {
 			margin-top: 10px;
 			position: relative;
@@ -1165,10 +1086,8 @@ header.home {
 //products - search page
 .search-page,
 .profile-page {
-
 	.products {
-		//		margin-top: 25px;
-		margin-top: 10px; //		margin-bottom: 30px;
+		margin-top: 10px;
 		margin-bottom: 0;
 		@extend %card-horizontal;
 		.main {
@@ -1236,8 +1155,6 @@ header.home {
 		}
 	}
 	.user-ads {
-		//		max-height: 490px;
-		//		overflow-y: auto;
 		.status {
 			position: absolute;
 			bottom: 0;
@@ -1256,9 +1173,6 @@ header.home {
 	}
 	#profile-tabs {
 		margin-bottom: 20px;
-		.tab {
-			//			padding-right: 10%
-		}
 		.etabs {
 			text-align: center;
 			border-bottom: solid 1px $main;
@@ -1266,7 +1180,7 @@ header.home {
 			padding: 0
 		}
 		.tab {
-			display: inline-block; //			width: calc(90% / 4);
+			display: inline-block;
 		}
 		.tab a {
 			font-size: .9rem;
@@ -1284,7 +1198,6 @@ header.home {
 			color: $grey-hover
 		}
 		.tab.active {
-			//			padding-top: 6px;
 			position: relative;
 			top: 1px;
 
@@ -1321,17 +1234,11 @@ header.home {
 				font-size: .8rem;
 			}
 		}
-		.sessions,
-		.bookmarks-list {
-			//			max-height: 400px;
-			//    overflow-y: auto;
-		}
 	}
 }
 
 .main-wrapper {
 	min-height: calc(100vh - 200px);
-
 	/* Equal to height of footer */
 	/* But also accounting for potential margin-bottom of last child */
 	//  margin-bottom: -50px;
@@ -1387,9 +1294,6 @@ footer {
 //global
 .modal-content {
 	font-size: .8rem;
-	.btn.submit {
-		//		width: 60%; //		font-size: .9rem
-	}
 }
 
 .modal-header {
@@ -1430,13 +1334,13 @@ select option.placeholder {
 	.modal-footer {
 		padding-top: 7px;
 		padding-bottom: 15px
-	} //	@extend %card;
+	} 
 	.card {
 		font-size: .8rem;
 		border: none;
 		box-shadow: 0 0 0 0;
 		.card-img-top {
-			background: no-repeat center; //			background-size: cover;
+			background: no-repeat center;
 			background-size: contain;
 			display: block;
 			height: 200px;
@@ -1471,7 +1375,6 @@ select option.placeholder {
 			}
 
 			.label {
-				//				font-weight: bold;
 				font-size: .7rem;
 				font-family: "gothic";
 				color: #888
@@ -1495,7 +1398,7 @@ select option.placeholder {
 					transition: .1s
 				}
 				.icon:hover {
-					font-size: .75rem; //					color: orange;
+					font-size: .75rem; 
 					cursor: pointer
 				}
 			}
@@ -1524,16 +1427,8 @@ select option.placeholder {
 			color: $main;
 			font-size: .9rem
 		}
-		.details {
-			//			width: 70%;
-			//			margin: auto;
-		}
 		.show-contact {
-			//			min-height: 28px;
-			//			padding: 3px 6px;
-			font-size: .7rem; //			letter-spacing: .5px;
-			//			font-weight: normal;
-			//			margin: 5px 0;
+			font-size: .7rem; 
 			color: $main;
 			text-decoration: underline;
 			font-family: "gothic";
@@ -1642,8 +1537,7 @@ select option.placeholder {
 		line-height: 25px;
 		border-radius: 2rem;
 		height: auto;
-		min-height: 35px; //		padding-top: 5px;
-		//		padding-bottom: 5px;
+		min-height: 35px;
 		padding: 5px 3px;
 		font-size: .58rem;
 		font-weight: bold;
@@ -1652,7 +1546,7 @@ select option.placeholder {
 		background-color: #fff;
 		color: $main;
 		min-width: 40%;
-		text-align: center; //		z-index: 100000;
+		text-align: center;
 		cursor: grab !important
 	}
 	.ajax-file-upload input[type="file"] {
@@ -1668,7 +1562,6 @@ select option.placeholder {
 
 .ajax-file-upload-container {
 	.ajax-file-upload-statusbar {
-		//		border: 1px solid $main;
 		border: 1px solid #6c757d;
 		width: 40% !important;
 		overflow: hidden;
@@ -1710,9 +1603,6 @@ select option.placeholder {
 //register modal
 #register-modal,
 #login-modal {
-	.modal-body {
-		//		text-align: center
-	}
 	.social,
 	#fileuploader-register {
 		text-align: center
@@ -1723,7 +1613,7 @@ select option.placeholder {
 	}
 	input {
 		width: 100%;
-		margin: auto; //		padding-bottom: 2px;
+		margin: auto; 
 	}
 	.btn {
 		white-space: nowrap;
@@ -1776,7 +1666,6 @@ select option.placeholder {
 		background: #c8c8c8;
 		content: '';
 		z-index: 5;
-
 	}
 }
 
@@ -1784,13 +1673,13 @@ select option.placeholder {
 	.modal-body {
 		text-align: center
 	}
-	.qr-login {
+	.qr-login, .verify-registered {
 		color: #0075b4;
 		margin-bottom: 10px;
 		text-align: left;
 		text-decoration: underline
 	}
-	.qr-login:hover {
+	.qr-login:hover, .verify-registered:hover {
 		color: #125b82;
 		cursor: pointer;
 	}
@@ -1809,14 +1698,7 @@ select option.placeholder {
 #register-modal {
 	.lines:first-child {
 		margin-top: 0px;
-	} //	.border-middle {
-	//		border-right: 1px solid #dee2e6;
-	//	}
-	//	@media(max-width: 768px) {
-	//		.border-middle {
-	//			border: none
-	//		}
-	//	}
+	} 
 }
 
 #qr-modal,
@@ -1909,9 +1791,7 @@ select option.placeholder {
 	}
 	a.select:hover {
 		border-color: $main
-	} //	.dropdown-menu{
-	//		direction: rtl;
-	//	}
+	} 
 	.dropdown-toggle::after {
 		color: #000;
 	}
@@ -1924,10 +1804,10 @@ select option.placeholder {
 	.image-wrapper {
 		max-width: 120px;
 		text-align: center;
-		border: 1px solid #6c757d; //    width: 40% !important;
+		border: 1px solid #6c757d; 
 		overflow: hidden;
 		text-overflow: ellipsis;
-		display: inline-block; //    min-height: 180px;
+		display: inline-block; 
 		margin-top: 10px;
 		margin-right: 10px;
 		margin: 5px;
@@ -1954,7 +1834,6 @@ select option.placeholder {
 	}
 }
 
-////////////////////
 //rating stars
 fieldset,
 .rate-group {
@@ -2014,8 +1893,8 @@ label {
 	.chat {
 		list-style: none;
 		background: none;
-		margin: 0; //    padding: 0 0 50px 0;
-		padding: 0 0 10px 0; //    margin-top: 60px;
+		margin: 0; 
+		padding: 0 0 10px 0; 
 		margin-bottom: 10px;
 		overflow-y: auto;
 		max-height: 50vh;
@@ -2093,9 +1972,6 @@ label {
 	.other .msg time {
 		color: #ddd;
 	}
-	.other .msg time:before {
-		//		color: #bbb;
-	}
 
 	.send-wrapper {
 		position: relative;
@@ -2103,7 +1979,7 @@ label {
 			border-radius: 0
 		}
 		.telegram {
-			position: absolute; //			top: 0;
+			position: absolute; 
 			right: 0;
 			bottom: 0;
 			padding: 1px 1px 0 0;
@@ -2118,11 +1994,8 @@ label {
 header {
 	position: relative;
 	.new-msg {
-		//		position: absolute;
-		//		top: 2px;
-		//		left: -40px;
 		display: inline-block;
-		background-color: $main; //		border: 2px solid #fff;
+		background-color: $main;
 		border-radius: 50%;
 		width: 36px;
 		height: 30px;
@@ -2138,14 +2011,7 @@ header {
 			color: #fff
 		}
 
-	} //	.new-msg:hover {
-	//		background-color: #fff;
-	//		color: $main;
-	//		a {
-	//			text-decoration: none;
-	//			color: $main
-	//		}
-	//	}
+	}
 }
 
 .profile-page .sessions {
@@ -2157,8 +2023,7 @@ header {
 	.new-msg {
 		position: absolute;
 		top: 29%;
-		left: 5px; //		background-color: #c30a30;
-		//		border: 2px solid #fff;
+		left: 5px;
 		border-radius: 50%;
 		width: 36px;
 		height: 30px;

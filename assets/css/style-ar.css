@@ -143,7 +143,7 @@ section.search {
   direction: rtl;
   text-align: right; }
 
-#login-modal .qr-login {
+#login-modal .qr-login, #login-modal .verify-registered {
   direction: rtl;
   text-align: right; }
 
@@ -170,7 +170,8 @@ section.search {
 #card-modal .info-col {
   text-align: right; }
 
-#card-modal .card .card-body .label, #card-modal .card .show-contact {
+#card-modal .card .card-body .label,
+#card-modal .card .show-contact {
   font-size: .8rem; }
 
 footer {
@@ -197,7 +198,8 @@ footer {
 .profile-page .products .main {
   direction: rtl; }
 
-.search-page .products .card .container, .profile-page .products .card .container {
+.search-page .products .card .container,
+.profile-page .products .card .container {
   padding-right: 0;
   padding-left: 15px; }
 
