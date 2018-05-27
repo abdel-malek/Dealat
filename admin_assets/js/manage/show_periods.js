@@ -42,6 +42,7 @@ var period_buttons =[];
                  {
                     "targets": -1, // edit
                     "data": null,
+                    "visible" : can_show_edit_modal,
                     "mRender": function(date, type, full) {
                        	 return '<button id="" onclick="show_periods_manage_modal(\'' + full[0] + '\');"  type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		             }
@@ -67,8 +68,10 @@ var period_buttons =[];
  
 function show_periods_manage_modal (id) {
   $('#period_id').val(id);
+  show_delete_data_btns(id);
+  show_save_edits_data_btns(id);
   if(id != 0){ 
-  	  $('#period_delete_btn').css('display' , 'inline');
+  	  //$('#period_delete_btn').css('display' , 'inline');
 	  $.ajax({
         url: base_url + '/api/data_control/get_period_info/format/json?period_id='+id,
         type: "get",
@@ -97,7 +100,9 @@ $('.manage_period_modal').on('hidden.bs.modal', function () {
   	    $('#period_en_name').val('');
         $('#period_ar_name').val('');
         $('#period_days').val('');
-        $('#period_delete_btn').css('display' , 'none');
+        $('.data_delete_btn').css('display' , 'inline');
+        $('.data_update_btn').css('display' , 'inline');
+       // $('#period_delete_btn').css('display' , 'none');
 });
  
 function save_period () {

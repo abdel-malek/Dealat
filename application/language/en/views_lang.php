@@ -185,6 +185,7 @@ $lang['set_reject_note'] = 'Reject Note';
 $lang['write_reject_note'] = 'Write the reject reason';
 $lang['cont'] = 'Continue';
 $lang['cancel'] = 'Cancel';
+$lang['cancel_1'] = 'Cancel';
 $lang['ad_number'] = 'Ad number';
 $lang['expire_at'] = 'Expires at';
 $lang['published_at'] = 'Published at';
@@ -238,6 +239,7 @@ $lang['birthday'] = 'Birthday';
 $lang['user_image']=  'User image';
 $lang['user_details']=  'User Details';
 $lang['is_deleted'] = 'Account is Deleted ?';
+$lang['ads_num'] = 'His ads number';
 
 
 //categories manages
@@ -431,3 +433,5 @@ $lang['delete_sub_category'] = "Delete Sub Category";
 $lang['export'] = 'Export';
 $lang[''] = '';
 $lang[''] = '';
+
+$lang['shown'] = 'Shown';

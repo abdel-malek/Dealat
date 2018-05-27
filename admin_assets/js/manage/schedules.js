@@ -42,6 +42,7 @@ var sche_buttons = [];
                  {
                     "targets": -1, // edit
                     "data": null,
+                    "visible" : can_show_edit_modal,
                     "mRender": function(date, type, full) {
                        	 return '<button id="" onclick="show_schedule_manage_modal(\'' + full[0] + '\');"  type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		             }
@@ -66,10 +67,11 @@ var sche_buttons = [];
 
  
 function show_schedule_manage_modal (id) {
-  $('#schedule_delete_btn').css('display' , 'none');
   $('#schedule_id').val(id);
+  show_delete_data_btns(id);
+  show_save_edits_data_btns(id);
   if(id != 0){ 
-  	  $('#schedule_delete_btn').css('display' , 'inline');
+  	 // $('#schedule_delete_btn').css('display' , 'inline');
 	  $.ajax({
         url: base_url + '/api/data_control/get_schedule_info/format/json?schedule_id='+id,
         type: "get",
@@ -96,7 +98,9 @@ function show_schedule_manage_modal (id) {
 $('.schedules_manage_modal').on('hidden.bs.modal', function () {
   	    $('#schedule_en_name').val('');
         $('#schedule_ar_name').val('');
-        $('#schedule_delete_btn').css('display' , 'none');
+        $('.data_delete_btn').css('display' , 'inline');
+        $('.data_update_btn').css('display' , 'inline');
+       // $('#schedule_delete_btn').css('display' , 'none');
 });
  
 function save_schedule() {

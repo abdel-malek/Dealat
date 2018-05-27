@@ -79,20 +79,24 @@ class Data_manage extends REST_Controller {
 		}
    }
    
-   public function edit_type_post()
+  public function edit_type_post()
    {
         $this -> form_validation -> set_rules('type_id', 'type id', 'required');
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
-			$this->load->model('data_sources/types');
-			$data = array(
-			   'en_name' => $this->input->post('en_name'),
-			   'ar_name' => $this->input->post('ar_name'),
-			);
-			$type_id = $this->types->save($data , $this->input->post('type_id'));
-			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_BRAND , $type_id);
-			$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));
+			if(PERMISSION::Check_permission(PERMISSION::UPDATE_DATA , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+				 $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('no_permission')));
+			}else{
+				$this->load->model('data_sources/types');
+				$data = array(
+				   'en_name' => $this->input->post('en_name'),
+				   'ar_name' => $this->input->post('ar_name'),
+				);
+				$type_id = $this->types->save($data , $this->input->post('type_id'));
+				$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_BRAND , $type_id);
+				$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));
+			}
 		}
    }
    
@@ -390,23 +394,27 @@ class Data_manage extends REST_Controller {
  
  public function save_about_post()
  {
-    $this->load->model('data_sources/about_info');
-    $data = array(
-      'ar_about_us' => $this->input->post('ar_about_us'),
-      'en_about_us' => $this->input->post('en_about_us'),
-      'phone' => $this->input->post('phone') ,
-      'email' => $this->input->post('email'),
-      'facebook_link' => $this->input->post('facebook_link'),
-      'youtube_link' => $this->input->post('youtube_link'),
-      'linkedin_link' => $this->input->post('linkedin_link'),
-      'twiter_link' => $this->input->post('twiter_link'),
-      'instagram_link' => $this->input->post('instagram_link'),
-      'ar_terms' => $this->input->post('ar_terms'),
-      'en_terms' => $this->input->post('en_terms'),
-	);
-   $saved = $this->about_info->save($data , 1);
-   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ABOUT_INFO);
-   $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
+    if(!PERMISSION::Check_permission(PERMISSION::UPDATE_ABOUT_INFO , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+    	$this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('no_permission')));
+    }else{
+    	$this->load->model('data_sources/about_info');
+	    $data = array(
+	      'ar_about_us' => $this->input->post('ar_about_us'),
+	      'en_about_us' => $this->input->post('en_about_us'),
+	      'phone' => $this->input->post('phone') ,
+	      'email' => $this->input->post('email'),
+	      'facebook_link' => $this->input->post('facebook_link'),
+	      'youtube_link' => $this->input->post('youtube_link'),
+	      'linkedin_link' => $this->input->post('linkedin_link'),
+	      'twiter_link' => $this->input->post('twiter_link'),
+	      'instagram_link' => $this->input->post('instagram_link'),
+	      'ar_terms' => $this->input->post('ar_terms'),
+	      'en_terms' => $this->input->post('en_terms'),
+		);
+	   $saved = $this->about_info->save($data , 1);
+	   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ABOUT_INFO);
+	   $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
+    }
  }
  
  public function load_certificates_page_get()

@@ -25,8 +25,8 @@
          </div> 
          <input type='hidden' id='type_model_id' />
         <div class="modal-footer">
-          <button onclick="save_type_model()" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button style="display: none"  onclick="delete_type_model()" id="type_model_delete_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button onclick="save_type_model()" class="btn btn-success data_update_btn"><?php echo $this->lang->line('save') ?></button>
+          <button style="display: none"  onclick="delete_type_model()" id="type_model_delete_btn"  type="button" class="btn btn-danger data_delete_btn"><?php echo $this->lang->line('delete') ?></button>
           <!-- <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->lang->line('close') ?></button> -->
         </div>
       </div>

@@ -37,9 +37,11 @@
 	           <!-- orders list -->
 	          <!-- <div class=""><label><input onclick="change_active_status(\'' + full[0] + '\');" name="active"  type="checkbox" class="js-switch" checked/> </label></div> -->
 	          <div class="clearfix"></div>
+	           <?php if(PERMISSION::Check_permission(PERMISSION::ADD_MAIN_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	            <div class="pull-left">
                    <button  style="margin-left: 10px;" id='add_main_comm_btn' onclick="show_comm_ad_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_new_main_commercial') ?></button>
                 </div>
+               <?php endif; ?>
 	            <div class="row">
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">

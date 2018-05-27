@@ -85,10 +85,12 @@
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
 			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="en_terms" id="en_terms"><?php echo $about_info->en_terms ?></textarea>
 			      	         </div>
-			               </div> 
-			               <div class='pull-right'>
-			               	  <button id="" onclick="save_about()" type="button" class="btn btn-primary"><?php echo $this->lang->line('save') ?></button>
 			               </div>
+			               <?php if(PERMISSION::Check_permission(PERMISSION::UPDATE_ABOUT_INFO , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+				               <div class='pull-right'>
+				               	  <button id="" onclick="save_about()" type="button" class="btn btn-primary"><?php echo $this->lang->line('save') ?></button>
+				               </div>
+				           <?php endif; ?>
 		                </form>
 	                  </div>
 	                </div>

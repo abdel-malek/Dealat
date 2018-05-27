@@ -124,7 +124,7 @@ var ads_buttons =[];
                     "mRender": function(date, type, full) {
                       // var full9 = full[9].split(" ");
                        //var template_id = full9[0];
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[10] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[10] + '\', \'' + 0 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         },
 	          ],
@@ -173,7 +173,7 @@ var ads_buttons =[];
             // highlight the new pendeing rows. 
             var new_count = response.data;
             var diff = new_count - current_pending_count;
-            console.log(diff);
+          //  console.log(diff);
             if(diff > 0){
               $(ads_table.rows().nodes()).each(function(index){
             	//console.log(index);
@@ -269,7 +269,7 @@ var ads_buttons =[];
     }
   });
  
- function show_ad_details (ad_id , tamplate_id) {
+ function show_ad_details (ad_id , tamplate_id , from_reports) {
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
@@ -383,18 +383,24 @@ var ads_buttons =[];
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             
             //show hide btns
+            show_delete_btn(from_reports , $item_info['publish_date']);
             if($item_info['status'] ==  PENDING){
-            	 $('.ads_details  #accept_btn').css('display', 'inline');
-            	 $('.ads_details  #reject_btn').css('display', 'inline');
+            	// $('.ads_details  #accept_btn').css('display', 'inline');
+            	 show_accept_btn(from_reports , $item_info['publish_date']);
+            	 //$('.ads_details  #reject_btn').css('display', 'inline');
+            	 show_reject_btn(from_reports , $item_info['publish_date']);
             	 $('.ads_details  .featured_div').css('display', 'none');
             	 $('.ads_details  .featured_select_div').css('display', 'inline');
             }
             if($item_info['status'] ==  ACCEPTED){
-                $('.ads_details  #hide_btn').css('display', 'inline');
-                $('.ads_details  #reject_btn').css('display', 'inline');
+               // $('.ads_details  #hide_btn').css('display', 'inline');
+                show_hide_btn(from_reports , 0 , $item_info['publish_date']);
+               // $('.ads_details  #reject_btn').css('display', 'inline');
+                show_reject_btn(from_reports);
             }
             if($item_info['status'] ==  HIDDEN){
-            	 $('.ads_details  #show_btn').css('display', 'inline');
+            	// $('.ads_details  #show_btn').css('display', 'inline');
+            	show_hide_btn(from_reports , 1 , $item_info['publish_date']);
             }
             
             //fill rejects notes
@@ -423,6 +429,81 @@ var ads_buttons =[];
       });
  }
  
+ 
+ function show_accept_btn (from_reported) {
+ 	if(from_reported == 0){ // before report
+ 	   if($.inArray(ACCEPT_AD, permissions) != -1){
+ 	   	  $('.ads_details  #accept_btn').css('display', 'inline');
+       }
+    }
+ }
+ 
+ function show_reject_btn (from_reported , publish_date) {
+ 	if(from_reported == 0){ // before report
+ 	   if($.inArray(REJECT_AD, permissions) != -1){ // if he have the permission to reject => always reject
+ 	   	  $('.ads_details  #reject_btn').css('display', 'inline');
+       }else{ // check if he have the permission to reject after accept
+       	  if(publish_date != null){ // the ad is accepted before
+       	  	  if($.inArray(REJECT_AFTER_ACCEPT, permissions) != -1){
+       	  	  	 $('.ads_details  #reject_btn').css('display', 'inline');
+       	  	  }
+       	  }
+       }
+   }else{ // after report
+      if($.inArray(REJECT_AFTER_REPORT, permissions) != -1){
+ 	   	  $('.ads_details  #reject_btn').css('display', 'inline');
+      }	
+   }
+ }
+ 
+ function show_hide_btn (from_reported , show_btn , publish_date) {
+ 	if(from_reported == 0){ // before report
+ 	   if($.inArray(HIDE_AD, permissions) != -1){
+ 	   	 if(show_btn == 0){
+ 	   	 	$('.ads_details  #hide_btn').css('display', 'inline');
+ 	   	 }else{
+ 	   	 	$('.ads_details  #show_btn').css('display', 'inline');
+ 	   	 }
+       }else{ // check if he have the permission to hide after accept
+       	  if(publish_date != null){ // the ad is accepted before
+       	  	  if($.inArray(HIDE_AFTER_ACCEPT, permissions) != -1){
+       	  	  	 if(show_btn == 0){
+		 	   	 	$('.ads_details  #hide_btn').css('display', 'inline');
+		 	   	 }else{
+		 	   	 	$('.ads_details  #show_btn').css('display', 'inline');
+		 	   	 }
+       	  	  }
+       	  }
+       }
+   }else{ // after report
+      if($.inArray(HIDE_AFTER_REPORT, permissions) != -1){
+ 	   	 if(show_btn == 0){
+ 	   	 	$('.ads_details  #hide_btn').css('display', 'inline');
+ 	   	 }else{
+ 	   	 	$('.ads_details  #show_btn').css('display', 'inline');
+ 	   	 }
+      }	
+   }
+ }
+ 
+ function show_delete_btn (from_reported , publish_date) {
+ 	if(from_reported == 0){ // before report
+ 	   if($.inArray(DELETE_AD, permissions) != -1){
+ 	   	 $('.ads_details  #delete_ad_btn').css('display', 'inline');
+       }else{ // check if he have the permission to delete after accept
+       	  if(publish_date != null){ // the ad is accepted before
+       	  	  if($.inArray(DELETE_AFTER_ACCEPT, permissions) != -1){
+       	  	  	 $('.ads_details  #delete_ad_btn').css('display', 'inline');
+       	  	  }
+       	  }
+       }
+   }else{ // after report
+      if($.inArray(DELETE_AFTER_REPORT, permissions) != -1){
+ 	   	  $('.ads_details  #delete_ad_btn').css('display', 'inline');
+      }	
+   }
+ }
+ 
  $('.ads_details').on('hidden.bs.modal', function () {
       $('.ads_details  .template_info').css('display', 'none');
  	  $('.images-slider').remove();
@@ -432,6 +513,7 @@ var ads_buttons =[];
       $('.ads_details  #reject_note_label').css('display', 'none');
       $('#expiry_edit_label').css('display' , 'none');
       $('.ads_details  #show_btn').css('display', 'none');
+      $('.ads_details  #delete_ad_btn').css('display', 'none');
  });
  
  

@@ -187,6 +187,7 @@ $lang['set_reject_note'] = 'ملاحظة الرفض';
 $lang['write_reject_note'] = 'اكتب اسباب الرفض هنا';
 $lang['cont'] = 'اكمل';
 $lang['cancel'] = 'تراجع';
+$lang['cancel_1'] = 'إلغاء';
 $lang['ad_number'] = 'رقم الإعلان';
 $lang['expire_at'] = 'ينتهي بـ';
 $lang['published_at'] = 'نُشر بـ';
@@ -428,3 +429,5 @@ $lang['edit_sub_category'] = 'تعديل صنف فرعي';
 $lang['hide_sub_category'] = 'إخفاء صنف فرعي';
 $lang['delete_sub_category'] = 'حذف صنف فرعي';
 $lang['export'] = 'تصدير';
+
+$lang['shown'] = 'ظاهر';

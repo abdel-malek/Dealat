@@ -129,7 +129,7 @@
           </div>
         <div class="modal-footer">
           <label style="display: none" id='has_ads_note'><?php echo $this->lang->line('has_ads_note') ?></label>
-          <button   onclick="save_category()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
+          <button  onclick="save_category()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
           <button  style="display: none" id="final_delete_category_btn"  type="button" class="btn btn-danger"  data-toggle="modal" data-target=".cat-delete-modal"><?php echo $this->lang->line('delete') ?></button>
           <button  style="display: none; background-color: #bdc3c7; border-color: #aaafb3;"  onclick="deactivate_cat()" id="delete_category_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('diactivate') ?></button>
           <button  style="display: none"  onclick="activate_cat()" id="activate_category_btn"  type="button" class="btn btn-primary"><?php echo $this->lang->line('activate') ?></button>

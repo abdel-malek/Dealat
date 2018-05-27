@@ -73,7 +73,7 @@
         <input type="hidden"  id="post_id"/>
         <div class="modal-footer">
           <button   onclick="save_comm()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="delete_comm()" id=""  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button style="display: none"  onclick="delete_comm()" id="delete_comm_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
           <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
           	 data-toggle="modal" data-target=".delete_modal"
 		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

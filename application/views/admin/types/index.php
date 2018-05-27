@@ -43,9 +43,11 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">
 	                  <div class="x_content">
-                  	    <div class="pull-left">
-                           <button onclick="show_manage_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_type') ?></button>
-                        </div>
+	                    <?php if(PERMISSION::Check_permission(PERMISSION::ADD_DATA , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+	                  	    <div class="pull-left">
+	                           <button onclick="show_manage_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_type') ?></button>
+	                        </div>
+	                    <?php endif; ?>
 	                    <table id="types_table" class="table table-striped table-bordered">
 	                      <thead>
 	                        <tr>

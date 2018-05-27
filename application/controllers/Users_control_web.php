@@ -129,6 +129,8 @@ class Users_control_web extends REST_Controller {
 		$this->load->model('data_sources/ads');
 		$user_id = $this->current_user->user_id;
 		$ads = $this->ads->get_user_ads_without_details($user_id);
+		//change seen status
+		$this->ads->change_ads_seen_status($user_id);
 		$this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 

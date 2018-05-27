@@ -2,6 +2,28 @@ var types_table;
 var type_models_table;
 var template = $('#filter_type_template_select').val();
 var types_buttons = [];
+var can_show_edit_modal = false;
+function show_delete_data_btns(id) {
+     if(id != 0){ // edit
+     	if($.inArray(DELETE_DATA, permissions) == -1){// do not have the permission
+ 		   $('.data_delete_btn').css('display' , 'none');
+ 	    } 
+     }else{ // add
+     	$('.data_delete_btn').css('display' , 'none');
+     }
+   }
+
+function show_save_edits_data_btns(id) {
+     if(id != 0){ // edit
+     	if($.inArray(UPDATE_DATA, permissions) == -1){// do not have the permission
+ 		   $('.data_update_btn').css('display' , 'none');
+ 	    } 
+     }else{ // add
+     	if($.inArray(ADD_DATA, permissions) == -1){// do not have the permission
+     	  $('.data_update_btn').css('display' , 'none');
+     	}
+     }
+  }
  $(document).ready(function() {
  	
  	if($.inArray(EXPORT_DATA, permissions) != -1){
@@ -17,6 +39,11 @@ var types_buttons = [];
              }
 		 );
  	}
+ 	
+ 	if($.inArray(UPDATE_DATA, permissions) != -1 || $.inArray(DELETE_DATA, permissions) != -1){
+ 		can_show_edit_modal = true;
+ 	}
+ 	
 
  	var types_TableButtons = function() {
            types_table = $("#types_table").DataTable({
@@ -57,7 +84,7 @@ var types_buttons = [];
 		         {
                     "targets": -2, // details
                     "data": null,
-                 //   "visible" : false,
+                    "visible" : can_show_edit_modal,
                     "mRender": function(date, type, full) {
                        	 return '<button id="" onclick="show_manage_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		             }
@@ -131,7 +158,7 @@ function show_models_modal (type_id) {
              {
                 "targets": -1, // models
                 "data": null,
-             //   "visible" : false,
+                "visible" : can_show_edit_modal,
                 "mRender": function(date, type, full) {
                     return '<button id="" onclick="show_manage_models_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
                   
@@ -164,10 +191,12 @@ function show_models_modal (type_id) {
   
 function show_manage_modal (type_id) {
    $('#type_id').val(type_id);
+   show_delete_data_btns(type_id);
+   show_save_edits_data_btns(type_id);
    if(type_id == 0){ // add
    	   $('#template_select_div').css('display' , 'inline');
    	   $('#type_category_select_div').css('display' , 'inline');
-   	   $('#type_delete_btn').css('display' , 'none');
+   	   //$('#type_delete_btn').css('display' , 'none');
    }else{ // edit
        $.ajax({
         url: base_url + '/api/data_control/get_type_info/format/json?type_id='+type_id,
@@ -197,12 +226,15 @@ function show_manage_modal (type_id) {
    $('.types_manage_modal').modal('show');
 }
 
+
  $('.types_manage_modal').on('hidden.bs.modal', function () {
 	   $('#template_label_div').css('display' , 'none');
 	   $('#template_select_div').css('display' , 'none');
 	   $('#type_category_label_div').css('display' , 'none');
 	   $('#type_category_select_div').css('display' , 'none');
 	   $('#type_delete_btn').css('display' , 'inline');
+	   $('.data_delete_btn').css('display' , 'inline');
+	   $('.data_update_btn').css('display' , 'inline');
 	   $('#type_en_name').val('');
        $('#type_ar_name').val('');
  });
@@ -237,7 +269,6 @@ function save_type () {
 	   	  data['type_id'] = type_id;
 	      url = base_url + '/admin/data_manage/edit_type/format/json';
 	   }
-	  // console.log(data);
 	    $.ajax({
 	        url: url,
 	        type: "post",
@@ -331,9 +362,11 @@ function delete_type () {
 
 function show_manage_models_modal (type_model_id) {
 	$('#type_model_id').val(type_model_id);
+	show_delete_data_btns(type_model_id);
+	show_save_edits_data_btns(type_model_id);
 	var type_id = $('#model_type_id').val();
 	if(type_model_id != 0){ // edit
-	  $('#type_model_delete_btn').css('display' , 'inline');
+	  //$('#type_model_delete_btn').css('display' , 'inline');
 	  $.ajax({
         url: base_url + '/api/data_control/get_type_model_info/format/json?type_model_id='+type_model_id,
         type: "get",
@@ -361,6 +394,8 @@ function show_manage_models_modal (type_model_id) {
 $('.type_model_manage_modal').on('hidden.bs.modal', function () {
 	 $('#type_model_en_name').val('');
      $('#type_model_ar_name').val('');
+     $('.data_delete_btn').css('display' , 'inline');
+	 $('.data_update_btn').css('display' , 'inline');
      $("body").addClass("modal-open");
  });
  

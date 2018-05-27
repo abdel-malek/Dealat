@@ -28,7 +28,7 @@
 	             </div>
 	         <?php endif; ?> 
 	         
-	         <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+	         <?php if(PERMISSION::Check_permission(PERMISSION::MAIN_COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                  <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
 	                <div class="tile-stats home_card">
 	                   <div class="icon"><i class="fa fa-money"></i></div>

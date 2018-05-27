@@ -23,6 +23,7 @@ $lang['not_an_admin'] = 'Oh sorry! Incorrect username or password, please try ag
 $lang['incorrect_verfication'] = 'Hmmm, Incorrect verification code, please try again.';
 $lang['not_a_qr_user'] = 'Oh sorry! Incorrect Pin code or the allowed period has expired, please try again.';
 $lang['no_users'] = 'No users in the selected filters';
+$lang['no_permission'] = 'you do not have permission to do this action!';
 
 // sms validation msg 
 //$lang['verification_msg'] = '<p> Welcome to Dealat! </p><p>Your activation code is </p>';

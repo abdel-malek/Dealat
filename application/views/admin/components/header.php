@@ -125,11 +125,15 @@
                   <?php endif; ?>  
                   
                   <!-- commercial ads -->
-                  <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                  <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN')) || PERMISSION::Check_permission(PERMISSION::MAIN_COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	                  <li><a><i class="fa fa-money"></i><?php echo ' ' ?><?php echo $this->lang->line('commercial_ads_manage') ?><span class="fa fa-chevron-down"></a>
 	                 	 <ul id="" class="nav child_menu">
+	                 	  <?php if(PERMISSION::Check_permission(PERMISSION::MAIN_COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?> 
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage/load_main_manage_page'); ?>"><?php echo $this->lang->line('main_ads') ?></a></li>
+	                 	  <?php endif; ?>
+	                 	  <?php if(PERMISSION::Check_permission(PERMISSION::COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/commercial_items_manage'); ?>"><?php echo $this->lang->line('others') ?></a></li>
+	                 	  <?php endif; ?>
 	                 	 </ul>
 	                  </li>
 	              <?php endif; ?>  

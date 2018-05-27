@@ -43,6 +43,7 @@ var city_buttons = [];
                  {
                     "targets": -1, // locations
                     "data": null,
+                    "visible" : can_show_edit_modal,
                     "mRender": function(date, type, full) {
                        	 return '<button id="" onclick="show_locations_modal(\'' + full[0] + '\');"  type="button" class="btn btn-primary" >'+lang_array['view']+'</li></button>';
 		             }
@@ -73,10 +74,12 @@ var city_buttons = [];
  
 function show_cities_manage_modal (city_id) {
   $('#manage_city_id').val(city_id);
-  $('#city_delete_btn').css('display' , 'none');
+ // $('#city_delete_btn').css('display' , 'none');
   $('#city_id').val(city_id);
+  show_delete_data_btns(city_id);
+  show_save_edits_data_btns(city_id);
   if(city_id != 0){ // edit 
-  	  $('#city_delete_btn').css('display' , 'inline');
+  	  //$('#city_delete_btn').css('display' , 'inline');
   	  $.ajax({
         url: base_url + '/api/data_control/get_city_info/format/json?city_id='+city_id,
         type: "get",
@@ -103,6 +106,8 @@ function show_cities_manage_modal (city_id) {
  $('.cities_manage_modal').on('hidden.bs.modal', function () {
   	    $('#city_en_name').val('');
         $('#city_ar_name').val('');
+        $('.data_delete_btn').css('display' , 'inline');
+        $('.data_update_btn').css('display' , 'inline');
  });
 
 
@@ -249,6 +254,7 @@ function show_locations_modal (city_id) {
              {
                 "targets": -1, 
                 "data": null,
+                "visible" : can_show_edit_modal,
                 "mRender": function(date, type, full) {
                     return '<button id="" onclick="show_manage_areas_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
                   
@@ -282,9 +288,11 @@ function show_locations_modal (city_id) {
  
  function show_manage_areas_modal (location_id) {
  	$('#location_id').val(location_id);
- 	$('#location_delete_btn').css('display' , 'none');
+ 	//$('#location_delete_btn').css('display' , 'none');
+ 	 show_delete_data_btns(location_id);
+     show_save_edits_data_btns(location_id);
      if(location_id != 0){ // edit
-     	  $('#location_delete_btn').css('display' , 'inline');
+     	  //$('#location_delete_btn').css('display' , 'inline');
 	  	  $.ajax({
 	        url: base_url + '/api/data_control/get_location_info/format/json?location_id='+location_id,
 	        type: "get",
@@ -311,6 +319,8 @@ function show_locations_modal (city_id) {
  $('.locations_manage_modal').on('hidden.bs.modal', function () {
   	    $('#location_en_name').val('');
 	    $('#location_ar_name').val('');
+	    $('.data_delete_btn').css('display' , 'inline');
+        $('.data_update_btn').css('display' , 'inline');
 	    $("body").addClass("modal-open");
  });
  

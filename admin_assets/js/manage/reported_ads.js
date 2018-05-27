@@ -1,6 +1,7 @@
 var reported_ads_table;
 var reports_table;
 var reports_buttons = [];
+var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
  $(document).ready(function() {
  	
  	if($.inArray(EXPORT_REPORTS, permissions) != -1){
@@ -58,7 +59,7 @@ var reports_buttons = [];
                     "targets": -2, // details
                     "data": null,
                     "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[3] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[3] + '\', \'' + 1 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         }  
 	          ],
@@ -79,39 +80,41 @@ var reports_buttons = [];
        
    // refresh
    setInterval(function() {
-		reported_ads_table.ajax.reload( null, false );
-		// reported_ads_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-		    // var data = this.data();
-		   // // console.log(data);
-		    // if(data[5] == 0){ // the reported not seen
-		    	// new PNotify({
-	              // title: lang_array['attention'],
-	              // text: lang_array['new_reported_ad']+data[1],
-	              // type: 'warning',
-	              // styling: 'bootstrap3',
-	              // buttons: {
-				        // sticker: false
-				   // }
-	          // });
-	         // // color the row (not working!)
-	         // $(this).css("background-color", "#f5dbc2");
-              // setTimeout(function () {
-                 // //   this.row.css("background-color", "#fff");
-              // }, 2500);
-		    // }
-		// });
-	     // set to seen
-		// $.ajax({
-		    // url: base_url + '/admin/items_manage/set_reports_to_seen/format/json',
-		    // type: "post",
-		    // dataType: "json",
-		    // global: false,     // this makes sure ajaxStart is not triggered
-		    // success: function(response) {
-		    // },error: function(xhr, status, error){
-		    // }
-		 // });
-		 
-		$.ajax({
+   	   if ($.fn.DataTable.isDataTable( '#reported_ads_table' ) ) { // if the reported ads page is open
+   	   	  reported_ads_table.ajax.reload( null, false );
+		  reported_ads_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+			    var data = this.data();
+			   // console.log(data);
+			    if(data[5] == 0){ // the reported not seen
+			    	new PNotify({
+		              title: lang_array['attention'],
+		              text: lang_array['new_reported_ad']+data[1],
+		              type: 'warning',
+		              styling: 'bootstrap3',
+		              buttons: {
+					        sticker: false
+					   }
+		          });
+		         $.playSound(alert_notify_path);
+		         // color the row (not working!)
+		         // $(this).css("background-color", "#f5dbc2");
+	              // setTimeout(function () {
+	                  //   this.row.css("background-color", "#fff");
+	              // }, 2500);
+			    }
+		 });
+		    // set to seen
+		 $.ajax({
+		    url: base_url + '/admin/items_manage/set_reports_to_seen/format/json',
+		    type: "post",
+		    dataType: "json",
+		    global: false,     // this makes sure ajaxStart is not triggered
+		    success: function(response) {
+		    },error: function(xhr, status, error){
+		    }
+		  });
+   	   }else{
+   	   	 $.ajax({
 		    url: base_url + '/admin/items_manage/get_not_seen_reported/format/json',
 		    type: "get",
 		    dataType: "json",
@@ -119,6 +122,7 @@ var reports_buttons = [];
 		    success: function(response) {
 		    	var unseen_count = response.data.length;
 		    	if(unseen_count != 0){
+		    	    $.playSound(alert_notify_path);
 		    		$.each(response.data, function( index, value ) {
 					   new PNotify({
 			              title: lang_array['attention'],
@@ -130,11 +134,13 @@ var reports_buttons = [];
 						   }
 			           });  
 					});
+					
 		    	}
-		    	console.log(response.data);
+		    	//console.log(response.data);
 		    },error: function(xhr, status, error){
 		    }
 		 });
+   	   }
 	  },  6000);  //3600000
    
  });
