@@ -184,4 +184,12 @@ class Users extends MY_Model {
      $q = parent::get_by(array('is_active' => 1 , 'is_deleted' =>0));
 	 return $q;
   }
+  
+  public function get_users_with_activation_codes()
+  {
+  	$this->db->select('users.name , users.phone , user_activation_codes.code , user_activation_codes.is_active as code_active , user_activation_codes.created_at , user_activation_codes.activation_code_id');
+	$this->db->join('user_activation_codes' , 'users.user_id = user_activation_codes.user_id' , 'left');
+	$this->db->where('users.is_deleted' , 0);
+	return parent::get();
+  }
 }

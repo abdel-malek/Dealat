@@ -134,6 +134,8 @@ $lang['notifications'] = 'الإشعارات';
 $lang['about_us_manage'] = 'إدارة معلومات حول';
 $lang['admins_manage'] = 'إدارة مستخدمي لوحة التحكم';
 $lang['admins_log'] = 'سجل الإجراءات';
+$lang['users_report'] = 'تقرير المستخدمين'; 
+$lang['activation_codes_report'] = 'تقرير رموز التفعيل';
 
 
 
@@ -241,6 +243,14 @@ $lang['birthday'] = 'تاريخ الميلاد';
 $lang['user_image']=  'الصورة الشخصيةٍ';
 $lang['user_details']=  'تفاصيل المستخدم';
 $lang['is_deleted'] = 'الحساب محذوف؟';
+$lang['users_activations_cods'] = 'قائمة رموز التفعيل للمستخدمين';
+$lang['code_status'] = 'الحالة';
+$lang['code'] = 'الرمز';
+$lang['used'] = 'مستخدم';
+$lang['not-used'] = 'غير مستخدم';
+$lang['verify_registered'] = "قمت بالتسجيل مسبقاً؟ تفعيل الحساب";
+$lang['ad_contact_phone'] = 'رقم التواصل';
+
 
 //categories manages
 $lang['category_name'] = "اسم الصنف";

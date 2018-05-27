@@ -379,6 +379,7 @@ var ads_buttons =[];
 			//fill seller info
 			$('.ads_details  #ad_seller_name').html($item_info['seller_name']);
 			$('.ads_details  #ad_seller_phone').html($item_info['seller_phone']);
+			$('.ads_details  #ad_contact_phone').html($item_info['seller_phone']);
             
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             

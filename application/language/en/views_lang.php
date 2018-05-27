@@ -122,7 +122,9 @@ $lang['home']= 'Home';
 $lang['categories_management'] = "Categories Manage";
 $lang['ads_management'] = "Users Ads Manage";
 $lang['commercial_ads_manage'] = "Commercials Manage";
-$lang['users_manage'] = "Users Manage"; 
+$lang['users_manage'] = "Users Manage";
+$lang['users_report'] = 'Users Report'; 
+$lang['activation_codes_report'] = 'Activation Cods Report';
 $lang['data_manage']= 'Data Manage';
 $lang['types']= 'Brands';
 $lang['pending_ads']= 'Pending ads';
@@ -240,6 +242,14 @@ $lang['user_image']=  'User image';
 $lang['user_details']=  'User Details';
 $lang['is_deleted'] = 'Account is Deleted ?';
 $lang['ads_num'] = 'His ads number';
+$lang['users_activations_cods'] = 'Users Activations Codes List';
+$lang['code_status'] = 'Status';
+$lang['code'] = 'Code';
+$lang['used'] = 'Used';
+$lang['not-used'] = 'Not Used';
+$lang['verify_registered'] = "Already registered? verify account";
+$lang['ad_contact_phone'] = 'Contact Phone';
+
 
 
 //categories manages

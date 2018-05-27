@@ -257,7 +257,8 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/admins.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/actions_log.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/certificates.js"></script>
-     <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/users_codes.js"></script>
    
   </body>
 </html>

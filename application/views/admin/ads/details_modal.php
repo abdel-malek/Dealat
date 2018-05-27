@@ -273,7 +273,7 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                    <form id="seller_info_ad" acrion="post" data-parsley-validate class="form-horizontal form-label-left">
-                   	   <div class="form-group">
+                   	  <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('seller_name') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_seller_name'></label>
@@ -283,6 +283,12 @@
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('seller_phone') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_seller_phone'></label>
+		      	         </div>
+		              </div>
+		              <div class="form-group">
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('ad_contact_phone') ?></label>
+		      	         <div class="col-md-6 col-sm-6 col-xs-12">
+		      	           <input  class="form-control"  type='text' id='ad_contact_phone' />
 		      	         </div>
 		              </div>
                    </form>

@@ -491,5 +491,34 @@ class Users_manage extends REST_Controller {
 	  echo json_encode($output);
   }
   
+  public function load_activation_codes_page_get()
+  {
+  	 $this -> data['subview'] = 'admin/users/activation_codes_report';
+	 $this -> load -> view('admin/_main_layout', $this -> data);
+  }
+  
+  public function get_users_activation_codes_get()
+  {
+  	  
+      $users = $this->users->get_users_with_activation_codes();
+	  $output = array("aaData" => array());
+      foreach ($users as $row) {
+      	    $recorde = array();
+			$recorde[] = $row -> activation_code_id;
+			$recorde[] = $row -> created_at;
+			$recorde[] = $row -> name;
+			$recorde[] = '00963 -'.$row-> phone;
+		    $recorde[] = $row -> code;
+			if($row->code_active == 1){
+				$recorde[] = $this->lang->line('used');
+			}else{
+				$recorde[] = $this->lang->line('not-used');
+			}
+			$recorde[] = $row->code_active;
+			$output['aaData'][] = $recorde;
+	   }
+	  echo json_encode($output);
+  }
+  
 
 }

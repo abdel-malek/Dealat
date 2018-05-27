@@ -108,6 +108,9 @@ class Ads extends MY_Model {
 			$this->load->model('data_sources/user_favorite_ads');
 			$q->is_favorite =  $this->user_favorite_ads->check_favorite($user_id , $ad_id);
 		}
+	    if($q->ad_contact_phone != null){
+	    	$q->seller_phone = $q->ad_contact_phone;
+	    }
 		return $q;
 	}
 
@@ -129,7 +132,7 @@ class Ads extends MY_Model {
 		return parent::get($ad_id , true);
     }
 	
-	public function get_ad_images($ad_id)
+   public function get_ad_images($ad_id)
 	{
 	   $this->load->model('data_sources/ad_images');
 	   return $this->ad_images->get_by(array('ad_id'=>$ad_id));

@@ -121,6 +121,14 @@
                   
                   <!-- user manage  -->
                   <?php if(PERMISSION::Check_permission(PERMISSION::USERS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                  	<li><a><i class="fa fa-group"></i><?php echo ' ' ?><?php echo $this->lang->line('users_manage') ?><span class="fa fa-chevron-down"></a>
+	                 	<ul id="" class="nav child_menu">
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><?php echo $this->lang->line('users_report') ?></a></li>
+	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/users_manage/load_activation_codes_page'); ?>"><?php echo $this->lang->line('activation_codes_report') ?></a></li>
+	                 	</ul>
+	                </li>
+                  	
+                  	
                     <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
                   <?php endif; ?>  
                   
