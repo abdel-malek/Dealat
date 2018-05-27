@@ -21,7 +21,6 @@ $(function () {
 			dataType: "json"
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				console.log(data);
 				var adData, negotiable, status, type, i, template, rendered, statusId1, statusId2;
 				for (i in data.data) {
 					if (data.data[i].is_negotiable === "0") {
@@ -123,7 +122,7 @@ $(function () {
 						}
 					});
 				});
-				//				$("#ads-filter-select")[0].sumo.reload();
+
 				var mixer2 = mixitup('#user-ads .main', {
 					selectors: {
 						control: '[data-mixitup-control]'
@@ -184,7 +183,6 @@ $(function () {
 				userInfo = data.data;
 				if (!userInfo.personal_image) {
 					//if image is null
-					//					userInfo.personal_image = '/assets/images/Dealat%20logo%20red.png';
 					userInfo.personal_image = '/assets/images/user2.jpg';
 				}
 				template = $('#user-info-template').html();
@@ -209,11 +207,6 @@ $(function () {
 				$("#edit-user-info-form input[name='phone']").val(data.data.phone);
 				$("#edit-user-info-form input[name='whatsup_number']").val(data.data.whatsup_number);
 				$("#edit-user-info-form input[name='birthday']").val(data.data.birthday);
-
-				//				if (data.data.visible_phone === "1") {
-				//					$("#edit-user-info-form input[name='visible_phone']").prop("checked", true);
-				//				}
-
 			}
 		});
 
@@ -380,7 +373,6 @@ $(function () {
 					}, 500);
 					setTimeout(function () {
 						$("#success-modal").modal("hide");
-						//						location.reload();
 					}, 3000);
 				}
 			});
@@ -529,6 +521,7 @@ $(function () {
 			var templateId, adId, catId, adStatus;
 			adId = $(this).parents(".card").data("adId");
 			templateId = $(this).parents(".card").data("templateId");
+			$("#edit-ad-form .template-id").val(templateId);
 			catId = $(this).parents(".card").data("categoryId");
 			adStatus = $(this).parents(".card").data("statusId");
 			if (adStatus == 3) {
@@ -545,7 +538,6 @@ $(function () {
 					template_id: templateId
 				}
 			}).done(function (data) {
-				console.log(data);
 				if (data.status === false) {} else {
 					//remove upload video except for properties category
 					if (templateId === 2) {
@@ -570,7 +562,6 @@ $(function () {
 
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
-					//					$("#edit-ad-modal input[name='location_id']").val(data.data.location_id);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
 					$("#edit-ad-modal .period-select")[0].sumo.reload();
 					$("#edit-ad-modal input[name='price']").val(data.data.price);
@@ -590,16 +581,7 @@ $(function () {
 
 					$("#edit-ad-modal textarea[name='description']").val(data.data.description);
 
-					//					if (data.data.type_id) {
-					//						$("#edit-ad-modal input[name='type_id']").val(data.data.type_id);
-					//						$("#edit-ad-modal .types-nav .select").text(data.data.type_name);
-					//					}
-					//					if (data.data.type_model_id) {
-					//						$("#edit-ad-modal input[name='type_model_id']").val(data.data.type_model_id);
-					//						$("#edit-ad-modal .types-nav .select").text(data.data.type_name + "-" + data.data.type_model_name);
-					//					}
 					if (data.data.type_id) {
-						//						$("#edit-ad-modal input[name='type_id']").val(data.data.type_id);
 						$("#edit-ad-modal select[name='type_id']").val(data.data.type_id).change();
 						$("#edit-ad-modal select[name='type_id']")[0].sumo.reload();
 						if (data.data.type_model_id) {
@@ -727,88 +709,6 @@ $(function () {
 				}
 			}
 
-//			console.log(hideArr);
-//			//vehicles
-//			if (templateId === 1) {
-//				if ($.inArray("manufacture_date", hideArr) === -1) {
-//					$("#edit-ad-modal input[name='manufacture_date']").attr("required", true);
-//				}
-//				if ($.inArray("kilometer", hideArr) === -1) {
-//					$("#edit-ad-modal input[name='kilometer']").attr("required", true);
-//				}
-//				if ($.inArray("is_automatic", hideArr) === -1) {
-//					$("#edit-ad-modal select[name='is_automatic']").attr("required", true);
-//				}
-//				//			if($.inArray("type_id", hideArr) === -1){
-//				//				$("#edit-ad-modal select[name='type_id']").attr("required", true);
-//				//			}
-//			} else {
-//				$("#edit-ad-modal input[name='manufacture_date']").removeAttr("required");
-//				$("#edit-ad-modal input[name='kilometer']").removeAttr("required");
-//				$("#edit-ad-modal select[name='is_automatic']").removeAttr("required");
-//				//			$("#edit-ad-modal select[name='type_id']").removeAttr("required");
-//			}
-//
-//			if (templateId === 1 || templateId === 3 || templateId === 4 || templateId === 5 || templateId === 6 || templateId === 7 || templateId === 9) {
-//				if ($.inArray("is_new", hideArr) === -1) {
-//					$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").attr("required", true);
-//				}
-//			} else {
-//				$("#edit-ad-modal select[name='is_new']").each(function () {
-//					$(this).removeAttr("required");
-//				});
-//			}
-//
-//			//only show upload video in properties
-//			if (templateId === 2) {
-//				$("#edit-ad-modal #fileuploader-ad-video").removeClass("d-none");
-//
-//				if ($.inArray("space", hideArr) === -1) {
-//					$("#edit-ad-modal input[name='space']").attr("required", true);
-//				}
-//				if ($.inArray("rooms_num", hideArr) === -1) {
-//					$("#edit-ad-modal input[name='rooms_num']").attr("required", true);
-//				}
-//				if ($.inArray("floor", hideArr) === -1) {
-//					$("#edit-ad-modal input[name='floor']").attr("required", true);
-//				}
-//				if ($.inArray("property_state_name", hideArr) === -1) {
-//					$("#edit-ad-modal select[name='property_state_id']").attr("required", true);
-//				}
-//			} else {
-//				$("#edit-ad-modal #fileuploader-ad-video").addClass("d-none");
-//
-//				$("#edit-ad-modal input[name='space']").removeAttr("required");
-//				$("#edit-ad-modal input[name='rooms_num']").removeAttr("required");
-//				$("#edit-ad-modal input[name='floor']").removeAttr("required");
-//				$("#edit-ad-modal select[name='property_state_id']").removeAttr("required");
-//			}
-//
-//			//if category is job remove price and negotiable inputs
-//			if (templateId === 8) {
-//				$("#edit-ad-modal input[name='price']").closest(".form-group").addClass("d-none");
-//				$("#edit-ad-modal input[name='price']").removeAttr("required");
-//				$("#edit-ad-modal input[name='price']").val("0");
-//				$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
-//
-//				if ($.inArray("education_name", hideArr) === -1) {
-//					$("#edit-ad-modal select[name='education_id']").attr("required", true);
-//				}
-//				if ($.inArray("certificate_name", hideArr) === -1) {
-//					$("#edit-ad-modal select[name='certificate_id']").attr("required", true);
-//				}
-//				//gender
-//			} else {
-//				$("#edit-ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
-//				$("#edit-ad-modal input[name='price']").attr("required", true);
-//				$("#edit-ad-modal input[name='price']").val("");
-//				$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
-//
-//				$("#edit-ad-modal select[name='education_id']").removeAttr("required");
-//				$("#edit-ad-modal select[name='certificate_id']").removeAttr("required");
-//				//gender
-//			}
-
 			$("#edit-ad-modal .template").each(function () {
 				$(this).addClass("d-none");
 
@@ -816,35 +716,6 @@ $(function () {
 					$(this).removeClass("d-none");
 				}
 			});
-			//only display selected template types
-			//			$("#edit-ad-modal .types-nav .type-item").each(function () {
-			//				$(this).addClass("d-none");
-			//				if ($(this).data("templateId") === templateId) {
-			//					has_types = 1;
-			//					$(this).removeClass("d-none");
-			//				}
-			//			});
-
-			//only display selected template types
-			//			$("#edit-ad-modal .types-nav .type-item").each(function () {
-			//				$(this).addClass("d-none");
-			//				if ($(this).data("categoryId") === subId) {
-			//					has_types = 1;
-			//					$(this).removeClass("d-none");
-			//				}
-			//			});
-
-			//display types select only if category is vehicles, mobiles or electronics
-			//			if (has_types !== 0) {
-			//				$("#edit-ad-modal .types-nav").parent(".form-group").removeClass("d-none");
-			//			} else {
-			//				$("#edit-ad-modal .types-nav").parent(".form-group").addClass("d-none");
-			//			}
-			//			if (lang === "ar") {
-			//				$("#edit-ad-modal .types-nav .select").text("اختر الماركة");
-			//			} else {
-			//				$("#edit-ad-modal .types-nav .select").text("Select type");
-			//			}
 
 			//only display selected template types
 			$("#edit-ad-modal .type-select option").each(function () {
@@ -858,13 +729,120 @@ $(function () {
 			$('#edit-ad-modal select.type-select')[0].sumo.reload();
 			//display types select only if category is vehicles, mobiles or electronics
 			if (has_types !== 0) {
-				//		if (templateId === 1 || templateId === 3 || templateId===4) {
 				$("#edit-ad-modal .type-select").parents(".form-group").removeClass("d-none");
 				$("#edit-ad-modal .model-select").parents(".form-group").addClass("d-none");
 			} else {
 				$("#edit-ad-modal .type-select").parents(".form-group").addClass("d-none");
 				$("#edit-ad-modal .model-select").parents(".form-group").addClass("d-none");
 			}
+
+			//vehicles
+			if (templateId === 1) {
+				if ($.inArray("manufacture_date", hideArr) === -1) {
+					$("#edit-ad-modal input[name='manufacture_date']").attr("required", true);
+				} else {
+					$("#edit-ad-modal input[name='manufacture_date']").removeAttr("required");
+				}
+				if ($.inArray("kilometer", hideArr) === -1) {
+					$("#edit-ad-modal input[name='kilometer']").attr("required", true);
+				} else {
+					$("#edit-ad-modal input[name='kilometer']").removeAttr("required");
+				}
+				if ($.inArray("is_automatic", hideArr) === -1) {
+					$("#edit-ad-modal select[name='is_automatic']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='is_automatic']").removeAttr("required");
+				}
+				if ($.inArray("type_name", hideArr) === -1 && has_types !== 0) {
+					$("#edit-ad-modal select[name='type_id']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='type_id']").removeAttr("required");
+				}
+			} else {
+				$("#edit-ad-modal input[name='manufacture_date']").removeAttr("required");
+				$("#edit-ad-modal input[name='kilometer']").removeAttr("required");
+				$("#edit-ad-modal select[name='is_automatic']").removeAttr("required");
+				$("#edit-ad-modal select[name='type_id']").removeAttr("required");
+			}
+
+			if (templateId === 1 || templateId === 3 || templateId === 4 || templateId === 5 || templateId === 6 || templateId === 7 || templateId === 9) {
+				if ($.inArray("is_new", hideArr) === -1) {
+					$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").attr("required", true);
+				} else {
+					$("#edit-ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").removeAttr("required");
+				}
+			} else {
+				$("#edit-ad-modal select[name='is_new']").each(function () {
+					$(this).removeAttr("required");
+				});
+			}
+
+			//only show upload video in properties
+			if (templateId === 2) {
+				$("#edit-ad-modal #fileuploader-ad-video").removeClass("d-none");
+
+				if ($.inArray("space", hideArr) === -1) {
+					$("#edit-ad-modal input[name='space']").attr("required", true);
+				} else {
+					$("#edit-ad-modal input[name='space']").removeAttr("required");
+				}
+				if ($.inArray("rooms_num", hideArr) === -1) {
+					$("#edit-ad-modal input[name='rooms_num']").attr("required", true);
+				} else {
+					$("#edit-ad-modal input[name='rooms_num']").removeAttr("required");
+				}
+				if ($.inArray("floor", hideArr) === -1) {
+					$("#edit-ad-modal input[name='floor']").attr("required", true);
+				} else {
+					$("#edit-ad-modal input[name='floor']").removeAttr("required");
+				}
+				if ($.inArray("property_state_name", hideArr) === -1) {
+					$("#edit-ad-modal select[name='property_state_id']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='property_state_id']").removeAttr("required");
+				}
+			} else {
+				$("#edit-ad-modal #fileuploader-ad-video").addClass("d-none");
+
+				$("#edit-ad-modal input[name='space']").removeAttr("required");
+				$("#edit-ad-modal input[name='rooms_num']").removeAttr("required");
+				$("#edit-ad-modal input[name='floor']").removeAttr("required");
+				$("#edit-ad-modal select[name='property_state_id']").removeAttr("required");
+			}
+
+			//if category is job remove price and negotiable inputs
+			if (templateId === 8) {
+				$("#edit-ad-modal input[name='price']").closest(".form-group").addClass("d-none");
+				$("#edit-ad-modal input[name='price']").removeAttr("required");
+				$("#edit-ad-modal input[name='price']").val("0");
+				$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").addClass("d-none");
+
+				if ($.inArray("education_name", hideArr) === -1) {
+					$("#edit-ad-modal select[name='education_id']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='education_id']").removeAttr("required");
+				}
+				if ($.inArray("gender", hideArr) === -1) {
+					$("#edit-ad-modal select[name='gender']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='gender']").removeAttr("required");
+				}
+				if ($.inArray("certificate_name", hideArr) === -1) {
+					$("#edit-ad-modal select[name='certificate_id']").attr("required", true);
+				} else {
+					$("#edit-ad-modal select[name='certificate_id']").removeAttr("required");
+				}
+			} else {
+				$("#edit-ad-modal input[name='price']").closest(".form-group").removeClass("d-none");
+				$("#edit-ad-modal input[name='price']").attr("required", true);
+				$("#edit-ad-modal input[name='price']").val("");
+				$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
+
+				$("#edit-ad-modal select[name='education_id']").removeAttr("required");
+				$("#edit-ad-modal select[name='gender']").removeAttr("required");
+				$("#edit-ad-modal select[name='certificate_id']").removeAttr("required");
+			}
+
 
 			$("#edit-ad-modal").modal("show");
 		});
@@ -978,19 +956,13 @@ $(function () {
 			}
 
 			if (deleteMainImgArr.length > 0 && editMainImg.length === 0 && editAdImgs.length === 0) {
-				//to keep default image
-				editAdData.push({
-					name: "main_image",
-					value: "-1"
-				});
-			}
-
-			if (tempEditMainImg.length === 0 && editMainImg.length === 0) {
-				if (editAdImgs.length > 0) {
+				//in case no images added
+				var templateId = $("#edit-ad-form .template-id").val();
+				if (templateId == 1) {
 					if (lang === "ar") {
-						$('#edit-ad-modal .error-message').text("الرجاء رفع صورة رئيسية للإعلان");
+						$('#edit-ad-modal .error-message').html("الرجاء إرفاق صورة واحدة للإعلان على الأقل ثم حاول مجدداً");
 					} else {
-						$('#edit-ad-modal .error-message').text("Please upload main ad image");
+						$('#edit-ad-modal .error-message').html("Please upload at least one image and try again");
 					}
 					$('#edit-ad-modal .error-message').removeClass("d-none");
 					$("#edit-ad-modal").animate({
@@ -999,6 +971,44 @@ $(function () {
 					return false;
 				}
 
+				//to keep default image
+				editAdData.push({
+					name: "main_image",
+					value: "-1"
+				});
+			}
+
+			if (tempEditMainImg.length === 0 && editMainImg.length === 0 && tempEditAdImgs.length === 0 && editAdImgs.length === 0) {
+				//in case no images added
+				var templateId = $("#edit-ad-form .template-id").val();
+				if (templateId == 1) {
+					if (lang === "ar") {
+						$('#edit-ad-modal .error-message').html("الرجاء إرفاق صورة واحدة للإعلان على الأقل ثم حاول مجدداً");
+					} else {
+						$('#edit-ad-modal .error-message').html("Please upload at least one image and try again");
+					}
+					$('#edit-ad-modal .error-message').removeClass("d-none");
+					$("#edit-ad-modal").animate({
+						scrollTop: $("body").offset().top
+					}, 500);
+					return false;
+				}
+			}
+
+			if (tempEditMainImg.length === 0 && editMainImg.length === 0) {
+				//there is no main image
+				if (editAdImgs.length > 0) {
+					if (lang === "ar") {
+						$('#edit-ad-modal .error-message').html("الرجاء رفع صورة رئيسية للإعلان");
+					} else {
+						$('#edit-ad-modal .error-message').html("Please upload main ad image");
+					}
+					$('#edit-ad-modal .error-message').removeClass("d-none");
+					$("#edit-ad-modal").animate({
+						scrollTop: $("body").offset().top
+					}, 500);
+					return false;
+				}
 			}
 
 			if (editAdImgs.length > 0) {
@@ -1047,7 +1057,7 @@ $(function () {
 					editAdData[i].value = "-1";
 				}
 			}
-			//			console.log(editAdData);
+
 			$("#confirm-edit-modal").modal("show");
 		});
 
@@ -1062,7 +1072,6 @@ $(function () {
 				dataType: "json",
 				data: $.param(editAdData)
 			}).done(function (data) {
-				//					console.log(data);
 				if (data.status === false) {} else {
 					//reset edit arrays
 					editMainImg = [];
@@ -1108,7 +1117,6 @@ $(function () {
 						username = data.data[i].seller_name;
 					}
 					if (!sessionImage) {
-						//						sessionImage = '/assets/images/Dealat%20logo%20red.png';
 						sessionImage = '/assets/images/user1.jpg';
 					}
 					sessionData = {
@@ -1138,7 +1146,6 @@ $(function () {
 							if ($(this).data("sessionId") == newMsgSessions[i]) {
 								$(this).css("background-color", "rgba(195, 10, 48, 0.22)");
 								$(this).find(".new-msg").removeClass("d-none");
-								//								$.playSound(sound_notify_path);
 							}
 						}
 					});

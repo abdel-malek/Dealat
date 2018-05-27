@@ -82,7 +82,7 @@ $lang['whatsapp_number'] = "Whatsapp";
 //verify sms modal
 $lang['verification'] = "Verification";
 $lang['verify'] = "Verify";
-$lang['verification_text'] = "We need to verify your mobile phone number. <br>A text message with your code has been sent to your phone.";
+$lang['verification_text'] = "We need to verify your mobile phone number. <br>A text message with your code will be sent to your phone within 24 hours.";
 $lang['verification_error'] = "If you haven't received any text message, please contact our customer support.";
 $lang['enter_code'] = "Please enter your code";
 $lang['no_message'] = "No text message received?";

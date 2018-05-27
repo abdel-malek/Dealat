@@ -14,33 +14,6 @@
 					</div>
 					<div class="col-md-2 text-center mt-2">
 						<div class="name">{{name}}</div>
-						<!--<fieldset class="rating">
-							<span class="rate-group" data-value="5">
-							<input type="radio" id="star5" name="rating" value="5" />
-							<label class="full" for="star5" title="Awesome - 5 stars"></label>
-						</span>
-
-							<div class="rate-group" data-value="4">
-								<input type="radio" id="star4" name="rating" value="4" />
-								<label class="full" for="star4" title="Pretty good - 4 stars"></label>
-							</div>
-
-							<div class="rate-group" data-value="3">
-								<input type="radio" id="star3" name="rating" value="3" />
-								<label class="full" for="star3" title="Meh - 3 stars"></label>
-							</div>
-
-							<div class="rate-group" data-value="2">
-								<input type="radio" id="star2" name="rating" value="2" />
-								<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-							</div>
-
-							<div class="rate-group" data-value="1">
-								<input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
-							</div>
-
-						</fieldset>
-						<div class="clearfix"></div>-->
 					</div>
 					<div class="col-md-5 offset-md-1 mt-2">
 						<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{city_name}}</span></div>
@@ -50,8 +23,6 @@
 					</div>
 					<div class="col-md-2 mt-2">
 						<button class="btn button2 edit-user-info"><?php echo $this->lang->line('edit_info'); ?></button>
-
-						<!--<button class="btn button2 delete-account"><?php echo $this->lang->line('delete_account'); ?></button>-->
 					</div>
 				</script>
 			</div>
@@ -60,28 +31,12 @@
 	<div class="container">
 		<div id="profile-tabs" class="profile-tabs">
 			<ul class='etabs'>
-
 				<div class="row">
-					<!--<div class="col">-->
 					<li class='col tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
-					<!--</div>-->
-					<!--<div class="col">-->
 					<li class='col tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
-					<!--</div>-->
-					<!--<div class="col">-->
 					<li class='col tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
-					<!--</div>-->
-					<!--<div class="col">-->
 					<li class='col tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
-					<!--</div>-->
 				</div>
-
-				<!--
-				<li class='tab'><a href="#user-ads"><?php echo $this->lang->line('my_ads'); ?></a></li>
-				<li class='tab'><a href="#favorites"><?php echo $this->lang->line('favorites'); ?></a></li>
-				<li class='tab'><a href="#chats" class="chat-tab-link"><?php echo $this->lang->line('chats'); ?></a></li>
-				<li class='tab'><a href="#bookmarks"><?php echo $this->lang->line('saved_searches'); ?> </a></li>
--->
 			</ul>
 			<div id="user-ads" class="user-ads">
 				<section class="products">
@@ -124,7 +79,6 @@
 												<div class="col-md-6">
 													<div class="card-body">
 														<div class="card-title mb-1">{{ad.title}}</div>
-														<!--<div class="details mb-2">{{ad.description}}</div>-->
 														<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 
@@ -157,14 +111,12 @@
 
 			<div id="favorites" class="favorites">
 				<section class="products">
-
 					<div class="container-fluid main">
 						<div class="row first">
 							<script id="user-fav-template" type="text/template">
 								<div class="col-md-6">
 									<div class="card mb-4" data-ad-id="{{ad.ad_id}}" data-template-id="{{ad.tamplate_id}}">
 										<div class="container">
-
 											<div class="row no-gutters">
 												<div class="col-md-6">
 													<div class="card-left">
@@ -191,7 +143,6 @@
 
 														<div class="date"><span class="date-lbl"><?php echo $this->lang->line('publish_date'); ?>: </span><span class="date-val">{{date}}</span></div>
 													</div>
-
 												</div>
 											</div>
 										</div>
@@ -206,9 +157,7 @@
 			<div id="chats" class="chats">
 				<div class="container">
 					<ul class="sessions">
-
 						<script id="chat-sessions-template" type="text/template">
-
 							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
 								<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
 								<div class="row no-gutters">
@@ -226,9 +175,7 @@
 								</div>
 							</li>
 							<hr>
-
 						</script>
-
 					</ul>
 				</div>
 			</div>
@@ -236,7 +183,6 @@
 			<div id="bookmarks" class="bookmarks">
 				<ul class="bookmarks-list">
 					<script id="saved-bookmarks-template" type="text/template">
-
 						<li class="bookmark" data-bookmark-id="{{user_bookmark_id}}" data-filter="{{filter}}">
 							<div class="row no-gutters">
 								<div class="col-sm-8 details">
@@ -288,8 +234,6 @@
 					</script>
 				</ul>
 			</div>
-
-
 		</div>
 	</div>
 
@@ -309,9 +253,8 @@
 							<div class="col-sm-6 border-middle">
 								<input type="hidden" name="ad_id" class="ad-id">
 								<input type="hidden" name="location_id" class="location-id">
-<!--								<input type="hidden" name="type_id" class="type-id">-->
-<!--								<input type="hidden" name="type_model_id" class="type-model-id">-->
 								<input type="hidden" class="ad-status">
+								<input type="hidden" class="template-id">
 
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" placeholder="<?php echo $this->lang->line('item_name'); ?>" required>
@@ -319,7 +262,6 @@
 
 								<div class="form-group">
 									<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_city'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 								</select>
 								</div>
@@ -332,7 +274,6 @@
 
 								<div class="form-group">
 									<select name="show_period" class="period-select" required placeholder="<?php echo $this->lang->line('show_period'); ?>">
-<!--									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('show_period'); ?></option>-->
 									<option disabled selected value="" class="d-none">
 								</select>
 								</div>
@@ -354,32 +295,12 @@
 
 							</div>
 							<div class="col-sm-6">
-<!--
-								<div class="form-group d-none field type_name">
-									<nav class="navbar navbar-expand-md navbar-light types-nav">
-										<ul class="navbar-nav">
-											<li class="nav-item dropdown">
-												<a class="nav-link dropdown-toggle select" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('select_type'); ?></a>
-												<ul class="dropdown-menu types main-dropdown">
-												</ul>
-											</li>
-										</ul>
-									</nav>
-								</div>
--->
 							<div class="form-group d-none field type_name">
 								<select name="type_id" class="type-select" placeholder="<?php echo $this->lang->line('select_type'); ?>">
 									<option disabled selected value="" class="d-none">
 								</select>
 							</div>
-
-<!--
-							<div class="form-group d-none field type_model_name">
-								<select name="type_model_id" class="model-select" placeholder="<?php echo $this->lang->line('select_model'); ?>">
-									<option disabled selected value="" class="d-none">
-								</select>
-							</div>
--->
+							
 							<div class="form-group d-none field type_model_name">
 								<select name="type_model_id" class="model-select">
 									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_model'); ?></option>
@@ -397,7 +318,6 @@
 									</div>
 									<div class="form-group field is_automatic">
 										<select name="is_automatic" class="automatic-select" placeholder="<?php echo $this->lang->line('select_motion'); ?>">
-<!--										<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_motion'); ?></option>-->
 										<option disabled selected value="" class="d-none">
 										<option value="1"><?php echo $this->lang->line('automatic'); ?></option>
 										<option value="0"><?php echo $this->lang->line('manual'); ?></option>
@@ -533,7 +453,7 @@
 								<div class="form-group field gender">
 										<select name="gender" class="gender-select" placeholder="<?php echo $this->lang->line('gender'); ?>">
 										<option disabled selected value="" class="d-none">
-<!--										<option value="-1"><?php echo $this->lang->line('not_set'); ?></option>-->
+										<option value=""><?php echo $this->lang->line('all'); ?></option>
 										<option value="1"><?php echo $this->lang->line('male'); ?></option>
 										<option value="2"><?php echo $this->lang->line('female'); ?></option>
 									</select>
@@ -602,9 +522,9 @@
 									</div>
 									{{/main_video}}
 								</script>
-								<div id="fileuploader-edit-ad-main">Upload</div>
-								<div id="fileuploader-edit-ad">Upload</div>
-								<div id="fileuploader-edit-ad-video" class="d-none">Upload</div>
+								<div id="fileuploader-edit-ad-main"></div>
+								<div id="fileuploader-edit-ad"></div>
+								<div id="fileuploader-edit-ad-video" class="d-none"></div>
 
 								<div class="">
 									<label class="">
@@ -666,18 +586,6 @@
 						<div class="form-group">
 							<input type="number" class="form-control whatsup" name="whatsup_number" title="Whatsapp Number" placeholder="<?php echo $this->lang->line('whatsapp_number'); ?>">
 						</div>
-
-						<!--
-						<div class="form-group">
-							<label class="">
-							<input type='hidden' value='0' name='visible_phone'>
-								<input type="checkbox" name="visible_phone" value="1"><span class=""> <?php echo $this->lang->line('visible_phone'); ?></span>
-							</label>
-							<div class="visible-phone-note">
-								<?php echo $this->lang->line('visible_phone_note'); ?>
-							</div>
-						</div>
--->
 
 						<div class="delete-account text-danger">
 							<?php echo $this->lang->line('delete_account'); ?>

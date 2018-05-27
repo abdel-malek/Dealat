@@ -83,7 +83,7 @@ $lang['whatsapp_number'] = "رقم الواتساب";
 //verify sms modal
 $lang['verification'] = "تحقق من الرمز";
 $lang['verify'] = "تحقق";
-$lang['verification_text'] = "سنقوم بالتحقق من رقم هاتفك.<br> تم إرسال رسالة تحوي رمز التأكيد إلى هاتفك.";
+$lang['verification_text'] = "سنقوم بالتحقق من رقم هاتفك.<br> سوف يتم إرسال رسالة تحوي رمز التأكيد إلى هاتفك خلال 24 ساعة.";
 $lang['verification_error'] = "في حال لم تصلك رسالة بالرمز الرجاء الاتصال بخدمة الزبائن";
 $lang['enter_code'] = "الرجاء إدخال الرمز";
 $lang['no_message'] = "لم تصلك رسالة؟";

@@ -1,10 +1,9 @@
-
 /*jslint browser: true*/
 /*global $, alert,console,lang, Mustache, base_url, logged, user_id, hiddenFields*/
 
 $(function () {
-var generatedQR = $("#qr-form .qr_gen_code").val();
-	
+	var generatedQR = $("#qr-form .qr_gen_code").val();
+
 	$("#qr-form input[name=\"secret_code\"]").keyup(function () {
 		if ($(this).val().length === 6) {
 			$("#qr-form .submit").removeAttr("disabled");
@@ -45,17 +44,17 @@ var generatedQR = $("#qr-form .qr_gen_code").val();
 				}
 				$('.qr-page .error-message').html(wholeMessage);
 				$('.qr-page .error-message').removeClass("d-none");
-				
+
 			} else {
-				if(data.data.cms_logged === 1){
+				if (data.data.cms_logged === 1) {
 					window.location = base_url + "/admin/dashboard";
-				}else{
+				} else {
 					window.location = base_url;
-				}	
+				}
 			}
 		});
 	});
-	
+
 	//language
 	$(".language-switch span").click(function (e) {
 		var language = "en";
@@ -73,5 +72,5 @@ var generatedQR = $("#qr-form .qr_gen_code").val();
 			}
 		});
 	});
-	
+
 });
