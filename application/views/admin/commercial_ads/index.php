@@ -61,9 +61,11 @@
 	                      <!-- Tab panes -->
 	                      <div class="tab-content">
 	                        <div class="tab-pane active" id="all">
+	                           <?php if(PERMISSION::Check_permission(PERMISSION::ADD_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	                            <div class="pull-left">
 	                              <button style='display: none' id='add_comm_btn' onclick="show_comm_ad_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_new_commercial') ?></button>
 	                            </div>
+	                           <?php endif; ?>
 	                            <table id="commercial_ads_table" class="table table-striped table-bordered">
 			                      <thead>
 			                        <tr>

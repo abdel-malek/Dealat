@@ -89,9 +89,13 @@ class Categories_manage extends REST_Controller {
 	{
 		$this -> form_validation -> set_rules('category_id', 'category_id', 'required');
 		if (!$this -> form_validation -> run()) {
-			throw new Validation_Exception(validation_errors());
+		   throw new Validation_Exception(validation_errors());
 		}else{
-	       $cat_id = $this->input->post('category_id');
+		   $parent_id = $this->input->post('parent_id');
+		   if(!$this->check_edit_permission($parent_id)){
+		   	   $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('no_permission')));
+		   }else{
+		   	   $cat_id = $this->input->post('category_id');
 		   $data = array();
 		   if($this->input->post('ar_name')){
 		   	  $data['ar_name'] = $this->input->post('ar_name');
@@ -113,8 +117,23 @@ class Categories_manage extends REST_Controller {
 		   }else{
 		   	 $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('failed'))); 
 		   }
+		   }
 		}
 	}
+
+    public function check_edit_permission($parent_id)
+    {
+        if($parent_id == 0){
+           if(!PERMISSION::Check_permission(PERMISSION::UPDATE_MAIN_CAT , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+			   return false; 
+		   } 
+        }else{
+           if(!PERMISSION::Check_permission(PERMISSION::UPDATE_SUB_CAT , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+			   return false; 
+		   } 
+        }
+      return true;
+    }
 	
 	public function get_sub_cats_get()
 	{

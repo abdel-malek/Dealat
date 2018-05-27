@@ -53,7 +53,7 @@
                     "targets": -1, // details
                     "data": null,
                     "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_comm_ad_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
+                       return '<button id="" onclick="show_comm_ad_modal(\'' + full[0] + '\',\'' + 0 + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		             }
 		         } 
 	          ],
@@ -159,11 +159,9 @@
     });
  });
  
-function show_comm_ad_modal (id) {
+function show_comm_ad_modal (id , is_main) {
    current_comm_id = id;
    var current_postion = $('#comm_position').val();
-   // console.log(current_postion);
-   // console.log('label'+current_postion);
    if(id != 0){// edit 
    	   	$.ajax({
         url: base_url + '/api/commercial_items_control/get_info/format/json?comm_id='+id,
@@ -203,13 +201,28 @@ function show_comm_ad_modal (id) {
    	 var current_pos = $('#comm_position').val();
    	 $('#label'+current_pos).css('display' , 'inline');
    }
+   //show the delete btn
+   show_commercial_delete_btn(is_main);
    $('.comm_ads_details').modal('show');
  }
-
+ 
+ function show_commercial_delete_btn (is_main) {
+ 	if(is_main == 1){
+ 	  if($.inArray(DELETE_MAIN_COMMERCIAL, permissions) != -1){
+      	   $('#delete_comm_btn').css('display' , 'inline');
+      } 
+ 	}else{
+ 	  if($.inArray(DELETE_OTHER_COMMERCIAL, permissions) != -1){
+      	   $('#delete_comm_btn').css('display' , 'inline');
+      }  
+ 	}
+ }
+ 
  $('.comm_ads_details').on('hidden.bs.modal', function () {
       $('#image_div').css('display', 'none');
    	  $('#created_div').css('display', 'none'); 
    	  $('.image_ration_note').css('display', 'none'); 
+   	  $('#delete_comm_btn').css('display' , 'none');
    	  $('#comm_title').val('');
    	  $('#comm_description').val(''); 
    	  $('#comm_url').val('');

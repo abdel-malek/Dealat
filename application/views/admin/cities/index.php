@@ -40,9 +40,11 @@
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">
 	                  <div class="x_content">
+	                  <?php if(PERMISSION::Check_permission(PERMISSION::ADD_DATA , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                   	    <div class="pull-left">
                            <button onclick="show_cities_manage_modal(0);" type="button" class="btn btn-primary"><li class="fa fa-plus"></li> <?php echo $this->lang->line('add_city') ?></button>
                         </div>
+                      <?php endif; ?>
 	                    <table id="cities_table" class="table table-striped table-bordered">
 	                      <thead>
 	                        <tr>

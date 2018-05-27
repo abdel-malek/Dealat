@@ -46,7 +46,16 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
+			if(PERMISSION::Check_permission(PERMISSION::SHOW_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
+			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
+			else{
+			   if($row->is_active == 1){
+			   	  $recorde[] = $this->lang->line('shown');
+			   }else{
+			   	  $recorde[] = $this->lang->line('hidden');
+			   }
+			}
+			//$recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
 			$recorde[] = $row -> category_id;
 			$output['aaData'][] = $recorde;
 		}
@@ -55,7 +64,6 @@ class Commercial_items_manage extends REST_Controller {
 
    public function get_main_get()
     {
-       //dump(commercila_status_checkbox(0));
        $items = $this->commercial_ads->get_by(array('category_id'=>0));
 	   $output = array("aaData" => array());
 		foreach ($items as $row) {
@@ -68,7 +76,15 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
+		    if(PERMISSION::Check_permission(PERMISSION::SHOW_MAIN_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
+			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position);
+			else{
+			   if($row->is_active == 1){
+			   	  $recorde[] = $this->lang->line('shown');
+			   }else{
+			   	  $recorde[] = $this->lang->line('hidden');
+			   }
+			}
 			$recorde[] = $row->position;
 			$output['aaData'][] = $recorde;
 		}

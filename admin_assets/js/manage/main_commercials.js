@@ -3,7 +3,7 @@
  $(document).ready(function() {
  	var main_comm_TableButtons = function() {
  		
- 		if($.inArray(EXPORT_COMMERCIALS, permissions) != -1){
+ 		if($.inArray(EXPORT_MAIN_COMMERCIALS, permissions) != -1){
 		  main_comm_buttons.push( 
 		  	 {
                   extend: "excel",
@@ -16,7 +16,7 @@
             }
 		 );
  	   }
-           main_ads_table = $("#main_commercials_table").DataTable({
+        main_ads_table = $("#main_commercials_table").DataTable({
              "oLanguage": {
 				  	"sProcessing":   lang_array['sProcessing'],
 					"sLengthMenu":   lang_array['sLengthMenu'],
@@ -55,7 +55,7 @@
                     "targets": -1, // details
                     "data": null,
                     "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_comm_ad_modal(\'' + full[0] + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
+                       return '<button id="" onclick="show_comm_ad_modal(\'' + full[0] + '\',\'' + 1 + '\');" type="button" class="btn btn-primary" ><li class="fa fa-edit"></li></button>';
 		            }
 		         },
 	          ],

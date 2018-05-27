@@ -28,8 +28,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
    $('#cat_id_input').attr('parent_id' , parent_id);
    $('#cat_id_input').attr('template_id' , template_id);
    var is_edit = false;
-  
-      
+ 
    if(is_main){ // manage main cat
    	  if(id == 0){ //add
    	  	 $('.choose_tamplate_div').css('display' , 'inline'); 
@@ -57,16 +56,17 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         	if(has_ads == 0){
         		// check wich btn to show the deactivate or the activate. 
         		if(cat_info['is_active'] == 0){
-        			$('#activate_category_btn').css('display', 'inline');
+        			//$('#activate_category_btn').css('display', 'inline');
+        			show_deactivat_cat_btn(is_main);
         		}else{
-        			$('#delete_category_btn').css('background-color','#bdc3c7');
-        			$('#delete_category_btn').css('display', 'inline');// deactivate btn
+        			//$('#delete_category_btn').css('display', 'inline');// deactivate btn
+        			show_deactivat_cat_btn(is_main);
         		}
-        		$('#final_delete_category_btn').css('display', 'inline');//delete btn
+        		//$('#final_delete_category_btn').css('display', 'inline');//delete btn
+        		show_delete_cat_btn(is_main);
         	}else{
         		$('#has_ads_note').css('display' , 'inline');
         	}
-        	
             $('#cat_arabic_name').val(cat_info['ar_name']);
             $('#cat_english_name').val(cat_info['en_name']);
             has_child = check_child_exsistence(id);
@@ -107,7 +107,7 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
         }
      });
    }else{ // add
-   	 $('#delete_category_btn').css('display', 'none');
+   	 // $('#delete_category_btn').css('display', 'none');
    	  if(is_main){
    	  	 template_id = $('#cat_tamplate').val();
    	  }
@@ -124,6 +124,42 @@ function show_manage_cat_modal (id , is_main , parent_id ,template_id) {
       });
    }	
    $('.manage_cat').modal('show');
+}
+
+function show_delete_cat_btn (is_main) {
+   if(is_main == 1){
+ 	  if($.inArray(DELETE_MAIN_CAT, permissions) != -1){
+      	   $('#final_delete_category_btn').css('display' , 'inline');
+      } 
+ 	}else{
+ 	  if($.inArray(DELETE_SUB_CAT, permissions) != -1){
+      	   $('#final_delete_category_btn').css('display' , 'inline');
+      }  
+ 	}
+}
+
+function show_deactivat_cat_btn (is_main) {
+   if(is_main == 1){
+ 	  if($.inArray(HIDE_MAIN_CAT, permissions) != -1){
+      	   $('#delete_category_btn').css('display' , 'inline');
+      } 
+ 	}else{
+ 	  if($.inArray(HIDE_SUB_CAT, permissions) != -1){
+      	   $('#delete_category_btn').css('display' , 'inline');
+      }  
+ 	}
+}
+
+function show_activat_cat_btn (is_main) {
+   if(is_main == 1){
+ 	  if($.inArray(HIDE_MAIN_CAT, permissions) != -1){
+      	   $('#activate_category_btn').css('display' , 'inline');
+      } 
+ 	}else{
+ 	  if($.inArray(HIDE_SUB_CAT, permissions) != -1){
+      	   $('#activate_category_btn').css('display' , 'inline');
+      }  
+ 	}
 }
 
 
@@ -151,7 +187,8 @@ function save_category(){
 	}
 	var data = {
 		'ar_name' : $('#cat_arabic_name').val(),
-		'en_name' : $('#cat_english_name').val()
+		'en_name' : $('#cat_english_name').val(),
+		'parent_id' : $('#cat_id_input').attr('parent_id')
 	};
 	// save hidden fields
     var template_attr = templates_attrs[template_id];
@@ -169,20 +206,16 @@ function save_category(){
     	data['hidden_fields'] = JSON.stringify(hidden_fields);
     }else{
     	if(id != 0){
-    	  data['hidden_fields'] = -1;
+    	  data['hidden_fields'] = -1; // empty the hidden filed column
     	}
     }
     var url; 
 	if(id == 0){ // add
-		data['parent_id'] = $('#cat_id_input').attr('parent_id');
+		//data['parent_id'] = $('#cat_id_input').attr('parent_id');
 		data['tamplate_id'] = template_id;
 		url = base_url + '/admin/categories_manage/add/format/json';
-		console.log(data);
-	}else{ // edit
-		data['category_id'] = id;
-		url = base_url + '/admin/categories_manage/edit/format/json';
-	}
-	$.ajax({
+		//console.log(data);
+		$.ajax({
 	        url: url,
 	        type: "post",
 	        dataType: "json",
@@ -224,6 +257,54 @@ function save_category(){
 	             });
 	        }
 	    });
+	}else{ // edit
+		data['category_id'] = id;
+		url = base_url + '/admin/categories_manage/edit/format/json';
+		$.ajax({
+	        url: url,
+	        type: "post",
+	        dataType: "json",
+	        data: data,
+	        success: function(response) {
+	            if(response.status == false){
+	           	  new PNotify({
+		                  title: lang_array['attention'],
+		                  text: response.message,
+		                  type: 'error',
+		                  styling: 'bootstrap3',
+		                  buttons: {
+						        sticker: false
+						}
+		          });
+	            }else{
+	                new PNotify({
+	                  title:  lang_array['success'],
+	                  text: lang_array['category_updated'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	               // change the updated cat names.
+	               $('#cat'+id).html(data[lang+'_name']);
+	               $('#for_cat'+id).html(data[lang+'_name']);
+			       $('.manage_cat').modal('hide');
+	             }
+	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	             });
+	        }
+	    });
+	}
+	
 }
 
 

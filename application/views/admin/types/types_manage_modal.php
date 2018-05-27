@@ -67,8 +67,8 @@
         <input type="hidden"  id="type_id"/>
         <input type="hidden"  id="type_template_id"/>s
         <div class="modal-footer">
-          <button   onclick="save_type()"  id="" type="button" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button   onclick="delete_type()" id="type_delete_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button   onclick="save_type()"  id="" type="button" class="btn btn-success data_update_btn"><?php echo $this->lang->line('save') ?></button>
+          <button   onclick="delete_type()" id="type_delete_btn"  type="button" class="btn btn-danger data_delete_btn"><?php echo $this->lang->line('delete') ?></button>
           <!-- <div id="delete-modal" class="modal fade delete_modal" tabindex="-1" role="dialog" aria-hidden="true">
           	 data-toggle="modal" data-target=".delete_modal"
 		    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

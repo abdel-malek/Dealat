@@ -192,6 +192,12 @@ function delete_admin (id) {
                var  check = $('.permissions_modal').find('#'+permission);
                check.prop("checked", true);
                check.parent("div").addClass("checked");
+               if(check.closest(".sub").hasClass("hidden")){
+               	check.closest(".sub").removeClass("hidden");
+               } 
+               if(check.closest(".checkbox").hasClass("main")){
+               	check.closest(".main").siblings(".sub").removeClass("hidden");
+               }
           });
         },error: function(xhr, status, error){
         	new PNotify({
@@ -211,6 +217,7 @@ function delete_admin (id) {
  $('.permissions_modal').on('hidden.bs.modal', function () {
   	  $('.permission_check').prop("checked", false);
       $('.permission_check').parent("div").removeClass("checked");
+      $(this).find(".sub").addClass("hidden");
 });
  
  //save user permissions 

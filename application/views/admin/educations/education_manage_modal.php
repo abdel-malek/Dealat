@@ -25,8 +25,9 @@
          </div> 
          <input type='hidden' id='education_id' />
         <div class="modal-footer">
-          <button onclick="save_education()" class="btn btn-success"><?php echo $this->lang->line('save') ?></button>
-          <button style="display: none"  onclick="delete_education()" id="education_delete_btn"  type="button" class="btn btn-danger"><?php echo $this->lang->line('delete') ?></button>
+          <button onclick="save_education()" class="btn btn-success data_update_btn"><?php echo $this->lang->line('save') ?></button>
+          <button  onclick="delete_education()" id="education_delete_btn"  type="button" class="btn btn-danger data_delete_btn"><?php echo $this->lang->line('delete') ?></button>
+      <!-- style="display: none"  -->
         </div>
       </div>
     </div>

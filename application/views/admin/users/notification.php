@@ -5,6 +5,7 @@
 	              <div class="title_left">
 	                 <h3><b><?php echo $this->lang->line('send_public_notification') ?></b></h3>  
 	              </div>
+	             <?php if(PERMISSION::Check_permission(PERMISSION::SEND_PUBLIC_NOTIFICATION , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	              	 <!-- filter form -->
 		             <div class="row" id="filter_panel">
 		              <div class="col-md-12 col-sm-12 col-xs-12">
@@ -46,29 +47,32 @@
 		                      </div> 	
 		                    </div>
 		                    </br>
-		                    <div class="row">
-		                      <div class="col-md-6">
-		                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('send_to_user') ?></label>
-		                         <select class="form-control select2_single" id="noti_users_select" tabindex="-1">
-		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
-		                        	<?php $users = get_users();?>
-		                         	<?php if($users!= null): foreach ($users as $key => $value): ?>
-		                         		  <option value="<?php echo $value->user_id; ?>"><?php echo $value->name ?></option>
-		                            <?php  endforeach; ?>
-		                            <?php endif; ?> 
-		                          </select>
-		                        </div>
-		                    </div>
+		                    <?php if(PERMISSION::Check_permission(PERMISSION::SEND_NOTIFICATION_TO_USER , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+			                    <div class="row">
+			                      <div class="col-md-6">
+			                      	<label class="control-label col-md-4 col-sm-3 col-xs-12"><?php echo $this->lang->line('send_to_user') ?></label>
+			                         <select class="form-control select2_single" id="noti_users_select" tabindex="-1">
+			                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
+			                        	<?php $users = get_users();?>
+			                         	<?php if($users!= null): foreach ($users as $key => $value): ?>
+			                         		  <option value="<?php echo $value->user_id; ?>"><?php echo $value->name ?></option>
+			                            <?php  endforeach; ?>
+			                            <?php endif; ?> 
+			                          </select>
+			                        </div>
+			                    </div>
+			                <?php endif; ?>
 		                   </div>
 		                  </div>
 		                </div>
 		              </div>
 		             <!-- /filter form -->
+		          <?php endif; ?>
 	             </div> 
 	            </div>
 	           <!-- orders list -->
 	          <div class="clearfix"></div>
-	
+	           <?php if(PERMISSION::Check_permission(PERMISSION::SEND_PUBLIC_NOTIFICATION , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 	            <div class="row">
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">
@@ -95,6 +99,8 @@
 	                </div>
 	              </div>
 	            </div>
+	          <?php endif; ?>  
+	            
 	            <div class="row">
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">

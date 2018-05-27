@@ -85,7 +85,15 @@ class Users_manage extends REST_Controller {
 			}else{
 				$recorde[] = $row->ads_num;
 			}
-			$recorde[] = user_status_checkbox($row->is_active , $row->user_id);
+			if(PERMISSION::Check_permission(PERMISSION::BLOCK_USER , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+				$recorde[] = user_status_checkbox($row->is_active , $row->user_id);
+			}else{
+			   if($row->is_active == 1){
+			   	  $recorde[] = $this->lang->line('active');
+			   }else{
+			   	  $recorde[] = $this->lang->line('inactive');
+			   }
+			}
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);

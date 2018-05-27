@@ -135,6 +135,7 @@
        	 lang_array['yes'] = 'Yes'
        	 lang_array['no'] = 'No';
        	 lang_array['new_reported_ad'] = 'There is a new report on the ad: ';
+       	 lang_array['category_updated'] = 'Category is Updated';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -191,6 +192,7 @@
        	 lang_array['yes'] = 'نعم'
        	 lang_array['no'] = 'كلا'
        	 lang_array['new_reported_ad'] = 'تم التبليغ عن الإعلان : ';
+       	 lang_array['category_updated'] = 'تم تعديل الصنف';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -205,6 +207,7 @@
        	 lang_array['sLast'] = "الأخير" ;
        }
        
+       //permissions
        const EXPORT_ADS = "2",
              EXPORT_REPORTS = "4",
              EXPORT_USERS = "6",
@@ -214,6 +217,27 @@
              EXPORT_NOTIFICATIONS = "14",
              EXPORT_ADMINS = "16",
              EXPORT_ACTIONS_LOG = "19";
+             ACCEPT_AD = "20", 
+		     REJECT_AD = "21",
+		     HIDE_AD = "22", 
+		     DELETE_AD = "23", 
+		     HIDE_AFTER_REPORT = "25",
+		     REJECT_AFTER_REPORT = "26",
+		     DELETE_AFTER_REPORT = "27",
+		     REJECT_AFTER_ACCEPT = "50" , 
+		     HIDE_AFTER_ACCEPT = "51", 
+		     DELETE_AFTER_ACCEPT = "52",
+		     DELETE_MAIN_COMMERCIAL = "32",
+		     DELETE_OTHER_COMMERCIAL = "35",
+		     DELETE_MAIN_CAT = "41",
+		     DELETE_SUB_CAT = "43",
+		     HIDE_MAIN_CAT = "40",
+		     HIDE_SUB_CAT = "42",
+		     ADD_DATA = "44",
+		     UPDATE_DATA = "45", 
+		     DELETE_DATA = "46",
+		     EXPORT_MAIN_COMMERCIALS = "54";
+
     </script>
     
     <!-- my js -->
