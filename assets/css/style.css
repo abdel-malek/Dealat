@@ -17,7 +17,7 @@ input[type=number] {
 
 html,
 body {
-  font-family: "calibri", sans-serif;
+  font-family: "calibri", serif;
   font-size: 20px;
   line-height: 1.35;
   color: #333;
@@ -437,7 +437,7 @@ summary:focus {
   .search-page .products .card .card-title,
   .profile-page .products .card .card-title, .home-page .products .card .card-title,
   .category-page .products .card .card-title {
-    font-family: "gothic";
+    font-family: "gothic", sans-serif;
     font-weight: bold;
     margin-bottom: 0;
     overflow: hidden;
@@ -761,7 +761,7 @@ header.home {
         cursor: pointer;
         transform: scale(1.1); }
       .categories .category-slider .slick-slide h6 {
-        font-family: "gothic";
+        font-family: "gothic", sans-serif;
         color: #444;
         font-size: .6rem;
         padding-top: 8px;
@@ -1126,7 +1126,7 @@ select option.placeholder {
           left: -1px; } }
       #card-modal .card .card-body .label {
         font-size: .7rem;
-        font-family: "gothic";
+        font-family: "gothic", sans-serif;
         color: #888; }
       #card-modal .card .card-body .price-val {
         margin-top: 38%; }
@@ -1161,7 +1161,7 @@ select option.placeholder {
           color: #FF87A0;
           cursor: pointer; }
     #card-modal .card .card-title {
-      font-family: "gothic";
+      font-family: "gothic", sans-serif;
       font-weight: bold;
       margin-bottom: 0;
       color: #c30a30;
@@ -1170,7 +1170,7 @@ select option.placeholder {
       font-size: .7rem;
       color: #c30a30;
       text-decoration: underline;
-      font-family: "gothic"; }
+      font-family: "gothic", sans-serif; }
     #card-modal .card .show-contact:hover {
       cursor: pointer;
       color: #8e0c28; }
@@ -1520,7 +1520,7 @@ select option.placeholder {
     border-radius: 4px;
     display: inline-block;
     color: #fff;
-    font-family: arial;
+    font-family: arial, "sans-serif";
     font-size: 13px;
     font-weight: normal;
     padding: 4px 15px;

@@ -6,6 +6,8 @@ $font: #333;
 $grey: #aaa;
 $grey-hover: #999;
 $placeholder: #6c757d;
+$main-font: 'calibri', serif;
+$second-font: 'gothic', sans-serif;
 
 @font-face {
 	font-family: "calibri";
@@ -31,7 +33,7 @@ input[type=number] {
 
 html,
 body {
-	font-family: "calibri", sans-serif;
+	font-family: $main-font;
 	font-size: 20px;
 	line-height: 1.35;
 	color: $font;
@@ -510,7 +512,7 @@ summary:focus {
 			transition: .2s
 		}
 		.card-title {
-			font-family: "gothic";
+			font-family: $second-font;
 			font-weight: bold;
 			margin-bottom: 0;
 			overflow: hidden;
@@ -918,7 +920,7 @@ header.home {
 				transform: scale(1.1)
 			}
 			h6 {
-				font-family: "gothic";
+				font-family: $second-font;
 				color: #444;
 				font-size: .6rem;
 				padding-top: 8px;
@@ -1378,7 +1380,7 @@ select option.placeholder {
 
 			.label {
 				font-size: .7rem;
-				font-family: "gothic";
+				font-family: $second-font;
 				color: #888
 			}
 			.price-val {
@@ -1423,7 +1425,7 @@ select option.placeholder {
 			}
 		}
 		.card-title {
-			font-family: "gothic";
+			font-family: $second-font;
 			font-weight: bold;
 			margin-bottom: 0;
 			color: $main;
@@ -1433,7 +1435,7 @@ select option.placeholder {
 			font-size: .7rem;
 			color: $main;
 			text-decoration: underline;
-			font-family: "gothic";
+			font-family: $second-font;
 		}
 		.show-contact:hover {
 			cursor: pointer;
@@ -1823,7 +1825,7 @@ select option.placeholder {
 			border-radius: 4px;
 			display: inline-block;
 			color: #fff;
-			font-family: arial;
+			font-family: arial, "sans-serif";
 			font-size: 13px;
 			font-weight: normal;
 			padding: 4px 15px;

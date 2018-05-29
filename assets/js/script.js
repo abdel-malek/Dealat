@@ -1946,9 +1946,10 @@ $(function () {
 					}
 				}
 				notSeenMsgs = newNotSeenMsgs;
-				notSeenInterval = setTimeout(checkNewMsgs, 1000);
+				
 			}
 		});
+		notSeenInterval = setTimeout(checkNewMsgs, 1000);
 	}
 
 	if (logged) {
@@ -2015,9 +2016,9 @@ $(function () {
 					}
 
 				}
-				intervalId = setTimeout(checkLiveSessionMsg, 100);
 			}
 		});
+		intervalId = setTimeout(checkLiveSessionMsg, 100);
 	}
 
 	var intervalId;
@@ -2610,7 +2611,7 @@ $(function () {
 				
 			}
 		});
-		setTimeout(checkNotCount, 1000);
+		setTimeout(checkNotCount, 2000);
 	}
 	//admin notifications count for user
 	if (logged) {
@@ -2713,7 +2714,7 @@ $(function () {
 				
 			}
 		});
-		setTimeout(checkAdNotCount, 1000);
+		setTimeout(checkAdNotCount, 1500);
 	}
 	//ads notifications count
 	if (logged) {
@@ -2725,6 +2726,7 @@ $(function () {
 		$("#ask-register-modal").modal("hide");
 		setTimeout(function () {
 			$("#register-modal").modal("show");
-		}, 500)
+		}, 500);
 	});
+	
 });
