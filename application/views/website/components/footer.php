@@ -44,7 +44,7 @@
 <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/slick-lightbox.min.js'); ?>"></script>
 <script>
-	$(document).ready(function() {
+//	$(document).ready(function() {
 		$('.ads-slider').slick({
 			infinite: true,
 			slidesToShow: 1,
@@ -90,10 +90,14 @@
 				}
 			]
 		});
-
-
+	
+	$(".loading-overlay .spinner").fadeOut(500, function () {
+		$(this).parent().fadeOut(500, function () {
+			$("body").removeAttr('style');
+			$(this).remove();
+		});
 	});
-
+//	});
 </script>
 <!--  mustache  -->
 <script src="<?php echo base_url('assets/js/mustache.min.js'); ?>"></script>
@@ -116,14 +120,6 @@
 </script>
 <!-- notify sound -->
    <script src="<?php echo base_url() ?>admin_assets/js/jquery.playSound.js"></script>
-  
-<script>
-	$(".loading-overlay .spinner").fadeOut(500, function () {
-		$(this).parent().fadeOut(500, function () {
-			$(this).remove();
-		});
-	});
-</script>
 
 <!--  multi level dropdown  -->
 <script src="<?php echo base_url('assets/js/bootstrap-4-navbar.js'); ?>"></script>
@@ -131,12 +127,13 @@
 <!--  mixit up  -->
 <script src="<?php echo base_url('assets/js/mixitup.min.js'); ?>"></script>
 
-<!--  fontawesome  -->
-<script src="<?php echo base_url('assets/js/fontawesome-all.min.js'); ?>"></script>
-
 <!--  file upload  -->
 <script src="<?php echo base_url('assets/js/jquery.form.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
+
+<!-- main js file -->
+<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>
 <!--  datepicker  -->
 <script src="<?php echo base_url('assets/js/datepicker.min.js'); ?>"></script>
 <script>
@@ -153,17 +150,15 @@
 			zIndex: 2000
 		});
 	});
-
 </script>
-
 <!-- WOW -->
 <script src="<?php echo base_url('assets/js/wow.min.js'); ?>"></script>
 <script>
 	new WOW().init();
 </script> 
-<!-- main js file -->
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>
+<!--  fontawesome  -->
+<script src="<?php echo base_url('assets/js/fontawesome-all.min.js'); ?>" defer></script>
+
 </body>
 
 </html>

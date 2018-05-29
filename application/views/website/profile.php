@@ -159,17 +159,20 @@
 					<ul class="sessions">
 						<script id="chat-sessions-template" type="text/template">
 							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
-								<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
-								<div class="row no-gutters">
-									<div class="col-2">
-										<div class="chat-img text-center">
-											<img src="<?php echo base_url('{{image}}'); ?>" height="50px" alt="">
+								<!-- <div class="new-msg d-none"><i class="fas fa-envelope"></i></div> -->
+								<div class="row align-items-center">
+								<div class="col-sm-1 text-center">
+										<div class="new-msg d-none"><i class="fas fa-envelope"></i></div>
+									</div>
+									<div class="col-3 col-sm-2">
+										<div class="chat-img">
+											<img src="<?php echo base_url('{{image}}'); ?>" height="45px" alt="">
 										</div>
 									</div>
-									<div class="col-3">
+									<div class="col-4 col-sm-4 col-md-3">
 										<div class="username">{{username}}</div>
 									</div>
-									<div class="col-4">
+									<div class="col-4 col-sm-5 col-md-6">
 										<div class="chat-name">{{details.ad_title}}</div>
 									</div>
 								</div>
@@ -603,7 +606,7 @@
 
 	<!--confirm edit ad modal modal-->
 	<div id="confirm-edit-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -30,13 +30,15 @@ $(function () {
 
 	//    Loading screen
 	//		$(window).on('load', function () {
-//	$(".loading-overlay .spinner").fadeOut(100, function () {
-//		$(this).parent().fadeOut(500, function () {
-//			$("body").removeAttr('style');
-//			$(this).remove();
-//		});
-//	});
+	//	$(".loading-overlay .spinner").fadeOut(100, function () {
+	//		$(this).parent().fadeOut(500, function () {
+	//			$("body").removeAttr('style');
+	//			$(this).remove();
 	//		});
+	//	});
+	//		});
+
+	//	$.getScript(base_url + 'assets/js/fontawesome-all.min.js');
 
 	$("button.register").click(function () {
 		$("#register-modal").modal("show");
@@ -202,7 +204,7 @@ $(function () {
 	$("#login-modal").on("hide.bs.modal", function () {
 		$('#login-modal .error-message').addClass("d-none");
 	});
-	
+
 	$("#verify-modal").on("hide.bs.modal", function () {
 		$('#verify-modal .error-message').addClass("d-none");
 	});
@@ -460,7 +462,7 @@ $(function () {
 				var cityId, i, j;
 				cityId = $(this).find('option:selected').val();
 				$('#ad-modal .location-select option:not(.placeholder), #edit-ad-modal .location-select option:not(.placeholder), #filter-modal .location-select option:not(.placeholder)').remove();
-				
+
 				for (i in locData.cities) {
 					if (locData.cities[i].city_id === cityId) {
 						//check if the selected type include models
@@ -633,7 +635,7 @@ $(function () {
 	$(document).ajaxStart(function () {
 		ajaxLoadTimeout = setTimeout(function () {
 			$(".loading-overlay1").fadeIn("fast");
-		}, 100);
+		}, 600);
 
 	}).ajaxComplete(function () {
 		clearTimeout(ajaxLoadTimeout);
@@ -646,9 +648,19 @@ $(function () {
 			type: "get",
 			url: base_url + '/api/items_control/get_item_details',
 			dataType: "json",
+			global: false, // this makes sure ajaxStart is not triggered
 			data: {
 				ad_id: $(this).parents(".card").data("adId"),
 				template_id: $(this).parents(".card").data("templateId")
+			},
+			beforeSend: function () {
+				ajaxLoadTimeout = setTimeout(function () {
+					$(".loading-overlay1").fadeIn("fast");
+				}, 100);
+			},
+			complete: function () {
+				clearTimeout(ajaxLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
 			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
@@ -890,7 +902,7 @@ $(function () {
 				}
 			}
 		}
-		
+
 		//only display selected template types
 		$("#ad-modal .type-select option").each(function () {
 			$(this).addClass("d-none");
@@ -2132,7 +2144,7 @@ $(function () {
 		localStorage.setItem('phone', $(this).find(".phone").val());
 		$("#verify-modal").find(".password").val($(this).find(".password").val());
 		localStorage.setItem('password', $(this).find(".password").val());
-		
+
 		$(this).find(".lang").val(lang);
 
 		$.ajax({
@@ -2169,17 +2181,17 @@ $(function () {
 		});
 	});
 
-	$("#login-form .verify-registered").click(function(){
+	$("#login-form .verify-registered").click(function () {
 		$("#verify-modal").find(".phone").val(localStorage.getItem('phone'));
 		$("#verify-modal").find(".password").val(localStorage.getItem('password'));
-		
+
 		$("#login-modal").modal("hide");
-			setTimeout(function () {
-				$("#verify-modal .text").addClass("d-none");
-				$("#verify-modal").modal("show");
-			}, 500); 	 
+		setTimeout(function () {
+			$("#verify-modal .text").addClass("d-none");
+			$("#verify-modal").modal("show");
+		}, 500);
 	});
-	
+
 	//verify
 	$('#verify-form').submit(function (e) {
 		e.preventDefault();
@@ -2542,18 +2554,19 @@ $(function () {
 		});
 	});
 
+	//notifications
 	//admin notifications
 	$("header .bell-icon").click(function () {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_notifications_for_me',
 			dataType: "json"
-		}).done(function (data) {
+		}).done(function (data) {console.log(data);
 			if (data.status === false) {} else {
 				$("header .notifications-dropdown .dropdown-menu").empty();
 
 				for (i in data.data) {
-					if (data.data[i].to_user_id && data.data[i].seen === "0") {
+					if (data.data[i].to_user_id) {
 						data.data[i].new = "1";
 					} else {
 						data.data[i].new = "0";
@@ -2564,22 +2577,44 @@ $(function () {
 				rendered = Mustache.render(template, data.data);
 				$("header .notifications-dropdown .dropdown-menu").append(rendered);
 
-				$(".notifications-dropdown .number").text("0");
+				$(".notifications-dropdown .number").addClass("d-none");
+				notCount = 0;
 			}
 		});
 	});
 
-	//admin notifications count for user
-	if (logged) {
+	var notCount = 0;
+
+	function checkNotCount() {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_my_notifications_count',
-			dataType: "json"
+			dataType: "json",
+			global: false // this makes sure ajaxStart is not triggered
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				$(".notifications-dropdown .number").text(data.data);
+				if (Number(data.data) - notCount > 0) {
+					if (lang === "ar") {
+						$(".notification-alert .text").html("لديك إشعار جديد");
+					} else {
+						$(".notification-alert .text").html("You have a new notification");
+					}
+					$(".notification-alert").removeClass("d-none");
+					setTimeout(function () {
+						$(".notification-alert").addClass("d-none");
+					}, 5000);
+					notCount = Number(data.data);
+					$(".notifications-dropdown .number").text(data.data);
+					$(".notifications-dropdown .number").removeClass("d-none");
+				}
+				
 			}
 		});
+		setTimeout(checkNotCount, 1000);
+	}
+	//admin notifications count for user
+	if (logged) {
+		checkNotCount();
 	}
 
 	$("header").on("click", ".notification", function () {
@@ -2644,22 +2679,45 @@ $(function () {
 					$("header .notes-dropdown .dropdown-menu").append(rendered);
 					//					}
 				}
-				$(".notes-dropdown .number").text("0");
+				$(".notes-dropdown .number").addClass("d-none");
+				adNotCount = 0;
 			}
 		});
 	});
 
-	//ads notifications count
-	if (logged) {
+	var adNotCount = 0;
+
+	function checkAdNotCount() {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_my_items_unseen_count',
-			dataType: "json"
+			dataType: "json",
+			global: false // this makes sure ajaxStart is not triggered
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				$(".notes-dropdown .number").text(data.data);
+				if (Number(data.data) - adNotCount > 0) {
+					if (lang === "ar") {
+						$(".notification-alert .text").html("لديك تحديث في حالة أحد إعلاناتك");
+					} else {
+						$(".notification-alert .text").html("You have a new ad status update");
+					}
+					$(".notification-alert").removeClass("d-none");
+					setTimeout(function () {
+						$(".notification-alert").addClass("d-none");
+					}, 5000);
+					adNotCount = Number(data.data);
+					
+					$(".notes-dropdown .number").text(data.data);
+					$(".notes-dropdown .number").removeClass("d-none");
+				}
+				
 			}
 		});
+		setTimeout(checkAdNotCount, 1000);
+	}
+	//ads notifications count
+	if (logged) {
+		checkAdNotCount();
 	}
 
 	//ask-register-modal

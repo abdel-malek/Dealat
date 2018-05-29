@@ -92,7 +92,7 @@
 <!--						</a>-->
 					</a>
 					<span class="dropdown notifications-dropdown">
-						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"><i class="fas fa-bell fa-lg"></i> <span class="number"></span></span>
+						<span class="btn dropdown-toggle bell-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Notifications"><i class="fas fa-bell fa-lg"></i> <span class="number d-none"></span></span>
 
 					<div class="dropdown-menu">
 
@@ -109,11 +109,11 @@
 					</span>
 
 					<span class="dropdown notes-dropdown">
-						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ads status"><i class="far fa-clipboard fa-lg"></i> <span class="number"></span></span>
+						<span class="btn dropdown-toggle notes-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Ads status"><i class="far fa-clipboard fa-lg"></i> <span class="number d-none"></span></span>
 
-					<div class="dropdown-menu">
+					<a class="dropdown-menu" href="<?php echo base_url('index.php/users_control_web/load_profile') ?>">
 
-					</div>
+					</a>
 					<script id="notes-template" type="text/template">
 						<li class="note" data-new="{{new}}">
 							<div class="row no-gutters">
@@ -1101,7 +1101,7 @@
 
 <!--notification modal-->
 <div id="notification-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1118,6 +1118,7 @@
 	</div>
 </div>
 
+<div class="notification-alert d-none"><i class="fas fa-info-circle"></i><span class="text"></span></div>
 <!--report modal-->
 <div id="report-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered " role="document">

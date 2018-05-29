@@ -273,4 +273,7 @@ header.home .header-account-logged li a {
 header.home .notes-dropdown .dropdown-menu {
   direction: rtl; }
 
+.notification-alert {
+  direction: rtl; }
+
 /*# sourceMappingURL=style-ar.css.map */

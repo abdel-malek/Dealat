@@ -679,14 +679,14 @@ header.home {
     line-height: 17px;
     font-size: .7rem; }
   header.home .notifications-dropdown {
-    margin-right: 5px; }
+    margin-right: 2px; }
   header.home .notes-dropdown .dropdown-menu {
     overflow-x: hidden;
     text-align: center;
-    min-width: 230px; }
+    min-width: 230px;
+    text-decoration: none; }
     header.home .notes-dropdown .dropdown-menu li {
-      padding: 2px 10px;
-      cursor: default; }
+      padding: 2px 10px; }
   header.home .notes-dropdown .number {
     top: -4px;
     right: -12px; }
@@ -748,22 +748,25 @@ header.home {
   top: 0; }
   .categories .category-slider {
     width: 91%; }
-    .categories .category-slider .slick-slide img {
-      margin: auto;
-      transition: .2s;
-      border-radius: 50%;
-      box-shadow: 4px 4px 12px 0px #bbb;
-      width: 60%; }
-    .categories .category-slider .slick-slide img:hover {
-      cursor: pointer;
-      transform: scale(1.1); }
-    .categories .category-slider .slick-slide h6 {
-      font-family: "gothic";
-      color: #444;
-      font-size: .6rem;
-      padding-top: 8px;
-      width: 80%;
-      margin: auto; }
+    .categories .category-slider .slick-slide {
+      padding-top: 2px;
+      padding-bottom: 5px; }
+      .categories .category-slider .slick-slide img {
+        margin: auto;
+        transition: .2s;
+        border-radius: 50%;
+        box-shadow: 4px 4px 12px 0px #bbb;
+        width: 60%; }
+      .categories .category-slider .slick-slide img:hover {
+        cursor: pointer;
+        transform: scale(1.1); }
+      .categories .category-slider .slick-slide h6 {
+        font-family: "gothic";
+        color: #444;
+        font-size: .6rem;
+        padding-top: 8px;
+        width: 80%;
+        margin: auto; }
   .categories .slick-arrow {
     top: 35%; }
   .categories .slick-prev {
@@ -1385,12 +1388,14 @@ select option.placeholder {
 
 #login-modal .modal-body {
   text-align: center; }
-#login-modal .qr-login, #login-modal .verify-registered {
+#login-modal .qr-login,
+#login-modal .verify-registered {
   color: #0075b4;
   margin-bottom: 10px;
   text-align: left;
   text-decoration: underline; }
-#login-modal .qr-login:hover, #login-modal .verify-registered:hover {
+#login-modal .qr-login:hover,
+#login-modal .verify-registered:hover {
   color: #125b82;
   cursor: pointer; }
 
@@ -1674,16 +1679,12 @@ header {
 .profile-page .session {
   position: relative; }
   .profile-page .session .new-msg {
-    position: absolute;
-    top: 29%;
-    left: 5px;
-    border-radius: 50%;
-    width: 36px;
-    height: 30px;
-    line-height: 30px;
     text-align: center;
     transition: .15s;
     color: #fff; }
+  @media (max-width: 576px) {
+    .profile-page .session .new-msg {
+      display: none; } }
 
 .SumoSelect {
   width: auto;
@@ -1751,5 +1752,18 @@ header {
 
 #ask-register-modal .modal-footer .button2 {
   width: 100%; }
+
+.notification-alert {
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  z-index: 2000;
+  padding: 20px;
+  background-color: rgba(195, 10, 48, 0.7);
+  color: #fff;
+  border-radius: 10px;
+  font-size: .8rem; }
+  .notification-alert .text {
+    padding: 0 4px; }
 
 /*# sourceMappingURL=style.css.map */
