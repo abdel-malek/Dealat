@@ -1,11 +1,8 @@
 package com.tradinos.dealat2.View;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +48,7 @@ import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.ConfirmDialog;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.Utils.ScalableImageView;
 
@@ -226,9 +222,7 @@ public class SubmitAdActivity extends MasterActivity {
 
         adapter = new HorizontalAdapter(mContext, linearLayout);
 
-        SpannableString content = new SpannableString(getString(R.string.labelTerms));
-        content.setSpan(new UnderlineSpan(), 0, getString(R.string.labelTerms).length(), 0);
-        buttonTerms.setText(content);
+        buttonTerms.setText(underlineString(getString(R.string.labelTerms)));
     }
 
     @Override
@@ -799,11 +793,11 @@ public class SubmitAdActivity extends MasterActivity {
             editCategory.setError(getString(R.string.errorRequired));
             editCategory.requestFocus();
 
-        } else if (currentTemplate == Category.PROPERTIES && selectedLocation == null) {
+        } /*else if (currentTemplate == Category.PROPERTIES && selectedLocation == null) {
             autoCompleteLocation.setError(getString(R.string.errorRequired));
             autoCompleteLocation.requestFocus();
 
-        } else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice)) {
+        }*/ else if (currentTemplate != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
 
@@ -1062,52 +1056,45 @@ public class SubmitAdActivity extends MasterActivity {
             popupBitmap = null;
         } else {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureDiscard));
+            dialog.show();
+
+            dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
+                public void onClick(View view) {
+                    JSONArray jsonArray = new JSONArray();
 
-                            JSONArray jsonArray = new JSONArray();
+                    Image image;
+                    for (int i = 0; i < adapter.getCount(); i++) {
+                        image = adapter.getItem(i);
+                        if (!image.isLoading())
+                            jsonArray.put(image.getServerPath());
+                    }
 
-                            Image image;
-                            for (int i = 0; i < adapter.getCount(); i++) {
-                                image = adapter.getItem(i);
-                                if (!image.isLoading())
-                                    jsonArray.put(image.getServerPath());
-                            }
+                    try {
+                        for (int i = 0; i < deletedImgsJsonArray.length(); i++) {
+                            jsonArray.put(deletedImgsJsonArray.getString(i));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                            try {
-                                for (int i = 0; i < deletedImgsJsonArray.length(); i++) {
-                                    jsonArray.put(deletedImgsJsonArray.getString(i));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            if (jsonArray.length() > 0) {
-                                ShowProgressDialog();
-                                AdController.getInstance(mController).deleteImage(jsonArray, new SuccessCallback<String>() {
-                                    @Override
-                                    public void OnSuccess(String result) {
-                                        HideProgressDialog();
-                                        setResult(RESULT_OK);
-                                        finish();
-                                    }
-                                });
-                            } else {
+                    if (jsonArray.length() > 0) {
+                        ShowProgressDialog();
+                        AdController.getInstance(mController).deleteImage(jsonArray, new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                HideProgressDialog();
                                 setResult(RESULT_OK);
                                 finish();
                             }
-
-                            break;
+                        });
+                    } else {
+                        setResult(RESULT_OK);
+                        finish();
                     }
                 }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-            builder.setMessage(R.string.areYouSureDiscard).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                    .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+            });
         }
     }
 

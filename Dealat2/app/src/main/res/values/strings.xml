@@ -11,6 +11,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">Ok</string>
+    <string name="or">Or</string>
+    <string name="countryCode">+963</string>
 
     <string name="arabic">عربي</string>
     <string name="english">English</string>
@@ -88,7 +90,7 @@
     <string name="labelShowPhone">Show phone number</string>
     <string name="labelOnlyToRegistered">Your phone number will be shown with this ad\'s details</string>
 
-    <string name="labelVerifySms">Please, enter verification code, you should receive it through SMS.  or press Skip</string>
+    <string name="labelVerifySms">Please, enter verification code, sent through SMS to</string>
 
     <string name="labelGoTo">1. Go to</string>
     <string name="labelQrUrl">dealat.tradinos.com/index.php/qrcode_login</string>
@@ -185,6 +187,7 @@
     <string name="buttonRegister">Register</string>
     <string name="buttonSkip">Skip</string>
     <string name="buttonVerify">Verify</string>
+    <string name="buttonReRequestCode">Resend code</string>
     <string name="buttonSell">Submit your ad for free</string>
     <string name="buttonTakePhoto">Take a photo</string>
     <string name="buttonDone">Done</string>

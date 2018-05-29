@@ -13,6 +13,7 @@ import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -41,7 +42,11 @@ public class RegisterActivity extends MasterActivity {
 
     @Override
     public void showData() {
-
+        User user = new CurrentAndroidUser(mContext).Get();
+        if (user != null){
+            editTextName.setText(user.getName());
+            editTextPhone.setText(user.getPhone());
+        }
     }
 
     @Override
@@ -85,6 +90,8 @@ public class RegisterActivity extends MasterActivity {
                                 public void OnSuccess(User result) {
                                     HideProgressDialog();
                                     MyApplication.saveUserState(User.PENDING);
+                                    MyApplication.saveCodeRequestDate(new Date());
+
                                     new CurrentAndroidUser(mContext).Save(result);
 
                                     Intent intent = new Intent(mContext, VerificationActivity.class);

@@ -1,7 +1,5 @@
 package com.tradinos.dealat2.View;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -37,6 +35,7 @@ import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
 import com.tradinos.dealat2.SplashActivity;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
 import java.util.List;
 import java.util.Locale;
@@ -320,32 +319,26 @@ public abstract class DrawerActivity extends MasterActivity
     }
 
     protected void logout() {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.logout_messg));
+        dialog.show();
+
+        dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            public void onClick(View view) {
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-                        UserController.getInstance(mController).logOut(refreshedToken, new SuccessCallback<String>() {
-                            @Override
-                            public void OnSuccess(String result) {
-                                MyApplication.saveUserState(User.NOT_REGISTERED);
-                                new CurrentAndroidUser(mContext).clearUser();
+                UserController.getInstance(mController).logOut(refreshedToken, new SuccessCallback<String>() {
+                    @Override
+                    public void OnSuccess(String result) {
+                        MyApplication.saveUserState(User.NOT_REGISTERED);
+                        new CurrentAndroidUser(mContext).clearUser();
 
-                                Intent intent = new Intent(mContext, SplashActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            }
-                        });
-
-                        break;
-                }
+                        Intent intent = new Intent(mContext, SplashActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                });
             }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-        builder.setMessage(getResources().getString(R.string.logout_messg)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+        });
     }
 }

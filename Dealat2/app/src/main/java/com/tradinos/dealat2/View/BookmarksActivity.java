@@ -1,7 +1,5 @@
 package com.tradinos.dealat2.View;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +13,7 @@ import com.tradinos.dealat2.Controller.UserController;
 import com.tradinos.dealat2.Model.Bookmark;
 import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,33 +89,30 @@ public class BookmarksActivity extends MasterActivity {
         switch (view.getId()) {
             case R.id.buttonFalse:
 
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureDeleteSearch));
+                dialog.show();
+
+                dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                ShowProgressDialog();
-                                UserController.getInstance(mController).deleteBookmark(bookmarks.get(position).getId(), new SuccessCallback<String>() {
-                                    @Override
-                                    public void OnSuccess(String result) {
-                                        HideProgressDialog();
+                    public void onClick(View view) {
+                        ShowProgressDialog();
+                        UserController.getInstance(mController).deleteBookmark(bookmarks.get(position).getId(), new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                HideProgressDialog();
 
-                                        bookmarks.remove(position);
-                                        ((BookmarkAdapter) listView.getAdapter()).notifyDataSetChanged();
+                                bookmarks.remove(position);
+                                ((BookmarkAdapter) listView.getAdapter()).notifyDataSetChanged();
 
-                                        if (bookmarks.isEmpty())
-                                            layoutEmpty.setVisibility(View.VISIBLE);
+                                if (bookmarks.isEmpty())
+                                    layoutEmpty.setVisibility(View.VISIBLE);
 
-                                        showMessageInToast(R.string.toastUnBookmark);
-                                    }
-                                });
-                        }
+                                showMessageInToast(R.string.toastUnBookmark);
+                            }
+                        });
                     }
-                };
+                });
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
-                builder.setMessage(R.string.areYouSureDeleteSearch).setPositiveButton(getString(R.string.yes), dialogClickListener)
-                        .setNegativeButton(getString(R.string.no), dialogClickListener).show();
                 break;
 
             case R.id.buttonTrue:

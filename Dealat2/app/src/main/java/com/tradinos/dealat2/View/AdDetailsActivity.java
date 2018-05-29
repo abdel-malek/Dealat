@@ -1,8 +1,6 @@
 package com.tradinos.dealat2.View;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -45,6 +43,7 @@ import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.Chat;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 
 /**
  * Created by developer on 01.03.18.
@@ -409,31 +408,25 @@ public class AdDetailsActivity extends MasterActivity {
 
                 case R.id.buttonDelete:
 
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureDeleteAd));
+                    dialog.show();
+
+                    dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    ShowProgressDialog();
-                                    AdController.getInstance(mController).changeStatus(currentAd.getId(), Ad.DELETED,
-                                            new SuccessCallback<String>() {
-                                                @Override
-                                                public void OnSuccess(String result) {
+                        public void onClick(View view) {
+                            ShowProgressDialog();
+                            AdController.getInstance(mController).changeStatus(currentAd.getId(), Ad.DELETED,
+                                    new SuccessCallback<String>() {
+                                        @Override
+                                        public void OnSuccess(String result) {
 
-                                                    HideProgressDialog();
-                                                    showMessageInToast(R.string.toastAdDeleted);
-                                                    finish();
-                                                }
-                                            });
-
-                                    break;
-                            }
+                                            HideProgressDialog();
+                                            showMessageInToast(R.string.toastAdDeleted);
+                                            finish();
+                                        }
+                                    });
                         }
-                    };
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT);
-                    builder.setMessage(R.string.areYouSureDeleteAd).setPositiveButton(getString(R.string.yes), dialogClickListener)
-                            .setNegativeButton(getString(R.string.no), dialogClickListener).show();
+                    });
 
                     break;
             }

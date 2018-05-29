@@ -9,21 +9,53 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/container"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/container2"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
         android:text="@string/labelVerifySms"
+        android:textAlignment="center"
         android:textAppearance="@style/textNormal"
         android:textColor="@color/white"
         />
+
+    <RelativeLayout
+        android:id="@+id/container2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/container"
+        android:layoutDirection="ltr"
+        >
+        <TextView
+            android:id="@+id/textViewPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="9499302994"
+            />
+
+        <ImageButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="@dimen/imageXSmall"
+            android:layout_height="@dimen/imageXSmall"
+            android:layout_toEndOf="@+id/textViewPhone"
+            android:visibility="invisible"
+            android:src="@drawable/pencil_copy"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            />
+    </RelativeLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
         android:layout_centerInParent="true"
         android:hint="@string/hintVerificationCode"
         android:textColorHint="@color/whiteTransparent"
@@ -40,19 +72,45 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/buttonFalse"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:paddingBottom="4dp"
         android:layout_below="@+id/container"
-        android:onClick="onClick"
-        android:text="@string/buttonSkip"
-        android:textColor="@color/white"
-        android:background="@null"
-        />
+        >
 
+        <Button
+            android:id="@+id/buttonMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@null"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/or"
+            android:textColor="@color/whiteTransparent"
+            />
+
+        <Button
+            android:id="@+id/buttonFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@null"
+            />
+    </LinearLayout>
 
 <Button
     android:id="@+id/buttonTrue"

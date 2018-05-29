@@ -1,8 +1,6 @@
 package com.tradinos.dealat2.View;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
@@ -59,6 +57,7 @@ import com.tradinos.dealat2.Model.Type;
 import com.tradinos.dealat2.Model.User;
 import com.tradinos.dealat2.MyApplication;
 import com.tradinos.dealat2.R;
+import com.tradinos.dealat2.Utils.CustomAlertDialog;
 import com.tradinos.dealat2.Utils.ImageDecoder;
 import com.tradinos.dealat2.Utils.ScalableImageView;
 
@@ -474,28 +473,24 @@ public class EditAdActivity extends MasterActivity {
 
                 if (checkGeneralInput())
                     if (checkTemplateInput()) {
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+
+                        CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureEdit));
+                        dialog.show();
+
+                        dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case DialogInterface.BUTTON_POSITIVE:
-
-                                        ShowProgressDialog();
-                                        AdController.getInstance(mController).editAd(parameters, new SuccessCallback<String>() {
-                                            @Override
-                                            public void OnSuccess(String result) {
-                                                HideProgressDialog();
-                                                showMessageInToast(getString(R.string.toastSaved));
-                                                finish();
-                                            }
-                                        });
-                                }
+                            public void onClick(View view) {
+                                ShowProgressDialog();
+                                AdController.getInstance(mController).editAd(parameters, new SuccessCallback<String>() {
+                                    @Override
+                                    public void OnSuccess(String result) {
+                                        HideProgressDialog();
+                                        showMessageInToast(getString(R.string.toastSaved));
+                                        finish();
+                                    }
+                                });
                             }
-                        };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-                        builder.setMessage(R.string.areYouSureEdit).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
-                                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+                        });
                     }
                 break;
 
@@ -624,11 +619,11 @@ public class EditAdActivity extends MasterActivity {
             editTitle.setError(getString(R.string.errorRequired));
             editTitle.requestFocus();
 
-        } else if (currentAd.getTemplate() == Category.PROPERTIES && selectedLocation == null) {
+        } /*else if (currentAd.getTemplate() == Category.PROPERTIES && selectedLocation == null) {
             autoCompleteLocation.setError(getString(R.string.errorRequired));
             autoCompleteLocation.requestFocus();
 
-        } else if (currentAd.getTemplate() != Category.JOBS && inputIsEmpty(editPrice)) {
+        }*/ else if (currentAd.getTemplate() != Category.JOBS && inputIsEmpty(editPrice)) {
             editPrice.setError(getString(R.string.errorRequired));
             editPrice.requestFocus();
 

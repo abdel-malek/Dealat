@@ -14,7 +14,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -279,6 +281,13 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
 
     public String formattedNumber(double number) {
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
+    }
+
+    public SpannableString underlineString(String text){
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, text.length(), 0);
+
+        return  content;
     }
 
     protected boolean inputIsEmpty(EditText editText) {

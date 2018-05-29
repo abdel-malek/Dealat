@@ -10,8 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -63,10 +61,8 @@ public class AboutActivity extends MasterActivity {
                 ((TextView) findViewById(R.id.textView)).setText(about.getContent());
 
                 if (about.getPhone() != null) {
-                    SpannableString content = new SpannableString(about.getPhone());
-                    content.setSpan(new UnderlineSpan(), 0, about.getPhone().length(), 0);
 
-                    ((TextView) findViewById(R.id.textViewPhone)).setText(content);
+                    ((TextView) findViewById(R.id.textViewPhone)).setText(underlineString(about.getPhone()));
                     findViewById(R.id.textViewPhone).setVisibility(View.VISIBLE);
                 }
             }

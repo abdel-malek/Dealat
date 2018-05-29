@@ -38,6 +38,7 @@ public class URLBuilder {
     }
 
     public String getServerUrl() {
+        // DON'T FORGET TO CHANGE getBaseUrl IN MyApplication
         SharedPreferences preferences = context.getSharedPreferences("Server", Context.MODE_PRIVATE);
         if (preferences == null)
 

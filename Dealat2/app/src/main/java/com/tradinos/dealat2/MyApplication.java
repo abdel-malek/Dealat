@@ -11,6 +11,7 @@ import com.tradinos.dealat2.Model.Category;
 import com.tradinos.dealat2.Model.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -85,6 +86,18 @@ public class MyApplication extends Application {
 
     public static String getCity() {
         return sharedPreferences.getString("cityId", "");
+    }
+
+
+    public static void saveCodeRequestDate(Date date) {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong("registerDate", date.getTime());
+        editor.commit();
+    }
+
+    public static long getCodeRequestDate() {
+        return sharedPreferences.getLong("registerDate", 0);
     }
 
     public static void saveImagePath(String path) {
@@ -213,6 +226,6 @@ public class MyApplication extends Application {
 
     public static String getBaseUrl() {
         return "http://dealat.tradinos.com/";
-       // return "http://192.168.9.17/Dealat/";
+        // return "http://192.168.9.17/Dealat/";
     }
 }

@@ -8,6 +8,7 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="ok">موافق</string>
+    <string name="or">أو</string>
 
     <string name="arabic">عربي</string>
     <string name="english">English</string>
@@ -84,7 +85,7 @@
     <string name="labelShowPhone">إظهار رقم الموبايل</string>
     <string name="labelOnlyToRegistered">سيظهر رقم موبايلك مع تفاصيل هذا الإعلان</string>
 
-    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS، أو اضغط تخطّي.</string>
+    <string name="labelVerifySms">من فضلك، ادخل رمز التحقق الذي سيصلك برسالة SMS إلى الرقم</string>
 
     <string name="labelGoTo">١. اذهب إلى الرابط</string>
     <string name="labelVisit">على جهاز الكومبيوتر الخاص بك، وامسح الرمز الظاهر</string>
@@ -178,6 +179,7 @@
 
     <string name="buttonRegister">تسجيل</string>
     <string name="buttonSkip">تخطّي</string>
+    <string name="buttonReRequestCode">أرسل الرمز مجدداً</string>
     <string name="buttonVerify">تفعيل الحساب</string>
     <string name="buttonSell">اضف إعلانك مجاناً</string>
     <string name="buttonTakePhoto">التقط صورة</string>
