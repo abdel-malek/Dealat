@@ -21,7 +21,11 @@
 							{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><i class="fab fa-facebook-square fa-2x"></i></a></span>{{/facebook_link}} {{#youtube_link}}
 							<span class="icon youtube"><a href="{{youtube_link}}"><i class="fab fa-youtube-square fa-2x"></i></a></span>{{/youtube_link}} {{#twiter_link}}
 							<span class="icon twitter"><a href="{{twiter_link}}"><i class="fab fa-twitter-square fa-2x"></i></a></span>{{/twiter_link}}
-							<!--<span class="icon google"><a href=""><i class="fab fa-google-plus-square fa-2x"></i></a></span>-->
+							{{#instagram_link}}
+							<span class="icon instagram"><a href="{{instagram_link}}"><i class="fab fa-instagram fa-2x"></i></a></span>{{/instagram_link}}
+							
+							{{#linkedin_link}}
+							<span class="icon linkedin"><a href="{{linkedin_link}}"><i class="fab fa-linkedin fa-2x"></i></a></span>{{/linkedin_link}}
 						</div>
 						<ul class="info">
 							<li><i class="fas fa-envelope"></i> {{email}}</li>

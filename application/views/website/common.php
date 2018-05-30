@@ -48,7 +48,8 @@
 				{{#facebook_link}}<span class="icon facebook"><a href="{{facebook_link}}"><img src="<?php echo base_url("assets/images/facebook.png"); ?>" alt=""></a></span>{{/facebook_link}} {{#youtube_link}}
 				<span class="icon youtube"><a href="{{youtube_link}}"><img src="<?php echo base_url("assets/images/youtube.png"); ?>" alt=""></a></span>{{/youtube_link}} {{#twiter_link}}
 				<span class="icon twitter"><a href="{{twiter_link}}"><img src="<?php echo base_url("assets/images/twitter.png"); ?>" alt=""></a></span>{{/twiter_link}}
-				<!--		<span class="icon instagram"><a href=""><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>-->
+				{{#instagram_link}}<span class="icon instagram"><a href="{{instagram_link}}"><img src="<?php echo base_url("assets/images/instagram.png"); ?>" alt=""></a></span>{{/instagram_link}}
+				{{#linkedin_link}}<span class="icon linkedin"><a href="{{linkedin_link}}"><img src="<?php echo base_url("assets/images/linkedin.png"); ?>" alt=""></a></span>{{/linkedin_link}}
 			</script>
 		</div>
 	</div>
