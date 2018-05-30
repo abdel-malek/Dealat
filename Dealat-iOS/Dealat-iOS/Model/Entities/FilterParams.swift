@@ -92,7 +92,11 @@ class FilterParams{
             params["certificate_name"] = JSON(x.map({$0.name})).rawString()
         }
 
-        
+        if let x = filter.propertyStates{
+            params["property_state_id"] = JSON(x).rawString()
+            params["property_state_name"] = JSON(x).rawString()
+        }
+
         
         if let x = filter.manufacture_date{
             params["manufacture_date"] = JSON(x).rawString()

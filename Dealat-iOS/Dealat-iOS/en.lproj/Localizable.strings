@@ -194,3 +194,9 @@
 "needRegister2" = "Your account isn't verified, Would you like to verify it?";
 
 "numberConfirmation" = "Is your phone correct?";
+
+"verify1" = "Please, enter verification code, sent through SMS to";
+"resendcode" = "Resend code";
+"or" = "or";
+"min" = "min";
+"sec" = "sec";

@@ -612,6 +612,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                 // final
                 self.parentVC.filter.propertyStates = arr!.isEmpty ? nil : arr!
 
+
             default:
                 break
             }

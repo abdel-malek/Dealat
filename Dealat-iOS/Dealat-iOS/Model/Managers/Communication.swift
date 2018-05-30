@@ -658,6 +658,8 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
+                    Provider.addTimer(60)
+                    
                     if let i = value.data, let obj = i.dictionaryObject{
                         let newUser = User.getObject(obj)
                         newUser.statues_key = User.USER_STATUES.PENDING_CODE.rawValue

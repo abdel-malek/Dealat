@@ -248,7 +248,12 @@ class FilterVC: BaseTVC {
             self.tfYear.text = allString
         }
         
-        
+        if filter.propertyStates != nil{
+            self.tfPropertyName.text = filter.propertyStates!.compactMap({$0.name}).joined(separator: ",")
+        }else{
+            self.tfPropertyName.text = allString
+        }
+
         
         
 //        if filter.engine_capacity != nil{

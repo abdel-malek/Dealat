@@ -11,6 +11,7 @@ import UIKit
 import SDWebImage
 import Kingfisher
 import Google
+import AFDateHelper
 
 class Provider : BaseManager {
     
@@ -113,6 +114,32 @@ class Provider : BaseManager {
         }
     }
     
+    // TO DO 1.1
+    // set time for activate wating minutes
+    static func addTimer(_ minutes : Int) {
+        let calendar = Calendar.current
+        let date = calendar.date(byAdding: .minute, value: minutes, to: Date())
+        UserDefaults.standard.set(date, forKey: "timerActive")
+    }
+    
+    static func getTimer() -> Int{
+        if let m = UserDefaults.standard.value(forKey: "timerActive"){
+            if let d = m as? Date{
+                
+                let s = d.seconds(from: Date())
+//                let s = Date().secondsEarlier(than: d)
+                
+                if s < 0 {
+                    return 0
+                }
+                
+                return s
+            }
+        }
+        
+        return 0
+    }
+
     
     static func setScreenName(_ name : String){
         if let tracker = GAI.sharedInstance().defaultTracker{
