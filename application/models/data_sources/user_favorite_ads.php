@@ -32,11 +32,14 @@ class User_favorite_ads extends MY_Model {
 	  $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
 	  $this->db->join('cites', 'locations.city_id = cites.city_id', 'left');
 	  $this->db->join('users' , 'users.user_id = ads.user_id ' , 'left');
+	  $this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 	  $this->db->where('status' , STATUS::ACCEPTED);
 	  $this->db->where('categories.is_active' , 1);
+	 // $this->db->where('categories.is_deleted' , 0);
 	  $this->db->where('users.is_deleted' , 0);
-	  $this->db->where('users.is_active' , 0);
+	  $this->db->where('users.is_active' , 1);
 	  $this->db->where('user_favorite_ads.user_id' , $user_id);
+	  $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');  
 	  return parent::get();
 	}
 	

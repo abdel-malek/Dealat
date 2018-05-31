@@ -29,6 +29,7 @@ class Reported_ads extends MY_Model {
 					   GROUP BY reported_ads.ad_id) as temp" ,
 					  "temp.Max_id = reported_ads.reported_ad_id" ,
 					  'inner');
+	 $this->db->order_by('reported_ads.reported_ad_id DESC');
 	 return parent::get();
   }
   

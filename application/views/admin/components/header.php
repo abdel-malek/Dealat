@@ -127,9 +127,6 @@
 	                 	   <li id=""><a href="<?php echo base_url('index.php/admin/users_manage/load_activation_codes_page'); ?>"><?php echo $this->lang->line('activation_codes_report') ?></a></li>
 	                 	</ul>
 	                </li>
-                  	
-                  	
-                    <li><a href="<?php echo base_url('index.php/admin/users_manage'); ?>"><i class="fa fa-group"></i><?php echo $this->lang->line('users_manage') ?></a></li>
                   <?php endif; ?>  
                   
                   <!-- commercial ads -->

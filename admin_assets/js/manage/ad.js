@@ -109,6 +109,7 @@ var ads_buttons =[];
 			 },
              "bServerSide": false,
              aaSorting : [[0, 'desc']],
+           //   aaSorting :[], // sort by modified date.
            //  "sAjaxSource": base_url + '/admin/items_manage/all/format/json',
              "ajax": {
               "url": base_url + '/admin/items_manage/all/format/json',
@@ -172,11 +173,12 @@ var ads_buttons =[];
         success: function(response) {
             // highlight the new pendeing rows. 
             var new_count = response.data;
+            //console.log(new_count);
             var diff = new_count - current_pending_count;
-          //  console.log(diff);
+            //console.log(diff);
             if(diff > 0){
+              //alert('fgb');
               $(ads_table.rows().nodes()).each(function(index){
-            	//console.log(index);
              	if(index < diff){
              		$.playSound(sound_notify_path);
              		$(this).css("background-color", "#1abb9c63");
@@ -273,9 +275,9 @@ var ads_buttons =[];
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
- 	  var url =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
+ 	  var url_details =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
-        url: url,
+        url: url_details,
         type: "get",
         dataType: "json",
         success: function(response) {
@@ -379,8 +381,11 @@ var ads_buttons =[];
 			//fill seller info
 			$('.ads_details  #ad_seller_name').html($item_info['seller_name']);
 			$('.ads_details  #ad_seller_phone').html($item_info['seller_phone']);
-			$('.ads_details  #ad_contact_phone').html($item_info['seller_phone']);
-            
+			if($item_info['ad_contact_phone'] != null){
+				$('.ads_details  #ad_contact_phone').val($item_info['ad_contact_phone']);
+			}else{
+				$('.ads_details  #ad_contact_phone').val($item_info['seller_phone']);
+			}
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             
             //show hide btns
@@ -521,10 +526,15 @@ var ads_buttons =[];
  function perform_action (action) {
  	 var can_proceed = true; 
  	 if(can_proceed == true){
+ 	 	var conatct_phone = $('.ads_details  #ad_contact_phone').val();
+ 	 	var user_phone = $('.ads_details  #ad_seller_phone').html();
  	    var data = {
 	     	action : action,
 	        ad_id : $('.ads_details  #post_id').val()
 	     };
+	     if(conatct_phone != user_phone){
+	     	data['ad_contact_phone'] = conatct_phone;
+	     }
 	     if(action == 'accept'){
 	     	data['publish_date'] = moment().format('YYYY-MM-DD HH:mm:ss');
 	     	data['is_featured'] =  $('.ads_details  #select_featured').val();
@@ -536,7 +546,7 @@ var ads_buttons =[];
 	     }
 	     console.log(data);
 	     $.ajax({
-	        url: base_url + '/api/items_control/action/format/json',
+	        url: base_url + '/admin/items_manage/action/format/json',
 	        type: "post",
 	        dataType: "json",
 	        data: data,

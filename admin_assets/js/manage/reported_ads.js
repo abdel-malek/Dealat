@@ -38,7 +38,8 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
 				   }
 			 },
             "bServerSide": false,
-            aaSorting : [[2, 'asc']],
+            //aaSorting : [[0, 'desc']],
+            "aaSorting": [],
             "ajax": {
               "url": base_url + '/admin/items_manage/get_all_reported_items/format/json',
 		      "type": "GET",
@@ -52,7 +53,7 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
                     "targets": -1, // reports
                     "data": null,
                     "mRender": function(date, type, full) {
-                       return '<button id="" onclick="show_reports(\'' + full[0] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button><span class="badge bg-green reports_count">'+full[4]+'</span>';
+                       return '<button id="" name="reports_list" seen_status="' + full[5] + '" onclick="show_reports(\'' + full[0] + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button><span class="badge bg-green reports_count">'+full[4]+'</span>';
 		             }
 		         },
 		          {
@@ -82,28 +83,52 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
    setInterval(function() {
    	   if ($.fn.DataTable.isDataTable( '#reported_ads_table' ) ) { // if the reported ads page is open
    	   	  reported_ads_table.ajax.reload( null, false );
-		  reported_ads_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-			    var data = this.data();
-			   // console.log(data);
-			    if(data[5] == 0){ // the reported not seen
-			    	new PNotify({
+		  // reported_ads_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+			    // var data = this.data();
+			    // console.log(reported_ads_table.row(rowIdx));
+			    // $(reported_ads_table.row(rowIdx)).css("background-color", "#f5dbc2");
+			    // if(data[5] == 0){ // the reported not seen
+			    	// new PNotify({
+		              // title: lang_array['attention'],
+		              // text: lang_array['new_reported_ad']+data[1],
+		              // type: 'warning',
+		              // styling: 'bootstrap3',
+		              // buttons: {
+					        // sticker: false
+					   // }
+		          // });
+		         // $.playSound(alert_notify_path);
+		         // // color the row (not working!)
+		         // $(this).css("background-color", "#f5dbc2");
+	              // // setTimeout(function () {
+	                    // // this.row.css("background-color", "#fff");
+	              // // }, 2500);
+			    // }
+		 // });
+		   $(reported_ads_table.rows().nodes()).each(function(index){
+		   	   var seen_status = $(this).find('[name=reports_list]').attr('seen_status');
+		   	   var ad_name = $(this).find("td:eq(1)").html();
+		   	   if(seen_status == 0){
+		   	   	  new PNotify({
 		              title: lang_array['attention'],
-		              text: lang_array['new_reported_ad']+data[1],
+		              text: lang_array['new_reported_ad']+ad_name,
 		              type: 'warning',
 		              styling: 'bootstrap3',
 		              buttons: {
 					        sticker: false
 					   }
-		          });
+		          }); 
 		         $.playSound(alert_notify_path);
 		         // color the row (not working!)
-		         // $(this).css("background-color", "#f5dbc2");
-	              // setTimeout(function () {
-	                  //   this.row.css("background-color", "#fff");
-	              // }, 2500);
-			    }
-		 });
-		    // set to seen
+		         $(this).css("background-color", "#f5dbc2");
+	              setTimeout(function () {
+	                    $(this).css("background-color", "#fff");
+	              }, 2500);
+		   	   }
+		   	   //console.log(seen_status);
+		   });
+		  
+		  // set to seen
 		 $.ajax({
 		    url: base_url + '/admin/items_manage/set_reports_to_seen/format/json',
 		    type: "post",
@@ -138,10 +163,10 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
 		    	}
 		    	//console.log(response.data);
 		    },error: function(xhr, status, error){
-		    }
+		   }
 		 });
    	   }
-	  },  6000);  //3600000
+	  },  10000);  //3600000
    
  });
  

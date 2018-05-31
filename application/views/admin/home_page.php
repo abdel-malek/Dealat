@@ -27,6 +27,14 @@
 	                </div>
 	             </div>
 	         <?php endif; ?> 
+	         <?php if(PERMISSION::Check_permission(PERMISSION::USERS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                 <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">
+	                <div class="tile-stats home_card">
+	                   <div class="icon col-md-3"><i class="fa fa-group"></i></div>
+	                   <h3 class='home_header col-md-9'><a href="<?php echo base_url('index.php/admin/users_manage/load_activation_codes_page'); ?>"><?php echo $this->lang->line('activation_codes_report') ?></a></h3>
+	                </div>
+	             </div>
+	         <?php endif; ?> 
 	         
 	         <?php if(PERMISSION::Check_permission(PERMISSION::MAIN_COMMERCIALS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                  <div class="animated flipInY col-lg-4 col-md-6 col-sm-6 col-xs-12">

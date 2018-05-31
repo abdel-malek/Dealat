@@ -4,6 +4,7 @@ class Ads extends MY_Model {
 	protected $_table_name = 'ads';
 	protected $_primary_key = 'ads.ad_id';
 	protected $_order_by = 'is_featured DESC , publish_date DESC'; //ASC
+	protected $_timestamps = TRUE;
 	public $rules = array();
 	
     function __construct() {
@@ -88,8 +89,8 @@ class Ads extends MY_Model {
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		$this->db->where('users.is_deleted' , 0);
 		$this->db->where('users.is_active' , 1);
-		$this->db->where('categories.is_active' , 1);
-		$this->db->where('categories.is_deleted' , 0);
+		//$this->db->where('categories.is_active' , 1);
+		//$this->db->where('categories.is_deleted' , 0);
 		if($tamplate_id != TAMPLATES::BASIC){
 			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
 			$this->db->select('tamplate.*');
@@ -529,6 +530,7 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
 		$this->db->where('categories.is_active' , 1);
+		$this->db->order_by('ads.modified_at DESC');
 		return parent::get();
 	}
 	
