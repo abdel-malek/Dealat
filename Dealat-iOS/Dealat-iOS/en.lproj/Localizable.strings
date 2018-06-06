@@ -185,7 +185,7 @@
 
 
 "Scan QRcode" = "Scan QR code";
-"QRCodeMessage" = "1- Go to http://dealat.tradinos.com/index.php/qrcode_login on your computer and scan the QR code.\n2- Enter PIN that will be shown on your mobile.";
+"QRCodeMessage" = "1- Go to http://www.deal-at.com/index.php/qrcode_login on your computer and scan the QR code.\n2- Enter PIN that will be shown on your mobile.";
 
 "pinLbl" = "PIN Number";
 

@@ -188,7 +188,7 @@
 
 
 "Scan QRcode" = "مسح QR code";
-"QRCodeMessage" = "1- اذهب إلى الرابط\nhttp://dealat.tradinos.com/index.php/qrcode_login\nعلى جهاز الكمبيوتر الخاص بك واسمح الرمز الظاهر.\n2- أدخل الرقم الذي سيظهر على موبايلك.";
+"QRCodeMessage" = "1- اذهب إلى الرابط\nhttp://www.deal-at.com/index.php/qrcode_login\nعلى جهاز الكمبيوتر الخاص بك واسمح الرمز الظاهر.\n2- أدخل الرقم الذي سيظهر على موبايلك.";
 
 "pinLbl" = "الرقم السري";
 
