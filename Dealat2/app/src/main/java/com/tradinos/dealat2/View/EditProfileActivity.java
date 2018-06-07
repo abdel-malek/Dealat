@@ -82,7 +82,6 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
         UserController.getInstance(mController).getCities(new SuccessCallback<List<Item>>() {
             @Override
             public void OnSuccess(List<Item> result) {
-                HideProgressDialog();
                 enabled = true;
 
                 final List<Item> cities = result;
@@ -120,6 +119,8 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
                             mImageLoader.get(MyApplication.getBaseUrl() + result.getImageUrl(), ImageLoader.getImageListener(imageViewPersonal,
                                     R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
                         }
+
+                        HideProgressDialog();
                     }
                 });
             }
@@ -132,14 +133,14 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
     @Override
     public void assignUIReferences() {
-        imageViewPersonal = (ImageView) findViewById(R.id.imageView);
-        editTextName = (EditText) findViewById(R.id.editName);
-        editWhatsApp = (EditText) findViewById(R.id.editWhatsApp);
-        editEmail = (EditText) findViewById(R.id.editEmail);
-        editBirthday = (EditText) findViewById(R.id.editBirthday);
-        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
-        spinnerGender = (AppCompatSpinner) findViewById(R.id.spinnerGender);
-        buttonRemove = (Button) findViewById(R.id.buttonRemove);
+        imageViewPersonal = findViewById(R.id.imageView);
+        editTextName = findViewById(R.id.editName);
+        editWhatsApp = findViewById(R.id.editWhatsApp);
+        editEmail = findViewById(R.id.editEmail);
+        editBirthday = findViewById(R.id.editBirthday);
+        spinnerCity = findViewById(R.id.spinner);
+        spinnerGender = findViewById(R.id.spinnerGender);
+        buttonRemove = findViewById(R.id.buttonRemove);
 
         findViewById(R.id.buttonEdit).setEnabled(false);
     }

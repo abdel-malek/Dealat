@@ -160,7 +160,7 @@ public class MultiPartStack extends HurlStack {
 		Map<String, File> fileUpload = ((MultiPartRequest) request).getFileUploads();
 		for (Map.Entry<String, File> entry : fileUpload.entrySet()) {
 
-			builder.addPart(((String) entry.getKey()), new FileBody((File) entry.getValue()));
+			builder.addPart(entry.getKey(), new FileBody(entry.getValue()));
 		}
 
 		ContentType contentType = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
@@ -168,8 +168,8 @@ public class MultiPartStack extends HurlStack {
 		Map<String, String> stringUpload = ((MultiPartRequest) request).getStringUploads();
 		for (Map.Entry<String, String> entry : stringUpload.entrySet()) {
 			try {
-				builder.addPart(((String) entry.getKey()),
-						new StringBody((String) entry.getValue(), contentType));
+				builder.addPart(entry.getKey(),
+						new StringBody(entry.getValue(), contentType));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

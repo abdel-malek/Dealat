@@ -87,7 +87,7 @@ public class VerificationActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        editTextCode = (EditText) findViewById(R.id.edit_query);
+        editTextCode = findViewById(R.id.edit_query);
         buttonMessage = findViewById(R.id.buttonMessage);
         buttonEditNumber = findViewById(R.id.buttonEdit);
         buttonSkip = findViewById(R.id.buttonFalse);

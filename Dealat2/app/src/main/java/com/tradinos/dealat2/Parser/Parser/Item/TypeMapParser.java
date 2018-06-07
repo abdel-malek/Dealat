@@ -18,6 +18,8 @@ import java.util.List;
 public class TypeMapParser implements TradinosParser<HashMap<Integer, List<Type>>> {
     @Override
     public HashMap<Integer, List<Type>> Parse(String text) throws JSONException {
+        if (text.equals("[]"))
+            return new HashMap<>();
         return Parse(new JSONObject(text));
     }
 

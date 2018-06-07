@@ -104,9 +104,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         this.contentViewRes = viewRes;
     }
 
-    public abstract void getData();
+    protected abstract void getData();
 
-    public abstract void showData();
+    protected abstract void showData();
 
     @Override
     public void setTitle(CharSequence title) {
@@ -122,9 +122,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     }
 
 
-    public abstract void assignUIReferences();
+    protected abstract void assignUIReferences();
 
-    public abstract void assignActions();
+    protected abstract void assignActions();
 
 
     public void defineController() {
@@ -291,9 +291,7 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
     }
 
     protected boolean inputIsEmpty(EditText editText) {
-        if (TextUtils.isEmpty(editText.getText().toString()))
-            return true;
-        return false;
+        return TextUtils.isEmpty(editText.getText().toString());
     }
 
     protected String stringInput(EditText editText) {
@@ -398,7 +396,6 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         SimpleDateFormat dateWithYearFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         DateFormat timeInstance = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.ENGLISH); //time without seconds
-
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());

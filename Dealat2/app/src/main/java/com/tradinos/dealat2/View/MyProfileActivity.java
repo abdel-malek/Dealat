@@ -73,10 +73,10 @@ public class MyProfileActivity extends MasterActivity {
                                 mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
                                 // Set up the ViewPager with the sections adapter.
-                                mViewPager = (ViewPager) findViewById(R.id.viewpager);
+                                mViewPager = findViewById(R.id.viewpager);
                                 mViewPager.setAdapter(mSectionsPagerAdapter);
 
-                                TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+                                TabLayout tabLayout = findViewById(R.id.tab_layout);
                                 tabLayout.setupWithViewPager(mViewPager);
 
                                 mViewPager.setCurrentItem(page);
@@ -148,9 +148,9 @@ public class MyProfileActivity extends MasterActivity {
         snackbar.show();
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

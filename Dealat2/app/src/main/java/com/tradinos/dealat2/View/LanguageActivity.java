@@ -55,7 +55,7 @@ public class LanguageActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        listView = (ListView) findViewById(R.id.listView);
+        listView = findViewById(R.id.listView);
     }
 
     @Override

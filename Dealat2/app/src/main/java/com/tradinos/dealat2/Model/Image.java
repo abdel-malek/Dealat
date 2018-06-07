@@ -11,7 +11,7 @@ public class Image implements Serializable {
     public static final int MAX_IMAGES = 8;
 
     private String path, serverPath;
-    private boolean selected, markedAsMain, loading = true;
+    private boolean selected, markedAsMain, loading;
 
     public Image(){
         path = "";
@@ -76,8 +76,6 @@ public class Image implements Serializable {
 
     public boolean isPreviouslyLoaded(){ // it means the image was uploaded when Submit and now when Edit Ad, image has no path
         // I mean it has no Local path on the device// but it has a server path of course
-        if (this.path.equals(""))
-            return true;
-        return false;
+        return this.path.equals("");
     }
 }

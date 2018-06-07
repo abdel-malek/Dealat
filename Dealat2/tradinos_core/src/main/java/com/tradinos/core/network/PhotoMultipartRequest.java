@@ -21,10 +21,10 @@ public class PhotoMultipartRequest<T> extends TradinosRequest<T> {
     private MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
 
     /* To hold the parameter name and the File to upload */
-    private Map<String, File> fileUploads = new HashMap<String, File>();
+    private Map<String, File> fileUploads = new HashMap<>();
 
     /* To hold the parameter name and the string content to upload */
-    private Map<String, String> stringUploads = new HashMap<String, String>();
+    private Map<String, String> stringUploads = new HashMap<>();
 
 
     public PhotoMultipartRequest(Context context, String url, RequestMethod method, final TradinosParser<T> parser, SuccessCallback<T> successCallback, final FaildCallback faildCallback) {

@@ -20,7 +20,6 @@ import com.tradinos.dealat2.R;
 
 public class SubCategoriesActivity extends MasterActivity {
 
-    private final int DURATION = 250;
     public static final int ACTION_VIEW = 1, ACTION_SELECT_CAT = 3, ACTION_FILTER_CAT = 4;
 
     private MyApplication application;
@@ -93,9 +92,9 @@ public class SubCategoriesActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        buttonBack = (ImageButton) findViewById(R.id.buttonTrue);
-        listView = (ListView) findViewById(R.id.listView);
-        textViewTitle = (TextView) findViewById(R.id.title);
+        buttonBack = findViewById(R.id.buttonTrue);
+        listView = findViewById(R.id.listView);
+        textViewTitle = findViewById(R.id.title);
     }
 
     @Override
@@ -171,6 +170,8 @@ public class SubCategoriesActivity extends MasterActivity {
     }
 
     private void animate(int dir) {
+        final int DURATION = 250;
+
         TranslateAnimation textAnimation, animation;
 
         if (MyApplication.getLocale().toString().equals("ar")) {

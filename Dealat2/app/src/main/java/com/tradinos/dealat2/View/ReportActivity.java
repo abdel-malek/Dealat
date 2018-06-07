@@ -57,8 +57,8 @@ public class ReportActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        listView = (ListView) findViewById(R.id.listView);
-        textViewTitle = (TextView) findViewById(R.id.title);
+        listView = findViewById(R.id.listView);
+        textViewTitle = findViewById(R.id.title);
     }
 
     @Override

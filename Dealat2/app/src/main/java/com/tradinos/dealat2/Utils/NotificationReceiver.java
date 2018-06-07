@@ -55,7 +55,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         notificationTitle += " (" + chat.getAdTitle() + ")";
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "Chats")
                 .setSmallIcon(R.drawable.dealat_logo_white_background)
                 .setContentTitle(notificationTitle)
                 .setContentText(msg)
@@ -81,10 +81,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     private boolean amISeller(User user, Chat chat) {
-        if (user != null) {
-            if (user.getId().equals(chat.getSellerId()))
-                return true;
-        }
+        if (user != null)
+            return user.getId().equals(chat.getSellerId());
+
         return false;
     }
 }

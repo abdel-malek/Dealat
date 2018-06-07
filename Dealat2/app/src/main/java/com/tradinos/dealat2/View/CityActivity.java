@@ -63,8 +63,8 @@ public class CityActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        listView = (ListView) findViewById(R.id.listView);
+        swipeRefreshLayout = findViewById(R.id.refreshLayout);
+        listView = findViewById(R.id.listView);
     }
 
     @Override

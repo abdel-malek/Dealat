@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Hidden fields tags -->
+    <!-- Property -->
+    <string name="hideSpace" translatable="false">space</string>
+    <string name="hideRoom" translatable="false">rooms_num</string>
+    <string name="hideFloor" translatable="false">floor</string>
+    <string name="hideNumberFloors" translatable="false">floors_number</string>
+    <string name="hidePropertyState" translatable="false">property_state_name</string>
+    <string name="hideFurn" translatable="false">with_furniture</string>
+
+    <!-- Jobs -->
+    <string name="hideEducation" translatable="false">education_name</string>
+    <string name="hideCertificate" translatable="false">certificate_name</string>
+    <string name="hideSchedule" translatable="false">schedule_name</string>
+    <string name="hideEx" translatable="false">experience</string>
+    <string name="hideSalary" translatable="false">salary</string>
+    <string name="hideGender" translatable="false">gender</string>
+
+    <!-- Vehicles -->
+    <string name="hideBrand" translatable="false">type_name</string>
+    <string name="hideModel" translatable="false">type_model_name</string>
+    <string name="hideYear" translatable="false">manufacture_date</string>
+    <string name="hideCapacity" translatable="false">engine_capacity</string>
+    <string name="hideKilo" translatable="false">kilometer</string>
+    <string name="hideAutomatic" translatable="false">is_automatic</string>
+
+    <!-- Electronics -->
+    <string name="hideSize" translatable="false">size</string>
+
+    <string name="hideSecondhand" translatable="false">is_new</string>
+
+
+    <!-- Bookmark fields tags -->
+    <!-- General fields -->
+    <string name="query" translatable="false">query</string>
+    <string name="categoryName" translatable="false">category_name</string>
+    <string name="cityName" translatable="false">city_name</string>
+    <string name="locationName" translatable="false">location_name</string>
+    <string name="priceMax" translatable="false">price_max</string>
+    <string name="priceMin" translatable="false">price_min</string>
+
+    <!-- Property -->
+    <string name="spaceMax" translatable="false">space_max</string>
+    <string name="spaceMin" translatable="false">space_min</string>
+    <string name="roomsNumMax" translatable="false">rooms_num_max</string>
+    <string name="roomsNumMin" translatable="false">rooms_num_min</string>
+    <string name="floorMax" translatable="false">floor_max</string>
+    <string name="floorMin" translatable="false">floor_min</string>
+    <string name="numberFloorsMin" translatable="false">floors_number_min</string>
+    <string name="numberFloorsMax" translatable="false">floors_number_max</string>
+    <string name="furnitureName" translatable="false">furniture_name</string>
+    <string name="propertyStateName" translatable="false">property_state_name</string>
+
+    <!-- Jobs -->
+    <string name="educationName" translatable="false">education_name</string>
+    <string name="certificateName" translatable="false">certificate_name</string>
+    <string name="scheduleName" translatable="false">schedule_name</string>
+    <string name="genderName" translatable="false">gender_name</string>
+    <string name="salaryMax" translatable="false">salary_max</string>
+    <string name="salaryMin" translatable="false">salary_min</string>
+
+    <!-- Vehicles -->
+    <string name="typeName" translatable="false">type_name</string>
+    <string name="modelName" translatable="false">model_name</string>
+    <string name="kilometerMax" translatable="false">kilometer_max</string>
+    <string name="kilometerMin" translatable="false">kilometer_min</string>
+    <string name="capacityMin" translatable="false">engine_capacity_min</string>
+    <string name="capacityMax" translatable="false">engine_capacity_max</string>
+    <string name="automaticName" translatable="false">automatic_name</string>
+    <string name="yearsName" translatable="false">years_name</string>
+
+    <!-- Electronics -->
+    <string name="sizeMax" translatable="false">size_max</string>
+    <string name="sizeMin" translatable="false">size_min</string>
+
+    <string name="stateName" translatable="false">state_name</string>
+
+</resources>

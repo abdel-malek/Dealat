@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -40,10 +39,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        //Log.d(TAG, "From: " + remoteMessage.getFrom());
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            // Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
             try {
                 sendNotification(remoteMessage.getData().get("ntf_body"),
@@ -56,9 +55,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
+//        if (remoteMessage.getNotification() != null) {
+//            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+//        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -69,6 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String body, String txt, String title, String type) throws JSONException {
 
         Intent intent;
+        String channelId = "Dealat";
 
         switch (type) {
             case "1":
@@ -87,6 +87,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Ad ad = new AdParser().Parse(body);
                 intent = new Intent(this, AdDetailsActivity.class);
                 intent.putExtra("ad", ad);
+                channelId = "Ads";
                 break;
 
             case "3": //Public Notification
@@ -94,6 +95,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent = new Intent(this, PublicNotificationActivity.class);
                 intent.putExtra("title", title);
                 intent.putExtra("txt", txt);
+                channelId = "General";
                 break;
 
             default: // just in case
@@ -105,7 +107,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.dealat_logo_white_background)
                 .setContentTitle(title)
                 .setContentText(txt)

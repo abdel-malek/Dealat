@@ -5,5 +5,5 @@ package com.tradinos.core.network;
  */
 public enum Code {
 
-    NetworkError , TimeOutError , ParsingError , ServerError , AuthenticationError;
+    NetworkError , TimeOutError , ParsingError , ServerError , AuthenticationError
 }

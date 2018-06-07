@@ -32,7 +32,7 @@ public class ImageDecoder {
     }
 
     private Bitmap decodeImage(String path, int factor) {
-        Bitmap bm = null;
+        Bitmap bm;
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -48,7 +48,7 @@ public class ImageDecoder {
         return bm;
     }
 
-    public int calculateInSampleSize(BitmapFactory.Options options, int factor) {
+    private int calculateInSampleSize(BitmapFactory.Options options, int factor) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;

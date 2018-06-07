@@ -31,11 +31,8 @@ import java.util.Map;
  */
 
 public class AdController extends ParentController {
-    public AdController(Context context, FaildCallback faildCallback) {
-        super(context, faildCallback);
-    }
 
-    public AdController(Controller controller) {
+    private AdController(Controller controller) {
         super(controller.getmContext(), controller.getmFaildCallback());
     }
 

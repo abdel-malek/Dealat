@@ -51,8 +51,8 @@ public class RegisterActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        editTextPhone = (EditText) findViewById(R.id.editPhone);
-        editTextName = (EditText) findViewById(R.id.editName);
+        editTextPhone = findViewById(R.id.editPhone);
+        editTextName = findViewById(R.id.editName);
     }
 
     @Override

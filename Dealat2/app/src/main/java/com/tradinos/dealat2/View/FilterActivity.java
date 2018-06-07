@@ -169,89 +169,89 @@ public class FilterActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        textPrice = (TextView) findViewById(R.id.textPrice);
-        textBrand = (TextView) findViewById(R.id.textBrand);
-        textModel = (TextView) findViewById(R.id.textModel);
-        textDate = (TextView) findViewById(R.id.textDate);
-        textTransmission = (TextView) findViewById(R.id.textTransmission);
+        textPrice = findViewById(R.id.textPrice);
+        textBrand = findViewById(R.id.textBrand);
+        textModel = findViewById(R.id.textModel);
+        textDate = findViewById(R.id.textDate);
+        textTransmission = findViewById(R.id.textTransmission);
         textCapacity = findViewById(R.id.textCapacity);
-        textKilo = (TextView) findViewById(R.id.textKilo);
+        textKilo = findViewById(R.id.textKilo);
 
-        textEdu = (TextView) findViewById(R.id.textEdu);
+        textEdu = findViewById(R.id.textEdu);
         textCertificate = findViewById(R.id.textCertificate);
-        textSch = (TextView) findViewById(R.id.textSch);
+        textSch = findViewById(R.id.textSch);
         textGender = findViewById(R.id.textGender);
-        textSalary = (TextView) findViewById(R.id.textSalary);
+        textSalary = findViewById(R.id.textSalary);
 
 
-        textRooms = (TextView) findViewById(R.id.textRooms);
-        textFloor = (TextView) findViewById(R.id.textFloor);
+        textRooms = findViewById(R.id.textRooms);
+        textFloor = findViewById(R.id.textFloor);
         textNumberFloors = findViewById(R.id.textNumberFloors);
-        textFurn = (TextView) findViewById(R.id.textFurn);
+        textFurn = findViewById(R.id.textFurn);
         textPropertyState = findViewById(R.id.textPropertyState);
-        textSpace = (TextView) findViewById(R.id.textSpace);
+        textSpace = findViewById(R.id.textSpace);
 
 
-        textSize = (TextView) findViewById(R.id.textSize);
+        textSize = findViewById(R.id.textSize);
 
-        textState = (TextView) findViewById(R.id.textState);
+        textState = findViewById(R.id.textState);
 
-        editQuery = (EditText) findViewById(R.id.editQuery);
-        editCategory = (EditText) findViewById(R.id.editCategory);
-        editPriceMax = (EditText) findViewById(R.id.editPriceMax);
-        editPriceMin = (EditText) findViewById(R.id.editPriceMin);
+        editQuery = findViewById(R.id.editQuery);
+        editCategory = findViewById(R.id.editCategory);
+        editPriceMax = findViewById(R.id.editPriceMax);
+        editPriceMin = findViewById(R.id.editPriceMin);
 
-        editKilometerMax = (EditText) findViewById(R.id.editKilometerMax);
-        editKilometerMin = (EditText) findViewById(R.id.editKilometerMin);
+        editKilometerMax = findViewById(R.id.editKilometerMax);
+        editKilometerMin = findViewById(R.id.editKilometerMin);
         editCapacityMin = findViewById(R.id.editCapacityMin);
         editCapacityMax = findViewById(R.id.editCapacityMax);
 
-        editSizeMax = (EditText) findViewById(R.id.editSizeMax);
-        editSizeMin = (EditText) findViewById(R.id.editSizeMin);
+        editSizeMax = findViewById(R.id.editSizeMax);
+        editSizeMin = findViewById(R.id.editSizeMin);
 
-        editSalaryMax = (EditText) findViewById(R.id.editSalaryMax);
-        editSalaryMin = (EditText) findViewById(R.id.editSalaryMin);
+        editSalaryMax = findViewById(R.id.editSalaryMax);
+        editSalaryMin = findViewById(R.id.editSalaryMin);
 
 
-        editSpaceMax = (EditText) findViewById(R.id.editSpaceMax);
-        editSpaceMin = (EditText) findViewById(R.id.editSpaceMin);
+        editSpaceMax = findViewById(R.id.editSpaceMax);
+        editSpaceMin = findViewById(R.id.editSpaceMin);
 
-        editRoomsMax = (EditText) findViewById(R.id.editRoomsMax);
-        editRoomsMin = (EditText) findViewById(R.id.editRoomsMin);
+        editRoomsMax = findViewById(R.id.editRoomsMax);
+        editRoomsMin = findViewById(R.id.editRoomsMin);
 
-        editFloorsMax = (EditText) findViewById(R.id.editFloorsMax);
-        editFloorsMin = (EditText) findViewById(R.id.editFloorsMin);
+        editFloorsMax = findViewById(R.id.editFloorsMax);
+        editFloorsMin = findViewById(R.id.editFloorsMin);
 
         editNumberFloorsMin = findViewById(R.id.editNumberFloorsMin);
         editNumberFloorsMax = findViewById(R.id.editNumberFloorsMax);
 
-        autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
+        autoCompleteLocation = findViewById(R.id.autoCompleteLocation);
 
-        spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
-        spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
-        spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
-        spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
+        spinnerBrand = findViewById(R.id.spinnerBrand);
+        spinnerModel = findViewById(R.id.spinnerModel);
+        spinnerYear = findViewById(R.id.spinnerYear);
+        spinnerTransmission = findViewById(R.id.spinnerTransmission);
 
-        spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
+        spinnerEdu = findViewById(R.id.spinnerEdu);
         spinnerCertificate = findViewById(R.id.spinnerCertificate);
-        spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
+        spinnerSch = findViewById(R.id.spinnerSch);
         spinnerGender = findViewById(R.id.spinnerGender);
 
-        spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
+        spinnerFurn = findViewById(R.id.spinnerFurn);
         spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
 
-        spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
+        spinnerState = findViewById(R.id.spinnerState);
 
-        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
+        spinnerCity = findViewById(R.id.spinner);
 
-        containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
-        containerSize = (LinearLayout) findViewById(R.id.containerSize);
-        containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
-        containerSpace = (LinearLayout) findViewById(R.id.containerSpace);
-        containerRooms = (LinearLayout) findViewById(R.id.containerRooms);
-        containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
+        containerKilometer = findViewById(R.id.containerKilometer);
+        containerSize = findViewById(R.id.containerSize);
+        containerSalary = findViewById(R.id.containerSalary);
+        containerSpace = findViewById(R.id.containerSpace);
+        containerRooms = findViewById(R.id.containerRooms);
+        containerFloors = findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
-        containerPrice = (LinearLayout) findViewById(R.id.containerPrice);
+        containerPrice = findViewById(R.id.containerPrice);
         containerCapacity = findViewById(R.id.containerCapacity);
     }
 

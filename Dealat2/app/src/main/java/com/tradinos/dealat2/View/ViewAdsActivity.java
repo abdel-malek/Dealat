@@ -80,55 +80,60 @@ public class ViewAdsActivity extends DrawerActivity {
         if (bookmarkId == null)
             buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
 
-        if (action == ACTION_SEARCH) {
-            AdController.getInstance(mController).search(searchParameters, new SuccessCallback<List<Ad>>() {
-                @Override
-                public void OnSuccess(List<Ad> result) {
+        switch (action) {
+            case ACTION_SEARCH:
+                AdController.getInstance(mController).search(searchParameters, new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
 
-                    if (result.isEmpty())
-                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                    else
-                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+                        if (result.isEmpty())
+                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                        else
+                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
 
-                    ads = result;
-                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+                        ads = result;
+                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
 
-                    getCommercialAds(selectedCategory.getId());
-                }
-            });
+                        getCommercialAds(selectedCategory.getId());
+                    }
+                });
 
-        } else if (action == ACTION_VIEW) {
+                break;
+            case ACTION_VIEW:
 
-            AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
-                @Override
-                public void OnSuccess(List<Ad> result) {
+                AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
 
-                    if (result.isEmpty())
-                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                    else
-                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+                        if (result.isEmpty())
+                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                        else
+                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
 
-                    ads = result;
-                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+                        ads = result;
+                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
 
-                    getCommercialAds(selectedCategory.getId());
-                }
-            });
-        } else if (action == ACTION_BOOKMARK) {
-            UserController.getInstance(mController).getBookmarkAds(getIntent().getStringExtra("bookmarkId"), new SuccessCallback<List<Ad>>() {
-                @Override
-                public void OnSuccess(List<Ad> result) {
-                    if (result.isEmpty())
-                        findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                    else
-                        findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+                        getCommercialAds(selectedCategory.getId());
+                    }
+                });
+                break;
 
-                    ads = result;
-                    gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+            case ACTION_BOOKMARK:
+                UserController.getInstance(mController).getBookmarkAds(getIntent().getStringExtra("bookmarkId"), new SuccessCallback<List<Ad>>() {
+                    @Override
+                    public void OnSuccess(List<Ad> result) {
+                        if (result.isEmpty())
+                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                        else
+                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
 
-                    getCommercialAds(selectedCategory.getId());
-                }
-            });
+                        ads = result;
+                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+
+                        getCommercialAds(selectedCategory.getId());
+                    }
+                });
+                break;
         }
     }
 
@@ -148,13 +153,13 @@ public class ViewAdsActivity extends DrawerActivity {
 
     @Override
     public void assignUIReferences() {
-        gridView = (GridView) findViewById(R.id.gridView);
-        buttonViews = (ImageButton) findViewById(R.id.buttonViews);
-        buttonFav = (ImageButton) findViewById(R.id.buttonFav);
-        imageViewCategory = (ImageView) findViewById(R.id.imageView);
-        textViewCategory = (TextView) findViewById(R.id.textView);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        searchView = (SearchView) findViewById(R.id.searchView);
+        gridView = findViewById(R.id.gridView);
+        buttonViews = findViewById(R.id.buttonViews);
+        buttonFav = findViewById(R.id.buttonFav);
+        imageViewCategory = findViewById(R.id.imageView);
+        textViewCategory = findViewById(R.id.textView);
+        refreshLayout = findViewById(R.id.refreshLayout);
+        searchView = findViewById(R.id.searchView);
     }
 
     @Override

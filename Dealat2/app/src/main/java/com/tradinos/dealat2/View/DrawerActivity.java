@@ -1,6 +1,7 @@
 package com.tradinos.dealat2.View;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,16 +54,16 @@ public abstract class DrawerActivity extends MasterActivity
         // FacebookSdk.sdkInitialize(this);
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
@@ -90,7 +91,11 @@ public abstract class DrawerActivity extends MasterActivity
                 menu.findItem(R.id.nav_Chats).setVisible(true);
                 menu.findItem(R.id.nav_savedSearches).setVisible(true);
                 menu.findItem(R.id.navLogout).setVisible(true);
-                menu.findItem(R.id.nav_qrCode).setVisible(true);
+
+                // if device has camera
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+                    menu.findItem(R.id.nav_qrCode).setVisible(true);
+
                 buttonRegister.setVisibility(View.GONE);
                 imageViewUser.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_person_48dp));
 
@@ -139,10 +144,10 @@ public abstract class DrawerActivity extends MasterActivity
     protected void onResume() {
         super.onResume();
 
-        if (MyApplication.getUserState() == User.REGISTERED){
+        if (MyApplication.getUserState() == User.REGISTERED) {
             User user = new CurrentAndroidUser(this).Get();
-            if (user != null){
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            if (user != null) {
+                NavigationView navigationView = findViewById(R.id.nav_view);
                 TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
                 ImageView imageViewUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
 
@@ -160,7 +165,7 @@ public abstract class DrawerActivity extends MasterActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -244,14 +249,14 @@ public abstract class DrawerActivity extends MasterActivity
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     protected void getCommercialAds(String categoryId) {
-        final ViewPager commercialPager = (ViewPager) findViewById(R.id.viewpager);
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final ViewPager commercialPager = findViewById(R.id.viewpager);
+        final TabLayout tabLayout = findViewById(R.id.tab_layout);
 
         CommercialAdsController.getInstance(mController).getCommercialAds(categoryId, new SuccessCallback<List<CommercialAd>>() {
             @Override

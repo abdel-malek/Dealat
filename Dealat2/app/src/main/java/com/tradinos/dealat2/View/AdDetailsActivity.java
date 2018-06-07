@@ -238,81 +238,81 @@ public class AdDetailsActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
 
-        textViewId = (TextView) findViewById(R.id.text2);
-        textViewTitle = (TextView) findViewById(R.id.title);
-        textViewTitle2 = (TextView) findViewById(R.id.text);
-        textViewViews = (TextView) findViewById(R.id.textView);
-        textViewPublishDate = (TextView) findViewById(R.id.textViewDate);
-        textViewPrice = (TextView) findViewById(R.id.textViewPrice);
-        textViewCity = (TextView) findViewById(R.id.textViewCity);
-        textViewLocation = (TextView) findViewById(R.id.textLocation);
-        textViewExpires = (TextView) findViewById(R.id.textViewExpires);
-        textNegotiable = (TextView) findViewById(R.id.textNegotiable);
-        textViewDesc = (TextView) findViewById(R.id.textDesc);
-        textViewSeller = (TextView) findViewById(R.id.textUser);
-        textViewPhone = (TextView) findViewById(R.id.textViewPhone);
+        textViewId = findViewById(R.id.text2);
+        textViewTitle = findViewById(R.id.title);
+        textViewTitle2 = findViewById(R.id.text);
+        textViewViews = findViewById(R.id.textView);
+        textViewPublishDate = findViewById(R.id.textViewDate);
+        textViewPrice = findViewById(R.id.textViewPrice);
+        textViewCity = findViewById(R.id.textViewCity);
+        textViewLocation = findViewById(R.id.textLocation);
+        textViewExpires = findViewById(R.id.textViewExpires);
+        textNegotiable = findViewById(R.id.textNegotiable);
+        textViewDesc = findViewById(R.id.textDesc);
+        textViewSeller = findViewById(R.id.textUser);
+        textViewPhone = findViewById(R.id.textViewPhone);
 
-        textViewEdu = (TextView) findViewById(R.id.textEdu);
+        textViewEdu = findViewById(R.id.textEdu);
         textCertificate = findViewById(R.id.textCertificate);
-        textViewSch = (TextView) findViewById(R.id.textSch);
-        textViewEx = (TextView) findViewById(R.id.textEx);
-        textViewSalary = (TextView) findViewById(R.id.textSalary);
+        textViewSch = findViewById(R.id.textSch);
+        textViewEx = findViewById(R.id.textEx);
+        textViewSalary = findViewById(R.id.textSalary);
         textGender = findViewById(R.id.textGender);
 
-        textViewSpace = (TextView) findViewById(R.id.textSpace);
-        textViewRooms = (TextView) findViewById(R.id.textRooms);
-        textViewFloors = (TextView) findViewById(R.id.textFloor);
+        textViewSpace = findViewById(R.id.textSpace);
+        textViewRooms = findViewById(R.id.textRooms);
+        textViewFloors = findViewById(R.id.textFloor);
         textViewNumberFloors = findViewById(R.id.textNumberFloors);
-        textViewFurn = (TextView) findViewById(R.id.textFurn);
-        textViewState = (TextView) findViewById(R.id.textState);
+        textViewFurn = findViewById(R.id.textFurn);
+        textViewState = findViewById(R.id.textState);
 
 
-        textViewBrand = (TextView) findViewById(R.id.textBrand);
-        textViewModel = (TextView) findViewById(R.id.textModel);
-        textViewKilo = (TextView) findViewById(R.id.textKilo);
-        textViewManufactureYear = (TextView) findViewById(R.id.textDate);
+        textViewBrand = findViewById(R.id.textBrand);
+        textViewModel = findViewById(R.id.textModel);
+        textViewKilo = findViewById(R.id.textKilo);
+        textViewManufactureYear = findViewById(R.id.textDate);
         textCapacity = findViewById(R.id.textCapacity);
-        textViewTransmission = (TextView) findViewById(R.id.textTransmission);
+        textViewTransmission = findViewById(R.id.textTransmission);
 
-        textViewSize = (TextView) findViewById(R.id.textSize);
+        textViewSize = findViewById(R.id.textSize);
 
-        textViewUsage = (TextView) findViewById(R.id.textUsage);
+        textViewUsage = findViewById(R.id.textUsage);
 
-        containerBrand = (LinearLayout) findViewById(R.id.containerBrand);
-        containerModel = (LinearLayout) findViewById(R.id.containerModel);
-        containerKilometer = (LinearLayout) findViewById(R.id.containerKilometer);
-        containerYear = (LinearLayout) findViewById(R.id.containerYear);
-        containerTransmission = (LinearLayout) findViewById(R.id.containerTransmission);
+        containerBrand = findViewById(R.id.containerBrand);
+        containerModel = findViewById(R.id.containerModel);
+        containerKilometer = findViewById(R.id.containerKilometer);
+        containerYear = findViewById(R.id.containerYear);
+        containerTransmission = findViewById(R.id.containerTransmission);
         containerCapacity = findViewById(R.id.containerCapacity);
 
-        containerUsage = (LinearLayout) findViewById(R.id.containerUsage);
+        containerUsage = findViewById(R.id.containerUsage);
 
-        containerEdu = (LinearLayout) findViewById(R.id.containerEdu);
+        containerEdu = findViewById(R.id.containerEdu);
         containerCertificate = findViewById(R.id.containerCertificate);
-        containerSchedule = (LinearLayout) findViewById(R.id.containerSchedule);
-        containerEx = (LinearLayout) findViewById(R.id.containerEx);
-        containerSalary = (LinearLayout) findViewById(R.id.containerSalary);
+        containerSchedule = findViewById(R.id.containerSchedule);
+        containerEx = findViewById(R.id.containerEx);
+        containerSalary = findViewById(R.id.containerSalary);
         containerGender = findViewById(R.id.containerGender);
 
-        containerSpace = (LinearLayout) findViewById(R.id.containerSpace);
-        containerRooms = (LinearLayout) findViewById(R.id.containerRooms);
-        containerFloors = (LinearLayout) findViewById(R.id.containerFloors);
+        containerSpace = findViewById(R.id.containerSpace);
+        containerRooms = findViewById(R.id.containerRooms);
+        containerFloors = findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
-        containerPropertyState = (LinearLayout) findViewById(R.id.containerPropertyState);
-        containerFurn = (LinearLayout) findViewById(R.id.containerFurn);
+        containerPropertyState = findViewById(R.id.containerPropertyState);
+        containerFurn = findViewById(R.id.containerFurn);
 
-        containerSize = (LinearLayout) findViewById(R.id.containerSize);
+        containerSize = findViewById(R.id.containerSize);
 
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
 
-        buttonFav = (ImageButton) findViewById(R.id.buttonFav);
-        buttonReport = (ImageButton) findViewById(R.id.buttonReport);
-        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        buttonFav = findViewById(R.id.buttonFav);
+        buttonReport = findViewById(R.id.buttonReport);
+        ratingBar = findViewById(R.id.ratingBar);
     }
 
     @Override

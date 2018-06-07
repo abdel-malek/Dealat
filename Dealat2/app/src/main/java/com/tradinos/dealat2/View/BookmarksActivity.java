@@ -66,9 +66,9 @@ public class BookmarksActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        layoutEmpty = (TextView) findViewById(R.id.layoutEmpty);
-        listView = (ListView) findViewById(R.id.listView);
+        refreshLayout = findViewById(R.id.refreshLayout);
+        layoutEmpty = findViewById(R.id.layoutEmpty);
+        listView = findViewById(R.id.listView);
     }
 
     @Override

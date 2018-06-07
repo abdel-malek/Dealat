@@ -130,11 +130,11 @@ public class ChatActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        editTextMsg = (EditText) findViewById(R.id.edit_query);
-        buttonSend = (ImageButton) findViewById(R.id.buttonTrue);
+        editTextMsg = findViewById(R.id.edit_query);
+        buttonSend = findViewById(R.id.buttonTrue);
     }
 
     @Override
@@ -272,16 +272,15 @@ public class ChatActivity extends MasterActivity {
     }
 
     private boolean amISeller() {
-        if (user != null) {
-            if (user.getId().equals(currentChat.getSellerId()))
-                return true;
-        }
+        if (user != null)
+            return user.getId().equals(currentChat.getSellerId());
+
         return false;
     }
 
     private void showButton(int visibility) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container3);
+            ViewGroup viewGroup = findViewById(R.id.container3);
 
             Slide slide;
             if (visibility == SHOW) {

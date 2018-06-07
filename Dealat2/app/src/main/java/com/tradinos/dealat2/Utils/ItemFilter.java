@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ItemFilter extends Filter {
     ArrayAdapter customAdapter;
-    List<Item> data = new ArrayList<>();
+    List<Item> data;
 
     public ItemFilter(ArrayAdapter adapter, List<Item> data) {
         this.customAdapter = adapter;

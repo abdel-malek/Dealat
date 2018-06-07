@@ -2,7 +2,6 @@
     <string name="app_name">Dealat</string>
 
     <string name="facebook_app_id">2030159240566942</string>
-    <string name="fb_login_protocol_scheme">fb2030159240566942</string>
 
     <string name="wait">Please wait..</string>
     <string name="connection_problem">There seems a problem with your internet connection, please check your network and retry.</string>
@@ -10,7 +9,7 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="or">Or</string>
     <string name="countryCode">+963</string>
 
@@ -93,7 +92,7 @@
     <string name="labelVerifySms">Please, enter verification code, sent through SMS to</string>
 
     <string name="labelGoTo">1. Go to</string>
-    <string name="labelQrUrl">dealat.tradinos.com/index.php/qrcode_login</string>
+    <string name="labelQrUrl">deal-at.com/index.php/qrcode_login</string>
     <string name="labelVisit">on your computer, and scan the QR code</string>
     <string name="labelScanQr">2. Enter PIN that will be shown on your mobile</string>
     
@@ -258,5 +257,6 @@
     <string name="areYouSureDeleteSearch">Are you sure you want to delete this search?</string>
     <string name="areYouSureDeactivate">Are you sure you want to deactivate your account?</string>
     <string name="logout_messg">Are you sure you want to logout?</string>
+    <string name="fb_login_protocol_scheme">fb2030159240566942</string>
 
 </resources>

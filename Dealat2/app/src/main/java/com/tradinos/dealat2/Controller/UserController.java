@@ -32,11 +32,8 @@ import java.util.Map;
  */
 
 public class UserController extends ParentController {
-    public UserController(Context context, FaildCallback faildCallback) {
-        super(context, faildCallback);
-    }
 
-    public UserController(Controller controller) {
+    private UserController(Controller controller) {
         super(controller.getmContext(), controller.getmFaildCallback());
     }
 

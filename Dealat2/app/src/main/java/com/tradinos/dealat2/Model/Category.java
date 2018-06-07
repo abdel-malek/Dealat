@@ -135,9 +135,7 @@ public class Category implements Serializable {
     }
 
     public boolean hasSubCats() {
-        if (this.subCategories.size() > 0)
-            return true;
-        return false;
+        return this.subCategories.size() > 0;
     }
 
     public boolean shouldHideTag(String tag) {

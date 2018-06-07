@@ -147,7 +147,7 @@ public class HorizontalAdapter {
 
         images.add(0, mainImage);
         views.add(0, mainView);
-        linearLayout.addView(mainView, 1); //because buttonEdit is child #0
+        linearLayout.addView(mainView, 2); //because buttonVideo is child #0 and buttonEdit is child #1
 
         enumerate();
     }

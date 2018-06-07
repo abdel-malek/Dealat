@@ -35,7 +35,6 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="9499302994"
             />
 
         <ImageButton

@@ -31,11 +31,11 @@ public class ChatsFragment extends Fragment {
 
     private List<Chat> chats = new ArrayList<>();
 
-    SwipeRefreshLayout refreshLayout;
-    TextView layoutEmpty;
-    ListView listView;
+    private SwipeRefreshLayout refreshLayout;
+    private TextView layoutEmpty;
+    private ListView listView;
 
-    public static ChatsFragment newInstance(List<Chat> chats){
+    public static ChatsFragment newInstance(List<Chat> chats) {
         ChatsFragment fragment = new ChatsFragment();
         fragment.setChats(chats);
 

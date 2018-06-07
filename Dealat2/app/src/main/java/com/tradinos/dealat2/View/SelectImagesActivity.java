@@ -36,7 +36,7 @@ import java.util.Locale;
 public class SelectImagesActivity extends MasterActivity {
 
     private final int REQUEST_CAMERA = 12,
-            REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14;
+            REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14, REQUEST_CAMERA_PERM = 15;
 
     private ImageAdapter adapter;
 
@@ -59,6 +59,11 @@ public class SelectImagesActivity extends MasterActivity {
 
     @Override
     public void showData() {
+
+        // if device has no camera
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+            findViewById(R.id.container).setVisibility(View.VISIBLE);
+
         if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -72,7 +77,7 @@ public class SelectImagesActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        gridView = (GridView) findViewById(R.id.gridView);
+        gridView = findViewById(R.id.gridView);
     }
 
     @Override
@@ -88,11 +93,16 @@ public class SelectImagesActivity extends MasterActivity {
                 if (Image.ImageCounter >= Image.MAX_IMAGES)
                     showMessageInToast(getString(R.string.toastMaxImages));
 
-                else if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
+                else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
                     ActivityCompat.requestPermissions(SelectImagesActivity.this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_WRITE);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(SelectImagesActivity.this,
+                            new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERM);
+
                 } else {
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -108,11 +118,10 @@ public class SelectImagesActivity extends MasterActivity {
                         // Continue only if the File was successfully created
                         if (photoFile != null) {
                             // N is for Nougat Api 24 Android 7
-                            if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT){
+                            if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT) {
                                 photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
                                         + ".provider", photoFile);
-                            }
-                            else
+                            } else
                                 photoUri = Uri.fromFile(photoFile);
 
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -143,8 +152,8 @@ public class SelectImagesActivity extends MasterActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == RESULT_OK) {
-                   adapter.addCapturedImage(new Image(MyApplication.getImagePath()));
-                   adapter.notifyDataSetChanged();
+                adapter.addCapturedImage(new Image(MyApplication.getImagePath()));
+                adapter.notifyDataSetChanged();
 
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -172,7 +181,7 @@ public class SelectImagesActivity extends MasterActivity {
         Cursor cursor;
         int column_index_data, column_index_folder_name;
         ArrayList<Image> listOfAllImages = new ArrayList<>();
-        String absolutePathOfImage = null;
+        String absolutePathOfImage;
         uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
         String[] projection = {MediaStore.MediaColumns.DATA,

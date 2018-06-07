@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.tradinos.dealat2.Fragment.ImageDetailsFragment;
 import com.tradinos.dealat2.Fragment.VideoFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
  */
 
 public class ImageDetailsAdapter extends FragmentPagerAdapter {
-    private List<String> paths = new ArrayList<>();
+    private List<String> paths;
     private int templateId;
     private String videoPath;
 

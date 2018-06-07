@@ -60,20 +60,22 @@ public class CheckableAdapter extends BaseAdapter {
     // these labels will reduce join on database to get names of selected items by their Ids
 
     public String getSelectedNames() {
-        String names = "";
+        StringBuilder stringBuilder = new StringBuilder();
 
         if (selectedItems.isEmpty())
             if (getItem(0) != null && getItem(0).isNothing())
-                names = getItem(0).getName();
+                stringBuilder.append(getItem(0).getName());
 
         for (int i = 0; i < selectedItems.size(); i++) {
             if (i == 0)
-                names += selectedItems.get(i).getName();
-            else
-                names += ", " + selectedItems.get(i).getName();
+                stringBuilder.append(selectedItems.get(i).getName());
+            else{
+                stringBuilder.append(", ");
+                stringBuilder.append(selectedItems.get(i).getName());
+            }
         }
 
-        return names;
+        return stringBuilder.toString();
     }
 
     @Override

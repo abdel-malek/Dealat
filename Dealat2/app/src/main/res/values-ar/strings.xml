@@ -251,6 +251,10 @@
     <string name="areYouSureDeleteSearch">هل أنت متأكد أنك تريد حذف هذا البحث؟</string>
     <string name="areYouSureDeactivate">هل أنت متأكد أنك تريد تعطيل حسابك؟</string>
     <string name="logout_messg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="facebook_app_id">2030159240566942</string>
+    <string name="countryCode">+963</string>
+    <string name="labelQrUrl">deal-at.com/index.php/qrcode_login</string>
+    <string name="fb_login_protocol_scheme">fb2030159240566942</string>
 
 
 </resources>

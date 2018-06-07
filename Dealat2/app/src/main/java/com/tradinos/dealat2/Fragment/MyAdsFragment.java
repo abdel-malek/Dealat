@@ -65,7 +65,7 @@ public class MyAdsFragment extends Fragment {
         if (ads.isEmpty())
             layoutEmpty.setVisibility(View.VISIBLE);
         else
-            listView.setAdapter(new MyAdAdapter(getContext(), ads));
+            listView.setAdapter(new MyAdAdapter(getContext(), filter(0)));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class MyAdsFragment extends Fragment {
                             layoutEmpty.setVisibility(View.GONE);
 
                         setAds(result);
-                        listView.setAdapter(new MyAdAdapter(getContext(), ads));
+                        listView.setAdapter(new MyAdAdapter(getContext(), filter(0)));
                         spinnerStatus.setSelection(0);
                     }
                 });
@@ -128,17 +128,16 @@ public class MyAdsFragment extends Fragment {
     }
 
     private List<Ad> filter(int status) {
+        List<Ad> result = new ArrayList<>();
 
         if (status == 0) // All
-            return ads;
+            result.addAll(ads);
         else {
-            List<Ad> result = new ArrayList<>();
-
             for (int i = 0; i < ads.size(); i++) {
                 if (ads.get(i).getStatus() == status)
                     result.add(ads.get(i));
             }
-            return result;
         }
+        return result;
     }
 }

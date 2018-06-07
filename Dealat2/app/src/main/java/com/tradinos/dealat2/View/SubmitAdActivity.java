@@ -82,7 +82,7 @@ public class SubmitAdActivity extends MasterActivity {
 
     private HashMap<String, String> parameters = new HashMap<>();
 
-    private JSONArray imagesJsonArray, deletedImgsJsonArray = new JSONArray(), deletedVideosJsonArray = new JSONArray();
+    private JSONArray deletedImgsJsonArray = new JSONArray(), deletedVideosJsonArray = new JSONArray();
 
     private HorizontalAdapter adapter;
 
@@ -227,85 +227,85 @@ public class SubmitAdActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        linearLayout = (LinearLayout) findViewById(R.id.layout);
+        linearLayout = findViewById(R.id.layout);
 
-        textBrand = (TextView) findViewById(R.id.textBrand);
-        textModel = (TextView) findViewById(R.id.textModel);
-        textDate = (TextView) findViewById(R.id.textDate);
-        textTransmission = (TextView) findViewById(R.id.textTransmission);
+        textBrand = findViewById(R.id.textBrand);
+        textModel = findViewById(R.id.textModel);
+        textDate = findViewById(R.id.textDate);
+        textTransmission = findViewById(R.id.textTransmission);
         textCapacity = findViewById(R.id.textCapacity);
-        textEdu = (TextView) findViewById(R.id.textEdu);
+        textEdu = findViewById(R.id.textEdu);
         textCertificate = findViewById(R.id.textCertificate);
-        textSch = (TextView) findViewById(R.id.textSch);
+        textSch = findViewById(R.id.textSch);
         textGender = findViewById(R.id.textGender);
-        textState = (TextView) findViewById(R.id.textState);
-        textFurn = (TextView) findViewById(R.id.textFurn);
+        textState = findViewById(R.id.textState);
+        textFurn = findViewById(R.id.textFurn);
         textPropertyState = findViewById(R.id.textPropertyState);
 
-        editTitle = (EditText) findViewById(R.id.editTitle);
-        editCategory = (EditText) findViewById(R.id.editCategory);
-        editDesc = (EditText) findViewById(R.id.editDesc);
-        editPrice = (EditText) findViewById(R.id.editPrice);
+        editTitle = findViewById(R.id.editTitle);
+        editCategory = findViewById(R.id.editCategory);
+        editDesc = findViewById(R.id.editDesc);
+        editPrice = findViewById(R.id.editPrice);
 
-        editKilo = (EditText) findViewById(R.id.editKilo);
+        editKilo = findViewById(R.id.editKilo);
 
-        editSize = (EditText) findViewById(R.id.editSize);
+        editSize = findViewById(R.id.editSize);
 
-        editSalary = (EditText) findViewById(R.id.editSalary);
-        editEx = (EditText) findViewById(R.id.editEx);
+        editSalary = findViewById(R.id.editSalary);
+        editEx = findViewById(R.id.editEx);
 
-        editSpace = (EditText) findViewById(R.id.editSpace);
-        editRooms = (EditText) findViewById(R.id.editRooms);
-        editFloors = (EditText) findViewById(R.id.editFloors);
+        editSpace = findViewById(R.id.editSpace);
+        editRooms = findViewById(R.id.editRooms);
+        editFloors = findViewById(R.id.editFloors);
         editNumberFloors = findViewById(R.id.editNumberFloors);
 
-        autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
+        autoCompleteLocation = findViewById(R.id.autoCompleteLocation);
 
-        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
-        spinnerPeriod = (AppCompatSpinner) findViewById(R.id.spinnerPeriod);
+        spinnerCity = findViewById(R.id.spinner);
+        spinnerPeriod = findViewById(R.id.spinnerPeriod);
 
-        spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
-        spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
-        spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
-        spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
+        spinnerBrand = findViewById(R.id.spinnerBrand);
+        spinnerModel = findViewById(R.id.spinnerModel);
+        spinnerYear = findViewById(R.id.spinnerYear);
+        spinnerTransmission = findViewById(R.id.spinnerTransmission);
         spinnerCapacity = findViewById(R.id.spinnerCapacity);
 
-        spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
+        spinnerEdu = findViewById(R.id.spinnerEdu);
         spinnerCertificate = findViewById(R.id.spinnerCertificate);
-        spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
+        spinnerSch = findViewById(R.id.spinnerSch);
         spinnerGender = findViewById(R.id.spinnerGender);
 
-        spinnerState = (AppCompatSpinner) findViewById(R.id.spinnerState);
+        spinnerState = findViewById(R.id.spinnerState);
 
-        spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
+        spinnerFurn = findViewById(R.id.spinnerFurn);
         spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
 
-        switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
-        switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
+        switchNegotiable = findViewById(R.id.switchNegotiable);
+        switchFeatured = findViewById(R.id.switchFeatured);
 
-        containerPrice = (TextInputLayout) findViewById(R.id.containerPrice);
+        containerPrice = findViewById(R.id.containerPrice);
 
-        containerKilometer = (TextInputLayout) findViewById(R.id.containerKilometer);
+        containerKilometer = findViewById(R.id.containerKilometer);
 
-        containerSize = (TextInputLayout) findViewById(R.id.containerSize);
+        containerSize = findViewById(R.id.containerSize);
 
-        containerSpace = (TextInputLayout) findViewById(R.id.containerSpace);
-        containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
-        containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
+        containerSpace = findViewById(R.id.containerSpace);
+        containerRooms = findViewById(R.id.containerRooms);
+        containerFloors = findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
 
-        containerEx = (TextInputLayout) findViewById(R.id.containerEx);
-        containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
+        containerEx = findViewById(R.id.containerEx);
+        containerSalary = findViewById(R.id.containerSalary);
 
-        progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
-        imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
-        imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
+        progressBarVideo = findViewById(R.id.progressBar);
+        imageButtonCheck = findViewById(R.id.imageCheck);
+        imageButtonVideo = findViewById(R.id.buttonVideo);
 
-        checkboxTerms = (CheckBox) findViewById(R.id.checkboxTerms);
+        checkboxTerms = findViewById(R.id.checkboxTerms);
         checkPhone = findViewById(R.id.checkPhone);
-        buttonTerms = (Button) findViewById(R.id.buttonTerms);
+        buttonTerms = findViewById(R.id.buttonTerms);
 
-        editTextError = (EditText) findViewById(R.id.editTextError);
+        editTextError = findViewById(R.id.editTextError);
     }
 
     @Override
@@ -430,86 +430,92 @@ public class SubmitAdActivity extends MasterActivity {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonTrue) { //Submit
+        switch (view.getId()) {
+            case R.id.buttonTrue:  //Submit
 
-            parameters.clear();
+                parameters.clear();
 
-            if (checkGeneralInput())
-                if (checkTemplateInput()) {
+                if (checkGeneralInput())
+                    if (checkTemplateInput()) {
 
-                    ShowProgressDialog();
-                    AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
+                        ShowProgressDialog();
+                        AdController.getInstance(mController).submitAd(parameters, new SuccessCallback<String>() {
+                            @Override
+                            public void OnSuccess(String result) {
+                                HideProgressDialog();
+
+                                ConfirmDialog dialog = new ConfirmDialog(mContext);
+                                dialog.show();
+
+                                dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                break;
+
+            case R.id.buttonEdit:
+                if (adapter.getCount() >= Image.MAX_IMAGES)
+                    showMessageInToast(R.string.toastMaxImages);
+                else {
+                    Intent intent = new Intent(mContext, SelectImagesActivity.class);
+                    intent.putExtra("counter", adapter.getCount());
+                    startActivityForResult(intent, REQUEST_SELECT_IMG);
+                }
+
+                break;
+
+            case R.id.layoutHorizontal:
+                final int position = Integer.parseInt(view.getTag().toString());
+                final Image clickedImage = adapter.getItem(position);
+
+                if (!clickedImage.isLoading()) {
+
+                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    //Inflate the view from a predefined XML layout
+                    View layout = inflater.inflate(R.layout.popup_layout,
+                            (ViewGroup) findViewById(R.id.popupLayout));
+
+                    ScalableImageView imageView = layout.findViewById(R.id.imageView);
+                    popupBitmap = new ImageDecoder().decodeLargeImage(clickedImage.getPath());
+                    imageView.setImageBitmap(popupBitmap);
+
+                    popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
+
+                    layout.findViewById(R.id.buttonTrue).setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void OnSuccess(String result) {
-                            HideProgressDialog();
+                        public void onClick(View view) {
+                            adapter.replaceMain(position);
 
-                            ConfirmDialog dialog = new ConfirmDialog(mContext);
-                            dialog.show();
-
-                            dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    setResult(RESULT_OK);
-                                    finish();
-                                }
-                            });
-
+                            popupBitmap.recycle();
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                            popupBitmap = null;
                         }
                     });
+
+                    layout.findViewById(R.id.buttonFalse).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            adapter.deleteImage(position);
+                            deletedImgsJsonArray.put(clickedImage.getServerPath());
+
+                            popupBitmap.recycle();
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                            popupBitmap = null;
+                        }
+                    });
+
+                    popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
                 }
-        } else if (view.getId() == R.id.buttonEdit) {
-            if (adapter.getCount() >= Image.MAX_IMAGES)
-                showMessageInToast(R.string.toastMaxImages);
-            else {
-                Intent intent = new Intent(mContext, SelectImagesActivity.class);
-                intent.putExtra("counter", adapter.getCount());
-                startActivityForResult(intent, REQUEST_SELECT_IMG);
-            }
-
-        } else if (view.getId() == R.id.layoutHorizontal) {
-            final int position = Integer.parseInt(view.getTag().toString());
-            final Image clickedImage = adapter.getItem(position);
-
-            if (!clickedImage.isLoading()) {
-
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                //Inflate the view from a predefined XML layout
-                View layout = inflater.inflate(R.layout.popup_layout,
-                        (ViewGroup) findViewById(R.id.popupLayout));
-
-                ScalableImageView imageView = layout.findViewById(R.id.imageView);
-                popupBitmap = new ImageDecoder().decodeLargeImage(clickedImage.getPath());
-                imageView.setImageBitmap(popupBitmap);
-
-                popupWindow = new PopupWindow(layout, MATCH_PARENT, MATCH_PARENT);
-
-                layout.findViewById(R.id.buttonTrue).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        adapter.replaceMain(position);
-
-                        popupBitmap.recycle();
-                        popupWindow.dismiss();
-                        popupWindow = null;
-                        popupBitmap = null;
-                    }
-                });
-
-                layout.findViewById(R.id.buttonFalse).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        adapter.deleteImage(position);
-                        deletedImgsJsonArray.put(clickedImage.getServerPath());
-
-                        popupBitmap.recycle();
-                        popupWindow.dismiss();
-                        popupWindow = null;
-                        popupBitmap = null;
-                    }
-                });
-
-                popupWindow.showAtLocation(findViewById(R.id.container2), Gravity.CENTER, 0, 0);
-            }
+                break;
         }
     }
 
@@ -517,33 +523,39 @@ public class SubmitAdActivity extends MasterActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_SELECT_CAT) {
-                selectedCategory = (Category) data.getSerializableExtra("category");
-                editCategory.setText(selectedCategory.getFullName());
-                //if error was set, then category was selected
-                //previous error didn't disappear automatically
-                editCategory.setError(null);
+            switch (requestCode) {
+                case REQUEST_SELECT_CAT:
+                    selectedCategory = (Category) data.getSerializableExtra("category");
+                    editCategory.setText(selectedCategory.getFullName());
+                    //if error was set, then category was selected
+                    //previous error didn't disappear automatically
+                    editCategory.setError(null);
 
-                replaceTemplate();
+                    replaceTemplate();
 
-                spinnerBrand.setAdapter(new TypeAdapter(mContext, getCategoryBrands()));
+                    spinnerBrand.setAdapter(new TypeAdapter(mContext, getCategoryBrands()));
 
-            } else if (requestCode == REQUEST_SELECT_IMG) {
-                List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
+                    break;
 
-                int base = adapter.getCount();
-                adapter.setViews(newImages);
+                case REQUEST_SELECT_IMG:
+                    List<Image> newImages = (List<Image>) data.getSerializableExtra("images");
 
-                // uploading images
-                for (int i = 0; i < newImages.size(); i++)
-                    new UploadImage(i + base).execute(newImages.get(i));
+                    int base = adapter.getCount();
+                    adapter.setViews(newImages);
 
-            } else if (requestCode == REQUEST_SELECT_VIDEO) {
-                String path = new ImageDecoder().getVideoPath(data.getData(), getContentResolver());
-                Bitmap bm = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND);
-                imageButtonVideo.setImageBitmap(bm);
-                progressBarVideo.setVisibility(View.VISIBLE);
-                new UploadVideo().execute(path);
+                    // uploading images
+                    for (int i = 0; i < newImages.size(); i++)
+                        new UploadImage(i + base).execute(newImages.get(i));
+
+                    break;
+
+                case REQUEST_SELECT_VIDEO:
+                    String path = new ImageDecoder().getVideoPath(data.getData(), getContentResolver());
+                    Bitmap bm = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND);
+                    imageButtonVideo.setImageBitmap(bm);
+                    progressBarVideo.setVisibility(View.VISIBLE);
+                    new UploadVideo().execute(path);
+                    break;
             }
         }
     }
@@ -832,7 +844,7 @@ public class SubmitAdActivity extends MasterActivity {
             if (selectedLocation != null)
                 parameters.put("location_id", selectedLocation.getId());
 
-            imagesJsonArray = new JSONArray();
+            JSONArray imagesJsonArray = new JSONArray();
             Image image;
             for (int i = 0; i < adapter.getCount(); i++) {
                 image = adapter.getItem(i);
@@ -1102,7 +1114,7 @@ public class SubmitAdActivity extends MasterActivity {
 
         int position;
 
-        public UploadImage(int position) {
+        UploadImage(int position) {
             this.position = position;
         }
 

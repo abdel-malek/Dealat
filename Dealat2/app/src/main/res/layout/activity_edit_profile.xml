@@ -134,7 +134,7 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="@string/hintBirthday"
@@ -198,9 +198,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:layoutDirection="ltr"
         android:padding="8dp"
         android:gravity="center"
         >
+
+        <Button
+            android:id="@+id/buttonFalse"
+            android:layout_width="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="onClick"
+            android:text="@string/buttonCancel"
+            android:textColor="@color/red"
+            android:background="@drawable/rounded_corner_white"
+            />
 
         <Button
             android:id="@+id/buttonTrue"
@@ -213,18 +226,6 @@
             android:text="@string/buttonSave"
             android:textColor="@color/white"
             android:background="@drawable/rounded_corner_red"
-            />
-
-        <Button
-            android:id="@+id/buttonFalse"
-            android:layout_width="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:onClick="onClick"
-            android:text="@string/buttonCancel"
-            android:textColor="@color/red"
-            android:background="@drawable/rounded_corner_white"
             />
     </LinearLayout>
 </LinearLayout>

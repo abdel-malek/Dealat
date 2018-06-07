@@ -32,10 +32,10 @@ public class CustomProgressDialog extends Dialog {
 
 		getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); 
 	
-		TextView textView_message = (TextView) findViewById(R.id.textView_message);
+		TextView textView_message = findViewById(R.id.textView_message);
 		textView_message.setText(message);
 
-		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		ProgressBar progressBar = findViewById(R.id.progressBar);
 		//progressBar.getIndeterminateDrawable().setColorFilter(0x222222, PorterDuff.Mode.MULTIPLY);
 		progressBar.setVisibility(View.VISIBLE);
 

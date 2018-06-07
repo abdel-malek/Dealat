@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tradinos.dealat2.Fragment.AdImageFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class AdImagesAdapter extends FragmentPagerAdapter {
 
-    private List<String> paths = new ArrayList<>();
+    private List<String> paths;
     private int templateId;
 
     public AdImagesAdapter(FragmentManager fm, List<String> paths, int templateId) {

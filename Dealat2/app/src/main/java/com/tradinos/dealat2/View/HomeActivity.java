@@ -83,9 +83,9 @@ public class HomeActivity extends DrawerActivity {
 
     @Override
     public void assignUIReferences() {
-        listView = (ListView) findViewById(R.id.listView);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        searchView = (SearchView) findViewById(R.id.searchView);
+        listView = findViewById(R.id.listView);
+        refreshLayout = findViewById(R.id.refreshLayout);
+        searchView = findViewById(R.id.searchView);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class HomeActivity extends DrawerActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                HashMap<String, String> parameters = new HashMap<String, String>();
+                HashMap<String, String> parameters = new HashMap<>();
                 parameters.put("query", query);
 
                 Intent intent = new Intent(mContext, ViewAdsActivity.class);

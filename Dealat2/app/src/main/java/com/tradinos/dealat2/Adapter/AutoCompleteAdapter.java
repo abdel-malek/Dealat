@@ -25,7 +25,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<Item> {
     private List<Item> items;
 
     public AutoCompleteAdapter(Context context, List<Item> items){
-        super(context, R.layout.row_location, new ArrayList<Item>(items));
+        super(context, R.layout.row_item_dropdown, new ArrayList<>(items));
         this.inflater = LayoutInflater.from(context);
         this.items = items;
     }

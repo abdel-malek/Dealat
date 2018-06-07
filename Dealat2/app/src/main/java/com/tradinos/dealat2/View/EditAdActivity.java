@@ -269,81 +269,81 @@ public class EditAdActivity extends MasterActivity {
     public void assignUIReferences() {
         findViewById(R.id.buttonEdit).setEnabled(false);
 
-        linearLayout = (LinearLayout) findViewById(R.id.layout);
+        linearLayout = findViewById(R.id.layout);
 
-        textBrand = (TextView) findViewById(R.id.textBrand);
-        textModel = (TextView) findViewById(R.id.textModel);
-        textDate = (TextView) findViewById(R.id.textDate);
-        textTransmission = (TextView) findViewById(R.id.textTransmission);
+        textBrand = findViewById(R.id.textBrand);
+        textModel = findViewById(R.id.textModel);
+        textDate = findViewById(R.id.textDate);
+        textTransmission = findViewById(R.id.textTransmission);
         textCapacity = findViewById(R.id.textCapacity);
-        textEdu = (TextView) findViewById(R.id.textEdu);
+        textEdu = findViewById(R.id.textEdu);
         textCertificate = findViewById(R.id.textCertificate);
-        textSch = (TextView) findViewById(R.id.textSch);
+        textSch = findViewById(R.id.textSch);
         textGender = findViewById(R.id.textGender);
-        textState = (TextView) findViewById(R.id.textState);
-        textFurn = (TextView) findViewById(R.id.textFurn);
+        textState = findViewById(R.id.textState);
+        textFurn = findViewById(R.id.textFurn);
         textPropertyState = findViewById(R.id.textPropertyState);
 
-        editTitle = (EditText) findViewById(R.id.editTitle);
-        editCategory = (EditText) findViewById(R.id.editCategory);
-        editDesc = (EditText) findViewById(R.id.editDesc);
-        editPrice = (EditText) findViewById(R.id.editPrice);
+        editTitle = findViewById(R.id.editTitle);
+        editCategory = findViewById(R.id.editCategory);
+        editDesc = findViewById(R.id.editDesc);
+        editPrice = findViewById(R.id.editPrice);
 
-        editKilo = (EditText) findViewById(R.id.editKilo);
+        editKilo = findViewById(R.id.editKilo);
 
-        editSize = (EditText) findViewById(R.id.editSize);
+        editSize = findViewById(R.id.editSize);
 
-        editSalary = (EditText) findViewById(R.id.editSalary);
-        editEx = (EditText) findViewById(R.id.editEx);
+        editSalary = findViewById(R.id.editSalary);
+        editEx = findViewById(R.id.editEx);
 
-        editSpace = (EditText) findViewById(R.id.editSpace);
-        editRooms = (EditText) findViewById(R.id.editRooms);
-        editFloors = (EditText) findViewById(R.id.editFloors);
+        editSpace = findViewById(R.id.editSpace);
+        editRooms = findViewById(R.id.editRooms);
+        editFloors = findViewById(R.id.editFloors);
         editNumberFloors = findViewById(R.id.editNumberFloors);
 
-        autoCompleteLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteLocation);
+        autoCompleteLocation = findViewById(R.id.autoCompleteLocation);
 
-        spinnerCity = (AppCompatSpinner) findViewById(R.id.spinner);
-        spinnerPeriod = (AppCompatSpinner) findViewById(R.id.spinnerPeriod);
+        spinnerCity = findViewById(R.id.spinner);
+        spinnerPeriod = findViewById(R.id.spinnerPeriod);
 
-        spinnerBrand = (AppCompatSpinner) findViewById(R.id.spinnerBrand);
-        spinnerModel = (AppCompatSpinner) findViewById(R.id.spinnerModel);
-        spinnerYear = (AppCompatSpinner) findViewById(R.id.spinnerYear);
-        spinnerTransmission = (AppCompatSpinner) findViewById(R.id.spinnerTransmission);
+        spinnerBrand = findViewById(R.id.spinnerBrand);
+        spinnerModel = findViewById(R.id.spinnerModel);
+        spinnerYear = findViewById(R.id.spinnerYear);
+        spinnerTransmission = findViewById(R.id.spinnerTransmission);
         spinnerCapacity = findViewById(R.id.spinnerCapacity);
 
-        spinnerEdu = (AppCompatSpinner) findViewById(R.id.spinnerEdu);
+        spinnerEdu = findViewById(R.id.spinnerEdu);
         spinnerCertificate = findViewById(R.id.spinnerCertificate);
-        spinnerSch = (AppCompatSpinner) findViewById(R.id.spinnerSch);
+        spinnerSch = findViewById(R.id.spinnerSch);
         spinnerGender = findViewById(R.id.spinnerGender);
 
         spinnerState = findViewById(R.id.spinnerState);
 
         spinnerPropertyState = findViewById(R.id.spinnerPropertyState);
-        spinnerFurn = (AppCompatSpinner) findViewById(R.id.spinnerFurn);
+        spinnerFurn = findViewById(R.id.spinnerFurn);
 
-        switchNegotiable = (SwitchCompat) findViewById(R.id.switchNegotiable);
-        switchFeatured = (SwitchCompat) findViewById(R.id.switchFeatured);
+        switchNegotiable = findViewById(R.id.switchNegotiable);
+        switchFeatured = findViewById(R.id.switchFeatured);
 
         checkPhone = findViewById(R.id.checkPhone);
 
-        containerPrice = (TextInputLayout) findViewById(R.id.containerPrice);
+        containerPrice = findViewById(R.id.containerPrice);
 
-        containerKilometer = (TextInputLayout) findViewById(R.id.containerKilometer);
+        containerKilometer = findViewById(R.id.containerKilometer);
 
-        containerSize = (TextInputLayout) findViewById(R.id.containerSize);
+        containerSize = findViewById(R.id.containerSize);
 
-        containerSpace = (TextInputLayout) findViewById(R.id.containerSpace);
-        containerRooms = (TextInputLayout) findViewById(R.id.containerRooms);
-        containerFloors = (TextInputLayout) findViewById(R.id.containerFloors);
+        containerSpace = findViewById(R.id.containerSpace);
+        containerRooms = findViewById(R.id.containerRooms);
+        containerFloors = findViewById(R.id.containerFloors);
         containerNumberFloors = findViewById(R.id.containerNumberFloors);
 
-        containerEx = (TextInputLayout) findViewById(R.id.containerEx);
-        containerSalary = (TextInputLayout) findViewById(R.id.containerSalary);
+        containerEx = findViewById(R.id.containerEx);
+        containerSalary = findViewById(R.id.containerSalary);
 
-        progressBarVideo = (ProgressBar) findViewById(R.id.progressBar);
-        imageButtonCheck = (ImageButton) findViewById(R.id.imageCheck);
-        imageButtonVideo = (ImageButton) findViewById(R.id.buttonVideo);
+        progressBarVideo = findViewById(R.id.progressBar);
+        imageButtonCheck = findViewById(R.id.imageCheck);
+        imageButtonVideo = findViewById(R.id.buttonVideo);
 
     }
 
@@ -915,7 +915,7 @@ public class EditAdActivity extends MasterActivity {
         spinnerPeriod.setSelection(getItemIndex(data.getShowPeriods(), String.valueOf(currentAd.getShowPeriod())));
 
 
-        int brand = 0;
+        int brand;
         switch (currentAd.getTemplate()) {
             case Category.PROPERTIES:
 
@@ -1131,7 +1131,7 @@ public class EditAdActivity extends MasterActivity {
 
         int position;
 
-        public UploadImage(int position) {
+        UploadImage(int position) {
             this.position = position;
         }
 

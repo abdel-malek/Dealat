@@ -7,11 +7,6 @@ package com.tradinos.dealat2.Utils;
 /*
  * TouchImageView.java
  * By: Michael Ortiz
- * Updated By: Patrick Lackemacher
- * Updated By: Babay88
- * Updated By: @ipsilondev
- * Updated By: hank-cp
- * Updated By: singpolyma
  * -------------------
  * Extends Android ImageView to include pinch zooming, panning, fling and double tap zoom.
  */
@@ -39,7 +34,6 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.OverScroller;
 import android.widget.Scroller;
 
@@ -68,9 +62,7 @@ public class ScalableImageView extends android.support.v7.widget.AppCompatImageV
     //
     private Matrix matrix, prevMatrix;
 
-    private static enum State {NONE, DRAG, ZOOM, FLING, ANIMATE_ZOOM}
-
-    ;
+    private static enum State {NONE, DRAG, ZOOM, FLING, ANIMATE_ZOOM};
     private State state;
 
     private float minScale;
@@ -1154,7 +1146,7 @@ public class ScalableImageView extends android.support.v7.widget.AppCompatImageV
                 minY = maxY = startY;
             }
 
-            scroller.fling(startX, startY, (int) velocityX, (int) velocityY, minX,
+            scroller.fling(startX, startY, velocityX, velocityY, minX,
                     maxX, minY, maxY);
             currX = startX;
             currY = startY;

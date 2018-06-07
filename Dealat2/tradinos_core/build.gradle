@@ -22,12 +22,12 @@ android {
 
 
 
-    buildToolsVersion '26'
+    buildToolsVersion '26.0.1'
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.mcxiaoke.volley:library-aar:1.0.1'
     compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5'
     compile 'org.apache.httpcomponents:httpmime:4.3.5'

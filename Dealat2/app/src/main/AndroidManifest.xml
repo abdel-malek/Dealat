@@ -15,7 +15,7 @@
     even if it’s absolutely required. If you only publish through Android Market, though,
     users with devices without a camera will not see your app listed
      -->
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:name=".MyApplication"
@@ -25,6 +25,7 @@
         android:roundIcon="@drawable/dealat_logo_white_background"
         android:supportsRtl="true"
         android:theme="@style/noTitleTheme">
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">

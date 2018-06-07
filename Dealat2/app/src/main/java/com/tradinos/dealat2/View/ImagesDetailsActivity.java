@@ -68,8 +68,8 @@ public class ImagesDetailsActivity extends MasterActivity {
 
     @Override
     public void assignUIReferences() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
     }
 
     @Override

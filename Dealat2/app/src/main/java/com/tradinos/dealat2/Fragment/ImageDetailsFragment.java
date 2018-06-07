@@ -21,7 +21,6 @@ import com.tradinos.dealat2.View.MasterActivity;
 public class ImageDetailsFragment extends Fragment {
     private String path;
     private int templateId;
-    private MasterActivity activity;
 
     public static ImageDetailsFragment newInstance(String path, int templateId){
         ImageDetailsFragment fragment = new ImageDetailsFragment();
@@ -44,7 +43,7 @@ public class ImageDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_image_details, container, false);
 
-        activity = (MasterActivity) getActivity();
+        MasterActivity activity = (MasterActivity) getActivity();
         int defaultDrawable = activity.getTemplateDefaultImage(templateId);
 
         if (path != null){
