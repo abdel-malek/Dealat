@@ -2561,8 +2561,9 @@ $(function () {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_notifications_for_me',
-			dataType: "json"
-		}).done(function (data) {console.log(data);
+			dataType: "json",
+			global: false // this makes sure ajaxStart is not triggered
+		}).done(function (data) {
 			if (data.status === false) {} else {
 				$("header .notifications-dropdown .dropdown-menu").empty();
 
@@ -2632,7 +2633,8 @@ $(function () {
 		$.ajax({
 			type: "get",
 			url: base_url + '/users_control_web/get_my_items',
-			dataType: "json"
+			dataType: "json",
+			global: false // this makes sure ajaxStart is not triggered
 		}).done(function (data) {
 			if (data.status === false) {} else {
 				$("header .notes-dropdown .dropdown-menu").empty();
