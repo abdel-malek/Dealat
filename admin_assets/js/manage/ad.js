@@ -195,9 +195,10 @@ var ads_buttons =[];
 	              text: lang_array['new_pending'],
 	              type: 'info',
 	              styling: 'bootstrap3',
-	              buttons: {
-				        sticker: false
-				   }
+	              hide: false,
+		               // buttons: {
+					   //     sticker: false
+					   //}
 	          });
             }
             $('.pending_count').html(response.data);

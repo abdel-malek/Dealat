@@ -123,8 +123,10 @@ class Categories extends MY_Model {
 			    'tamplate_name' => TAMPLATES::get_tamplate_name($parent_info->tamplate_id),
 			    'web_image' =>$parent_info->web_image, 
 			    'mobile_image' =>$parent_info->mobile_image,
-			    'description' =>$parent_info->description
+			    'description' =>$parent_info->description,
+			    'queue' => $this->max_queue($parent_id)
 			   );
+			   
 			   $new_parent = $this->save($data);
 			   //change the current name to other and change the parent id to be the newly created category 
 			   $this->save(array('en_name'=>'Others', 'ar_name'=>'أخرى', 'parent_id'=>$new_parent), $parent_id);
@@ -139,16 +141,18 @@ class Categories extends MY_Model {
 	    'tamplate_name' =>TAMPLATES::get_tamplate_name($this->input->post('tamplate_id')),
 	    'description'=>$this->input->post('description'),
 	    'hidden_fields' => $this->input->post('hidden_fields'),
-	    'parent_id' =>$parent_id
+	    'parent_id' =>$parent_id,
+	    'queue' => $this->max_queue($parent_id)
 	   );
 	   if($parent_id == 0){
-	   	 $category_data['web_image'] = 'assets/images/Categories/web/others.png';
+	   	  $template_name = TAMPLATES::get_tamplate_name($this->input->post('tamplate_id'));
+	   	  $category_data['web_image'] = CATEGORIES_IMAGES_WEB_PATH.$template_name.'.png';
+		  $category_data['mobile_image'] = CATEGORIES_IMAGES_MOBILE_PATH.$template_name.'.png';;
 	   }else{
 	   	  $parent_info = parent::get($parent_id);
 	   	  $category_data['is_active'] = $parent_info->is_active;
 	   }
 	   // set the new category order. 
-	   $category_data['queue'] = $this->max_queue($parent_id);
 	   $new_subcategory = $this->save($category_data);
        $this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
@@ -158,7 +162,7 @@ class Categories extends MY_Model {
 			$this -> db -> trans_commit();
 			return $new_subcategory;
 	    }
-	}
+   }
 
 
    public function has_child($cat_id)
@@ -252,7 +256,12 @@ class Categories extends MY_Model {
                         ->where('parent_id', $parent_id)
                         ->where('is_deleted', 0)
                         ->get()->row();
-        return $res ? $res->queue : 0;
+	    if($res != null){
+			return $res->queue + 1;
+		}else{
+		    return 0;	
+		}
+     //   return $res ? $res->queue : 0;
    }
    
    

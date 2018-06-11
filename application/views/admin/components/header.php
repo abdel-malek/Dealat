@@ -208,7 +208,7 @@
                        aria-expanded="false"><?php echo $current_lang; ?><span
                             class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                       <li><a onclick="change_admin_lang('ar')" >Arabic</a></li>
+                       <li><a onclick="change_admin_lang('ar')" >عربي</a></li>
                        <li><a onclick="change_admin_lang('en')">English</a></li>
                     </ul>
                 </li>

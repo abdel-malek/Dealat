@@ -34,7 +34,9 @@
 		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
 		                        	<?php $admins = get_admins();?>
 		                         	<?php if($admins!= null): foreach ($admins as $key => $value): ?>
+		                         		<?php if($value->name != 'Ola_dev'): ?>
 		                         		  <option value="<?php echo $value->admin_id; ?>"><?php echo $value->name ?></option>
+		                         		<?php endif; ?>
 		                            <?php  endforeach; ?>
 		                            <?php endif; ?> 
 		                          </select>

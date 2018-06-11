@@ -114,9 +114,10 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
 		              text: lang_array['new_reported_ad']+ad_name,
 		              type: 'warning',
 		              styling: 'bootstrap3',
-		              buttons: {
-					        sticker: false
-					   }
+		              hide: false,
+		               // buttons: {
+					   //     sticker: false
+					   //}
 		          }); 
 		         $.playSound(alert_notify_path);
 		         // color the row (not working!)
@@ -154,9 +155,10 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
 			              text: lang_array['new_reported_ad']+value.title,
 			              type: 'warning',
 			              styling: 'bootstrap3',
-			              buttons: {
-						        sticker: false
-						   }
+			              hide: false,
+		               // buttons: {
+					   //     sticker: false
+					   //}
 			           });  
 					});
 					
