@@ -231,7 +231,7 @@ $(function () {
 				sideDefaultImg;
 
 			sliderDefaultImg = {
-				image: "assets/images/default_top_ad.jpg"
+				image: "assets/images/default_top.jpg"
 			};
 			sideDefaultImg = {
 				image: "assets/images/default-side_ad.jpg"
