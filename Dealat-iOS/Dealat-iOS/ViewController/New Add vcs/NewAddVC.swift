@@ -167,6 +167,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 
                 self.setupTypes()
                 self.refreshData()
+                
             }
         }
     }
@@ -282,45 +283,47 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     func ifHidden(index : IndexPath) -> Bool{
         
-        if let cat = self.selectedCategory,cat.hidden_fields != nil {
+        if let cat = self.selectedCategory,cat.hidden_fields != nil,cat.hidden_fields != "0" {
+            
+            let s1 = cat.hidden_fields!.replacingOccurrences(of: "\"", with: "")
+            let s2 = s1.components(separatedBy: CharacterSet.init(charactersIn: "[,]")).filter({!$0.isEmpty})
             
             switch (index.section,index.row){
                 
-            case (1,0): return cat.hidden_fields.contains("type_name")
-            case (1,1): return cat.hidden_fields.contains("type_model_name")
-            case (1,2): return cat.hidden_fields.contains("manufacture_date")
-            case (1,3): return cat.hidden_fields.contains("is_automatic")
-            case (1,4): return cat.hidden_fields.contains("is_new")
-            case (1,5): return cat.hidden_fields.contains("kilometer")
-            case (1,6): return cat.hidden_fields.contains("engine_capacity")
+            case (1,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (1,1): return s2.first(where: {$0 == "type_model_name"}) != nil
+            case (1,2): return s2.first(where: {$0 == "manufacture_date"}) != nil
+            case (1,3): return s2.first(where: {$0 == "is_automatic"}) != nil
+            case (1,4): return s2.first(where: {$0 == "is_new"}) != nil
+            case (1,5): return s2.first(where: {$0 == "kilometer"}) != nil
+            case (1,6): return s2.first(where: {$0 == "engine_capacity"}) != nil
                 
-            case (2,0): return cat.hidden_fields.contains("space")
-            case (2,1): return cat.hidden_fields.contains("rooms_num")
-            case (2,2): return cat.hidden_fields.contains("floors_number")
-            case (2,3): return cat.hidden_fields.contains("floor")
-            case (2,4): return cat.hidden_fields.contains("state")
-            case (2,5): return cat.hidden_fields.contains("furniture")
+            case (2,0): return s2.first(where: {$0 == "space"}) != nil
+            case (2,1): return s2.first(where: {$0 == "rooms_num"}) != nil
+            case (2,2): return s2.first(where: {$0 == "floors_number"}) != nil
+            case (2,3): return s2.first(where: {$0 == "floor"}) != nil
+            case (2,4): return s2.first(where: {$0 == "property_state_name"}) != nil
+            case (2,5): return s2.first(where: {$0 == "with_furniture"}) != nil
                 
-            case (3,0): return cat.hidden_fields.contains("type_name")
-            case (3,1): return cat.hidden_fields.contains("state")
+            case (3,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (3,1): return s2.first(where: {$0 == "state"}) != nil
                 
-            case (4,0): return cat.hidden_fields.contains("type_name")
-            case (4,1): return cat.hidden_fields.contains("state")
-            case (4,2): return cat.hidden_fields.contains("size")
+            case (4,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (4,1): return s2.first(where: {$0 == "state"}) != nil
+            case (4,2): return s2.first(where: {$0 == "size"}) != nil
                 
-            case (5,0): return cat.hidden_fields.contains("state")
-            case (6,0): return cat.hidden_fields.contains("state")
-            case (7,0): return cat.hidden_fields.contains("state")
+            case (5,0): return s2.first(where: {$0 == "state"}) != nil
+            case (6,0): return s2.first(where: {$0 == "state"}) != nil
+            case (7,0): return s2.first(where: {$0 == "state"}) != nil
                 
-            case (8,0): return cat.hidden_fields.contains("education")
-            case (8,1): return cat.hidden_fields.contains("certificate_name")
-            case (8,2): return cat.hidden_fields.contains("schedule")
-            case (8,3): return cat.hidden_fields.contains("gender")
-            case (8,4): return cat.hidden_fields.contains("experience")
-            case (8,5): return cat.hidden_fields.contains("salary")
+            case (8,0): return s2.first(where: {$0 == "education"}) != nil
+            case (8,1): return s2.first(where: {$0 == "certificate_name"}) != nil
+            case (8,2): return s2.first(where: {$0 == "schedule"}) != nil
+            case (8,3): return s2.first(where: {$0 == "gender"}) != nil
+            case (8,4): return s2.first(where: {$0 == "experience"}) != nil
+            case (8,5): return s2.first(where: {$0 == "salary"}) != nil
 
-                
-            case (9,0): return cat.hidden_fields.contains("state")
+            case (9,0): return s2.first(where: {$0 == "state"}) != nil
                 
             default:
                 break
@@ -844,7 +847,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+                
         if self.ifHidden(index: indexPath){
             return 0
         }
@@ -1047,7 +1050,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 return
             }
             params["price"] = price
+        }else{
+            params["price"] = "0"
         }
+        
         
         guard  !self.imagesPaths.isEmpty else {
             self.validMessage( message : "Please add images".localized)
@@ -1075,7 +1081,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let manufacture_date = self.selectedYear{
                 params["manufacture_date"] = self.years[manufacture_date]
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 2, section: 1)){
                 self.validMessage(tf : tfYear, message : "Please enter".localized +  "Year".localized)
                 return
             }
@@ -1086,14 +1092,14 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
 
             if let is_new = self.selectedStatus{
                 params["is_new"] = is_new
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 4, section: 1)){
                 self.validMessage(tf : tfStatus, message : "Please enter".localized +  "State".localized)
                 return
             }
 
             if let kilometer = self.tfKilometers.text, !kilometer.isEmpty{
                 params["kilometer"] = kilometer
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 5, section: 1)){
                 self.validMessage(tf : tfKilometers, message : "Please enter".localized +  "Kilometer".localized)
                 return
             }
@@ -1104,7 +1110,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let type = self.selectedType, let type_id = type.type_id {
                 params["type_id"] = type_id.intValue
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 0, section: 1)){
                 self.validMessage(tf : tfType, message : "Please enter".localized +  "TypeName".localized)
                 return
             }
@@ -1118,21 +1124,21 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let rooms = self.tfRooms_num.text, !rooms.isEmpty{
                 params["rooms_num"] = rooms
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 1, section: 2)){
                 self.validMessage(tf : tfRooms_num, message : "Please enter".localized +  "Rooms".localized)
                 return
             }
 
             if let floor = self.tfFloor.text, !floor.isEmpty{
                 params["floor"] = floor
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 3, section: 2)){
                 self.validMessage(tf : tfFloor, message : "Please enter".localized +  "Floor".localized)
                 return
             }
 
             if let space = self.tfSpace.text, !space.isEmpty{
                 params["space"] = space
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 0, section: 2)){
                 self.validMessage(tf : tfSpace, message : "Please enter".localized +  "Space".localized)
                 return
             }
@@ -1140,19 +1146,17 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let floors_number = self.tfFloors_number.text, !floors_number.isEmpty{
                 params["floors_number"] = floors_number
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 2, section: 2)){
                 self.validMessage(tf : tfFloor, message : "Please enter".localized +  "floors_number".localized)
                 return
             }
             
-            
             //params["is_new"] = is_new
             params["with_furniture"] = tfWith_furniture.isOn ? 1 : 0
             
-            
             if let s = self.selectedPropertyStatus, let state = s.property_state_id {
                 params["property_state_id"] = state.intValue
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 4, section: 2)){
                 self.validMessage(tf : tfStatus2, message : "Please enter".localized +  "PropertyState".localized)
                 return
             }
@@ -1163,7 +1167,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let  is_new = self.selectedStatus{
                 params["is_new"] = is_new
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 1, section: 3)){
                 self.validMessage(tf : tfStatus3, message : "Please enter".localized +  "State".localized)
                 return
             }
@@ -1177,7 +1181,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
 
             if let is_new = self.selectedStatus{
                 params["is_new"] = is_new
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 1, section: 4)){
                 self.validMessage(tf : tfStatus4, message : "Please enter".localized +  "State".localized)
                 return
             }
@@ -1198,21 +1202,21 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
             if let schedule = self.selectedSchedule, let schedule_id = schedule.schedule_id{
                 params["schedule_id"] = schedule_id.intValue
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 2, section: 8)){
                 self.validMessage(tf : tfSchedule, message : "Please enter".localized +  "Schedule".localized)
                 return
             }
             
             if let education = self.selectedEducation, let education_id = education.education_id{
                 params["education_id"] = education_id.intValue
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 0, section: 8)){
                 self.validMessage(tf : tfEducation, message : "Please enter".localized +  "Education".localized)
                 return
             }
             
             if let certificate = self.selectedCertificate, let certificate_id = certificate.certificate_id{
                 params["certificate_id"] = certificate_id.intValue
-            }else{
+            }else if !self.ifHidden(index: IndexPath.init(row: 1, section: 8)){
                 self.validMessage(tf : tfCertificate, message : "Please enter".localized +  "Certificate".localized)
                 return
             }
@@ -1225,11 +1229,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 params["salary"] = salary
             }
             
-            
-            
             params["gender"] = selectedGender
-
-            
             
         default:
             break

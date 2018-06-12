@@ -107,45 +107,48 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
 
     func ifHidden(index : IndexPath) -> Bool{
         
-        if let cat = Provider.shared.catsFull.filter({$0.category_id.intValue == self.ad.category_id.intValue}).first,cat.hidden_fields != nil {
+        if let cat = Provider.shared.catsFull.filter({$0.category_id.intValue == self.ad.category_id.intValue}).first,cat.hidden_fields != nil,cat.hidden_fields != "0" {
+            
+            let s1 = cat.hidden_fields!.replacingOccurrences(of: "\"", with: "")
+            let s2 = s1.components(separatedBy: CharacterSet.init(charactersIn: "[,]")).filter({!$0.isEmpty})
+            
             
             switch (index.section,index.row){
                 
-            case (1,0): return cat.hidden_fields.contains("type_name")
-            case (1,1): return cat.hidden_fields.contains("type_model_name")
-            case (1,2): return cat.hidden_fields.contains("manufacture_date")
-            case (1,3): return cat.hidden_fields.contains("is_automatic")
-            case (1,4): return cat.hidden_fields.contains("is_new")
-            case (1,5): return cat.hidden_fields.contains("kilometer")
-            case (1,6): return cat.hidden_fields.contains("engine_capacity")
+            case (1,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (1,1): return s2.first(where: {$0 == "type_model_name"}) != nil
+            case (1,2): return s2.first(where: {$0 == "manufacture_date"}) != nil
+            case (1,3): return s2.first(where: {$0 == "is_automatic"}) != nil
+            case (1,4): return s2.first(where: {$0 == "is_new"}) != nil
+            case (1,5): return s2.first(where: {$0 == "kilometer"}) != nil
+            case (1,6): return s2.first(where: {$0 == "engine_capacity"}) != nil
 
-            case (2,0): return cat.hidden_fields.contains("space")
-            case (2,1): return cat.hidden_fields.contains("rooms_num")
-            case (2,2): return cat.hidden_fields.contains("floors_number")
-            case (2,3): return cat.hidden_fields.contains("floor")
-            case (2,4): return cat.hidden_fields.contains("state")
-            case (2,5): return cat.hidden_fields.contains("furniture")
+            case (2,0): return s2.first(where: {$0 == "space"}) != nil
+            case (2,1): return s2.first(where: {$0 == "rooms_num"}) != nil
+            case (2,2): return s2.first(where: {$0 == "floors_number"}) != nil
+            case (2,3): return s2.first(where: {$0 == "floor"}) != nil
+            case (2,4): return s2.first(where: {$0 == "property_state_name"}) != nil
+            case (2,5): return s2.first(where: {$0 == "with_furniture"}) != nil
                 
-            case (3,0): return cat.hidden_fields.contains("type_name")
-            case (3,1): return cat.hidden_fields.contains("state")
+            case (3,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (3,1): return s2.first(where: {$0 == "state"}) != nil
                 
-            case (4,0): return cat.hidden_fields.contains("type_name")
-            case (4,1): return cat.hidden_fields.contains("state")
-            case (4,2): return cat.hidden_fields.contains("size")
+            case (4,0): return s2.first(where: {$0 == "type_name"}) != nil
+            case (4,1): return s2.first(where: {$0 == "state"}) != nil
+            case (4,2): return s2.first(where: {$0 == "size"}) != nil
                 
-            case (5,0): return cat.hidden_fields.contains("state")
-            case (6,0): return cat.hidden_fields.contains("state")
-            case (7,0): return cat.hidden_fields.contains("state")
+            case (5,0): return s2.first(where: {$0 == "state"}) != nil
+            case (6,0): return s2.first(where: {$0 == "state"}) != nil
+            case (7,0): return s2.first(where: {$0 == "state"}) != nil
                 
-            case (8,0): return cat.hidden_fields.contains("education")
-            case (8,1): return cat.hidden_fields.contains("certificate_name")
-            case (8,2): return cat.hidden_fields.contains("schedule")
-            case (8,3): return cat.hidden_fields.contains("gender")
-            case (8,4): return cat.hidden_fields.contains("experience")
-            case (8,5): return cat.hidden_fields.contains("salary")
+            case (8,0): return s2.first(where: {$0 == "education"}) != nil
+            case (8,1): return s2.first(where: {$0 == "certificate_name"}) != nil
+            case (8,2): return s2.first(where: {$0 == "schedule"}) != nil
+            case (8,3): return s2.first(where: {$0 == "gender"}) != nil
+            case (8,4): return s2.first(where: {$0 == "experience"}) != nil
+            case (8,5): return s2.first(where: {$0 == "salary"}) != nil
                 
-                
-            case (9,0): return cat.hidden_fields.contains("state")
+            case (9,0): return s2.first(where: {$0 == "state"}) != nil
                 
             default:
                 break
