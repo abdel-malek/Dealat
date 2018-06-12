@@ -17,7 +17,7 @@ public class Category implements Serializable {
             FASHION = 5, KIDS = 6, SPORTS = 7, JOBS = 8, INDUSTRIES = 9, SERVICES = 10, BASIC = 11;
 
     private String id, name, parentId, imageUrl;
-    private String hiddenFields;
+    private String[] hiddenFields;
     private int templateId;
     private List<Category> subCategories;
 
@@ -108,11 +108,11 @@ public class Category implements Serializable {
         this.templateId = templateId;
     }
 
-    public String getHiddenFields() {
+    public String[] getHiddenFields() {
         return hiddenFields;
     }
 
-    public void setHiddenFields(String hiddenFields) {
+    public void setHiddenFields(String[] hiddenFields) {
         this.hiddenFields = hiddenFields;
     }
 
@@ -140,8 +140,11 @@ public class Category implements Serializable {
 
     public boolean shouldHideTag(String tag) {
         if (this.hiddenFields != null) {
-            if (tag != null)
-                return this.hiddenFields.contains(tag);
+            if (tag != null) {
+                for (int i = 0; i < this.hiddenFields.length; i++)
+                    if (tag.equals(hiddenFields[i]))
+                        return true;
+            }
         }
 
         return false;

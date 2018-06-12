@@ -32,11 +32,12 @@ public class CategoryParser implements TradinosParser<Category> {
         JSONArray jsonArray;
         if (validData(jsonObject.getString("hidden_fields"))) {
             jsonArray = new JSONArray(jsonObject.getString("hidden_fields"));
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < jsonArray.length(); i++)
-                stringBuilder.append(jsonArray.getString(i).replaceAll("\"\"", " "));
+            String[] hiddenFields = new String[jsonArray.length()];
 
-            category.setHiddenFields(stringBuilder.toString());
+            for (int i = 0; i < jsonArray.length(); i++)
+                hiddenFields[i] = jsonArray.getString(i).replaceAll("\"\"", "");
+
+            category.setHiddenFields(hiddenFields);
         }
 
         return category;
