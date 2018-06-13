@@ -241,6 +241,8 @@
     <string name="toastRegister">يجب تسجيل الدخول أولاً!</string>
     <string name="toastVerify">يجب أن تفعّل حسابك أولاً!</string>
     <string name="toastSelectReport">من فضلك، اختر سبب الإبلاغ</string>
+    <string name="toastUploadError">لم يتم تحميل الصورة!</string>
+    <string name="toastUploadVideoError">لم يتم تحميل الفيديو!</string>
 
 
     <!-- Alert Dialog -->

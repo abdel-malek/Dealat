@@ -33,4 +33,13 @@
         android:layout_gravity="center"
         android:indeterminateDrawable="@drawable/progress_bar"
         />
+
+    <ImageButton
+        android:id="@+id/viewError"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_delete_white_24dp"
+        android:background="@color/grayTransparent"
+        />
 </FrameLayout>

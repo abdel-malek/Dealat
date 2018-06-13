@@ -247,6 +247,8 @@
     <string name="toastRegister">You need to register first!</string>
     <string name="toastVerify">You need to verify your number first!</string>
     <string name="toastSelectReport">Please, Select reporting reason</string>
+    <string name="toastUploadError">Image wasn\'t uploaded!</string>
+    <string name="toastUploadVideoError">Video wasn\'t uploaded!</string>
 
 
     <!-- Alert Dialog -->

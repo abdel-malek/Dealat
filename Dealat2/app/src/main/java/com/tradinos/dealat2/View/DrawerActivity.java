@@ -47,6 +47,13 @@ public abstract class DrawerActivity extends MasterActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private int currentPage = 0;
+    private Handler handler = new Handler();
+    private Runnable update;
+
+    CommercialAdapter commercialAdapter;
+    //views
+    ViewPager commercialPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +145,19 @@ public abstract class DrawerActivity extends MasterActivity
                     }
                 });
         }
+
+        commercialPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
+
+        update = new Runnable() {
+            public void run() {
+                if (currentPage == commercialAdapter.getCount()) {
+                    currentPage = 0;
+                }
+                commercialPager.setCurrentItem(currentPage++, true);
+                handler.postDelayed(this, 5000);
+            }
+        };
     }
 
     @Override
@@ -255,9 +275,8 @@ public abstract class DrawerActivity extends MasterActivity
     }
 
     protected void getCommercialAds(String categoryId) {
-        final ViewPager commercialPager = findViewById(R.id.viewpager);
-        final TabLayout tabLayout = findViewById(R.id.tab_layout);
 
+        handler.removeCallbacks(update);
         CommercialAdsController.getInstance(mController).getCommercialAds(categoryId, new SuccessCallback<List<CommercialAd>>() {
             @Override
             public void OnSuccess(final List<CommercialAd> result) {
@@ -265,28 +284,12 @@ public abstract class DrawerActivity extends MasterActivity
                 if (findViewById(R.id.refreshLayout) != null)
                     ((SwipeRefreshLayout) findViewById(R.id.refreshLayout)).setRefreshing(false);
 
-                CommercialAdapter commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
+                commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
                 commercialPager.setAdapter(commercialAdapter);
 
                 tabLayout.setupWithViewPager(commercialPager);
 
-                final Handler handler = new Handler();
-                final Runnable update = new Runnable() {
-                    public void run() {
-                        if (currentPage == result.size()) {
-                            currentPage = 0;
-                        }
-                        commercialPager.setCurrentItem(currentPage++, true);
-                    }
-                };
-
-                new Timer().schedule(new TimerTask() {
-
-                    @Override
-                    public void run() {
-                        handler.post(update);
-                    }
-                }, 100, 5000);
+                handler.postDelayed(update, 100);
             }
         });
     }

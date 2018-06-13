@@ -3,6 +3,7 @@ package com.tradinos.dealat2.Adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -120,6 +121,16 @@ public class HorizontalAdapter {
             textView.setText(String.valueOf(position + 1));
             progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void errorView(int position) {
+        View view = views.get(position);
+
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        ImageButton viewError = view.findViewById(R.id.viewError);
+
+        progressBar.setVisibility(View.INVISIBLE);
+        viewError.setVisibility(View.VISIBLE);
     }
 
     public void deleteImage(int position) {

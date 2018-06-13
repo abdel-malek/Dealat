@@ -88,7 +88,13 @@ public class ImageDecoder {
         }
 
         Bitmap bitmap = decodeLargeImage(path);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bmpStream);
+
+        String extension = path.substring(path.lastIndexOf(".") + 1);
+        if (extension.equals("png"))
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bmpStream);
+        else
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bmpStream);
+
         byte[] bmpPicByteArray = bmpStream.toByteArray();
 
         FileOutputStream fo;

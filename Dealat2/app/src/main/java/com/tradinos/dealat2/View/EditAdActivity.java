@@ -29,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.tradinos.core.network.Code;
+import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.dealat2.Adapter.AutoCompleteAdapter;
@@ -38,6 +40,7 @@ import com.tradinos.dealat2.Adapter.ItemAdapter;
 import com.tradinos.dealat2.Adapter.TypeAdapter;
 import com.tradinos.dealat2.Controller.AdController;
 import com.tradinos.dealat2.Controller.CurrentAndroidUser;
+import com.tradinos.dealat2.Controller.ParentController;
 import com.tradinos.dealat2.Model.Ad;
 import com.tradinos.dealat2.Model.AdElectronic;
 import com.tradinos.dealat2.Model.AdFashion;
@@ -1141,7 +1144,12 @@ public class EditAdActivity extends MasterActivity {
             final Image image = images[0];
 
             //new File(image.getPath())
-            AdController.getInstance(mController).uploadImage(new ImageDecoder().ConvertBitmapToFile(image.getPath()), new SuccessCallback<String>() {
+            AdController.getInstance(new ParentController(mContext, new FaildCallback() {
+                @Override
+                public void OnFaild(Code errorCode, String Message, String data) {
+                    showMessageInToast(getString(R.string.toastUploadError));
+                }
+            })).uploadImage(new ImageDecoder().ConvertBitmapToFile(image.getPath()), new SuccessCallback<String>() {
                 @Override
                 public void OnSuccess(String result) {
                     image.setServerPath(result);
@@ -1159,7 +1167,14 @@ public class EditAdActivity extends MasterActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            AdController.getInstance(mController).uploadVideo(new File(strings[0]), new SuccessCallback<String>() {
+            AdController.getInstance(new ParentController(mContext, new FaildCallback() {
+                @Override
+                public void OnFaild(Code errorCode, String Message, String data) {
+                    imageButtonVideo.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_video_call_white_36dp));
+                    progressBarVideo.setVisibility(View.INVISIBLE);
+                    showMessageInToast(getString(R.string.toastUploadVideoError));
+                }
+            })).uploadVideo(new File(strings[0]), new SuccessCallback<String>() {
                 @Override
                 public void OnSuccess(String result) {
                     videoServerPath = result;
