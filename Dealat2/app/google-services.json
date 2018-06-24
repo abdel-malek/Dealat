@@ -8,6 +8,37 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:460183534566:android:9728a6af9e8142d2",
+        "android_client_info": {
+          "package_name": "com.dealat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460183534566-3b8lq1i96usptmaldjvtgo6idthpk6l1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTr-OpgVNjDNqzm5PfrptVwUzQvzvAzaY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:460183534566:android:ceafbde07aae9d7a",
         "android_client_info": {
           "package_name": "com.tradinos.dealat2"

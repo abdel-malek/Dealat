@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tradinos.dealat2">
+    package="com.dealat">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +18,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.dealat.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/dealat_logo_white_background"
         android:label="@string/app_name"
@@ -27,7 +27,7 @@
         android:theme="@style/noTitleTheme">
 
         <activity
-            android:name=".SplashActivity"
+            android:name="com.dealat.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,97 +36,97 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".View.LanguageActivity"
+        <activity android:name="com.dealat.View.LanguageActivity"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name=".View.CityActivity"
+            android:name="com.dealat.View.CityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".View.RegisterActivity"
+            android:name="com.dealat.View.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".View.VerificationActivity"
+            android:name="com.dealat.View.VerificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".View.HomeActivity"
+            android:name="com.dealat.View.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/noTitleTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.SubCategoriesActivity"
+            android:name="com.dealat.View.SubCategoriesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity
-            android:name=".View.SelectImagesActivity"
+            android:name="com.dealat.View.SelectImagesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".View.SubmitAdActivity"
+            android:name="com.dealat.View.SubmitAdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.ViewAdsActivity"
+            android:name="com.dealat.View.ViewAdsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.FilterActivity"
+            android:name="com.dealat.View.FilterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".View.AdDetailsActivity"
+            android:name="com.dealat.View.AdDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".View.ReportActivity"
+            android:name="com.dealat.View.ReportActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".View.MyProfileActivity"
+            android:name="com.dealat.View.MyProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/noTitleTheme.NoActionBar" />
 
         <activity
-            android:name=".View.EditProfileActivity"
+            android:name="com.dealat.View.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".View.EditAdActivity"
+            android:name="com.dealat.View.EditAdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".View.ChatActivity"
+            android:name="com.dealat.View.ChatActivity"
             android:screenOrientation="portrait"
             />
 
         <activity
-            android:name=".View.BookmarksActivity"
+            android:name="com.dealat.View.BookmarksActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".View.ImagesDetailsActivity"
+            android:name="com.dealat.View.ImagesDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".View.AboutActivity"
+            android:name="com.dealat.View.AboutActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".View.TermsActivity"
+        <activity android:name="com.dealat.View.TermsActivity"
             android:screenOrientation="portrait"
             />
 
-        <activity android:name=".View.PublicNotificationActivity"
+        <activity android:name="com.dealat.View.PublicNotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent"
             />
 
-        <activity android:name=".View.QRCodeActivity"
+        <activity android:name="com.dealat.View.QRCodeActivity"
             android:screenOrientation="portrait"
             />
 
@@ -140,19 +140,19 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service android:name=".FCM.MyFirebaseMessagingService">
+        <service android:name="com.dealat.FCM.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".FCM.MyFirebaseInstanceIDService">
+        <service android:name="com.dealat.FCM.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".Utils.NotificationReceiver">
+        <receiver android:name="com.dealat.Utils.NotificationReceiver">
             <intent-filter android:priority="0">
                 <action android:name="com.dealat.MSG" />
             </intent-filter>

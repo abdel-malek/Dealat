@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.tradinos.dealat2.Utils.ScalableImageView
+    <com.dealat.Utils.ScalableImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
