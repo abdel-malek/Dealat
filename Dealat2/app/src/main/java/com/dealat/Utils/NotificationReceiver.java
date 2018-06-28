@@ -1,5 +1,6 @@
 package com.dealat.Utils;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.dealat.Controller.CurrentAndroidUser;
@@ -31,6 +33,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        final String CHANNEL_ID = "Chat";
+        final String CHANNEL_NAME = "Chats notifications";
+
         User user = new CurrentAndroidUser(context).Get();
 
         Chat chat = (Chat) intent.getSerializableExtra("chat");
@@ -45,6 +50,13 @@ public class NotificationReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(), chatIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         String notificationTitle;
         if (amISeller(user, chat))
@@ -55,7 +67,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         notificationTitle += " (" + chat.getAdTitle() + ")";
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "Chats")
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.dealat_logo_white_background)
                 .setContentTitle(notificationTitle)
                 .setContentText(msg)
@@ -73,9 +85,6 @@ public class NotificationReceiver extends BroadcastReceiver {
             inboxStyle.addLine(messages.get(i));
 
         notificationBuilder.setStyle(inboxStyle);
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(Integer.valueOf(chat.getChatId()), notificationBuilder.build());
     }

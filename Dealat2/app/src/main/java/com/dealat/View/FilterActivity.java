@@ -18,6 +18,7 @@ import com.dealat.Adapter.CheckableAdapter;
 import com.dealat.Adapter.CityAdapter;
 import com.dealat.Adapter.ItemAdapter;
 import com.dealat.Adapter.TypeAdapter;
+import com.dealat.MyApplication;
 import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.AdController;
 import com.dealat.Model.AdVehicle;
@@ -104,6 +105,7 @@ public class FilterActivity extends MasterActivity {
 
                 brands = result.getBrands();
                 List<Type> templateBrands = brands.get(currentTemplate);
+
                 if (templateBrands != null)
                     spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands, true));
 
@@ -389,10 +391,23 @@ public class FilterActivity extends MasterActivity {
 
                 replaceTemplate();
 
+                // set brands that related to selectedCategory
                 List<Type> templateBrands = brands.get(currentTemplate);
-                if (templateBrands != null)
-                    spinnerBrand.setAdapter(new TypeAdapter(mContext, templateBrands, true));
+                List<String> descendantsIds = getDescendantsIds(selectedCategory);
+                List<Type> brands = new ArrayList<>();
+                brands.add(Type.getNoType());
 
+                if (templateBrands != null) { //if template has types
+                    for (int i = 0; i < templateBrands.size(); i++) {
+                        if (descendantsIds.contains(templateBrands.get(i).getCategoryId()))
+                            brands.add(templateBrands.get(i));
+                    }
+
+                    if (descendantsIds.size() > 1)
+                        spinnerBrand.setAdapter(new TypeAdapter(mContext, brands, true));
+                    else
+                        spinnerBrand.setAdapter(new TypeAdapter(mContext, brands, false));
+                }
             }
         }
     }
@@ -800,5 +815,21 @@ public class FilterActivity extends MasterActivity {
                 textState.setVisibility(visibility);
                 spinnerState.setVisibility(visibility);
         }
+    }
+
+
+    private List<String> getDescendantsIds(Category category) {
+        List<String> descendantsIds = new ArrayList<>();
+
+        List<Category> subCats = ((MyApplication) getApplication()).getSubCatsById(category.getId());
+        if (subCats.isEmpty())
+            descendantsIds.add(category.getId());
+
+        else {
+            for (int i = 0; i < subCats.size(); i++)
+                descendantsIds.addAll(getDescendantsIds(subCats.get(i)));
+        }
+
+        return descendantsIds;
     }
 }

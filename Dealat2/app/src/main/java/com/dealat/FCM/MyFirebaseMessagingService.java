@@ -1,11 +1,13 @@
 package com.dealat.FCM;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.dealat.Parser.Parser.Ad.AdParser;
@@ -68,7 +70,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String body, String txt, String title, String type) throws JSONException {
 
         Intent intent;
-        String channelId = "Dealat";
+
+        String channelId = "General";
+        String channelName = "General Notifications";
+
 
         switch (type) {
             case "1":
@@ -87,15 +92,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Ad ad = new AdParser().Parse(body);
                 intent = new Intent(this, AdDetailsActivity.class);
                 intent.putExtra("ad", ad);
+
                 channelId = "Ads";
+                channelName = "Ads Notifications";
                 break;
 
-            case "3": //Public Notification
+            case "3": // Public Notification
             case "4": // Notification to certain user
                 intent = new Intent(this, PublicNotificationActivity.class);
                 intent.putExtra("title", title);
                 intent.putExtra("txt", txt);
-                channelId = "General";
                 break;
 
             default: // just in case
@@ -106,6 +112,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt(), intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
 
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.dealat_logo_white_background)
@@ -115,12 +130,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         int id = new Random().nextInt();
         // ids of notification of type 2 and 3 (action, public) are always negative to avoid conflict with msg notification (type 1)
-        // that there Ids are same as chatId which is definitely positive
+        // that their Ids are same as chatId which is definitely positive
         if (id > 0)
             id = id * -1;
 
