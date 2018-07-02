@@ -33,6 +33,7 @@ class Types extends MY_Model {
 		                   CONCAT_WS("-", categories.'.$lang.'_name, types.'.$lang.'_name) AS full_type_name' , false);
 		$this->db->join('categories', 'types.category_id = categories.category_id' , 'left outer');
 		$this->db->where('types.is_active' , 1);
+		$this->db->order_by('name');
 		$q =  parent::get();
 		foreach ($q as  $row) {
 		  $row->models = null;

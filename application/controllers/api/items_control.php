@@ -126,7 +126,7 @@ class Items_control extends REST_Controller {
       } 
     }
 
-   public function item_images_upload_post()
+  public function item_images_upload_post()
    {
       $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
       $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
@@ -138,7 +138,7 @@ class Items_control extends REST_Controller {
       }
    }
 	
-   public function item_video_upload_post()
+  public function item_video_upload_post()
    {
    	  $vedio_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
 	  $vedio = upload_attachement($this, ADS_VEDIO_PATH , $vedio_name, true); 

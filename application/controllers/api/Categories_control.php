@@ -53,6 +53,16 @@ class Categories_control extends REST_Controller {
 		$categories = $this->categories->get_childs_only($this->data['lang']);
 		dump($categories);
 	}
+	
+	public function get_nested_ids_get()
+	{
+		if(!$this->input->get('category_id')){
+			throw new Parent_Exeption('category id is requierd');
+		}else{
+		   	$child_ids = $this->categories-> get_nested_ids($this->input->get('category_id'));
+		    $this->response(array('status' => true, 'data' => $child_ids, 'message' => ''));	
+		}
+	}
 
 	
 }

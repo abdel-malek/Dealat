@@ -200,6 +200,7 @@ $config['auth_override_class_method']['categories_control']['get_nested_categori
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_info'] = 'none';
+$config['auth_override_class_method']['categories_control']['get_nested_ids'] = 'none';
 $config['auth_override_class_method']['categories_control']['test'] = 'none';
 $config['auth_override_class_method']['users_control_web']['index'] = 'none';
 $config['auth_override_class_method']['users_control_web']['change_language'] = 'none';

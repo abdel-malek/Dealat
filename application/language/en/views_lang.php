@@ -331,6 +331,10 @@ $lang['linkedin_link'] = 'LinkedIn link';
 $lang['instagram_link'] = 'Instagram link';
 $lang['terms_en'] = 'Terms and conditions in english';
 $lang['terms_ar'] = 'Terms and conditions in arabic';
+$lang['meta_description'] = 'Meta Description';
+$lang['meta_keywords'] = 'Meta Keyword';
+$lang['meta_title'] = 'Meta Title';
+$lang['comma'] = 'Seperated By comma';
 
 //admin manage
 $lang['admin_name'] = 'Admin Name';

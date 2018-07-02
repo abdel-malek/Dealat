@@ -85,7 +85,7 @@ class Data_manage extends REST_Controller {
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		} else {
-			if(PERMISSION::Check_permission(PERMISSION::UPDATE_DATA , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
+			if(!PERMISSION::Check_permission(PERMISSION::UPDATE_DATA , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
 				 $this->response(array('status' => false, 'data' =>'', 'message' => $this->lang->line('no_permission')));
 			}else{
 				$this->load->model('data_sources/types');
@@ -410,6 +410,9 @@ class Data_manage extends REST_Controller {
 	      'instagram_link' => $this->input->post('instagram_link'),
 	      'ar_terms' => $this->input->post('ar_terms'),
 	      'en_terms' => $this->input->post('en_terms'),
+	      'meta_description' => $this->input->post('meta_description'),
+	      'meta_keywords' => $this->input->post('meta_keywords'),
+	      'meta_title' => $this->input->post('meta_title')
 		);
 	   $saved = $this->about_info->save($data , 1);
 	   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_ABOUT_INFO);

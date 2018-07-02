@@ -15,6 +15,7 @@ class Type_models extends MY_Model {
 		$this->db->select('type_models.'.$lang.'_name as name, type_models.type_id , type_model_id');
 		$this->db->where('is_active' , 1);
 		$this->db->where('type_id' , $type_id);
+		$this->db->order_by('name');
 		return parent::get();
 	}
 	

@@ -75,6 +75,7 @@ class Ads extends MY_Model {
 		                   users.name as seller_name,
 		                   users.phone as seller_phone,
 		                   users.whatsup_number,
+		                   users.is_admin,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
 		                   show_periods.days,

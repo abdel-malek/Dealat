@@ -368,7 +368,19 @@ class Users_manage extends REST_Controller {
 	  $current_admin = $this->current_user->user_id;
 	  $output = array("aaData" => array());
       foreach ($admins as $row) {
-      	if($row->admin_id != $current_admin){
+      	if($row->is_super == 1){
+      		if($row->name != 'Ola_dev'){
+      	  	$recorde = array();
+			$recorde[] = $row -> admin_id;
+			$recorde[] = $row -> created_at;
+			$recorde[] = $row -> name;
+		    $recorde[] = $row -> username;
+			$recorde[] = '';
+			$recorde[] = '';
+			$output['aaData'][] = $recorde;
+      	  } 
+      	}else{
+      	  if($row->admin_id != $current_admin){
       	  if($row->name != 'Ola_dev'){
       	  	$recorde = array();
 			$recorde[] = $row -> admin_id;
@@ -379,6 +391,7 @@ class Users_manage extends REST_Controller {
 			$recorde[] = '';
 			$output['aaData'][] = $recorde;
       	  }
+      	 }
       	}
 	   }
 	  echo json_encode($output);

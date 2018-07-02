@@ -3,6 +3,21 @@ class GENDER{
 	const MALE = 1 , 
 	      FEMALE = 2;
 		  
+    public static function get_list($lang = 'en')
+    {
+    	if($lang == 'en'){
+        	return array(
+        	   GENDER::MALE => 'Male',
+        	   GENDER::FEMALE => 'Female'
+			);
+        }else{
+        	return array(
+        	   GENDER::MALE => 'ذكر',
+        	   GENDER::FEMALE => 'أنثى'
+			);
+        }
+    }
+		  
     public static function get_name($id , $lang)
     {
         if($lang == 'en'){

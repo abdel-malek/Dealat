@@ -10,7 +10,10 @@ function save_about(){
 	 	'youtube_link': $('#youtube_link').val(),
 	 	'linkedin_link': $('#linkedin_link').val(),
 	 	'ar_terms' : $('#ar_terms').val(),
-	 	'en_terms' : $('#en_terms').val()
+	 	'en_terms' : $('#en_terms').val(),
+	 	'meta_description' : $('#meta_description').val(),
+	 	'meta_keywords' : $('#meta_keywords').val(),
+	 	'meta_title' : $('#meta_title').val(),
 	 };
 	$.ajax({
 	        url: base_url + '/admin/data_manage/save_about/format/json',

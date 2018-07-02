@@ -313,6 +313,13 @@ abstract class REST_Controller extends CI_Controller {
        
 	   // call remote services
 	   
+	   //load meta data 
+	   $this->load->model('data_sources/about_info');
+	   $info = $this->about_info->get(null, true , 1);
+	   $this->data['meta_description'] = $info->meta_description;
+	   $this->data['meta_keywords'] = $info->meta_keywords;
+	   $this->data['meta_title'] = $info->meta_title;
+	  // dump($this->data);
     }
 
     /**

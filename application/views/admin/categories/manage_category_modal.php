@@ -50,7 +50,7 @@
 	      	            	<?php echo $this->lang->line('type') ?>
 	      	            </label>
 	      	            <label style="display: none" for="cat_type_model_name " class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
-	      	            	<input checked=""  type="checkbox" class="template_info_cat 1_info_cat" id="cat_type_model_name"></input>
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_type_model_name"></input>
 	      	                <?php echo $this->lang->line('type_model') ?>
 	      	            </label>
 	      	            <label style="display: none" for="cat_manufacture_date" class="col-md-6 col-xs-12 template_info_cat 1_info_cat">
@@ -89,8 +89,8 @@
 	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_floors_number"></input>
 	      	            	<?php echo $this->lang->line('floors_number') ?>
 	      	            </label>
-	      	            <label style="display: none" for="cat_state" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
-	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_state"></input>
+	      	            <label style="display: none" for="cat_property_state_name" class="col-md-6 col-xs-12 template_info_cat 2_info_cat">
+	      	            	<input checked=""  type="checkbox" class="hide_check_box" id="cat_property_state_name"></input>
 	      	            	<?php echo $this->lang->line('state') ?>
 	      	            </label>
 	      	            <label style="display: none" for="cat_size" class="col-md-6 col-xs-12 template_info_cat 4_info_cat">

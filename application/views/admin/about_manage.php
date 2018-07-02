@@ -86,6 +86,26 @@
 			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="en_terms" id="en_terms"><?php echo $about_info->en_terms ?></textarea>
 			      	         </div>
 			               </div>
+			               
+			               <div class="form-group">
+			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('meta_title') ?></label>
+			      	         <div class="col-md-6 col-sm-6 col-xs-12">
+			      	           <input type='text' class="form-control" name="meta_title"   id='meta_title' value="<?php echo $about_info->meta_title ?>"></input>
+			      	         </div>
+				           </div> 
+			               
+			               <div class="form-group">
+			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('meta_description') ?></label>
+			      	         <div class="col-md-6 col-sm-6 col-xs-12">
+			      	            <textarea  class="form-control col-md-7 col-xs-12" name="meta_description" id="meta_description"><?php echo $about_info->meta_description ?></textarea>
+			      	         </div>
+			               </div> 
+			               <div class="form-group">
+			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('meta_keywords') ?></br><small><?php echo $this->lang->line('comma') ?></small></label>
+			      	         <div class="col-md-6 col-sm-6 col-xs-12">
+			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="meta_keywords" id="meta_keywords"><?php echo $about_info->meta_keywords ?></textarea>
+			      	         </div>
+			               </div>
 			               <?php if(PERMISSION::Check_permission(PERMISSION::UPDATE_ABOUT_INFO , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
 				               <div class='pull-right'>
 				               	  <button id="" onclick="save_about()" type="button" class="btn btn-primary"><?php echo $this->lang->line('save') ?></button>

@@ -81,7 +81,7 @@
     
     <!-- vars --> 
 
-   <!--  slick slider  -->
+   <!--slick slider  -->
    <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
    
     <!-- jquery uploader -->

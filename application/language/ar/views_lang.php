@@ -331,6 +331,11 @@ $lang['linkedin_link'] = 'رابط لينكدان';
 $lang['instagram_link'] = 'رابط انستغرام';
 $lang['terms_ar'] = 'شروط استخدام ديلات بالعربي';
 $lang['terms_en'] = 'شروط استخدام ديلات بالانجليزي';
+$lang['meta_description'] = 'الشرح الوصفي';
+$lang['meta_keywords'] = 'الكلمات المفتاحية الوصفية';
+$lang['meta_title'] = 'العنوان الوصفي';
+$lang['comma'] = 'يُفصل بينها بفاصلة';
+
 
 //admin manage
 $lang['admin_name'] = 'اسم مستخدم لوحة التحكم';
