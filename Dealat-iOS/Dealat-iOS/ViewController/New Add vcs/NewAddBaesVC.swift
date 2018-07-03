@@ -41,7 +41,6 @@ class NewAddBaesVC: UIViewController {
                 self.title = "Sell".localized
                 self.submitBtn.setTitle("Submit".localized, for: .normal)
             }
-
         }
     }
     

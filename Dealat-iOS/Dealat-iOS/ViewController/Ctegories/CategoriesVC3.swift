@@ -53,14 +53,16 @@ extension CategoriesVC3 : UITableViewDelegate, UITableViewDataSource{
         if indexPath.row == 0{
             
             if cat.category_id == nil{
-            self.chooseCatVC.filterVC?.filter.category = nil
-            self.chooseCatVC.filterVC?.refreshData()
+                self.chooseCatVC.filterVC?.filter.category = nil
                 print("IFFFFF")
             }else{
                 self.chooseCatVC.filterVC?.filter.category = cat
-                self.chooseCatVC.filterVC?.refreshData()
                 print("ELSEEEE")
             }
+            
+            self.chooseCatVC.filterVC?.filter.type_id = nil
+            self.chooseCatVC.filterVC?.refreshData()
+
             self.chooseCatVC.dismiss(animated: true, completion: nil)
         }else{
             let c = cat.children[indexPath.row - 1]
@@ -72,6 +74,7 @@ extension CategoriesVC3 : UITableViewDelegate, UITableViewDataSource{
                 self.navigationController?.pushViewController(vc, animated: true)
             }else{
                 self.chooseCatVC.filterVC?.filter.category = c
+                self.chooseCatVC.filterVC?.filter.type_id = nil
                 self.chooseCatVC.filterVC?.refreshData()
                 self.chooseCatVC.dismiss(animated: true, completion: nil)
             }

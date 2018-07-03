@@ -25,6 +25,10 @@ class AdDetailsBaseVC: UIViewController {
     
     @IBOutlet weak var sellerLbl : UILabel!
     
+    @IBOutlet weak var sallerVVHeight : NSLayoutConstraint!
+    @IBOutlet weak var contactVVHeight : NSLayoutConstraint!
+
+    
     var msg : String = ""
 
     var adDetailsVC : AdDetailsVC!
@@ -35,6 +39,10 @@ class AdDetailsBaseVC: UIViewController {
         
         self.title = self.ad.title
         configureNavigationBar()
+        
+        self.sallerVVHeight.constant = 0
+        self.contactVVHeight.constant = 0
+
         
         Provider.setScreenName("AdDetailsActivity")
 
@@ -183,14 +191,18 @@ class AdDetailsBaseVC: UIViewController {
     
     
     func refreshBar(){
+        self.sallerVVHeight.constant = 50
+        self.contactVVHeight.constant = 50
+
+        
         if User.isRegistered(){
             let same = self.ad.seller_id.intValue == User.getID()
-            
+
             self.editBtn.isHidden = !same
             self.deleteBtn.isHidden = !same
+            
             self.callBtn.isHidden = same
             self.messageBtn.isHidden = same
-            //        self.reportBtn.isHidden = same
             
             if !same, let v = self.ad.ad_visible_phone{
                 self.callBtn.isHidden = !v.Boolean
@@ -203,6 +215,23 @@ class AdDetailsBaseVC: UIViewController {
                 self.callBtn.isHidden = !v.Boolean
             }
         }
+        
+        if self.ad.is_admin.Boolean{
+            self.sallerVVHeight.constant = 0
+            self.messageBtn.isHidden = true
+            
+            var same = false
+            
+            if User.isRegistered(){
+                same = self.ad.seller_id.intValue == User.getID()
+            }
+            
+            if !same && self.messageBtn.isHidden && self.callBtn.isHidden{
+                self.contactVVHeight.constant = 0
+            }
+            
+        }
+        
     }
     
     func showErrorMessage(text: String,duration : TimeInterval = 3) {

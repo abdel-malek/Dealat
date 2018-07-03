@@ -1240,7 +1240,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
 //            var imagesArray = [String]()
 //            imagesArray.append(i)
             
-            if let yy = JSON(self.imagesPathsDeleted).rawString(){
+            if let yy = JSON(self.imagesPathsDeleted.filter({!$0.isEmpty})).rawString(){
                 params["deleted_images"] = yy
             }
         }

@@ -28,7 +28,20 @@ class Provider : BaseManager {
     static var selectedCategory : Cat!
     static var selectedLocation : Location!
 
-    
+  
+    static func loadAllChildren(_ res : [Cat] , i : Int) -> [Cat]{
+        let catsBases = res.filter({$0.parent_id.intValue == i})
+        var cats = [Cat]()
+        
+        for j in catsBases{
+            cats.append(j)
+            cats += Provider.loadAllChildren(res, i : j.category_id.intValue)
+        }
+        
+        return cats
+    }
+
+
     static func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         

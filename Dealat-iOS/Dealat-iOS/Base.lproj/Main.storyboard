@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7ZG-lj-BUh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7ZG-lj-BUh">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -795,7 +795,6 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="Thr-ZW-KiK" firstAttribute="top" secondItem="HfQ-x2-CMj" secondAttribute="top" constant="4" id="ITf-xq-47v"/>
-                                            <constraint firstAttribute="height" constant="50" id="N91-Ds-JvU"/>
                                             <constraint firstItem="iZ1-A6-ugZ" firstAttribute="height" secondItem="Thr-ZW-KiK" secondAttribute="height" id="dae-lp-9KG"/>
                                             <constraint firstAttribute="bottom" secondItem="Thr-ZW-KiK" secondAttribute="bottom" constant="4" id="e8L-Sk-IPG"/>
                                             <constraint firstItem="76Z-f8-uU7" firstAttribute="width" secondItem="NKw-xb-nN1" secondAttribute="width" id="ety-DS-SSl"/>
@@ -807,6 +806,7 @@
                                 <constraints>
                                     <constraint firstItem="HfQ-x2-CMj" firstAttribute="centerX" secondItem="3bf-8U-bza" secondAttribute="centerX" id="DYi-YO-Oks"/>
                                     <constraint firstItem="HfQ-x2-CMj" firstAttribute="top" secondItem="3bf-8U-bza" secondAttribute="top" id="G2z-mo-mqt"/>
+                                    <constraint firstAttribute="height" constant="50" id="Kme-xM-pcF"/>
                                     <constraint firstItem="HfQ-x2-CMj" firstAttribute="width" secondItem="3bf-8U-bza" secondAttribute="width" multiplier="3:4" id="UZl-0X-H2f"/>
                                     <constraint firstAttribute="bottom" secondItem="HfQ-x2-CMj" secondAttribute="bottom" id="mvT-BU-iE0"/>
                                 </constraints>
@@ -829,10 +829,12 @@
                     </view>
                     <connections>
                         <outlet property="callBtn" destination="76Z-f8-uU7" id="N0i-cm-mIK"/>
+                        <outlet property="contactVVHeight" destination="Kme-xM-pcF" id="jsO-oN-mnf"/>
                         <outlet property="deleteBtn" destination="efw-VX-Se9" id="dz0-jK-Nd7"/>
                         <outlet property="editBtn" destination="x63-nq-vi9" id="alo-vv-T6f"/>
                         <outlet property="messageBtn" destination="NKw-xb-nN1" id="H3d-rb-v79"/>
                         <outlet property="reportBtn" destination="BAW-67-wwd" id="eR5-PW-hJY"/>
+                        <outlet property="sallerVVHeight" destination="eJr-is-gj8" id="Y7I-UC-dQf"/>
                         <outlet property="sellerLbl" destination="QMV-Yw-Cem" id="SGN-o6-hXR"/>
                     </connections>
                 </viewController>
@@ -3297,25 +3299,25 @@ $</string>
                                         <rect key="frame" x="0.0" y="1855" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vaF-lK-SGz" id="vzZ-cT-mJu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="10" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Floor" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PcL-Ti-edZ" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                    <rect key="frame" x="8" y="8" width="323" height="70"/>
+                                                    <rect key="frame" x="8" y="8" width="323" height="70.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ij1-dG-WoP">
-                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="4Ud-K7-wFP"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="Uuz-hg-hfl">
-                                                    <rect key="frame" x="335" y="27.5" width="32" height="32"/>
+                                                    <rect key="frame" x="335" y="28" width="32" height="32"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3337,25 +3339,25 @@ $</string>
                                         <rect key="frame" x="0.0" y="1942" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5tn-2f-5E4" id="1zF-FE-SLx">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="8" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PropertyState" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dtF-5R-ofj" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                    <rect key="frame" x="8" y="8" width="323" height="70.5"/>
+                                                    <rect key="frame" x="8" y="8" width="323" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0XB-Xk-A5m">
-                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="C1r-aW-rHw"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="zYb-6P-cmk">
-                                                    <rect key="frame" x="335" y="28" width="32" height="32"/>
+                                                    <rect key="frame" x="335" y="27" width="32" height="32"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3377,18 +3379,18 @@ $</string>
                                         <rect key="frame" x="0.0" y="2029" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Cw-Ez-Fpi" id="2n1-h0-gAf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oB-ch-8y3">
-                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="H7q-MD-tgT"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Furniture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0A-v1-tgM">
-                                                    <rect key="frame" x="8" y="8" width="76" height="70.5"/>
+                                                    <rect key="frame" x="8" y="8" width="76" height="70"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -3423,18 +3425,18 @@ $</string>
                                         <rect key="frame" x="0.0" y="2116" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kmg-N8-mqD" id="cs4-rA-QBq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="13" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sej-lL-xPp" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                    <rect key="frame" x="8" y="8" width="323" height="70.5"/>
+                                                    <rect key="frame" x="8" y="8" width="323" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fV0-aD-jVc">
-                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="lSM-3S-s3y"/>
@@ -3463,25 +3465,25 @@ $</string>
                                         <rect key="frame" x="0.0" y="2203" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BtF-Xt-nj4" id="dJy-jq-wLn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="14" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="05a-ec-wIo" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                    <rect key="frame" x="8" y="8" width="323" height="70"/>
+                                                    <rect key="frame" x="8" y="8" width="323" height="70.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ir-J5-Kg2">
-                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="hQq-yf-5FW"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="sNE-Vr-cmM">
-                                                    <rect key="frame" x="335" y="27" width="32" height="32"/>
+                                                    <rect key="frame" x="335" y="27.5" width="32" height="32"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3507,25 +3509,25 @@ $</string>
                                         <rect key="frame" x="0.0" y="2290" width="375" height="87"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sbG-sj-9TM" id="oCd-Oh-WSH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="15" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TypeName*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1k6-t9-4hx" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                    <rect key="frame" x="8" y="8" width="323" height="70"/>
+                                                    <rect key="frame" x="8" y="8" width="323" height="70.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="20"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03I-GO-alp">
-                                                    <rect key="frame" x="8" y="85" width="359" height="1"/>
+                                                    <rect key="frame" x="8" y="85.5" width="359" height="1"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="tSU-Xy-mQm"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="kl6-6J-dSq">
-                                                    <rect key="frame" x="335" y="27.5" width="32" height="32"/>
+                                                    <rect key="frame" x="335" y="28" width="32" height="32"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

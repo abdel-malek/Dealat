@@ -2,7 +2,7 @@
 //  SelectLangVC.swift
 //  Dealat-iOS
 //
-//  Created by IOS Developer on 4/25/18.
+//  Created by Yahya Tabba on 4/25/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 

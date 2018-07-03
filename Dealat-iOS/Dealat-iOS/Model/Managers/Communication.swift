@@ -23,15 +23,15 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
-//    let baseImgsURL = "http://192.168.9.17/Dealat/"
+    //    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
+    //    let baseImgsURL = "http://192.168.9.17/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
     
     let baseURL = "http://www.deal-at.com/index.php/api"
     let baseImgsURL = "http://www.deal-at.com/"
-
+    
     
     let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
     let get_allURL = "/categories_control/get_all/format/json"
@@ -60,7 +60,7 @@ class Communication: BaseManager {
     let edit_user_infoURL = "/users_control/edit_user_info/format/json"
     let item_images_uploadURL = "/items_control/item_images_upload/format/json"
     let item_video_uploadURL = "/items_control/item_video_upload/format/json"
-
+    
     let get_my_chat_sessionsURL = "/users_control/get_my_chat_sessions/format/json"
     let get_chat_messagesURL = "/users_control/get_chat_messages/format/json"
     let send_msgURL = "/users_control/send_msg/format/json"
@@ -195,20 +195,20 @@ class Communication: BaseManager {
                     var periods = [Period]()
                     var certificates = [Certificate]()
                     var states = [PropertyState]()
-
+                    
                     
                     for i in value.data["nested_locations"].arrayValue{
                         if let obj = i.dictionaryObject, let a = City(JSON: obj){
                             cities.append(a)
                         }
                     }
-
+                    
                     for i in value.data["location"].arrayValue{
                         if let obj = i.dictionaryObject, let a = Location(JSON: obj){
                             locations.append(a)
                         }
                     }
-
+                    
                     
                     let tys = value.data["types"]
                     for i in 0..<11{
@@ -237,7 +237,7 @@ class Communication: BaseManager {
                             periods.append(a)
                         }
                     }
-
+                    
                     for i in value.data["certificates"].arrayValue{
                         if let obj = i.dictionaryObject, let a = Certificate(JSON: obj){
                             certificates.append(a)
@@ -248,7 +248,7 @@ class Communication: BaseManager {
                             states.append(a)
                         }
                     }
-
+                    
                     
                     
                     
@@ -299,7 +299,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func get_report_messages(_ callback :  @escaping ( _ reports : [ReportMessage]) -> Void){
         let url = URL(string: baseURL + get_report_messagesURL)!
@@ -361,7 +361,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     
     func search(query : String!,filter : FilterParams, callback : @escaping ([AD]) -> Void){
@@ -378,7 +378,7 @@ class Communication: BaseManager {
             
             FilterParams.shared = filter
         }
-            
+        
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -605,8 +605,8 @@ class Communication: BaseManager {
             }
         }
     }
-
-
+    
+    
     
     func get_commercial_ads(_ category_id : Int, callback : @escaping ([Commercial]?) -> Void){
         let url = URL(string: baseURL + get_commercial_itemsURL)!
@@ -733,7 +733,7 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                   let me = User.getCurrentUser()
+                    let me = User.getCurrentUser()
                     me.token = token
                     User.saveMe(me: me)
                     
@@ -781,7 +781,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func set_as_favorite(_ ad_id : Int, callback : @escaping (Bool) -> Void){
         
@@ -1191,7 +1191,7 @@ class Communication: BaseManager {
         
         let url = URL(string: baseURL + delete_bookmarkURL)!
         let params = ["user_bookmark_id" : user_bookmark_id]
-
+        
         Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
             self.output(response)
@@ -1213,7 +1213,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func change_status(ad_id : Int,status : Int, callback : @escaping (Bool) -> Void){
         
@@ -1241,7 +1241,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func get_about_info( _ callback : @escaping (AboutInfo) -> Void){
         
@@ -1261,7 +1261,7 @@ class Communication: BaseManager {
                             callback(a)
                         }
                     }
-
+                    
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                 }
@@ -1299,7 +1299,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     func QR_code_scan(gen_code : String, callback : @escaping (String) -> Void){
         
@@ -1328,7 +1328,7 @@ class Communication: BaseManager {
             }
         }
     }
-
+    
     
     
     func output(_ res : DataResponse<CustomResponse>){
@@ -1357,13 +1357,13 @@ class Communication: BaseManager {
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
         
-//            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString
-//            let plainData = plainString.data(using: String.Encoding.utf8.rawValue)
-//            let base64String = plainData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-//            headers["Authorization"] = "Basic \(base64String!)"
-
+        //            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString
+        //            let plainData = plainString.data(using: String.Encoding.utf8.rawValue)
+        //            let base64String = plainData?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        //            headers["Authorization"] = "Basic \(base64String!)"
         
-//        headers["Authorization"] = "Basic OTk0NzI5NDU4Ojg5ZjI1NThiZDRiM2RmMDBiN2Y5YThlZTllOWRmNjc5"
+        
+        //        headers["Authorization"] = "Basic OTk0NzI5NDU4Ojg5ZjI1NThiZDRiM2RmMDBiN2Y5YThlZTllOWRmNjc5"
         
         if User.isRegistered() || User.getCurrentUser().statues_key == User.USER_STATUES.PENDING_PROFILE.rawValue{
             let me = User.getCurrentUser()
@@ -1374,11 +1374,6 @@ class Communication: BaseManager {
                 headers["Authorization"] = "Basic \(base64String!)"
             }
         }
-        
         return headers
     }
-    
-    
-    
 }
-

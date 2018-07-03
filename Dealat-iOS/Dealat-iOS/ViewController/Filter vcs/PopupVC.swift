@@ -17,6 +17,8 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     var parentVC: FilterVC!
     var type = 0
     
+    var hasChildrenWithTypes : Bool = true
+    
     /*
      1 -> locations
      2 -> typesBase
@@ -337,7 +339,8 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
                     cell.textLabel?.text = c.locations[index].location_name
                 }
             case 2:
-                cell.textLabel?.text = self.parentVC.typesBase[index].full_type_name
+                let t = self.parentVC.typesBase[index]
+                cell.textLabel?.text = self.hasChildrenWithTypes ? t.full_type_name : t.name
             case 3:
                 if let type = parentVC.typesBase.filter({$0.type_id == self.parentVC.filter.type_id.type_id}).first{
                     cell.textLabel?.text =  type.models[index].name

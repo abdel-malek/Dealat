@@ -197,12 +197,19 @@ class FilterVC: BaseTVC {
         if filter.category != nil{
             self.tfCategory.text = filter.category.category_name
             
+            var cats = Provider.loadAllChildren(Provider.shared.catsFull, i: filter.category.category_id.intValue)
+            cats.append(filter.category)
+            
+            
+            print("CATS : '\(self.filter.category.toJSON())' \(cats.count) - \(Provider.loadAllChildren(Provider.shared.catsFull, i: filter.category.category_id.intValue).count)")
+            
             self.typesBase = self.typesBase2.filter({ (t) -> Bool in
-                if let c = t.tamplate_id, let c2 = filter.category.tamplate_id{
-                    print("CCC : \(c.intValue) -- CCC2 \(c2.intValue)")
-                    return c.intValue == c2.intValue
-                }
-                return false
+                return cats.map({$0.category_id.intValue}).contains(t.category_id.intValue)
+                
+//                if let c = t.tamplate_id, let c2 = filter.category.tamplate_id{
+//                    return c.intValue == c2.intValue
+//                }
+//                return false
             })
 
         }else{
@@ -211,9 +218,10 @@ class FilterVC: BaseTVC {
         
             
         if filter.type_id != nil{
-            self.tfType1.text = filter.type_id.full_type_name
-            self.tfType3.text = filter.type_id.full_type_name
-            self.tfType4.text = filter.type_id.full_type_name
+            let name = self.hasChildrenWithTypes() ? filter.type_id.full_type_name : filter.type_id.name
+            self.tfType1.text = name
+            self.tfType3.text = name
+            self.tfType4.text = name
         }else{
             self.tfType1.text = allString
             self.tfType3.text = allString
@@ -379,6 +387,7 @@ class FilterVC: BaseTVC {
 //        if indexPath.row == 0{
 //            self.locationDropDown.show()
 //        }
+        print("didSelectRowAt : \(indexPath)")
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "PopupVC") as! PopupVC
         vc.modalPresentationStyle = .overCurrentContext
@@ -413,6 +422,7 @@ class FilterVC: BaseTVC {
             switch indexPath.row{
             case 0:
                 vc.type = 2
+                vc.hasChildrenWithTypes = self.hasChildrenWithTypes()
                 self.present(vc, animated: true, completion: nil)
             case 1:
                 vc.type = 3
@@ -442,6 +452,7 @@ class FilterVC: BaseTVC {
             
         case 3,4:
             vc.type = 2
+            vc.hasChildrenWithTypes = self.hasChildrenWithTypes()
             self.present(vc, animated: true, completion: nil)
             
         case 8:
@@ -531,6 +542,23 @@ class FilterVC: BaseTVC {
         }
     }
     
+    
+    func hasChildrenWithTypes() -> Bool{
+        
+        if let categoty_id = filter.category.category_id{
+
+            let cats = Provider.loadAllChildren(Provider.shared.catsFull, i: categoty_id.intValue)
+            
+            let ty = self.typesBase2.filter({ (t) -> Bool in
+                return cats.map({$0.category_id.intValue}).contains(t.category_id.intValue)
+            })
+            
+            
+            return !ty.isEmpty
+        }
+        
+        return true
+    }
     
     
 }
