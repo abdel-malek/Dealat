@@ -249,6 +249,9 @@ $lang['used'] = 'Used';
 $lang['not-used'] = 'Not Used';
 $lang['verify_registered'] = "Already registered? verify account";
 $lang['ad_contact_phone'] = 'Contact Phone';
+$lang['admin'] = 'Admin';
+$lang['not_admin'] = 'Not Admin';
+$lang['admin_status'] = 'Admin ?';
 
 
 

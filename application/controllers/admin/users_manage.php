@@ -87,11 +87,17 @@ class Users_manage extends REST_Controller {
 			}
 			if(PERMISSION::Check_permission(PERMISSION::BLOCK_USER , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
 				$recorde[] = user_status_checkbox($row->is_active , $row->user_id);
+				$recorde[] = user_is_admin_status_checkbox($row->is_admin , $row->user_id);
 			}else{
 			   if($row->is_active == 1){
 			   	  $recorde[] = $this->lang->line('active');
 			   }else{
 			   	  $recorde[] = $this->lang->line('inactive');
+			   }
+			   if($row->is_admin == 1){
+			   	  $recorde[] = $this->lang->line('admin');
+			   }else{
+			   	  $recorde[] = $this->lang->line('not_admin');
 			   }
 			}
 			$output['aaData'][] = $recorde;
@@ -105,6 +111,15 @@ class Users_manage extends REST_Controller {
 	  $this->session->set_userdata(array('language' => $current_lang));
 	  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	 // redirect('admin/items_manage');
+	}
+	
+	public function change_is_admin_status_post()
+	{
+		$user_id = $this->input->post('user_id');
+		$status = $this->input->post('is_admin');
+		$updated_user_id = $this->users->save(array('is_admin'=> !$status) , $user_id);
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_USER_STATUS , $updated_user_id);
+		$this -> response(array('status' => true, 'data' => $updated_user_id, 'message' => $this->lang->line('sucess')));
 	}
 	
 	public function change_status_post()

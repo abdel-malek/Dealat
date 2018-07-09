@@ -63,6 +63,24 @@ function user_status_checkbox($is_active  , $id)
     return  $html;
 }
 
+function user_is_admin_status_checkbox($is_admin  , $id)
+{
+    if($is_admin){
+      	$html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="user_admin_status_check" user_id=' .$id. '  onclick="change_user_admin_status(' .$id. ',' .$is_admin. ');"  type="checkbox" class="js-switch" checked></input>';
+	    $html .=  '</label>';
+	    $html .=  '</div>';	
+    }else{
+     	$html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="user_admin_status_check" user_id=' .$id. '  onclick="change_user_admin_status(' .$id. ',' .$is_admin. ');"  type="checkbox" class="js-switch"></input>';
+	    $html .=  '</label>';
+	    $html .=  '</div>';	
+    }   
+    return  $html;
+}
+
 function get_sub_cats($cat_id , $lang)
 {
    	$CI =& get_instance();

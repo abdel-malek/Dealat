@@ -10,6 +10,11 @@ class Users_control extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 		$this->data['city'] = $this->response->city;
 		$this->load->model('data_sources/users');
+		if($this->response->os  == OS::IOS){
+			$this->data['os'] = '_os'; 
+		}else{
+			$this->data['os']= '';
+		}
 	}
 
 	public function index_get() {
@@ -87,7 +92,8 @@ class Users_control extends REST_Controller {
 	public function get_countries_get()
 	{
 		$this->load->model('data_sources/locations');
-		$countries = $this->locations->get_cities($this->data['lang']);
+		$method = 'get_cities'.$this->data['os'];
+		$countries = $this->locations->$method($this->data['lang']);
 		if($countries){
 			$this->response(array('status' => true, 'data' => $countries, "message" => $this->lang->line('sucess')));
 		}else{
@@ -98,14 +104,16 @@ class Users_control extends REST_Controller {
 	public function get_my_favorites_get()
 	{
 		$this->load->model('data_sources/user_favorite_ads');
-		$ads = $this->user_favorite_ads->get_my_favorites($this->current_user->user_id , $this->data['lang']);
+		$method = 'get_my_favorites'.$this->data['os'];
+		$ads = $this->user_favorite_ads->$method($this->current_user->user_id , $this->data['lang']);
 		$this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 	
 	public function get_my_items_get()
 	{
 	   $this->load->model('data_sources/ads');
-	   $ads = $this->ads->get_user_ads($this->current_user->user_id , $this->data['lang']);
+	   $method = 'get_user_ads'.$this->data['os'];
+	   $ads = $this->ads->$method($this->current_user->user_id , $this->data['lang']);
 	   $this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 	

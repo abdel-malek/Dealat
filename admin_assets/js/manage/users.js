@@ -3,10 +3,17 @@ var users_table;
 var user_chats_table;
 var messages_table;
 var users_buttons = [];
-var gender_array = {
+if(lang == 'en'){
+  var gender_array = {
 	1: 'Male',
 	2: 'Female'
-};
+   };
+}else{
+  var gender_array = {
+	1: 'ذكر',
+	2: 'أنثى'
+   };
+}
  $(document).ready(function() {
  	
  	if($.inArray(EXPORT_USERS, permissions) != -1){
@@ -104,6 +111,55 @@ function change_user_status(user_id , is_active){
 	                new PNotify({
 	                  title:  lang_array['success'],
 	                  text: lang_array['user_status_changed'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	             }
+	             users_table.ajax.url(base_url + '/admin/users_manage/get_all/format/json').load();
+	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	            });
+	        }
+	     });
+}
+
+function change_user_admin_status(user_id , is_admin){
+	var data = {
+		user_id : user_id , 
+		is_admin : is_admin
+	};
+	
+	var url = base_url + '/admin/users_manage/change_is_admin_status/format/json';
+    $.ajax({
+	        url: url,
+	        type: "post",
+	        dataType: "json",
+	        data: data,
+	        success: function(response) {
+	            if(response.status == false){
+	           	  new PNotify({
+		                  title: lang_array['attention'],
+		                  text: response.message,
+		                  type: 'error',
+		                  styling: 'bootstrap3',
+		                  buttons: {
+						        sticker: false
+						}
+		          });
+	            }else{
+	                new PNotify({
+	                  title:  lang_array['success'],
+	                  text: lang_array['user_admin_status_changed'],
 	                  type: 'success',
 	                  styling: 'bootstrap3',
 	                  buttons: {
@@ -284,8 +340,8 @@ function show_chat_messages (chat_id , seller_name , user_name) {
               }else{
               	  $('.user_details #user_email').html(lang_array['not_set']);
               }
-              if(response.data.gender != null  && response.data.gender != '' ){
-              	  $('.user_details #user_gender').html(gender_array[response.data.gender]);
+              if(response.data.user_gender != null  && response.data.user_gender != '' ){
+              	  $('.user_details #user_gender').html(gender_array[response.data.user_gender]);
               }else{
               	  $('.user_details #user_gender').html(lang_array['not_set']);
               }

@@ -9,6 +9,11 @@ class Items_control extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/ads');
 		$this->data['lang']=  $this->response->lang;
+		if($this->response->os  == OS::IOS){
+			$this->data['os'] = '_os'; 
+		}else{
+			$this->data['os']= '';
+		}
 	}
 	
 	public function get_latest_items_get()
@@ -20,7 +25,8 @@ class Items_control extends REST_Controller {
 	public function get_items_by_main_category_get()
 	{
 		$main_category_id = $this->input->get('category_id');
-		$ads_list = $this->ads->get_ads_by_category($main_category_id , $this->data['lang']);
+		$method = 'get_ads_by_category'.$this->data['os'];
+		$ads_list = $this->ads->$method($main_category_id , $this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
 	
@@ -47,7 +53,8 @@ class Items_control extends REST_Controller {
         }
         $ad_id = $this->input->get('ad_id');
         $tamplate_id = $this->input->get('template_id');
-        $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
+		$method = 'get_ad_details'.$this->data['os'];
+        $deatils = $this->ads->$method($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
         $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
     }
 
@@ -185,7 +192,8 @@ class Items_control extends REST_Controller {
    {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
-		$resuts = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
+		$method = 'serach_with_filter'.$this->data['os'];
+		$resuts = $this->ads->$method( $this->data['lang']  , $query_string , $category_id);
 		$this->response(array('status' => true, 'data' =>$resuts, 'message' => $this->lang->line('sucess')));
    }
 	
@@ -202,7 +210,7 @@ class Items_control extends REST_Controller {
 		$this->search_get();
 	}
 	
-	public function get_data_lists_get()
+  public function get_data_lists_get()
 	{
 	     $this->load->model('data_sources/types');
 		 $this->load->model('data_sources/educations');
@@ -211,9 +219,11 @@ class Items_control extends REST_Controller {
 		 $this->load->model('data_sources/show_periods');
 		 $this->load->model('data_sources/certificates');
 		 $this->load->model('data_sources/property_states');
-		 $locations = $this->locations->get_all($this->data['lang']);
+		 $locations_method = 'get_all'.$this->data['os'];
+		 $nested_locations_method = 'get_cities_with_locations'.$this->data['os'];
+		 $locations = $this->locations->$locations_method($this->data['lang']);
 		 //$cities = $this->locations->get_cities($this->data['lang']);
-		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
+		 $nested_locations = $this->locations->$nested_locations_method($this->data['lang']);
 		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
@@ -224,7 +234,7 @@ class Items_control extends REST_Controller {
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
-	public function get_data_get()
+  public function get_data_get()
 	{
 		$attrs = TAMPLATES::get_tamplate_attributes_array();
 		$status = STATUS::get_list();
@@ -364,7 +374,7 @@ class Items_control extends REST_Controller {
     }
    
   public function report_item_post()
-   {
+    {
 		$this -> form_validation -> set_rules('ad_id', 'ad_id', 'required');
 		$this -> form_validation -> set_rules('report_message_id', 'report_message_id', 'required');
 		if (!$this -> form_validation -> run()) {

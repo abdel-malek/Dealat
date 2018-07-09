@@ -59,11 +59,38 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-    	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
+    	//$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
 	 }
+
+   public function get_ads_by_category_os($main_category_id , $lang)
+	 {
+	    $this->db->select('ads.* ,
+		                  categories.'.$lang.'_name as category_name ,
+		                  c.'.$lang.'_name as parent_category_name ,
+		                  categories.tamplate_id,
+		                  locations.'.$lang.'_os_name as location_name ,
+		                  cites.'.$lang.'_os_name as  city_name,
+		                  show_periods.days
+		                 ');
+		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
+		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
+		$this->db->where('status' , STATUS::ACCEPTED);
+		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
+		$this->db->where('categories.is_active' , 1);
+		$this->db->where('categories.is_deleted' , 0);
+    //	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
+		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
+		$q = parent::get();
+		return $q;
+    }
     
    public function get_ad_details($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC , $user_id = null)
 	{
@@ -78,6 +105,57 @@ class Ads extends MY_Model {
 		                   users.is_admin,
 		                   locations.'.$lang.'_name as location_name ,
 		                   cites.'.$lang.'_name as  city_name,
+		                   show_periods.days,
+						   DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
+	                       timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
+		                  ', false);
+       	$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+		$this->db->join('users' , 'ads.user_id = users.user_id', 'left');
+	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
+		$this->db->where('users.is_deleted' , 0);
+		$this->db->where('users.is_active' , 1);
+		//$this->db->where('categories.is_active' , 1);
+		//$this->db->where('categories.is_deleted' , 0);
+		if($tamplate_id != TAMPLATES::BASIC){
+			$tamplate_name = TAMPLATES::get_tamplate_name($tamplate_id);
+			$this->db->select('tamplate.*');
+			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');
+		    $tamplate_secondry_tamplate = TAMPLATES::get_tamplate_secondry_tables($tamplate_id);
+		    if($tamplate_secondry_tamplate){
+		       foreach ($tamplate_secondry_tamplate as $table) {
+				  $this->db->select($table.'s.'.$lang.'_name as '.$table.'_name');
+				  $this->db->join($table.'s' , $table.'s.'.$table.'_id = tamplate.'.$table.'_id','left' );
+			   }
+		    }
+		}
+		$q = parent::get($ad_id);
+		$q->images = $this->get_ad_images($ad_id);
+		if($user_id != null){
+			$this->load->model('data_sources/user_favorite_ads');
+			$q->is_favorite =  $this->user_favorite_ads->check_favorite($user_id , $ad_id);
+		}
+	    if($q->ad_contact_phone != null){
+	    	$q->seller_phone = $q->ad_contact_phone;
+	    }
+		return $q;
+	}
+
+   public function get_ad_details_os($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC , $user_id = null)
+	{
+	    $this->db->select('ads.* ,
+		                   categories.'.$lang.'_name as category_name ,
+		                   c.'.$lang.'_name as parent_category_name ,
+		                   categories.tamplate_id,
+		                   users.user_id as seller_id,
+		                   users.name as seller_name,
+		                   users.phone as seller_phone,
+		                   users.whatsup_number,
+		                   users.is_admin,
+		                   locations.'.$lang.'_os_name as location_name ,
+		                   cites.'.$lang.'_os_name as  city_name,
 		                   show_periods.days,
 						   DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
 	                       timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
@@ -475,6 +553,93 @@ class Ads extends MY_Model {
      return parent::get(); 
    }
 
+
+
+  public function serach_with_filter_os($lang , $query_string = null , $category_id = null)
+   {
+	 //filter
+	 if($category_id != null){
+	 	$this->load->model('data_sources/categories');
+	 	$category_info = $this->categories->get($category_id);
+		if($category_info->tamplate_id != TAMPLATES::BASIC){
+		  	$tamplate_name = TAMPLATES::get_tamplate_name($category_info->tamplate_id);
+			$model = $tamplate_name.'_tamplate';
+			$this->load->model('data_sources/'.$model);
+		    $this->$model->filter();
+			$this->db->select('ads.* ,
+			                   c1.'.$lang.'_name as category_name ,
+			                   c1.tamplate_id,
+		                       c.'.$lang.'_name as parent_category_name ,
+		                       users.name as seller_name,
+		                       locations.'.$lang.'_os_name as location_name ,
+		                       cites.'.$lang.'_os_name as  city_name,
+					           tamplate.*,
+					           show_periods.days,
+		                      ');
+			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');	
+		}else{
+			$this->db->select('ads.* ,
+			                   c1.'.$lang.'_name as category_name ,
+			                   c1.tamplate_id,
+		                       c.'.$lang.'_name as parent_category_name ,
+		                       users.name as seller_name,
+		                       locations.'.$lang.'_os_name as location_name ,
+		                       cites.'.$lang.'_os_name as  city_name,
+		                       show_periods.days,
+		                      ');
+		}
+		//$this->db->where('ads.category_id' , $category_id);
+		$this->db->where("(c1.category_id = '$category_id' OR c1.parent_id = '$category_id' OR c.parent_id = '$category_id')");
+	 }else{
+		$this->db->select('ads.* ,
+		                   c1.'.$lang.'_name as category_name ,
+		                   c1.tamplate_id,
+	                       c.'.$lang.'_name as parent_category_name ,
+	                       users.name as seller_name,
+	                       locations.'.$lang.'_os_name as location_name ,
+		                   cites.'.$lang.'_os_name as  city_name,
+		                   show_periods.days,
+                          ');
+	 }
+	 $this->db->where('status' , STATUS::ACCEPTED );
+	//serach
+	 if($query_string != null){
+	      if(strlen($query_string) < 3){
+	        $this->db->where("(ads.title LIKE '%".$query_string."%' OR ads.description LIKE '%".$query_string."%' )",NULL, FALSE);	
+		 	// $this->db->like('ads.title', $query_string); 
+			// $this->db->or_like('ads.description', $query_string); 
+	   	 }else{
+		 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
+		 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
+		 }
+	 }
+	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
+	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
+	 $this->db->join('users' , 'ads.user_id = users.user_id', 'left');
+	 $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+	 $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+	 $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left outer');
+	 //not expired
+	 $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())'); 
+	 // the user is not deleted
+	 $this->db->where('users.is_deleted' , 0);
+	 // the category is activated. 
+     $this->db->where('c1.is_active' , 1);
+	 if($this->input->get('location_id')){
+	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
+	 }
+	 if($this->input->get('city_id')){
+	 	$this->db->where('ads.city_id' , $this->input->get('city_id'));
+	 }
+	 if($this->input->get('price_max') && $this->input->get('price_max') != ''){
+	   	 $this->db->where('price <= ' , $this->input->get('price_max'));
+	 }
+	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){	
+		$this->db->where('price >= ' , $this->input->get('price_min')); 
+	 }
+     return parent::get(); 
+   }
+
  
   public function get_lists($lang)
    {
@@ -543,6 +708,29 @@ class Ads extends MY_Model {
 	                  categories.tamplate_id,
 	                  locations.'.$lang.'_name as location_name ,
 	                  cites.'.$lang.'_name as  city_name,
+	                  DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
+	                  timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
+	                 ' , false);
+	  $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+	  $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+	  $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left');
+	  $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left');
+	  $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+	  $this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
+	  $this->db->where('ads.user_id' , $user_id);
+	  $this->db->where('users.is_deleted' , 0);
+	  $this->db->where('ads.status != ' , STATUS::DELETED);
+	  return parent::get();
+	}
+  
+  public function get_user_ads_os($user_id , $lang)
+	{
+	  $this->db->select('ads.* ,
+	                  categories.'.$lang.'_name as category_name ,
+	                  c.'.$lang.'_name as parent_category_name ,
+	                  categories.tamplate_id,
+	                  locations.'.$lang.'_os_name as location_name ,
+	                  cites.'.$lang.'_os_name as  city_name,
 	                  DATE_ADD(publish_date, INTERVAL days DAY) as expiry_date,
 	                  timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
 	                 ' , false);

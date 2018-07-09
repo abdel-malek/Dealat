@@ -250,6 +250,9 @@ $lang['used'] = 'مستخدم';
 $lang['not-used'] = 'غير مستخدم';
 $lang['verify_registered'] = "قمت بالتسجيل مسبقاً؟ تفعيل الحساب";
 $lang['ad_contact_phone'] = 'رقم التواصل';
+$lang['admin'] = 'مدير';
+$lang['not_admin'] = 'غير مدير';
+$lang['admin_status'] = 'مدير؟';
 
 
 //categories manages

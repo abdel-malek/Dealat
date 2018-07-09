@@ -285,6 +285,7 @@ abstract class REST_Controller extends CI_Controller {
 
         $this->response->lang = $this->_detect_lang();
 		$this->response->city = $this->_detect_city();
+		$this->response->os = $this->_detect_os();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
         $this->response->is_auth = $this->_detect_auth();
@@ -751,6 +752,20 @@ abstract class REST_Controller extends CI_Controller {
 		//print_r($this->session->userdata);
         return $this->session->userdata('city');
 		
+   }
+  
+  protected function _detect_os() {
+        $header = $this->input->request_headers();
+        if (isset($header['Os'])) {
+            $this->session->set_userdata(array('os' => $header['Os']));
+            return $header['Os'];
+        }
+        if (!$this->session->userdata('Os')) {
+            $this->session->set_userdata(array('os' => 1));
+            return 1;
+        }
+		//print_r($this->session->userdata);
+        return $this->session->userdata('os');
    }
 	
    protected function _detect_auth() {

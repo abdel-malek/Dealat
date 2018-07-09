@@ -136,6 +136,7 @@
        	 lang_array['no'] = 'No';
        	 lang_array['new_reported_ad'] = 'There is a new report on the ad: ';
        	 lang_array['category_updated'] = 'Category is Updated';
+       	 lang_array['user_admin_status_changed'] = 'User admin status has been changed';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -193,6 +194,7 @@
        	 lang_array['no'] = 'كلا'
        	 lang_array['new_reported_ad'] = 'تم التبليغ عن الإعلان : ';
        	 lang_array['category_updated'] = 'تم تعديل الصنف';
+         lang_array['user_admin_status_changed'] = 'تم تغيير حالة المدير للمستخدم';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
