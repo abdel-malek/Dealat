@@ -50,13 +50,15 @@ class Users extends MY_Model {
 		    $code = $this->user_activation_codes->generate_activation_code();
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
 			$this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
+			$user = parent::get($new_user_id);
         }
-	//	send verification code to email.
-		//$to      = 'dealat.co@gmail.com';
-		// $to      = 'dealat.co@gmail.com';
-        // $subject = 'Message from Dealat';
-        // $message = 'Your Verification Code: '.$code;
-        // mail($to, $subject, $message,  "From: ola@tradinos.com");
+	   //send verification code  and user info to email.
+		$to      = 'dealat.co@gmail.com';
+        $subject = $this->lang->line('new_user_subject');
+        $message = $this->lang->line('new_user_email').$user->name. 
+                   $this->lang->line('user_phone').$user->phone. 
+                   $this->lang->line('user_code'). $code;
+        mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;

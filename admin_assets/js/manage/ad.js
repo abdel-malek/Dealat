@@ -344,6 +344,7 @@ var ads_buttons =[];
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
             $('.ads_details  #ad_edit_status').html(edit_status_array[$item_info['edit_status']]);
             $('.ads_details  #ad_price').html($item_info['price']);
+            $('.ads_details  #ad_input_price').val($item_info['price']);
             if($item_info['is_negotiable'] == '1'){
             	$('.ads_details  #ad_negotiable').html('Yes');
             }
@@ -362,18 +363,19 @@ var ads_buttons =[];
             	   	 $('.ads_details  #ad_is_automatic').html('Manual'); 
             	   }
             	}
-                else if(value == 'with_furniture'){
+               else if(value == 'with_furniture'){
             	   if($item_info[value] == 1){
             	   	 $('.ads_details  #ad_with_furniture').html('Yes'); 
             	   }
-            	}else if(value == 'is_new'){
+              }else if(value == 'is_new'){
             	   $('.ads_details  .is_new').css('display', 'inline');
             	   if($item_info[value] == 1){
             	   	 $('.ads_details  #ad_is_new').html('Yes'); 
             	   }
-            	}else{
+               }else{
             	  if($item_info[value] != null){
             		 $('.ads_details  #ad_'+value).html($item_info[value]);
+            		 $('.ads_details  #ad_input_'+value).val($item_info[value]);
             	  }
             	}
 			});
@@ -435,8 +437,8 @@ var ads_buttons =[];
         }
       });
  }
- 
- 
+
+
  function show_accept_btn (from_reported) {
  	if(from_reported == 0){ // before report
  	   if($.inArray(ACCEPT_AD, permissions) != -1){
@@ -521,8 +523,88 @@ var ads_buttons =[];
       $('#expiry_edit_label').css('display' , 'none');
       $('.ads_details  #show_btn').css('display', 'none');
       $('.ads_details  #delete_ad_btn').css('display', 'none');
+      $('.readonly_elem').css('display' , 'block');
+      $('.editable_elem').css('display' , 'none');
+      $('#edit_btn').css('display' ,'inline');
+      $('#save_ad_edits_btn').css('display' , 'none');
  });
  
+ 
+ function make_ad_eitable () {
+ 	
+    $('.readonly_elem').css('display' , 'none');
+    $('.editable_elem').css('display' , 'inline');
+    $('#edit_btn').css('display' ,'none');
+    $('#save_ad_edits_btn').css('display' , 'inline');
+    new PNotify({
+          title: lang_array['note'],
+          text: lang_array['price_and_kelo_edit'],
+          type: 'info',
+          styling: 'bootstrap3',
+          hide: true,
+          buttons: {
+		       sticker: false
+		   }
+      });
+ }
+ 
+ 
+ function save_ad_edits(){
+ 	ad_id = $('.ads_details  #post_id').val();
+ 	var data = {
+ 		'ad_id':ad_id
+ 	};
+ 	var price = $('#ad_input_price').val();
+ 	var kilometer = $('#ad_input_kilometer').val();
+ 	if(price != ''){
+ 		 data['price'] = price;
+ 	}
+ 	if(kilometer != ''){
+ 		 data['kilometer'] = kilometer;
+ 	}
+ 	console.log(data);
+ 	$.ajax({
+	        url: base_url + '/admin/items_manage/edit_item/format/json',
+	        type: "post",
+	        dataType: "json",
+	        data: data,
+	        success: function(response) {
+	            if(response.status == false){
+	               new PNotify({
+	                  title: lang_array['attention'],
+	                  text:  response.message,
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	              });
+	            }else{
+	                new PNotify({
+	                  title: lang_array['success'] ,
+	                  text: lang_array['ad_saved'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	          ads_table.ajax.url(base_url + '/admin/items_manage/all/format/json' ).load();
+	          //$('.ads_details').modal('hide');
+	         }
+	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	          });
+	        }
+	     });
+ }
  
  function perform_action (action) {
  	 var can_proceed = true; 
@@ -624,92 +706,6 @@ var ads_buttons =[];
  	 }
  }
 
-// function get_pending_ads () {
-  // var url_pending =  base_url + '/api/items_control/get_pending_items/format/json';
- // // console.log(url_pending);
-  // $.ajax({
-        // url: url_pending,
-        // type: "get",
-        // dataType: "json",
-        // success: function(response) {
-        	// //console.log(response.data);
-            // $('.orders').html('');
-             // if(response.data != ''){
-               // pending_count = response.data.orders.length;
-               // $('#order_counts').html(pending_count);
-             // }else{
-             	// new PNotify({
-                      // title: 'ملاحظة',
-                      // text: 'ليس لديك أي طلبات تنتظرك حاليّاً',
-                      // type: 'info',
-                      // hide: false,
-                      // styling: 'bootstrap3',
-                      // buttons: {
-				        // sticker: false
-				      // }
-                // });
-             // }
-             // var str ='';
-             // $.each(response.data.orders, function(index, order) { 
-             	// //  console.log(order);
-                  // str += '<li id='+order['order_id']+'> <div class="row">';
-              // //    str += '<div class="col-md-2"></div>';
-                  // str += '<div class="col-md-8">';
-                  // str += '<a>';
-                  // str += '<span style="font-size:17px !important"><span>';
-                  // str += '<b  style="color:#169F85 !important">الطلب #'+ order['order_id']+'</b>';
-                  // if(order['unseen_log_count'] != 0){
-                  	  // str += '   <span class="countIcon' + order['order_id'] + '"><span class="badge bg-green count' + order['order_id'] + '">' + order['unseen_log_count'] + '</span></span>';
-                  // }
-                  // str += '</span></span>';
-                  // str += '<span style="font-size:14px !important" class="message">';
-                  // str += '<b  style="color:rgba(243,156,18,0.88);">';
-                  // str += 'الزبون:  </b>';
-                  // str += order['customer_name'];
-                  // str += '</span>';
-                  // str += '<span style="font-size:14px !important" class="message">';
-                  // str += '<b  style="color:rgba(243,156,18,0.88);">';
-                  // str += 'تاريخ التسليم المطلوب:  </b>';
-                  // if(order['delivery_date'] == null){
-                  	// str += 'بأقرب وقت';
-                  // }else{
-                  	// str += order['delivery_date'];
-                  // }
-                  // if(order['user_role_id'] == 1){ // logistic man then show the stage
-                  	  // str += '</span>';
-	                  // str += '<span style="font-size:14px !important" class="message">';
-	                  // str += '<b  style="color:rgba(243,156,18,0.88);">';
-	                  // str += 'المرحلة الحاليّة:  </b>';
-	                  // str += order['stage_name'];
-	                  // str += '</span>';
-                  // }
-                  // str += '<span style="font-size:14px !important" class="message">';
-                  // str += '<b  style="color:rgba(243,156,18,0.88);">';
-                  // str += 'الحالة:  </b>';
-                  // str += order['status_name'];
-                  // str += '</span>';
-                  // str += '</a>';
-                  // str += '</div>';
-                  // str += '<div  class=" col-md-4 pull-right">';
-               // // str += '<button   onclick=\'show_order_details_model(' +JSON.stringify(order)+ ')\' id="order_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".order_details" >view</button>';
-                  // str+= '<button   onclick=\'show_order_details_model(' +JSON.stringify(order)+ ')\' id="order_button" type="button" class="btn btn-primary" >التفاصيل</button>';
-                  // str += '</div>';
-                  // str += '</div> </li>';
-	          // }); 
-            // $('.orders').html(str);
-        // },error: function(xhr, status, error){
-        	// new PNotify({
-                  // title: 'Oh No!',
-                  // text: 'Something Went Wrong while getting you pending orders, please refresh!',
-                  // type: 'error',
-                  // styling: 'bootstrap3',
-                  // buttons: {
-				        // sticker: false
-				      // }
-          // });
-        // }
-      // });
-// }
 
 
   

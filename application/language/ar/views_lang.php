@@ -449,3 +449,6 @@ $lang['delete_sub_category'] = 'حذف صنف فرعي';
 $lang['export'] = 'تصدير';
 
 $lang['shown'] = 'ظاهر';
+
+//edit ad 
+$lang['save_changes'] = 'حفظ التغيرات';

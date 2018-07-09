@@ -340,7 +340,7 @@ class Ads extends MY_Model {
 	  } 
   }
  
-  public function edit($ad_id , $category_id)
+  public function edit($ad_id , $category_id , $from_admin = 0)
   {
   	   $this->load->model('data_sources/categories');
   	   $this -> db -> trans_start();
@@ -423,7 +423,9 @@ class Ads extends MY_Model {
 	   if($this->input->post('edit_status')){
 	   	  $data['edit_status'] = $this->input->post('edit_status');
 	   }
-	   $data['status'] = STATUS::PENDING;
+	   if(!$from_admin){
+	   	 $data['status'] = STATUS::PENDING;
+	   }
 	   $edited_ad_id = parent::save($data  , $ad_id);
 	   
 	   //save tamplate edits

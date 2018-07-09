@@ -449,6 +449,8 @@ $lang['hide_sub_category'] = "Hide Sub Category";
 $lang['delete_sub_category'] = "Delete Sub Category";
 $lang['export'] = 'Export';
 $lang[''] = '';
-$lang[''] = '';
 
 $lang['shown'] = 'Shown';
+
+//edit ad 
+$lang['save_changes'] = 'Save Changes';

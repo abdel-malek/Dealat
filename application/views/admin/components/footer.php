@@ -137,6 +137,7 @@
        	 lang_array['new_reported_ad'] = 'There is a new report on the ad: ';
        	 lang_array['category_updated'] = 'Category is Updated';
        	 lang_array['user_admin_status_changed'] = 'User admin status has been changed';
+       	 lang_array['price_and_kelo_edit'] = 'Now you can edit price and kilomerte values.';
        	 //datatable
        	 lang_array['sProcessing'] = 'Processing...' ;
        	 lang_array['sLengthMenu'] = 'Show _MENU_ entries' ;
@@ -195,6 +196,7 @@
        	 lang_array['new_reported_ad'] = 'تم التبليغ عن الإعلان : ';
        	 lang_array['category_updated'] = 'تم تعديل الصنف';
          lang_array['user_admin_status_changed'] = 'تم تغيير حالة المدير للمستخدم';
+         lang_array['price_and_kelo_edit'] = 'الآن يمكنك تعديل حقول السعر والكيلومتراج';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;

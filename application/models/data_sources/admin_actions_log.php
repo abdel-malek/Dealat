@@ -18,6 +18,7 @@ class Admin_actions_log extends MY_Model {
 		  'ar_action' => $action['ar_action'],
 		  'en_action' => $action['en_action']
 		);
+		dump($data);
 		return parent::save($data);
 	}
 	

@@ -44,10 +44,14 @@ $lang['new_msg'] = 'New Message';
 
 
 //email 
-$lang['pending_email'] = 'Welcome to Dealat Control panel!' ."\n" .' There is a new ad waiting for your approval.'."\n" .' The ad number : ';
-$lang['pending_after_edit_email'] = 'Welcome to Dealat Control panel!' ."\n" .'An ad is edited and waiting for your approval.' ."\n" .' The ad number : ';
-$lang['reported_ad_email'] = 'Welcome to Dealat Control panel!' ."\n" .'An ad has been reported!' ."\n" .'The ad number : ';
+$lang['pending_email'] = 'Welcome to Dealat Control panel!' ."\n \n" .' There is a new ad waiting for your approval.'."\n \n" .'The ad number : ';
+$lang['pending_after_edit_email'] = 'Welcome to Dealat Control panel!' ."\n \n" .'An ad is edited and waiting for your approval.' ."\n \n" .'The ad number : ';
+$lang['reported_ad_email'] = 'Welcome to Dealat Control panel!' ."\n \n" .'An ad has been reported!' ."\n \n" .'The ad number : ';
 $lang['report_message'] = '' ."\n" .'The report cuase is: ';
+$lang['new_user_email'] = 'Welcome to Dealat Control panel!' ."\n \n" .'A new user has been registered.'."\n \n" .'User name : ';
+$lang['user_phone'] = '' ."\n" .'User phone: ';
+$lang['user_code'] = '' ."\n" .'User Verification Code: ';
+$lang['new_user_subject'] = 'Message from Dealat, New user';
 
 
 

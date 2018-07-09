@@ -6,6 +6,7 @@
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
           <h4 class="modal-title" id="ad_deatils_title"><?php echo $this->lang->line('ad_details') ?></h4>
+          
         </div>
         <div class="modal-body">
         	
@@ -97,7 +98,8 @@
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('price') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
-		      	           <label class="form-control"  id='ad_price'> 10000$</label>
+		      	           <label class="form-control  readonly_elem"  id='ad_price'></label>
+		      	           <input class="form-control  editable_elem"  id='ad_input_price' style="display:  none"></input>
 		      	         </div>
 		             </div>
 		             
@@ -160,7 +162,8 @@
 		             <div class="form-group template_info 1_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('kilometrage') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
-		      	           <label class="form-control"  id='ad_kilometer'><?php echo $this->lang->line('not_set') ?></label>
+		      	           <label class="form-control readonly_elem"  id='ad_kilometer'><?php echo $this->lang->line('not_set') ?></label>
+		      	           <input class="form-control editable_elem"  id='ad_input_kilometer' style="display: none"></input>
 		      	         </div>
 		             </div>
 		             
@@ -308,7 +311,8 @@
           <button style="display: none" onclick="perform_action('show')" id="show_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('show_ad') ?></button>
           <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
           <button style="display: none"  onclick="perform_action('accept')"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('accept_ad') ?></button>
-          
+          <button onclick="make_ad_eitable()"  id="edit_btn" type="button" class="btn btn-primary"><span class='fa fa-edit'></span></button>
+          <button style="display: none"  onclick="save_ad_edits()"  id="save_ad_edits_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('save_changes') ?></button>
         </div>
       </div>
     </div>

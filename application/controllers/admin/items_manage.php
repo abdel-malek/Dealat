@@ -196,4 +196,25 @@ class Items_manage extends REST_Controller {
 		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
     }
+
+
+  public function edit_item_post()
+   {
+      if(!$this->input->post('ad_id')){
+      	 throw new Parent_Exception('ad id is required');
+      }else{
+      	   $this->load->model('data_sources/admin_actions_log');
+	       $ad_id = $this->input->post('ad_id');
+		   $ad_info = $this->ads->get($ad_id);
+		   $category_id  = $ad_info->category_id;
+		   $edit_result = $this->ads->edit($ad_id , $category_id , 1 );
+		   if($edit_result){
+		   	  // add to log
+		   	  $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_AD , $ad_id);
+		   	  $this -> response(array('status' => true, 'data' => $edit_result, 'message' => $this->lang->line('sucess')));
+		   }else{
+		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		   }
+      }
+   }
 }

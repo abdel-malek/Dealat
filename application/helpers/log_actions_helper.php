@@ -43,9 +43,10 @@ class LOG_ACTIONS {
 		  HIDE_AD= 41,
 		  SHOW_AD = 42, 
 		  DELETE_AD = 43,
-		  ADD_PERIOD = 34 ,
-	      EDIT_PERIOD= 35, 
-	      DELETE_PERIOD = 36;
+		  ADD_PERIOD = 44 ,
+	      EDIT_PERIOD= 45, 
+	      DELETE_PERIOD = 46,
+		  EDIT_AD = 47;
 		  
   public static function get_note($action_id , $exstrainfo = null)
   {
@@ -184,6 +185,9 @@ class LOG_ACTIONS {
               break;
 		  case LOG_ACTIONS::DELETE_PERIOD:
 			  return array('ar_action' => 'حذف فترة الظهور رقم '.$exstrainfo , 'en_action' => ' Delete the Show period #'.$exstrainfo);
+              break;
+		  case LOG_ACTIONS::EDIT_AD:
+			  return array('ar_action' => 'تعديل معلومات الاعلان رقم  '.$exstrainfo , 'en_action' => ' Edit the info of the ad #'.$exstrainfo);
               break;
           default:
               return array('ar_action' => ' ' , 'en_action' => '');
