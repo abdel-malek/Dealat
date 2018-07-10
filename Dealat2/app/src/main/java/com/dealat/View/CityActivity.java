@@ -37,7 +37,7 @@ public class CityActivity extends MasterActivity {
 
     @Override
     public void getData() {
-        if (isNetworkAvailable()){
+        if (isNetworkAvailable()) {
             if (!swipeRefreshLayout.isRefreshing())
                 ShowProgressDialog();
 
@@ -80,7 +80,7 @@ public class CityActivity extends MasterActivity {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonTrue){
+        if (view.getId() == R.id.buttonTrue) {
             if (adapter.getSelected() == null)
                 showMessageInToast(R.string.labelPleaseSelectCity);
             else {

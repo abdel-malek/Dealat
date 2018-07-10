@@ -43,8 +43,10 @@ public class HomeActivity extends DrawerActivity {
 
         mainCategory = Category.getMain(getString(R.string.allCategories));
 
-        if (!isNetworkAvailable())
+        if (!isNetworkAvailable()) {
+            refreshLayout.setRefreshing(false);
             return;
+        }
 
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();
@@ -65,7 +67,9 @@ public class HomeActivity extends DrawerActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
-                        intent.putExtra("category", mainCategory.getSubCategories().get(i));
+                        Category category = ((MainCatAdapter)listView.getAdapter()).getItem(i);
+                        intent.putExtra("category", category);
+                      //  intent.putExtra("category", mainCategory.getSubCategories().get(i));
                         intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
 
                         startActivity(intent);
@@ -132,14 +136,13 @@ public class HomeActivity extends DrawerActivity {
     public void onClick(View view) {
         if (view.getId() == R.id.buttonTrue) {
 
-            if (registered()){
+            if (registered()) {
                 Intent intent = new Intent(mContext, SubmitAdActivity.class);
                 intent.putExtra("category", mainCategory);
 
                 startActivity(intent);
             }
-        }
-        else if (view.getId() == R.id.buttonFilter){
+        } else if (view.getId() == R.id.buttonFilter) {
             Intent intent = new Intent(mContext, FilterActivity.class);
             intent.putExtra("category", mainCategory);
             intent.putExtra("action", 1);

@@ -34,7 +34,6 @@ public class MainCatAdapter extends BaseAdapter {
         this.categories = categories;
     }
 
-
     @Override
     public int getCount() {
         return this.categories.size();
@@ -56,18 +55,26 @@ public class MainCatAdapter extends BaseAdapter {
         view = this.inflater.inflate(R.layout.row_main_category, null);
 
         ImageView imageView = view.findViewById(R.id.imageView);
-        TextView textView = view.findViewById(R.id.textView);
+        TextView textView = view.findViewById(R.id.textViewCat);
+        TextView textViewCounts = view.findViewById(R.id.textView);
 
-        textView.setText(getItem(i).getName());
-        if (i % 2 == 0)
+        Category category = getItem(i);
+
+        textView.setText(category.getName());
+        textViewCounts.setText(((MasterActivity) context).formattedNumber(((MasterActivity) context).getFullAdsCount(category)));
+
+        if (i % 2 == 0) {
             textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-        else
+            textViewCounts.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+        } else {
             textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            textViewCounts.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        }
 
-        int defaultDrawable = ((MasterActivity)context).getTemplateDefaultImage(getItem(i).getTemplateId());
+        int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(category.getTemplateId());
 
         ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-        mImageLoader.get(MyApplication.getBaseUrl() + getItem(i).getImageUrl(), ImageLoader.getImageListener(imageView,
+        mImageLoader.get(MyApplication.getBaseUrl() + category.getImageUrl(), ImageLoader.getImageListener(imageView,
                 defaultDrawable, defaultDrawable));
 
         return view;

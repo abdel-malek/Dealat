@@ -1,5 +1,6 @@
 package com.dealat.Utils;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,60 +34,68 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        final String CHANNEL_ID = "Chat";
-        final String CHANNEL_NAME = "Chats notifications";
+        if (getResultCode() == Activity.RESULT_OK) {
 
-        User user = new CurrentAndroidUser(context).Get();
+            final String CHANNEL_ID = "Chat";
+            final String CHANNEL_NAME = "Chats notifications";
 
-        Chat chat = (Chat) intent.getSerializableExtra("chat");
-        //msg is sent normally because it will be decoded in MessageAdapter // I mean Emoji decoding
-        String msg = intent.getStringExtra("msg");
-        msg = EmojiParser.parseToUnicode(msg);
+            User user = new CurrentAndroidUser(context).Get();
 
-        Intent chatIntent = new Intent(context, ChatActivity.class);
-        chatIntent.putExtra("chat", chat);
-        chatIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Chat chat = (Chat) intent.getSerializableExtra("chat");
+            //msg is sent normally because it will be decoded in MessageAdapter // I mean Emoji decoding
+            String msg = intent.getStringExtra("msg");
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(), chatIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+            try {
+                msg = EmojiParser.parseToUnicode(msg);
+            } catch (NullPointerException e) {
 
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+            Intent chatIntent = new Intent(context, ChatActivity.class);
+            chatIntent.putExtra("chat", chat);
+            chatIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt(), chatIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
+
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            String notificationTitle;
+            if (amISeller(user, chat))
+                notificationTitle = chat.getUserName();
+            else
+                notificationTitle = chat.getSellerName();
+
+            notificationTitle += " (" + chat.getAdTitle() + ")";
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.dealat_logo_white_background)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(msg)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent);
+
+
+            // to group notification related to same chat
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            inboxStyle.setBigContentTitle(notificationTitle);
+
+            List<String> messages = MyApplication.saveAndGetMessages(chat.getChatId(), msg);
+            for (int i = 0; i < messages.size(); i++)
+                inboxStyle.addLine(messages.get(i));
+
+            notificationBuilder.setStyle(inboxStyle);
+
+            notificationManager.notify(Integer.valueOf(chat.getChatId()), notificationBuilder.build());
         }
-
-        String notificationTitle;
-        if (amISeller(user, chat))
-            notificationTitle = chat.getUserName();
-        else
-            notificationTitle = chat.getSellerName();
-
-        notificationTitle += " (" + chat.getAdTitle() + ")";
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.dealat_logo_white_background)
-                .setContentTitle(notificationTitle)
-                .setContentText(msg)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-
-        // to group notification related to same chat
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle(notificationTitle);
-
-        List<String> messages = MyApplication.saveAndGetMessages(chat.getChatId(), msg);
-        for (int i = 0; i < messages.size(); i++)
-            inboxStyle.addLine(messages.get(i));
-
-        notificationBuilder.setStyle(inboxStyle);
-
-        notificationManager.notify(Integer.valueOf(chat.getChatId()), notificationBuilder.build());
     }
 
     private boolean amISeller(User user, Chat chat) {

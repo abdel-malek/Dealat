@@ -47,7 +47,7 @@ public class ViewAdsActivity extends DrawerActivity {
     private GridView gridView;
     private ImageButton buttonViews, buttonFav;
     private ImageView imageViewCategory;
-    private TextView textViewCategory;
+    private TextView textViewCategory, textViewCount;
     private SwipeRefreshLayout refreshLayout;
     private SearchView searchView;
 
@@ -86,13 +86,8 @@ public class ViewAdsActivity extends DrawerActivity {
                     @Override
                     public void OnSuccess(List<Ad> result) {
 
-                        if (result.isEmpty())
-                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                        else
-                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
-
                         ads = result;
-                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+                        showResult();
 
                         getCommercialAds(selectedCategory.getId());
                     }
@@ -105,13 +100,8 @@ public class ViewAdsActivity extends DrawerActivity {
                     @Override
                     public void OnSuccess(List<Ad> result) {
 
-                        if (result.isEmpty())
-                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                        else
-                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
-
                         ads = result;
-                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+                        showResult();
 
                         getCommercialAds(selectedCategory.getId());
                     }
@@ -122,18 +112,29 @@ public class ViewAdsActivity extends DrawerActivity {
                 UserController.getInstance(mController).getBookmarkAds(getIntent().getStringExtra("bookmarkId"), new SuccessCallback<List<Ad>>() {
                     @Override
                     public void OnSuccess(List<Ad> result) {
-                        if (result.isEmpty())
-                            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                        else
-                            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
 
                         ads = result;
-                        gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+                        showResult();
 
                         getCommercialAds(selectedCategory.getId());
                     }
                 });
                 break;
+        }
+    }
+
+    private void showResult() {
+        if (ads != null) {
+            if (ads.isEmpty()) {
+                findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+                textViewCount.setText("");
+
+            } else {
+                findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+                textViewCount.setText(formattedNumber(ads.size()) + " " + getString(R.string.ad));
+            }
+
+            gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
         }
     }
 
@@ -158,6 +159,7 @@ public class ViewAdsActivity extends DrawerActivity {
         buttonFav = findViewById(R.id.buttonFav);
         imageViewCategory = findViewById(R.id.imageView);
         textViewCategory = findViewById(R.id.textView);
+        textViewCount = findViewById(R.id.textViewCount);
         refreshLayout = findViewById(R.id.refreshLayout);
         searchView = findViewById(R.id.searchView);
     }
@@ -209,7 +211,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()){
+                if (newText.isEmpty()) {
                     searchView.setIconified(true);
                     searchParameters.remove("query");
                     bookmarkId = null;
@@ -230,7 +232,7 @@ public class ViewAdsActivity extends DrawerActivity {
         buttonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bookmarkId == null){
+                if (bookmarkId == null) {
                     if (!searchParameters.isEmpty()) {
                         UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
                             @Override
@@ -245,8 +247,7 @@ public class ViewAdsActivity extends DrawerActivity {
                             }
                         });
                     }
-                }
-                else {
+                } else {
                     UserController.getInstance(mController).deleteBookmark(bookmarkId, new SuccessCallback<String>() {
                         @Override
                         public void OnSuccess(String result) {

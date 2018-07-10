@@ -18,7 +18,7 @@ public class Category implements Serializable {
 
     private String id, name, parentId, imageUrl;
     private String[] hiddenFields;
-    private int templateId;
+    private int templateId, adsCount;
     private List<Category> subCategories;
 
 
@@ -106,6 +106,14 @@ public class Category implements Serializable {
 
     public void setTemplateId(int templateId) {
         this.templateId = templateId;
+    }
+
+    public int getAdsCount() {
+        return adsCount;
+    }
+
+    public void setAdsCount(int adsCount) {
+        this.adsCount = adsCount;
     }
 
     public String[] getHiddenFields() {

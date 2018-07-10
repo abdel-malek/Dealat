@@ -112,6 +112,7 @@ public class AdDetailsActivity extends MasterActivity {
                 currentAd.setImagesPaths(result.getImagesPaths());
                 currentAd.setMainVideoUrl(result.getMainVideoUrl());
                 currentAd.setVisiblePhone(result.isVisiblePhone());
+                currentAd.setAdminSeller(result.isAdminSeller());
 
                 if (result.getMainVideoUrl() != null)// just a gap thing for video // because count of fragments must increase +1
                     result.getImagesPaths().add(0, "");
@@ -160,6 +161,7 @@ public class AdDetailsActivity extends MasterActivity {
                     textViewPublishDate.setText(getString(R.string.published) + " " + formattedDate(result.getPublishDate()));
 
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
+                textViewViews.setText(formattedNumber(result.getViews()) + " " + getString(R.string.view));
                 textViewCity.setText(result.getCityName());
 
                 if (result.getLocationId() != null) {
@@ -167,8 +169,6 @@ public class AdDetailsActivity extends MasterActivity {
                     findViewById(R.id.line6).setVisibility(View.VISIBLE);
                     findViewById(R.id.containerLocation).setVisibility(View.VISIBLE);
                 }
-
-                textViewSeller.setText(result.getSellerName());
 
                 if (result.isNegotiable())
                     textNegotiable.setText(getString(R.string.yes));
@@ -185,6 +185,17 @@ public class AdDetailsActivity extends MasterActivity {
                     if (currentAd.isVisiblePhone()) {
                         textViewPhone.setText(getPhoneNumber(result.getSellerPhone()));
                         textViewPhone.setVisibility(View.VISIBLE);
+                    } else { //contact only using Dealat chat
+                        findViewById(R.id.buttonCall).setVisibility(View.GONE);
+                        findViewById(R.id.line20).setVisibility(View.GONE);
+                    }
+
+                    if (currentAd.isAdminSeller()) {
+                        findViewById(R.id.buttonMessage).setVisibility(View.GONE);
+                        findViewById(R.id.line20).setVisibility(View.GONE);
+                    } else {
+                        textViewSeller.setText(result.getSellerName());
+                        textViewSeller.setVisibility(View.VISIBLE);
                     }
 
                     if (currentAd.getSellerId().equals(user.Get().getId())) { // view info for Seller
@@ -217,11 +228,6 @@ public class AdDetailsActivity extends MasterActivity {
                         buttonFav.setVisibility(View.VISIBLE);
 
                         findViewById(R.id.containerContact).setVisibility(View.VISIBLE);
-
-                        if (!currentAd.isVisiblePhone()) { //contact only using Dealat chat
-                            findViewById(R.id.buttonCall).setVisibility(View.GONE);
-                            findViewById(R.id.line20).setVisibility(View.GONE);
-                        }
 
                         buttonReport.setVisibility(View.VISIBLE); // seller cannot report their ad
                     }

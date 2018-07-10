@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.dealat.Model.Category;
 import com.dealat.R;
+import com.dealat.View.MasterActivity;
 
 import java.util.List;
 
@@ -19,11 +20,15 @@ import java.util.List;
 public class CategoryAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
+    private Context context;
     private List<Category> categories;
+    private boolean viewAdsCount;
 
-    public CategoryAdapter(Context context, List<Category> categories){
+    public CategoryAdapter(Context context, List<Category> categories, boolean viewAdsCount) {
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
         this.categories = categories;
+        this.viewAdsCount = viewAdsCount;
     }
 
 
@@ -48,13 +53,19 @@ public class CategoryAdapter extends BaseAdapter {
         if (view == null)
             view = this.inflater.inflate(R.layout.row_category, null);
 
-        ((TextView)view.findViewById(R.id.textView)).setText(getItem(i).getName());
+        Category category = getItem(i);
+        String adsCount = "";
 
-        if (getItem(i).hasSubCats())
+        if (viewAdsCount)
+            adsCount = " (" + ((MasterActivity) context).formattedNumber(((MasterActivity) context).getFullAdsCount(category))
+                    + ")";
+
+        ((TextView) view.findViewById(R.id.textView)).setText(category.getName() + adsCount);
+
+        if (category.hasSubCats())
             view.findViewById(R.id.imageView).setVisibility(View.VISIBLE);
         else
             view.findViewById(R.id.imageView).setVisibility(View.INVISIBLE);
-
 
         return view;
     }

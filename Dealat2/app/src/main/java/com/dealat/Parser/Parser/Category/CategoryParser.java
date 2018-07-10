@@ -24,6 +24,8 @@ public class CategoryParser implements TradinosParser<Category> {
         category.setParentId(jsonObject.getString("parent_id"));
         category.setName(jsonObject.getString("category_name"));
         category.setTemplateId(jsonObject.getInt("tamplate_id"));
+        category.setAdsCount(jsonObject.getInt("ads_count"));
+
 
         if (validData(jsonObject.getString("mobile_image")))
             category.setImageUrl(jsonObject.getString("mobile_image"));

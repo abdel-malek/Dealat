@@ -18,8 +18,6 @@ import com.dealat.Adapter.CheckableAdapter;
 import com.dealat.Adapter.CityAdapter;
 import com.dealat.Adapter.ItemAdapter;
 import com.dealat.Adapter.TypeAdapter;
-import com.dealat.MyApplication;
-import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.AdController;
 import com.dealat.Model.AdVehicle;
 import com.dealat.Model.Category;
@@ -27,7 +25,10 @@ import com.dealat.Model.City;
 import com.dealat.Model.Item;
 import com.dealat.Model.TemplatesData;
 import com.dealat.Model.Type;
+import com.dealat.MyApplication;
 import com.dealat.R;
+import com.dealat.Utils.NumberTextWatcher;
+import com.tradinos.core.network.SuccessCallback;
 
 import org.json.JSONArray;
 
@@ -259,6 +260,11 @@ public class FilterActivity extends MasterActivity {
 
     @Override
     public void assignActions() {
+        editPriceMax.addTextChangedListener(new NumberTextWatcher(editPriceMax));
+        editPriceMin.addTextChangedListener(new NumberTextWatcher(editPriceMin));
+
+        editSalaryMax.addTextChangedListener(new NumberTextWatcher(editSalaryMax));
+        editSalaryMin.addTextChangedListener(new NumberTextWatcher(editSalaryMin));
 
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -433,10 +439,10 @@ public class FilterActivity extends MasterActivity {
         }
 
         if (!inputIsEmpty(editPriceMax))
-            parameters.put(getString(R.string.priceMax), stringInput(editPriceMax));
+            parameters.put(getString(R.string.priceMax), String.valueOf(doubleEditText(editPriceMax)));
 
         if (!inputIsEmpty(editPriceMin))
-            parameters.put(getString(R.string.priceMin), stringInput(editPriceMin));
+            parameters.put(getString(R.string.priceMin), String.valueOf(doubleEditText(editPriceMin)));
     }
 
     private void getTemplateInput() {
@@ -488,10 +494,10 @@ public class FilterActivity extends MasterActivity {
             case Category.JOBS:
 
                 if (!inputIsEmpty(editSalaryMax))
-                    parameters.put(getString(R.string.salaryMax), stringInput(editSalaryMax));
+                    parameters.put(getString(R.string.salaryMax), String.valueOf(doubleEditText(editSalaryMax)));
 
                 if (!inputIsEmpty(editSalaryMin))
-                    parameters.put(getString(R.string.salaryMin), stringInput(editSalaryMin));
+                    parameters.put(getString(R.string.salaryMin), String.valueOf(doubleEditText(editSalaryMin)));
 
                 jsonArray = ((CheckableAdapter) spinnerEdu.getAdapter()).getSelectedItems();
                 if (jsonArray.length() > 0) {
@@ -816,7 +822,6 @@ public class FilterActivity extends MasterActivity {
                 spinnerState.setVisibility(visibility);
         }
     }
-
 
     private List<String> getDescendantsIds(Category category) {
         List<String> descendantsIds = new ArrayList<>();

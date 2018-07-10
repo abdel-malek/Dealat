@@ -66,23 +66,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             try {
                 String myDate = dateInstance.format(format.parse(message.getCreatedAt()));
-                String preDate = dateInstance.format(format.parse(getItem(position-1).getCreatedAt()));
-                if(myDate.equals(preDate))
+                String preDate = dateInstance.format(format.parse(getItem(position - 1).getCreatedAt()));
+                if (myDate.equals(preDate))
                     holder.textViewDate.setVisibility(View.GONE);
                 else
                     holder.textViewDate.setVisibility(View.VISIBLE);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }
-        else
+        } else
             holder.textViewDate.setVisibility(View.VISIBLE);
 
         if (holder.imageViewCheck != null) { // it doesn't exist in row_chat_other
-            if (message.isSent()){
+            if (message.isSent()) {
                 holder.imageViewCheck.setVisibility(View.VISIBLE);
-            }
-            else
+            } else
                 holder.imageViewCheck.setVisibility(View.INVISIBLE);
         }
     }

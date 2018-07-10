@@ -1,5 +1,6 @@
 package com.dealat.View;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -72,7 +73,7 @@ public class ChatActivity extends MasterActivity {
 
         IntentFilter filter = new IntentFilter();
         // set priority to 1, so ChatReceiver is called before NotificationReceiver
-        filter.setPriority(1);
+      //  filter.setPriority(1);
         filter.addAction("com.dealat.MSG");
 
         receiver = new ChatReceiver();
@@ -221,7 +222,7 @@ public class ChatActivity extends MasterActivity {
         public void onReceive(Context context, Intent intent) {
             Chat chat = (Chat) intent.getSerializableExtra("chat");
 
-            if (chat.getChatId().equals(currentChat.getChatId())){
+            if (chat.getChatId().equals(currentChat.getChatId())) {
 
                 Message message = new Message();
                 message.setText(intent.getStringExtra("msg"));
@@ -241,7 +242,7 @@ public class ChatActivity extends MasterActivity {
 
                 // abort sendOrderedBroadcast so NotificationReceiver won't be called
                 // because a notification won't be built when chatting in this session
-                abortBroadcast();
+                setResultCode(Activity.RESULT_CANCELED);
             }
         }
     }

@@ -226,7 +226,11 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         if (jsonObject.getInt("ad_visible_phone") == 1)
             ad.setVisiblePhone(true);
 
+        if (jsonObject.getInt("is_admin") == 1)
+            ad.setAdminSeller(true);
+
         ad.setPrice(jsonObject.getDouble("price"));
+        ad.setViews(jsonObject.getInt("views_num"));
         ad.setStatus(jsonObject.getInt("status"));
 
         ad.setShowPeriod(jsonObject.getInt("show_period"));

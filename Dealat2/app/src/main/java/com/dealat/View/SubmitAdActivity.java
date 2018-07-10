@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ import com.dealat.Adapter.ItemAdapter;
 import com.dealat.Adapter.TypeAdapter;
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Utils.ImageDecoder;
+import com.dealat.Utils.NumberTextWatcher;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
@@ -312,6 +314,12 @@ public class SubmitAdActivity extends MasterActivity {
 
     @Override
     public void assignActions() {
+
+        editPrice.addTextChangedListener(new NumberTextWatcher(editPrice));
+        editSalary.addTextChangedListener(new NumberTextWatcher(editSalary));
+        editKilo.addTextChangedListener(new NumberTextWatcher(editKilo));
+        editSize.addTextChangedListener(new NumberTextWatcher(editSize));
+        editSpace.addTextChangedListener(new NumberTextWatcher(editSpace));
 
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -829,7 +837,7 @@ public class SubmitAdActivity extends MasterActivity {
         else {
 
             if (currentTemplate != Category.JOBS)
-                parameters.put("price", stringInput(editPrice));
+                parameters.put("price", String.valueOf(doubleEditText(editPrice)));
 
             if (switchNegotiable.isChecked())
                 parameters.put("is_negotiable", "1");
@@ -931,7 +939,7 @@ public class SubmitAdActivity extends MasterActivity {
                         editSpace.requestFocus();
                         result = false;
                     } else
-                        parameters.put("space", stringInput(editSpace));
+                        parameters.put("space", String.valueOf(doubleEditText(editSpace)));
                 }
 
                 item = (Item) spinnerFurn.getSelectedItem();
@@ -949,7 +957,7 @@ public class SubmitAdActivity extends MasterActivity {
                 parameters.put("price", "0");
 
                 if (!inputIsEmpty(editSalary))
-                    parameters.put("salary", stringInput(editSalary));
+                    parameters.put("salary", String.valueOf(doubleEditText(editSalary)));
 
                 item = (Item) spinnerCertificate.getSelectedItem();
                 if (!selectedCategory.shouldHideTag(getString(R.string.hideCertificate))) {
@@ -1014,7 +1022,7 @@ public class SubmitAdActivity extends MasterActivity {
                         editKilo.requestFocus();
                         result = false;
                     } else
-                        parameters.put("kilometer", stringInput(editKilo));
+                        parameters.put("kilometer", String.valueOf(doubleEditText(editKilo)));
                 }
 
                 item = ((Item) spinnerModel.getSelectedItem());
@@ -1039,7 +1047,7 @@ public class SubmitAdActivity extends MasterActivity {
             case Category.ELECTRONICS:
 
                 if (!inputIsEmpty(editSize))
-                    parameters.put("size", stringInput(editSize));
+                    parameters.put("size", String.valueOf(doubleEditText(editSize)));
 
             case Category.MOBILES:
 

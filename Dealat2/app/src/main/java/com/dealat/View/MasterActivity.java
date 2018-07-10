@@ -42,6 +42,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -273,6 +274,21 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             default:
                 return R.drawable.others;
         }
+    }
+
+    public int getFullAdsCount(Category category) {
+        int result = 0;
+
+        List<Category> subCats = ((MyApplication) getApplication()).getSubCatsById(category.getId());
+        if (subCats.isEmpty())
+            return category.getAdsCount();
+
+        else {
+            for (int i = 0; i < subCats.size(); i++)
+                result += getFullAdsCount(subCats.get(i));
+        }
+
+        return result;
     }
 
     public String formattedNumber(int number) {

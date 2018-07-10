@@ -41,7 +41,7 @@ public class MultiPartStack extends HurlStack {
     private final static String HEADER_CONTENT_TYPE = "Content-Type";
 	
 	
-	
+	/*
 	
 	@Override
 	public HttpResponse performRequest(Request<?> request,
@@ -53,7 +53,7 @@ public class MultiPartStack extends HurlStack {
 		else {
 			return performMultiPartRequest(request, additionalHeaders);
 		}
-	}
+	}*/
 	
     private static void addHeaders(HttpUriRequest httpRequest, Map<String, String> headers) {
         for (String key : headers.keySet()) {

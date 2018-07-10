@@ -20,9 +20,9 @@ public class Ad implements Serializable {
     private String rejectNote;
     private String mainImageUrl, mainVideoUrl;
     private double price;
-    private int template, status, showPeriod, expiresAfter, days; //days is the number of days of showPeriod
+    private int views, template, status, showPeriod, expiresAfter, days; //days is the number of days of showPeriod
     // but here showPeriod stands for the id of it as we intent to make a management for it
-    private boolean negotiable, featured, favorite, visiblePhone;
+    private boolean negotiable, featured, favorite, visiblePhone, adminSeller;
     private List<String> imagesPaths;
 
     public Ad(){
@@ -163,6 +163,14 @@ public class Ad implements Serializable {
         this.price = price;
     }
 
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     public int getTemplate() {
         return template;
     }
@@ -257,6 +265,14 @@ public class Ad implements Serializable {
 
     public void setVisiblePhone(boolean visiblePhone) {
         this.visiblePhone = visiblePhone;
+    }
+
+    public boolean isAdminSeller() {
+        return adminSeller;
+    }
+
+    public void setAdminSeller(boolean adminSeller) {
+        this.adminSeller = adminSeller;
     }
 
     public List<String> getImagesPaths() {

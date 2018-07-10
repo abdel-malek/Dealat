@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ImageDecoder {
 
-    private final int smallFactor = 150, largeFactor = 500;
+    private final int smallFactor = 120, largeFactor = 500;
 
     public Bitmap decodeLargeImage(String path) {
         //  return BitmapFactory.decodeFile(path);

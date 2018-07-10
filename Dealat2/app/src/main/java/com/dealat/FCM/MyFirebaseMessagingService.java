@@ -1,5 +1,6 @@
 package com.dealat.FCM;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.dealat.Parser.Parser.Ad.AdParser;
 import com.dealat.Parser.Parser.Chat.ChatParser;
+import com.dealat.Utils.NotificationReceiver;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.dealat.Model.Ad;
@@ -83,7 +85,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent = new Intent("com.dealat.MSG");
                 intent.putExtra("msg", txt);
                 intent.putExtra("chat", chat);
-                sendOrderedBroadcast(intent, null);
+                sendOrderedBroadcast(intent, null, new NotificationReceiver(), null,
+                        Activity.RESULT_OK, null ,null);
 
                 //return because Notification of chats are built in NotificationReceiver
                 return;
