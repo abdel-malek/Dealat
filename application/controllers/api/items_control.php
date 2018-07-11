@@ -114,7 +114,7 @@ class Items_control extends REST_Controller {
 		   $save_result = $this->ads->create_an_ad($basic_data, $main_image , $ads_images_paths , $tamplate_id);
 		   if($save_result != false){
 		   	 // send an email 
-		   	 $this->ads->send_pending_email($save_result);
+		   	// $this->ads->send_pending_email($save_result);
 		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => $this->lang->line('sucess')));
 		   }else{
 		   	 $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));

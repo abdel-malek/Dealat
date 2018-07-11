@@ -15,7 +15,7 @@ $lang['view_details'] = "View Details";
 //card modal
 $lang['seller_name'] = "Seller Name";
 $lang['seller_rating'] = "Seller Rating";
-$lang['price'] = "Price";
+$lang['price'] = "Price(SP)";
 $lang['chat_seller'] = "Chat with seller";
 $lang['contact_info'] = "Contact Info";
 $lang['item_status'] = "Status";
@@ -146,7 +146,7 @@ $lang['created_at'] = "Created at";
 $lang['tamplate_name'] = 'Template';
 $lang['title'] = 'Title';
 $lang['publish_date'] = 'Publish Date';
-$lang['price'] = 'Price';
+$lang['price'] = 'Price (SP)';
 $lang['location'] = 'Location';
 $lang['details'] = 'Details';
 $lang['is_negotiable']= 'Is negotiable';
@@ -195,7 +195,7 @@ $lang['rejects_notes'] = 'Rejects Note';
 $lang['edit_status'] = 'Edit status';
 $lang['expiry_edit_note'] = 'This Ad is Expired and edited, if you accept it will be republished';
 $lang['delete_ad_confirmation'] = 'Delete this ad will delete all that is related to it, including chats and favorites, Are you sure you want to continue?';
-
+$lang['currency'] = 'SP';
 
 
 //commercial ads manage 

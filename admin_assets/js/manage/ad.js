@@ -276,7 +276,7 @@ var ads_buttons =[];
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
- 	  var url_details =  base_url + '/api/items_control/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
+ 	  var url_details =  base_url + '/admin/items_manage/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
       $.ajax({
         url: url_details,
         type: "get",
@@ -343,7 +343,7 @@ var ads_buttons =[];
             $('.ads_details  #ad_location').html($item_info['city_name']+' - '+$item_info['location_name']);
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
             $('.ads_details  #ad_edit_status').html(edit_status_array[$item_info['edit_status']]);
-            $('.ads_details  #ad_price').html($item_info['price']);
+            $('.ads_details  #ad_price').html(new Intl.NumberFormat('ja-JP').format($item_info['price']));
             $('.ads_details  #ad_input_price').val($item_info['price']);
             if($item_info['is_negotiable'] == '1'){
             	$('.ads_details  #ad_negotiable').html('Yes');
@@ -372,13 +372,17 @@ var ads_buttons =[];
             	   if($item_info[value] == 1){
             	   	 $('.ads_details  #ad_is_new').html('Yes'); 
             	   }
-               }else{
+              }else if(value == 'salary' || value =='kilometer' || value == 'size' || value == 'space'){ // format numbers. 
+            	   if($item_info[value] != null){
+            	   	 $('.ads_details  #ad_'+value).html(new Intl.NumberFormat('ja-JP').format($item_info[value])); 
+            	   }
+              }else{
             	  if($item_info[value] != null){
             		 $('.ads_details  #ad_'+value).html($item_info[value]);
             		 $('.ads_details  #ad_input_'+value).val($item_info[value]);
             	  }
-            	}
-			});
+              }
+		   });
 			
 			
 			//fill seller info

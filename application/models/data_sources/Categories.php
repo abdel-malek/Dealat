@@ -52,27 +52,33 @@ class Categories extends MY_Model {
 		return $result_array;
 	}
 
-   public function get_all($lang)
+  public function get_all($lang)
     {
-       $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
-	   $this->db->where('is_active', 1);
+       $this->db->select('categories.'.$lang.'_name as category_name , categories.category_id , parent_id  , web_image, mobile_image , tamplate_id  , hidden_fields , count(ads_temp.ad_id) as ads_count');
+	   $this->db->join("(SELECT ads.ad_id , show_periods.days , ads.category_id , status , publish_date
+					     FROM ads
+					     left join show_periods on ads.show_period = show_periods.show_period_id) as ads_temp" ,
+					    "ads_temp.category_id = categories.category_id AND ads_temp.status = 2 AND (DATE_ADD(publish_date, INTERVAL days DAY) > NOW())" ,
+				        "left outer" , false);
+	   $this->db->where('is_active', 1); 
+	   $this->db->group_by('categories.category_id');
 	   return parent::get();
     }
 	
-	public function get_main_categories($lang)
+   public function get_main_categories($lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		$this->db->where('is_active' , 1);
 		return parent::get_by(array('parent_id'=>0));
 	}
 
-   	public function get_main_categories_for_manage($lang)
+   public function get_main_categories_for_manage($lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		return parent::get_by(array('parent_id'=>0));
 	}
 	
-	public function get_category_subcategories($category_id , $lang)
+   public function get_category_subcategories($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		$q = parent::get_by(array('parent_id'=>$category_id , 'is_active' =>1));
@@ -86,7 +92,7 @@ class Categories extends MY_Model {
 	}
 	
 	// for manage
-    public function get_subcats_with_parents($category_id , $lang)
+   public function get_subcats_with_parents($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name ,
 		                  p.'.$lang.'_name as parent_name , 
@@ -103,7 +109,7 @@ class Categories extends MY_Model {
 		return $array;
 	}
 	
-	public function create_category()
+   public function create_category()
 	{
 	    $this -> db -> trans_start();
 		$this->load->model('data_sources/ads');
@@ -165,7 +171,7 @@ class Categories extends MY_Model {
    }
 
 
-   public function has_child($cat_id)
+  public function has_child($cat_id)
    {
       $res = $this->get_by(array('parent_id' => $cat_id) , true ,1);
 	  if($res != null){
@@ -175,7 +181,7 @@ class Categories extends MY_Model {
 	  }
    }
    
-   public function get_nested_ids($category_id )
+  public function get_nested_ids($category_id )
    {
        $this->db->select('categories.category_id as category_id , sun_cat.category_id as sun_id, sun_sun_cat.category_id as sun_sun_id');
 	   $this->db->join('categories as sun_cat' ,'sun_cat.parent_id = categories.category_id' , 'left outer');
@@ -195,27 +201,27 @@ class Categories extends MY_Model {
        return $ids;
    }
    
-   public function diactivate($ids)
+  public function diactivate($ids)
    {
 	  $this->db->set('is_active' , 0);
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->update('categories');
    }
    
-   public function activate($ids)
+  public function activate($ids)
    {
 	  $this->db->set('is_active' , 1);
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->update('categories');
    }
    
-   public function delete_cats($ids)
+  public function delete_cats($ids)
    {
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->delete('categories');
    }
    
-   public function update_queue($parent_id , $cats_queue)
+  public function update_queue($parent_id , $cats_queue)
    {
         $queue = 0;
 		$result;
@@ -226,7 +232,7 @@ class Categories extends MY_Model {
         return $result;
    }
    
-   public function get_childs_only($lang)
+  public function get_childs_only($lang)
    {
        $this->db->select('categories.'.$lang.'_name as category_name ,
 		                  parent_category.'.$lang.'_name as parent_name , 
@@ -240,7 +246,7 @@ class Categories extends MY_Model {
 	   return parent::get();
    }
    
-   public function get_category_name($cat_id , $lang)
+  public function get_category_name($cat_id , $lang)
    {
        $this->db->select('categories.'.$lang.'_name as category_name ,
 		                  parent_category.'.$lang.'_name as parent_name , 
@@ -250,7 +256,7 @@ class Categories extends MY_Model {
 	   return parent::get(null , true);
    }
 
-   public function max_queue($parent_id) {
+  public function max_queue($parent_id) {
         $res = $this->db->select('max(queue) as queue')
                         ->from('categories')
                         ->where('parent_id', $parent_id)
@@ -264,5 +270,18 @@ class Categories extends MY_Model {
      //   return $res ? $res->queue : 0;
    }
    
-   
+  public function get_counts_by_category()
+   {
+      // $this->db->select('count(ads.ad_id) as ads_count  , categories.category_id' );
+	  // $this->db->join('ads' , 'ads.category_id = categories.category_id' , 'left outer');
+	  // $this->db->group_by('categories.category_id');
+	  // $this->db->order_by('categories.category_id');
+	  // return parent::get();
+	  $this->db->select('count(ads.ad_id) as ad_count , categories.category_id as category_id , sun_cat.category_id as sun_id, sun_sun_cat.category_id as sun_sun_id');
+	  $this->db->join('categories as sun_cat' ,'sun_cat.parent_id = categories.category_id' , 'left outer');
+	  $this->db->join('categories as sun_sun_cat' ,'sun_sun_cat.parent_id = sun_cat.category_id' , 'left outer');
+	  
+	  
+	   
+   }
 }

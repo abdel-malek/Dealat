@@ -829,12 +829,12 @@ class Ads extends MY_Model {
    }
    
    
-
-
-
-   
-
-
+   public function increment_views($ad_id)
+   {
+       $this->db->set('views_num' , 'views_num + 1' , false);
+	   $this->db->where('ad_id' , $ad_id);
+	   return $this->db->update($this->_table_name);
+   }
 }
 
 

@@ -15,7 +15,7 @@ $lang['view_details'] = "عرض التفاصيل";
 //card modal
 $lang['seller_name'] = "اسم البائع";
 $lang['seller_rating'] = "تقييم البائع";
-$lang['price'] = "السعر";
+$lang['price'] = "السعر(ل.س)";
 $lang['chat_seller'] = "تواصل مع البائع";
 $lang['contact_info'] = "معلومات الاتصال";
 $lang['item_status'] = "الحالة";
@@ -147,7 +147,7 @@ $lang['created_at'] = "تاريخ الإنشاء";
 $lang['tamplate_name'] = 'القالب';
 $lang['publish_date'] = 'تاريخ النشر';
 $lang['title'] = 'العنوان';
-$lang['price'] = 'السعر';
+$lang['price'] = 'السعر (ل.س)';
 $lang['location'] = 'الموقع';
 $lang['details'] = 'التفاصيل';
 $lang['is_negotiable']= 'قابل للنقاش';
@@ -197,6 +197,8 @@ $lang['rejects_notes'] = 'سبب الرفض';
 $lang['edit_status'] = 'حالة التعديل';
 $lang['expiry_edit_note'] = 'هذا الإعلان منتهي الصلاحية ومعدّل, اذا تم قبوله فسوف يعاد نشره بالمعلومات الحالية';
 $lang['delete_ad_confirmation'] = 'حذف الإعلان سيؤدي إلى حذف كل ما يتعلق به متضمنة التشات والتفضيلات، هل أنت متأكد من أنك تريد المتابعة؟';
+$lang['currency'] = 'ل.س';
+
 
 //commercial ads manage 
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";

@@ -58,7 +58,7 @@ class Users extends MY_Model {
         $message = $this->lang->line('new_user_email').$user->name. 
                    $this->lang->line('user_phone').$user->phone. 
                    $this->lang->line('user_code'). $code;
-        mail($to, $subject, $message,  "From: ola@tradinos.com");
+        //mail($to, $subject, $message,  "From: ola@tradinos.com");
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;
