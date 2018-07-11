@@ -196,6 +196,7 @@ $config['auth_override_class_method']['items_control']['get_report_messages'] = 
 $config['auth_override_class_method']['items_control']['report_item'] = 'none';
 $config['auth_override_class_method']['items_control']['get_pending_count'] = 'none';
 $config['auth_override_class_method']['items_control']['get_pending_items'] = 'none';
+$config['auth_override_class_method']['items_control']['increment_views_'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_nested_categories'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_all'] = 'none';
 $config['auth_override_class_method']['categories_control']['get_subcategories'] = 'none';

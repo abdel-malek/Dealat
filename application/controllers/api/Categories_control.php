@@ -50,8 +50,8 @@ class Categories_control extends REST_Controller {
 	
 	public function test_get()
 	{
-		$categories = $this->categories->get_childs_only($this->data['lang']);
-		dump($categories);
+		$data = $this->categories->get_counts_by_category();
+		dump($data);
 	}
 	
 	public function get_nested_ids_get()

@@ -49,7 +49,7 @@ class Items_manage extends REST_Controller {
 			}else{
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
-			$recorde[] = $row -> price;
+			$recorde[] = number_format($row -> price, 0, '.', ',').' '.$this->lang->line('currency');
 			$recorde[] = $row -> city_name. ' - '.$row->location_name;
 			$recorde[] = STATUS::get_name($row -> status  , $this->data['lang']);
 			$recorde[] = EDIT_STATUS::get_edit_status_name($row->edit_status , $this->data['lang']);
@@ -59,8 +59,17 @@ class Items_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
+
+   
+   public function get_item_details_get()
+    {
+        $ad_id = $this->input->get('ad_id');
+        $tamplate_id = $this->input->get('template_id');
+        $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id);
+        $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
+    }
 	
-	public function get_all_reported_items_get()
+   public function get_all_reported_items_get()
 	{
 		$this->load->model('data_sources/reported_ads');
 		$ads = $this->reported_ads-> get_reported_ads();
@@ -79,7 +88,7 @@ class Items_manage extends REST_Controller {
 		echo json_encode($output);
 	}
 	
-	public function get_item_reports_get()
+    public function get_item_reports_get()
 	{
 		$this->load->model('data_sources/reported_ads');
 		$reports = $this->reported_ads-> get_ad_reports($this->input->get('ad_id') , $this->data['lang']);

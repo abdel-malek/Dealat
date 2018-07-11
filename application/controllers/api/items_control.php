@@ -55,7 +55,19 @@ class Items_control extends REST_Controller {
         $tamplate_id = $this->input->get('template_id');
 		$method = 'get_ad_details'.$this->data['os'];
         $deatils = $this->ads->$method($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
-        $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
+		if($deatils){
+			// increent the number of views for this ad.
+			if(isset($user_id)&& $user_id != null){
+				if($deatils->user_id != $user_id){
+				   $this->ads->increment_views($ad_id);	
+				}
+			}else{
+			   $this->ads->increment_views($ad_id);	
+			}
+			$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
+		}else{
+			$this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
+		}
     }
 
     public function post_new_item_post()
@@ -299,7 +311,7 @@ class Items_control extends REST_Controller {
  	  }
 	}
 	
-   public function get_report_messages_get()
+  public function get_report_messages_get()
     {
 	    $this->load->model('data_sources/report_messages');
 	    $messages = $this->report_messages->get_all($this->data['lang']);
@@ -335,4 +347,6 @@ class Items_control extends REST_Controller {
 			}
 		}
    	}
+
+
 }
