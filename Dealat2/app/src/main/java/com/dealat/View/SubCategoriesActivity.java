@@ -87,10 +87,10 @@ public class SubCategoriesActivity extends MasterActivity {
 
         textViewTitle.setText(category.getName());
 
-        if (action == ACTION_VIEW)
-            adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
-        else
+        if (action == ACTION_SELECT_CAT)
             adapter = new CategoryAdapter(mContext, category.getSubCategories(), false);
+        else
+            adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
         listView.setAdapter(adapter);
     }
 
@@ -119,10 +119,10 @@ public class SubCategoriesActivity extends MasterActivity {
 
                     textViewTitle.setText(category.getName());
 
-                    if (action == ACTION_VIEW)
-                        adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
-                    else
+                    if (action == ACTION_SELECT_CAT)
                         adapter = new CategoryAdapter(mContext, category.getSubCategories(), false);
+                    else
+                        adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
                     listView.setAdapter(adapter);
 
                     buttonBack.setVisibility(View.VISIBLE);
@@ -167,10 +167,10 @@ public class SubCategoriesActivity extends MasterActivity {
 
             textViewTitle.setText(category.getName());
 
-            if (action == ACTION_VIEW)
-                adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
-            else
+            if (action == ACTION_SELECT_CAT)
                 adapter = new CategoryAdapter(mContext, category.getSubCategories(), false);
+            else
+                adapter = new CategoryAdapter(mContext, category.getSubCategories(), true);
             listView.setAdapter(adapter);
 
             animate(1);

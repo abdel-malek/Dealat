@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dealat.BuildConfig;
 import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.DealatController;
 import com.dealat.Model.About;
@@ -41,6 +42,8 @@ public class AboutActivity extends MasterActivity {
             public void OnSuccess(About result) {
                 HideProgressDialog();
                 about = result;
+
+                ((TextView) findViewById(R.id.textDesc)).setText(getString(R.string.version) + " " + BuildConfig.VERSION_NAME);
 
                 if (about.getFacebookLink() != null)
                     findViewById(R.id.buttonFacebook).setVisibility(View.VISIBLE);

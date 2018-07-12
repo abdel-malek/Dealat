@@ -194,8 +194,10 @@ public class ViewAdsActivity extends DrawerActivity {
                 searchParameters.clear();
                 searchParameters.put("query", query);
 
-                if (!selectedCategory.isMain())
+                if (!selectedCategory.isMain()) {
                     searchParameters.put("category_id", selectedCategory.getId());
+                    searchParameters.put(getString(R.string.categoryName), selectedCategory.getFullName());
+                }
 
                 bookmarkId = null;
                 Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);

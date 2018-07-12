@@ -48,6 +48,7 @@
     <string name="female">Female</string>
     <string name="ad">Ad</string>
     <string name="view">View</string>
+    <string name="version">Version</string>
 
     <string name="selectImages">You can attach</string>
     <string name="images">images with your ad</string>

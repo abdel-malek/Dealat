@@ -1,5 +1,12 @@
 package com.dealat.Controller;
 
+import android.net.Uri;
+
+import com.dealat.API.APIModel;
+import com.dealat.API.URLBuilder;
+import com.dealat.Model.Ad;
+import com.dealat.Model.Item;
+import com.dealat.Model.TemplatesData;
 import com.dealat.Parser.Parser.Ad.AdDetailsParser;
 import com.dealat.Parser.Parser.Ad.AdListParser;
 import com.dealat.Parser.Parser.Item.ItemListParser;
@@ -10,11 +17,6 @@ import com.tradinos.core.network.PhotoMultipartRequest;
 import com.tradinos.core.network.RequestMethod;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.core.network.TradinosRequest;
-import com.dealat.API.APIModel;
-import com.dealat.API.URLBuilder;
-import com.dealat.Model.Ad;
-import com.dealat.Model.Item;
-import com.dealat.Model.TemplatesData;
 
 import org.json.JSONArray;
 
@@ -59,7 +61,7 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void uploadVideo(File video, SuccessCallback<String> successCallback){
+    public void uploadVideo(File video, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "item_video_upload").getURL(getmContext());
         PhotoMultipartRequest request = new PhotoMultipartRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 
@@ -120,7 +122,7 @@ public class AdController extends ParentController {
 
         request.addParameter("category_id", categoryId);
 
-       // authenticationRequired(request);
+        // authenticationRequired(request);
         addToHeader(request);
         request.Call();
     }
@@ -141,8 +143,9 @@ public class AdController extends ParentController {
         String url = new URLBuilder(APIModel.ads, "search").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
 
-        for (Map.Entry<String, String> entry : parameters.entrySet())
-            request.addParameter(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            request.addParameter(entry.getKey(), Uri.encode(entry.getValue(), "UTF-8"));
+        }
 
         addToHeader(request);
         request.Call();
@@ -171,7 +174,7 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getReportList(SuccessCallback<List<Item>> successCallback){
+    public void getReportList(SuccessCallback<List<Item>> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_report_messages").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get,
                 new ItemListParser("report_message_id", "msg"), successCallback, getmFaildCallback());
@@ -180,7 +183,7 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void reportAd(String adId, String reportId, SuccessCallback<String> successCallback){
+    public void reportAd(String adId, String reportId, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.ads, "report_item").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post,
                 new StringParser(), successCallback, getmFaildCallback());
