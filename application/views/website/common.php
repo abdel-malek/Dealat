@@ -200,6 +200,7 @@
 
 					<div class="col-sm-4 info-col mb-1 border-middle">
 						<div class="number"><span class="number-lbl label"><?php echo $this->lang->line('ad_number'); ?>: </span><span class="number-val"><b>{{ad.ad_id}}</b></span></div>
+						<div class="views"><span class="views-lbl label"><?php echo $this->lang->line('views'); ?>: </span><span class="views-val"><b>{{ad.views_num}}</b></span></div>
 						<div class="category"><span class="category-lbl label"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 						<div class="seller"><span class="seller-lbl label"><?php echo $this->lang->line('seller_name'); ?>: </span><span class="seller-val">{{ad.seller_name}}</span></div>
 
@@ -468,16 +469,16 @@
 									<ul class="dropdown-menu">
 										{{ #. }}
 										<li>
-											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}" ">{{category_name}}</a>
+											<a class="dropdown-item last-subcategory" href="" data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}">{{category_name}}</a>
 										</li>
 										{{ /. }}
 									</ul>
 								</script>
 
-							<div class="form-group ">
-								<select name="city_id " class="city-select " required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-											<option disabled selected value="" class="d-none">
-												</select>
+							<div class="form-group">
+								<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
+									<option disabled selected value="" class="d-none">
+								</select>
 							</div>
 
 							<div class="form-group">
@@ -493,7 +494,7 @@
 							</div>
 
 							<div class="form-group">
-								<input type="number" class="form-control" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
+								<input type="text" class="form-control number" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
 							</div>
 
 							<div class="form-group">
@@ -564,14 +565,14 @@
 
 
 								<div class="form-group field kilometer">
-									<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
+									<input type="text" class="form-control number" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 								</div>
 
 							</div>
 							<!--properties template-->
 							<div class="template-properties template d-none" data-template-id="2">
 								<div class="form-group field space">
-									<input type="number" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
+									<input type="text" class="form-control number" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 								</div>
 
 								<div class="form-group field rooms_num">
@@ -615,7 +616,7 @@
 							<div class="template-electronics template d-none" data-template-id="4">
 
 								<div class="form-group field size">
-									<input type="number" step=any class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+									<input type="number" step="any" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
 								</div>
 
 								<div class="form-group field is_new">
@@ -691,7 +692,7 @@
 								</div>
 
 								<div class="form-group field salary">
-									<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
+									<input type="text" class="form-control number" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 								</div>
 							</div>
 
@@ -788,7 +789,7 @@
 								<li><a class="dropdown-item dropdown-toggle" href="" data-category-id={{category_id}}>{{category_name}}</a>
 									<ul class="dropdown-menu">
 										<li>
-											<a class="dropdown-item subcategory last-subcategory" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}><?php echo $this->lang->line('all'); ?> {{category_name}}</a>
+											<a class="dropdown-item subcategory last-subcategory all" href="" data-template-id={{tamplate_id}} data-category-id={{category_id}}><?php echo $this->lang->line('all'); ?> {{category_name}}</a>
 										</li>
 										{{ #children }}
 										<li>
@@ -803,11 +804,11 @@
 							<script id="filter-modal-subcategories-template" type="text/template">
 								<ul class="dropdown-menu">
 									<li>
-										<a class="dropdown-item last-subcategory" href="" data-template-id="{{parent.tamplate_id}}" data-category-id="{{parent.category_id}}" "><?php echo $this->lang->line('all'); ?>  {{parent.category_name}}</a>
+										<a class="dropdown-item last-subcategory all" href="" data-template-id="{{parent.tamplate_id}}" data-category-id="{{parent.category_id}}"><?php echo $this->lang->line('all'); ?>  {{parent.category_name}}</a>
 										</li>
 										{{ #children }}
 										<li>
-											<a class="dropdown-item last-subcategory " href=" " data-template-id="{{tamplate_id}} " data-category-id="{{category_id}} " ">{{category_name}}</a>
+											<a class="dropdown-item last-subcategory" href=" " data-template-id="{{tamplate_id}}" data-category-id="{{category_id}}">{{category_name}}</a>
 									</li>
 									{{ /children }}
 								</ul>
@@ -829,10 +830,10 @@
 								<label for=""><?php echo $this->lang->line('price'); ?>:</label>
 								<div class="row">
 									<div class="col-sm-6">
-										<input type="number" class="form-control" name="price_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+										<input type="text" class="form-control number price" name="price_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
 									</div>
 									<div class="col-sm-6">
-										<input type="number" class="form-control" name="price_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+										<input type="text" class="form-control number price" name="price_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
 									</div>
 								</div>
 							</div>
@@ -862,10 +863,10 @@
 									<label for=""><?php echo $this->lang->line('kilometers'); ?>:</label>
 									<div class="row">
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="kilometers_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+											<input type="text" class="form-control number" name="kilometers_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
 										</div>
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="kilometers_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+											<input type="text" class="form-control number" name="kilometers_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
 										</div>
 									</div>
 								</div>
@@ -905,10 +906,10 @@
 									<label for=""><?php echo $this->lang->line('space'); ?>:</label>
 									<div class="row">
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="space_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+											<input type="text" class="form-control number" name="space_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
 										</div>
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="space_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+											<input type="text" class="form-control number" name="space_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
 										</div>
 									</div>
 								</div>
@@ -980,10 +981,10 @@
 									<label for=""><?php echo $this->lang->line('size'); ?>:</label>
 									<div class="row">
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="size_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0" step=any>
+											<input type="number" class="form-control" name="size_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0" step="any">
 										</div>
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="size_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0" step=any>
+											<input type="number" class="form-control" name="size_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0" step="any">
 										</div>
 									</div>
 								</div>
@@ -1061,10 +1062,10 @@
 									<label for=""><?php echo $this->lang->line('salary'); ?>:</label>
 									<div class="row">
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="salary_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
+											<input type="text" class="form-control number" name="salary_min" placeholder="<?php echo $this->lang->line('from'); ?>" min="0">
 										</div>
 										<div class="col-sm-6">
-											<input type="number" class="form-control" name="salary_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
+											<input type="text" class="form-control number" name="salary_max" placeholder="<?php echo $this->lang->line('to'); ?>" min="0">
 										</div>
 									</div>
 								</div>

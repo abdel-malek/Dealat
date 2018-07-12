@@ -290,13 +290,42 @@ $(function () {
 		dataType: "json"
 	}).done(function (data) {
 		if (data.status === false) {} else {
-			//save subcategories in array
+			var adsCount = [],
+				j, k;
+			//save subcategories in array for categories slider
 			for (i in data.data) {
 				subcategories.push({
 					categoryId: data.data[i].category_id,
 					children: data.data[i].children
 				});
+				//calculate ads count for each category
+				var count = 0;
+				count = count + Number(data.data[i].ads_count);
+				if (data.data[i].children) {
+					for (j in data.data[i].children) {
+						count = count + Number(data.data[i].children[j].ads_count);
+						if (data.data[i].children[j].children) {
+							for (k in data.data[i].children[j].children) {
+								count = count + Number(data.data[i].children[j].children[k].ads_count);
+							}
+						}
+					}
+				}
+				adsCount.push({
+					categoryId: data.data[i].category_id,
+					count: count
+				});
 			}
+
+			$(".category-slider .category").each(function () {
+				for (i in adsCount) {
+					if ($(this).data("categoryId") == adsCount[i].categoryId) {
+						$(this).find(".items-count").text(adsCount[i].count);
+						break;
+					}
+				}
+
+			});
 			var catData;
 			catData = {
 				categories: data.data
@@ -315,48 +344,92 @@ $(function () {
 			$("#filter-modal .categories-nav .main-categories").append(rendered);
 
 			for (i in data.data) {
-				for (j in data.data[i].children) {
+				if (data.data[i].children) {
+					for (j in data.data[i].children) {
 
-					if (data.data[i].children[j].children) {
-						//save hidden_fields in array
-						for (k in data.data[i].children[j].children) {
-							if (data.data[i].children[j].children[k].hidden_fields) {
+						if (data.data[i].children[j].children) {
+							//save hidden_fields in array
+							for (k in data.data[i].children[j].children) {
+								if (data.data[i].children[j].children[k].hidden_fields) {
+									hiddenFields.push({
+										categoryId: data.data[i].children[j].children[k].category_id,
+										hidden: $.parseJSON(data.data[i].children[j].children[k].hidden_fields)
+									});
+								}
+							}
+							var catId = data.data[i].children[j].category_id;
+							$(".categories-nav .subcategory[data-category-id=" + catId + "]").addClass("dropdown-toggle");
+							$(".categories-nav .subcategory[data-category-id=" + catId + "]").removeClass("last-subcategory");
+
+							//add third level subcategories
+							template = $('#ad-modal-subcategories-template').html();
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i].children[j].children);
+							$("#ad-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
+
+							var filterSub = {
+								parent: data.data[i].children[j],
+								children: data.data[i].children[j].children
+							};
+							template = $('#filter-modal-subcategories-template').html();
+							Mustache.parse(template);
+							rendered = Mustache.render(template, filterSub);
+							$("#filter-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
+						} else {
+							if (data.data[i].children[j].hidden_fields) {
 								hiddenFields.push({
-									categoryId: data.data[i].children[j].children[k].category_id,
-									hidden: $.parseJSON(data.data[i].children[j].children[k].hidden_fields)
+									categoryId: data.data[i].children[j].category_id,
+									hidden: $.parseJSON(data.data[i].children[j].hidden_fields)
 								});
 							}
-						}
-						var catId = data.data[i].children[j].category_id;
-						$(".categories-nav .subcategory[data-category-id=" + catId + "]").addClass("dropdown-toggle");
-						$(".categories-nav .subcategory[data-category-id=" + catId + "]").removeClass("last-subcategory");
-
-						//add third level subcategories
-						template = $('#ad-modal-subcategories-template').html();
-						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i].children[j].children);
-						$("#ad-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
-
-						var filterSub = {
-							parent: data.data[i].children[j],
-							children: data.data[i].children[j].children
-						};
-						template = $('#filter-modal-subcategories-template').html();
-						Mustache.parse(template);
-						rendered = Mustache.render(template, filterSub);
-						$("#filter-modal .categories-nav .subcategory[data-category-id=" + catId + "]").after(rendered);
-					} else {
-						if (data.data[i].children[j].hidden_fields) {
-							hiddenFields.push({
-								categoryId: data.data[i].children[j].category_id,
-								hidden: $.parseJSON(data.data[i].children[j].hidden_fields)
-							});
 						}
 					}
 				}
 			}
 		}
 	});
+
+	function getCatChildrenTypes(catId) {
+		var childrenIds = [],
+			j, k;
+		for (i in subcategories) {
+			if (subcategories[i].categoryId == catId) {
+				if (subcategories[i].children) {
+					for (j in subcategories[i].children) {
+						if (subcategories[i].children[j].children) {
+							for (k in subcategories[i].children[j].children) {
+								//save children ids in array
+								childrenIds.push({
+									categoryId: subcategories[i].children[j].children[k].category_id
+								});
+							}
+						} else {
+							childrenIds.push({
+								categoryId: subcategories[i].children[j].category_id
+							});
+						}
+					}
+				}
+				break;
+			} else {
+				if (subcategories[i].children) {
+					for (j in subcategories[i].children) {
+						if (subcategories[i].children[j].category_id == catId) {
+							if (subcategories[i].children[j].children) {
+								for (k in subcategories[i].children[j].children) {
+									//save children ids in array
+									childrenIds.push({
+										categoryId: subcategories[i].children[j].children[k].category_id
+									});
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return childrenIds;
+	}
 
 	//view subcategories when click on category slider
 	$(".category").click(function () {
@@ -508,9 +581,12 @@ $(function () {
 				types: arr2
 			};
 
+
 			// types
 			for (i in typesData.types) {
-				$('#filter-modal .type-select, #ad-modal .type-select, #edit-ad-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
+				$('#filter-modal .type-select').append('<option class="d-none type-full-name" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].full_type_name + '</option> <option class="d-none type-name" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
+
+				$('#ad-modal .type-select, #edit-ad-modal .type-select').append('<option class="d-none" value="' + typesData.types[i].type_id + '" data-template-id="' + typesData.types[i].tamplate_id + '" data-category-id="' + typesData.types[i].category_id + '">' + typesData.types[i].name + '</option>');
 			}
 
 			$('#filter-modal select.type-select')[0].sumo.reload();
@@ -742,6 +818,12 @@ $(function () {
 					data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
 				}
 
+				//add commas to price
+				data.data.price = new Intl.NumberFormat().format(data.data.price);
+				data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
+				data.data.space = new Intl.NumberFormat().format(data.data.space);
+				data.data.salary = new Intl.NumberFormat().format(data.data.salary);
+
 				adData = {
 					ad: data.data,
 					date: data.data.publish_date.split(' ')[0],
@@ -776,6 +858,12 @@ $(function () {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
+				}
+
+				if (data.data.is_admin === 1) {
+					$("#card-modal .chat, #card-modal .seller").addClass("d-none");
+				} else {
+					$("#card-modal .chat, #card-modal .seller").removeClass("d-none");
 				}
 
 				//category job then remove price circle
@@ -953,6 +1041,9 @@ $(function () {
 		}
 
 		if (templateId === 1 || templateId === 3 || templateId === 4 || templateId === 5 || templateId === 6 || templateId === 7 || templateId === 9) {
+			$("#ad-modal select[name='is_new']").each(function () {
+				$(this).removeAttr("required");
+			});
 			if ($.inArray("is_new", hideArr) === -1) {
 				$("#ad-modal .template[data-template-id=" + templateId + "] select[name='is_new']").attr("required", true);
 			} else {
@@ -1066,7 +1157,11 @@ $(function () {
 
 	//view template fields when change category in filter modal
 	$("#filter-modal .categories-nav").on("click", ".last-subcategory", function () {
-		var templateId, subId, subName, has_types = 0;
+		var templateId, subId, subName, has_types = 0,
+			has_class_all = 0;
+		if ($(this).hasClass("all")) {
+			has_class_all = 1;
+		}
 		templateId = $(this).data("templateId");
 		$("#filter-form input.template-id").val(templateId);
 		subId = $(this).data("categoryId");
@@ -1097,15 +1192,33 @@ $(function () {
 		});
 
 		//only display selected template types
-		$("#filter-modal .type-select option").each(function () {
-			$(this).addClass("d-none");
-			if ($(this).data("categoryId") === subId) {
-				has_types = 1;
-				$(this).removeClass("d-none");
-			}
-		});
+		if (has_class_all) {
+			//selected category has class all
+			var childrenIds = [];
+			childrenIds = getCatChildrenTypes(subId);
+			$("#filter-modal .type-select option").addClass("d-none");
+			$("#filter-modal .type-select option.type-full-name").each(function () {
+				for (i in childrenIds) {
+					if ($(this).data("categoryId") == childrenIds[i].categoryId) {
+						has_types = 1;
+						$(this).removeClass("d-none");
+						break;
+					}
+				}
+			});
+		} else {
+			$("#filter-modal .type-select option").addClass("d-none");
+			$("#filter-modal .type-select option.type-name").each(function () {
+				if ($(this).data("categoryId") === subId) {
+					has_types = 1;
+					$(this).removeClass("d-none");
+				}
+			});
+		}
 
 		$('#filter-modal select.type-select')[0].sumo.reload();
+		$("#filter-modal .model-select")[0].sumo.unSelectAll();
+		$("#filter-modal .model-select")[0].sumo.reload();
 		//display types select only if category is vehicles, mobiles or electronics
 		if (has_types !== 0) {
 			$("#filter-modal .type-select").parents(".form-group").removeClass("d-none");
@@ -1114,9 +1227,6 @@ $(function () {
 			$("#filter-modal .type-select").parents(".form-group").addClass("d-none");
 			$("#filter-modal .model-select").parents(".form-group").addClass("d-none");
 		}
-
-		$("#filter-form .category-id").val(subId);
-		$("#filter-form input[name='category_name']").val(subName);
 
 		//change select placeholder
 		var catText1, catText2, subText, text;
@@ -1131,11 +1241,25 @@ $(function () {
 		}
 		$(this).closest(".categories-nav").find(".select").text(text);
 
+		$("#filter-form .category-id").val(subId);
+		$("#filter-form input[name='category_name']").val(text);
+
+		//reset non-multiple select boxes
 		$('#filter-form select:not(.city-select, .location-select, .multiple)').each(function () {
 			$(this).prop('selectedIndex', 0);
 			$(this)[0].sumo.reload();
 		});
 
+		//reset multiple select boxes
+		$('#filter-form select.multiple').each(function () {
+			//			$(this).prop('selectedIndex', 0);
+			$(this)[0].sumo.unSelectAll();
+			$(this)[0].sumo.reload();
+		});
+		
+		$('#filter-form input[type="text"]:not(.search, .price),#filter-form input[type="number"]').each(function () {
+			$(this).val("");
+		});
 	});
 
 	//featured ad
@@ -1374,6 +1498,13 @@ $(function () {
 			});
 		}
 
+		var numbersWithComma = ["price", "kilometer", "space", "salary"];
+		for (i in data) {
+			if (numbersWithComma.indexOf(data[i].name) > -1) {
+				data[i].value = data[i].value.replace(/,/g, '');
+			}
+		}
+console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -1762,6 +1893,14 @@ $(function () {
 			});
 		}
 
+		var numbersWithComma = ["price_min", "kilometer_min", "space_min", "salary_min", "price_max", "kilometer_max", "space_max", "salary_max"];
+
+		for (i in data) {
+			if (numbersWithComma.indexOf(data[i].name) > -1) {
+				data[i].value = data[i].value.replace(/,/g, '');
+			}
+		}
+
 		data1 = $.param(data);
 
 		sessionStorage.removeItem('bookmark');
@@ -1946,7 +2085,7 @@ $(function () {
 					}
 				}
 				notSeenMsgs = newNotSeenMsgs;
-				
+
 			}
 		});
 		notSeenInterval = setTimeout(checkNewMsgs, 1000);
@@ -2609,7 +2748,7 @@ $(function () {
 					$(".notifications-dropdown .number").text(data.data);
 					$(".notifications-dropdown .number").removeClass("d-none");
 				}
-				
+
 			}
 		});
 		setTimeout(checkNotCount, 2000);
@@ -2709,11 +2848,11 @@ $(function () {
 						$(".notification-alert").addClass("d-none");
 					}, 5000);
 					adNotCount = Number(data.data);
-					
+
 					$(".notes-dropdown .number").text(data.data);
 					$(".notes-dropdown .number").removeClass("d-none");
 				}
-				
+
 			}
 		});
 		setTimeout(checkAdNotCount, 1500);
@@ -2730,5 +2869,18 @@ $(function () {
 			$("#register-modal").modal("show");
 		}, 500);
 	});
-	
+
+	//add commas while user typing numbers
+	$('input.number').keyup(function (event) {
+		// skip for arrow keys
+		if (event.which >= 37 && event.which <= 40) return;
+
+		// format number
+		$(this).val(function (index, value) {
+			return value
+				.replace(/\D/g, "")
+				.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		});
+	});
+
 });

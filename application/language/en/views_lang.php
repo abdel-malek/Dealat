@@ -43,7 +43,7 @@ $lang['size'] = "Size";
 $lang['schedule'] = "Schedule";
 $lang['experience'] = "Experience";
 $lang['education'] = "Education";
-$lang['salary'] = "Salary";
+$lang['salary_'] = "Salary";
 $lang['set_as_featured'] = "Set as featured advertisement";
 $lang['featured_cost'] = "This feature is paid. If you want your ad to be featured, enable it, and the admin will contact with you.";
 $lang['agree_policy'] = "I agree to the dealat";
@@ -454,3 +454,4 @@ $lang['shown'] = 'Shown';
 
 //edit ad 
 $lang['save_changes'] = 'Save Changes';
+$lang['views'] = 'Views';

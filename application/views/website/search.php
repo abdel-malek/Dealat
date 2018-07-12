@@ -68,7 +68,7 @@
 												<?php if($ad->price != 0): ?>
 												<div class="price">
 													<div class="price-val">
-														<?php echo $ad->price ?>
+														<?php echo number_format($ad -> price, 0, '.', ','); ?>
 														<?php echo $this->lang->line('sp'); ?>
 													</div>
 												</div>

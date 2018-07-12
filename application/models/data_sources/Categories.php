@@ -8,49 +8,57 @@ class Categories extends MY_Model {
 
 	
 	public function get_nested($lang)
-	{
-	    $this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id  , web_image, mobile_image , tamplate_id , description , hidden_fields');
-	    $this->db->where('is_active', 1);
-		$this -> db -> order_by($this -> _order_by);
-		$categories = $this -> db -> get('categories') -> result_array();
-	    // create an array to hold the references
-	    $refs = array();
-	
-	   // create an array to hold the root parents list
-	    $list = array();
-	
-	   // loop over the results
-	    foreach($categories as $data)
-	    {
-            // Assign by reference (assign the children)
-	       $thisref = &$refs[ $data['category_id'] ]; 
+    {
+        $this->db->select('categories.'.$lang.'_name as category_name , description,  categories.category_id , parent_id  , web_image, mobile_image , tamplate_id  , hidden_fields , count(ads_temp.ad_id) as ads_count');
+        $this->db->join("(SELECT ads.ad_id , show_periods.days , ads.category_id , status , publish_date
+                         FROM ads
+                         left join show_periods on ads.show_period = show_periods.show_period_id) as ads_temp" ,
+                        "ads_temp.category_id = categories.category_id AND ads_temp.status = 2 AND (DATE_ADD(publish_date, INTERVAL days DAY) > NOW())" ,
+                        "left outer" , false);
+        $this->db->where('is_active', 1); 
+        $this->db->group_by('categories.category_id');
+        $this->db->where('is_active', 1);
+        $this -> db -> order_by($this -> _order_by);
+        $categories = $this -> db -> get('categories') -> result_array();
+        // create an array to hold the references
+        $refs = array();
+    
+       // create an array to hold the root parents list
+        $list = array();
+    
+       // loop over the results
+        foreach($categories as $data)
+        {
+           // Assign by reference (assign the children)
+           $thisref = &$refs[ $data['category_id'] ];
 
-	       // add the the menu parent
-	       $thisref['category_id'] = $data['category_id'];
-	       $thisref['category_name'] = $data['category_name'];
-		   $thisref['parent_id']=$data['parent_id'];
-		   $thisref['web_image']=$data['web_image'];
-		   $thisref['mobile_image']=$data['mobile_image'];
-		   $thisref['tamplate_id']= $data['tamplate_id'];
-		   $thisref['description']=$data['description'];
-		   $thisref['hidden_fields']=$data['hidden_fields'];
-	       // if there is no parent id
-	       if ($data['parent_id']== 0)
-	       {
-	          $list[ $data['category_id'] ] = &$thisref; 
-	       }
-	       else
-	       {
-	          $refs[ $data['parent_id'] ]['children'][ ] = &$thisref;
-	       }
-		
-	   }
-	    $result_array = array();
-		foreach ($list as $key => $value) {
-			$result_array[] = $value;
-		}
-		return $result_array;
-	}
+           // add the the menu parent
+           $thisref['category_id'] = $data['category_id'];
+           $thisref['category_name'] = $data['category_name'];
+           $thisref['parent_id']=$data['parent_id'];
+           $thisref['web_image']=$data['web_image'];
+           $thisref['mobile_image']=$data['mobile_image'];
+           $thisref['tamplate_id']= $data['tamplate_id'];
+           $thisref['description']=$data['description'];
+           $thisref['hidden_fields']=$data['hidden_fields'];
+           $thisref['ads_count'] = $data['ads_count'];
+           // if there is no parent id
+           if ($data['parent_id']== 0)
+           {
+              $list[ $data['category_id'] ] = &$thisref; 
+           }
+           else
+           {
+              $refs[ $data['parent_id'] ]['children'][ ] = &$thisref;
+           }
+        
+       }
+        $result_array = array();
+        foreach ($list as $key => $value) {
+            $result_array[] = $value;
+        }
+        return $result_array;
+    }
 
   public function get_all($lang)
     {

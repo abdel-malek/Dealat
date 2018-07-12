@@ -23,7 +23,8 @@ body {
   color: #333;
   padding: 0px;
   margin: 0px;
-  background-color: #eeeeee; }
+  background-color: #eeeeee;
+  cursor: default; }
 
 .container-fluid {
   padding: 0; }
@@ -767,6 +768,19 @@ header.home {
         padding-top: 8px;
         width: 80%;
         margin: auto; }
+      .categories .category-slider .slick-slide .items-count {
+        background-color: #c30a30;
+        border: 1px solid #fff;
+        color: #fff;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 50%;
+        min-width: 23px;
+        min-height: 23px;
+        padding: 0;
+        font-size: .8rem; }
   .categories .slick-arrow {
     top: 35%; }
   .categories .slick-prev {
@@ -1130,9 +1144,6 @@ select option.placeholder {
         color: #888; }
       #card-modal .card .card-body .price-val {
         margin-top: 38%; }
-      #card-modal .card .card-body .views-lbl,
-      #card-modal .card .card-body .likes-lbl {
-        padding-right: 20px; }
       #card-modal .card .card-body .fav {
         position: absolute;
         text-align: center;
@@ -1501,6 +1512,10 @@ select option.placeholder {
 #edit-ad-modal .featured-note,
 #filter-modal .featured-note {
   font-size: 0.65rem; }
+
+#filter-modal .SumoSelect > .optWrapper {
+  width: auto;
+  min-width: 100%; }
 
 #edit-ad-modal .image-wrapper {
   max-width: 120px;

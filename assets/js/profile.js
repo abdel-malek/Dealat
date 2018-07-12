@@ -564,7 +564,7 @@ $(function () {
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
 					$("#edit-ad-modal .period-select")[0].sumo.reload();
-					$("#edit-ad-modal input[name='price']").val(data.data.price);
+					$("#edit-ad-modal input[name='price']").val(new Intl.NumberFormat().format(data.data.price));
 					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
 					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
 
@@ -595,7 +595,7 @@ $(function () {
 						$("#edit-ad-modal input[name='manufacture_date']").val(data.data.manufacture_date);
 					}
 					if (data.data.kilometer) {
-						$("#edit-ad-modal input[name='kilometer']").val(data.data.kilometer);
+						$("#edit-ad-modal input[name='kilometer']").val(new Intl.NumberFormat().format(data.data.kilometer));
 					}
 					if (data.data.engine_capacity) {
 						$("#edit-ad-modal select[name='engine_capacity']").val(data.data.engine_capacity);
@@ -616,7 +616,7 @@ $(function () {
 						});
 					}
 					if (data.data.space) {
-						$("#edit-ad-modal input[name='space']").val(data.data.space);
+						$("#edit-ad-modal input[name='space']").val(new Intl.NumberFormat().format(data.data.space));
 					}
 					if (data.data.rooms_num) {
 						$("#edit-ad-modal input[name='rooms_num']").val(data.data.rooms_num);
@@ -659,7 +659,7 @@ $(function () {
 						$("#edit-ad-modal select[name='gender']")[0].sumo.unSelectAll();
 					}
 					if (data.data.salary) {
-						$("#edit-ad-modal input[name='salary']").val(data.data.salary);
+						$("#edit-ad-modal input[name='salary']").val(new Intl.NumberFormat().format(data.data.salary));
 					}
 
 					if (data.data.ad_visible_phone === "1") {
@@ -1058,6 +1058,13 @@ $(function () {
 				}
 			}
 
+			var numbersWithComma = ["price", "kilometer", "space", "salary"];
+			for (i in editAdData) {
+				if (numbersWithComma.indexOf(editAdData[i].name) > -1) {
+					editAdData[i].value = editAdData[i].value.replace(/,/g, '');
+				}
+			}
+
 			$("#confirm-edit-modal").modal("show");
 		});
 
@@ -1259,6 +1266,15 @@ $(function () {
 				for (i in data.data) {
 					data.data[i].query = $.parseJSON(data.data[i].query);
 					data.data[i].filter = $.param(data.data[i].query);
+					
+					//add commas to price
+//					var numbersWithComma = ["price_min", "kilometer_min", "space_min", "salary_min", "price_max", "kilometer_max", "space_max", "salary_max"];
+		
+					if(data.data[i].query.price_min){
+						data.data[i].query.price_min = new Intl.NumberFormat().format(data.data[i].query.price_min);
+					}
+					
+					
 					template = $('#saved-bookmarks-template').html();
 					Mustache.parse(template);
 					rendered = Mustache.render(template, data.data[i]);

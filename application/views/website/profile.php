@@ -189,25 +189,25 @@
 						<li class="bookmark" data-bookmark-id="{{user_bookmark_id}}" data-filter="{{filter}}">
 							<div class="row no-gutters">
 								<div class="col-sm-8 details">
-									{{# query.search}}
-									<div class="search"><span class="search-lbl"><?php echo $this->lang->line('search'); ?>: </span><span class="search-val">{{query.search}}</span></div>{{/query.search}} {{#query.category_name}}
+									{{# query.query}}
+									<div class="search"><span class="search-lbl"><?php echo $this->lang->line('search'); ?>: </span><span class="search-val">{{query.query}}</span></div>{{/query.query}} {{#query.category_name}}
 									<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="query.category-val">{{query.category_name}}</span></div>{{/query.category_name}} {{#query.city_name}}
 									<div class="city"><span class="city-lbl"><?php echo $this->lang->line('city'); ?>: </span><span class="city-val">{{query.city_name}}</span></div>{{/query.city_name}} {{#query.location_name}}
 									<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{query.location_name}}</span></div>{{/query.location_name}} {{#query.price_min}}
-									<div class="price"><span class="price-lbl"><?php echo $this->lang->line('price'); ?>: </span><span class="price-val"><?php echo $this->lang->line('from'); ?>: {{query.price_min}}<?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.price_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.price_min}} {{#query.type_name}}
-									<div class="type "><span class="type-lbl"><?php echo $this->lang->line('type'); ?>: </span><span class="type-val">{{query.type_name}}</span></div>{{/query.type_name}} {{#query.type_model_name}}
-									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.type_model_name}}</span></div>{{/query.type_model_name}} 
+									<div class="price"><span class="price-lbl"><?php echo $this->lang->line('item_price'); ?>: </span><span class="price-val"><?php echo $this->lang->line('from'); ?>: {{query.price_min}} <?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.price_max}} <?php echo $this->lang->line('sp'); ?></span></div>{{/query.price_min}} {{#query.type_name}}
+									<div class="type "><span class="type-lbl"><?php echo $this->lang->line('type'); ?>: </span><span class="type-val">{{query.type_name}}</span></div>{{/query.type_name}} {{#query.model_name}}
+									<div class="model "><span class="model-lbl"><?php echo $this->lang->line('type_model'); ?>: </span><span class="model-val">{{query.model_name}}</span></div>{{/query.model_name}} 
 									{{#query.engine_capacity_min}}
-									<div class="engine_capacity"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>: </span><span class="engine_capacity-val"><?php echo $this->lang->line('from'); ?>: {{query.engine_capacity_min}}<?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.engine_capacity_max}}<?php echo $this->lang->line('sp'); ?></span></div>{{/query.engine_capacity_min}} 
+									<div class="engine_capacity"><span class="engine_capacity-lbl"><?php echo $this->lang->line('engine_capacity'); ?>: </span><span class="engine_capacity-val"><?php echo $this->lang->line('from'); ?>: {{query.engine_capacity_min}} <?php echo $this->lang->line('to'); ?>: {{query.engine_capacity_max}}</span></div>{{/query.engine_capacity_min}} 
 									{{#query.years_name}}
 									<div class="manufacture_date"><span class="manufacture_date-lbl"><?php echo $this->lang->line('manufacture_date'); ?>: </span><span class="manufacture_date-val">{{query.years_name}}</span></div>{{/query.years_name}} {{#query.automatic_name}}
 									<div class="is_automatic"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>: </span><span class="is_automatic-val">{{query.automatic_name}}</span></div>{{/query.automatic_name}} {{#query.state_name}}
 									<div class="is_new"><span class="is_new-lbl"></span>
-										<?php echo $this->lang->line('item_status'); ?>: <span class="is_new-val">{{query.state_name}}</span></div>{{/query.state_name}} {{#query.kilometer_min}}
-									<div class="kilometer"><span class="kilometer-lbl"><?php echo $this->lang->line('kilometrage'); ?>: </span><span class="kilometer-val">from: {{query.kilometer_min}} to: {{query.kilometer_max}}</span></div>{{/query.kilometer_min}} {{#query.space_min}}
+										<?php echo $this->lang->line('item_status'); ?>: <span class="is_new-val">{{query.state_name}}</span></div>{{/query.state_name}} {{#query.kilometers_min}}
+									<div class="kilometers"><span class="kilometers-lbl"><?php echo $this->lang->line('kilometers'); ?>: </span><span class="kilometers-val">from: {{query.kilometers_min}} to: {{query.kilometers_max}}</span></div>{{/query.kilometers_min}} {{#query.space_min}}
 
 									<div class="space"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>: </span><span class="space-val"><?php echo $this->lang->line('from'); ?>: {{query.space_min}} <?php echo $this->lang->line('to'); ?>: {{query.space_max}}</span></div>{{/query.space_min}} {{#query.rooms_num_min}}
-									<div class="rooms_num"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>:</span><span class="rooms_num-val"><?php echo $this->lang->line('from'); ?>: {{query.rooms_num_min}} <?php echo $this->lang->line('to'); ?>: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
+									<div class="rooms_num"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>: </span><span class="rooms_num-val"><?php echo $this->lang->line('from'); ?>: {{query.rooms_num_min}} <?php echo $this->lang->line('to'); ?>: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
 									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.floors_number_min}}
 									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val">from: {{query.floors_number_min}} to: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} 
 									{{#query.property_state_name}}
@@ -217,11 +217,11 @@
 
 									<div class="size"><span class="size-lbl"><?php echo $this->lang->line('size'); ?>: </span><span class="size-val"><?php echo $this->lang->line('from'); ?>: {{query.size_min}} <?php echo $this->lang->line('to'); ?>: {{query.size_max}}</span></div>{{/query.size_min}} {{#query.schedule_name}}
 
-									<div class="schedule schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>:</span><span class="schedule-val">{{query.schedule_name}}</span></div>{{/query.schedule_name}} {{#query.education_name}}
+									<div class="schedule schedule_name"><span class="schedule-lbl"><?php echo $this->lang->line('schedule'); ?>: </span><span class="schedule-val">{{query.schedule_name}}</span></div>{{/query.schedule_name}} {{#query.education_name}}
 									<div class="education education_name"><span class="education-lbl"><?php echo $this->lang->line('education'); ?>: </span><span class="education-val">{{query.education_name}}</span></div>{{/query.education_name}} {{#query.certificate_name}}
 									<div class="certificate certificate_name"><span class="certificate-lbl"><?php echo $this->lang->line('certificate'); ?>: </span><span class="certificate-val">{{query.certificate_name}}</span></div>{{/query.certificate_name}} {{#query.gender_name}}
 									<div class="education gender"><span class="education-lbl"><?php echo $this->lang->line('gender'); ?>: </span><span class="education-val">{{query.gender_name}}</span></div>{{/query.gender_name}} {{#query.salary_min}}
-									<div class="salary"><span class="salary-lbl"><?php echo $this->lang->line('salary'); ?>: </span><span class="salary-val"><?php echo $this->lang->line('from'); ?>: {{query.salary_min}} <?php echo $this->lang->line('to'); ?>: {{query.salary_max}}</span></div>{{/query.salary_min}}
+									<div class="salary"><span class="salary-lbl"><?php echo $this->lang->line('salary_'); ?>: </span><span class="salary-val"><?php echo $this->lang->line('from'); ?>: {{query.salary_min}} <?php echo $this->lang->line('sp'); ?> <?php echo $this->lang->line('to'); ?>: {{query.salary_max}} <?php echo $this->lang->line('sp'); ?></span></div>{{/query.salary_min}}
 								</div>
 								<div class="col-6 col-sm-2 text-center">
 									<div class="show">
@@ -282,7 +282,7 @@
 								</div>
 
 								<div class="form-group">
-									<input type="number" class="form-control" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
+									<input type="text" class="form-control number" name="price" placeholder="<?php echo $this->lang->line('item_price'); ?>" required>
 								</div>
 
 								<div class="form-group">
@@ -339,14 +339,14 @@
 										<input type="text" class="form-control" name="manufacture_date" placeholder="<?php echo $this->lang->line('manufacture_date'); ?>" data-toggle="datepicker">
 									</div>
 									<div class="form-group field kilometer">
-										<input type="number" class="form-control" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
+										<input type="text" class="form-control number" name="kilometer" placeholder="<?php echo $this->lang->line('kilometers'); ?>">
 									</div>
 
 								</div>
 								<!--properties template-->
 								<div class="template-properties template d-none" data-template-id="2">
 									<div class="form-group field space">
-										<input type="number" class="form-control" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
+										<input type="text" class="form-control number" name="space" placeholder="<?php echo $this->lang->line('space'); ?>">
 									</div>
 
 									<div class="form-group field rooms_num">
@@ -391,7 +391,7 @@
 								<div class="template-electronics template d-none" data-template-id="4">
 
 									<div class="form-group field size">
-										<input type="text" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
+										<input type="number" step="any" class="form-control" name="size" placeholder="<?php echo $this->lang->line('size'); ?>">
 									</div>
 
 									<div class="form-group field is_new">
@@ -467,7 +467,7 @@
 									</div>
 
 									<div class="form-group field salary">
-										<input type="number" class="form-control" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
+										<input type="text" class="form-control number" name="salary" placeholder="<?php echo $this->lang->line('salary'); ?>">
 									</div>
 								</div>
 

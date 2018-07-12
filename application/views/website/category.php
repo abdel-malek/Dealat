@@ -24,6 +24,7 @@
 					<h6 class="name">
 						<?php echo $category->category_name ?>
 					</h6>
+					<div class="items-count">0</div>
 				</div>
 				<?php endforeach; ?>
 				<?php endif; ?>
@@ -123,7 +124,7 @@
 									</div>
 									<div class="price">
 										<div class="price-val">
-											<?php echo $ad->price; ?> <?php echo $this->lang->line('sp'); ?>
+											<?php echo number_format($ad -> price, 0, '.', ','); ?> <?php echo $this->lang->line('sp'); ?>
 										</div>
 									</div>
 								</div>

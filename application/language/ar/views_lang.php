@@ -41,7 +41,7 @@ $lang['size'] = "الحجم";
 $lang['schedule'] = "الدوام";
 $lang['experience'] = "الخبرة";
 $lang['education'] = "الدراسة";
-$lang['salary'] = "الراتب";
+$lang['salary_'] = "الراتب";
 $lang['set_as_featured'] = "إضافة كإعلان مميز";
 $lang['featured_cost'] = "هذه الميزة مدفوعة. إذا كنت تريد أن يكون إعلانك مميّزاً قم بتفعيلها، وبعدها ستتواصل الإدارة معك.";
 $lang['agree_policy'] = "أنا أوافق على";
@@ -454,3 +454,4 @@ $lang['shown'] = 'ظاهر';
 
 //edit ad 
 $lang['save_changes'] = 'حفظ التغيرات';
+$lang['views'] = 'المشاهدات';
