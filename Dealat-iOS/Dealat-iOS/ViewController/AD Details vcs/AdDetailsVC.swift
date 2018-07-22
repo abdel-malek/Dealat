@@ -50,6 +50,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var favVV : UIView!
     @IBOutlet weak var imgFav : UIImageView!
 
+    @IBOutlet weak var viewLbl : UILabel!
+
 
     // 1 Vehicle
     @IBOutlet weak var manufacture_dateLbl : UILabel!
@@ -203,6 +205,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.title = ad.title
         Provider.sd_setImage(self.img, urlString: ad.main_image)
         
+        if let views_num = ad.views_num{
+            self.viewLbl.text = "\(views_num.stringValue) " + "views".localized
+        }else{
+            self.viewLbl.text = nil
+        }
         
         if User.isRegistered(){
             let same = self.ad.seller_id.intValue == User.getID()
@@ -297,7 +304,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new1.text = ad.vehicle.is_new.Boolean ? "new".localized : "old".localized
             }
             if self.ad.vehicle.kilometer != nil{
-                self.kilometerLbl.text = ad.vehicle.kilometer.doubleValue.formatDigital()
+                self.kilometerLbl.text = (ad.vehicle.kilometer != nil) ? ad.vehicle.kilometer.stringValue.currencyInputFormatting() : nil
             }
             self.type_nameLbl.text = ad.vehicle.type_name
             self.type_model_nameLbl.text = ad.vehicle.type_model_name
@@ -315,7 +322,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             if ad.property.with_furniture != nil{
                 self.with_furnitureLbl.text = ad.property.with_furniture.Boolean ? "yes".localized : "no".localized
             }
-            self.spaceLbl.text = ad.property.space
+            
+            
+            self.spaceLbl.text = (ad.property.space != nil) ? ad.property.space.currencyInputFormatting() : nil
         }
         
         //3 Mobiles
@@ -333,7 +342,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new4.text = ad.electronic.is_new.Boolean ? "new".localized : "old".localized
             }
             self.type_nameLbl4.text = ad.electronic.type_name
-            self.sizeLbl.text = ad.electronic.size
+            self.sizeLbl.text = ad.electronic.size != nil ? ad.electronic.size.currencyInputFormatting() : nil
         }
         
         //5 Fashion

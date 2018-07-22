@@ -11,18 +11,19 @@ import UIKit
 class CategoryCell: BaseCell {
 
     @IBOutlet weak var lbl: UILabel!
+    @IBOutlet weak var lblCount: UILabel!
+
     
     var cat : Cat!{
         didSet{
             self.lbl.text = cat.category_name
-            
+            self.lblCount.text = String(cat.ads_count2)
             
             if self.cat.children.count > 1 && self.tag != -1{
                 self.accessoryType = .disclosureIndicator
             }else{
                 self.accessoryType = .none
             }
-            
             
             let border = CALayer()
             let width = CGFloat(0.5)
@@ -32,8 +33,6 @@ class CategoryCell: BaseCell {
             border.borderWidth = width
             self.layer.addSublayer(border)
             self.layer.masksToBounds = true
-
-            
         }
     }
 

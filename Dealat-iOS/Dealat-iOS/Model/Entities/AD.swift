@@ -46,6 +46,7 @@ class AD : BaseEntity {
     var expired_after : JSON!
     var ad_visible_phone : JSON!
     var is_admin : JSON!
+    var views_num : JSON!
     
     var vehicle = Vehicle()
     var property = Property()
@@ -171,7 +172,7 @@ class AD : BaseEntity {
         expired_after <- map["expired_after"]
         ad_visible_phone <- map["ad_visible_phone"]
         is_admin <- map["is_admin"]
-        
+        views_num <- map["views_num"]
         
         // 1 Vehicle
         vehicle.manufacture_date <- map["manufacture_date"]

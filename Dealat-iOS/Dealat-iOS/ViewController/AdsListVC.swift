@@ -64,6 +64,30 @@ class AdsListVC: BaseVC {
     
     override func getRefreshing() {
         
+        if !self.fromFilter && self.query.isEmpty{
+            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView2.reloadData()
+                self.refreshTopAds()
+            }
+        }else{
+            Communication.shared.search(query: self.query, filter : Provider.filter, callback: { (res) in
+                self.hideLoading()
+                self.ads = res
+                self.collectionView2.reloadData()
+                
+                self.categoryNameLbl.title = nil
+                self.categoryImg.image = nil
+                self.markImg.image = #imageLiteral(resourceName: "star_copy")
+                self.markImg.target = self
+                self.markImg.action = #selector(self.markAction)
+                self.refreshTopAds()
+            })
+        }
+    }
+    
+    func refreshTopAds(){
         var cat_id = 0
         if !self.fromFilter && self.query.isEmpty{
             cat_id = self.cat.category_id.intValue
@@ -88,26 +112,6 @@ class AdsListVC: BaseVC {
                     self.collectionView.backgroundView = im
                 }
             }
-        }
-
-        if !self.fromFilter && self.query.isEmpty{
-            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
-                self.hideLoading()
-                self.ads = res
-                self.collectionView2.reloadData()
-            }
-        }else{
-            Communication.shared.search(query: self.query, filter : Provider.filter, callback: { (res) in
-                self.hideLoading()
-                self.ads = res
-                self.collectionView2.reloadData()
-                
-                self.categoryNameLbl.title = nil
-                self.categoryImg.image = nil
-                self.markImg.image = #imageLiteral(resourceName: "star_copy")
-                self.markImg.target = self
-                self.markImg.action = #selector(self.markAction)
-            })
         }
     }
     

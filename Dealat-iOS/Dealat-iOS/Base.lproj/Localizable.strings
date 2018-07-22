@@ -13,7 +13,8 @@
 "Email" = "Email address";
 "Password" = "Password";
 "ConfirmPassword" = "Confirm password";
-"SetArea" = "Set Area";
+"SetArea" = "Choose Area";
+"SetLang" = "Choose Language";
 "SignIn" = "Sign in";
 "Already" = "Already have an account?";
 "Skip" = "Skip";
@@ -28,7 +29,8 @@
 "Birthday" = "Birthday";
 "Gender" = "Gender";
 "Call" = "Call";
-
+"Male" = "Male";
+"Famale" = "Famale";
 
 
 //SIDE MENU
@@ -41,16 +43,19 @@
 "Settings" = "Settings";
 "Help" = "About App";
 "Logout" = "Log out";
+"Deactive" = "Deactive account";
 
 //My Profile
 "My Ads" = "My Ads";
 "Favorites" = "Favorites";
 "My Chats" = "My Chats";
+"showPhone" = "Show phone number";
+"showPhone2" = "Your phone number will be shown with this ad's details";
 
 
 
 //General
-"Sell" = "Submit an Ad";//Sell your item
+"Sell" = "Submit your ad for free";//Sell your item
 "SellEdit" = "Edit the Ad";
 "Category" = "Category";
 "City" = "City";
@@ -75,7 +80,6 @@
 "AdDate" = "Published date";
 "AdDateCreated" = "Created date";
 "AdExpires" = "Expires on";
-"AdExpired" = "Expired on";
 "From" = "From";
 "To" = "To";
 "Show" = "Show";
@@ -90,14 +94,15 @@
 "TypeModelName" = "Model";
 "Automatic" = "Automatic";
 "Manual" = "Manual";
-
+"EngineCapacity" = "Engine Capacity";
 
 
 //Properties
 "Space" = "Space";
 "Rooms" = "Rooms";
+"floors_number" = "Floors number";
 "Floor" = "Floor";
-"PropertyState" = "Property state";
+"PropertyState" = "Finishing type";
 "State" = "State";
 "Furniture" = "Furnitured";
 
@@ -106,9 +111,10 @@
 
 //Job
 "Education" = "Education";
+"Certificate" = "Certificate";
 "Schedule" = "Schedule";
 "Experience" = "Experience";
-"Salary" = "Salary";
+"Salary" = "Salary (S.P)";
 
 "Save" = "Save";
 "Submit" = "Submit";
@@ -116,6 +122,8 @@
 "Search" = "Search";
 "OK" = "OK";
 "Cancel" = "Cancel";
+"Continue" = "Continue";
+"View" = "View";
 "AR" = "العربية";
 "EN" = "English";
 "ChangeLangTitle" = "Select App Language";
@@ -125,6 +133,17 @@
 "ChangeLangTitle2" = "Looks Weird?";
 "ChangeLangMessage2" = "Please restart your app and it will be fine.";
 
+"logoutMessage" = "Are you sure you want to logout?";
+"deactiveMessage" = "Are you sure you want to delete your account?";
+"featureMessage" = "This feature is paid. If you want your ad to be featured, enable it, and Admin will contact you.";
+
+"termsMessage1" = "I have read and agree to the ";
+"termsMessage2" = "terms of Dealat";
+"termsMessage3" = "Terms of Dealat";
+
+
+"termsValidateMessage" = "You must agree to Dealat terms!";
+
 
 //Add status
 "Pending" = "Pending";
@@ -132,6 +151,7 @@
 "Hidden" = "Hidden";
 "Rejected" = "Rejected";
 "Deleted" = "Deleted";
+"Expired" = "Expired";
 
 "Please enter" = "Please enter ";
 "Please add images" = "Please add images";
@@ -143,6 +163,7 @@
 
 "DeleteBookmark" = "Are you sure to remove this saved searches?";
 
+
 "RejectionReason" = "Rejection reason";
 "AdStatus" = "Status";
 
@@ -151,3 +172,31 @@
 "Capture video" = "Capture video";
 "Choose video" = "Choose video";
 "Make as Main" = "Make as Main";
+
+
+"Take a picture" = "Take a picture";
+"Choose an image" = "Choose an image";
+
+"AdDone" = "Your ad has been added successfully and it is now waiting for approval";
+"AdDone2" = "You're ad will be pending again until Admin accepts the changes, Are you sure you want to edit it?";
+"Successful" = "Successful";
+"Changes Saved" = "Changes Saved";
+
+
+"Scan QRcode" = "Scan QR code";
+"QRCodeMessage" = "1- Go to http://www.deal-at.com/index.php/qrcode_login on your computer and scan the QR code.\n2- Enter PIN that will be shown on your mobile.";
+
+"pinLbl" = "PIN Number";
+
+
+"needRegister1" = "You're not registered yet, Would you like to register?";
+"needRegister2" = "Your account isn't verified, Would you like to verify it?";
+
+"numberConfirmation" = "Is your phone correct?";
+
+"verify1" = "Please, enter verification code, sent through SMS to";
+"resendcode" = "Resend code";
+"or" = "or";
+"min" = "min";
+"sec" = "sec";
+"views" = "views";

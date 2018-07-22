@@ -35,6 +35,28 @@ extension String{
                     print("OKK \(lang)")
                     lang2 = "en"
                 }
+                
+                if self == "S.P"{
+                    print("LOCALIZED S.P")
+                    return (lang2 == "ar") ? Provider.shared.currency_ar : Provider.shared.currency_en
+                }
+                if self == "Salary"{
+                    var t = (lang2 == "ar") ? "الراتب" : "Salary"
+                    let l = (lang2 == "ar") ? Provider.shared.currency_ar : Provider.shared.currency_en
+                    if !l.isEmpty{
+                        t += " (\(l))"
+                    }
+                    return t
+                }
+                if self == "Price SP"{
+                    var t = (lang2 == "ar") ? "السعر" : "Price"
+                    let l = (lang2 == "ar") ? Provider.shared.currency_ar : Provider.shared.currency_en
+                    if !l.isEmpty{
+                        t += " (\(l))"
+                    }
+                    return t
+                }
+                
                 let path  = Bundle.main.path(forResource: lang2, ofType: "lproj")
                 let bundle = Bundle.init(path: path!)
                 let s = bundle!.localizedString(forKey: self, value: nil, table: nil)
@@ -224,6 +246,48 @@ extension Double{
     }
     
 }
+
+extension String {
+    
+    // formatting text for currency textField
+    func currencyInputFormatting() -> String {
+        
+        var number: NSNumber!
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+//        formatter.maximumFractionDigits = 0;
+//        formatter.numberStyle = .currencyAccounting
+//        formatter.currencySymbol = "$"
+//        formatter.maximumFractionDigits = 5
+//        formatter.minimumFractionDigits = 5
+        
+        var amountWithPrefix = self
+        
+        // remove from String: "$", ".", ","
+        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
+        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
+        
+        let double = (amountWithPrefix as NSString).doubleValue
+        number = NSNumber(value: (double)) //NSNumber(value: (double / 100))
+        
+        // if first number is 0 or all numbers were deleted
+        guard number != 0 as NSNumber else {
+            return ""
+        }
+        
+        return formatter.string(from: number)!
+    }
+    
+    func deleteDecimal() -> String{
+        var string = self.replacingOccurrences(of: ",", with: "")
+        string = string.replacingOccurrences(of: ".", with: "")
+
+        return string
+    }
+    
+    
+}
+
 
 extension JSON{
     

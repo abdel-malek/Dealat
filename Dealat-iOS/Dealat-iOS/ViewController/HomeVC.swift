@@ -96,37 +96,35 @@ class HomeVC: BaseVC {
     
     override func getRefreshing() {
         
-        Communication.shared.get_commercial_ads(0) { (res) in
-
-//            while(res == nil){
-//                self.getRefreshing()
-//                return
-//            }
-
-            if let coms = res{
-                self.hideLoading()
-                self.commericals = coms
-                
-                self.pageControl.numberOfPages = self.commericals.count
-                self.timer.invalidate()
-                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
-                self.timer.fire()
-                self.collectionView.reloadData()
-                
-                if coms.isEmpty{
-                    let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
-                    im.contentMode = .scaleAspectFit
-                    self.collectionView.backgroundView = im
-                }
-            }
-            
-        }
-        
-        
         Communication.shared.get_all { (res) in
             self.hideLoading()
             self.cats = res
             self.tableView.reloadData()
+            
+            Communication.shared.get_commercial_ads(0) { (res) in
+                
+                //            while(res == nil){
+                //                self.getRefreshing()
+                //                return
+                //            }
+                
+                if let coms = res{
+                    self.hideLoading()
+                    self.commericals = coms
+                    
+                    self.pageControl.numberOfPages = self.commericals.count
+                    self.timer.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                    self.timer.fire()
+                    self.collectionView.reloadData()
+                    
+                    if coms.isEmpty{
+                        let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                        im.contentMode = .scaleAspectFit
+                        self.collectionView.backgroundView = im
+                    }
+                }
+            }
         }
         
         //        Communication.shared.get_nested_categories { (res) in
@@ -143,9 +141,9 @@ class HomeVC: BaseVC {
         //        self.navigationController?.pushViewController(vc, animated: true)
         
         if User.isRegistered(){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
-        vc.homeVC = self
-        self.navigationController?.pushViewController(vc, animated: true)
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
+            vc.homeVC = self
+            self.navigationController?.pushViewController(vc, animated: true)
         }else{
             let me = User.getCurrentUser()
             let txt = me.statues_key == (User.USER_STATUES.NEW_USER.rawValue) ? "needRegister1".localized : "needRegister2".localized
@@ -267,6 +265,10 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        for i in self.cats[indexPath.row].children{
+            print("i.name \(i.category_name) - i.ads_count2 \(i.ads_count2)")
+        }
         
         if self.cats[indexPath.row].children.count > 1{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseCatVC") as! ChooseCatVC

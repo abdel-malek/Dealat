@@ -17,6 +17,9 @@ class CustomResponse : BaseEntity {
     var status : Bool = false
     var data : JSON!
     var message : String = ""
+    var currency_en : String = ""
+    var currency_ar : String = ""
+
     
     var description : String{
         return "CustomResponse: { status: \(status), data: \(data!) , message : \(message) }"
@@ -26,6 +29,10 @@ class CustomResponse : BaseEntity {
         status <- map["status"]
         data <- map["data"]
         message <- map["message"]
+        
+        currency_en <- map["currency_en"]
+        currency_ar <- map["currency_ar"]
+        
     }
     
     

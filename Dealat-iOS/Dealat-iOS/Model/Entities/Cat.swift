@@ -21,6 +21,11 @@ class Cat : BaseEntity {
     var description : String!
     var tamplate_id : JSON!
     var children : [Cat] = [Cat]()
+    var ads_count : JSON!
+    
+    var ads_count2 : Int{
+       return self.getAllAdsCount() + self.ads_count.intValue
+    }
     
     var hidden_fields : String!
 
@@ -37,7 +42,12 @@ class Cat : BaseEntity {
         tamplate_id <- map["tamplate_id"]
         children <- map["children"]
         hidden_fields <- map["hidden_fields"]
-    
+        ads_count <- map["ads_count"]
+        
+        if ads_count == nil{
+            ads_count = JSON(0)
+        }
+        
     }
     
     static func getName(_ category_id : Int) -> String{
@@ -60,7 +70,19 @@ class Cat : BaseEntity {
     }
     
     
+    
+    
+    func getAllAdsCount() -> Int{
+        var total : Int = 0
         
+        for i in self.children{
+            total += i.ads_count.intValue
+            total += i.getAllAdsCount()
+        }
+        
+        return total
+    }
+
         
     
     

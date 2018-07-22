@@ -21,6 +21,9 @@ class Provider : BaseManager {
     var cats = [Cat]()
     var catsFull = [Cat]()
 
+    var currency_en : String = ""
+    var currency_ar : String = ""
+
     
 //    static var searchText : String!
     static var filter = FilterParams()
@@ -40,6 +43,8 @@ class Provider : BaseManager {
         
         return cats
     }
+    
+
 
 
     static func isValidEmail(_ testStr:String) -> Bool {

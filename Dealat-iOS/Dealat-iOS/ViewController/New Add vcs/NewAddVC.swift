@@ -344,8 +344,20 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         setupViews()
         
         
-        
+        self.tfPrice.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSize.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSpace.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfKilometers.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+
     }
+    
+    @objc func myTextFieldDidChange(_ textField: UITextField) {
+        
+        if let amountString = textField.text?.currencyInputFormatting() {
+            textField.text = amountString
+        }
+    }
+
     
     
     override func getRefreshing() {
@@ -713,7 +725,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 }
             }
             
-            self.tfPrice.text = ad.price.stringValue
+            self.tfPrice.text = ad.price != nil ? ad.price.stringValue.currencyInputFormatting() : nil
             self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
             self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
             self.tfDescription.text = ad.description
@@ -751,7 +763,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.selectedStatus = self.ad.vehicle.is_new.intValue
                 
                 if let kilometer = self.ad.vehicle.kilometer{
-                    self.tfKilometers.text = kilometer.stringValue
+                    self.tfKilometers.text = kilometer.stringValue.currencyInputFormatting()
                 }
                 
                 if let type_id = self.ad.vehicle.type_id{
@@ -776,7 +788,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.tfRooms_num.text = self.ad.property.rooms_num
                 self.tfFloors_number.text = self.ad.property.floors_number
                 self.tfFloor.text = self.ad.property.floor
-                self.tfSpace.text = self.ad.property.space
+                self.tfSpace.text = (self.ad.property.space != nil) ? self.ad.property.space.currencyInputFormatting() : nil
 
                 if let f = self.ad.property.with_furniture{
                     self.tfWith_furniture.setOn(f.boolValue, animated: false)
@@ -804,7 +816,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                     self.selectedStatus = is_new.Boolean ? 1 : 0
                 }
 
-                self.tfSize.text = self.ad.electronic.size
+                self.tfSize.text = (self.ad.electronic.size != nil) ? self.ad.electronic.size.currencyInputFormatting() : nil
 
             case 5:
                 if let is_new = self.ad.fashion.is_new{
@@ -1049,7 +1061,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.validMessage(tf : tfPrice, message : "Please enter".localized +  "Price".localized)
                 return
             }
-            params["price"] = price
+            params["price"] = price.deleteDecimal()
         }else{
             params["price"] = "0"
         }
@@ -1098,7 +1110,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
 
             if let kilometer = self.tfKilometers.text, !kilometer.isEmpty{
-                params["kilometer"] = kilometer
+                params["kilometer"] = kilometer.deleteDecimal()
             }else if !self.ifHidden(index: IndexPath.init(row: 5, section: 1)){
                 self.validMessage(tf : tfKilometers, message : "Please enter".localized +  "Kilometer".localized)
                 return
@@ -1137,7 +1149,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             }
 
             if let space = self.tfSpace.text, !space.isEmpty{
-                params["space"] = space
+                params["space"] = space.deleteDecimal()
             }else if !self.ifHidden(index: IndexPath.init(row: 0, section: 2)){
                 self.validMessage(tf : tfSpace, message : "Please enter".localized +  "Space".localized)
                 return
@@ -1190,7 +1202,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 params["type_id"] = type_id.intValue
             }
 
-            params["size"] = self.tfSize.text!
+            params["size"] = self.tfSize.text!.deleteDecimal()
         case 5,6,7,9:
             
             if let is_new = self.selectedStatus{

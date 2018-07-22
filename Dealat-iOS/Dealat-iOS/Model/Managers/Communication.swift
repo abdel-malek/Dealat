@@ -23,12 +23,12 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-    //    let baseURL = "http://192.168.9.17/Dealat/index.php/api"
-    //    let baseImgsURL = "http://192.168.9.17/Dealat/"
+//        let baseURL = "http://192.168.9.96/Dealat/index.php/api"
+//        let baseImgsURL = "http://192.168.9.96/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
-    
+
     let baseURL = "http://www.deal-at.com/index.php/api"
     let baseImgsURL = "http://www.deal-at.com/"
     
@@ -286,6 +286,10 @@ class Communication: BaseManager {
                         }
                     }
                     
+                    Provider.shared.currency_en = value.currency_en
+                    Provider.shared.currency_ar = value.currency_ar
+
+                    
                     callback(cities)
                     
                     
@@ -469,6 +473,10 @@ class Communication: BaseManager {
                     let resFinal = self.loadCats(res, i: 0)
                     Provider.shared.cats = resFinal
                     
+                    
+                    Provider.shared.currency_en = value.currency_en
+                    Provider.shared.currency_ar = value.currency_ar
+
                     callback(resFinal)
                     
                 }else{
@@ -1356,6 +1364,8 @@ class Communication: BaseManager {
         headers["lang"] = AppDelegate.isArabic() ? "ar" : "en"
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
+        headers["os"] = "2"
+
         
         //            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString
         //            let plainData = plainString.data(using: String.Encoding.utf8.rawValue)

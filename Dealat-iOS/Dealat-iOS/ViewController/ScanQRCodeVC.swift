@@ -76,8 +76,11 @@ class ScanQRCodeVC: BaseVC, AVCaptureMetadataOutputObjectsDelegate {
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = vv.layer.bounds
+        previewLayer.frame.size.width = self.view.frame.width - 20
+        previewLayer.frame.size.height = self.view.frame.width - 20
         previewLayer.videoGravity = .resizeAspectFill
         vv.layer.addSublayer(previewLayer)
+        
         
         captureSession.startRunning()
     }

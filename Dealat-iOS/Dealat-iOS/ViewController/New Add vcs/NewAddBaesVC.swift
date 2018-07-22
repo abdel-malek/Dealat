@@ -19,7 +19,6 @@ class NewAddBaesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         if ad != nil{
             Provider.setScreenName("EditAdActivity")
         }else{
