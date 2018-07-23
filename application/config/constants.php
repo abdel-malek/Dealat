@@ -45,6 +45,7 @@ define('COMMERCIAL_IMAGES_PATH', '/commercial_items_images/');
 define('CATEGORIES_IMAGES_WEB_PATH', '/assets/images/Categories/web/');
 define('CATEGORIES_IMAGES_MOBILE_PATH', '/assets/images/Categories/mobile/');
 define('QR_CODES_PATH', '/QR_codes/');
+define('IOS_LOGO', 'http://dealat.tradinos.com/assets/images/ios_logo.png');
 
 
 /* End of file constants.php */

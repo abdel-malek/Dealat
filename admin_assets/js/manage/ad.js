@@ -12,6 +12,11 @@ var current_pending_count = 0;
 var sound_notify_path = site_url +'admin_assets/definite.mp3';
 var test = 0;
 var ads_buttons =[];
+var types;
+var current_type_index;
+var chosen_type_models; 
+var current_template; 
+//var current_type_model_id = 0; 
 
  $(document).ready(function() {
  	if($.inArray(EXPORT_ADS, permissions) != -1){
@@ -164,19 +169,20 @@ var ads_buttons =[];
      
  // reload to get new pending ads.      
    setInterval(function() {
-		ads_table.ajax.reload( null, false );
 		$.ajax({
         url: base_url + '/api/items_control/get_pending_count/format/json',
         type: "get",
         dataType: "json",
         global: false,     // this makes sure ajaxStart is not triggered
         success: function(response) {
+        	$('#ads_table > tbody > tr').removeAttr('style');
             // highlight the new pendeing rows. 
             var new_count = response.data;
             //console.log(new_count);
             var diff = new_count - current_pending_count;
             //console.log(diff);
             if(diff > 0){
+              ads_table.ajax.reload( null, false );
               //alert('fgb');
               $(ads_table.rows().nodes()).each(function(index){
              	if(index < diff){
@@ -274,6 +280,7 @@ var ads_buttons =[];
  
  function show_ad_details (ad_id , tamplate_id , from_reports) {
  	  $('.ads_details  #post_id').val(ad_id);
+ 	  $('.ads_details  #ad_details_template_id').val(tamplate_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
  	  var url_details =  base_url + '/admin/items_manage/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
@@ -282,8 +289,10 @@ var ads_buttons =[];
         type: "get",
         dataType: "json",
         success: function(response) {
-            console.log(response.data);   
+           // console.log(response.data);   
             $item_info = response.data;
+            $('.ads_details  #ad_details_category_id').val($item_info['category_id']);
+            
             $('#delete_ad_btn').attr('template_id' , $item_info['tamplate_id']);
             if(lang == 'en'){
             	$('#ad_deatils_title').html('Ad #'+$item_info['ad_id']+' Details');
@@ -308,8 +317,10 @@ var ads_buttons =[];
             }
             //fill basic info
             $('.ads_details  #ad_title').html($item_info['title']);
+            $('.ads_details  #ad_input_title').val($item_info['title']);
             if($item_info['description'] != null){
                $('.ads_details  #ad_description').html($item_info['description']);	
+               $('.ads_details  #ad_input_description').val($item_info['description']);	
             } 
             // image slider 
              var main_image = $item_info['main_image'];
@@ -341,6 +352,36 @@ var ads_buttons =[];
             $('.ads_details  #ad_creation_date').html($item_info['created_at']);
             $('.ads_details  #ad_category').html($item_info['parent_category_name']+' --> '+$item_info['category_name']);
             $('.ads_details  #ad_location').html($item_info['city_name']+' - '+$item_info['location_name']);
+            $.each(response.data.cities, function(index, value) {
+	        	if($item_info['city_id']  == value.id){
+	        	    $('.ads_details #ad_input_city').append($('<option/>', {
+	                  value: value.id,
+	                  text: value.name,
+	                  selected : true,
+	                }));
+	                $('.ads_details #ad_input_city').trigger('change');
+	        	}else{
+	        	    $('.ads_details #ad_input_city').append($('<option/>', {
+	                  value: value.id,
+	                  text: value.name,
+	                }));	
+	        	 }
+		    });
+		    $.each(response.data.locations, function(index, value) {
+	        	if($item_info['location_id']  == value.id){
+	        	    $('.ads_details #ad_input_location').append($('<option/>', {
+	                  value: value.id,
+	                  text: value.name,
+	                  selected : true,
+	                }));
+	                $('.ads_details #ad_input_location').trigger('change');
+	        	}else{
+	        	    $('.ads_details #ad_input_location').append($('<option/>', {
+	                  value: value.id,
+	                  text: value.name,
+	                }));	
+	        	}
+		    });
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
             $('.ads_details  #ad_edit_status').html(edit_status_array[$item_info['edit_status']]);
             $('.ads_details  #ad_price').html(new Intl.NumberFormat('ja-JP').format($item_info['price']));
@@ -394,6 +435,7 @@ var ads_buttons =[];
 				$('.ads_details  #ad_contact_phone').val($item_info['seller_phone']);
 			}
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
+            $('.editable_elem').css('display' , 'none');
             
             //show hide btns
             show_delete_btn(from_reports , $item_info['publish_date']);
@@ -528,44 +570,294 @@ var ads_buttons =[];
       $('.ads_details  #show_btn').css('display', 'none');
       $('.ads_details  #delete_ad_btn').css('display', 'none');
       $('.readonly_elem').css('display' , 'block');
+      $('.editable_elem > div.fit_select_ad_details_div > select.select2_single').html('');
+      $('.editable_elem > div.fit_select_ad_details_div > select.select2_single').val('').trigger('change');
       $('.editable_elem').css('display' , 'none');
       $('#edit_btn').css('display' ,'inline');
       $('#save_ad_edits_btn').css('display' , 'none');
  });
  
  
+ // function make_ad_eitable () {
+//  	
+    // $('.readonly_elem').css('display' , 'none');
+    // $('.editable_elem').css('display' , 'inline');
+    // $('#edit_btn').css('display' ,'none');
+    // $('#save_ad_edits_btn').css('display' , 'inline');
+    // new PNotify({
+          // title: lang_array['note'],
+          // text: lang_array['price_and_kelo_edit'],
+          // type: 'info',
+          // styling: 'bootstrap3',
+          // hide: true,
+          // buttons: {
+		       // sticker: false
+		   // }
+      // });
+ // }
+ 
  function make_ad_eitable () {
- 	
-    $('.readonly_elem').css('display' , 'none');
-    $('.editable_elem').css('display' , 'inline');
-    $('#edit_btn').css('display' ,'none');
-    $('#save_ad_edits_btn').css('display' , 'inline');
-    new PNotify({
-          title: lang_array['note'],
-          text: lang_array['price_and_kelo_edit'],
-          type: 'info',
-          styling: 'bootstrap3',
-          hide: true,
-          buttons: {
-		       sticker: false
-		   }
-      });
+ 	 tamplate_id = $('.ads_details  #ad_details_template_id').val();
+ 	 current_template = tamplate_id;
+ 	 ad_id = $('.ads_details  #post_id').val();
+     var url =  base_url + '/admin/items_manage/get_data_lists/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
+     $.ajax({
+        url: url,
+        type: "get",
+        dataType: "json",
+        success: function(response) {
+        	 // hide labels and  show inputs 
+	         $('.readonly_elem').css('display' , 'none');
+	         $('.editable_elem.'+tamplate_id+'_info').css('display' , 'inline');
+	         $('.editable_elem.basics').css('display' , 'inline');
+	         $('#edit_btn').css('display' ,'none');
+	         $('#save_ad_edits_btn').css('display' , 'inline');
+        	//console.log(response.data);
+            $item_info = response.data.info;
+            //fill basic inputs 
+            $('.ads_details  #ad_input_title').val($item_info['title']);
+            if($item_info['description'] != null){
+               $('.ads_details  #ad_input_description').val($item_info['description']);	
+            } 
+             
+            // fill deteilad basic inputs
+            $('.ads_details  #ad_input_price').val($item_info['price']);
+            $('.ads_details  #ad_input_negotiable').val($item_info['is_negotiable']);
+            $('.ads_details  #select_featured').val($item_info['is_featured']);
+            //location
+            $.each(response.data.cities, function(index, value) {
+	        	if($item_info['city_id']  == value.city_id){
+	        	    $('.ads_details #ad_input_city').append($('<option/>', {
+	                  value: value.city_id,
+	                  text: value.name,
+	                  selected : true,
+	                }));
+	                $('.ads_details #ad_input_city').trigger('change');
+	        	}else{
+	        	    $('.ads_details #ad_input_city').append($('<option/>', {
+	                  value: value.city_id,
+	                  text: value.name,
+	                }));	
+	        	 }
+		    });
+		    $.each(response.data.location, function(index, value) {
+	        	if($item_info['location_id']!= null && $item_info['location_id']  == value.location_id){
+	        	    $('.ads_details #ad_input_location').append($('<option/>', {
+	                  value: value.location_id,
+	                  text: value.location_name,
+	                  selected : true,
+	                }));
+	                $('.ads_details #ad_input_location').trigger('change');
+	        	}else{
+	        	    $('.ads_details #ad_input_location').append($('<option/>', {
+	                  value: value.location_id,
+	                  text: value.location_name,
+	                }));	
+	        	}
+		    });
+            // fill temaplet info inputs 
+            var template_attr = templates_attrs[tamplate_id];
+            //console.log(template_attr);
+        
+            $.each( template_attr, function( key, value ) {
+             if(value == 'type_name' || value == 'type_model_name' || value == 'education_name' || value == 'schedule_name' || value == 'schedule_name' || value == 'certificate_name' || value == 'property_state_name'){
+             	if(value == 'type_name'){
+             	  types = response.data.types[tamplate_id];
+               	  $.each(response.data.types[tamplate_id], function(index, value) {
+				      	if( $item_info['type_id']!= null && $item_info['type_id']  == value.type_id){
+				      		current_type_index = index;
+				      		chosen_type_models = value.models;
+			        	    $('.ads_details #ad_input_type_name').append($('<option/>', {
+			                  value: value.type_id,
+			                  text: value.full_type_name,
+			                  type_index : index,
+			                  selected : true,
+			                }));
+			                $('.ads_details #ad_input_type_name').trigger('change');
+			        	}else{
+			        	    $('.ads_details #ad_input_type_name').append($('<option/>', {
+			                  value: value.type_id,
+			                  text: value.full_type_name,
+			                  type_index : index,
+			                }));	
+			        	}
+				   });
+              }
+              if(value == 'type_model_name'){
+              	 // current_type_model_id = $item_info['type_model_id'];
+              	 $('.ads_details #ad_input_type_model_name').trigger('change');
+               	  // $.each(chosen_type_models, function(index, value) {
+				      	// if($item_info['type_model_id']  == value.type_model_id){
+			        	    // $('.ads_details #ad_input_type_model_name').append($('<option/>', {
+			                  // value: value.type_model_id,
+			                  // text: value.name,
+			                  // selected : true,
+			                // }));
+			                // //$('#select2-ad_input_type_model_name-container').attr('title', value.name);
+			                // $('.ads_details #ad_input_type_model_name').trigger('change');
+			        	// }else{
+			        	    // $('.ads_details #ad_input_type_model_name').append($('<option/>', {
+			                  // value: value.type_model_id,
+			                  // text: value.name,
+			                // }));	
+			        	// }
+				   // });
+              }
+              if(value == 'education_name'){
+              	   $.each(response.data.educations, function(index, value) {
+				      	if($item_info['education_id'] != null && $item_info['education_id']  == value.education_id){
+			        	    $('.ads_details #ad_input_education_name').append($('<option/>', {
+			                  value: value.education_id,
+			                  text: value.name,
+			                  selected : true,
+			                }));
+			                $('.ads_details #ad_input_education_name').trigger('change');
+			        	}else{
+			        	    $('.ads_details #ad_input_education_name').append($('<option/>', {
+			                  value: value.education_id,
+			                  text: value.name,
+			                }));	
+			        	}
+				    });
+               }
+               if(value == 'schedule_name'){
+              	   $.each(response.data.schedules, function(index, value) {
+				      	if($item_info['schedule_id'] != null && $item_info['schedule_id']  == value.schedule_id){
+			        	    $('.ads_details #ad_input_schedule_name').append($('<option/>', {
+			                  value: value.schedule_id,
+			                  text: value.name,
+			                  selected : true,
+			                }));
+			                $('.ads_details #ad_input_schedule_name').trigger('change');
+			        	}else{
+			        	    $('.ads_details #ad_input_schedule_name').append($('<option/>', {
+			                  value: value.schedule_id,
+			                  text: value.name,
+			                }));	
+			        	}
+				    });
+               }
+               if(value == 'certificate_name'){
+              	   $.each(response.data.certificates, function(index, value) {
+				      	if($item_info['certificate_id'] != null && $item_info['certificate_id']  == value.certificate_id){
+			        	    $('.ads_details #ad_input_certificate_name').append($('<option/>', {
+			                  value: value.certificate_id,
+			                  text: value.name,
+			                  selected : true,
+			                }));
+			                $('.ads_details #ad_input_certificate_name').trigger('change');
+			        	}else{
+			        	    $('.ads_details #ad_input_certificate_name').append($('<option/>', {
+			                  value: value.certificate_id,
+			                  text: value.name,
+			                }));	
+			        	}
+				    });
+               }
+               if(value == 'property_state_name'){
+              	   $.each(response.data.states, function(index, value) {
+				      	if($item_info['property_state_id'] != null && $item_info['property_state_id']  == value.property_state_id){
+			        	    $('.ads_details #ad_input_property_state_name').append($('<option/>', {
+			                  value: value.property_state_id,
+			                  text: value.name,
+			                  selected : true,
+			                }));
+			                $('.ads_details #ad_input_property_state_name').trigger('change');
+			        	}else{
+			        	    $('.ads_details #ad_input_property_state_name').append($('<option/>', {
+			                  value: value.property_state_id,
+			                  text: value.name,
+			                }));	
+			        	}
+				    });
+                }
+             }else if(value == 'is_new'){
+             	 $('.editable_elem.is_new_edit').css('display' , 'inline');
+             	 $('.ads_details #ad_input_'+value).val($item_info[value]);
+             }else{
+             	$('.ads_details #ad_input_'+value).val($item_info[value]);
+             }
+             $('.editable_elem').css('margin-bottom',  "10px");
+		   });
+        },error: function(xhr, status, error){
+        	new PNotify({
+                  title: lang_array['attention'],
+                  text: lang_array['something_wrong'],
+                  type: 'error',
+                  styling: 'bootstrap3',
+                  buttons: {
+				        sticker: false
+				}
+            });
+         }
+     });
  }
  
+ // change types model acording to selected type. 
+ $('#ad_input_type_name').change(function(event) {
+      current_type_index =  $(this).find("option:selected").attr('type_index');
+      //console.log(current_type_index);
+      if(current_type_index != null){
+      	  chosen_type_models = types[current_type_index]['models'];
+	      $('.ads_details #ad_input_type_model_name').html('');
+	      $('.ads_details #ad_input_type_model_name').val('').trigger('change');
+	      $.each(chosen_type_models, function(index, value) {
+	    	    $('.ads_details #ad_input_type_model_name').append($('<option/>', {
+	              value: value.type_model_id,
+	              text: value.name,
+	            }));	
+		  });
+      }
+ });  
  
- function save_ad_edits(){
+function save_ad_edits(){
  	ad_id = $('.ads_details  #post_id').val();
  	var data = {
  		'ad_id':ad_id
  	};
  	var price = $('#ad_input_price').val();
  	var kilometer = $('#ad_input_kilometer').val();
+ 	var title = $('#ad_input_title').val();
+ 	var desc = $('#ad_input_description').val();
+ 	var city = $('#ad_input_city').val();
+ 	var location = $('#ad_input_location').val();
+ 	console.log(location);
+ 	var is_negotiable = $('#ad_input_negotiable').val();
+ 	var is_featuerd = $('#select_featured').val();
  	if(price != ''){
- 		 data['price'] = price;
+ 	    data['price'] = price;
  	}
  	if(kilometer != ''){
- 		 data['kilometer'] = kilometer;
+ 		data['kilometer'] = kilometer;
  	}
+ 	if(title != ''){
+ 	    data['title'] = title;
+ 	}
+ 	if(desc != ''){
+ 	    data['description'] = desc;
+ 	}else{
+ 	    data['description'] = -1; 
+ 	}
+ 	data['city_id'] =  city;
+ 	if(location != null && location != '' && location != 0){
+ 		data['location_id'] =  location;
+ 	}else{
+ 		data['location_id'] = -1;
+ 	}
+ 	data['is_negotiable'] = is_negotiable;
+ 	data['is_featured'] = is_featuerd;
+ 	var template_attr = templates_attrs[tamplate_id];
+    //console.log(template_attr);
+    $.each( template_attr, function( key, attr_name ) { 
+    	 attr_id = attr_name.replace("name", "id");
+    	 value = $('#ad_input_'+attr_name).val();
+    	 if(value != null && value != ''){
+    	 	 data[attr_id] = value;
+    	 }else{
+    	 	 data[attr_id] = -1;
+    	 	// console.log(-1);
+    	 }
+    });
  	console.log(data);
  	$.ajax({
 	        url: base_url + '/admin/items_manage/edit_item/format/json',
@@ -610,7 +902,7 @@ var ads_buttons =[];
 	     });
  }
  
- function perform_action (action) {
+function perform_action (action) {
  	 var can_proceed = true; 
  	 if(can_proceed == true){
  	 	var conatct_phone = $('.ads_details  #ad_contact_phone').val();

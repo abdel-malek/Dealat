@@ -95,9 +95,9 @@ class Users_control extends REST_Controller {
 		$method = 'get_cities'.$this->data['os'];
 		$countries = $this->locations->$method($this->data['lang']);
 		if($countries){
-			$this->response(array('status' => true, 'data' => $countries, "message" => $this->lang->line('sucess')));
+			$this->response(array('status' => true, 'data' => $countries, "message" => $this->lang->line('sucess')  , 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
 		}else{
-			$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed')));
+			$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed'), 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
 		}
 	}
 	
@@ -383,5 +383,16 @@ class Users_control extends REST_Controller {
 		   	  $this->response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		   }
 		}
+   }
+   
+   public function get_urls_get()
+   {
+       $data = array(
+         'site_url' => 'http://dealat.tradinos.com',
+         'logo_url' => 'http://dealat.tradinos.com/assets/images/ios_logo.png',
+         'currency_ar' =>'دولار' ,
+         'currency_en' => 'USD'
+	   );
+	   $this->response(array('status' => true, 'data' => $data, "message" => $this->lang->line('sucess')));
    }
 }

@@ -87,6 +87,8 @@
     <!-- jquery uploader -->
     <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
     
+    
+    
     <script>
        var lang_array=[];
        if(lang == 'en'){
@@ -245,6 +247,7 @@
     </script>
     
     <!-- my js -->
+    
     <script src="<?php echo base_url() ?>admin_assets/js/general.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/ad.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/commercial_ads.js"></script>

@@ -83,28 +83,6 @@ var alert_notify_path = site_url +'admin_assets/report_alert.mp3';
    setInterval(function() {
    	   if ($.fn.DataTable.isDataTable( '#reported_ads_table' ) ) { // if the reported ads page is open
    	   	  reported_ads_table.ajax.reload( null, false );
-		  // reported_ads_table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
-			    // var data = this.data();
-			    // console.log(reported_ads_table.row(rowIdx));
-			    // $(reported_ads_table.row(rowIdx)).css("background-color", "#f5dbc2");
-			    // if(data[5] == 0){ // the reported not seen
-			    	// new PNotify({
-		              // title: lang_array['attention'],
-		              // text: lang_array['new_reported_ad']+data[1],
-		              // type: 'warning',
-		              // styling: 'bootstrap3',
-		              // buttons: {
-					        // sticker: false
-					   // }
-		          // });
-		         // $.playSound(alert_notify_path);
-		         // // color the row (not working!)
-		         // $(this).css("background-color", "#f5dbc2");
-	              // // setTimeout(function () {
-	                    // // this.row.css("background-color", "#fff");
-	              // // }, 2500);
-			    // }
-		 // });
 		   $(reported_ads_table.rows().nodes()).each(function(index){
 		   	   var seen_status = $(this).find('[name=reports_list]').attr('seen_status');
 		   	   var ad_name = $(this).find("td:eq(1)").html();

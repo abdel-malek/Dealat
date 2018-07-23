@@ -9,7 +9,7 @@ class Items_control extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/ads');
 		$this->data['lang']=  $this->response->lang;
-		if($this->response->os  == OS::IOS){
+		if($this->response->os == OS::IOS){
 			$this->data['os'] = '_os'; 
 		}else{
 			$this->data['os']= '';

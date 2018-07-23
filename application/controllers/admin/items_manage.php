@@ -69,6 +69,31 @@ class Items_manage extends REST_Controller {
         $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
     }
 	
+   public function get_data_lists_get()
+	{
+	     $this->load->model('data_sources/types');
+		 $this->load->model('data_sources/educations');
+		 $this->load->model('data_sources/schedules');
+		 $this->load->model('data_sources/locations');
+		 $this->load->model('data_sources/show_periods');
+		 $this->load->model('data_sources/certificates');
+		 $this->load->model('data_sources/property_states');
+		 $ad_id = $this->input->get('ad_id');
+         $tamplate_id = $this->input->get('template_id');
+         $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id);
+		 $locations = $this->locations->get_all($this->data['lang']);
+		 $cities = $this->locations->get_cities($this->data['lang']);
+		 //$nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
+		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
+		 $educations = $this->educations->get_all($this->data['lang']);
+		 $schedules = $this->schedules->get_all($this->data['lang']);
+		 $show_periods = $this->show_periods->get_all($this->data['lang']);
+		 $certificates = $this->certificates->get_all($this->data['lang']);
+		 $property_states = $this->property_states->get_all($this->data['lang']);
+		 $data = array('info'=>$deatils ,'location' =>$locations ,'cities'=>$cities ,  'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates , 'states' => $property_states);
+		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
+	}
+	
    public function get_all_reported_items_get()
 	{
 		$this->load->model('data_sources/reported_ads');

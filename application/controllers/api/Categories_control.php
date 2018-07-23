@@ -21,7 +21,7 @@ class Categories_control extends REST_Controller {
 	public function get_all_get()
 	{
 		$categories = $this->categories->get_all($this->data['lang']);
-		$this->response(array('status' => true, 'data' =>$categories, 'message' => ''));
+		$this->response(array('status' => true, 'data' =>$categories, 'message' => '' , 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
 	}
 	
 	public function get_main_categories_get()

@@ -125,7 +125,7 @@ class Categories extends MY_Model {
 	    $parent_id = $this->input->post('parent_id');
 		if($parent_id != 0){ // not main category
 		  	// then check if it's parent have any ads 
-		  	$has_ads = $this->ads->check_category_ads_existence($parent_id);
+		  	$has_ads = $this->ads->check_category_ads_existence_for_add($parent_id);
 			if($has_ads){
 			   // get the parent category info	
 			   $parent_info = $this->get($parent_id);

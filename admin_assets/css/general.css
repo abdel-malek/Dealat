@@ -5,6 +5,11 @@
 .fit_select_div .select2  {
 	width:100% !important
 }
+
+.fit_select_ad_details_div .select2  {
+	width:100% !important;
+	margin-bottom: 10px !important;
+}
 /* .my_order_select_div .select2  {
 	width:409px  !important
 }*/
@@ -119,6 +124,7 @@ input[type=checkbox], input[type=radio] {
  width: 100%;
  margin-top: 0px;
  height: 200px;
+ direction: ltr !important; 
 }
 
 .slick-track{
@@ -408,5 +414,5 @@ thead{
  	position: relative;
     top: 9px;
  }*/
- 
- 
+
+

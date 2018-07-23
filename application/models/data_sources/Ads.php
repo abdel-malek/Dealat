@@ -674,6 +674,17 @@ class Ads extends MY_Model {
 	   }
 	}
 	
+   public function check_category_ads_existence_for_add($category_id)
+	{
+	   $this->load->model('data_sources/categories');
+	   $ads = parent::get_by(array('category_id' => $category_id), false ,1);
+	   if($ads != null){
+	   	 return true;
+	   }else{
+	   	 return false;
+	   }
+	}
+	
    public function get_all_ads_with_details($lang)
 	{
 	    $this->db->select('ads.* ,

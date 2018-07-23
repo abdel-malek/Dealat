@@ -265,20 +265,20 @@
 
 								<div class="form-group">
 									<select name="city_id" class="city-select" required placeholder="<?php echo $this->lang->line('select_city'); ?>">
-									<option disabled selected value="" class="d-none">
-								</select>
+									  <option disabled selected value="" class="d-none">
+								    </select>
 								</div>
 
 								<div class="form-group">
 									<select name="location_id" class="location-select">
-									<option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
-								</select>
+									  <option selected value="" class="placeholder d-none"><?php echo $this->lang->line('select_location'); ?></option>
+								    </select>
 								</div>
 
 								<div class="form-group">
-									<select name="show_period" class="period-select" required placeholder="<?php echo $this->lang->line('show_period'); ?>">
+								   <select name="show_period" class="period-select" required placeholder="<?php echo $this->lang->line('show_period'); ?>">
 									<option disabled selected value="" class="d-none">
-								</select>
+								   </select>
 								</div>
 
 								<div class="form-group">
