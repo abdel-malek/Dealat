@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.tradinos.core.network.InternetManager;
 import com.dealat.Model.Ad;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.MasterActivity;
+import com.tradinos.core.network.InternetManager;
 
 import java.util.List;
 

@@ -30,7 +30,6 @@
 
 
     <!-- Internal Strings -->
-    <string name="phonePrefix">0</string>
     <string name="all">الكل</string>
     <string name="allCategories">كل التصنيفات</string>
     <string name="today">اليوم</string>
@@ -221,6 +220,7 @@
     <string name="errorRequired">هذا الحقل مطلوب</string>
     <string name="errorCodeLenght">رمز التحقق يحب أن يحوي ٦ خانات!</string>
     <string name="errorPhoneLength">رقم الموبايل يحب أن يحوي ٩ خانات!</string>
+    <string name="errorHomeNumber">يرجى إدخال رقم موبايل</string>
     <string name="errorCategory">لايمكن تغيير تصنيف الإعلان</string>
     <string name="errorAgreeToTerms">يجب أن توافق على شروط استخدام ديلات!</string>
 

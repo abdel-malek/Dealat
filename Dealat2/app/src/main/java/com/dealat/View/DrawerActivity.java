@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -19,17 +18,16 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Adapter.CommercialAdapter;
-import com.dealat.Controller.CurrentAndroidUser;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.tradinos.core.network.InternetManager;
-import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.CommercialAdsController;
+import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Controller.UserController;
 import com.dealat.Model.CommercialAd;
 import com.dealat.Model.User;
@@ -37,6 +35,9 @@ import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.SplashActivity;
 import com.dealat.Utils.CustomAlertDialog;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.tradinos.core.network.InternetManager;
+import com.tradinos.core.network.SuccessCallback;
 
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +52,6 @@ public abstract class DrawerActivity extends MasterActivity
     CommercialAdapter commercialAdapter;
     //views
     ViewPager commercialPager;
-    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +145,6 @@ public abstract class DrawerActivity extends MasterActivity
         }
 
         commercialPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tab_layout);
-
         update = new Runnable() {
             public void run() {
                 if (currentPage == commercialAdapter.getCount()) {
@@ -156,6 +154,9 @@ public abstract class DrawerActivity extends MasterActivity
                 handler.postDelayed(this, 5000);
             }
         };
+
+        int height = getResources().getDisplayMetrics().widthPixels / 3;
+        commercialPager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
     }
 
     @Override
@@ -284,8 +285,6 @@ public abstract class DrawerActivity extends MasterActivity
 
                 commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
                 commercialPager.setAdapter(commercialAdapter);
-
-                tabLayout.setupWithViewPager(commercialPager);
 
                 handler.postDelayed(update, 100);
             }

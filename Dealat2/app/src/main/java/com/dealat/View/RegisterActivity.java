@@ -43,7 +43,7 @@ public class RegisterActivity extends MasterActivity {
     @Override
     public void showData() {
         User user = new CurrentAndroidUser(mContext).Get();
-        if (user != null){
+        if (user != null) {
             editTextName.setText(user.getName());
             editTextPhone.setText(user.getPhone());
         }
@@ -228,6 +228,9 @@ public class RegisterActivity extends MasterActivity {
             editTextPhone.requestFocus();
         } else if (stringInput(editTextPhone).length() != 9) {
             editTextPhone.setError(getString(R.string.errorPhoneLength));
+            editTextPhone.requestFocus();
+        } else if (isHomeNumber(stringInput(editTextPhone))) {
+            editTextPhone.setError(getString(R.string.errorHomeNumber));
             editTextPhone.requestFocus();
         } else
             return true;

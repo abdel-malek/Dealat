@@ -299,11 +299,11 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         return NumberFormat.getInstance(Locale.ENGLISH).format(number);
     }
 
-    public SpannableString underlineString(String text){
+    public SpannableString underlineString(String text) {
         SpannableString content = new SpannableString(text);
         content.setSpan(new UnderlineSpan(), 0, text.length(), 0);
 
-        return  content;
+        return content;
     }
 
     protected boolean inputIsEmpty(EditText editText) {
@@ -379,6 +379,12 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             return getString(R.string.phonePrefix) + number;
 
         return number;
+    }
+
+    public boolean isHomeNumber(String number) {
+        if (number.startsWith("9"))
+            return false;
+        return true;
     }
 
     public String getWhatsAppNumber(String number) {

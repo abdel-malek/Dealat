@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.tradinos.core.network.InternetManager;
 import com.dealat.Model.CommercialAd;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.tradinos.core.network.InternetManager;
 
 /**
  * Created by developer on 19.02.18.

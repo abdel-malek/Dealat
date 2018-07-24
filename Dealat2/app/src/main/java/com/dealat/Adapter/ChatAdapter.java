@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.tradinos.core.network.InternetManager;
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Model.Chat;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.tradinos.core.network.InternetManager;
 
 import java.util.List;
 

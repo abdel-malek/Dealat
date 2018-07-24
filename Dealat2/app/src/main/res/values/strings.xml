@@ -30,7 +30,6 @@
 
 
     <!-- Internal Strings -->
-    <string name="phonePrefix">0</string>
     <string name="all">All</string>
     <string name="allCategories">All Categories</string>
     <string name="today">Today</string>
@@ -160,7 +159,7 @@
 
     <string name="labelListEmpty">This list is empty!</string>
 
-    <string name="hintPhone">Phone Number</string>
+    <string name="hintPhone">Mobile Phone Number</string>
     <string name="hintName">Name</string>
     <string name="hintEmail">Email address</string>
     <string name="hintWhatsapp">WhatsApp Number</string>
@@ -223,6 +222,7 @@
     <string name="errorRequired">This field is required</string>
     <string name="errorCodeLenght">Code must have 6 digits</string>
     <string name="errorPhoneLength">Phone number must have 9 digits</string>
+    <string name="errorHomeNumber">Please enter a Mobile phone number</string>
     <string name="errorCategory">Category can\'t be changed!</string>
     <string name="errorAgreeToTerms">You must agree to Dealat terms!</string>
 

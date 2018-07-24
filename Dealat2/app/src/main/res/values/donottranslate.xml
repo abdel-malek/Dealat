@@ -3,8 +3,9 @@
 
     <string name="fb_login_protocol_scheme" translatable="false">fb2030159240566942</string>
     <string name="facebook_app_id">2030159240566942</string>
-    <string name="countryCode">+963</string>
-    <string name="labelQrUrl">deal-at.com/index.php/qrcode_login</string>
+    <string name="countryCode" translatable="false">+963</string>
+    <string name="phonePrefix" translatable="false">0</string>
+    <string name="labelQrUrl" translatable="false">deal-at.com/index.php/qrcode_login</string>
 
 
     <!-- Hidden fields tags -->

@@ -4,16 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.tradinos.core.network.InternetManager;
 import com.dealat.Model.Category;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.MasterActivity;
+import com.tradinos.core.network.InternetManager;
 
 import java.util.List;
 
@@ -53,6 +54,9 @@ public class MainCatAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         view = this.inflater.inflate(R.layout.row_main_category, null);
+
+        int height = context.getResources().getDisplayMetrics().heightPixels / 4;
+        view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
 
         ImageView imageView = view.findViewById(R.id.imageView);
         TextView textView = view.findViewById(R.id.textViewCat);
