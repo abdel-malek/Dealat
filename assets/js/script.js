@@ -819,10 +819,18 @@ $(function () {
 				}
 
 				//add commas to price
-				data.data.price = new Intl.NumberFormat().format(data.data.price);
-				data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
-				data.data.space = new Intl.NumberFormat().format(data.data.space);
-				data.data.salary = new Intl.NumberFormat().format(data.data.salary);
+				if (data.data.price) {
+					data.data.price = new Intl.NumberFormat().format(data.data.price);
+				}
+				if (data.data.kilometer) {
+					data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
+				}
+				if (data.data.space) {
+					data.data.space = new Intl.NumberFormat().format(data.data.space);
+				}
+				if (data.data.salary) {
+					data.data.salary = new Intl.NumberFormat().format(data.data.salary);
+				}
 
 				adData = {
 					ad: data.data,
@@ -854,16 +862,20 @@ $(function () {
 					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
 				}
 
+//				console.log(data.data);
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
+					if (data.data.is_admin === 1) {
+						$("#card-modal .chat").addClass("d-none");
+					} 
 				}
 
 				if (data.data.is_admin === 1) {
-					$("#card-modal .chat, #card-modal .seller").addClass("d-none");
+					$("#card-modal .seller").addClass("d-none");
 				} else {
-					$("#card-modal .chat, #card-modal .seller").removeClass("d-none");
+					$("#card-modal .seller").removeClass("d-none");
 				}
 
 				//category job then remove price circle
@@ -929,8 +941,8 @@ $(function () {
 	$("#card-modal").on("click", ".show-contact", function () {
 		var phone, whatsapp;
 		phone = $(this).parents(".card").find(".seller-phone").val();
-		$("#card-modal .details .mobile-val a").text(phone);
-		$("#card-modal .details .mobile-val a").attr("href", "tel:" + phone);
+		$("#card-modal .details .mobile-val a").text("+963 " + phone);
+		$("#card-modal .details .mobile-val a").attr("href", "tel:+963" + phone);
 		$("#card-modal .details").removeClass("d-none");
 	});
 
@@ -1256,7 +1268,7 @@ $(function () {
 			$(this)[0].sumo.unSelectAll();
 			$(this)[0].sumo.reload();
 		});
-		
+
 		$('#filter-form input[type="text"]:not(.search, .price),#filter-form input[type="number"]').each(function () {
 			$(this).val("");
 		});
@@ -1498,18 +1510,29 @@ $(function () {
 			});
 		}
 
+		//remove commas from numbers before sending the request
 		var numbersWithComma = ["price", "kilometer", "space", "salary"];
 		for (i in data) {
 			if (numbersWithComma.indexOf(data[i].name) > -1) {
 				data[i].value = data[i].value.replace(/,/g, '');
 			}
 		}
-console.log(data);
+		//console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
 			dataType: "json",
-			data: $.param(data)
+			global: false, // this makes sure ajaxStart is not triggered
+			data: $.param(data),
+			beforeSend: function () {
+				//				ajaxLoadTimeout = setTimeout(function () {
+				$(".loading-overlay1").fadeIn("fast");
+				//				}, 100);
+			},
+			complete: function () {
+				//				clearTimeout(ajaxLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
+			}
 		}).done(function (data) {
 			if (data.status === false) {
 				var errorMessage = $.parseHTML(data.message),
@@ -1893,6 +1916,7 @@ console.log(data);
 			});
 		}
 
+		//remove commas from numbers before sending the request
 		var numbersWithComma = ["price_min", "kilometer_min", "space_min", "salary_min", "price_max", "kilometer_max", "space_max", "salary_max"];
 
 		for (i in data) {
@@ -2234,11 +2258,11 @@ console.log(data);
 		var pass1, pass2, data, phone, whatsup;
 		phone = $(this).find(".phone").val();
 
-		if (phone.length !== 9) {
+		if (phone.length !== 9 || phone[0] !== "9") {
 			if (lang === "ar") {
-				$('#register-modal .error-message').text("رقم الهاتف يجب أن يتكون من 9 أرقام");
+				$('#register-modal .error-message').text("رقم الهاتف يجب أن يتكون من 9 أرقام ويبدأ بالرقم 9");
 			} else {
-				$('#register-modal .error-message').text("Phone must be exactly 9 characters in length");
+				$('#register-modal .error-message').text("Phone must be exactly 9 characters in length and start with 9");
 			}
 			$('#register-modal .error-message').removeClass("d-none");
 			$("#register-modal").animate({
@@ -2251,7 +2275,7 @@ console.log(data);
 		pass2 = $(this).find(".confirm_password").val();
 		if (pass1 !== pass2) {
 			if (lang === "ar") {
-				$('#register-modal .error-message').text("الرجاء إدخال كلمة المرور بشكل صحيح");
+				$('#register-modal .error-message').text("الرجاء إدخال تأكيد كلمة المرور بشكل صحيح");
 			} else {
 				$('#register-modal .error-message').text("Please retype password correctly");
 			}

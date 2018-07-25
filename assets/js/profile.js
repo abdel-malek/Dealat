@@ -79,6 +79,9 @@ $(function () {
 						}
 					}
 
+					//add commas to price
+					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
+					
 					if (data.data[i].publish_date) {
 						adData = {
 							ad: data.data[i],
@@ -158,6 +161,9 @@ $(function () {
 						}
 					}
 
+					//add commas to price
+					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
+					
 					adData = {
 						ad: data.data[i],
 						date: data.data[i].publish_date.split(' ')[0],

@@ -750,7 +750,7 @@ header.home {
   .categories .category-slider {
     width: 91%; }
     .categories .category-slider .slick-slide {
-      padding-top: 2px;
+      padding-top: 4px;
       padding-bottom: 5px; }
       .categories .category-slider .slick-slide img {
         margin: auto;
@@ -779,7 +779,7 @@ header.home {
         border-radius: 50%;
         min-width: 23px;
         min-height: 23px;
-        padding: 0;
+        padding: 0px 5px;
         font-size: .8rem; }
   .categories .slick-arrow {
     top: 35%; }
