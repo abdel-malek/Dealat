@@ -30,6 +30,8 @@ class Provider : BaseManager {
     
     static var selectedCategory : Cat!
     static var selectedLocation : Location!
+    
+    static var logoImage = #imageLiteral(resourceName: "Dealat logo red")
 
   
     static func loadAllChildren(_ res : [Cat] , i : Int) -> [Cat]{

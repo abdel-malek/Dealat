@@ -140,7 +140,7 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         
     }
     
-    func setupViews(){
+    @objc func setupViews(){
         
     }
     

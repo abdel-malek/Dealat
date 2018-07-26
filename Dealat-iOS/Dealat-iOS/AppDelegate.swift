@@ -37,13 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Provider.isArabic = AppDelegate.isArabic()
         
-        AppDelegate.setupViews()
+      //  AppDelegate.setupViews() // TODO
         setupNotification(application)
         
-        if User.isRegistered(){
-            Communication.shared.get_my_info { (res) in
-            }
-        }
+        
         
         return true
     }
@@ -98,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     
-    static func setupViews(){
+     @objc static func setupViews(){
         
         if let arr =  UserDefaults.standard.value(forKey: "AppleLanguages") as? [String]{
             if let lang = arr.first{

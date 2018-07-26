@@ -15,6 +15,7 @@ class RegisterVC: BaseVC {
     //    @IBOutlet weak var tfConfirmPassword : UITextField!
     
     
+    @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var tfName : UITextField!
     @IBOutlet weak var tfPhone: UITextField!
     
@@ -40,6 +41,9 @@ class RegisterVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        self.img.image = Provider.logoImage
         
         self.getData()
         

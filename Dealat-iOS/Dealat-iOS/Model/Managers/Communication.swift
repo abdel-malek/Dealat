@@ -29,8 +29,8 @@ class Communication: BaseManager {
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
 
-    let baseURL = "http://www.deal-at.com/index.php/api"
-    let baseImgsURL = "http://www.deal-at.com/"
+    var baseURL = "http://www.deal-at.com/index.php/api"
+    var baseImgsURL = "http://www.deal-at.com/"
     
     
     let get_latest_itemsURL = "/items_control/get_latest_items/format/json"
@@ -76,6 +76,7 @@ class Communication: BaseManager {
     let delete_my_accountURL = "/users_control/delete_my_account/format/json"
     
     let QR_code_scanURL = "/QR_users_control/QR_code_scan/format/json"
+    
     
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
@@ -286,8 +287,8 @@ class Communication: BaseManager {
                         }
                     }
                     
-                    Provider.shared.currency_en = value.currency_en
-                    Provider.shared.currency_ar = value.currency_ar
+//                    Provider.shared.currency_en = value.currency_en
+//                    Provider.shared.currency_ar = value.currency_ar
 
                     
                     callback(cities)
@@ -474,8 +475,8 @@ class Communication: BaseManager {
                     Provider.shared.cats = resFinal
                     
                     
-                    Provider.shared.currency_en = value.currency_en
-                    Provider.shared.currency_ar = value.currency_ar
+//                    Provider.shared.currency_en = value.currency_en
+//                    Provider.shared.currency_ar = value.currency_ar
 
                     callback(resFinal)
                     
@@ -727,7 +728,7 @@ class Communication: BaseManager {
     
     func save_user_token(_ token : String, callback : @escaping (Bool) -> Void){
         
-        let url = URL(string: baseURL + save_user_tokenURL)!
+        let url = URL(string: "http://www.deal-at.com/index.php/api" + save_user_tokenURL)!
         
         let lang = AppDelegate.isArabic() ? "ar" : "en"
         let params : [String : Any] = ["token" : token,"os" : 2,"lang" : lang]
@@ -748,7 +749,8 @@ class Communication: BaseManager {
                     callback(true)
                     
                 }else{
-                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+//                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                    callback(false)
                 }
                 break
             case .failure(let error):
@@ -1365,6 +1367,11 @@ class Communication: BaseManager {
         headers["city_id"] = "\(Provider.getCity())"
         headers["Api-call"] = "1"
         headers["os"] = "2"
+        
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            headers["version"] = version
+        }
+
 
         
         //            let plainString = "994729458:89f2558bd4b3df00b7f9a8ee9e9df679" as NSString

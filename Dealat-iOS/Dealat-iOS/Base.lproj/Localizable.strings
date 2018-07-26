@@ -200,3 +200,5 @@
 "min" = "min";
 "sec" = "sec";
 "views" = "views";
+"TryAgain" = "Try again";
+"ConnectionError" = "Error in connection!";

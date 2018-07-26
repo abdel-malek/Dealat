@@ -23,19 +23,22 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var phoneBtn : UIButton!
     
     @IBOutlet weak var textView : UITextView!
+    @IBOutlet weak var img : UIImageView!
+
     
     var aboutInfo : AboutInfo!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.img.image = Provider.logoImage
+
         self.scrollView.isHidden = true
 
         self.getData()
         self.title = "Help".localized
         
         Provider.setScreenName("AboutActivity")
-
     }
     
     
