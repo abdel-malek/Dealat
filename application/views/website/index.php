@@ -20,7 +20,7 @@
 					</div>
 					<div class="col-sm-6 col-md-3 col-lg-2">
 						<div class="download android text-center">
-							<a href="https://play.google.com/store/apps/details?id=com.dealat">
+							<a href="https://play.google.com/store/apps/details?id=com.dealat" target="_blank">
 								<?php if( $this->session->userdata("language")  == "en" ) { ?>
 								<img src="<?php echo base_url('assets/images/google-play-badge.png'); ?>" height="45px" alt="">
 								<?php } else {?>
@@ -31,7 +31,7 @@
 					</div>
 					<div class="col-sm-6 col-md-3 col-lg-2">
 						<div class="download ios text-center">
-							<a href="https://itunes.apple.com/us/app/dealat/id1397149787?mt=8">
+							<a href="https://itunes.apple.com/us/app/dealat/id1397149787?mt=8" target="_blank">
 								<?php if( $this->session->userdata("language")  == "en" ) { ?>
 								<img src="<?php echo base_url('assets/images/ios%20en%20black.png'); ?>" height="45px" width="152.5px" alt="">
 								<?php } else {?>
