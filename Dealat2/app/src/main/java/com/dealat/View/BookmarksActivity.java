@@ -3,19 +3,20 @@ package com.dealat.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dealat.Adapter.BookmarkAdapter;
+import com.dealat.Adapter.BookmarkPagingAdapter;
 import com.dealat.Controller.UserController;
-import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Model.Bookmark;
 import com.dealat.Model.Category;
 import com.dealat.R;
 import com.dealat.Utils.CustomAlertDialog;
+import com.dealat.Utils.PaginationScrollListener;
+import com.tradinos.core.network.SuccessCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,11 +25,25 @@ import java.util.List;
 
 public class BookmarksActivity extends MasterActivity {
 
-    private List<Bookmark> bookmarks = new ArrayList<>();
+    public final int PAGE_SIZE = 20;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = 1; // first is called in MyProfileActivity
+
+    //private List<Bookmark> bookmarks = new ArrayList<>();
     //views
+    private GridLayoutManager gridLayoutManager;
+    private BookmarkPagingAdapter pagingAdapter;
+
     private SwipeRefreshLayout refreshLayout;
     private TextView layoutEmpty;
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +53,13 @@ public class BookmarksActivity extends MasterActivity {
 
     @Override
     public void getData() {
-        if (!refreshLayout.isRefreshing())
-            ShowProgressDialog();
+        gridLayoutManager = new GridLayoutManager(mContext, 1);
+        pagingAdapter = new BookmarkPagingAdapter(mContext);
 
-        UserController.getInstance(mController).getBookmarks(new SuccessCallback<List<Bookmark>>() {
-            @Override
-            public void OnSuccess(List<Bookmark> result) {
-                HideProgressDialog();
-                refreshLayout.setRefreshing(false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(pagingAdapter);
 
-                if (result.isEmpty())
-                    layoutEmpty.setVisibility(View.VISIBLE);
-                else
-                    layoutEmpty.setVisibility(View.GONE);
-
-                bookmarks.clear();
-                bookmarks.addAll(result);
-                listView.setAdapter(new BookmarkAdapter(mContext, bookmarks));
-            }
-        });
+        getBookmarks();
     }
 
     @Override
@@ -68,7 +71,7 @@ public class BookmarksActivity extends MasterActivity {
     public void assignUIReferences() {
         refreshLayout = findViewById(R.id.refreshLayout);
         layoutEmpty = findViewById(R.id.layoutEmpty);
-        listView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.recyclerView);
     }
 
     @Override
@@ -77,7 +80,31 @@ public class BookmarksActivity extends MasterActivity {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-                getData();
+                pagingAdapter.clear();
+                currentPage = 1;
+                isLastPage = false;
+
+                getBookmarks();
+            }
+        });
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1; //Increment page index to load the next one
+
+                getBookmarks();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
         });
     }
@@ -89,25 +116,25 @@ public class BookmarksActivity extends MasterActivity {
         switch (view.getId()) {
             case R.id.buttonFalse:
 
-                CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureDeleteSearch));
+                final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.areYouSureDeleteSearch));
                 dialog.show();
 
                 dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         ShowProgressDialog();
-                        UserController.getInstance(mController).deleteBookmark(bookmarks.get(position).getId(), new SuccessCallback<String>() {
+                        UserController.getInstance(mController).deleteBookmark(pagingAdapter.getItem(position).getId(), new SuccessCallback<String>() {
                             @Override
                             public void OnSuccess(String result) {
                                 HideProgressDialog();
 
-                                bookmarks.remove(position);
-                                ((BookmarkAdapter) listView.getAdapter()).notifyDataSetChanged();
+                                pagingAdapter.removeItem(position);
 
-                                if (bookmarks.isEmpty())
+                                if (pagingAdapter.getItemCount() == 0)
                                     layoutEmpty.setVisibility(View.VISIBLE);
 
                                 showMessageInToast(R.string.toastUnBookmark);
+                                dialog.dismiss();
                             }
                         });
                     }
@@ -123,10 +150,38 @@ public class BookmarksActivity extends MasterActivity {
 
                 intent.putExtra("action", ViewAdsActivity.ACTION_BOOKMARK);
                 intent.putExtra("category", mainCategory);
-                intent.putExtra("bookmarkId", bookmarks.get(position).getId());
+                intent.putExtra("bookmarkId", pagingAdapter.getItem(position).getId());
 
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void getBookmarks() {
+        if (currentPage == 1 && !refreshLayout.isRefreshing())
+            ShowProgressDialog();
+
+        UserController.getInstance(mController).getBookmarks(currentPage, PAGE_SIZE, new SuccessCallback<List<Bookmark>>() {
+            @Override
+            public void OnSuccess(List<Bookmark> result) {
+                HideProgressDialog();
+                refreshLayout.setRefreshing(false);
+
+                pagingAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                pagingAdapter.addAll(result);
+
+                if (pagingAdapter.getItemCount() == 0)
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                else
+                    layoutEmpty.setVisibility(View.GONE);
+
+                if (result.size() < PAGE_SIZE)
+                    isLastPage = true;
+                else
+                    pagingAdapter.addLoadingFooter();
+            }
+        });
     }
 }

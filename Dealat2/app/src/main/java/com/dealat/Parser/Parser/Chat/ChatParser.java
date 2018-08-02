@@ -20,6 +20,8 @@ public class ChatParser implements TradinosParser<Chat> {
         Chat chat = new Chat();
 
         chat.setAdId(jsonObject.getString("ad_id"));
+        chat.setTemplateId(jsonObject.getString("template_id"));
+
         chat.setUserId(jsonObject.getString("user_id"));
         chat.setSellerId(jsonObject.getString("seller_id"));
         chat.setChatId(jsonObject.getString("chat_session_id"));
@@ -33,7 +35,7 @@ public class ChatParser implements TradinosParser<Chat> {
         if (validData(jsonObject.getString("seller_pic")))
             chat.setSellerPic(jsonObject.getString("seller_pic"));
 
-        if (jsonObject.has("ad_title")) // these don't exist in Chat notification
+        if (jsonObject.has("ad_title"))
             chat.setAdTitle(jsonObject.getString("ad_title"));
 
 

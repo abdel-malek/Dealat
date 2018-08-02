@@ -217,6 +217,9 @@
     <string name="navHelp">Help</string>
     <string name="navQr">Scan QR code</string>
 
+    <!-- Options -->
+    <string name="opt_details">Ad\'s details</string>
+
 
     <!-- Errors -->
     <string name="errorRequired">This field is required</string>

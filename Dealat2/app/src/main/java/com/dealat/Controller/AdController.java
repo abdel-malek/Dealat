@@ -5,8 +5,10 @@ import android.net.Uri;
 import com.dealat.API.APIModel;
 import com.dealat.API.URLBuilder;
 import com.dealat.Model.Ad;
+import com.dealat.Model.GroupedResponse;
 import com.dealat.Model.Item;
 import com.dealat.Model.TemplatesData;
+import com.dealat.Parser.AdsResponseParser;
 import com.dealat.Parser.Parser.Ad.AdDetailsParser;
 import com.dealat.Parser.Parser.Ad.AdListParser;
 import com.dealat.Parser.Parser.Item.ItemListParser;
@@ -116,10 +118,12 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getCategoryAds(String categoryId, SuccessCallback<List<Ad>> successCallback) {
+    public void getCategoryAds(int pageNum, int pageSize, String categoryId, SuccessCallback<GroupedResponse> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_items_by_main_category").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdsResponseParser(), successCallback, getmFaildCallback());
 
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
         request.addParameter("category_id", categoryId);
 
         // authenticationRequired(request);
@@ -139,13 +143,16 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void search(HashMap<String, String> parameters, SuccessCallback<List<Ad>> successCallback) {
+    public void search(int pageNum, int pageSize, HashMap<String, String> parameters, SuccessCallback<GroupedResponse> successCallback) {
         String url = new URLBuilder(APIModel.ads, "search").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdsResponseParser(), successCallback, getmFaildCallback());
 
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             request.addParameter(entry.getKey(), Uri.encode(entry.getValue(), "UTF-8"));
         }
+
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
 
         addToHeader(request);
         request.Call();

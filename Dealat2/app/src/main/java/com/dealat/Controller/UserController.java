@@ -1,5 +1,7 @@
 package com.dealat.Controller;
 
+import com.dealat.Model.GroupedResponse;
+import com.dealat.Parser.AdsResponseParser;
 import com.dealat.Parser.Parser.Bookmark.BookmarkListParser;
 import com.dealat.Parser.Parser.Item.ItemListParser;
 import com.tradinos.core.network.Controller;
@@ -138,27 +140,39 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void getMyAds(SuccessCallback<List<Ad>> successCallback) {
+    public TradinosRequest getMyAds(int status, int pageNum, int pageSize, SuccessCallback<List<Ad>> successCallback) {
         String url = new URLBuilder(APIModel.users, "get_my_items").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
 
+        request.addParameter("status", String.valueOf(status));
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
+
         addToHeader(request);
         authenticationRequired(request);
         request.Call();
+
+        return request;
     }
 
-    public void getMyFavorites(SuccessCallback<List<Ad>> successCallback) {
+    public void getMyFavorites(int pageNum, int pageSize, SuccessCallback<List<Ad>> successCallback) {
         String url = new URLBuilder(APIModel.users, "get_my_favorites").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
 
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
+
         addToHeader(request);
         authenticationRequired(request);
         request.Call();
     }
 
-    public void getBookmarks(SuccessCallback<List<Bookmark>> successCallback) {
+    public void getBookmarks(int pageNum, int pageSize, SuccessCallback<List<Bookmark>> successCallback) {
         String url = new URLBuilder(APIModel.users, "get_my_bookmarks").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new BookmarkListParser(), successCallback, getmFaildCallback());
+
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
 
         addToHeader(request);
         authenticationRequired(request);
@@ -188,11 +202,13 @@ public class UserController extends ParentController {
         request.Call();
     }
 
-    public void getBookmarkAds(String id, SuccessCallback<List<Ad>> successCallback) {
+    public void getBookmarkAds(int pageNum, int pageSize, String id, SuccessCallback<GroupedResponse> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_bookmark_search").getURL(getmContext());
-        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdListParser(), successCallback, getmFaildCallback());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdsResponseParser(), successCallback, getmFaildCallback());
 
         request.addParameter("user_bookmark_id", id);
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
 
         addToHeader(request);
         authenticationRequired(request);

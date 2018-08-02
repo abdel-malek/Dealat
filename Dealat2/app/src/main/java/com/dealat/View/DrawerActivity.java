@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Adapter.CommercialAdapter;
-import com.dealat.Controller.CommercialAdsController;
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Controller.UserController;
 import com.dealat.Model.CommercialAd;
@@ -46,8 +45,8 @@ public abstract class DrawerActivity extends MasterActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private int currentPage = 0;
-    private Handler handler = new Handler();
-    private Runnable update;
+    protected Handler handler = new Handler();
+    protected Runnable update;
 
     CommercialAdapter commercialAdapter;
     //views
@@ -273,22 +272,13 @@ public abstract class DrawerActivity extends MasterActivity
         return true;
     }
 
-    protected void getCommercialAds(String categoryId) {
-
+    protected void getCommercialAds(List<CommercialAd> commercialAds) {
         handler.removeCallbacks(update);
-        CommercialAdsController.getInstance(mController).getCommercialAds(categoryId, new SuccessCallback<List<CommercialAd>>() {
-            @Override
-            public void OnSuccess(final List<CommercialAd> result) {
-                HideProgressDialog();
-                if (findViewById(R.id.refreshLayout) != null)
-                    ((SwipeRefreshLayout) findViewById(R.id.refreshLayout)).setRefreshing(false);
 
-                commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), result);
-                commercialPager.setAdapter(commercialAdapter);
+        commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), commercialAds);
+        commercialPager.setAdapter(commercialAdapter);
 
-                handler.postDelayed(update, 100);
-            }
-        });
+        handler.postDelayed(update, 100);
     }
 
     private void setLocale(String lang) {

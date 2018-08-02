@@ -226,8 +226,8 @@ public class MyApplication extends Application {
 
     public static String getBaseUrl() {
         // return "http://dealat.tradinos.com/";
-          //return "http://192.168.9.96/Dealat/";
-        //return "http://deal-at.com/";
-        return "http://dealat-sy.tradinos.com/";
+        // return "http://192.168.9.96/Dealat/";
+        return "http://deal-at.com/";
+        //  return "http://dealat-sy.tradinos.com/";
     }
 }

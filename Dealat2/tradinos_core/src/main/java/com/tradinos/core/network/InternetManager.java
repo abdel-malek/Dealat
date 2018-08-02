@@ -39,10 +39,12 @@ public class InternetManager {
             // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
+        mRequestQueue.getCache().clear(); // response was cached and Basel got upset
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    public <T> void addToRequestQueue(Request<T> req, String url) {
+        getRequestQueue().getCache().remove(url);
         getRequestQueue().add(req);
     }
 

@@ -31,15 +31,10 @@
         android:layout_above="@+id/container2"
         android:id="@+id/refreshLayout">
 
-        <GridView
-            android:id="@+id/gridView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnWidth="100dp"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="4dp"
-            android:horizontalSpacing="4dp"
-            android:gravity="center"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 

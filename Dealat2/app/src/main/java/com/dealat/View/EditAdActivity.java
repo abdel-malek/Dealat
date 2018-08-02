@@ -197,7 +197,7 @@ public class EditAdActivity extends MasterActivity {
                 currentAd = result;
                 // when assigning result to currentAd it's important to pay attention that status of currentAd
                 // now equals the status of result, which means the status coming from server and that what we want..
-                // because in MyAdAdapter status might be changed to EXPIRED
+                // because in MyAdPagingAdapter status might be changed to EXPIRED
 
                 videoServerPath = result.getMainVideoUrl();
 

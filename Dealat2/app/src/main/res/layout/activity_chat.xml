@@ -5,33 +5,46 @@
     android:background="@drawable/background_blur"
     >
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="8dp"
         android:background="@color/red"
         >
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:textColor="@color/white"
-            android:textAppearance="@style/textHeadline"
-            />
-        <TextView
-            android:id="@+id/textName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/whiteTransparent"
-            android:textAppearance="@style/textNormal"
-            />
-    </LinearLayout>
+            android:layoutDirection="ltr"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/textHeadline"
+                    />
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/whiteTransparent"
+                    android:textAppearance="@style/textNormal"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

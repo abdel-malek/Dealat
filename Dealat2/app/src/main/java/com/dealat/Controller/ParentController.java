@@ -3,6 +3,7 @@ package com.dealat.Controller;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
+import com.dealat.BuildConfig;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
 import com.tradinos.core.network.Controller;
@@ -39,6 +40,7 @@ public class ParentController extends Controller {
             request.getHeaders().put("city", MyApplication.getCity());
             request.getHeaders().put("lang", MyApplication.getLocale().toString());
             request.getHeaders().put("Api-call", "1");
+            request.getHeaders().put("version", BuildConfig.VERSION_NAME);
 
         } catch (AuthFailureError authFailureError) {
             authFailureError.printStackTrace();

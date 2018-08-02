@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Chat implements Serializable {
 
-    private String userId, sellerId, chatId, adId;
+    private String userId, sellerId, chatId, adId, templateId;
     private String userName, sellerName;
     private String userPic, sellerPic;
     private String adTitle;
@@ -45,6 +45,14 @@ public class Chat implements Serializable {
 
     public void setAdId(String adId) {
         this.adId = adId;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 
     public String getUserName() {

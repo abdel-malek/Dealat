@@ -81,7 +81,7 @@ public class TradinosRequest2<T>  extends  TradinosRequest{
     }
 
     public void Call() {
-        InternetManager.getInstance(getContext()).addToRequestQueue(this);
+        InternetManager.getInstance(getContext()).addToRequestQueue(this, this.url);
     }
 
     public Context getContext() {

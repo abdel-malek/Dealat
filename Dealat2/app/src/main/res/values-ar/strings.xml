@@ -215,6 +215,8 @@
     <string name="navLogout">تسجيل الخروج</string>
     <string name="navQr">مسح QR Code</string>
 
+    <!-- Options -->
+    <string name="opt_details">تفاصيل الإعلان</string>
 
     <!-- Errors -->
     <string name="errorRequired">هذا الحقل مطلوب</string>

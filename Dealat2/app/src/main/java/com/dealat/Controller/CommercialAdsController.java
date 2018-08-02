@@ -1,13 +1,10 @@
 package com.dealat.Controller;
 
-import android.content.Context;
-
 import com.dealat.API.APIModel;
 import com.dealat.API.URLBuilder;
 import com.dealat.Model.CommercialAd;
 import com.dealat.Parser.Parser.CommercialAd.CommercialAdListParser;
 import com.tradinos.core.network.Controller;
-import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.RequestMethod;
 import com.tradinos.core.network.SuccessCallback;
 import com.tradinos.core.network.TradinosRequest;
@@ -19,9 +16,6 @@ import java.util.List;
  */
 
 public class CommercialAdsController extends ParentController {
-    public CommercialAdsController(Context context, FaildCallback faildCallback) {
-        super(context, faildCallback);
-    }
 
     public CommercialAdsController(Controller controller){
         super(controller.getmContext(), controller.getmFaildCallback());

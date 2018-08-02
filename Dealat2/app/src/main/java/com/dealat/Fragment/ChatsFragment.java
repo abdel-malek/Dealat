@@ -1,24 +1,23 @@
 package com.dealat.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dealat.Adapter.ChatAdapter;
+import com.dealat.Adapter.ChatPagingAdapter;
 import com.dealat.Controller.ChatController;
 import com.dealat.Model.Chat;
-import com.dealat.View.ChatActivity;
+import com.dealat.R;
+import com.dealat.Utils.PaginationScrollListener;
 import com.dealat.View.MasterActivity;
 import com.tradinos.core.network.SuccessCallback;
-import com.dealat.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +28,23 @@ import java.util.List;
 
 public class ChatsFragment extends Fragment {
 
+    public final int PAGE_SIZE = 20;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = 1; // first is called in MyProfileActivity
+
     private List<Chat> chats = new ArrayList<>();
+    private ChatPagingAdapter pagingAdapter;
 
     private SwipeRefreshLayout refreshLayout;
     private TextView layoutEmpty;
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     public static ChatsFragment newInstance(List<Chat> chats) {
         ChatsFragment fragment = new ChatsFragment();
@@ -43,8 +54,7 @@ public class ChatsFragment extends Fragment {
     }
 
     public void setChats(List<Chat> chats) {
-        this.chats.clear();
-        this.chats.addAll(chats);
+        this.chats = chats;
     }
 
     @Nullable
@@ -54,49 +64,89 @@ public class ChatsFragment extends Fragment {
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
-        listView = rootView.findViewById(R.id.listView);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
 
-        if (chats.isEmpty())
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        pagingAdapter = new ChatPagingAdapter(getContext());
+        pagingAdapter.addAll(chats);
+
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(pagingAdapter);
+
+        if (pagingAdapter.getItemCount() == 0)
             layoutEmpty.setVisibility(View.VISIBLE);
         else
-            listView.setAdapter(new ChatAdapter(getContext(), chats));
+            layoutEmpty.setVisibility(View.GONE);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), ChatActivity.class);
 
-                intent.putExtra("chat", chats.get(i));
-
-                startActivity(intent);
-            }
-        });
+        if (chats.size() < PAGE_SIZE) // first page is the last page too
+            isLastPage = true;
+        else
+            pagingAdapter.addLoadingFooter();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
 
-                MasterActivity activity = (MasterActivity) getActivity();
+                pagingAdapter.clear();
+                chats.clear();
+                currentPage = 1;
+                isLastPage = false;
 
-                ChatController.getInstance(activity.getController()).getChats(new SuccessCallback<List<Chat>>() {
-                    @Override
-                    public void OnSuccess(List<Chat> result) {
-                        refreshLayout.setRefreshing(false);
+                getData();
+            }
+        });
 
-                        if (result.isEmpty())
-                            layoutEmpty.setVisibility(View.VISIBLE);
-                        else
-                            layoutEmpty.setVisibility(View.GONE);
 
-                        setChats(result);
-                        listView.setAdapter(new ChatAdapter(getContext(), chats));
-                    }
-                });
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1; //Increment page index to load the next one
+
+                getData();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
         });
 
 
         return rootView;
+    }
+
+    private void getData() {
+        MasterActivity activity = (MasterActivity) getActivity();
+
+        ChatController.getInstance(activity.getController()).getChats(currentPage, PAGE_SIZE, new SuccessCallback<List<Chat>>() {
+            @Override
+            public void OnSuccess(List<Chat> result) {
+                refreshLayout.setRefreshing(false);
+
+                pagingAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                pagingAdapter.addAll(result);
+
+                if (pagingAdapter.getItemCount() == 0)
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                else
+                    layoutEmpty.setVisibility(View.GONE);
+
+
+                if (result.size() < PAGE_SIZE)
+                    isLastPage = true;
+                else
+                    pagingAdapter.addLoadingFooter();
+            }
+        });
     }
 }

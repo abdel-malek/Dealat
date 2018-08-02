@@ -4,18 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tradinos.core.network.SuccessCallback;
-import com.dealat.Adapter.AdAdapter;
+import com.dealat.Adapter.AdPagingAdapter;
 import com.dealat.Controller.UserController;
 import com.dealat.Model.Ad;
 import com.dealat.R;
+import com.dealat.Utils.PaginationScrollListener;
 import com.dealat.View.MasterActivity;
+import com.tradinos.core.network.SuccessCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +28,27 @@ import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
-    private List<Ad> favs = new ArrayList<>();
+    public final int PAGE_SIZE = 20;
 
-    SwipeRefreshLayout refreshLayout;
-    TextView layoutEmpty;
-    ListView listView;
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = 1; // first is called in MyProfileActivity
+
+    private List<Ad> favs = new ArrayList<>();
+    private AdPagingAdapter pagingAdapter;
+
+    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
+    private TextView layoutEmpty;
+
 
     public static FavoritesFragment newInstance(List<Ad> favs) {
         FavoritesFragment fragment = new FavoritesFragment();
-
         fragment.setFavs(favs);
 
         return fragment;
@@ -51,38 +65,88 @@ public class FavoritesFragment extends Fragment {
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
-        listView = rootView.findViewById(R.id.listView);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
 
-        if (favs.isEmpty())
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        pagingAdapter = new AdPagingAdapter(getContext(), R.layout.row_view1);
+        pagingAdapter.addAll(favs);
+
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(pagingAdapter);
+
+
+        if (pagingAdapter.getItemCount() == 0)
             layoutEmpty.setVisibility(View.VISIBLE);
         else
-            listView.setAdapter(new AdAdapter(getContext(), favs, R.layout.row_view1));
-        // startActivityForResult(); to refresh if ad was unfavorited
+            layoutEmpty.setVisibility(View.GONE);
+
+        if (favs.size() < PAGE_SIZE) // first page is the last page too
+            isLastPage = true;
+        else
+            pagingAdapter.addLoadingFooter();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
 
-                MasterActivity activity = (MasterActivity) getActivity();
+                pagingAdapter.clear();
+                favs.clear();
 
-                UserController.getInstance(activity.getController()).getMyFavorites(new SuccessCallback<List<Ad>>() {
-                    @Override
-                    public void OnSuccess(List<Ad> result) {
-                        refreshLayout.setRefreshing(false);
+                currentPage = 1;
+                isLastPage = false;
 
-                        if (result.isEmpty())
-                            layoutEmpty.setVisibility(View.VISIBLE);
-                        else
-                            layoutEmpty.setVisibility(View.GONE);
+                getData();
+            }
+        });
 
-                        setFavs(result);
-                        listView.setAdapter(new AdAdapter(getContext(), result, R.layout.row_view1));
-                    }
-                });
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1; //Increment page index to load the next one
+
+                getData();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
         });
 
         return rootView;
+    }
+
+    private void getData() {
+        MasterActivity activity = (MasterActivity) getActivity();
+
+        UserController.getInstance(activity.getController()).getMyFavorites(currentPage, PAGE_SIZE, new SuccessCallback<List<Ad>>() {
+            @Override
+            public void OnSuccess(List<Ad> result) {
+                refreshLayout.setRefreshing(false);
+
+                pagingAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                pagingAdapter.addAll(result);
+
+                if (pagingAdapter.getItemCount() == 0)
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                else
+                    layoutEmpty.setVisibility(View.GONE);
+
+
+                if (result.size() < PAGE_SIZE)
+                    isLastPage = true;
+                else
+                    pagingAdapter.addLoadingFooter();
+            }
+        });
     }
 }

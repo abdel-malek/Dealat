@@ -211,6 +211,16 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
         ad.setCityId(jsonObject.getString("city_id"));
         ad.setCityName(jsonObject.getString("city_name"));
+        ad.setCreationDate(jsonObject.getString("created_at"));
+
+        if (jsonObject.has("expired_after"))
+            if (validData(jsonObject.getString("expired_after")))
+                ad.setExpiresAfter(jsonObject.getInt("expired_after"));
+
+        if (jsonObject.has("expiry_date"))
+            if (validData(jsonObject.getString("expiry_date")))
+                ad.setExpiryDate(jsonObject.getString("expiry_date"));
+
 
         if (validData(jsonObject.getString("whatsup_number")))
             ad.setWhatsAppNumber(jsonObject.getString("whatsup_number"));

@@ -72,6 +72,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
         this.successCallback = successCallback;
         this.faildCallback = faildCallback;
         this.parser = parser;
+        this.setShouldCache(false);
 
 
         if (this.getMethod() == Method.POST)
@@ -108,7 +109,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
     }
 
     public void Call() {
-        InternetManager.getInstance(getContext()).addToRequestQueue(this);
+        InternetManager.getInstance(getContext()).addToRequestQueue(this, this.url);
     }
 
     public Context getContext() {

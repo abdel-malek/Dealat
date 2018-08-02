@@ -92,7 +92,6 @@ public class AdDetailsActivity extends MasterActivity {
 
         user = new CurrentAndroidUser(mContext);
         currentAd = (Ad) getIntent().getSerializableExtra("ad");
-        currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
 
         getAd();
     }
@@ -104,6 +103,7 @@ public class AdDetailsActivity extends MasterActivity {
             public void OnSuccess(Ad result) {
                 enabled = true;
 
+                currentAd.setTitle(result.getTitle());
                 currentAd.setSellerId(result.getSellerId());
                 currentAd.setSellerPhone(result.getSellerPhone());
                 currentAd.setSellerName(result.getSellerName());
@@ -113,6 +113,20 @@ public class AdDetailsActivity extends MasterActivity {
                 currentAd.setMainVideoUrl(result.getMainVideoUrl());
                 currentAd.setVisiblePhone(result.isVisiblePhone());
                 currentAd.setAdminSeller(result.isAdminSeller());
+                currentAd.setCategoryId(result.getCategoryId());
+                currentAd.setCreationDate(result.getCreationDate());
+                currentAd.setRejectNote(result.getRejectNote());
+                currentAd.setStatus(result.getStatus());
+                currentAd.setExpiryDate(result.getExpiryDate());
+                currentAd.setExpiresAfter(result.getExpiresAfter());
+
+
+                if (currentAd.getPublishDate() != null) { // only published ads their expiry dates are calculated
+                    if (currentAd.getStatus() == Ad.ACCEPTED && currentAd.getExpiresAfter() < 0)
+                        currentAd.setStatus(Ad.EXPIRED);
+                }
+
+                currentCategory = MyApplication.getCategoryById(currentAd.getCategoryId());
 
                 if (result.getMainVideoUrl() != null)// just a gap thing for video // because count of fragments must increase +1
                     result.getImagesPaths().add(0, "");
@@ -391,8 +405,10 @@ public class AdDetailsActivity extends MasterActivity {
 
                 case R.id.buttonMessage:
                     intent = new Intent(mContext, ChatActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     Chat chat = new Chat();
                     chat.setAdId(currentAd.getId());
+                    chat.setTemplateId(String.valueOf(currentAd.getTemplate()));
                     chat.setSellerId(currentAd.getSellerId());
                     chat.setSellerName(currentAd.getSellerName());
                     chat.setUserId(user.Get().getId());

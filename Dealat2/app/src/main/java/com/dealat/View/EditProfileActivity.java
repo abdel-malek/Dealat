@@ -298,7 +298,8 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
 
             if (newImages.size() > 0) {
                 imageViewPersonal.setImageBitmap(new ImageDecoder().decodeSmallImage(newImages.get(0).getPath()));
-                image = new File(newImages.get(0).getPath());
+                image = new ImageDecoder().ConvertBitmapToFile(newImages.get(0).getPath());
+                //image = new File(newImages.get(0).getPath());
             }
         }
     }

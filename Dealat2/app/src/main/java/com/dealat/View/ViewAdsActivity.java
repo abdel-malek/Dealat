@@ -4,26 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dealat.Adapter.AdAdapter;
-import com.dealat.Controller.UserController;
-import com.tradinos.core.network.SuccessCallback;
+import com.dealat.Adapter.AdPagingAdapter;
 import com.dealat.Controller.AdController;
+import com.dealat.Controller.UserController;
 import com.dealat.Model.Ad;
 import com.dealat.Model.Category;
+import com.dealat.Model.GroupedResponse;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.dealat.Utils.PaginationScrollListener;
+import com.tradinos.core.network.SuccessCallback;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,17 +36,29 @@ import java.util.List;
 public class ViewAdsActivity extends DrawerActivity {
 
     public static final int ACTION_SEARCH = 15, ACTION_VIEW = 16, ACTION_BOOKMARK = 17;
+    public final int PAGE_SIZE = 20;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = 1;
 
     private int currentView, action;
     private String bookmarkId;
 
     private Category selectedCategory;
     private int currentTemplate;
-    private List<Ad> ads = new ArrayList<>();
     private HashMap<String, String> searchParameters = new HashMap<>();
 
+    private AdPagingAdapter pagingAdapter;
+
     // views
-    private GridView gridView;
+    private GridLayoutManager gridLayoutManager;
+    private RecyclerView recyclerView;
     private ImageButton buttonViews, buttonFav;
     private ImageView imageViewCategory;
     private TextView textViewCategory, textViewCount;
@@ -61,6 +75,11 @@ public class ViewAdsActivity extends DrawerActivity {
     public void getData() {
         // if preference isn't exist, the default view is 1
         currentView = ((MyApplication) getApplication()).getCurrentView();
+        gridLayoutManager = new GridLayoutManager(mContext, 1);
+        pagingAdapter = new AdPagingAdapter(mContext, getGridCellResource());
+
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(pagingAdapter);
 
         selectedCategory = (Category) getIntent().getSerializableExtra("category");
         currentTemplate = selectedCategory.getTemplateId();
@@ -74,7 +93,8 @@ public class ViewAdsActivity extends DrawerActivity {
     }
 
     private void getAds() {
-        if (!refreshLayout.isRefreshing())
+
+        if (currentPage == 1 && !refreshLayout.isRefreshing())
             ShowProgressDialog();
 
         if (bookmarkId == null)
@@ -82,60 +102,70 @@ public class ViewAdsActivity extends DrawerActivity {
 
         switch (action) {
             case ACTION_SEARCH:
-                AdController.getInstance(mController).search(searchParameters, new SuccessCallback<List<Ad>>() {
+                AdController.getInstance(mController).search(currentPage, PAGE_SIZE, searchParameters, new SuccessCallback<GroupedResponse>() {
                     @Override
-                    public void OnSuccess(List<Ad> result) {
+                    public void OnSuccess(GroupedResponse result) {
 
-                        ads = result;
-                        showResult();
+                        showResult(result.getAds());
 
-                        getCommercialAds(selectedCategory.getId());
+                        if (currentPage == 1)  // commercials are sent with first page only
+                            getCommercialAds(result.getCommercialAds());
                     }
                 });
 
                 break;
             case ACTION_VIEW:
 
-                AdController.getInstance(mController).getCategoryAds(selectedCategory.getId(), new SuccessCallback<List<Ad>>() {
+                AdController.getInstance(mController).getCategoryAds(currentPage, PAGE_SIZE, selectedCategory.getId(), new SuccessCallback<GroupedResponse>() {
                     @Override
-                    public void OnSuccess(List<Ad> result) {
+                    public void OnSuccess(GroupedResponse result) {
 
-                        ads = result;
-                        showResult();
+                        showResult(result.getAds());
 
-                        getCommercialAds(selectedCategory.getId());
+                        if (currentPage == 1)  // commercials are sent with first page only
+                            getCommercialAds(result.getCommercialAds());
                     }
                 });
                 break;
 
             case ACTION_BOOKMARK:
-                UserController.getInstance(mController).getBookmarkAds(getIntent().getStringExtra("bookmarkId"), new SuccessCallback<List<Ad>>() {
+                UserController.getInstance(mController).getBookmarkAds(currentPage, PAGE_SIZE, getIntent().getStringExtra("bookmarkId"), new SuccessCallback<GroupedResponse>() {
                     @Override
-                    public void OnSuccess(List<Ad> result) {
+                    public void OnSuccess(GroupedResponse result) {
 
-                        ads = result;
-                        showResult();
+                        showResult(result.getAds());
 
-                        getCommercialAds(selectedCategory.getId());
+                        if (currentPage == 1)  // commercials are sent with first page only
+                            getCommercialAds(result.getCommercialAds());
                     }
                 });
                 break;
         }
     }
 
-    private void showResult() {
-        if (ads != null) {
-            if (ads.isEmpty()) {
-                findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
-                textViewCount.setText("");
+    private void showResult(List<Ad> result) {
+        HideProgressDialog();
+        if (findViewById(R.id.refreshLayout) != null)
+            ((SwipeRefreshLayout) findViewById(R.id.refreshLayout)).setRefreshing(false);
 
-            } else {
-                findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
-                textViewCount.setText(formattedNumber(ads.size()) + " " + getString(R.string.ad));
-            }
+        pagingAdapter.removeLoadingFooter();
+        isLoading = false;
 
-            gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+        pagingAdapter.addAll(result);
+
+        if (pagingAdapter.getItemCount() == 0) {
+            findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
+            textViewCount.setText("");
+
+        } else {
+            findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
+            textViewCount.setText(formattedNumber(pagingAdapter.getItemCount()) + " " + getString(R.string.ad));
         }
+
+        if (result.size() < PAGE_SIZE)
+            isLastPage = true;
+        else
+            pagingAdapter.addLoadingFooter();
     }
 
     @Override
@@ -154,7 +184,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
     @Override
     public void assignUIReferences() {
-        gridView = findViewById(R.id.gridView);
+        recyclerView = findViewById(R.id.recyclerView);
         buttonViews = findViewById(R.id.buttonViews);
         buttonFav = findViewById(R.id.buttonFav);
         imageViewCategory = findViewById(R.id.imageView);
@@ -177,7 +207,9 @@ public class ViewAdsActivity extends DrawerActivity {
                 ((MyApplication) getApplication()).setCurrentView(currentView);
 
                 buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
-                gridView.setAdapter(new AdAdapter(mContext, ads, getGridCellResource()));
+
+                pagingAdapter.setResourceLayout(getGridCellResource());
+                recyclerView.setAdapter(pagingAdapter); // to enforce re-creating views
             }
         });
 
@@ -206,6 +238,9 @@ public class ViewAdsActivity extends DrawerActivity {
                 buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
 
                 action = ACTION_SEARCH;
+                pagingAdapter.clear();
+                currentPage = 1;
+                isLastPage = false;
 
                 getAds();
                 return false;
@@ -227,6 +262,10 @@ public class ViewAdsActivity extends DrawerActivity {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
+                pagingAdapter.clear();
+                currentPage = 1;
+                isLastPage = false;
+
                 getAds();
             }
         });
@@ -236,9 +275,11 @@ public class ViewAdsActivity extends DrawerActivity {
             public void onClick(View view) {
                 if (bookmarkId == null) {
                     if (!searchParameters.isEmpty()) {
+                        ShowProgressDialog();
                         UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
                             @Override
                             public void OnSuccess(String result) {
+                                HideProgressDialog();
                                 showMessageInToast(getString(R.string.toastBookmark));
                                 bookmarkId = result;
 
@@ -250,9 +291,11 @@ public class ViewAdsActivity extends DrawerActivity {
                         });
                     }
                 } else {
+                    ShowProgressDialog();
                     UserController.getInstance(mController).deleteBookmark(bookmarkId, new SuccessCallback<String>() {
                         @Override
                         public void OnSuccess(String result) {
+                            HideProgressDialog();
                             showMessageInToast(R.string.toastUnBookmark);
                             bookmarkId = null;
 
@@ -263,6 +306,26 @@ public class ViewAdsActivity extends DrawerActivity {
                         }
                     });
                 }
+            }
+        });
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1; //Increment page index to load the next one
+
+                getAds();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
             }
         });
     }
@@ -297,6 +360,9 @@ public class ViewAdsActivity extends DrawerActivity {
                 textViewCategory.setText(selectedCategory.getFullName());
 
                 action = ACTION_SEARCH;
+                pagingAdapter.clear();
+                currentPage = 1;
+                isLastPage = false;
                 getAds();
             }
     }
@@ -321,19 +387,19 @@ public class ViewAdsActivity extends DrawerActivity {
     private int getGridCellResource() {
         switch (currentView) {
             case 1:
-                gridView.setNumColumns(1);
+                gridLayoutManager.setSpanCount(1);
                 return R.layout.row_view1;
 
             case 2:
-                gridView.setNumColumns(1);
+                gridLayoutManager.setSpanCount(1);
                 return R.layout.row_view2;
 
             case 3:
-                gridView.setNumColumns(2);
+                gridLayoutManager.setSpanCount(2);
                 return R.layout.row_view3;
 
             default:
-                gridView.setNumColumns(1);
+                gridLayoutManager.setSpanCount(1);
                 return R.layout.row_view1;
         }
     }

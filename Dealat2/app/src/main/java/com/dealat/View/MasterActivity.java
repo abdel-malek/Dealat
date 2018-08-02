@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.view.View;
@@ -304,6 +305,16 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
         content.setSpan(new UnderlineSpan(), 0, text.length(), 0);
 
         return content;
+    }
+
+    public Spanned htmlContent(String content) {
+        if (content != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                return Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT);
+            else
+                return Html.fromHtml(content);
+        }
+        return new SpannableString("");
     }
 
     protected boolean inputIsEmpty(EditText editText) {

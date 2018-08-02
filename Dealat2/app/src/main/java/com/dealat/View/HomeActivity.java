@@ -9,14 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dealat.Adapter.MainCatAdapter;
-import com.dealat.Model.Category;
-import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.CategoryController;
+import com.dealat.Model.Category;
+import com.dealat.Model.GroupedResponse;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.tradinos.core.network.SuccessCallback;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by developer on 19.02.18.
@@ -51,12 +51,16 @@ public class HomeActivity extends DrawerActivity {
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();
 
-        CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<List<Category>>() {
+        CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<GroupedResponse>() {
             @Override
-            public void OnSuccess(List<Category> result) {
+            public void OnSuccess(GroupedResponse result) {
 
-                result.add(mainCategory);
-                ((MyApplication) getApplication()).setAllCategories(result);
+                HideProgressDialog();
+                if (findViewById(R.id.refreshLayout) != null)
+                    ((SwipeRefreshLayout) findViewById(R.id.refreshLayout)).setRefreshing(false);
+
+                result.getCategories().add(mainCategory);
+                ((MyApplication) getApplication()).setAllCategories(result.getCategories());
 
                 mainCategory.setSubCategories(((MyApplication) getApplication()).getSubCatsById("0"));
 
@@ -76,7 +80,7 @@ public class HomeActivity extends DrawerActivity {
                     }
                 });
 
-                getCommercialAds("0");
+                getCommercialAds(result.getCommercialAds());
             }
         });
     }

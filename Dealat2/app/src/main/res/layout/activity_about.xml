@@ -118,7 +118,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:visibility="invisible"
-            android:onClick="onClick"
             android:textAppearance="@style/textNormal"
             android:textColor="@color/blueLight"
             />

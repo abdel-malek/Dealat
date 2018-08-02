@@ -25,12 +25,10 @@
         android:layout_below="@+id/title"
         >
 
-        <ListView
-            android:id="@+id/listView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/grayTransparent"
-            android:dividerHeight="@dimen/lineHight"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 

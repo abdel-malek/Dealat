@@ -36,9 +36,12 @@ public class ChatController extends ParentController{
         return new ChatController(controller);
     }
 
-    public void getChats(SuccessCallback<List<Chat>> successCallback){
+    public void getChats(int pageNum, int pageSize, SuccessCallback<List<Chat>> successCallback){
         String url = new URLBuilder(APIModel.users, "get_my_chat_sessions").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new ChatListParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("page_num", String.valueOf(pageNum));
+        request.addParameter("page_size", String.valueOf(pageSize));
 
         authenticationRequired(request);
         addToHeader(request);

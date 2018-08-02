@@ -503,7 +503,8 @@ public class SubmitAdActivity extends MasterActivity {
                         public void onClick(View view) {
                             adapter.replaceMain(position);
 
-                            popupBitmap.recycle();
+                            if (popupBitmap != null) // because of a crash
+                                popupBitmap.recycle();
                             popupWindow.dismiss();
                             popupWindow = null;
                             popupBitmap = null;
@@ -516,7 +517,8 @@ public class SubmitAdActivity extends MasterActivity {
                             adapter.deleteImage(position);
                             deletedImgsJsonArray.put(clickedImage.getServerPath());
 
-                            popupBitmap.recycle();
+                            if (popupBitmap != null) // because of a crash
+                                popupBitmap.recycle();
                             popupWindow.dismiss();
                             popupWindow = null;
                             popupBitmap = null;
@@ -1138,8 +1140,8 @@ public class SubmitAdActivity extends MasterActivity {
                 @Override
                 public void OnFaild(Code errorCode, String Message, String data) {
                     showMessageInToast(getString(R.string.toastUploadError));
-                  //  image.setLoading(false);
-                   // adapter.errorView(position);
+                    //  image.setLoading(false);
+                    // adapter.errorView(position);
                 }
             })).uploadImage(new ImageDecoder().ConvertBitmapToFile(image.getPath()), new SuccessCallback<String>() {
                 @Override

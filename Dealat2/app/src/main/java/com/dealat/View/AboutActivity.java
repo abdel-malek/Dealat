@@ -1,23 +1,18 @@
 package com.dealat.View;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dealat.BuildConfig;
-import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.DealatController;
 import com.dealat.Model.About;
 import com.dealat.R;
+import com.tradinos.core.network.SuccessCallback;
 
 /**
  * Created by developer on 19.04.18.
@@ -25,7 +20,7 @@ import com.dealat.R;
 
 public class AboutActivity extends MasterActivity {
 
-    private final int REQUEST_CALL = 6;
+   // private final int REQUEST_CALL = 6;
     private About about;
 
     @Override
@@ -61,11 +56,12 @@ public class AboutActivity extends MasterActivity {
                     findViewById(R.id.buttonInstagram).setVisibility(View.VISIBLE);
 
                 ((TextView) findViewById(R.id.email)).setText(about.getEmail());
-                ((TextView) findViewById(R.id.textView)).setText(about.getContent());
+
+                ((TextView) findViewById(R.id.textView)).setText(htmlContent(about.getContent()));
 
                 if (about.getPhone() != null) {
 
-                    ((TextView) findViewById(R.id.textViewPhone)).setText(underlineString(about.getPhone()));
+                    ((TextView) findViewById(R.id.textViewPhone)).setText(htmlContent(about.getPhone()));
                     findViewById(R.id.textViewPhone).setVisibility(View.VISIBLE);
                 }
             }
@@ -89,13 +85,13 @@ public class AboutActivity extends MasterActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CALL) {
-
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
-                startActivity(callIntent);
-        }
+//        if (requestCode == REQUEST_CALL) {
+//
+//            Intent callIntent = new Intent(Intent.ACTION_CALL);
+//            callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)
+//                startActivity(callIntent);
+//        }
     }
 
     @Override
@@ -121,19 +117,19 @@ public class AboutActivity extends MasterActivity {
                 openUrl(about.getInstagramLink());
                 break;
 
-            case R.id.textViewPhone:
-
-                if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(mContext,
-                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(AboutActivity.this,
-                            new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
-                } else {
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-
-                    callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
-                    startActivity(callIntent);
-                }
-                break;
+//            case R.id.textViewPhone:
+//
+//                if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(mContext,
+//                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(AboutActivity.this,
+//                            new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+//                } else {
+//                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+//
+//                    callIntent.setData(Uri.parse("tel:" + getPhoneNumber(about.getPhone())));
+//                    startActivity(callIntent);
+//                }
+//                break;
         }
     }
 

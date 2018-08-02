@@ -1,26 +1,27 @@
 package com.dealat.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tradinos.core.network.SuccessCallback;
-import com.dealat.Adapter.MyAdAdapter;
+import com.dealat.Adapter.MyAdPagingAdapter;
 import com.dealat.Adapter.StatusAdapter;
 import com.dealat.Controller.UserController;
 import com.dealat.Model.Ad;
 import com.dealat.R;
-import com.dealat.View.AdDetailsActivity;
+import com.dealat.Utils.PaginationScrollListener;
 import com.dealat.View.MasterActivity;
+import com.tradinos.core.network.SuccessCallback;
+import com.tradinos.core.network.TradinosRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +32,38 @@ import java.util.List;
 
 public class MyAdsFragment extends Fragment {
 
+    public final int PAGE_SIZE = 20;
+
+    private int initialized = 0;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = 1; // first is called in MyProfileActivity
+
     private List<Ad> ads = new ArrayList<>();
+    private MyAdPagingAdapter pagingAdapter;
 
-    SwipeRefreshLayout refreshLayout;
-    TextView layoutEmpty;
-    ListView listView;
+    private SwipeRefreshLayout refreshLayout;
+    private TextView layoutEmpty;
+    private RecyclerView recyclerView;
+    private AppCompatSpinner spinnerStatus;
 
+
+    private TradinosRequest request;
 
     public static MyAdsFragment newInstance(List<Ad> ads) {
         MyAdsFragment fragment = new MyAdsFragment();
-
         fragment.setAds(ads);
 
         return fragment;
     }
 
     public void setAds(List<Ad> ads) {
-        this.ads.clear();
         this.ads.addAll(ads);
     }
 
@@ -57,65 +73,80 @@ public class MyAdsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_my_ads, null);
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
+        spinnerStatus = rootView.findViewById(R.id.spinner);
         layoutEmpty = rootView.findViewById(R.id.layoutEmpty);
-        listView = rootView.findViewById(R.id.listView);
-        final AppCompatSpinner spinnerStatus = rootView.findViewById(R.id.spinner);
-        spinnerStatus.setAdapter(new StatusAdapter(getContext()));
+        recyclerView = rootView.findViewById(R.id.recyclerView);
 
-        if (ads.isEmpty())
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        pagingAdapter = new MyAdPagingAdapter(getContext());
+        pagingAdapter.addAll(ads);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(pagingAdapter);
+
+        if (pagingAdapter.getItemCount() == 0)
             layoutEmpty.setVisibility(View.VISIBLE);
         else
-            listView.setAdapter(new MyAdAdapter(getContext(), filter(0)));
+            layoutEmpty.setVisibility(View.GONE);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-
-                Ad ad = (Ad) adapterView.getItemAtPosition(i);
-
-                Intent intent = new Intent(getContext(), AdDetailsActivity.class);
-                intent.putExtra("ad", ad);
-                getContext().startActivity(intent);
-            }
-        });
+        if (ads.size() < PAGE_SIZE) // first page is the last page too
+            isLastPage = true;
+        else
+            pagingAdapter.addLoadingFooter();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
 
-                MasterActivity activity = (MasterActivity) getActivity();
+                ads.clear();
+                pagingAdapter.clear();
 
-                UserController.getInstance(activity.getController()).getMyAds(new SuccessCallback<List<Ad>>() {
-                    @Override
-                    public void OnSuccess(List<Ad> result) {
-                        refreshLayout.setRefreshing(false);
+                currentPage = 1;
+                isLastPage = false;
 
-                        if (result.isEmpty())
-                            layoutEmpty.setVisibility(View.VISIBLE);
-                        else
-                            layoutEmpty.setVisibility(View.GONE);
+                spinnerStatus.setSelection(0);
 
-                        setAds(result);
-                        listView.setAdapter(new MyAdAdapter(getContext(), filter(0)));
-                        spinnerStatus.setSelection(0);
-                    }
-                });
+                getAds(0);
             }
         });
+
+        recyclerView.addOnScrollListener(new PaginationScrollListener(layoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1; //Increment page index to load the next one
+
+                getAds(spinnerStatus.getSelectedItemPosition());
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+
+        spinnerStatus.setAdapter(new StatusAdapter(getContext()));
 
         spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                List<Ad> result = filter(i);
+                if (++initialized > 1) { // to avoid calling onItemSelected when first creating the fragment and initializing adapter
+                    currentPage = 1;
+                    isLastPage = false;
 
-                if (result.isEmpty())
-                    layoutEmpty.setVisibility(View.VISIBLE);
-                else
-                    layoutEmpty.setVisibility(View.GONE);
+                    pagingAdapter.clear();
+                    ads.clear();
 
-                listView.setAdapter(new MyAdAdapter(getContext(), result));
+                    refreshLayout.setRefreshing(true); // instead of a progress bar
+                    getAds(i);
+                }
             }
 
             @Override
@@ -127,17 +158,38 @@ public class MyAdsFragment extends Fragment {
         return rootView;
     }
 
-    private List<Ad> filter(int status) {
-        List<Ad> result = new ArrayList<>();
+    private void getAds(int status) {
+        MasterActivity activity = (MasterActivity) getActivity();
 
-        if (status == 0) // All
-            result.addAll(ads);
-        else {
-            for (int i = 0; i < ads.size(); i++) {
-                if (ads.get(i).getStatus() == status)
-                    result.add(ads.get(i));
+        request = UserController.getInstance(activity.getController()).getMyAds(status, currentPage, PAGE_SIZE, new SuccessCallback<List<Ad>>() {
+            @Override
+            public void OnSuccess(List<Ad> result) {
+                refreshLayout.setRefreshing(false);
+
+                pagingAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                pagingAdapter.addAll(result);
+
+                if (pagingAdapter.getItemCount() == 0)
+                    layoutEmpty.setVisibility(View.VISIBLE);
+                else
+                    layoutEmpty.setVisibility(View.GONE);
+
+                if (result.size() < PAGE_SIZE)
+                    isLastPage = true;
+                else
+                    pagingAdapter.addLoadingFooter();
             }
-        }
-        return result;
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+
+        if (request != null && !request.isCanceled())
+            request.cancel();
+
+        super.onDestroyView();
     }
 }

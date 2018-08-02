@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,6 +32,8 @@ import java.util.List;
 
 public class MyProfileActivity extends MasterActivity {
 
+    public final int PAGE_SIZE = 20;
+
     private final int REQUEST_EDIT_PROFILE = 1;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -52,18 +55,18 @@ public class MyProfileActivity extends MasterActivity {
         final int page = getIntent().getIntExtra("page", 0);
 
         ShowProgressDialog();
-        UserController.getInstance(mController).getMyAds(new SuccessCallback<List<Ad>>() {
+        UserController.getInstance(mController).getMyAds(0,1, PAGE_SIZE, new SuccessCallback<List<Ad>>() {
             @Override
             public void OnSuccess(List<Ad> result) {
                 myAdsList = result;
 
-                UserController.getInstance(mController).getMyFavorites(new SuccessCallback<List<Ad>>() {
+                UserController.getInstance(mController).getMyFavorites(1, PAGE_SIZE, new SuccessCallback<List<Ad>>() {
                     @Override
                     public void OnSuccess(List<Ad> result) {
 
                         myFavsList = result;
 
-                        ChatController.getInstance(mController).getChats(new SuccessCallback<List<Chat>>() {
+                        ChatController.getInstance(mController).getChats(1, PAGE_SIZE, new SuccessCallback<List<Chat>>() {
                             @Override
                             public void OnSuccess(List<Chat> result) {
                                 chats = result;
@@ -148,7 +151,7 @@ public class MyProfileActivity extends MasterActivity {
         snackbar.show();
     }
 
-    class SectionsPagerAdapter extends FragmentPagerAdapter {
+    class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
