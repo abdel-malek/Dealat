@@ -1907,6 +1907,12 @@ label {
 
 //chat modal
 #chat-modal {
+	.ad-name{
+		&:hover{
+			cursor: pointer;
+			text-decoration: underline
+		}
+	}
 	.modal-header {
 		background-color: $main;
 		padding: 5px 0;

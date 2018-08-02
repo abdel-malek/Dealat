@@ -1117,7 +1117,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_chat_sessions',
 			dataType: "json",
 			data: $(this).serialize()
-		}).done(function (data) {
+		}).done(function (data) { console.log(data);
 			if (data.status === false) {} else {
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
@@ -1169,8 +1169,9 @@ $(function () {
 
 		//open a chat session
 		$(".profile-page .chats").on("click", ".session", function () {
-			var adId, sessionId, sellerId, isSeller;
+			var adId,templateId, sessionId, sellerId, isSeller;
 			adId = $(this).data("adId");
+			templateId = $(this).data("templateId");
 			sessionId = $(this).data("sessionId");
 			sellerId = $(this).data("sellerId");
 
@@ -1187,6 +1188,7 @@ $(function () {
 			$("#chat-modal .chat-header .user-name").text($(this).data("username"));
 
 			$("#chat-form .ad-id").val(adId);
+			$("#chat-form .template-id").val(templateId);
 			$("#chat-form .chat-session-id").val(sessionId);
 
 			$.ajax({
@@ -1355,5 +1357,232 @@ $(function () {
 				}
 			});
 		});
+		
+		$(".profile-page #chat-modal .ad-name").click(function(){
+			//copied from openCardModal function except for ajax data
+			$.ajax({
+			type: "get",
+			url: base_url + '/api/items_control/get_item_details',
+			dataType: "json",
+			global: false, // this makes sure ajaxStart is not triggered
+			data: {
+				ad_id: $("#chat-form .ad-id").val(),
+				template_id: $("#chat-form .template-id").val()
+			},
+			beforeSend: function () {
+				ajaxLoadTimeout = setTimeout(function () {
+					$(".loading-overlay1").fadeIn("fast");
+				}, 100);
+			},
+			complete: function () {
+				clearTimeout(ajaxLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
+			}
+		}).done(function (data) {
+			if (data.status === false) {} else {
+				var adData, negotiable, automatic, status, furniture, type, templateId;
+
+				if (data.data.is_negotiable === "0") {
+					if (lang === "ar") {
+						negotiable = "غير قابل للتفاوض";
+					} else {
+						negotiable = "Not negotiable";
+					}
+
+				} else {
+					if (lang === "ar") {
+						negotiable = "قابل للتفاوض";
+					} else {
+						negotiable = "Negotiable";
+					}
+				}
+				if (data.data.is_automatic === "0") {
+					if (lang === "ar") {
+						automatic = "يدوي";
+					} else {
+						automatic = "Manual";
+					}
+
+				} else {
+					if (lang === "ar") {
+						automatic = "اوتوماتيكي";
+					} else {
+						automatic = "Automatic";
+					}
+				}
+				if (data.data.with_furniture === "0") {
+					if (lang === "ar") {
+						furniture = "لا";
+					} else {
+						furniture = "No";
+					}
+
+				} else {
+					if (lang === "ar") {
+						furniture = "نعم";
+					} else {
+						furniture = "Yes";
+					}
+				}
+				if (data.data.is_new === "0") {
+					if (lang === "ar") {
+						status = "مستعمل";
+					} else {
+						status = "Used";
+					}
+
+				} else {
+					if (lang === "ar") {
+						status = "جديد";
+					} else {
+						status = "New";
+					}
+				}
+
+				if (data.data.gender === "1") {
+					if (lang === "ar") {
+						data.data.gender = "ذكر";
+					} else {
+						data.data.gender = "Male";
+					}
+
+				} else if (data.data.gender === "2") {
+					if (lang === "ar") {
+						data.data.gender = "أنثى";
+					} else {
+						data.data.gender = "Female";
+					}
+				}
+
+				if (!data.data.main_image && !data.data.main_video) {
+					data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
+				}
+
+				//add commas to price
+				if (data.data.price) {
+					data.data.price = new Intl.NumberFormat().format(data.data.price);
+				}
+				if (data.data.kilometer) {
+					data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
+				}
+				if (data.data.space) {
+					data.data.space = new Intl.NumberFormat().format(data.data.space);
+				}
+				if (data.data.salary) {
+					data.data.salary = new Intl.NumberFormat().format(data.data.salary);
+				}
+
+				adData = {
+					ad: data.data,
+					date: data.data.publish_date.split(' ')[0],
+					negotiable: negotiable,
+					automatic: automatic,
+					status: status,
+					furniture: furniture
+				};
+
+				template = $('#ad-details-template').html();
+				Mustache.parse(template);
+				rendered = Mustache.render(template, adData);
+				$("#card-modal .modal-body").append(rendered);
+
+				$('#card-modal .card-img-slider').slick({
+					infinite: true,
+					slidesToShow: 1,
+					mobileFirst: true,
+					swipeToSlide: true
+				});
+
+				$('.card-img-slider').slickLightbox({
+					src: 'src',
+					itemSelector: '.card-img-top img'
+				});
+
+				if (adData.ad.seller_phone) {
+					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
+				}
+
+//				console.log(data.data);
+				if (data.data.seller_id === user_id) {
+					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
+				} else {
+					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
+					if (data.data.is_admin === 1) {
+						$("#card-modal .chat").addClass("d-none");
+					} 
+				}
+
+				if (data.data.is_admin === 1) {
+					$("#card-modal .seller").addClass("d-none");
+				} else {
+					$("#card-modal .seller").removeClass("d-none");
+				}
+
+				//category job then remove price circle
+				if (data.data.tamplate_id === "8") {
+					$("#card-modal .price").addClass("d-none");
+					$("#card-modal .negotiable").addClass("d-none");
+				} else {
+					$("#card-modal .price").removeClass("d-none");
+					$("#card-modal .negotiable").removeClass("d-none");
+				}
+
+				if (!logged) {
+					$("#card-modal .fav .icon").data("added", 0);
+				}
+
+				$("#card-modal .templates [class*='-val']").each(function () {
+					if ($(this).text() === " ") {
+						$(this).text(" -");
+					}
+				});
+
+				var subId = data.data.category_id;
+				//put all fields as shown
+				$("#card-modal .field").each(function () {
+					$(this).removeClass("d-none");
+				});
+
+				//hide fields from template according to hiddenFields array
+				var hideArr = [];
+				for (i in hiddenFields) {
+					if (hiddenFields[i].categoryId == subId) {
+						hideArr = hiddenFields[i].hidden;
+						for (j in hideArr) {
+							$("#card-modal .field." + hideArr[j]).addClass("d-none");
+						}
+					}
+				}
+
+				templateId = parseInt(data.data.tamplate_id, 10);
+				$("#card-modal .template").each(function () {
+					if ($(this).data("templateId") === templateId) {
+
+						$(this).removeClass("d-none");
+					}
+				});
+
+				if ($(".card .fav .icon").data("added") === 0) {
+					$(".card .fav .icon").html('<i class="far fa-heart fa-2x"></i>');
+					$(".card .fav .icon").css("color", "#bbb");
+				} else if ($(".card .fav .icon").data("added") === 1) {
+					$(".card .fav .icon").html('<i class="fas fa-heart fa-2x"></i>');
+					$(".card .fav .icon").css("color", "#FF87A0");
+				}
+$("#chat-modal").modal("hide");
+				setTimeout(function () {
+					$("#card-modal").modal("show");
+					setTimeout(function () {
+					$(".card-img-slider").slick("refresh");
+				}, 200);
+				}, 500);
+				
+				
+			}
+		});
+			
+			
+		});
+		
 	}
 });
