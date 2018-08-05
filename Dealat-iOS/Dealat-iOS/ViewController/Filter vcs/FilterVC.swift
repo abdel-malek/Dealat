@@ -89,6 +89,14 @@ class FilterVC: BaseTVC {
         }
     }
     
+    @objc func myTextFieldDidChange(_ textField: UITextField) {
+        
+        if let amountString = textField.text?.currencyInputFormatting() {
+            textField.text = amountString
+        }
+    }
+
+    
     func ifHidden(index : IndexPath) -> Bool{
         
         if let cat = self.filter.category,cat.hidden_fields != nil ,cat.hidden_fields != "0" {
@@ -135,6 +143,18 @@ class FilterVC: BaseTVC {
         super.viewDidLoad()
         
         self.filter = Provider.filter
+        
+        self.tfPrice1.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfPrice2.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfKilometers1.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfKilometers2.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfCapacity1.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfCapacity2.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSalary1.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSalary2.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSpace1.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+        self.tfSpace2.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
+
         
         setupViews()
         getData()

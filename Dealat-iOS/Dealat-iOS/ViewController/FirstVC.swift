@@ -86,6 +86,11 @@ class FirstVC: UIViewController {
         Communication.shared.baseImgsURL = "\(urlString)/"
         Communication.shared.baseURL = "\(urlString)/" + "index.php/api"
         
+        //TODO IMPORTNANT
+//        Communication.shared.baseURL = "http://192.168.9.96/Dealat/index.php/api"
+//        Communication.shared.baseImgsURL = "http://192.168.9.96/Dealat/"
+
+        
         if let imgString = img,let url = URL.init(string: imgString){
             
             imgCache.sd_setImage(with: url, placeholderImage: nil, options: SDWebImageOptions.refreshCached, progress: nil) { (im, err, type, ur) in

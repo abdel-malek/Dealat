@@ -96,42 +96,42 @@ class HomeVC: BaseVC {
     
     override func getRefreshing() {
         
-        Communication.shared.get_all { (res) in
+        Communication.shared.get_all { (categories,commercials) in
             self.hideLoading()
-            self.cats = res
+            self.cats = categories
             self.tableView.reloadData()
             
-            Communication.shared.get_commercial_ads(0) { (res) in
-                
-                //            while(res == nil){
-                //                self.getRefreshing()
-                //                return
-                //            }
-                
-                if let coms = res{
-                    self.hideLoading()
-                    self.commericals = coms
-                    
-                    self.pageControl.numberOfPages = self.commericals.count
-                    self.timer.invalidate()
-                    self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
-                    self.timer.fire()
-                    self.collectionView.reloadData()
-                    
-                    if coms.isEmpty{
-                        let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
-                        im.contentMode = .scaleAspectFit
-                        self.collectionView.backgroundView = im
-                    }
-                }
+            self.commericals = commercials
+            if commercials.isEmpty{
+                let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                im.contentMode = .scaleAspectFit
+                self.collectionView.backgroundView = im
             }
+            self.collectionView.reloadData()
+
         }
         
-        //        Communication.shared.get_nested_categories { (res) in
-        //            self.hideLoading()
-        //            self.cats = res
-        //            self.tableView.reloadData()
-        //        }
+    }
+    
+    func refreshTopCommercials(){
+        /*Communication.shared.get_commercial_ads(0) { (res) in
+            if let coms = res{
+                self.hideLoading()
+                self.commericals = coms
+                
+                self.pageControl.numberOfPages = self.commericals.count
+                self.timer.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                self.timer.fire()
+                self.collectionView.reloadData()
+                
+                if coms.isEmpty{
+                    let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                    im.contentMode = .scaleAspectFit
+                    self.collectionView.backgroundView = im
+                }
+            }
+        }*/
     }
     
     
@@ -208,7 +208,6 @@ class HomeVC: BaseVC {
         }else{
             menuLeftNavigationController.leftSide = true
             SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-            
         }
         
         SideMenuManager.default.menuWidth = UIScreen.main.bounds.width * 2 / 3
@@ -240,8 +239,6 @@ class HomeVC: BaseVC {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
-    
 }
 
 extension HomeVC : UITableViewDelegate,UITableViewDataSource{

@@ -23,8 +23,8 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//        let baseURL = "http://192.168.9.96/Dealat/index.php/api"
-//        let baseImgsURL = "http://192.168.9.96/Dealat/"
+//        var baseURL = "http://192.168.9.96/Dealat/index.php/api"
+//        var baseImgsURL = "http://192.168.9.96/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
 //    let baseImgsURL = "http://dealat.tradinos.com/"
@@ -112,9 +112,9 @@ class Communication: BaseManager {
     }
     
     
-    func get_ads_by_main_category(_ category_id : Int, callback : @escaping ([AD]) -> Void){
+    func get_ads_by_main_category(_ category_id : Int,page_num : Int, callback : @escaping ([AD],[Commercial]) -> Void){
         let url = URL(string: baseURL + get_items_by_main_categoryURL)!
-        let params : [String : Any] = ["category_id" : category_id]
+        let params : [String : Any] = ["category_id" : category_id,"page_size" : Provider.PAGE_SIZE,"page_num" : page_num]
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -125,14 +125,19 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var res = [AD]()
+                    var ads = [AD]()
+                    var commercials = [Commercial]()
                     
-                    for i in value.data.arrayValue{
+                    for i in value.data["ads"].arrayValue{
                         let a = AD(JSON: i.dictionaryObject!)!
-                        res.append(a)
+                        ads.append(a)
                     }
-                    
-                    callback(res)
+                    for i in value.data["commercials"].arrayValue{
+                        let a = Commercial(JSON: i.dictionaryObject!)!
+                        commercials.append(a)
+                    }
+
+                    callback(ads,commercials)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -369,10 +374,11 @@ class Communication: BaseManager {
     
     
     
-    func search(query : String!,filter : FilterParams, callback : @escaping ([AD]) -> Void){
+    func search(page_num : Int,query : String!,filter : FilterParams, callback : @escaping ([AD],[Commercial]) -> Void){
         let url = URL(string: baseURL + searchURL)!
         
-        var params : [String : Any] = [:]
+        var params : [String : Any] = ["page_size" : Provider.PAGE_SIZE,"page_num" : page_num]
+        
         
         if let q = query , !q.isEmpty{
             params["query"] = q
@@ -394,14 +400,19 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var res = [AD]()
+                    var ads = [AD]()
+                    var commercials = [Commercial]()
                     
-                    for i in value.data.arrayValue{
+                    for i in value.data["ads"].arrayValue{
                         let a = AD(JSON: i.dictionaryObject!)!
-                        res.append(a)
+                        ads.append(a)
+                    }
+                    for i in value.data["commercials"].arrayValue{
+                        let a = Commercial(JSON: i.dictionaryObject!)!
+                        commercials.append(a)
                     }
                     
-                    callback(res)
+                    callback(ads,commercials)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -449,7 +460,7 @@ class Communication: BaseManager {
     
     
     
-    func get_all(_ callback : @escaping ([Cat]) -> Void){
+    func get_all(_ callback : @escaping ( _ categories : [Cat],_ commercials : [Commercial]) -> Void){
         let url = URL(string: baseURL + get_allURL)!
         print(url.absoluteString)
         
@@ -462,23 +473,26 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var res = [Cat]()
-                    
-                    for i in value.data.arrayValue{
+                    var categories = [Cat]()
+                    var commercials = [Commercial]()
+
+                    for i in value.data["categories"].arrayValue{
                         let a = Cat(JSON: i.dictionaryObject!)!
-                        res.append(a)
+                        categories.append(a)
                     }
-                    
-                    Provider.shared.catsFull = res
-                    
-                    let resFinal = self.loadCats(res, i: 0)
+                    for i in value.data["commercials"].arrayValue{
+                        let a = Commercial(JSON: i.dictionaryObject!)!
+                        commercials.append(a)
+                    }
+
+                    Provider.shared.catsFull = categories
+                    let resFinal = self.loadCats(categories, i: 0)
                     Provider.shared.cats = resFinal
-                    
                     
 //                    Provider.shared.currency_en = value.currency_en
 //                    Provider.shared.currency_ar = value.currency_ar
 
-                    callback(resFinal)
+                    callback(resFinal, commercials)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
@@ -544,8 +558,6 @@ class Communication: BaseManager {
             case .success(let value):
                 
                 if value.status{
-                    
-                    
                     
                     callback(value)
                     
@@ -850,8 +862,10 @@ class Communication: BaseManager {
     }
     
     
-    func get_my_favorites(_ callback : @escaping ([AD]) -> Void){
+    func get_my_favorites(page_num : Int, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_my_favoritesURL)!
+        let params = ["page_size" : Provider.PAGE_SIZE,"page_num" : page_num]
+
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
@@ -883,10 +897,11 @@ class Communication: BaseManager {
     }
     
     
-    func get_my_items(_ callback : @escaping ([AD]) -> Void){
+    func get_my_items(page_num : Int,status : Int, callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_my_itemsURL)!
+        let params = ["page_size" : Provider.PAGE_SIZE,"page_num" : page_num,"status" : status]
         
-        Alamofire.request(url, method: .get, parameters: nil, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
             self.output(response)
             
@@ -1163,10 +1178,11 @@ class Communication: BaseManager {
     }
     
     
-    func get_bookmark_search( user_bookmark_id : Int, callback : @escaping ([AD]) -> Void){
+    func get_bookmark_search(page_num : Int, user_bookmark_id : Int, callback : @escaping ([AD]) -> Void){
         
         let url = URL(string: baseURL + get_bookmark_searchURL)!
-        let params = ["user_bookmark_id" : user_bookmark_id]
+        let params = ["user_bookmark_id" : user_bookmark_id,"page_size" : Provider.PAGE_SIZE,"page_num" : page_num]
+
         
         Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             

@@ -20,7 +20,9 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var linkedinBtn : UIButton!
     
     @IBOutlet weak var emailBtn : UIButton!
-    @IBOutlet weak var phoneBtn : UIButton!
+    @IBOutlet weak var phoneLbl : UILabel!
+
+//    @IBOutlet weak var phoneBtn : UIButton!
     
     @IBOutlet weak var textView : UITextView!
     @IBOutlet weak var img : UIImageView!
@@ -48,18 +50,21 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             
             self.aboutInfo = res
             
-            self.textView.text = res.about_us
+            self.textView.attributedText = res.about_us.html2AttributedString
             
             if let email = res.email, !email.isEmpty{
                 self.emailBtn.setTitle(email, for: .normal)
             }else{
                 self.emailBtn.isHidden = true
             }
-            if let phone = res.phone, !phone.isEmpty{
-                self.phoneBtn.setTitle(phone, for: .normal)
-            }else{
-                self.phoneBtn.isHidden = true
-            }
+            
+            self.phoneLbl.attributedText = res.phone.html2AttributedString
+
+//            if let phone = res.phone, !phone.isEmpty{
+//                self.phoneBtn.setTitle(phone, for: .normal)
+//            }else{
+//                self.phoneBtn.isHidden = true
+//            }
             if res.facebook_link == nil || res.facebook_link.isEmpty{
                 self.facebookBtn.isHidden = true
             }
@@ -103,8 +108,12 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
         if phone.count == 9{
             phone = "0" + phone
         }
-
-        UIApplication.shared.openURL(URL.init(string: "telprompt://\(phone)")!)
+        
+        if let url = URL.init(string: "telprompt://\(phone)"){
+            if UIApplication.shared.canOpenURL(url){
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
     
     @IBAction func facebookAction(){
@@ -143,6 +152,4 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             }
         }
     }
-    
-    
 }

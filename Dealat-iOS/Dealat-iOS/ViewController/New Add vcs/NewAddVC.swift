@@ -1341,7 +1341,6 @@ extension NewAddVC{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
         if isSelectTemplate(2){
             if indexPath.row == 0{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell

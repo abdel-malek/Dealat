@@ -21,6 +21,13 @@ class AdsListVC: BaseVC {
     
     @IBOutlet weak var viewBtn: UIBarButtonItem!
     
+    
+    var pageNumber = 1
+    var isDataLoading : Bool = false
+    var isAllDataFetched : Bool = false
+    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+
+    
     var x1 = -1
     var timer : Timer = Timer()
     var viewsType : Int = 1
@@ -59,42 +66,113 @@ class AdsListVC: BaseVC {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(openFilter))
         
         Provider.setScreenName("ViewAdsActivity")
-
     }
     
     override func getRefreshing() {
+        self.isDataLoading = false
+        self.isAllDataFetched = false
+        self.pageNumber = 1
         
+        getRefreshing2()
+    }
+    
+    func getRefreshing2(){
         if !self.fromFilter && self.query.isEmpty{
-            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue) { (res) in
+            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue,page_num : self.pageNumber) { (ads,commercials) in
                 self.hideLoading()
-                self.ads = res
-                self.collectionView2.reloadData()
-                self.refreshTopAds()
+//                self.ads = ads
+//                self.collectionView2.reloadData()
+                self.onDataRecived(ads)
+                self.refreshTopAds(commercials)
             }
         }else{
-            Communication.shared.search(query: self.query, filter : Provider.filter, callback: { (res) in
+            Communication.shared.search(page_num : self.pageNumber,query: self.query, filter : Provider.filter, callback: { (ads,commercials) in
                 self.hideLoading()
-                self.ads = res
-                self.collectionView2.reloadData()
-                
+                //self.ads = ads
+                //self.collectionView2.reloadData()
+                self.onDataRecived(ads)
+
                 self.categoryNameLbl.title = nil
                 self.categoryImg.image = nil
                 self.markImg.image = #imageLiteral(resourceName: "star_copy")
                 self.markImg.target = self
                 self.markImg.action = #selector(self.markAction)
-                self.refreshTopAds()
+                self.refreshTopAds(commercials)
             })
         }
     }
     
-    func refreshTopAds(){
-        var cat_id = 0
+    
+    func onDataRecived(_ res : [AD]){
+        self.hideLoading()
+        self.collectionView2.isHidden = false
+        isDataLoading = false
+//        self.collectionView2.footer = nil //TODO
+        
+        
+        if self.pageNumber == 1{
+            self.ads = res
+        }else{
+            self.ads = self.ads + res
+            //            self.restaurants += res
+        }
+        
+        if (res.count < Provider.PAGE_SIZE)
+        {
+            isAllDataFetched = true
+        }
+        
+        self.collectionView2.reloadData()
+        
+        // TODO
+        //        if !self.restaurants.isEmpty{
+        if !self.ads.isEmpty, self.pageNumber == 1{
+            self.collectionView2.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+//            self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
+        }
+    }
+    
+    func loadItems()
+    {
+        
+        if(isDataLoading || isAllDataFetched)
+        {
+            return
+        }
+        
+        isDataLoading = true
+        pageNumber = pageNumber + 1
+        
+        indicater.startAnimating()
+        indicater.hidesWhenStopped = true
+        indicater.frame.size.height = 40
+        print("TES TES TES :\(indicater.frame.size.height)")
+        
+//        self.collectionView2.tableFooterView = indicater // TODO
+        
+        
+        getRefreshing2()
+    }
+    
+    func refreshTopAds(_ commercials : [Commercial] = [Commercial]() ){
+
+        if pageNumber == 1{
+            self.commericals = commercials
+            if commercials.isEmpty{
+                let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                im.contentMode = .scaleAspectFit
+                self.collectionView.backgroundView = im
+            }
+            self.collectionView.reloadData()
+        }
+        
+        /*var cat_id = 0
         if !self.fromFilter && self.query.isEmpty{
             cat_id = self.cat.category_id.intValue
         }else if Provider.selectedCategory != nil{
             cat_id = Provider.selectedCategory.category_id.intValue
         }
-        
+         
         Communication.shared.get_commercial_ads(cat_id) { (res) in
             if let coms = res{
                 self.hideLoading()
@@ -112,7 +190,7 @@ class AdsListVC: BaseVC {
                     self.collectionView.backgroundView = im
                 }
             }
-        }
+        }*/
     }
     
     @objc func markAction(){
@@ -245,6 +323,12 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! AdCell
             
+            //check if it is the last item at the list
+            if(indexPath.row == self.ads.count - 1)
+            {
+                loadItems()
+            }
+
             cell.ad = self.ads[indexPath.row]
             return cell
         }
@@ -253,7 +337,6 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if collectionView == self.collectionView{
             if let urlString = self.commericals[indexPath.row].ad_url, let url = URL.init(string: urlString){
                 if UIApplication.shared.canOpenURL(url){

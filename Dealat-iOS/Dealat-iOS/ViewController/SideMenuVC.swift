@@ -95,8 +95,10 @@ class SideMenuVC: BaseVC {
 
             
             if i.tag == 1{
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
-                self.homeVC.navigationController?.pushViewController(vc, animated: true)
+                if User.isRegistered(){
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
+                    self.homeVC.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             
             if i.tag == 2{

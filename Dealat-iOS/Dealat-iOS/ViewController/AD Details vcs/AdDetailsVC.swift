@@ -109,6 +109,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
 
     func ifHidden(index : IndexPath) -> Bool{
         
+        
+        
         if let cat = Provider.shared.catsFull.filter({$0.category_id.intValue == self.ad.category_id.intValue}).first,cat.hidden_fields != nil,cat.hidden_fields != "0" {
             
             let s1 = cat.hidden_fields!.replacingOccurrences(of: "\"", with: "")
@@ -203,6 +205,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     func refreshData(){
         self.title = ad.title
+        print("TTTT : \(ad.title)")
         Provider.sd_setImage(self.img, urlString: ad.main_image)
         
         if let views_num = ad.views_num{
@@ -255,11 +258,18 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         self.numberLbl.text = number
         
         self.nameLbl.text = ad.title
-        if ad.price.doubleValue == 0{
-            self.priceLbl.text = "Free".localized
+        
+        if ad.price != nil{
+            if  ad.price.doubleValue == 0{
+                self.priceLbl.text = "Free".localized
+            }else{
+                self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
+            }
         }else{
-            self.priceLbl.text = ad.price.doubleValue.formatDigital() + "\n " + "S.P".localized
+            self.priceLbl.text =  "S.P".localized
         }
+        
+            
         if ad.publish_date != nil{
             let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
             self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
@@ -283,7 +293,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         
 //        self.sellerLbl.text = ad.seller_name
         self.parentBase?.sellerLbl.text = ad.seller_name
-        self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
+        if ad.is_negotiable != nil{
+            self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
+        }else{
+            self.negotiableLbl.text = ""
+        }
+        
         self.desLbl.text = ad.description
         
         //gallery ad images

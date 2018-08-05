@@ -17,13 +17,13 @@ class Provider : BaseManager {
     
     static let shared = Provider()
     static var isArabic : Bool = false
+    static let PAGE_SIZE = 8
     
     var cats = [Cat]()
     var catsFull = [Cat]()
 
     var currency_en : String = ""
     var currency_ar : String = ""
-
     
 //    static var searchText : String!
     static var filter = FilterParams()
@@ -32,7 +32,6 @@ class Provider : BaseManager {
     static var selectedLocation : Location!
     
     static var logoImage = #imageLiteral(resourceName: "Dealat logo red")
-
   
     static func loadAllChildren(_ res : [Cat] , i : Int) -> [Cat]{
         let catsBases = res.filter({$0.parent_id.intValue == i})
@@ -46,8 +45,6 @@ class Provider : BaseManager {
         return cats
     }
     
-
-
 
     static func isValidEmail(_ testStr:String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -121,7 +118,7 @@ class Provider : BaseManager {
         let us = u.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
         let url = URL.init(string: Communication.shared.baseImgsURL + us){
             
-            print("------\n" + url.absoluteString + "\n------")
+//            print("------\n" + url.absoluteString + "\n------")
             img.sd_setShowActivityIndicatorView(true)
             img.sd_setIndicatorStyle(.gray)
 

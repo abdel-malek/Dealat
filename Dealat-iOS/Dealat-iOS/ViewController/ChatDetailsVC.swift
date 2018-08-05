@@ -46,10 +46,21 @@ class ChatDetailsVC: BaseVC {
         IQKeyboardManager.sharedManager().disabledTouchResignedClasses = [ChatDetailsVC.self]
         IQKeyboardManager.sharedManager().disabledDistanceHandlingClasses = [ChatDetailsVC.self]
         
+        let infoBtn = UIButton.init(type: .infoLight)
+        infoBtn.addTarget(self, action: #selector(self.goToDetails), for: UIControlEvents.touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: infoBtn)
+        
         getData()
         
         Provider.setScreenName("ChatActivity")
 
+    }
+    
+    @objc func goToDetails(){
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
+        vc.tamplateId = self.chat.template_id.intValue
+        vc.ad = AD.init(JSON : ["ad_id" : self.chat.ad_id.intValue,"tamplate_id" : self.chat.template_id.intValue, "category_id" : 0])
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
