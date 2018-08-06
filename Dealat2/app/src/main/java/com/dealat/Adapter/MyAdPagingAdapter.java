@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Model.Ad;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.AdDetailsActivity;
 import com.dealat.View.MasterActivity;
-import com.tradinos.core.network.InternetManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,16 +69,18 @@ public class MyAdPagingAdapter extends RecyclerView.Adapter<MyAdPagingAdapter.Vi
                 int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(item.getTemplate());
                 if (item.getMainImageUrl() != null) {
 
-                    ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-                    mImageLoader.get(MyApplication.getBaseUrl() + item.getMainImageUrl(),
-                            ImageLoader.getImageListener(holder.imageViewMain,
-                                    defaultDrawable, defaultDrawable));
+                    Picasso.with(context)
+                            .load(MyApplication.getBaseUrl() + item.getMainImageUrl())
+                            .into(holder.imageViewMain);
                 } else
                     holder.imageViewMain.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
                 holder.textViewTitle.setText(item.getTitle());
 
-                if (item.getPublishDate() != null) {
+                if (item.getPublishDate() == null) {
+                    holder.textViewDate.setText("");
+                    holder.textViewExpires.setText("");
+                } else {
                     holder.textViewDate.setText(context.getString(R.string.published)
                             + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 

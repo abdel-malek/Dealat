@@ -54,6 +54,11 @@ public class BookmarkPagingAdapter extends RecyclerView.Adapter<BookmarkPagingAd
                 holder.buttonDelete.setTag(position);
                 holder.buttonView.setTag(position);
 
+                 // hide everything
+                for (int i=0; i< holder.container.getChildCount(); i++)
+                    holder.container.getChildAt(i).setVisibility(View.GONE);
+
+
                 final int index = 1; // to get second view, which is for sure TextView
                 HashMap<String, String> fields = bookmarks.get(position).getFields();
                 LinearLayout container;
@@ -67,6 +72,8 @@ public class BookmarkPagingAdapter extends RecyclerView.Adapter<BookmarkPagingAd
                             textView.setText(entry.getValue());
                     }
                 }
+
+                holder.container.findViewById(R.id.container2).setVisibility(View.VISIBLE);
                 break;
 
             case LOADING:
@@ -129,12 +136,12 @@ public class BookmarkPagingAdapter extends RecyclerView.Adapter<BookmarkPagingAd
     class ViewHolder extends RecyclerView.ViewHolder {
 
         Button buttonView, buttonDelete;
-        View container;
+        LinearLayout container;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            container = itemView;
+            container = itemView.findViewById(R.id.container);
             buttonView = itemView.findViewById(R.id.buttonTrue);
             buttonDelete = itemView.findViewById(R.id.buttonFalse);
         }

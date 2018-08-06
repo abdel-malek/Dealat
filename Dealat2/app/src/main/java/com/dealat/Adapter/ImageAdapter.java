@@ -76,6 +76,7 @@ public class ImageAdapter extends BaseAdapter {
         if (getItem(i).isSelected())
             imageViewCheck.setVisibility(View.VISIBLE);
 
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

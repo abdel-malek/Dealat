@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Model.Chat;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.ChatActivity;
-import com.tradinos.core.network.InternetManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +82,12 @@ public class ChatPagingAdapter extends RecyclerView.Adapter<ChatPagingAdapter.Vi
                     }
                 }
 
-                if (url != null) {
-                    ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-                    mImageLoader.get(MyApplication.getBaseUrl() + url,
-                            ImageLoader.getImageListener(holder.imageView,
-                                    R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
+                if (url == null)
+                    holder.imageView.setImageResource(R.drawable.ic_person_48dp);
+                else {
+                    Picasso.with(context)
+                            .load(MyApplication.getBaseUrl() + url)
+                            .into(holder.imageView);
                 }
 
                 break;

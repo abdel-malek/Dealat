@@ -7,18 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Model.Ad;
 import com.dealat.Model.Category;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.AdDetailsActivity;
 import com.dealat.View.MasterActivity;
-import com.tradinos.core.network.InternetManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,15 +77,32 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
                     }
                 });
 
+                ImageView imageView = holder.imageView;
+                ImageView featured = holder.imageViewFeatured;
+
+                if (resourceLayout == R.layout.row_view2) {
+                    if (position % 2 == 0) {
+                        holder.frameLayout1.setVisibility(View.GONE);
+                        holder.frameLayout2.setVisibility(View.VISIBLE);
+
+                        imageView = holder.imageView2;
+                        featured = holder.imageViewFeatured2;
+                    } else {
+                        holder.frameLayout1.setVisibility(View.VISIBLE);
+                        holder.frameLayout2.setVisibility(View.GONE);
+
+                        imageView = holder.imageView;
+                        featured = holder.imageViewFeatured;
+                    }
+                }
+
                 int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(item.getTemplate());
                 if (item.getMainImageUrl() != null) {
-
-                    ImageLoader mImageLoader = InternetManager.getInstance(context).getImageLoader();
-                    mImageLoader.get(MyApplication.getBaseUrl() + item.getMainImageUrl(),
-                            ImageLoader.getImageListener(holder.imageView,
-                                    defaultDrawable, defaultDrawable));
+                    Picasso.with(context)
+                            .load(MyApplication.getBaseUrl() + item.getMainImageUrl())
+                            .into(imageView);
                 } else
-                    holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
+                    imageView.setImageDrawable(ContextCompat.getDrawable(context, defaultDrawable));
 
                 if (item.getTemplate() == Category.JOBS)
                     holder.textViewPrice.setVisibility(View.INVISIBLE);
@@ -95,15 +112,19 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
 
                 holder.textViewTitle.setText(item.getTitle());
 
-                if (item.getPublishDate() != null)
+                if (item.getPublishDate() == null)
+                    holder.textViewDate.setText("");
+                else
                     holder.textViewDate.setText(context.getString(R.string.published)
                             + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 
-                if (item.isFavorite())
-                    holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));
+//                if (item.isFavorite())
+//                    holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));
 
                 if (item.isFeatured())
-                    holder.imageViewFeatured.setVisibility(View.VISIBLE);
+                    featured.setVisibility(View.VISIBLE);
+                else
+                    featured.setVisibility(View.INVISIBLE);
 
                 break;
 
@@ -119,12 +140,7 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (resourceLayout == R.layout.row_view2 || resourceLayout == R.layout.row_view2_left) {
-            if (position % 2 == 0)
-                resourceLayout = R.layout.row_view2;
-            else
-                resourceLayout = R.layout.row_view2_left;
-        }
+
         return (position == ads.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
     }
 
@@ -162,15 +178,17 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView, imageViewFeatured;
+        ImageView imageView, imageViewFeatured, imageView2, imageViewFeatured2;
         TextView textViewPrice, textViewTitle, textView, textViewDate;
         ImageButton buttonFav;
         View container;
 
+        FrameLayout frameLayout1, frameLayout2;
+
         ViewHolder(View view) {
             super(view);
 
-            container = view;
+            container = view.findViewById(R.id.container);
             imageView = view.findViewById(R.id.imageView);
             imageViewFeatured = view.findViewById(R.id.imageViewFeatured);
             textViewPrice = view.findViewById(R.id.textViewPrice);
@@ -178,6 +196,12 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
             textView = view.findViewById(R.id.textView);
             textViewDate = view.findViewById(R.id.textViewDate);
             buttonFav = view.findViewById(R.id.buttonFav);
+
+            frameLayout1 = view.findViewById(R.id.container1);
+            frameLayout2 = view.findViewById(R.id.container2);
+
+            imageView2 = view.findViewById(R.id.imageView2);
+            imageViewFeatured2 = view.findViewById(R.id.imageViewFeatured2);
         }
     }
 }

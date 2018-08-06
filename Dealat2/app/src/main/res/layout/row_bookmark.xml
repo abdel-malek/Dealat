@@ -6,6 +6,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/container"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -873,6 +874,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/container2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
