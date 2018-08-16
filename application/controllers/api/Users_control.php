@@ -92,28 +92,28 @@ class Users_control extends REST_Controller {
 	public function get_countries_get()
 	{
 		$this->load->model('data_sources/locations');
-		$method = 'get_cities'.$this->data['os'];
-		$countries = $this->locations->$method($this->data['lang']);
+		//$method = 'get_cities'.$this->data['os'];
+		$countries = $this->locations->get_cities($this->data['lang']);
 		if($countries){
-			$this->response(array('status' => true, 'data' => $countries, "message" => $this->lang->line('sucess')  , 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
+			$this->response(array('status' => true, 'data' => $countries, "message" => $this->lang->line('sucess'), 'currency_ar' =>'ل.س' , 'currency_en' => 'S.P'));
 		}else{
-			$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed'), 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
+			$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed'), 'currency_ar' =>'' , 'currency_en' => ''));
 		}
 	}
 	
 	public function get_my_favorites_get()
 	{
 		$this->load->model('data_sources/user_favorite_ads');
-		$method = 'get_my_favorites'.$this->data['os'];
-		$ads = $this->user_favorite_ads->$method($this->current_user->user_id , $this->data['lang']);
+		//$method = 'get_my_favorites'.$this->data['os'];
+		$ads = $this->user_favorite_ads->get_my_favorites($this->current_user->user_id , $this->data['lang']);
 		$this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 	
 	public function get_my_items_get()
 	{
 	   $this->load->model('data_sources/ads');
-	   $method = 'get_user_ads'.$this->data['os'];
-	   $ads = $this->ads->$method($this->current_user->user_id , $this->data['lang']);
+	   //$method = 'get_user_ads'.$this->data['os'];
+	   $ads = $this->ads->get_user_ads($this->current_user->user_id , $this->data['lang']);
 	   $this->response(array('status' => true, 'data' => $ads, "message" => $this->lang->line('sucess')));
 	}
 	
@@ -151,7 +151,6 @@ class Users_control extends REST_Controller {
 		   $ad_id = $this->input->get('ad_id');
 		   $user_id = $this->current_user->user_id;
 		   $chat_session_info = $this->chat_sessions->check_by_seller_or_user($ad_id , $user_id);
-		  // dump($chat_session_info);
 		   if($chat_session_info){
 		   	  $chat_id = $chat_session_info->chat_session_id;
 			  $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
@@ -387,12 +386,23 @@ class Users_control extends REST_Controller {
    
    public function get_urls_get()
    {
-       $data = array(
+   	   $data = array(
          'site_url' => 'http://dealat.tradinos.com',
          'logo_url' => 'http://dealat.tradinos.com/assets/images/ios_logo.png',
-         'currency_ar' =>'دولار' ,
-         'currency_en' => 'USD'
+         'currency_ar' =>'' ,
+         'currency_en' => ''
 	   );
+   	   if($this->response->version  == '1.0'){
+			$data['site_url'] = 'http://dealat.tradinos.com'; 
+	   }else{
+			$data['site_url'] = 'http://deal-at.com'; 
+	   }
 	   $this->response(array('status' => true, 'data' => $data, "message" => $this->lang->line('sucess')));
+   }
+   
+   public function test_get()
+   {
+       $this->load->model('data_sources/chat_sessions');
+	   dump($this->chat_sessions->get_with_users(23));
    }
 }

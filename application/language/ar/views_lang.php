@@ -198,6 +198,8 @@ $lang['edit_status'] = 'حالة التعديل';
 $lang['expiry_edit_note'] = 'هذا الإعلان منتهي الصلاحية ومعدّل, اذا تم قبوله فسوف يعاد نشره بالمعلومات الحالية';
 $lang['delete_ad_confirmation'] = 'حذف الإعلان سيؤدي إلى حذف كل ما يتعلق به متضمنة التشات والتفضيلات، هل أنت متأكد من أنك تريد المتابعة؟';
 $lang['currency'] = 'ل.س';
+$lang['user'] = 'المستخدم';
+
 
 
 //commercial ads manage 
@@ -220,6 +222,7 @@ $lang['main_commercials']= 'الإعلانات التجارية الرئيسية
 $lang['show_status']= 'حالة الظهور';
 $lang['expected_ratio_side']= 'أبعاد الصورة المتوقعة من نسبة 3:4';
 $lang['expected_ratio_slider']= 'أبعاد الصورة المتوقعة من نسبة 3:1';
+$lang['expected_ratio_main_banner'] = 'أبعاد الصورة المتوقعة من نسبة 6:1';
 
 
 //users manage

@@ -7,7 +7,7 @@ class Commercial_ads extends MY_Model {
 	//protected $_order_by = '';
 	public $rules = array();
 	
-	public function get_commercial_ads($category_id, $lang , $for_mobile = 0 )
+	public function get_commercial_ads($category_id, $lang ,$city, $from_web = null )
 	{
 	   if($category_id == 0){
 	   	 $this->db->where('category_id' ,0);
@@ -19,12 +19,13 @@ class Commercial_ads extends MY_Model {
 	     $this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
 	     $this->db->where("(categories.category_id = '$category_id' OR categories.parent_id = '$category_id' OR c.parent_id = '$category_id')");
 	   }
-	   if($for_mobile == 1){
+	   if($from_web == null){
 	   	 $this->db->where('position' , POSITION::MOBILE);
 	   }else{
 	   	 $this->db->where('position !=' , POSITION::MOBILE);
 	   }
 	   $this->db->where('commercial_ads.is_active' , 1);
+	   $this->db->where('city_id' , $city);
 	   return parent::get();
 	}
 	

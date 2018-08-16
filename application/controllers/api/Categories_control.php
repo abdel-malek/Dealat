@@ -9,6 +9,7 @@ class Categories_control extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/categories');
 	    $this->data['lang']=  $this->response->lang;
+		$this->data['version'] = $this->response->version;
 	}
 
 
@@ -20,8 +21,17 @@ class Categories_control extends REST_Controller {
 	
 	public function get_all_get()
 	{
+		// get main commercial ads
+		$this->load->model('data_sources/commercial_ads');
+		$commercials = $this->commercial_ads->get_commercial_ads(0,$this->data['lang'], $this->input->get('from_web'));
+		// get categories.
 		$categories = $this->categories->get_all($this->data['lang']);
-		$this->response(array('status' => true, 'data' =>$categories, 'message' => '' , 'currency_ar' =>'دولار' , 'currency_en' => 'USD'));
+		$data  = array('categories' => $categories , 'commercials' => $commercials);
+		// for old versions
+        if($this->data['version'] == '1.0'){
+        	 $data = $categories;
+        }
+		$this->response(array('status' => true, 'data' =>$data , 'message' => ''));
 	}
 	
 	public function get_main_categories_get()
@@ -46,12 +56,6 @@ class Categories_control extends REST_Controller {
 			$info = $this->categories->get($cat_id);
 			$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 		}
-	}
-	
-	public function test_get()
-	{
-		$data = $this->categories->get_counts_by_category();
-		dump($data);
 	}
 	
 	public function get_nested_ids_get()

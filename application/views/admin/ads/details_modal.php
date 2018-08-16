@@ -418,12 +418,12 @@
           </div>
           <label  style="display: none" id="reject_note_label"></label>
           <label  style="display: none" id="expiry_edit_label"><?php echo $this->lang->line('expiry_edit_note') ?></label>
-          <button style="display: none" template_id id="delete_ad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target=".ad-delete-modal"><span class="fa fa-trash"></span></button>
+          <button style="display: none" template_id id="delete_ad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target=".ad-delete-modal"><?php echo $this->lang->line('delete') ?></button>
           <button style="display: none" onclick="perform_action('hide')" id="hide_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('hide_ad') ?></button>
           <button style="display: none" onclick="perform_action('show')" id="show_btn" type="button" class="btn btn-warning"><?php echo $this->lang->line('show_ad') ?></button>
           <button style="display: none" id="reject_btn"  type="button" class="btn btn-danger" data-toggle="modal" data-target=".reject_model"><?php echo $this->lang->line('reject_ad') ?></button>
           <button style="display: none"  onclick="perform_action('accept')"  id="accept_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('accept_ad') ?></button>
-          <button onclick="make_ad_eitable()"  id="edit_btn" type="button" class="btn btn-primary"><span class='fa fa-edit'></span></button>
+          <button onclick="make_ad_eitable()"  id="edit_btn" type="button" class="btn btn-primary"><?php echo $this->lang->line('edit') ?></button>
           <button style="display: none"  onclick="save_ad_edits()"  id="save_ad_edits_btn" type="button" class="btn btn-success"><?php echo $this->lang->line('save_changes') ?></button>
         </div>
       </div>

@@ -84,10 +84,31 @@
    <!--slick slider  -->
    <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
    
-    <!-- jquery uploader -->
-    <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
+   <!-- jquery uploader -->
+   <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
     
-    
+    <!-- tinymce -->
+    <script src="<?php echo base_url() ?>/admin_assets/js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript">
+		tinyMCE.init({
+			// General options
+			//mode : "textareas",
+			mode : "specific_textareas",
+            editor_selector : "tinymce",
+			theme : "advanced",
+			plugins : "autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave,visualblocks",
+	
+			// Theme options
+			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak,restoredraft,visualblocks",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+		});
+	</script>
     
     <script>
        var lang_array=[];
@@ -121,7 +142,7 @@
        	 lang_array['location_saved'] = 'Area is saved' ;
        	 lang_array['location_deleted'] = 'Area is Deleted' ;
        	 lang_array['notification_sent'] = 'Notification sent successfully'
-       	
+       	 lang_array['about_saved'] = 'About info saved successfully';
        	// lang_array['category_deactivated'] = 'Category and ';
        	 lang_array['reject_note'] = 'Reject Note';
        	 lang_array['export_to_excel'] = 'Export to Excel';
@@ -199,6 +220,7 @@
        	 lang_array['category_updated'] = 'تم تعديل الصنف';
          lang_array['user_admin_status_changed'] = 'تم تغيير حالة المدير للمستخدم';
          lang_array['price_and_kelo_edit'] = 'الآن يمكنك تعديل حقول السعر والكيلومتراج';
+         lang_array['about_saved'] = 'تم حفظ معلومات حول بنجاح';
        	 //datatable
        	 lang_array['sProcessing'] = "جارٍ التحميل..." ;
        	 lang_array['sLengthMenu'] = "أظهر _MENU_ مدخلات" ;
@@ -267,5 +289,6 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/users_codes.js"></script>
    
+
   </body>
 </html>

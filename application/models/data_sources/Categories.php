@@ -292,4 +292,12 @@ class Categories extends MY_Model {
 	  
 	   
    }
+   
+  public function get_info($id)
+  {
+  	$this->db->select('*');
+	$this->db->from($this->_table_name);
+	$this->db->where('category_id' , $id);
+	return $this->db->get()->row(); 
+  }
 }

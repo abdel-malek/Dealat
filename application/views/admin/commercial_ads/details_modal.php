@@ -49,7 +49,7 @@
 		                   </select>
 	      	         </div>
 	      	         <label style="display: none" class='image_ration_note' id="label1"><?php echo $this->lang->line('expected_ratio_side') ?></label>
-	      	         <label style="display: none" class='image_ration_note'  id="label2"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
+	      	         <label style="display: none" class='image_ration_note'  id="label2"> <?php echo $this->lang->line('expected_ratio_main_banner') ?></label>
 	      	         <label style="display: none" class='image_ration_note'  id="label3"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
 	               </div> 
 	               

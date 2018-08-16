@@ -22,19 +22,19 @@
 			               <div class="form-group">
 			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('about_ar') ?></label>
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
-			      	            <textarea  class="form-control col-md-7 col-xs-12" name="ar_about_us" id="about_ar"><?php echo $about_info->ar_about_us ?></textarea>
+			      	            <textarea  class="form-control col-md-7 col-xs-12 tinymce" name="ar_about_us" id="about_ar"><?php echo $about_info->ar_about_us ?></textarea>
 			      	         </div>
 			               </div> 
 			               <div class="form-group">
 			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('about_en') ?></label>
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
-			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="en_about_us" id="about_en"><?php echo $about_info->en_about_us ?></textarea>
+			      	            <textarea  class="form-control col-md-7 col-xs-12 tinymce"  name="en_about_us" id="about_en"><?php echo $about_info->en_about_us ?></textarea>
 			      	         </div>
 			               </div> 
 			               <div class="form-group">
 			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('phone') ?></label>
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
-			      	           <input type='text' class="form-control" name="phone" id='about_phone' value ="<?php echo $about_info->phone ?>"></input>
+			      	           <textarea class="form-control tinymce" name="phone" id='about_phone' ><?php echo $about_info->phone ?></textarea>
 			      	         </div>
 				           </div> 
 				           <div class="form-group">
@@ -77,13 +77,13 @@
 				           <div class="form-group">
 			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('terms_ar') ?></label>
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
-			      	            <textarea  class="form-control col-md-7 col-xs-12" name="ar_terms" id="ar_terms"><?php echo $about_info->ar_terms ?></textarea>
+			      	            <textarea  class="form-control col-md-7 col-xs-12 tinymce" name="ar_terms" id="ar_terms"><?php echo $about_info->ar_terms ?></textarea>
 			      	         </div>
 			               </div> 
 			               <div class="form-group">
 			      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('terms_en') ?></label>
 			      	         <div class="col-md-6 col-sm-6 col-xs-12">
-			      	            <textarea  class="form-control col-md-7 col-xs-12"  name="en_terms" id="en_terms"><?php echo $about_info->en_terms ?></textarea>
+			      	            <textarea  class="form-control col-md-7 col-xs-12 tinymce"  name="en_terms" id="en_terms"><?php echo $about_info->en_terms ?></textarea>
 			      	         </div>
 			               </div>
 			               

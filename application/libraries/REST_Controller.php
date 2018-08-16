@@ -286,6 +286,7 @@ abstract class REST_Controller extends CI_Controller {
         $this->response->lang = $this->_detect_lang();
 		$this->response->city = $this->_detect_city();
 		$this->response->os = $this->_detect_os();
+		$this->response->version = $this->_detect_version();
 		$this->response->is_auth = $this->_detect_auth();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
@@ -315,11 +316,10 @@ abstract class REST_Controller extends CI_Controller {
 	   
 	   //load meta data 
 	   $this->load->model('data_sources/about_info');
-	   $info = $this->about_info->get(null, true , 1);
+	   $info = $this->about_info->get(null, true , 1 , true); // the last true for get_all
 	   $this->data['meta_description'] = $info->meta_description;
 	   $this->data['meta_keywords'] = $info->meta_keywords;
 	   $this->data['meta_title'] = $info->meta_title;
-	  // dump($this->data);
     }
 
     /**
@@ -444,7 +444,14 @@ abstract class REST_Controller extends CI_Controller {
      */
     public function response($data = null, $http_code = 200, $view = null) {
         global $CFG;
-
+		
+		// by ola
+        //set headers to NOT cache a page
+		 header("Cache-Control: no-cache, must-revalidate"); //HTTP 1.1
+		 header("Pragma: no-cache"); //HTTP 1.0
+	     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+	     
+	     
         // If data is NULL and not code provide, error and bail
         if ($data === NULL && $http_code === null) {
             $http_code = 404;
@@ -521,7 +528,6 @@ abstract class REST_Controller extends CI_Controller {
 //        if ( ! $this->_zlib_oc && ! $CFG->item('compress_output')) {
 //            header('Content-Length: ' . strlen($output));
 //        }
-
         exit($output);
     }
 
@@ -753,7 +759,8 @@ abstract class REST_Controller extends CI_Controller {
 		
    }
   
-  protected function _detect_os() {
+    
+   protected function _detect_os() {
         $header = $this->input->request_headers();
         if (isset($header['Os'])) {
             $this->session->set_userdata(array('os' => $header['Os']));
@@ -766,20 +773,35 @@ abstract class REST_Controller extends CI_Controller {
 		//print_r($this->session->userdata);
         return $this->session->userdata('os');
    }
+
+   protected function _detect_version() {
+        $header = $this->input->request_headers();
+        if (isset($header['Version'])) {
+            $this->session->set_userdata(array('version' => $header['Version']));
+            return $header['Version'];
+        }
+        if (!$this->session->userdata('Version')) {
+            $this->session->set_userdata(array('version' => '1.0'));
+            return '1.0';
+        }
+        return $this->session->userdata('version');
+   }
 	
    protected function _detect_auth() {
         $header = $this->input->request_headers();
+		//dump($header);
 	    if (isset($header['Authorization'])) {
 		     $this->_prepare_basic_auth();
 	         if(isset($this->current_user) && $this->current_user != null){
 	           return $this->current_user->user_id;	
 	         }else{
-	         	return false;
+	           return false;
 	         }
 		}else{
 			return false;
 		}
     }
+  // Basic OTU3NjY0OTA0OmZkNjkzMmVhZmIzNzAxZTE2M2Y2NDFiZGZjMjlkMDI0
 
     /**
      * Log request

@@ -8,7 +8,7 @@ class User_permission extends MY_Model {
 
 	public function get_user_permissions_ids($id_user) {
 		$this -> db -> select('permission_id');
-		$result = parent::get_by(array('user_id' => $id_user));
+		$result = parent::get_by(array('user_id' => $id_user) , false , null , true);
 		$result_array = array();
 		foreach ($result as $array) {
 			foreach ($array as $permission_id) {

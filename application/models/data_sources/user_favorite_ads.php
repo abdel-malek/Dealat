@@ -39,7 +39,7 @@ class User_favorite_ads extends MY_Model {
 	  $this->db->where('users.is_deleted' , 0);
 	  $this->db->where('users.is_active' , 1);
 	  $this->db->where('user_favorite_ads.user_id' , $user_id);
-	  $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');  
+	 // $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');  
 	  return parent::get();
 	}
 

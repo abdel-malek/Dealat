@@ -37,6 +37,18 @@
 		                            <?php endif; ?> 
 		                          </select>
 		                        </div>
+		                        
+		                        <div class="col-md-4">
+		                      	 <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('user') ?></label>
+		                         <select class="form-control select2_single" id="user_ad_select" tabindex="-1">
+		                           <option value ='0'><?php echo $this->lang->line('all') ?></option>
+		                        	<?php $users = get_users();?>
+		                         	<?php if($users!= null): foreach ($users as $key => $value): ?>
+		                         		  <option value="<?php echo $value->user_id; ?>"><?php echo $value->name.' '.$value->phone ?></option>
+		                            <?php  endforeach; ?>
+		                            <?php endif; ?> 
+		                          </select>
+		                        </div>
 		                     </div>
 		                    </div>
 		                  </div>
@@ -62,6 +74,7 @@
 	                        <tr>
 	                          <th>#</th>
 	                          <th><?php echo $this->lang->line('created_at') ?></th>
+	                          <th><?php echo $this->lang->line('user') ?></th>
 	                          <th><?php echo $this->lang->line('tamplate_name') ?></th>
 	                          <th><?php echo $this->lang->line('category') ?></th>
 	                          <th><?php echo $this->lang->line('title') ?></th>

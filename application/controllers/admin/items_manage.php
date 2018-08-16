@@ -41,6 +41,7 @@ class Items_manage extends REST_Controller {
 			$recorde = array();
 			$recorde[] = $row -> ad_id;
 			$recorde[] = $row -> created_at;
+			$recorde[] = $row->user_name.' '.$row->user_phone;
 			$recorde[] = TAMPLATES::get_tamplate_name($row -> tamplate_id  , $this->data['lang']);
 			$recorde[] = $row->category_name;
 			$recorde[] = $row -> title;

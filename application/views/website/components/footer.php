@@ -9,7 +9,8 @@
 						<h3>
 							<?php echo $this->lang->line('about'); ?>
 						</h3>
-						<div class="">{{about_us}}</div>
+						<!-- <div class="">{{about_us}}</div> -->
+						<div class="">{{&about_us}}</div>
 					</div>
 				</div>
 				<div class="col-md-5">
@@ -29,7 +30,7 @@
 						</div>
 						<ul class="info">
 							<li><i class="fas fa-envelope"></i> {{email}}</li>
-							<li><i class="fas fa-phone" data-fa-transform="flip-h"></i> {{phone}}</li>
+							<li style="direction:  ltr;"><i class="fas fa-phone" data-fa-transform="flip-h"></i> {{&phone}}</li>
 						</ul>
 					</div>
 				</div>

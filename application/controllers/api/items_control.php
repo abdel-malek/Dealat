@@ -9,6 +9,8 @@ class Items_control extends REST_Controller {
 		parent::__construct();
 		$this->load->model('data_sources/ads');
 		$this->data['lang']=  $this->response->lang;
+		$this->data['version'] = $this->response->version;
+		$this->data['city'] = $this->response->city;
 		if($this->response->os == OS::IOS){
 			$this->data['os'] = '_os'; 
 		}else{
@@ -25,9 +27,20 @@ class Items_control extends REST_Controller {
 	public function get_items_by_main_category_get()
 	{
 		$main_category_id = $this->input->get('category_id');
-		$method = 'get_ads_by_category'.$this->data['os'];
-		$ads_list = $this->ads->$method($main_category_id , $this->data['lang']);
-		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
+		// get ads
+		$ads_list = $this->ads->get_ads_by_category($main_category_id , $this->data['lang']);
+		$data['ads'] = $ads_list;
+		//get commrecial ads.
+		if($this->input->get('page_num') && $this->input->get('page_num') == 1){// if calling the services for the firt page then get the commercials
+			$this->load->model('data_sources/commercial_ads');
+			$commercials = $this->commercial_ads->get_commercial_ads($main_category_id,$this->data['lang'],$this->data['city'], $this->input->get('from_web'));
+			$data['commercials'] = $commercials;
+		}
+        // for old versions
+        if($this->data['version'] == '1.0'){
+        	 $data = $ads_list;
+        }
+		$this->response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 	
 	public function get_pending_items_get()
@@ -53,8 +66,8 @@ class Items_control extends REST_Controller {
         }
         $ad_id = $this->input->get('ad_id');
         $tamplate_id = $this->input->get('template_id');
-		$method = 'get_ad_details'.$this->data['os'];
-        $deatils = $this->ads->$method($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
+		//$method = 'get_ad_details'.$this->data['os'];
+        $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
 		if($deatils){
 			// increent the number of views for this ad.
 			if(isset($user_id)&& $user_id != null){
@@ -147,7 +160,7 @@ class Items_control extends REST_Controller {
 
   public function item_images_upload_post()
    {
-      $image_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
+      $image_name = date('m-d-Y_hia').'-'.uniqid(rand()).'-'.$this->current_user->user_id;
       $image = upload_attachement($this, ADS_IMAGES_PATH , $image_name);
       if (isset($image['image'])) {
           $image_path =  ADS_IMAGES_PATH.$image['image']['upload_data']['file_name'];
@@ -204,9 +217,22 @@ class Items_control extends REST_Controller {
    {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
-		$method = 'serach_with_filter'.$this->data['os'];
-		$resuts = $this->ads->$method( $this->data['lang']  , $query_string , $category_id);
-		$this->response(array('status' => true, 'data' =>$resuts, 'message' => $this->lang->line('sucess')));
+		$data['ads'] = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
+		//get commrecial ads.
+		if($this->input->get('page_num') && $this->input->get('page_num') == 1){// if calling the services for the firt page then get the commercials
+			$this->load->model('data_sources/commercial_ads');
+		    if($category_id){
+		    	$commercials = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'],$this->data['city'], $this->input->get('from_web'));
+		    }else{
+		    	$commercials = $this->commercial_ads->get_commercial_ads(0 ,$this->data['lang'],$this->data['city'], $this->input->get('from_web'));
+		    }
+			$data['commercials'] = $commercials;
+		}
+		// for old versions
+        if($this->data['version'] == '1.0'){
+        	 $data = $data['ads'];
+        }
+		$this->response(array('status' => true, 'data' =>$data, 'message' => $this->lang->line('sucess')));
    }
 	
   public function get_bookmark_search_get()
@@ -231,11 +257,11 @@ class Items_control extends REST_Controller {
 		 $this->load->model('data_sources/show_periods');
 		 $this->load->model('data_sources/certificates');
 		 $this->load->model('data_sources/property_states');
-		 $locations_method = 'get_all'.$this->data['os'];
-		 $nested_locations_method = 'get_cities_with_locations'.$this->data['os'];
-		 $locations = $this->locations->$locations_method($this->data['lang']);
+		 // $locations_method = 'get_all'.$this->data['os'];
+		 // $nested_locations_method = 'get_cities_with_locations'.$this->data['os'];
+		 $locations = $this->locations->get_all($this->data['lang']);
 		 //$cities = $this->locations->get_cities($this->data['lang']);
-		 $nested_locations = $this->locations->$nested_locations_method($this->data['lang']);
+		 $nested_locations = $this->locations->get_cities_with_locations($this->data['lang']);
 		 $types = $this->types->get_all_by_tamplate($this->data['lang']);
 		 $educations = $this->educations->get_all($this->data['lang']);
 		 $schedules = $this->schedules->get_all($this->data['lang']);
@@ -262,7 +288,11 @@ class Items_control extends REST_Controller {
 	   	 $ad_id = $this->input->post('ad_id');
 		 $user_id = $this->current_user->user_id;
 		 $this->load->model('data_sources/user_favorite_ads');
-		 $favorate_id = $this->user_favorite_ads->save(array('ad_id'=>$ad_id , 'user_id'=>$user_id));
+		 $check = $this->user_favorite_ads->check_favorite($user_id , $ad_id);
+		 $favorate_id = $ad_id;
+		 if(!$check){
+		 	$favorate_id = $this->user_favorite_ads->save(array('ad_id'=>$ad_id , 'user_id'=>$user_id));
+		 }
 		 if($favorate_id){
 		 	$this -> response(array('status' => true, 'data' => $favorate_id, 'message' => $this->lang->line('sucess')));
 		 }else{
@@ -288,13 +318,6 @@ class Items_control extends REST_Controller {
    	  }
    }
    
-   
-  public function test_post()
-    {
-     $this->load->model('notification');
-	 $this->load->helper('notification');
-     $this->notification->send_notification(6 , 'Your ad is accepted' , null , 'Ad Accepted' , NotificationHelper::ACTION);
-    }
    
 
   public function change_status_post()

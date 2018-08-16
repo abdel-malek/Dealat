@@ -9,6 +9,7 @@ class Commercial_items_control extends REST_Controller {
 		$this->load->model('data_sources/commercial_ads');
 		$this->load->model('data_sources/admin_actions_log');
 		$this->data['lang']=  $this->response->lang;
+		$this->data['city'] = $this->response->city;
 	}
 	
 	public function get_commercial_items_get()
@@ -18,12 +19,7 @@ class Commercial_items_control extends REST_Controller {
         }else{
             $category_id = $this->input->get('category_id');
             $ads = null;
-            
-            if ($this->input->get('from_web')){ // for web
-                $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 0);
-            }else{ // for mobile
-                $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'], 1);
-            }
+            $ads = $this->commercial_ads->get_commercial_ads($category_id,$this->data['lang'],$this->data['city'], $this->input->get('from_web'));
           $this->response(array('status' => true, 'data' =>$ads, 'message' => ''));
         }
     }

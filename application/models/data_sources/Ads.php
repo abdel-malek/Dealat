@@ -473,10 +473,12 @@ class Ads extends MY_Model {
   public function serach_with_filter($lang , $query_string = null , $category_id = null)
    {
 	 //filter
+	 //dump($category_id);
 	 if($category_id != null){
 	 	$this->load->model('data_sources/categories');
-	 	$category_info = $this->categories->get($category_id);
-		if($category_info->tamplate_id != TAMPLATES::BASIC){
+	 	$category_info = $this->categories->get_info($category_id);
+		dump($category_info);
+		if($category_info != null && $category_info->tamplate_id != TAMPLATES::BASIC){
 		  	$tamplate_name = TAMPLATES::get_tamplate_name($category_info->tamplate_id);
 			$model = $tamplate_name.'_tamplate';
 			$this->load->model('data_sources/'.$model);
@@ -622,7 +624,7 @@ class Ads extends MY_Model {
 	 $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 	 $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left outer');
 	 //not expired
-	 $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())'); 
+	// $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())'); 
 	 // the user is not deleted
 	 $this->db->where('users.is_deleted' , 0);
 	 // the category is activated. 
@@ -694,6 +696,8 @@ class Ads extends MY_Model {
 		                  locations.'.$lang.'_name as location_name ,
 		                  cites.'.$lang.'_name as  city_name,
 		                  show_periods.days,
+		                  users.name as user_name,
+		                  users.phone as user_phone,
 		                  timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) as expired_after,
 		                 ' , false);
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
@@ -733,8 +737,17 @@ class Ads extends MY_Model {
 	  $this->db->where('ads.user_id' , $user_id);
 	  $this->db->where('users.is_deleted' , 0);
 	  $this->db->where('ads.status != ' , STATUS::DELETED);
+	  if($status = $this->input->get('status')){
+	  	  if($status == 3){
+	  	  	 $this->db->where('timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) <' , 0);
+			 $this->db->where('ads.status' , STATUS::ACCEPTED);
+	  	  }else{
+	  	  	 $this->db->where('ads.status' , $status);
+			// $this->db->where('timestampdiff(DAY,now(),(DATE_ADD(publish_date, INTERVAL days DAY))) >=' , 0);
+	  	  }
+	  }
 	  return parent::get();
-	}
+   }
   
   public function get_user_ads_os($user_id , $lang)
 	{

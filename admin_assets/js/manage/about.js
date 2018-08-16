@@ -1,4 +1,5 @@
 function save_about(){
+	 tinyMCE.triggerSave();
 	 data = {
 	 	'ar_about_us' : $('#about_ar').val(),
 	 	'en_about_us' : $('#about_en').val(),
@@ -15,6 +16,7 @@ function save_about(){
 	 	'meta_keywords' : $('#meta_keywords').val(),
 	 	'meta_title' : $('#meta_title').val(),
 	 };
+	//console.log(data);
 	$.ajax({
 	        url: base_url + '/admin/data_manage/save_about/format/json',
 	        type: "post",
@@ -33,8 +35,17 @@ function save_about(){
 						}
 		          });
 	            }else{
-	                 window.location.reload();
-	             }
+	                 //window.location.reload();
+	              new PNotify({
+	                  title:  lang_array['success'],
+	                  text: lang_array['about_saved'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	            }
 	        },error: function(xhr, status, error){
 	        	new PNotify({
 	                  title: lang_array['attention'],

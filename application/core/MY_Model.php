@@ -25,7 +25,7 @@ class MY_Model extends CI_Model {
 		return $data;
 	}
 	
-	public function get($id = NULL, $single = FALSE , $limit= null){
+	public function get($id = NULL, $single = FALSE , $limit= null , $get_all = FALSE){
 		
 		if ($id != NULL) {
 			$filter = $this->_primary_filter;
@@ -46,12 +46,22 @@ class MY_Model extends CI_Model {
 		   	  $this->db->order_by($this->_order_by);
 		   }
 	   }
-	  return $this->db->get($this->_table_name , $limit)->$method();
+	   // for pageing 
+	   if($this->input->get('page_size')!= null && $this->input->get('page_num') != null && !$get_all){ 
+			$page_size = $this->input->get('page_size');
+			$page_num = $this->input->get('page_num');
+			$offset = $page_num * $page_size - $page_size;
+			$r = $this->db->get($this->_table_name , $page_size , $offset)->$method();
+			//dump($r);
+			return $r;
+	   }else{ // without pageing
+	   	    return $this->db->get($this->_table_name , $limit)->$method();
+	   }
 	}
 	
-	public function get_by($where, $single = FALSE,$limit= null){
+	public function get_by($where, $single = FALSE, $limit= null, $get_all = FALSE){
 		$this->db->where($where);
-		return $this->get(NULL, $single,$limit);
+		return $this->get(NULL, $single,$limit,$get_all);
 	}
 	
 	public function save($data, $id = NULL){

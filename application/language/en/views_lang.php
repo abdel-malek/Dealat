@@ -196,6 +196,7 @@ $lang['edit_status'] = 'Edit status';
 $lang['expiry_edit_note'] = 'This Ad is Expired and edited, if you accept it will be republished';
 $lang['delete_ad_confirmation'] = 'Delete this ad will delete all that is related to it, including chats and favorites, Are you sure you want to continue?';
 $lang['currency'] = 'SP';
+$lang['user'] = 'User';
 
 
 //commercial ads manage 
@@ -218,6 +219,7 @@ $lang['add_new_main_commercial'] = 'Add New Main Commercial';
 $lang['show_status']= 'Show status';
 $lang['expected_ratio_side']= 'Expected image ration is 3:4';
 $lang['expected_ratio_slider']= 'Expected image ration is 3:1';
+$lang['expected_ratio_main_banner'] = 'Expected image ration is 6:1';
 
 
 //users manage

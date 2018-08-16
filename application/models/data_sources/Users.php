@@ -100,7 +100,7 @@ class Users extends MY_Model {
 		if($account_type == ACCOUNT_TYPE::MOBILE || $account_type == ACCOUNT_TYPE::BOTH){
 		  if($is_multi == 0){ // for the fisrt time and when the user don't want to enter from deffrent devices. 
 		  	    $server_key = uniqid();
-		        while ($this->get_by(array('server_key'=>$server_key))) {
+		        while ($this->get_by(array('server_key'=>md5($server_key)))) {
 		            $server_key = uniqid();
 		        }
 				$data['server_key'] =  md5($server_key);

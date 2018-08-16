@@ -3,6 +3,8 @@ var status_val = $("#status_select").val();
 var status_name = $("#status_select").find("option:selected").text();
 var edit_status_val = $("#edit_status_select").val();
 var edit_status_name = $("#edit_status_select").find("option:selected").text();
+var user_ad_val = $("#user_ad_select").val();
+var user_ad_name = $("#user_ad_select").find("option:selected").text();
 var templates_attrs;
 var status_array;
 var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
@@ -16,6 +18,7 @@ var types;
 var current_type_index;
 var chosen_type_models; 
 var current_template; 
+
 //var current_type_model_id = 0; 
 
  $(document).ready(function() {
@@ -130,11 +133,12 @@ var current_template;
                     "mRender": function(date, type, full) {
                       // var full9 = full[9].split(" ");
                        //var template_id = full9[0];
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[10] + '\', \'' + 0 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[11] + '\', \'' + 0 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         },
 	          ],
               dom: "Bfrtip",
+              "scrollX": true,
               buttons: ads_buttons,
               "initComplete": function(settings, json) {
 			      
@@ -251,32 +255,77 @@ var current_template;
     	
     }
  });
+//  
+ // //filter by edit status
+  // $('#edit_status_select').change(function(event) {
+    // edit_status_val = $("#edit_status_select").val();
+     // if(edit_status_val == 0){
+       // if(status_val != 0){
+       	 // ads_table
+		 // .search( status_name )
+	// //	 .columns().search( status_name )
+		 // .draw();
+       // }else{
+       	 // ads_table
+		 // .search( '' )
+		 // .columns().search( '' )
+		 // .draw();
+       // }
+    // }else{
+      // edit_status_name = $(this).find("option:selected").text();
+      // if(status_val != 0){
+      	// ads_table.search( status_name+' '+edit_status_name).draw();
+      // }else{
+      	// ads_table.search(edit_status_name).draw();
+      // }
+// 	  
+    // }
+  // });
+  
+  
+  // filter by status 
+ $('#status_select').change(function(event) {
+    status_val = $("#status_select").val();
+    $('#status_count_label').html(status_array_for_label[status_val]);
+    if(status_val == PENDING){
+    	// show count circle 
+    	$('.countIcon').css('display' , 'inline');
+    }else{
+        $('.countIcon').css('display' , 'none');
+    }
+    status_name = $(this).find("option:selected").text();
+    check_filter_values();
+    ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
+ });
  
  //filter by edit status
   $('#edit_status_select').change(function(event) {
     edit_status_val = $("#edit_status_select").val();
-     if(edit_status_val == 0){
-       if(status_val != 0){
-       	 ads_table
-		 .search( status_name )
-	//	 .columns().search( status_name )
-		 .draw();
-       }else{
-       	 ads_table
-		 .search( '' )
-		 .columns().search( '' )
-		 .draw();
-       }
-    }else{
-      edit_status_name = $(this).find("option:selected").text();
-      if(status_val != 0){
-      	ads_table.search( status_name+' '+edit_status_name).draw();
-      }else{
-      	ads_table.search(edit_status_name).draw();
-      }
-	  
-    }
+    edit_status_name = $(this).find("option:selected").text();
+    check_filter_values();
+    ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
   });
+  
+  
+   //filter by user
+  $('#user_ad_select').change(function(event) {
+    user_ad_val = $("#user_ad_select").val();
+    user_ad_name = $(this).find("option:selected").text();
+    check_filter_values();
+    ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
+  });
+  
+  function check_filter_values() {
+      if(status_val == 0){
+      	 status_name = '';
+      }
+      if(edit_status_val == 0){
+      	 edit_status_name = '';
+      }
+      if(user_ad_val == 0){
+      	 user_ad_name = '';
+      }
+  }
  
  function show_ad_details (ad_id , tamplate_id , from_reports) {
  	  $('.ads_details  #post_id').val(ad_id);
