@@ -1583,6 +1583,9 @@ label {
 
 #chat-modal {
   /* M E S S A G E S */ }
+  #chat-modal .ad-name:hover {
+    cursor: pointer;
+    text-decoration: underline; }
   #chat-modal .modal-header {
     background-color: #c30a30;
     padding: 5px 0;

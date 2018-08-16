@@ -1185,6 +1185,7 @@
 
 				<form id="chat-form">
 					<input type="hidden" class="ad-id" name="ad_id">
+					<input type="hidden" class="template-id" >
 					<input type="hidden" class="is-seller">
 					<input type="hidden" class="chat-session-id" name="chat_session_id">
 					<div class="send-wrapper">

@@ -158,7 +158,7 @@
 				<div class="container">
 					<ul class="sessions">
 						<script id="chat-sessions-template" type="text/template">
-							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-seller-id="{{details.seller_id}}">
+							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-template-id="{{details.template_id}}" data-seller-id="{{details.seller_id}}">
 								<!-- <div class="new-msg d-none"><i class="fas fa-envelope"></i></div> -->
 								<div class="row align-items-center">
 								<div class="col-sm-1 text-center">
