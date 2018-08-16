@@ -21,6 +21,7 @@ public class InternetManager {
     private InternetManager(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
+        mRequestQueue.getCache().clear();
 
         mImageLoader = new ImageLoader(mRequestQueue,
                 new BitmapLruCache());
@@ -45,6 +46,7 @@ public class InternetManager {
 
     public <T> void addToRequestQueue(Request<T> req, String url) {
         getRequestQueue().getCache().remove(url);
+        getRequestQueue().getCache().clear();
         getRequestQueue().add(req);
     }
 

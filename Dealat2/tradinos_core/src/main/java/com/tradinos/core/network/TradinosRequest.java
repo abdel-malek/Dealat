@@ -73,7 +73,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
         this.faildCallback = faildCallback;
         this.parser = parser;
         this.setShouldCache(false);
-
+        setShouldCache(false);
 
         if (this.getMethod() == Method.POST)
             this.setRetryPolicy(new VolleyRetryPolicy(50000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -109,7 +109,10 @@ public class TradinosRequest<T> extends Request<JSONObject> {
     }
 
     public void Call() {
+        this.setShouldCache(false);
+        setShouldCache(false);
         InternetManager.getInstance(getContext()).addToRequestQueue(this, this.url);
+
     }
 
     public Context getContext() {
