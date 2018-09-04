@@ -19,6 +19,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -180,7 +181,9 @@ public abstract class MasterActivity extends AppCompatActivity implements View.O
             progressDialog.setCanceledOnTouchOutside(false);
         }
         if (!progressDialog.isShowing()) {
-            progressDialog.show();
+           try {
+               progressDialog.show();
+           }catch (WindowManager.BadTokenException exc){}
         }
     }
 

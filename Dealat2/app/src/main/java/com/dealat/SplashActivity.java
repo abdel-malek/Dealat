@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Controller.UserController;
@@ -16,6 +17,7 @@ import com.dealat.View.RegisterActivity;
 import com.dealat.View.VerificationActivity;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 import com.tradinos.core.network.Code;
 import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
@@ -34,7 +36,13 @@ public class SplashActivity extends MasterActivity {
         setContentView(R.layout.activity_splash);
 
         super.onCreate(savedInstanceState);
+        try{
+            Picasso.with(getmContext())
+                    .load(R.drawable.subed_background)
+                    .into((ImageView) findViewById(R.id.backGround_image));
+        }catch (OutOfMemoryError e){
 
+        }
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/all_android");
 
         /* New Handler to

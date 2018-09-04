@@ -169,7 +169,7 @@ public class AdDetailsActivity extends MasterActivity {
                 textViewId.setText(result.getFormattedId());
                 textViewTitle.setText(result.getTitle());
                 textViewTitle2.setText(result.getTitle());
-                ((TextView) findViewById(R.id.textViewCat)).setText(currentCategory.getFullName());
+                ((TextView) findViewById(R.id.textViewCat)).setText(/*currentCategory.getFullName()*/result.getCategoryName());
 
                 if (result.getPublishDate() != null)  // unaccepted ads their publish dates are null
                     textViewPublishDate.setText(getString(R.string.published) + " " + formattedDate(result.getPublishDate()));

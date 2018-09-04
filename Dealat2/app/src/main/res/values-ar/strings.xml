@@ -258,5 +258,7 @@
     <string name="areYouSureDeleteSearch">هل أنت متأكد أنك تريد حذف هذا البحث؟</string>
     <string name="areYouSureDeactivate">هل أنت متأكد أنك تريد تعطيل حسابك؟</string>
     <string name="logout_messg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="connection_error">حدث خطأ ما, يرجى إعادة المحاولة.</string>
+    <string name="try_again">إعادة المحاولة</string>
 
 </resources>

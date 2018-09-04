@@ -14,7 +14,7 @@ public class Ad implements Serializable {
     public final static int PENDING = 1, ACCEPTED = 2, EXPIRED = 3,
             HIDDEN = 4, REJECTED = 5, DELETED = 6;
 
-    private String id, cityId, locationId, categoryId, publishDate, expiryDate, creationDate;
+    private String id, cityId, locationId, categoryId,categoryName, publishDate, expiryDate, creationDate;
     private String title, description, locationName, cityName;
     private String sellerId, sellerName, sellerPhone, whatsAppNumber;
     private String rejectNote;
@@ -24,7 +24,6 @@ public class Ad implements Serializable {
     // but here showPeriod stands for the id of it as we intent to make a management for it
     private boolean negotiable, featured, favorite, visiblePhone, adminSeller;
     private List<String> imagesPaths;
-
     public Ad(){
         description = "";
         imagesPaths = new ArrayList<>();
@@ -294,4 +293,12 @@ public class Ad implements Serializable {
    public boolean isRejected(){
        return this.status == REJECTED;
    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

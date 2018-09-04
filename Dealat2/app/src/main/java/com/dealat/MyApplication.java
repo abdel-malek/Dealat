@@ -44,6 +44,15 @@ public class MyApplication extends Application {
         return sTracker;
     }
 
+    public MyApplication() {
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        setAllCategories(new ArrayList<Category>());
+    }
+
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         sharedPreferences = getSharedPreferences("dealat", Context.MODE_PRIVATE);
@@ -62,7 +71,7 @@ public class MyApplication extends Application {
         Gson gson = new Gson();
         String json = gson.toJson(locale);
         editor.putString("locale", json);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -70,7 +79,7 @@ public class MyApplication extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt("userState", state);
-        editor.commit();
+        editor.apply();
     }
 
     public static int getUserState() {
@@ -81,7 +90,7 @@ public class MyApplication extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("cityId", cityId);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getCity() {
@@ -93,7 +102,7 @@ public class MyApplication extends Application {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("registerDate", date.getTime());
-        editor.commit();
+        editor.apply();
     }
 
     public static long getCodeRequestDate() {
@@ -104,7 +113,7 @@ public class MyApplication extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("path", path);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getImagePath() {
@@ -136,7 +145,7 @@ public class MyApplication extends Application {
         }
 
         editor.putInt("allCategories_size", allCategories.size());
-        editor.commit();
+        editor.apply();
 
         MyApplication.allCategories = allCategories;
     }
@@ -191,7 +200,7 @@ public class MyApplication extends Application {
     public void setCurrentView(int i) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("view", i);
-        editor.commit();
+        editor.apply();
     }
 
     public static List<String> saveAndGetMessages(String chatId, String message) {
@@ -207,7 +216,7 @@ public class MyApplication extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("chat" + chatId + i, message); // save new message
         editor.putInt("chat" + chatId + "size", messages.size()); // save new size
-        editor.commit();
+        editor.apply();
 
         return messages;
     }
@@ -221,7 +230,7 @@ public class MyApplication extends Application {
 
         editor.remove("chat" + chatId + "size");
 
-        editor.commit();
+        editor.apply();
     }
 
     public static String getBaseUrl() {

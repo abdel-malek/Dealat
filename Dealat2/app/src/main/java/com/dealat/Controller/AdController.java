@@ -10,7 +10,6 @@ import com.dealat.Model.Item;
 import com.dealat.Model.TemplatesData;
 import com.dealat.Parser.AdsResponseParser;
 import com.dealat.Parser.Parser.Ad.AdDetailsParser;
-import com.dealat.Parser.Parser.Ad.AdListParser;
 import com.dealat.Parser.Parser.Item.ItemListParser;
 import com.dealat.Parser.Parser.StringParser;
 import com.dealat.Parser.Parser.TemplatesDataParser;

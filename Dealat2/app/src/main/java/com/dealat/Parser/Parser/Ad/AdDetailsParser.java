@@ -208,6 +208,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setSellerName(jsonObject.getString("seller_name"));
         ad.setSellerPhone(jsonObject.getString("seller_phone"));
         ad.setCategoryId(jsonObject.getString("category_id"));
+        ad.setCategoryName(jsonObject.getString("parent_category_name")+" -- "+jsonObject.getString("category_name"));
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
         ad.setCityId(jsonObject.getString("city_id"));
         ad.setCityName(jsonObject.getString("city_name"));

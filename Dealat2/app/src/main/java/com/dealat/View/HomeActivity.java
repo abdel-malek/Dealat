@@ -10,10 +10,17 @@ import android.widget.ListView;
 
 import com.dealat.Adapter.MainCatAdapter;
 import com.dealat.Controller.CategoryController;
+import com.dealat.Controller.CurrentAndroidUser;
+import com.dealat.Controller.ParentController;
 import com.dealat.Model.Category;
 import com.dealat.Model.GroupedResponse;
+import com.dealat.Model.User;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.dealat.SplashActivity;
+import com.dealat.Utils.CustomAlertDialog;
+import com.tradinos.core.network.Code;
+import com.tradinos.core.network.FaildCallback;
 import com.tradinos.core.network.SuccessCallback;
 
 import java.util.HashMap;
@@ -43,15 +50,40 @@ public class HomeActivity extends DrawerActivity {
 
         mainCategory = Category.getMain(getString(R.string.allCategories));
 
-        if (!isNetworkAvailable()) {
+       /* if (!isNetworkAvailable()) { //if you un-comment this ... please check messages (we have a connection error alert here in home activity)
             refreshLayout.setRefreshing(false);
             return;
-        }
+        }*/
 
         if (!refreshLayout.isRefreshing())
             ShowProgressDialog();
 
-        CategoryController.getInstance(mController).getAllCategories(new SuccessCallback<GroupedResponse>() {
+        CategoryController.getInstance(new ParentController(getmContext(), new FaildCallback() {
+            @Override
+            public void OnFaild(Code errorCode, String Message, String data) {
+                refreshLayout.setRefreshing(false);
+
+                HideProgressDialog();
+
+                // if user was logged and then chose to register from ONE other device
+                // we need to log them out
+                if (errorCode == Code.AuthenticationError) {
+                    showMessageInToast(getString(R.string.toastRegister));
+
+                    MyApplication.saveUserState(User.NOT_REGISTERED);
+                    new CurrentAndroidUser(mContext).clearUser();
+
+                    Intent intent = new Intent(mContext, SplashActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else if (errorCode == Code.NetworkError || errorCode == Code.TimeOutError || errorCode==Code.ParsingError)
+                    showConnectionErrorDialog(getString(R.string.connection_error));
+                else {
+                    //network or server error ... inforce retry again dialog to ensure that we have categories in all sections in the app
+                    showConnectionErrorDialog(Message);
+                }
+            }
+        })).getAllCategories(new SuccessCallback<GroupedResponse>() {
             @Override
             public void OnSuccess(GroupedResponse result) {
 
@@ -71,16 +103,28 @@ public class HomeActivity extends DrawerActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Intent intent = new Intent(mContext, SubCategoriesActivity.class);
 
-                        Category category = ((MainCatAdapter)listView.getAdapter()).getItem(i);
+                        Category category = ((MainCatAdapter) listView.getAdapter()).getItem(i);
                         intent.putExtra("category", category);
-                      //  intent.putExtra("category", mainCategory.getSubCategories().get(i));
+                        //  intent.putExtra("category", mainCategory.getSubCategories().get(i));
                         intent.putExtra("action", SubCategoriesActivity.ACTION_VIEW);
-
                         startActivity(intent);
                     }
                 });
 
                 getCommercialAds(result.getCommercialAds());
+            }
+        });
+    }
+
+    private void showConnectionErrorDialog(String message) {
+        CustomAlertDialog dialog = new CustomAlertDialog(mContext, message);
+        dialog.setOneButtonDialog(true);
+        dialog.show();
+
+        dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
             }
         });
     }

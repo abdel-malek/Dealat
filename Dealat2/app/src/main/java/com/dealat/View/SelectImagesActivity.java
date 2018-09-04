@@ -36,7 +36,8 @@ import java.util.Locale;
 public class SelectImagesActivity extends MasterActivity {
 
     private final int REQUEST_CAMERA = 12,
-            REQUEST_PERMISSION_READ = 13, REQUEST_PERMISSION_WRITE = 14, REQUEST_CAMERA_PERM = 15;
+            REQUEST_PERMISSION_READ /*read and write permission for android 8.0.0*/= 13,
+            REQUEST_PERMISSION_WRITE = 14, REQUEST_CAMERA_PERMISSION = 15;
 
     private ImageAdapter adapter;
 
@@ -64,11 +65,12 @@ public class SelectImagesActivity extends MasterActivity {
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
             findViewById(R.id.container).setVisibility(View.VISIBLE);
 
-        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(SelectImagesActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+                ContextCompat.checkSelfPermission(SelectImagesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(SelectImagesActivity.this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_READ);
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_READ);
         } else {
             adapter = new ImageAdapter(mContext, getAllShownImagesPath());
             gridView.setAdapter(adapter);
@@ -93,41 +95,20 @@ public class SelectImagesActivity extends MasterActivity {
                 if (Image.ImageCounter >= Image.MAX_IMAGES)
                     showMessageInToast(getString(R.string.toastMaxImages));
 
-                else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                        ContextCompat.checkSelfPermission(SelectImagesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+                        ContextCompat.checkSelfPermission(SelectImagesActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
 
                     ActivityCompat.requestPermissions(SelectImagesActivity.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_WRITE);
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                }/* else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(SelectImagesActivity.this,
                         Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(SelectImagesActivity.this,
                             new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERM);
 
-                } else {
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    // Ensure that there's a camera activity to handle the intent
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        // Create the File where the photo should go
-                        photoFile = null;
-                        try {
-                            photoFile = createImageFile();
-                        } catch (IOException ex) {
-                            // Error occurred while creating the File
-                        }
-                        // Continue only if the File was successfully created
-                        if (photoFile != null) {
-                            // N is for Nougat Api 24 Android 7
-                            if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT) {
-                                photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
-                                        + ".provider", photoFile);
-                            } else
-                                photoUri = Uri.fromFile(photoFile);
-
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
-                        }
-                    }
+                }*/ else {
+                    openCamera();
                 }
 
                 break;
@@ -145,6 +126,33 @@ public class SelectImagesActivity extends MasterActivity {
                 setResult(RESULT_CANCELED);
                 finish();
                 break;
+        }
+    }
+
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                // N is for Nougat Api 24 Android 7
+                if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT) {
+                    photoUri = FileProvider.getUriForFile(mContext, mContext.getPackageName()
+                            + ".provider", photoFile);
+                } else
+                    photoUri = Uri.fromFile(photoFile);
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+            }
         }
     }
 
@@ -167,13 +175,16 @@ public class SelectImagesActivity extends MasterActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION_READ) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED&&grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 adapter = new ImageAdapter(mContext, getAllShownImagesPath());
                 gridView.setAdapter(adapter);
             } else { // to avoid NullPointerException in case Done or camera button is clicked
                 adapter = new ImageAdapter(mContext, new ArrayList<Image>());
             }
         }
+        else if (requestCode==REQUEST_CAMERA_PERMISSION&&grantResults.length > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED&&grantResults[1] == PackageManager.PERMISSION_GRANTED)
+            openCamera();
+
     }
 
     private ArrayList<Image> getAllShownImagesPath() {

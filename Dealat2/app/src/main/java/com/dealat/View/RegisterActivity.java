@@ -33,6 +33,12 @@ public class RegisterActivity extends MasterActivity {
         setContentView(R.layout.activity_register);
         //  FacebookSdk.sdkInitialize(this);
         super.onCreate(savedInstanceState);
+
+        try{
+            findViewById(R.id.container_view).setBackground(getResources().getDrawable(R.drawable.background_blur));
+        }catch (OutOfMemoryError e){
+
+        }
     }
 
     @Override
