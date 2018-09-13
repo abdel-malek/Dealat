@@ -89,12 +89,16 @@ class Provider : BaseManager {
         Formatter.locale = Locale(identifier: "EN")
         
         if let final = Formatter.number(from: NumberStr), final != 0{
-            return String(describing: final)
+            var zeroCharacter = ""
+            if NumberStr.first == "0" || NumberStr.first == "٠"{
+                zeroCharacter = "0"
+            }
+            return zeroCharacter + String(describing: final)
         }else{
             return NumberStr
         }
     }
-    
+
     
     static func getAttribute(text : String, font : UIFont, color : UIColor) -> NSAttributedString{
         

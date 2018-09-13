@@ -162,6 +162,8 @@ class AdsListVC: BaseVC {
                 let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
                 im.contentMode = .scaleAspectFit
                 self.collectionView.backgroundView = im
+            }else{
+                self.collectionView.backgroundView = nil
             }
             self.collectionView.reloadData()
         }

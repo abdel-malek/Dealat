@@ -27,6 +27,11 @@ class TermsVC: BaseVC {
             self.hideLoading()
             
             self.textView.text = res.terms
+            
+//            DispatchQueue.main.async {
+//                self.textView.attributedText = res.terms.html2AttributedString
+//            }
+
         }
     }
 

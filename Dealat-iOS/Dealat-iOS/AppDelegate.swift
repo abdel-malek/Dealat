@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = Theme.Color.White
         UINavigationBar.appearance().titleTextAttributes = [
             NSAttributedStringKey.foregroundColor : Theme.Color.White,
-            NSAttributedStringKey.font : Theme.Font.CenturyGothic
+            NSAttributedStringKey.font : Theme.Font.CenturyGothic.withSize(19)
         ]
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         

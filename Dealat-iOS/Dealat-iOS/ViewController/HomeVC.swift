@@ -95,23 +95,49 @@ class HomeVC: BaseVC {
     }
     
     override func getRefreshing() {
-        
-        Communication.shared.get_all { (categories,commercials) in
+        Communication.shared.get_all { (response,categories,commercials) in
             self.hideLoading()
-            self.cats = categories
-            self.tableView.reloadData()
             
-            self.commericals = commercials
-            if commercials.isEmpty{
-                let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
-                im.contentMode = .scaleAspectFit
-                self.collectionView.backgroundView = im
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    self.cats = categories
+                    self.tableView.reloadData()
+                    
+                    self.commericals = commercials
+                    if commercials.isEmpty{
+                        let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
+                        im.contentMode = .scaleAspectFit
+                        self.collectionView.backgroundView = im
+                    }else{
+                        self.collectionView.backgroundView = nil
+                    }
+                    self.collectionView.reloadData()
+                    
+                }else{
+                    self.showAlertError(title: "ConnectionError".localized, message : value.message)
+                }
+                
+            case .failure(let error):
+                self.showAlertError(title: "ConnectionError".localized, message : error.localizedDescription)
             }
-            self.collectionView.reloadData()
-
         }
-        
     }
+    
+    func showAlertError( title : String, message : String){
+        
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertActionStyle.default, handler: { (ac) in
+            self.showLoading()
+            self.getRefreshing()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
     func refreshTopCommercials(){
         /*Communication.shared.get_commercial_ads(0) { (res) in

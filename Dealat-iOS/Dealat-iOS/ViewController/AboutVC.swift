@@ -9,6 +9,7 @@
 import UIKit
 import  SwiftyJSON
 import MessageUI
+import AttributedTextView
 
 class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
     
@@ -20,7 +21,7 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var linkedinBtn : UIButton!
     
     @IBOutlet weak var emailBtn : UIButton!
-    @IBOutlet weak var phoneLbl : UILabel!
+    @IBOutlet weak var phoneLbl : UITextView!
 
 //    @IBOutlet weak var phoneBtn : UIButton!
     
@@ -50,8 +51,6 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             
             self.aboutInfo = res
             
-            self.textView.attributedText = res.about_us.html2AttributedString
-            
             if let email = res.email, !email.isEmpty{
                 self.emailBtn.setTitle(email, for: .normal)
             }else{
@@ -59,6 +58,9 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             }
             
             self.phoneLbl.attributedText = res.phone.html2AttributedString
+            self.textView.attributedText = res.about_us.html2AttributedString
+//            self.textView.allowsEditingTextAttributes = true
+            
 
 //            if let phone = res.phone, !phone.isEmpty{
 //                self.phoneBtn.setTitle(phone, for: .normal)
@@ -68,6 +70,7 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             if res.facebook_link == nil || res.facebook_link.isEmpty{
                 self.facebookBtn.isHidden = true
             }
+            
             if res.instagram_link == nil || res.instagram_link.isEmpty{
                 self.instagramBtn.isHidden = true
             }

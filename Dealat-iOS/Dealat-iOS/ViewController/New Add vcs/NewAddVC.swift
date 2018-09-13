@@ -352,9 +352,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     @objc func myTextFieldDidChange(_ textField: UITextField) {
-        
-        if let amountString = textField.text?.currencyInputFormatting() {
-            textField.text = amountString
+        if let text = textField.text{
+            textField.text = Provider.getEnglishNumber(text.deleteDecimal()).currencyInputFormatting()
         }
     }
 
@@ -1057,7 +1056,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         
         if self.selectedCategory.tamplate_id.intValue != 8{
-            guard let price = self.tfPrice.text, !price.isEmpty, (Int(price) != nil) else {
+            guard let price = self.tfPrice.text, !price.isEmpty, (Int(price.deleteDecimal()) != nil) else {
                 self.validMessage(tf : tfPrice, message : "Please enter".localized +  "Price".localized)
                 return
             }

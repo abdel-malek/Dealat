@@ -34,11 +34,11 @@ class ScanQRCodeVC: BaseVC, AVCaptureMetadataOutputObjectsDelegate {
         pinRes.font = Theme.Font.Calibri.withSize(20)
         
         
-        if AppDelegate.isArabic(){
+        
+        if !AppDelegate.isArabic(){
         self.lbl.text = "1- Go to \(Communication.shared.baseImgsURL)index.php/qrcode_login on your computer and scan the QR code.\n2- Enter PIN that will be shown on your mobile."
         }else{
             self.lbl.text = "1- اذهب إلى الرابط\n\(Communication.shared.baseImgsURL)index.php/qrcode_login\nعلى جهاز الكمبيوتر الخاص بك واسمح الرمز الظاهر.\n2- أدخل الرقم الذي سيظهر على موبايلك."
-            
         }
         
         self.lbl.font = Theme.Font.Calibri.withSize(16)

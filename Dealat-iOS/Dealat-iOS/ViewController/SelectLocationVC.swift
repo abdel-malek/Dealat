@@ -83,5 +83,44 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
     }
     
     
+    override func RequestErrorNotificationRecived(_ notification: NSNotification) {
+        super.RequestErrorNotificationRecived(notification)
+        
+        var message = ""
+        
+        if let msg = notification.object as? String
+        {
+            message = msg
+        }
+        
+        self.showAlertError(title: "ConnectionError".localized, message : message)
+    }
+    
+    
+    override func connectionErrorNotificationReceived(_ notification: NSNotification) {
+        super.connectionErrorNotificationReceived(notification)
+        
+        var message = ""
+        if let msg = notification.object as? String{
+            message = msg
+        }
+        if let err = notification.object as? Error{
+            message  = err.localizedDescription
+        }
+
+        self.showAlertError(title: "ConnectionError".localized, message : message)
+    }
+    
+    func showAlertError( title : String, message : String){
+        
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertActionStyle.default, handler: { (ac) in
+            self.getData()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
 }

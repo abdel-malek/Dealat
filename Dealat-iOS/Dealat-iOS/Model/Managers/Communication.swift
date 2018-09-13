@@ -460,7 +460,7 @@ class Communication: BaseManager {
     
     
     
-    func get_all(_ callback : @escaping ( _ categories : [Cat],_ commercials : [Commercial]) -> Void){
+    func get_all(_ callback : @escaping ( _ response : DataResponse<CustomResponse> ,_ categories : [Cat],_ commercials : [Commercial]) -> Void){
         let url = URL(string: baseURL + get_allURL)!
         print(url.absoluteString)
         
@@ -492,14 +492,16 @@ class Communication: BaseManager {
 //                    Provider.shared.currency_en = value.currency_en
 //                    Provider.shared.currency_ar = value.currency_ar
 
-                    callback(resFinal, commercials)
+                    callback(response,resFinal, commercials)
                     
                 }else{
-                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                    callback(response,[Cat](), [Commercial]())
+//                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                 }
                 break
             case .failure(let error):
-                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                callback(response,[Cat](), [Commercial]())
+//                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
                 break
             }
         }
