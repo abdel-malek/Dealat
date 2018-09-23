@@ -30,7 +30,7 @@ public class TermsActivity extends MasterActivity {
             @Override
             public void OnSuccess(About result) {
                 HideProgressDialog();
-                ((TextView)findViewById(R.id.textView)).setText(result.getTerms());
+                ((TextView)findViewById(R.id.textView)).setText(htmlContent(result.getTerms()));
             }
         });
     }

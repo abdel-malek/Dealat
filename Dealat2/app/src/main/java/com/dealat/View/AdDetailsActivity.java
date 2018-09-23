@@ -175,7 +175,8 @@ public class AdDetailsActivity extends MasterActivity {
                     textViewPublishDate.setText(getString(R.string.published) + " " + formattedDate(result.getPublishDate()));
 
                 textViewPrice.setText(formattedNumber(result.getPrice()) + " " + getString(R.string.sp));
-                textViewViews.setText(formattedNumber(result.getViews()) + " " + getString(R.string.view));
+                if (result.getViews() != null)
+                    textViewViews.setText(formattedNumber(result.getViews()) + " " + getString(R.string.view));
                 textViewCity.setText(result.getCityName());
 
                 if (result.getLocationId() != null) {

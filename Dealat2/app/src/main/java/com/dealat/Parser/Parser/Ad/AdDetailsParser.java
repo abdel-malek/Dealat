@@ -208,7 +208,7 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         ad.setSellerName(jsonObject.getString("seller_name"));
         ad.setSellerPhone(jsonObject.getString("seller_phone"));
         ad.setCategoryId(jsonObject.getString("category_id"));
-        ad.setCategoryName(jsonObject.getString("parent_category_name")+" -- "+jsonObject.getString("category_name"));
+        ad.setCategoryName(jsonObject.getString("parent_category_name") + " -- " + jsonObject.getString("category_name"));
         ad.setTemplate(jsonObject.getInt("tamplate_id"));
         ad.setCityId(jsonObject.getString("city_id"));
         ad.setCityName(jsonObject.getString("city_name"));
@@ -241,7 +241,8 @@ public class AdDetailsParser implements TradinosParser<Ad> {
             ad.setAdminSeller(true);
 
         ad.setPrice(jsonObject.getDouble("price"));
-        ad.setViews(jsonObject.getInt("views_num"));
+        if (jsonObject.has("views_num"))
+            ad.setViews(jsonObject.getInt("views_num"));
         ad.setStatus(jsonObject.getInt("status"));
 
         ad.setShowPeriod(jsonObject.getInt("show_period"));

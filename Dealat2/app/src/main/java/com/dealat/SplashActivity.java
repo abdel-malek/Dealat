@@ -39,7 +39,7 @@ public class SplashActivity extends MasterActivity {
         try{
             Picasso.with(getmContext())
                     .load(R.drawable.subed_background)
-                    .into((ImageView) findViewById(R.id.backGround_image));
+                    .fit().into((ImageView) findViewById(R.id.backGround_image));
         }catch (OutOfMemoryError e){
 
         }

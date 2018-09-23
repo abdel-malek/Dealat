@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -455,8 +456,10 @@ public class SubmitAdActivity extends MasterActivity {
                                 HideProgressDialog();
 
                                 ConfirmDialog dialog = new ConfirmDialog(mContext);
-                                dialog.show();
-
+                                try {
+                                    dialog.show();
+                                } catch (WindowManager.BadTokenException e) {
+                                }
                                 dialog.getButtonOk().setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

@@ -129,6 +129,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.dealat_logo_white_background)
                 .setContentTitle(title)
                 .setContentText(txt)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(txt))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -119,7 +120,10 @@ public class HomeActivity extends DrawerActivity {
     private void showConnectionErrorDialog(String message) {
         CustomAlertDialog dialog = new CustomAlertDialog(mContext, message);
         dialog.setOneButtonDialog(true);
-        dialog.show();
+
+        try {
+            dialog.show();
+        }catch (WindowManager.BadTokenException e){}
 
         dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
             @Override
