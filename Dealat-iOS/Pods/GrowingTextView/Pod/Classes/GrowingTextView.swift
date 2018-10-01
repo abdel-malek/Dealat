@@ -13,7 +13,7 @@ import UIKit
     @objc optional func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat)
 }
 
-@IBDesignable @objc
+@objc
 open class GrowingTextView: UITextView {
     override open var text: String! {
         didSet { setNeedsDisplay() }

@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import WebKit
 
-class TermsVC: BaseVC {
+class TermsVC: BaseVC,WKNavigationDelegate {
 
     @IBOutlet weak var textView : UITextView!
+    var webView : WKWebView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "termsMessage3".localized
+//        self.textView.isHidden = true
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(self.dis))
         
@@ -26,12 +30,33 @@ class TermsVC: BaseVC {
         Communication.shared.get_about_info { (res) in
             self.hideLoading()
             
-            self.textView.text = res.terms
-            
-//            DispatchQueue.main.async {
-//                self.textView.attributedText = res.terms.html2AttributedString
-//            }
+                do{
+                    let d = res.terms.data(using: String.Encoding.utf8)!
+                    let y = try NSAttributedString.init(data: d, options: [.documentType: NSAttributedString.DocumentType.html,.characterEncoding : String.Encoding.utf8.rawValue], documentAttributes: nil)
+                    
+                    let dir = AppDelegate.isArabic() ? [NSWritingDirection.rightToLeft.rawValue] : [NSWritingDirection.leftToRight.rawValue]
+                    let att = NSMutableAttributedString.init(attributedString: y)
+                    att.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri, NSAttributedStringKey.writingDirection : dir], range: NSRange(location: 0, length: att.length))
+                    
+                    self.textView.attributedText = att
+                }catch let err{
+                    print("ERR : \(err.localizedDescription)")
+                }
 
+            
+//            let htmlString = "<html>\(res.terms)</html>"
+//            var v = (self.navigationController?.navigationBar.frame.height)!
+//            v += UIApplication.shared.statusBarFrame.size.height
+//            self.webView = WKWebView(frame: self.view.bounds)
+//            self.webView.frame.size.height -= v
+//            self.webView?.sizeToFit()
+//            self.webView?.backgroundColor = .clear
+//            self.webView.isOpaque = false
+//            self.webView?.scrollView.bouncesZoom = false
+//            self.webView?.scrollView.delegate = self
+//            self.webView?.navigationDelegate = self
+//            self.webView.loadHTMLString(htmlString, baseURL: nil)
+//            self.view.addSubview(self.webView!)
         }
     }
 

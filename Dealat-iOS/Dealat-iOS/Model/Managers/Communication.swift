@@ -23,7 +23,7 @@ class Communication: BaseManager {
     let encodingQuery = URLEncoding(destination: .queryString)
     let encodingBody = URLEncoding(destination: .httpBody)
     
-//        var baseURL = "http://192.168.9.96/Dealat/index.php/api"
+//        var baseURL = "http://192.168.0.125/Dealat/index.php/api"
 //        var baseImgsURL = "http://192.168.9.96/Dealat/"
     
 //    let baseURL = "http://dealat.tradinos.com/index.php/api"
@@ -1389,6 +1389,10 @@ class Communication: BaseManager {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
             headers["version"] = version
         }
+        if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+            headers["build"] = version
+        }
+
 
 
         

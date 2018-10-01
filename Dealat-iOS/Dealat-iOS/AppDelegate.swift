@@ -321,7 +321,6 @@ extension AppDelegate : MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         print("new didReceive 3")
 
-        
         print("applicationReceivedRemoteMessage10")
         print(remoteMessage.appData)
     }

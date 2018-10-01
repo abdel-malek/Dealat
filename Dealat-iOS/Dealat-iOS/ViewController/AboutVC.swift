@@ -19,6 +19,8 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
     @IBOutlet weak var twitterBtn : UIButton!
     @IBOutlet weak var youtubeBtn : UIButton!
     @IBOutlet weak var linkedinBtn : UIButton!
+    @IBOutlet weak var versionLbl : UILabel!
+
     
     @IBOutlet weak var emailBtn : UIButton!
     @IBOutlet weak var phoneLbl : UITextView!
@@ -41,6 +43,13 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
         self.getData()
         self.title = "Help".localized
         
+        
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionLbl.text = version
+        }else{
+            versionLbl.text = nil
+        }
+
         Provider.setScreenName("AboutActivity")
     }
     
@@ -57,8 +66,16 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
                 self.emailBtn.isHidden = true
             }
             
-            self.phoneLbl.attributedText = res.phone.html2AttributedString
-            self.textView.attributedText = res.about_us.html2AttributedString
+            let attPhone = NSMutableAttributedString.init(attributedString: res.phone.html2AttributedString!)
+            attPhone.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attPhone.length))
+            self.phoneLbl.attributedText = attPhone
+
+
+            let attAbout = NSMutableAttributedString.init(attributedString: res.about_us.html2AttributedString!)
+            attAbout.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attAbout.length))
+            self.textView.attributedText = attAbout
+            
+            
 //            self.textView.allowsEditingTextAttributes = true
             
 

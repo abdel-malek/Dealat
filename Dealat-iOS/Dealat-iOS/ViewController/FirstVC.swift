@@ -65,7 +65,6 @@ class FirstVC: UIViewController {
                 self.showAlertError(title: "ConnectionError".localized, message : error.localizedDescription)
             }
         }
-        
     }
     
     
@@ -87,7 +86,7 @@ class FirstVC: UIViewController {
         Communication.shared.baseURL = "\(urlString)/" + "index.php/api"
         
         //TODO IMPORTNANT
-//        Communication.shared.baseURL = "http://192.168.9.96/Dealat/index.php/api"
+//        Communication.shared.baseURL = "http://192.168.0.125/Dealat/index.php/api"
 //        Communication.shared.baseImgsURL = "http://192.168.9.96/Dealat/"
 
         

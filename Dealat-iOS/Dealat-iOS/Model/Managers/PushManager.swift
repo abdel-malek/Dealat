@@ -13,7 +13,7 @@ import SwiftyJSON
 
 class PushManager{
     
-    static let LN_KEY = "mobifone"
+    static let LN_KEY = "Dealat"
     
     static var LocalSchedules = [String]()
     
