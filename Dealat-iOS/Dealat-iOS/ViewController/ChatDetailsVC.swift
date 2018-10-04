@@ -24,6 +24,7 @@ class ChatDetailsVC: BaseVC {
     
     var chat = Chat()
     var messages = [Message]()
+    var ad : AD!
     
     var messages2 = [(Date,[Message])]()
     
@@ -58,8 +59,15 @@ class ChatDetailsVC: BaseVC {
     
     @objc func goToDetails(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
-        vc.tamplateId = self.chat.template_id.intValue
-        vc.ad = AD.init(JSON : ["ad_id" : self.chat.ad_id.intValue,"tamplate_id" : self.chat.template_id.intValue, "category_id" : 0])
+        var tamplateId = 1
+        if self.chat.template_id != nil{
+            tamplateId = self.chat.template_id.intValue
+        }else if self.ad != nil{
+            tamplateId = self.ad.tamplate_id.intValue
+        }
+        
+        vc.tamplateId = tamplateId
+        vc.ad = AD.init(JSON : ["ad_id" : self.chat.ad_id.intValue,"tamplate_id" : tamplateId, "category_id" : 0])
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

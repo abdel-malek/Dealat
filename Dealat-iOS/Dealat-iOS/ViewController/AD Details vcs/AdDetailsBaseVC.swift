@@ -161,6 +161,7 @@ class AdDetailsBaseVC: UIViewController {
             chat.seller_id = self.ad.seller_id
             chat.seller_name = self.ad.seller_name
             vc.chat = chat
+            vc.ad = self.ad
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             self.showErrorMessage(text: "need_register".localized)
