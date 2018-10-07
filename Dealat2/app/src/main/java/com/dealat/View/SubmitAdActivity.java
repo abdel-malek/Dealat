@@ -56,6 +56,7 @@ import com.dealat.R;
 import com.dealat.Utils.ConfirmDialog;
 import com.dealat.Utils.CustomAlertDialog;
 import com.dealat.Utils.ScalableImageView;
+import com.vdurmont.emoji.EmojiParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -851,7 +852,7 @@ public class SubmitAdActivity extends MasterActivity {
                 parameters.put("is_featured", "1");
 
             parameters.put("title", stringInput(editTitle));
-            parameters.put("description", stringInput(editDesc));
+            parameters.put("description", EmojiParser.parseToAliases(editDesc.getText().toString()));
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());

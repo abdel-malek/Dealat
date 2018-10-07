@@ -44,6 +44,7 @@ import com.dealat.Model.Chat;
 import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.Utils.CustomAlertDialog;
+import com.vdurmont.emoji.EmojiParser;
 
 /**
  * Created by developer on 01.03.18.
@@ -167,8 +168,8 @@ public class AdDetailsActivity extends MasterActivity {
 
                 // filling data
                 textViewId.setText(result.getFormattedId());
-                textViewTitle.setText(result.getTitle());
-                textViewTitle2.setText(result.getTitle());
+                textViewTitle.setText(EmojiParser.parseToUnicode(result.getTitle()));
+                textViewTitle2.setText(EmojiParser.parseToUnicode(result.getTitle()));
                 ((TextView) findViewById(R.id.textViewCat)).setText(/*currentCategory.getFullName()*/result.getCategoryName());
 
                 if (result.getPublishDate() != null)  // unaccepted ads their publish dates are null
@@ -190,7 +191,7 @@ public class AdDetailsActivity extends MasterActivity {
                 else
                     textNegotiable.setText(getString(R.string.no));
 
-                textViewDesc.setText(result.getDescription());
+                textViewDesc.setText(EmojiParser.parseToUnicode(result.getDescription()));
 
                 HideProgressDialog();
                 fillTemplate(result);

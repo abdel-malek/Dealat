@@ -2,6 +2,7 @@ package com.dealat.View;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public class TermsActivity extends MasterActivity {
             @Override
             public void OnSuccess(About result) {
                 HideProgressDialog();
-                ((TextView)findViewById(R.id.textView)).setText(htmlContent(result.getTerms()));
+                ((TextView)findViewById(R.id.textView)).setText(/*htmlContent(*/Html.fromHtml(result.getTerms())/*)*/);
             }
         });
     }

@@ -64,6 +64,7 @@ import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.Utils.CustomAlertDialog;
 import com.dealat.Utils.ScalableImageView;
+import com.vdurmont.emoji.EmojiParser;
 
 import org.json.JSONArray;
 
@@ -654,8 +655,8 @@ public class EditAdActivity extends MasterActivity {
 
             parameters.put("ad_id", currentAd.getId());
 
-            parameters.put("title", stringInput(editTitle));
-            parameters.put("description", stringInput(editDesc));
+            parameters.put("title", EmojiParser.parseToAliases(editTitle.getText().toString()));
+            parameters.put("description", EmojiParser.parseToAliases(editDesc.getText().toString()));
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
 
@@ -901,7 +902,7 @@ public class EditAdActivity extends MasterActivity {
     }
 
     private void fillTemplate(TemplatesData data) {
-        editTitle.setText(currentAd.getTitle());
+        editTitle.setText(EmojiParser.parseToUnicode(currentAd.getTitle()));
         editPrice.setText(formattedNumber(currentAd.getPrice()));
 
         if (currentAd.isNegotiable())
@@ -919,7 +920,7 @@ public class EditAdActivity extends MasterActivity {
         else
             checkPhone.setChecked(false);
 
-        editDesc.setText(currentAd.getDescription());
+        editDesc.setText(EmojiParser.parseToUnicode(currentAd.getDescription()));
 
         int loc = getItemIndex(new ArrayList<Item>(data.getCities()), currentAd.getCityId());
         spinnerCity.setSelection(loc);

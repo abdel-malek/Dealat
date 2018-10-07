@@ -19,6 +19,7 @@ import com.dealat.R;
 import com.dealat.View.AdDetailsActivity;
 import com.dealat.View.MasterActivity;
 import com.squareup.picasso.Picasso;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
                     holder.textViewPrice.setText(((MasterActivity) context).formattedNumber(item.getPrice()) +
                             " " + context.getString(R.string.sp));
 
-                holder.textViewTitle.setText(item.getTitle());
+                holder.textViewTitle.setText(EmojiParser.parseToUnicode(item.getTitle()));
 
                 if (item.getPublishDate() == null)
                     holder.textViewDate.setText("");
