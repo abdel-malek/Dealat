@@ -464,8 +464,10 @@ summary:focus {
 		.price {
 			position: absolute;
 			font-weight: bold;
-			height: 70px;
-			width: 70px;
+//			height: 70px;
+//			width: 70px;
+			height: 75px;
+			width: 75px;
 			border-radius: 50%;
 			background-color: $main;
 			text-align: center;
@@ -476,7 +478,8 @@ summary:focus {
 
 		}
 		.price-val {
-			margin-top: 35%
+//			margin-top: 35%
+			margin-top: 27px
 		}
 		.overlay {
 			position: absolute;
@@ -1375,8 +1378,8 @@ select option.placeholder {
 			.price {
 				position: absolute;
 				font-weight: bold;
-				height: 80px;
-				width: 80px;
+				height: 75px;
+				width: 75px;
 				border-radius: 50%;
 				background-color: $main;
 				text-align: center;
@@ -1400,7 +1403,8 @@ select option.placeholder {
 				color: #888
 			}
 			.price-val {
-				margin-top: 38%
+//				margin-top: 38%
+				margin-top: 27px
 			} //			.views-lbl,
 			//			.likes-lbl {
 			//				padding-right: 20px

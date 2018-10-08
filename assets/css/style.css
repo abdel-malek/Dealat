@@ -383,8 +383,8 @@ summary:focus {
   .category-page .products .card .price {
     position: absolute;
     font-weight: bold;
-    height: 70px;
-    width: 70px;
+    height: 75px;
+    width: 75px;
     border-radius: 50%;
     background-color: #c30a30;
     text-align: center;
@@ -395,7 +395,7 @@ summary:focus {
   .search-page .products .card .price-val,
   .profile-page .products .card .price-val, .home-page .products .card .price-val,
   .category-page .products .card .price-val {
-    margin-top: 35%; }
+    margin-top: 27px; }
   .search-page .products .card .overlay,
   .profile-page .products .card .overlay, .home-page .products .card .overlay,
   .category-page .products .card .overlay {
@@ -1124,8 +1124,8 @@ select option.placeholder {
       #card-modal .card .card-body .price {
         position: absolute;
         font-weight: bold;
-        height: 80px;
-        width: 80px;
+        height: 75px;
+        width: 75px;
         border-radius: 50%;
         background-color: #c30a30;
         text-align: center;
@@ -1143,7 +1143,7 @@ select option.placeholder {
         font-family: "gothic", sans-serif;
         color: #888; }
       #card-modal .card .card-body .price-val {
-        margin-top: 38%; }
+        margin-top: 27px; }
       #card-modal .card .card-body .fav {
         position: absolute;
         text-align: center;
