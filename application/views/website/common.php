@@ -194,8 +194,8 @@
 
 				<div class="row">
 					<div class="col-12 mb-4 text-center">
-						<div class="card-title">{{ad.title}}</div>
-						<div class="details">{{ad.description}}</div>
+						<div class="card-title">{{{ad.title}}}</div>
+						<div class="details">{{{ad.description}}}</div>
 					</div>
 
 					<div class="col-sm-4 info-col mb-1 border-middle">

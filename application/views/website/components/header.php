@@ -54,7 +54,10 @@
 
 	<!--  animate  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/animate.css'); ?>" />
-
+	
+	<!--  emoji  -->
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/emoji.css'); ?>" />
+	
 	<!--  main css style file  -->
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>" />
 	<?php if($this->session->userdata('language') == "ar"){ ?>

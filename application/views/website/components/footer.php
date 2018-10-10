@@ -161,6 +161,8 @@
 <script>
 	new WOW().init();
 </script> 
+<!-- emoji -->
+<script src="<?php echo base_url('assets/js/emoji.min.js'); ?>"></script>
 <!--  fontawesome  -->
 <script src="<?php echo base_url('assets/js/fontawesome-all.min.js'); ?>" defer></script>
 

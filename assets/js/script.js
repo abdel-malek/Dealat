@@ -2,6 +2,25 @@
 /*global $, alert,console,lang, Mustache, base_url, logged, user_id, hiddenFields*/
 
 $(function () {
+	var emoji = new EmojiConvertor();
+	// force text output mode
+	//	emoji.text_mode = true;
+
+	// show the short-name as a `title` attribute for css/img emoji
+	emoji.include_title = true;
+
+	// change the path to your emoji images (requires trailing slash)
+	// you can grab the images from the emoji-data link here:
+	// https://github.com/iamcal/js-emoji/tree/master/build
+	emoji.img_sets.apple.path = site_url + '/assets/images/emojis/facebook-64/';
+	emoji.img_sets.apple.sheet = site_url + '/assets/images/emojis/facebook-sheet-64.png';
+	// Configure this library to use the sheets defined in `img_sets` (see above)
+	emoji.use_sheet = true;
+	
+	$(".card-title").each(function(){
+		$(this).html(emoji.replace_colons($(this).html()));
+	});
+	
 	//css
 	$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
 
@@ -832,6 +851,10 @@ $(function () {
 					data.data.salary = new Intl.NumberFormat().format(data.data.salary);
 				}
 
+				//to convert emoji if existed
+				data.data.title = emoji.replace_colons(data.data.title);
+				data.data.description = emoji.replace_colons(data.data.description);
+
 				adData = {
 					ad: data.data,
 					date: data.data.publish_date.split(' ')[0],
@@ -862,14 +885,14 @@ $(function () {
 					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
 				}
 
-//				console.log(data.data);
+				//				console.log(data.data);
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
 					if (data.data.is_admin === 1) {
 						$("#card-modal .chat").addClass("d-none");
-					} 
+					}
 				}
 
 				if (data.data.is_admin === 1) {
@@ -934,6 +957,7 @@ $(function () {
 				setTimeout(function () {
 					$(".card-img-slider").slick("refresh");
 				}, 200);
+
 			}
 		});
 	}
