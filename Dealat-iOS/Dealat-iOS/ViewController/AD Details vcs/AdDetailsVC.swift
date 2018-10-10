@@ -204,8 +204,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     }
     
     func refreshData(){
-        self.title = ad.title
-        print("TTTT : \(ad.title)")
+        self.title = ad.title.emojiUnescapedString
+        
+        print("TTTT : \(ad.title.emojiUnescapedString)")
         Provider.sd_setImage(self.img, urlString: ad.main_image)
         
         if let views_num = ad.views_num{
@@ -257,7 +258,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         number += self.ad.ad_id.stringValue
         self.numberLbl.text = number
         
-        self.nameLbl.text = ad.title
+        self.nameLbl.text = ad.title.emojiUnescapedString
         
         if ad.price != nil{
             if  ad.price.doubleValue == 0{
@@ -299,7 +300,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.negotiableLbl.text = ""
         }
         
-        self.desLbl.text = ad.description
+        self.desLbl.text = ad.description.emojiUnescapedString
         
         //gallery ad images
         collectionView.delegate = self
@@ -562,10 +563,10 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             for i in self.ad.images{
                 if let urlString = i.image, let url = URL.init(string: Communication.shared.baseImgsURL + urlString){
                     if !i.isVideo{
-                        let im = LightboxImage.init(imageURL: url, text: self.ad.title, videoURL: nil)
+                        let im = LightboxImage.init(imageURL: url, text: self.ad.title.emojiUnescapedString, videoURL: nil)
                         images.append(im)
                     }else{
-                        let im = LightboxImage.init(image: #imageLiteral(resourceName: "ic_play_circle_outline"), text: self.ad.title, videoURL: url)
+                        let im = LightboxImage.init(image: #imageLiteral(resourceName: "ic_play_circle_outline"), text: self.ad.title.emojiUnescapedString, videoURL: url)
                         images.append(im)
                     }
                 }

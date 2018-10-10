@@ -115,7 +115,7 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
         {
             loadItems()
         }
-
+        
             return cell
     }
     

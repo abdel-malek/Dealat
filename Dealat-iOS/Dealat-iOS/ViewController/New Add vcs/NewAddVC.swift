@@ -694,7 +694,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
                 self.checkboxPhone.isChecked = self.ad.ad_visible_phone.Boolean
             }
             
-            self.tfTitle.text = ad.title
+            self.tfTitle.text = ad.title.emojiUnescapedString
+            
             if let categoty_id = self.ad.category_id{
                 if let cat = Provider.shared.catsFull.first(where: {$0.category_id.intValue == categoty_id.intValue}){
                     self.selectedCategory = cat
@@ -727,7 +728,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             self.tfPrice.text = ad.price != nil ? ad.price.stringValue.currencyInputFormatting() : nil
             self.negotiableSwitch.setOn(ad.is_negotiable.Boolean, animated: false)
             self.featuredSwitch.setOn(ad.is_featured.Boolean, animated: false)
-            self.tfDescription.text = ad.description
+            self.tfDescription.text = ad.description.emojiUnescapedString
             
             print("COUNT IMAGES : \(self.ad.images.count)")
             
@@ -1277,7 +1278,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             let alert  = UIAlertController.init(title: "Alert!".localized, message: "AdDone2".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
                 self.showLoading()
-                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
+                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
                     self.hideLoading()
                     self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
                 }
@@ -1287,7 +1288,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
         }else{
             self.showLoading()
-            Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional : params) { (res) in
+            Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional : params) { (res) in
                 self.hideLoading()
                 
                 self.navigationController?.popViewController(animated: true)

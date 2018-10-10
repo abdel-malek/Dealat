@@ -29,6 +29,7 @@ class ChatDetailsVC: BaseVC {
     var messages2 = [(Date,[Message])]()
     
     static var messagesRT = [(TimeInterval,Bool)]()
+    static var isSending : Bool = false
 
 
     override func viewDidLoad() {
@@ -59,15 +60,20 @@ class ChatDetailsVC: BaseVC {
     
     @objc func goToDetails(){
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
+        
         var tamplateId = 1
+        var adTitle = ""
+        
         if self.chat.template_id != nil{
             tamplateId = self.chat.template_id.intValue
+            adTitle = self.chat.ad_title ?? ""
         }else if self.ad != nil{
             tamplateId = self.ad.tamplate_id.intValue
+            adTitle = self.ad.title
         }
         
         vc.tamplateId = tamplateId
-        vc.ad = AD.init(JSON : ["ad_id" : self.chat.ad_id.intValue,"tamplate_id" : tamplateId, "category_id" : 0])
+        vc.ad = AD.init(JSON : ["title" : adTitle,"ad_id" : self.chat.ad_id.intValue,"tamplate_id" : tamplateId, "category_id" : 0])
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -218,6 +224,7 @@ class ChatDetailsVC: BaseVC {
             self.hideLoading()
             self.textView.text = nil
 
+            self.tableView.alpha = 0
             self.messages = res
             self.fixMessages()
         }
@@ -260,7 +267,13 @@ class ChatDetailsVC: BaseVC {
         
         
         if let m = messages3.last{
-            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+            DispatchQueue.main.async {
+                let indexPath = IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1)
+                self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: false)
+                self.tableView.alpha = 1
+            }
+        }else{
+            self.tableView.alpha = 1
         }
     }
     
@@ -307,6 +320,48 @@ class ChatDetailsVC: BaseVC {
         }
     }
     
+    func fixMessages2(){
+        
+        var chat_session_id : Int!
+        if self.chat.chat_session_id != nil {
+            chat_session_id = self.chat.chat_session_id.intValue
+        }
+        
+        print("-----")
+        for mm in 0..<self.messages.count{
+            
+
+            if self.messages[mm].isNew,!ChatDetailsVC.isSending{
+                ChatDetailsVC.isSending = true
+                print("--\(self.messages[mm].text!)---")
+
+                Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: self.messages[mm].text.emojiEscapedString, callback: { (res) in
+                    
+
+                    self.messages[mm].isNew = false
+                    self.messages[mm].created_at = res.created_at
+                    
+                    for s in 0..<self.messages2.count{
+                        for i in 0..<self.messages2[s].1.count{
+                            
+                            if self.messages2[s].1[i].timeStamp == self.messages[mm].timeStamp{
+                                self.messages2[s].1[i].isNew = false
+                                self.messages2[s].1[i].created_at = res.created_at
+                                self.tableView.reloadRows(at: [IndexPath.init(row: i, section: s)], with: UITableViewRowAnimation.fade)
+                            }
+                        }
+                    }
+                    
+                    ChatDetailsVC.isSending = false
+                    
+                    self.fixMessages()
+                    self.fixMessages2()
+                })
+                break
+            }
+        }
+            print("-----")
+    }
     
     @IBAction func sendAction(){
 //        self.textView.resignFirstResponder()
@@ -328,11 +383,12 @@ class ChatDetailsVC: BaseVC {
             print("Date.init().timeIntervalSinceNow : \(timeStamp)")
 
             let msg = Message(JSON: ["text" : message.emojiEscapedString,"to_seller" : JSON(true),"chat_session_id" : chat_session_id,"isNew" : true,"timeStamp" : timeStamp, "created_at" : Date().toString(format: DateFormatType.custom("yyyy-MM-dd HH:mm:ss"))])
+            msg?.isNew = true
             
             self.messages.append(msg!)
             
             self.fixMessages()
-            
+            self.fixMessages2()
             
 //            var message_id : JSON!
 //            var text : String!
@@ -435,7 +491,9 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
         print("textViewDidBeginEditing")
         
         if let m = self.messages2.last{
-            self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.top, animated: false)
+            }
         }
     }
     

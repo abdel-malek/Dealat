@@ -1016,7 +1016,7 @@ class Communication: BaseManager {
     }
     
     
-    func send_msg( ad_id : Int,chat_session_id : Int!, msg : String, callback : @escaping (Bool) -> Void){
+    func send_msg( ad_id : Int,chat_session_id : Int!, msg : String, callback : @escaping (Message) -> Void){
         let url = URL(string: baseURL + send_msgURL)!
         
         var params : [String : Any] = ["ad_id" : ad_id,"msg" : msg]
@@ -1034,8 +1034,14 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
+                    if let i = value.data.dictionaryObject{
+                        if let a = Message(JSON: i){
+                            callback(a)
+                        }
+                    }
+
                     
-                    callback(true)
+//                    callback(true)
                     
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)

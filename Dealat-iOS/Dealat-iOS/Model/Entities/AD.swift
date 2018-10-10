@@ -26,8 +26,8 @@ class AD : BaseEntity {
     var main_image : String!
     var main_video : String!
     var is_negotiable : JSON!
-    var title : String!
-    var description : String!
+    var title : String! = ""
+    var description : String! = ""
     var created_at : String!
     var modified_at: String!
     var category_name : String!

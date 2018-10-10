@@ -44,7 +44,10 @@ class MessageCell: BaseCell {
             if let m = message{
                 
                 if m.isNew{
-                    if let i = ChatDetailsVC.messagesRT.first(where: {$0.0 == m.timeStamp}){
+                    self.vv1.backgroundColor = Theme.Color.red.withAlphaComponent(0.5)
+                    self.vv2.backgroundColor = Theme.Color.White.withAlphaComponent(0.5)
+
+                   /* if let i = ChatDetailsVC.messagesRT.first(where: {$0.0 == m.timeStamp}){
                         if i.1{
                             self.vv1.backgroundColor = Theme.Color.red
                             self.vv2.backgroundColor = Theme.Color.White
@@ -55,7 +58,7 @@ class MessageCell: BaseCell {
                     }else{
                         ChatDetailsVC.messagesRT.append((m.timeStamp,false))
                         self.sendMaessage()
-                    }
+                    }*/
                 }
                 else{
                     self.vv1.backgroundColor = Theme.Color.red

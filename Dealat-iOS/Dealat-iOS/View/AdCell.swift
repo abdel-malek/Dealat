@@ -37,7 +37,7 @@ class AdCell : UICollectionViewCell{
             }
                 
             Provider.sd_setImage(self.img, urlString: ad.main_image)
-            self.nameLbl.text = ad.title
+            self.nameLbl.text = ad.title.emojiUnescapedString
             
             if ad.price.doubleValue == 0{
                 self.priceLbl.text =  "Free".localized

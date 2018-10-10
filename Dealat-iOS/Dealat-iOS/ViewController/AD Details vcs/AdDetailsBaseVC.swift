@@ -37,7 +37,7 @@ class AdDetailsBaseVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = self.ad.title
+        self.title = self.ad.title.emojiUnescapedString
         configureNavigationBar()
         
         self.sallerVVHeight.constant = 0
