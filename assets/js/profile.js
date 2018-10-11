@@ -1100,7 +1100,6 @@ $(function () {
 		});
 
 		$("#confirm-edit-modal .submit").click(function () {
-			console.log(editAdData);
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',
@@ -1139,7 +1138,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_chat_sessions',
 			dataType: "json",
 			data: $(this).serialize()
-		}).done(function (data) { console.log(data);
+		}).done(function (data) { 
 			if (data.status === false) {} else {
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
