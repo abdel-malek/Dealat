@@ -1,8 +1,10 @@
  var comm_ads_table;
  var cat_id = 0;
  var cat_name;
- var position_val = $('#comm_position_filter_others').val();
- var position_name; 
+ var position_val_other = $('#comm_position_filter_others').val();
+ var position_name_other; 
+ var city_val_other = $('#comm_city_filter_others').val();
+ var city_name_other;
  var current_comm_id; 
  var comm_image_path='';
  var comm_buttons = [];
@@ -97,22 +99,46 @@
    
    
     // filter by position
-	$('#comm_position_filter_others').change(function(event) {
-	    position_val = $("#comm_position_filter_others").val();
-	    if(position_val == 0){
-	    	comm_ads_table
-			 .search( '' )
-			 .columns().search( '' )
-			 .draw();
-	    }else{
-	        position_name = $(this).find("option:selected").text();
-	        if(cat_id != 0){
-	          comm_ads_table.search(cat_name+' '+position_name ).draw();	
-	        }else{
-	          comm_ads_table.search(position_name).draw();
-	        }
-	    }
-	});
+	// $('#comm_position_filter_others').change(function(event) {
+	    // position_val = $("#comm_position_filter_others").val();
+	    // if(position_val == 0){
+	    	// comm_ads_table
+			 // .search( '' )
+			 // .columns().search( '' )
+			 // .draw();
+	    // }else{
+	        // position_name = $(this).find("option:selected").text();
+	        // if(cat_id != 0){
+	          // comm_ads_table.search(cat_name+' '+position_name ).draw();	
+	        // }else{
+	          // comm_ads_table.search(position_name).draw();
+	        // }
+	    // }
+	// });
+	
+	
+  $('#comm_position_filter_others').change(function(event) {
+    position_val_other =  $('#comm_position_filter_others').val();
+    position_name_other = $(this).find("option:selected").text();
+    check_other_filter_values();
+    comm_ads_table.search( position_name_other+' '+city_name_other ).draw();
+  });
+  
+  $('#comm_city_filter_other').change(function(event) {
+    city_val_other =  $('#comm_city_filter_other').val();
+    city_name_other = $(this).find("option:selected").text();
+    check_other_filter_values();
+    comm_ads_table.search( position_name_other+' '+city_name_other ).draw();
+  }); 
+   
+  function check_other_filter_values() {
+      if(  position_val_other== 0){
+      	 position_name_other = '';
+      }
+      if(city_val_other == 0){
+      	 city_name_other = '';
+      }
+   }
 	
 	// show the write ration note
    $('#comm_position').change(function(event) {
@@ -239,6 +265,7 @@ function save_comm() {
   	 	position : $("#comm_position").val(),
   	    title : $('#comm_title').val(),
   	 	description :  $('#comm_description').val(),
+  	 	city_id : $('#comm_city').val()
   	 };
   	 if(comm_image_path != ''){
   	 	data['image'] =comm_image_path; 
@@ -347,13 +374,15 @@ function delete_comm() {
 	     });
 }
 
-function change_status (id , category , position , to_active) {
+function change_status (id , category , position ,city, to_active ) {
     data = {
     	'comm_id' : id, 
     	'category_id' :category , 
     	'position' :position,
-    	'to_active' : to_active 
+    	'to_active' : to_active,
+    	'city_id' : city
     };
+   // console.log(city);
      var url = base_url + '/api/commercial_items_control/change_status/format/json';
      $.ajax({
 	        url: url,

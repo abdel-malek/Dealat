@@ -53,6 +53,20 @@
 	      	         <label style="display: none" class='image_ration_note'  id="label3"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
 	               </div> 
 	               
+	               
+	               <div class="form-group">
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>
+	      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
+	      	               <select class="form-control select2_single" id="comm_city" tabindex="-1">
+      	               	        <?php $data = get_cities_array($this->session->userdata('language'));?>
+	                         	<?php if($data!= null): foreach ($data as $key => $value): ?>
+	                         		  <option value="<?php echo $value['city_id']; ?>"><?php echo $value['name'] ?></option>
+	                            <?php  endforeach; ?>
+	                            <?php endif; ?>  
+		                   </select>
+	      	         </div>
+	      	       </div>
+	               
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('upload_image') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">

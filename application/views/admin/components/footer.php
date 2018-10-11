@@ -109,6 +109,9 @@
 			theme_advanced_resizing : true,
 		});
 	</script>
+
+  <!-- emoji -->
+  <script src="<?php echo base_url('assets/js/emojione.min.js'); ?>"></script>
     
     <script>
        var lang_array=[];

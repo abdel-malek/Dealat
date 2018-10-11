@@ -14,8 +14,8 @@ class NotificationHelper {
 	const ADMIN_TO_USER = 4;
 	
 	// topics
-	const IOS_TOPIC = '/topics/all_ios';
-	const ANDROID_TOPIC = '/topics/all_android';
+	const IOS_TOPIC = '/topics/all_ios_ver1.0';
+	const ANDROID_TOPIC = '/topics/all_android_ver1.0';
 
     function __construct() {
     }

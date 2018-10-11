@@ -1,5 +1,9 @@
  var main_ads_table;
  var main_comm_buttons = [];
+ var position_val = $('#comm_position_filter_main').val();
+ var position_name ; 
+ var city_val = $('#comm_city_filter_main').val();
+ var city_name;
  $(document).ready(function() {
  	var main_comm_TableButtons = function() {
  		
@@ -75,22 +79,62 @@
           };
         }();
        main_comm_TableManageButtons.init();
-       
+     });
        
        // filter by position
-	  $('#comm_position_filter_main').change(function(event) {
-	    var  position_val = $("#comm_position_filter_main").val();
-	    if(position_val == 0){
-	    	main_ads_table
-			 .search( '' )
-			 .columns().search( '' )
-			 .draw();
-	    }else{
-	        position_name = $(this).find("option:selected").text();
-	    	main_ads_table.search( position_name ).draw();
-	    }
-	  });
-	       
-   });   
+	  // $('#comm_position_filter_main').change(function(event) {
+	    // var  position_val = $("#comm_position_filter_main").val();
+	    // if(position_val == 0){
+	    	// main_ads_table
+			 // .search( '' )
+			 // .columns().search( '' )
+			 // .draw();
+	    // }else{
+	        // position_name = $(this).find("option:selected").text();
+	    	// main_ads_table.search( position_name ).draw();
+	    // }
+	  // });
+// 	  
+// 	  
+	   // // filter by cities
+	  // $('#comm_city_filter_main').change(function(event) {
+	    // var  city_val = $("#comm_city_filter_main").val();
+	    // if(city_val == 0){
+	    	// main_ads_table
+			 // .search( '' )
+			 // .columns().search( '' )
+			 // .draw();
+	    // }else{
+	        // position_name = $(this).find("option:selected").text();
+	    	// main_ads_table.search( position_name ).draw();
+	    // }
+	  // });
+// 	       
+   // });  
+   
+   
+  $('#comm_position_filter_main').change(function(event) {
+    position_val =  $('#comm_position_filter_main').val();
+    position_name = $(this).find("option:selected").text();
+    check_main_filter_values();
+    main_ads_table.search( position_name+' '+city_name ).draw();
+  });
+  
+  $('#comm_city_filter_main').change(function(event) {
+    city_val =  $('#comm_city_filter_main').val();
+    city_name = $(this).find("option:selected").text();
+    check_main_filter_values();
+    main_ads_table.search( position_name+' '+city_name ).draw();
+  }); 
+   
+   function check_main_filter_values() {
+      if(  position_val== 0){
+      	 position_name = '';
+      }
+      if(city_val == 0){
+      	 city_name = '';
+      }
+    }
+ 
   
   

@@ -10,6 +10,7 @@ class Categories_control extends REST_Controller {
 		$this->load->model('data_sources/categories');
 	    $this->data['lang']=  $this->response->lang;
 		$this->data['version'] = $this->response->version;
+		$this->data['city'] = $this->response->city;
 	}
 
 
@@ -23,7 +24,7 @@ class Categories_control extends REST_Controller {
 	{
 		// get main commercial ads
 		$this->load->model('data_sources/commercial_ads');
-		$commercials = $this->commercial_ads->get_commercial_ads(0,$this->data['lang'], $this->input->get('from_web'));
+		$commercials = $this->commercial_ads->get_commercial_ads(0,$this->data['lang'],$this->data['city'], $this->input->get('from_web'));
 		// get categories.
 		$categories = $this->categories->get_all($this->data['lang']);
 		$data  = array('categories' => $categories , 'commercials' => $commercials);

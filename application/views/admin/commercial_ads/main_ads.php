@@ -25,6 +25,20 @@
 		                            <?php endif; ?> 
 		                         </select>
 		                        </div>
+		                        
+		                        <!-- city filter -->
+		                        <div class="col-md-4">
+		                      	 <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('city') ?></label>
+		                         <select class="form-control select2_single" id="comm_city_filter_main" tabindex="-1">
+		                            <option value="0"><?php echo $this->lang->line('all') ?></option>
+	      	               	        <?php $data = get_cities_array($this->session->userdata('language'));?>
+		                         	<?php if($data!= null): foreach ($data as $key => $value): ?>
+		                         		  <option value="<?php echo $value['city_id']; ?>"><?php echo $value['name'] ?></option>
+		                            <?php  endforeach; ?>
+		                            <?php endif; ?> 
+		                         </select>
+		                        </div>
+		                        
 		                     </div>
 		                    </div>
 		                  </div>
@@ -53,6 +67,7 @@
 	                          <th><?php echo $this->lang->line('created_at') ?></th>
 	                          <th><?php echo $this->lang->line('title') ?></th>
 	                          <th><?php echo $this->lang->line('position') ?></th>
+	                          <th><?php echo $this->lang->line('city') ?></th>
 	                          <th><?php echo $this->lang->line('show_status') ?></th>
 	                          <th><?php echo $this->lang->line('details') ?></th>
 			                </tr>

@@ -47,11 +47,29 @@ class Reported_ads extends MY_Model {
 
  public function send_email($ad_id , $report_message)
  {
-    $to = 'Report@deal-at.com';
-    $subject = 'Message from Dealat, New Report';
-	$message =  $this->lang->line('reported_ad_email');
-	$message .= $this->lang->line('report_message') . $report_message;
-    mail($to, $subject, $message,  "From: ola@tradinos.com");
+    // $to = 'Report@deal-at.com';
+    // $subject = 'Message from Dealat, New Report';
+	// $message =  $this->lang->line('reported_ad_email');
+	// $message .= $this->lang->line('report_message') . $report_message;
+    // mail($to, $subject, $message,  "From: ola@tradinos.com");
+       $this->load->library('email');
+	   $confing =array(
+	   'protocol'=>'smtp',
+	   'smtp_host'=>"secure247.inmotionhosting.com",
+	   'smtp_port'=>465,
+	   'smtp_user'=>"app@deal-at.com",
+	   'smtp_pass'=>"M@in2018",
+	   'smtp_crypto'=>'ssl',
+	   'mailtype'=>'html'
+	   );
+	   $this->email->initialize($confing);
+	   $this->email->set_newline("\r\n");
+	   $this->email->from('app@deal-at.com');
+	   $this->email->to('dealat.co@gmail.com' );
+	   $this->email->subject('Message from Dealat, New Report');
+	   $message =  $this->lang->line('reported_ad_email');
+	   $message .= $this->lang->line('report_message') . $report_message;
+	   $this->email->message($message);
  }
  
  public function set_to_seen()

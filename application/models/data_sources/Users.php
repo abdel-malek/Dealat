@@ -53,12 +53,31 @@ class Users extends MY_Model {
 			$user = parent::get($new_user_id);
         }
 	   //send verification code  and user info to email.
-		$to      = 'dealat.co@gmail.com';
-        $subject = $this->lang->line('new_user_subject');
-        $message = $this->lang->line('new_user_email').$user->name. 
-                   $this->lang->line('user_phone').$user->phone. 
-                   $this->lang->line('user_code'). $code;
+		// $to      = 'dealat.co@gmail.com';
+        // $subject = $this->lang->line('new_user_subject');
+        // $message = $this->lang->line('new_user_email').$user->name. 
+                   // $this->lang->line('user_phone').$user->phone. 
+                   // $this->lang->line('user_code'). $code;
         //mail($to, $subject, $message,  "From: ola@tradinos.com");
+	       $this->load->library('email');
+		   $confing =array(
+		   'protocol'=>'smtp',
+		   'smtp_host'=>"secure247.inmotionhosting.com",
+		   'smtp_port'=>465,
+		   'smtp_user'=>"app@deal-at.com",
+		   'smtp_pass'=>"M@in2018",
+		   'smtp_crypto'=>'ssl',
+		   'mailtype'=>'html'
+		   );
+		   $this->email->initialize($confing);
+		   $this->email->set_newline("\r\n");
+		   $this->email->from('app@deal-at.com');
+		   $this->email->to('dealat.co@gmail.com' );
+		   $this->email->subject($this->lang->line('new_user_subject'));
+		   $message = $this->lang->line('new_user_email').$user->name. 
+                      $this->lang->line('user_phone').$user->phone. 
+                      $this->lang->line('user_code'). $code;
+		   $this->email->message($message);
 		$user = $this->get($new_user_id);
 		if($user){
 			return $user;

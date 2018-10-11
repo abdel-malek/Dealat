@@ -59,7 +59,7 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-    	//$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
+    	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
@@ -477,7 +477,7 @@ class Ads extends MY_Model {
 	 if($category_id != null){
 	 	$this->load->model('data_sources/categories');
 	 	$category_info = $this->categories->get_info($category_id);
-		dump($category_info);
+		//dump($category_info);
 		if($category_info != null && $category_info->tamplate_id != TAMPLATES::BASIC){
 		  	$tamplate_name = TAMPLATES::get_tamplate_name($category_info->tamplate_id);
 			$model = $tamplate_name.'_tamplate';
@@ -842,14 +842,35 @@ class Ads extends MY_Model {
    
    public function send_pending_email($ad_id , $after_edit = false)
    {
-		$to      = 'dealat.co@gmail.com';
-	    $subject = 'Message from Dealat';
-		if($after_edit){
+		// $to      = 'dealat.co@gmail.com';
+	    // $subject = 'Message from Dealat';
+		// if($after_edit){
+		   // $message =  $this->lang->line('pending_after_edit_email') . $ad_id;
+		// }else{
+		   // $message =  $this->lang->line('pending_email') . $ad_id;	
+		// }
+	    // mail($to, $subject, $message,  "From: ola@tradinos.com");
+	   $this->load->library('email');
+	   $confing =array(
+	   'protocol'=>'smtp',
+	   'smtp_host'=>"secure247.inmotionhosting.com",
+	   'smtp_port'=>465,
+	   'smtp_user'=>"app@deal-at.com",
+	   'smtp_pass'=>"M@in2018",
+	   'smtp_crypto'=>'ssl',
+	   'mailtype'=>'html'
+	   );
+	   $this->email->initialize($confing);
+	   $this->email->set_newline("\r\n");
+	   $this->email->from('app@deal-at.com');
+	   $this->email->to('dealat.co@gmail.com' );
+	   $this->email->subject('Message from Dealat');
+	   if($after_edit){
 		   $message =  $this->lang->line('pending_after_edit_email') . $ad_id;
-		}else{
+	   }else{
 		   $message =  $this->lang->line('pending_email') . $ad_id;	
-		}
-	    mail($to, $subject, $message,  "From: ola@tradinos.com");
+	   }
+	   $this->email->message($message);
    }
    
    

@@ -32,9 +32,11 @@ class Commercial_ads extends MY_Model {
    public function get_all($lang)
 	{
 	   $this->db->select('commercial_ads.* ,
-		                 categories.'.$lang.'_name as category_name ');
+		                 categories.'.$lang.'_name as category_name ,
+		                 cites.'.$lang.'_name as city_name ');
 	   $this->db->where('commercial_ads.category_id !=' , 0 );
 	   $this->db->join('categories' , 'commercial_ads.category_id = categories.category_id' , 'left'); 
+	   $this->db->join('cites' , 'commercial_ads.city_id = cites.city_id' , 'left');
 	   return parent::get();
 	}
 	
@@ -44,10 +46,10 @@ class Commercial_ads extends MY_Model {
 	  return $ok;
 	}
 	
-	public function check_active_number($category , $position)
+	public function check_active_number($category , $position , $city)
 	{
 		$this->db->select('COUNT(commercial_ad_id) as  active_count');
-		$q = parent::get_by(array('category_id' => $category , 'is_active' => 1 , 'position' => $position));
+		$q = parent::get_by(array('category_id' => $category , 'is_active' => 1 , 'position' => $position , 'city_id' => $city));
 	    $count = $q[0]->active_count;
 		$limit = POSITION::get_limit($position);
 		if($count >= $limit){
@@ -55,6 +57,14 @@ class Commercial_ads extends MY_Model {
 		}else{
 			return true;
 		}
+	}
+	
+	public function get_all_main($lang)
+	{
+		$this->db->select('cites.'.$lang.'_name as city_name , commercial_ads.*' );
+		$this->db->join('cites' , 'commercial_ads.city_id = cites.city_id' , 'left');
+		$this->db->where('category_id' , 0);
+		return parent::get();
 	}
 	
 }

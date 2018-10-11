@@ -437,9 +437,13 @@ var current_template;
             $('.ads_details  #ad_input_price').val($item_info['price']);
             if($item_info['is_negotiable'] == '1'){
             	$('.ads_details  #ad_negotiable').html('Yes');
+            }else{
+            	$('.ads_details  #ad_negotiable').html('No');
             }
-            if($item_info['is_featured'] == 1){
+            if($item_info['is_featured'] == '1'){
             	$('.ads_details  #ad_featured').html('Yes');
+            }else{
+            	$('.ads_details  #ad_featured').html('No');
             }
             $('.ads_details  #select_featured').val($item_info['is_featured']);
             
@@ -461,6 +465,8 @@ var current_template;
             	   $('.ads_details  .is_new').css('display', 'inline');
             	   if($item_info[value] == 1){
             	   	 $('.ads_details  #ad_is_new').html('Yes'); 
+            	   }else{
+            	   	 $('.ads_details  #ad_is_new').html('No');
             	   }
               }else if(value == 'salary' || value =='kilometer' || value == 'size' || value == 'space'){ // format numbers. 
             	   if($item_info[value] != null){
@@ -689,6 +695,7 @@ var current_template;
 	                }));	
 	        	 }
 		    });
+		     $('.ads_details #ad_input_location').append('<option><option/>');
 		    $.each(response.data.location, function(index, value) {
 	        	if($item_info['location_id']!= null && $item_info['location_id']  == value.location_id){
 	        	    $('.ads_details #ad_input_location').append($('<option/>', {
@@ -732,8 +739,11 @@ var current_template;
 			        	}
 				   });
               }
+              console.log(value);
+              //console.log('val '+$('.ads_details #ad_input_type_model_name'));
               if(value == 'type_model_name'){
               	 // current_type_model_id = $item_info['type_model_id'];
+              	 $('.ads_details  #ad_input_type_model_name').val($item_info['type_model_id']);
               	 $('.ads_details #ad_input_type_model_name').trigger('change');
                	  // $.each(chosen_type_models, function(index, value) {
 				      	// if($item_info['type_model_id']  == value.type_model_id){

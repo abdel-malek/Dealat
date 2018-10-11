@@ -33,7 +33,7 @@
 		               <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('description') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
-		      	           <p class="form-control readonly_elem"  id='ad_description'><?php echo $this->lang->line('not_set') ?></p>
+		      	           <p class="readonly_elem"  id='ad_description' style="padding: 10px;"><?php echo $this->lang->line('not_set') ?></p>
 		      	           <textarea style="display:  none" class="form-control editable_elem basics"  id="ad_input_description" name="ad_input_description"   rows="4" cols="50" style="margin: 0px; width: 259px; height: 136px;"></textarea>
 		      	         </div>
 		               </div> 

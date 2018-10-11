@@ -94,6 +94,7 @@ class Commercial_items_control extends REST_Controller {
 	  if($this->input->post('category_id')){
 	  	 $data['category_id'] = $this->input->post('category_id');
 	  }
+	  $data['city_id'] = $this->input->post('city_id');
 	  if($comm_id == 0){ // add
 	     if(!$this->input->post('image')){
 	        throw new Parent_Exception($this->lang->line('image_is_requierd'));
@@ -125,9 +126,10 @@ class Commercial_items_control extends REST_Controller {
   	  $category_id = $this->input->post('category_id');
 	  $position = $this->input->post('position');
 	  $to_active = $this->input->post('to_active');
+	  $city_id = $this->input->post('city_id');
 	  $is_ok = true;
 	  if($to_active == 1){
-	     $is_ok = $this->commercial_ads->check_active_number($category_id , $position);
+	     $is_ok = $this->commercial_ads->check_active_number($category_id , $position ,$city_id);
 	  }
 	  if(!$is_ok){
 	  	  throw new Parent_Exception($this->lang->line('excced_limit')); 

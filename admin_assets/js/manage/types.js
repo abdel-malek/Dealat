@@ -75,9 +75,9 @@ function show_save_edits_data_btns(id) {
                     "mRender": function(date, type, full) {
                      //  if(full[3] == 'vehicles' || full[3] == 'مركبات' ){
                        	 return '<button id="" onclick="show_models_modal(\'' + full[0] + '\');" type_id=\'' + full[0] + '\' type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
-                    //   }else{
-                    //   	   return '';
-                    //   }
+                     //  }else{
+                     //   	return '';
+                     //  }
                       
 		             }
 		         },
