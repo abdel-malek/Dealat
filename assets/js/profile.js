@@ -12,6 +12,7 @@
 
 $(function () {
 	if ($(".profile-page").length > 0) {
+		
 		var userRateValue = 2;
 		var i, template, rendered;
 		//get my ads
@@ -166,6 +167,10 @@ $(function () {
 
 					//add commas to price
 					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
+					
+					//convert emojis shortnames to native unicode
+					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
+					data.data[i].description = emojione.shortnameToUnicode(data.data[i].description);
 					
 					adData = {
 						ad: data.data[i],

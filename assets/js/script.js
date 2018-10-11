@@ -7,6 +7,10 @@ $(function () {
 		$(this).html(emojione.shortnameToUnicode($(this).html()));
 	});
 	
+	$(".details").each(function(){
+		$(this).html(emojione.shortnameToUnicode($(this).html()));
+	});
+	
 	//css
 	$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
 
