@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C4C212D854C93C49664519CA42571349"
+               BlueprintIdentifier = "E7C5CA40470B81FA510AF37B6E1D392D"
                BuildableName = "CHIPageControl.framework"
                BlueprintName = "CHIPageControl"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C4C212D854C93C49664519CA42571349"
+            BlueprintIdentifier = "E7C5CA40470B81FA510AF37B6E1D392D"
             BuildableName = "CHIPageControl.framework"
             BlueprintName = "CHIPageControl"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "321CAE3B41F791EC7171E5FCD1F9735F"
+               BlueprintIdentifier = "BCF7FA545E283537751F600E516056D2"
                BuildableName = "SwipeBack.framework"
                BlueprintName = "SwipeBack"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "321CAE3B41F791EC7171E5FCD1F9735F"
+            BlueprintIdentifier = "BCF7FA545E283537751F600E516056D2"
             BuildableName = "SwipeBack.framework"
             BlueprintName = "SwipeBack"
             ReferencedContainer = "container:Pods.xcodeproj">

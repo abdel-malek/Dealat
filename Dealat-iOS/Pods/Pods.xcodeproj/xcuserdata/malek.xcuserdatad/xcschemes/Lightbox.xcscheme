@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AB33426523581DE5A39BEC42E84CD867"
+               BlueprintIdentifier = "58E8F6C68F910180DBB6076F800808CE"
                BuildableName = "Lightbox.framework"
                BlueprintName = "Lightbox"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AB33426523581DE5A39BEC42E84CD867"
+            BlueprintIdentifier = "58E8F6C68F910180DBB6076F800808CE"
             BuildableName = "Lightbox.framework"
             BlueprintName = "Lightbox"
             ReferencedContainer = "container:Pods.xcodeproj">

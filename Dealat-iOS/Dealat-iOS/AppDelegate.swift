@@ -13,6 +13,8 @@ import FirebaseMessaging
 import UserNotifications
 import Google
 import SwiftyJSON
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       //  AppDelegate.setupViews() // TODO
         setupNotification(application)
         
-        
+        Fabric.with([Crashlytics.self])
         
         return true
     }

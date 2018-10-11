@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5168099F2EBFC99A707C03C9EADE01A5"
+               BlueprintIdentifier = "FD1ECC3979ED6D745803FF751221D70C"
                BuildableName = "DropDown.framework"
                BlueprintName = "DropDown"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5168099F2EBFC99A707C03C9EADE01A5"
+            BlueprintIdentifier = "FD1ECC3979ED6D745803FF751221D70C"
             BuildableName = "DropDown.framework"
             BlueprintName = "DropDown"
             ReferencedContainer = "container:Pods.xcodeproj">

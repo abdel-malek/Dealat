@@ -8,9 +8,12 @@ PODS:
   - AttributedTextView (1.1.0)
   - Cache (4.1.2)
   - CHIPageControl/Aji (0.1.5)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
   - DatePickerDialog (2.0)
   - DLRadioButton (1.4.11)
   - DropDown (2.3.1)
+  - Fabric (1.7.13)
   - Firebase/Core (4.10.0):
     - FirebaseAnalytics (= 4.1.0)
     - FirebaseCore (= 4.0.16)
@@ -94,9 +97,11 @@ DEPENDENCIES:
   - AlamofireObjectMapper
   - AttributedTextView (~> 1.1.0)
   - CHIPageControl/Aji
+  - Crashlytics (~> 3.10.2)
   - DatePickerDialog
   - DLRadioButton
   - DropDown
+  - Fabric (~> 1.7.7)
   - Firebase/Core
   - Firebase/Messaging
   - Google/Analytics
@@ -128,9 +133,11 @@ SPEC REPOS:
     - AttributedTextView
     - Cache
     - CHIPageControl
+    - Crashlytics
     - DatePickerDialog
     - DLRadioButton
     - DropDown
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -174,9 +181,11 @@ SPEC CHECKSUMS:
   AttributedTextView: fda07f9e259c5fbca5d206266e82dfaee0545def
   Cache: bd0233fc688b5e83a27bcd87807db7e6f23adcc5
   CHIPageControl: 79d19a8ee2e35fa3c1da6533adb5364c77b5cfea
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   DatePickerDialog: 5e1c24d9fe6506cd45dbc573eed7b0a251b1c09d
   DLRadioButton: 0d04b8259e7bfd886571a1e9173c73fee7118f50
   DropDown: 20499c7b2731b0d21609af924e47c7677a2be50d
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   Firebase: c98c8b1fbcbdccd82539a36c2b17a9b1bb0ee798
   FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
   FirebaseCore: eb9e1a56733ff1094ecf3e28af9069c344b25239
@@ -212,6 +221,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: d1ab378af0923320ec0b5eab11d7b2f803d31261
   YangMingShan: 561cfbb769e8cf679d3f23d8ae7030402ddb6495
 
-PODFILE CHECKSUM: f8bd1808a598cb9529c763b4db62ca95103baa5a
+PODFILE CHECKSUM: 51c0dffd0c5cc12eaf5cde8c6d578722333a31ed
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.1

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347A4CB32EE8761528D60DFE07BFAC52"
+               BlueprintIdentifier = "67B4FA25474B03147FAB8559849E08CF"
                BuildableName = "AFDateHelper.framework"
                BlueprintName = "AFDateHelper"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "347A4CB32EE8761528D60DFE07BFAC52"
+            BlueprintIdentifier = "67B4FA25474B03147FAB8559849E08CF"
             BuildableName = "AFDateHelper.framework"
             BlueprintName = "AFDateHelper"
             ReferencedContainer = "container:Pods.xcodeproj">

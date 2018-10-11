@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "37BDA862C01AA50897A1B5BA90C3BE9E"
+               BlueprintIdentifier = "8CB3D833D822FA208543879C0E8B0ED0"
                BuildableName = "AttributedTextView.framework"
                BlueprintName = "AttributedTextView"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37BDA862C01AA50897A1B5BA90C3BE9E"
+            BlueprintIdentifier = "8CB3D833D822FA208543879C0E8B0ED0"
             BuildableName = "AttributedTextView.framework"
             BlueprintName = "AttributedTextView"
             ReferencedContainer = "container:Pods.xcodeproj">

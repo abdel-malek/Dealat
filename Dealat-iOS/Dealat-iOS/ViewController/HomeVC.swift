@@ -9,6 +9,7 @@
 import UIKit
 import SideMenu
 import CHIPageControl
+import Crashlytics
 
 class HomeVC: BaseVC {
     

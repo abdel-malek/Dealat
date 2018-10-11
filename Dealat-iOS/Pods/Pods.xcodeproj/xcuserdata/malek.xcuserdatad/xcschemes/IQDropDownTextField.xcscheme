@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2B53101EC29FFFF7B80D815E9E4763C9"
+               BlueprintIdentifier = "53524820AADE2772432A3057CCFC17B7"
                BuildableName = "IQDropDownTextField.framework"
                BlueprintName = "IQDropDownTextField"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2B53101EC29FFFF7B80D815E9E4763C9"
+            BlueprintIdentifier = "53524820AADE2772432A3057CCFC17B7"
             BuildableName = "IQDropDownTextField.framework"
             BlueprintName = "IQDropDownTextField"
             ReferencedContainer = "container:Pods.xcodeproj">
