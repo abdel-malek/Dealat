@@ -2,23 +2,9 @@
 /*global $, alert,console,lang, Mustache, base_url, logged, user_id, hiddenFields*/
 
 $(function () {
-	var emoji = new EmojiConvertor();
-	// force text output mode
-	//	emoji.text_mode = true;
-
-	// show the short-name as a `title` attribute for css/img emoji
-	emoji.include_title = true;
-
-	// change the path to your emoji images (requires trailing slash)
-	// you can grab the images from the emoji-data link here:
-	// https://github.com/iamcal/js-emoji/tree/master/build
-	emoji.img_sets.apple.path = site_url + '/assets/images/emojis/facebook-64/';
-	emoji.img_sets.apple.sheet = site_url + '/assets/images/emojis/facebook-sheet-64.png';
-	// Configure this library to use the sheets defined in `img_sets` (see above)
-	emoji.use_sheet = true;
-	
+	//convert emojis shortnames to native unicode
 	$(".card-title").each(function(){
-		$(this).html(emoji.replace_colons($(this).html()));
+		$(this).html(emojione.shortnameToUnicode($(this).html()));
 	});
 	
 	//css
@@ -852,8 +838,8 @@ $(function () {
 				}
 
 				//to convert emoji if existed
-				data.data.title = emoji.replace_colons(data.data.title);
-				data.data.description = emoji.replace_colons(data.data.description);
+				data.data.title = emojione.shortnameToUnicode(data.data.title);
+				data.data.description = emojione.shortnameToUnicode(data.data.description);
 
 				adData = {
 					ad: data.data,
@@ -1541,6 +1527,23 @@ $(function () {
 				data[i].value = data[i].value.replace(/,/g, '');
 			}
 		}
+		
+		// convert native unicode emoji to their shortnames upon form submission.
+		var title = $(this).find('input[name="title"]').val();
+		title = emojione.toShort(title);
+
+		data.push({
+				name: "title",
+				value: title
+			});
+		var desc = $(this).find('textarea[name="description"]').val();
+		desc = emojione.toShort(desc);
+
+		data.push({
+				name: "description",
+				value: desc
+			});
+		
 		//console.log(data);
 		$.ajax({
 			type: "post",

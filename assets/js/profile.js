@@ -82,6 +82,9 @@ $(function () {
 					//add commas to price
 					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
 					
+					//convert emojis shortnames to native unicode
+					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
+					
 					if (data.data[i].publish_date) {
 						adData = {
 							ad: data.data[i],
@@ -564,8 +567,11 @@ $(function () {
 						$("#edit-ad-modal input[name='price']").val("");
 						$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
 					}
-
-
+					
+					//convert emojis shortnames to native unicode
+					data.data.title = emojione.shortnameToUnicode(data.data.title);
+					data.data.description = emojione.shortnameToUnicode(data.data.description);
+					
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
@@ -573,7 +579,6 @@ $(function () {
 					$("#edit-ad-modal input[name='price']").val(new Intl.NumberFormat().format(data.data.price));
 					$("#edit-ad-modal select[name='city_id']").val(data.data.city_id).change();
 					$("#edit-ad-modal select[name='city_id']")[0].sumo.reload();
-
 
 					if (data.data.location_id) {
 						$("#edit-ad-modal select[name='location_id']").val(data.data.location_id);
@@ -939,7 +944,7 @@ $(function () {
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
-
+			
 			var i,
 				secondary_imgs = [],
 				adStatus;
@@ -947,6 +952,22 @@ $(function () {
 			adStatus = $(this).find(".ad-status").val();
 			editAdData = $(this).serializeArray();
 
+			// convert native unicode emoji to their shortnames upon form submission.
+			var title = $(this).find('input[name="title"]').val();
+			title = emojione.toShort(title);
+			
+			editAdData.push({
+					name: "title",
+					value: title
+				});
+			var desc = $(this).find('textarea[name="description"]').val();
+			desc = emojione.toShort(desc);
+			
+			editAdData.push({
+					name: "description",
+					value: desc
+				});
+			
 			if (adStatus) {
 				editAdData.push({
 					name: "edit_status",
@@ -1079,6 +1100,7 @@ $(function () {
 		});
 
 		$("#confirm-edit-modal .submit").click(function () {
+			console.log(editAdData);
 			$.ajax({
 				type: "post",
 				url: base_url + '/api/items_control/edit',
@@ -1132,6 +1154,10 @@ $(function () {
 					if (!sessionImage) {
 						sessionImage = '/assets/images/user1.jpg';
 					}
+					
+					//convert emojis shortnames to native unicode
+					data.data[i].ad_title = emojione.shortnameToUnicode(data.data[i].ad_title);
+					
 					sessionData = {
 						image: sessionImage,
 						username: username,
