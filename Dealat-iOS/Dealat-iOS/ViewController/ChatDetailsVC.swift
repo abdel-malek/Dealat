@@ -26,7 +26,7 @@ class ChatDetailsVC: BaseVC {
     var messages = [Message]()
     var ad : AD!
     
-    var messages2 = [(Date,[Message])]()
+    var messages2 = [(String,[Message])]()
     
     static var messagesRT = [(TimeInterval,Bool)]()
     static var isSending : Bool = false
@@ -237,27 +237,42 @@ class ChatDetailsVC: BaseVC {
     
     func fixMessages(){
         var messagesTemp = [Message]()
-        var messages3 =  [(Date,[Message])]()
+//        var messages3 =  [(Date,[Message])]()
+        var messages3 =  [(String,[Message])]()
+
         
         for i in self.messages{
             messagesTemp.append(Message.init(JSON : i.toJSON())!)
         }
         
         
-        var temp = [Message]()
+//        var temp = [Message]()
+        var temp = [String]()
+
         
         for i in messagesTemp{
-            if !temp.contains(where: {$0.getDate() == i.getDate()}){
-                temp.append(Message.init(JSON : i.toJSON())!)
+            
+//            if !temp.contains(where: {$0.getDate() == i.getDate()}){
+//                temp.append(Message.init(JSON : i.toJSON())!)
+//            }
+            
+            if !temp.contains(i.getDateOnlyString()) {
+                temp.append(i.getDateOnlyString())
             }
+            
         }
         
         for i in temp{
-            let mesgs = messagesTemp.filter({$0.getDate() == i.getDate()}).sorted(by: { (m1, m2) -> Bool in
-                return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
-            })
+//            let mesgs = messagesTemp.filter({$0.getDate() == i.getDate()}).sorted(by: { (m1, m2) -> Bool in
+//                return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
+//            })
             
-            messages3.append((i.getDate(), mesgs))
+            let mesgs = messagesTemp.filter({$0.getDateOnlyString() == i}).sorted { (m1, m2) -> Bool in
+                return m1.getDateFull().compare(DateComparisonType.isEarlier(than: m2.getDateFull()))
+            }
+
+            
+            messages3.append((i, mesgs))
         }
         
         
@@ -268,8 +283,16 @@ class ChatDetailsVC: BaseVC {
         
         if let m = messages3.last{
             DispatchQueue.main.async {
-                let indexPath = IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1)
-                self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: false)
+                
+                if UIDevice().userInterfaceIdiom == .phone {
+                    switch UIScreen.main.nativeBounds.height  {
+                    case 2436,2688,1792: break
+                    default:
+                        let indexPath = IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1)
+                        self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                    }
+                }
+                
                 self.tableView.alpha = 1
             }
         }else{
@@ -438,7 +461,7 @@ extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.messages2[section].0.toString()
+        return self.messages2[section].0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -453,7 +476,7 @@ extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
         
         let ll = UILabel()
         ll.font = Theme.Font.Calibri
-        ll.text = self.messages2[section].0.toString(format: DateFormatType.isoDate)
+        ll.text = self.messages2[section].0
         ll.backgroundColor = UIColor.gray
         ll.textColor = . white
         ll.textAlignment = .center
@@ -492,7 +515,15 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
         
         if let m = self.messages2.last{
             DispatchQueue.main.async {
-                self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.top, animated: false)
+                
+                if UIDevice().userInterfaceIdiom == .phone {
+                    switch UIScreen.main.nativeBounds.height  {
+                    case 2436,2688,1792: break
+                    default:
+                        self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+                    }
+                }
+                
             }
         }
     }

@@ -44,6 +44,16 @@ class Message : BaseEntity {
         
     }
     
+    func  getDateOnlyString() -> String{
+        if let created_at = self.created_at{
+             let cc = created_at.components(separatedBy: " ")
+        
+            if let dateString = cc.first{
+                return dateString
+            }
+        }
+        return Date().toString(format: DateFormatType.isoDate)
+    }
     
     func getDate() -> Date{
         if let created_at = self.created_at{
@@ -55,7 +65,6 @@ class Message : BaseEntity {
         
         print("FALSEEEEEEEE")
         return Date()
-
     }
     
     func getDateFull() -> Date{

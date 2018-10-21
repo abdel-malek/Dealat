@@ -25,6 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        let new = User()
+        new.phone = "988271127"
+        new.server_key = "016a6cea3752099ecf7364cb46024ffa"
+        new.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
+        User.saveMe(me: new)
+        
+        
         IQKeyboardManager.sharedManager().enable = true
         
         UINavigationBar.appearance().barTintColor = Theme.Color.red//UIColor.groupTableViewBackground

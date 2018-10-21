@@ -92,8 +92,8 @@ class MessageCell: BaseCell {
                 }
             }
             
-            self.text1Lbl.decideTextDirection()
-            self.text2Lbl.decideTextDirection()
+//            self.text1Lbl.decideTextDirection()
+//            self.text2Lbl.decideTextDirection()
             
         }
     }
