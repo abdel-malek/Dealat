@@ -466,20 +466,21 @@ summary:focus {
 			font-weight: bold;
 //			height: 70px;
 //			width: 70px;
-			height: 75px;
-			width: 75px;
+			height: 82px;
+			width: 82px;
+			padding: 0 2px;
 			border-radius: 50%;
 			background-color: $main;
 			text-align: center;
 			z-index: 1;
 			color: #fff;
-			font-size: .8rem;
+			font-size: .75rem;
 			box-shadow: 2px 1px 10px 0px #a8a8a8;
 
 		}
 		.price-val {
 //			margin-top: 35%
-			margin-top: 27px
+			margin-top: 31px
 		}
 		.overlay {
 			position: absolute;
@@ -594,7 +595,8 @@ summary:focus {
 		width: 95%;
 		min-height: 320px;
 		.card-body {
-			padding-left: 40px;
+//			padding-left: 40px;
+			padding-left: 49px;
 			.category {
 				max-width: 100%;
 				overflow: hidden;
@@ -1378,8 +1380,9 @@ select option.placeholder {
 			.price {
 				position: absolute;
 				font-weight: bold;
-				height: 75px;
-				width: 75px;
+				height: 82px;
+				width: 82px;
+				padding: 0 2px;
 				border-radius: 50%;
 				background-color: $main;
 				text-align: center;
@@ -1387,7 +1390,7 @@ select option.placeholder {
 				left: -30px;
 				z-index: 1;
 				color: #fff;
-				font-size: .8rem;
+				font-size: .75rem;
 				box-shadow: 2px 1px 10px 0px #a8a8a8;
 
 			}
@@ -1404,7 +1407,7 @@ select option.placeholder {
 			}
 			.price-val {
 //				margin-top: 38%
-				margin-top: 27px
+				margin-top: 31px
 			} //			.views-lbl,
 			//			.likes-lbl {
 			//				padding-right: 20px
