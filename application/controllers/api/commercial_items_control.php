@@ -26,14 +26,27 @@ class Commercial_items_control extends REST_Controller {
 	
 	public function get_info_get()
 	{
+
 	   if(!$this->input->get('comm_id')){
 	   	   throw Parent_Exception('id is requierd');
 	   }else{
 	   	  $id = $this->input->get('comm_id');
 		  $info = $this-> commercial_ads -> get($id);
-		  $this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+		  $cities = $this->_get_cities_array($id);
+		  $data = array('info' => $info , 'cities' => $cities);
+		  $this->response(array('status' => true, 'data' => $data, 'message' => ''));
 	   }
 	}
+
+    private function _get_cities_array($comm_id){
+    	$this->load->model('data_sources/commercials_cities');
+    	$cities = $this->commercials_cities->get_cities($comm_id , $this->data['lang']);
+		$cities_ids = array();
+		foreach ($cities as $key => $city_row) {
+		   $cities_ids [] = $city_row->city_id;
+		}
+		return $cities_ids;
+    }
 
    public function item_images_upload_post()
    {
@@ -63,6 +76,7 @@ class Commercial_items_control extends REST_Controller {
 	
   public function save_post()
   {
+  	  $this->load->model('data_sources/commercials_cities');
       $comm_id = $this->input->post('comm_id');
 	  $data = array( 
 	    // 'title' => $this->input->post('title'),
@@ -94,7 +108,8 @@ class Commercial_items_control extends REST_Controller {
 	  if($this->input->post('category_id')){
 	  	 $data['category_id'] = $this->input->post('category_id');
 	  }
-	  $data['city_id'] = $this->input->post('city_id');
+
+	  $cities = $this->input->post('city_id');
 	  if($comm_id == 0){ // add
 	     if(!$this->input->post('image')){
 	        throw new Parent_Exception($this->lang->line('image_is_requierd'));
@@ -106,6 +121,8 @@ class Commercial_items_control extends REST_Controller {
 	  	 $comm_id = $this->commercial_ads->save($data, $comm_id);
 		 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_COMMERCIAL , $comm_id);
 	  }
+	  // save the commercials cities.
+	  $this->commercials_cities->save_cities($comm_id , $cities);
 	  $this -> response(array('status' => true, 'data' => $comm_id, 'message' => $this->lang->line('sucess')));
   }
 

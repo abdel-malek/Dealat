@@ -945,7 +945,7 @@ function save_ad_edits(){
 					 }
 	               });
 	          ads_table.ajax.url(base_url + '/admin/items_manage/all/format/json' ).load();
-	          //$('.ads_details').modal('hide');
+	          $('.ads_details').modal('hide');
 	         }
 	        },error: function(xhr, status, error){
 	        	new PNotify({

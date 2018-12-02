@@ -88,8 +88,8 @@
 			 .draw();
         }else{
         	$('#add_comm_btn').css('display' , 'inline');
-        	if(position_val != 0){
-        		comm_ads_table.search( cat_name+' '+position_name ).draw();
+        	if(position_val_other != 0){
+        		comm_ads_table.search( cat_name+' '+position_name_other ).draw();
         	}else{
         		comm_ads_table.search( cat_name ).draw();
         	}
@@ -194,7 +194,8 @@ function show_comm_ad_modal (id , is_main) {
         type: "get",
         dataType: "json",
         success: function(response) {
-        	var info = response.data;
+        	var info = response.data['info'];
+        	cities =  response.data['cities'];
             $('#created_div').css('display', 'inline');
         	$('#comm_created_at').html(info['created_at']);
             if(info['title']!= null){
@@ -210,7 +211,8 @@ function show_comm_ad_modal (id , is_main) {
             $("#comm_image").attr("src",site_url + info['image']);
             $('#comm_position').val(info['position']).trigger('change');
             $('#label'+info['position']).css('display' , 'inline');
-        //   console.log(response);
+            $("#comm_city").val(cities).trigger("change");
+          // console.log(cities);
         },error: function(xhr, status, error){
         	new PNotify({
                   title: lang_array['attention'],
@@ -252,6 +254,7 @@ function show_comm_ad_modal (id , is_main) {
    	  $('#comm_title').val('');
    	  $('#comm_description').val(''); 
    	  $('#comm_url').val('');
+   	  $("#comm_city").val([]).trigger("change");
    	  $(".comm_ads_details .ajax-file-upload-container").empty();
    	  comm_image_path = '';
  });

@@ -46,7 +46,8 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$recorde[] = $row->city_name;
+			$cities = $this->_get_cities_names($row -> commercial_ad_id);
+			$recorde[] = $cities;
 			if(PERMISSION::Check_permission(PERMISSION::SHOW_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
 			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $row->city_id);
 			else{
@@ -77,7 +78,8 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$recorde[] = $row->city_name;
+			$cities = $this->_get_cities_names($row -> commercial_ad_id);
+			$recorde[] = $cities;
 		    if(PERMISSION::Check_permission(PERMISSION::SHOW_MAIN_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
 			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $row->city_id);
 			else{
@@ -91,6 +93,21 @@ class Commercial_items_manage extends REST_Controller {
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
+    }
+
+
+    private function _get_cities_names($comm_id){
+    	$this->load->model('data_sources/commercials_cities');
+    	$cities = $this->commercials_cities->get_cities($comm_id , $this->data['lang']);
+		$cities_names = '';
+		foreach ($cities as $key => $city_row) {
+		   if($cities_names != ''){
+		   	  $cities_names .= ', '.$city_row->city_name;
+		   }else{
+		   	  $cities_names .= $city_row->city_name;
+		   }
+		}
+		return $cities_names;
     }
 
 }
