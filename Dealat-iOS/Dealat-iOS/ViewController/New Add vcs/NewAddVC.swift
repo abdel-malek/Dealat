@@ -430,8 +430,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         
         let arr = NSMutableAttributedString.init()
-        arr.append(NSAttributedString.init(string: "termsMessage1".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri.withSize(15),NSAttributedStringKey.foregroundColor : UIColor.white]))
-        arr.append(NSAttributedString.init(string: "termsMessage2".localized, attributes: [NSAttributedStringKey.font : Theme.Font.Calibri.withSize(15),NSAttributedStringKey.underlineColor : UIColor.blue,NSAttributedStringKey.underlineStyle : 1,  NSAttributedStringKey.foregroundColor : UIColor.blue]))
+        arr.append(NSAttributedString.init(string: "termsMessage1".localized, attributes: [NSAttributedString.Key.font : Theme.Font.Calibri.withSize(15),NSAttributedString.Key.foregroundColor : UIColor.white]))
+        arr.append(NSAttributedString.init(string: "termsMessage2".localized, attributes: [NSAttributedString.Key.font : Theme.Font.Calibri.withSize(15),NSAttributedString.Key.underlineColor : UIColor.blue,NSAttributedString.Key.underlineStyle : 1,  NSAttributedString.Key.foregroundColor : UIColor.blue]))
         termsLbl.attributedText = arr
         
         termsLbl.isUserInteractionEnabled = true
@@ -456,7 +456,7 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         img.clipsToBounds = true
         self.tableView.backgroundView = img
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
 
         
@@ -875,9 +875,9 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
         
         switch indexPath.section {
         case 0:
-            return (indexPath.row == 0 || indexPath.row == 8) ? UITableViewAutomaticDimension : 54
+            return (indexPath.row == 0 || indexPath.row == 8) ? UITableView.automaticDimension : 54
         case 11:
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         default:
             if self.selectedCategory != nil{
                 return (self.selectedCategory.tamplate_id.intValue == indexPath.section) ? 54 : 0
@@ -1516,7 +1516,7 @@ extension NewAddVC{
         let alertController = UIAlertController.init(title: "Allow photo album access?", message: "Need your permission to access photo albumbs", preferredStyle: .alert)
         let dismissAction = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
         let settingsAction = UIAlertAction.init(title: "Settings", style: .default) { (action) in
-            UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.openURL(URL.init(string: UIApplication.openSettingsURLString)!)
         }
         alertController.addAction(dismissAction)
         alertController.addAction(settingsAction)
@@ -1528,7 +1528,7 @@ extension NewAddVC{
         let alertController = UIAlertController.init(title: "Allow camera album access?", message: "Need your permission to take a photo", preferredStyle: .alert)
         let dismissAction = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
         let settingsAction = UIAlertAction.init(title: "Settings", style: .default) { (action) in
-            UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.openURL(URL.init(string: UIApplication.openSettingsURLString)!)
         }
         alertController.addAction(dismissAction)
         alertController.addAction(settingsAction)
@@ -1784,7 +1784,7 @@ extension NewAddVC : UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if row == 0{
-            return NSAttributedString.init(string: "select one", attributes: [NSAttributedStringKey.foregroundColor : UIColor.lightGray])
+            return NSAttributedString.init(string: "select one", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         }
         return nil
     }
@@ -1809,10 +1809,10 @@ extension NewAddVC : UIImagePickerControllerDelegate, UINavigationControllerDele
     }
     
     func captureVideo(){
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera;
             imagePicker.mediaTypes = ["public.movie"]
             imagePicker.cameraCaptureMode = .video
             imagePicker.allowsEditing = false
@@ -1857,10 +1857,10 @@ extension NewAddVC : UIImagePickerControllerDelegate, UINavigationControllerDele
         dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         
-        if let url = info[UIImagePickerControllerMediaURL] as? URL{
+        if let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL{
             print("UIImagePickerControllerMediaURL :\(url.absoluteString)" )
             
             self.videoUrl = url
@@ -1934,7 +1934,7 @@ extension UIImage {
         var imgData:Data?
         var compressingValue:CGFloat = 1.0
         while (needCompress && compressingValue > 0.0) {
-            if let data:Data = UIImageJPEGRepresentation(self, compressingValue) {
+            if let data:Data =  self.jpegData(compressionQuality: compressingValue){
                 if data.count < sizeInBytes {
                     needCompress = false
                     imgData = data

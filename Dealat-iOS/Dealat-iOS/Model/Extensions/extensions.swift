@@ -214,7 +214,7 @@ extension UITextField{
         set {
             if let ph = newValue{
                 let p = self.placeholder != nil ? self.placeholder! : ""
-                self.attributedPlaceholder = NSAttributedString(string:p, attributes:[NSAttributedStringKey.foregroundColor: ph])
+                self.attributedPlaceholder = NSAttributedString(string:p, attributes:[NSAttributedString.Key.foregroundColor: ph])
             }
         }
     }

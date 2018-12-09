@@ -29,7 +29,7 @@ class SavedSearchesVC: BaseVC, UITableViewDelegate,UITableViewDataSource {
         self.title = "Saved searches".localized
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.addSubview(ref)
         self.tableView.tableFooterView = UIView()

@@ -21,7 +21,7 @@ class TermsVC: BaseVC,WKNavigationDelegate {
         self.title = "termsMessage3".localized
 //        self.textView.isHidden = true
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(self.dis))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action: #selector(self.dis))
         
         getData()
     }
@@ -36,7 +36,7 @@ class TermsVC: BaseVC,WKNavigationDelegate {
                     
                     let dir = AppDelegate.isArabic() ? [NSWritingDirection.rightToLeft.rawValue] : [NSWritingDirection.leftToRight.rawValue]
                     let att = NSMutableAttributedString.init(attributedString: y)
-                    att.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri, NSAttributedStringKey.writingDirection : dir], range: NSRange(location: 0, length: att.length))
+                    att.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.white,NSAttributedString.Key.font: Theme.Font.Calibri, NSAttributedString.Key.writingDirection : dir], range: NSRange(location: 0, length: att.length))
                     
                     self.textView.attributedText = att
                 }catch let err{

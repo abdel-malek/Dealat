@@ -26,7 +26,7 @@ class MyAdsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,UIColl
     var pageNumber = 1
     var isDataLoading : Bool = false
     var isAllDataFetched : Bool = false
-    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     override func viewDidLoad() {
         super.viewDidLoad()

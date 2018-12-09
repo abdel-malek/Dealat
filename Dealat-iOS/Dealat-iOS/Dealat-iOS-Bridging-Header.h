@@ -6,3 +6,7 @@
 //#import <Google/Analytics.h>
 
 #import "DLRadioButton.h"
+
+#import <GoogleAnalytics/GAI.h>
+#import <GoogleAnalytics/GAIDictionaryBuilder.h>
+#import <GoogleAnalytics/GAIFields.h>

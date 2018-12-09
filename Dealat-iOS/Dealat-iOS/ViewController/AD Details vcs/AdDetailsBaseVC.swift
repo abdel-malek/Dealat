@@ -51,7 +51,7 @@ class AdDetailsBaseVC: UIViewController {
     func configureNavigationBar() {
         //setup back button
         self.navigationItem.hidesBackButton = false
-        let rr = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action:nil)
+        let rr = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action:nil)
         self.navigationItem.backBarButtonItem = rr
     }
     
@@ -71,7 +71,7 @@ class AdDetailsBaseVC: UIViewController {
             i.parentBase = self
             self.adDetailsVC = i
 
-            self.addChildViewController(i)
+            self.addChild(i)
         }
     }
     
@@ -175,7 +175,7 @@ class AdDetailsBaseVC: UIViewController {
     }
     
     @IBAction func removeAction(){
-        let alert = UIAlertController.init(title: "Alert!".localized, message: "removeAdd".localized, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController.init(title: "Alert!".localized, message: "removeAdd".localized, preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
             self.adDetailsVC.showLoading()

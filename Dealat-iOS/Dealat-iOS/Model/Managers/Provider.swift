@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import SDWebImage
 import Kingfisher
-import Google
+//import Google
 import AFDateHelper
+
 
 class Provider : BaseManager {
     
@@ -108,9 +109,9 @@ class Provider : BaseManager {
         p.paragraphSpacing = 10
         
         let attributedString = NSAttributedString(string: text, attributes: [
-            NSAttributedStringKey.font : font,
-            NSAttributedStringKey.foregroundColor : color,
-            NSAttributedStringKey.paragraphStyle : p
+            NSAttributedString.Key.font : font,
+            NSAttributedString.Key.foregroundColor : color,
+            NSAttributedString.Key.paragraphStyle : p
             ])
         
         return attributedString
@@ -167,7 +168,7 @@ class Provider : BaseManager {
             tracker.set(kGAIScreenName, value: name)
             
             if let builder = GAIDictionaryBuilder.createScreenView(){
-                tracker.send(builder.build() as! [AnyHashable : Any])
+                tracker.send(builder.build() as? [AnyHashable : Any])
             }
         }
     }

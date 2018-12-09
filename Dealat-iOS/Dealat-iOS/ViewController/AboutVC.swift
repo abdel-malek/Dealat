@@ -67,12 +67,12 @@ class AboutVC: BaseVC,MFMailComposeViewControllerDelegate {
             }
             
             let attPhone = NSMutableAttributedString.init(attributedString: res.phone.html2AttributedString!)
-            attPhone.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attPhone.length))
+            attPhone.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.white,NSAttributedString.Key.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attPhone.length))
             self.phoneLbl.attributedText = attPhone
 
 
             let attAbout = NSMutableAttributedString.init(attributedString: res.about_us.html2AttributedString!)
-            attAbout.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.white,NSAttributedStringKey.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attAbout.length))
+            attAbout.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.white,NSAttributedString.Key.font: Theme.Font.Calibri.withSize(17)], range: NSRange(location: 0, length: attAbout.length))
             self.textView.attributedText = attAbout
             
             

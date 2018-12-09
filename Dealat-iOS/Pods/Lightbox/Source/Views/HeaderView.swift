@@ -13,7 +13,7 @@ open class HeaderView: UIView {
 
     let button = UIButton(type: .system)
 
-    button.setAttributedTitle(title, for: UIControlState())
+    button.setAttributedTitle(title, for: UIControl.State())
 
     if let size = LightboxConfig.CloseButton.size {
       button.frame.size = size
@@ -25,7 +25,7 @@ open class HeaderView: UIView {
       for: .touchUpInside)
 
     if let image = LightboxConfig.CloseButton.image {
-      button.setBackgroundImage(image, for: UIControlState())
+        button.setBackgroundImage(image, for: UIControl.State())
     }
 
     button.isHidden = !LightboxConfig.CloseButton.enabled
@@ -35,15 +35,12 @@ open class HeaderView: UIView {
 
   open fileprivate(set) lazy var deleteButton: UIButton = { [unowned self] in
     let title = NSAttributedString(
-      string: "",//LightboxConfig.DeleteButton.text
+      string: LightboxConfig.DeleteButton.text,
       attributes: LightboxConfig.DeleteButton.textAttributes)
 
-    let button = UIButton.init(type: UIButtonType.infoLight)
+    let button = UIButton(type: .system)
 
     button.setAttributedTitle(title, for: .normal)
-    button.setTitleColor(UIColor.white, for: .normal)
-    button.tintColor = UIColor.white
-
 
     if let size = LightboxConfig.DeleteButton.size {
       button.frame.size = size
@@ -55,7 +52,7 @@ open class HeaderView: UIView {
       for: .touchUpInside)
 
     if let image = LightboxConfig.DeleteButton.image {
-      button.setBackgroundImage(image, for: UIControlState())
+        button.setBackgroundImage(image, for: UIControl.State())
     }
 
     button.isHidden = !LightboxConfig.DeleteButton.enabled
@@ -82,7 +79,7 @@ open class HeaderView: UIView {
   // MARK: - Actions
 
   @objc func deleteButtonDidPress(_ button: UIButton) {
-//    delegate?.headerView(self, didPressDeleteButton: button)
+    delegate?.headerView(self, didPressDeleteButton: button)
   }
 
   @objc func closeButtonDidPress(_ button: UIButton) {

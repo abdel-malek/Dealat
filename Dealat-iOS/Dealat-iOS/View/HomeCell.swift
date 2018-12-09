@@ -24,6 +24,8 @@ class HomeCell: BaseCell {
 
             self.lbl.textAlignment = (self.tag % 2 == 0) ? .right : .left
             
+            
+            
             self.cntLeft.text = (self.tag % 2 == 0) ? "\(cat.ads_count2)" : nil
             self.cntRight.text = (self.tag % 2 == 0) ? nil : "\(cat.ads_count2)"
 

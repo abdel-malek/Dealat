@@ -26,8 +26,8 @@ pod 'IQKeyboardManagerSwift'
 
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
-#pod 'GoogleAnalytics'
-pod 'Google/Analytics'
+pod 'GoogleAnalytics'
+#pod 'Google/Analytics'
 
 #pod 'UICheckbox.Swift'
 
@@ -41,16 +41,16 @@ pod 'XLPagerTabStrip'
 
 
 pod 'IQDropDownTextField'
-pod 'GrowingTextView', '~> 0.5.5'
+pod 'GrowingTextView'#, '~> 0.5.5'
 pod 'ActiveLabel'
 pod 'Lightbox'
 #pod 'Emoji-swift'
 
 
-pod 'AttributedTextView', '~> 1.1.0'
+pod 'AttributedTextView'#, '~> 1.1.0'
 
-pod 'Fabric', '~> 1.7.7'
-pod 'Crashlytics', '~> 3.10.2'
+pod 'Fabric'#, '~> 1.7.7'
+pod 'Crashlytics'#, '~> 3.10.2'
 
 
 #pod 'FacebookCore'

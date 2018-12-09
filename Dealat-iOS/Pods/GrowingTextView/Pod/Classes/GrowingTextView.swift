@@ -13,12 +13,12 @@ import UIKit
     @objc optional func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat)
 }
 
-@objc
+@IBDesignable @objc
 open class GrowingTextView: UITextView {
     override open var text: String! {
         didSet { setNeedsDisplay() }
     }
-    private weak var heightConstraint: NSLayoutConstraint?
+    private var heightConstraint: NSLayoutConstraint?
     
     // Maximum length of text. 0 means no limit.
     @IBInspectable open var maxLength: Int = 0
@@ -57,8 +57,8 @@ open class GrowingTextView: UITextView {
     private func commonInit() {
         contentMode = .redraw
         associateConstraints()
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: .UITextViewTextDidChange, object: self)
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidEndEditing), name: .UITextViewTextDidEndEditing, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextView.textDidChangeNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidEndEditing), name: UITextView.textDidEndEditingNotification, object: self)
     }
     
     deinit {
@@ -66,7 +66,7 @@ open class GrowingTextView: UITextView {
     }
     
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 30)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 30)
     }
     
     private func associateConstraints() {
@@ -153,7 +153,7 @@ open class GrowingTextView: UITextView {
                 // Otherwise user placeholder and inherit `text` attributes
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.alignment = textAlignment
-                var attributes: [NSAttributedStringKey: Any] = [
+                var attributes: [NSAttributedString.Key: Any] = [
                     .foregroundColor: placeholderColor,
                     .paragraphStyle: paragraphStyle
                 ]
@@ -168,12 +168,10 @@ open class GrowingTextView: UITextView {
     
     // Trim white space and new line characters when end editing.
     @objc func textDidEndEditing(notification: Notification) {
-        if let notificationObject = notification.object as? GrowingTextView {
-            if notificationObject === self {
-                if trimWhiteSpaceWhenEndEditing {
-                    text = text?.trimmingCharacters(in: .whitespacesAndNewlines)
-                    setNeedsDisplay()
-                }
+        if let sender = notification.object as? GrowingTextView, sender == self {
+            if trimWhiteSpaceWhenEndEditing {
+                text = text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                setNeedsDisplay()
             }
             scrollToCorrectPosition()
         }
@@ -191,4 +189,3 @@ open class GrowingTextView: UITextView {
         }
     }
 }
-

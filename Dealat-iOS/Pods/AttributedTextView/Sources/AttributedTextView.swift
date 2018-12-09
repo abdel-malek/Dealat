@@ -77,11 +77,14 @@ import UIKit
             _attributer = newValue
             self.attributedText = _attributer?.attributedText
 
-            self.isUserInteractionEnabled = true
-            self.isSelectable = true
-            self.isEditable = false
+            if _attributer?.hasCallbacks() ?? false {
+                // Without these makeInteract does not work
+                self.isUserInteractionEnabled = true
+                self.isSelectable = true
+                self.isEditable = false
+            }
             if let color = _attributer?.linkColor {
-                self.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: color]
+                self.linkTextAttributes = [NSAttributedString.Key.foregroundColor: color as Any]
             }
         }
     }

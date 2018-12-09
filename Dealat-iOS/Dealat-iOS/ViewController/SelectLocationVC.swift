@@ -113,9 +113,9 @@ class SelectLocationVC: BaseVC,UITableViewDelegate,UITableViewDataSource {
     
     func showAlertError( title : String, message : String){
         
-        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
-        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertActionStyle.default, handler: { (ac) in
+        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertAction.Style.default, handler: { (ac) in
             self.getData()
         }))
         

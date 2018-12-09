@@ -10,6 +10,7 @@ import UIKit
 import DropDown
 import SkyFloatingLabelTextField
 
+
 class FilterVC: BaseTVC {
     
 //    @IBOutlet weak var categoryLbl : UILabel!
@@ -166,7 +167,7 @@ class FilterVC: BaseTVC {
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .none
 
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
 
         
@@ -535,7 +536,7 @@ class FilterVC: BaseTVC {
         case 11:
             if self.filter.category != nil{
                 if [1,2,3,4,5,6,7,9].contains(self.filter.category.tamplate_id.intValue){
-                    return UITableViewAutomaticDimension
+                    return UITableView.automaticDimension
                 }
             }
             

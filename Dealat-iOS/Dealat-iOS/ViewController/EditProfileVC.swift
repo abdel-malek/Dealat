@@ -13,6 +13,7 @@ import Alamofire
 import DatePickerDialog
 import AFDateHelper
 
+
 class EditProfileVC: BaseVC {
     
     @IBOutlet var tfields: [SkyFloatingLabelTextField]!
@@ -147,7 +148,7 @@ class EditProfileVC: BaseVC {
     
     
    @IBAction func openDate(){
-        DatePickerDialog().show("Select date".localized, doneButtonTitle: "OK".localized, cancelButtonTitle: "Cancel".localized, defaultDate: Date(timeIntervalSince1970: 0), minimumDate: nil, maximumDate: Date(), datePickerMode: UIDatePickerMode.date) { (res) in
+    DatePickerDialog().show("Select date".localized, doneButtonTitle: "OK".localized, cancelButtonTitle: "Cancel".localized, defaultDate: Date(timeIntervalSince1970: 0), minimumDate: nil, maximumDate: Date(), datePickerMode: UIDatePicker.Mode.date) { (res) in
             
             if let d = res {
                 self.tfBirthday.text = d.toString(format: DateFormatType.isoDate)
@@ -364,7 +365,7 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         if row == 0{
-            return NSAttributedString.init(string: "select one", attributes: [NSAttributedStringKey.foregroundColor : UIColor.lightGray])
+            return NSAttributedString.init(string: "select one", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         }
         return nil
     }
@@ -385,10 +386,10 @@ extension EditProfileVC : UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     func SelectCamera(){
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera;
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         }
@@ -426,9 +427,9 @@ extension EditProfileVC : UIImagePickerControllerDelegate, UINavigationControlle
         dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         
         // Set photoImageView to display the selected image.
         imgProfile.image = selectedImage
@@ -437,13 +438,14 @@ extension EditProfileVC : UIImagePickerControllerDelegate, UINavigationControlle
         
         // Dismiss the picker.
         dismiss(animated: true, completion: nil)
+
     }
-    
+        
     
     func savePhotoLocal(_ img : UIImage) -> URL?{
         let tt = img.resized(toWidth: 512)
         
-        var imageData = UIImagePNGRepresentation(tt!)
+        var imageData = tt!.pngData()
         
         let imageSize: Int = imageData!.count
         print("size of image in KB: %f ", imageSize / 1024)

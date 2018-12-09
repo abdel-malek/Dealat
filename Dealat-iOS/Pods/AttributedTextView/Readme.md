@@ -1,7 +1,5 @@
 ## AttributedTextView
 
-⚠️ For Swift 4.2 / XCode 10 see the XCode10 branch ⚠️
-
 [![Issues](https://img.shields.io/github/issues-raw/evermeer/AttributedTextView.svg?style=flat)](https://github.com/evermeer/AttributedTextView/issues)
 [![Documentation](https://img.shields.io/badge/documented-99%-green.svg?style=flat)](http://cocoadocs.org/docsets/AttributedTextView)
 [![Stars](https://img.shields.io/github/stars/evermeer/AttributedTextView.svg?style=flat)](https://github.com/evermeer/AttributedTextView/stargazers)
@@ -71,6 +69,15 @@ And like this all text will be size 20
 
 ```swift
 "red".red.append("blue").blue.all.size(20)
+```
+
+### Clickable links
+When using AttributedTextView and creating links with .makeInteract, then you have to be aware that it will also automatically set the following properties which are needed for links to work.
+
+```swift
+isUserInteractionEnabled = true
+isSelectable = true
+isEditable = false
 ```
 
 ### Sample code

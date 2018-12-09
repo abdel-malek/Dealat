@@ -79,7 +79,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         
         self.vv.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.dis)))

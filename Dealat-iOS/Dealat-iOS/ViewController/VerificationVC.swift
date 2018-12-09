@@ -20,14 +20,14 @@ class VerificationVC: BaseVC {
 
     var timer = Timer()
 
-    let att : [NSAttributedStringKey: Any] = [
-        NSAttributedStringKey.font : Theme.Font.Calibri.withSize(20),
-        NSAttributedStringKey.foregroundColor : Theme.Color.White,
-        NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue]
+    let att : [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font : Theme.Font.Calibri.withSize(20),
+        NSAttributedString.Key.foregroundColor : Theme.Color.White,
+        NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue]
     
-    let a2 : [NSAttributedStringKey: Any] = [
-        NSAttributedStringKey.font : Theme.Font.Calibri.withSize(20),
-        NSAttributedStringKey.foregroundColor : Theme.Color.White]
+    let a2 : [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.font : Theme.Font.Calibri.withSize(20),
+        NSAttributedString.Key.foregroundColor : Theme.Color.White]
 
     
     override func viewDidLoad() {

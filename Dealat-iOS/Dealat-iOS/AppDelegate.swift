@@ -11,7 +11,7 @@ import IQKeyboardManagerSwift
 import Firebase
 import FirebaseMessaging
 import UserNotifications
-import Google
+//import Google
 import SwiftyJSON
 import Fabric
 import Crashlytics
@@ -22,17 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
                 
         
-        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.shared.enable = true
         
         UINavigationBar.appearance().barTintColor = Theme.Color.red//UIColor.groupTableViewBackground
         UINavigationBar.appearance().tintColor = Theme.Color.White
         UINavigationBar.appearance().titleTextAttributes = [
-            NSAttributedStringKey.foregroundColor : Theme.Color.White,
-            NSAttributedStringKey.font : Theme.Font.CenturyGothic.withSize(19)
+            NSAttributedString.Key.foregroundColor : Theme.Color.White,
+            NSAttributedString.Key.font : Theme.Font.CenturyGothic.withSize(19)
         ]
         UINavigationBar.appearance().barStyle = UIBarStyle.black
         
@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                selector: #selector(self.tokenRefreshNotification),
                                                name: .InstanceIDTokenRefresh,
                                                object: nil)
+
         
         
         if let gai = GAI.sharedInstance()  {
@@ -194,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }else
         {
-            if application.applicationState != UIApplicationState.active{
+            if application.applicationState != UIApplication.State.active{
                 PushManager.handleNotificationTapping(data: notification.userInfo)
             }
         }

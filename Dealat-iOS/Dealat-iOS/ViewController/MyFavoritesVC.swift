@@ -21,7 +21,7 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
     var pageNumber = 1
     var isDataLoading : Bool = false
     var isAllDataFetched : Bool = false
-    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     
     override func viewDidLoad() {

@@ -44,12 +44,12 @@ class ChatDetailsVC: BaseVC {
         
         textView.tintColor = Theme.Color.red
         
-        IQKeyboardManager.sharedManager().disabledToolbarClasses = [ChatDetailsVC.self]
-        IQKeyboardManager.sharedManager().disabledTouchResignedClasses = [ChatDetailsVC.self]
-        IQKeyboardManager.sharedManager().disabledDistanceHandlingClasses = [ChatDetailsVC.self]
+        IQKeyboardManager.shared.disabledToolbarClasses = [ChatDetailsVC.self]
+        IQKeyboardManager.shared.disabledTouchResignedClasses = [ChatDetailsVC.self]
+        IQKeyboardManager.shared.disabledDistanceHandlingClasses = [ChatDetailsVC.self]
         
         let infoBtn = UIButton.init(type: .infoLight)
-        infoBtn.addTarget(self, action: #selector(self.goToDetails), for: UIControlEvents.touchUpInside)
+        infoBtn.addTarget(self, action: #selector(self.goToDetails), for: UIControl.Event.touchUpInside)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: infoBtn)
         
         getData()
@@ -185,7 +185,7 @@ class ChatDetailsVC: BaseVC {
         textView.placeholder = "TypeHere".localized
         
         // *** Listen to keyboard show / hide ***
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
 //        self.title = self.chat.ad_title
         
@@ -211,7 +211,7 @@ class ChatDetailsVC: BaseVC {
         
         tableView.delegate = self
         tableView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         
         self.tableView.register(UINib.init(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "MessageCell")
@@ -289,7 +289,7 @@ class ChatDetailsVC: BaseVC {
                     case 2436,2688,1792: break
                     default:
                         let indexPath = IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1)
-                        self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                        self.tableView.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.bottom, animated: false)
                     }
                 }
                 
@@ -302,7 +302,7 @@ class ChatDetailsVC: BaseVC {
     
     @objc private func keyboardWillChangeFrame(_ notification: Notification) {
         
-        if let endFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let endFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             var keyboardHeight = view.bounds.height - endFrame.origin.y
             
             print(keyboardHeight)
@@ -370,7 +370,7 @@ class ChatDetailsVC: BaseVC {
                             if self.messages2[s].1[i].timeStamp == self.messages[mm].timeStamp{
                                 self.messages2[s].1[i].isNew = false
                                 self.messages2[s].1[i].created_at = res.created_at
-                                self.tableView.reloadRows(at: [IndexPath.init(row: i, section: s)], with: UITableViewRowAnimation.fade)
+                                self.tableView.reloadRows(at: [IndexPath.init(row: i, section: s)], with: UITableView.RowAnimation.fade)
                             }
                         }
                     }
@@ -520,7 +520,7 @@ extension ChatDetailsVC: GrowingTextViewDelegate {
                     switch UIScreen.main.nativeBounds.height  {
                     case 2436,2688,1792: break
                     default:
-                        self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableViewScrollPosition.bottom, animated: false)
+                        self.tableView.scrollToRow(at: IndexPath.init(row: m.1.count - 1, section: self.messages2.count - 1), at: UITableView.ScrollPosition.bottom, animated: false)
                     }
                 }
                 

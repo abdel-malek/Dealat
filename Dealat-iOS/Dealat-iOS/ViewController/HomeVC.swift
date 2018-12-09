@@ -74,7 +74,7 @@ class HomeVC: BaseVC {
     override func setupViews() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.addSubview(ref)
         
@@ -129,9 +129,9 @@ class HomeVC: BaseVC {
     
     func showAlertError( title : String, message : String){
         
-        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
-        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertActionStyle.default, handler: { (ac) in
+        alert.addAction(UIAlertAction.init(title: "TryAgain".localized, style: UIAlertAction.Style.default, handler: { (ac) in
             self.showLoading()
             self.getRefreshing()
         }))

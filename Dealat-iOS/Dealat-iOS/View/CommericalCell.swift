@@ -175,13 +175,13 @@ class CommericalCell: UICollectionViewCell {
         }
         
          if let tt = im.resized(toWidth: 300){
-            imageData = UIImagePNGRepresentation(tt)
+            imageData = tt.pngData()
             print("TYPE11")
-        }else if let d = UIImagePNGRepresentation(im){
+         }else if let d = im.pngData(){
             imageData = d
             print("TYPE22")
 
-         }else if let d = UIImageJPEGRepresentation(im, 0.8){
+         }else if let d = im.jpegData(compressionQuality: 0.8){
             imageData = d
             print("TYPE33")
          }

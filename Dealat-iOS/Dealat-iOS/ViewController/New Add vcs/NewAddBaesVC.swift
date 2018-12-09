@@ -31,7 +31,7 @@ class NewAddBaesVC: UIViewController {
             embeddedViewController = i
             i.ad = self.ad
             i.homeVC = self.homeVC
-            self.addChildViewController(i)
+            self.addChild(i)
 
             if i.editMode{
                 self.title = "SellEdit".localized

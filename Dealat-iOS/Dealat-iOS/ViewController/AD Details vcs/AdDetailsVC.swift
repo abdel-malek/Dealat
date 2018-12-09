@@ -305,7 +305,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         //gallery ad images
         collectionView.delegate = self
         collectionView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.tableFooterView = UIView()  // it's just 1 line, awesome!
         
@@ -506,18 +506,18 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 if User.isRegistered(){
                     let same = self.ad.seller_id.intValue == User.getID()
                     if same{
-                        return UITableViewAutomaticDimension
+                        return UITableView.automaticDimension
                     }
                 }
                 return 0
             }
             
             let collectionVHeight : CGFloat = (self.ad.images.isEmpty) ? 40 : 110
-            return (indexPath.row == 1) ? tableView.frame.height / 2 + collectionVHeight : UITableViewAutomaticDimension
+            return (indexPath.row == 1) ? tableView.frame.height / 2 + collectionVHeight : UITableView.automaticDimension
         case 11:
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         default:
-            return (self.ad.tamplate_id.intValue == indexPath.section) ? UITableViewAutomaticDimension : 0
+            return (self.ad.tamplate_id.intValue == indexPath.section) ? UITableView.automaticDimension : 0
         }
     }
     

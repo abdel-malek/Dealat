@@ -33,7 +33,7 @@ class SideMenuVC: BaseVC {
         
         if let i = self.btns.first(where: {$0.tag == -1}){
             let tit = User.isRegistered() ? "Logout".localized : "Register".localized
-            i.setTitle(tit, for: UIControlState.normal)
+            i.setTitle(tit, for: UIControl.State.normal)
         }
 
         

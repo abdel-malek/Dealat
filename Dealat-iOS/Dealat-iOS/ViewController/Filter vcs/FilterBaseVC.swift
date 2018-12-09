@@ -50,7 +50,7 @@ class FilterBaseVC: BaseVC {
         if segue.identifier == "vc"{
             if segue.destination.isKind(of: FilterVC.self){
                 self.embeddedViewController = segue.destination as! FilterVC
-                self.addChildViewController(self.embeddedViewController)
+                self.addChild(self.embeddedViewController)
             }
         }
     }

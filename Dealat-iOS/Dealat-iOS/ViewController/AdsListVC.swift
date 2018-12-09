@@ -25,7 +25,7 @@ class AdsListVC: BaseVC {
     var pageNumber = 1
     var isDataLoading : Bool = false
     var isAllDataFetched : Bool = false
-    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let indicater : UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     
     var x1 = -1
@@ -220,7 +220,7 @@ class AdsListVC: BaseVC {
             self.markImg.image = nil
         }else{
             self.categoryNameLbl.title = self.cat.category_name
-            self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
+            self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
         }
     
     }
