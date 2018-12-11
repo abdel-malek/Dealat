@@ -721,7 +721,7 @@ header.home {
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover; }
+    background-size: contain; }
   .ads-slider .slick-dots {
     bottom: 0; }
 

@@ -871,8 +871,15 @@ header.home {
 		height: 100%;
 		background-repeat: no-repeat;
 		background-position: center;
-		background-size: cover;
+//		background-size: cover;
+//		background-position: top;
+		background-size: contain;
 	}
+//	@media(max-width: 1199px){
+//		.ad-image {
+//			background-position: center;
+//		}
+//	}
 
 	.slick-dots {
 		bottom: 0

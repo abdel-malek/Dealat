@@ -1294,6 +1294,37 @@ $(function () {
 			});
 		});
 
+		//open a chat session
+		$(".profile-page .chats").on("click", ".delete-chat", function (e) {
+			e.stopPropagation();
+			var chatId = $(this).parents(".session").data("sessionId");
+			var btn = $(this);
+
+			$.ajax({
+				type: "post",
+				url: base_url + '/api/users_control/delete_chat',
+				dataType: "json",
+				data: {
+					chat_id: chatId
+				}
+			}).done(function (data) {
+				console.log(data);
+				if (data.status)  {
+					btn.parents(".session").next("hr").remove();
+					btn.parents(".session").remove();
+					if (lang === "ar") {
+						$("#success-modal .text").html("تم حذف الدردشة بنجاح");
+					} else {
+						$("#success-modal .text").html("Chat deleted successfully");
+					}
+					$("#success-modal").modal("show");
+					setTimeout(function () {
+						$("#success-modal").modal("hide");
+					}, 2000);
+				}
+			});
+		});
+		
 		//get saved bookmarks
 		$.ajax({
 			type: "get",
