@@ -1294,7 +1294,7 @@ $(function () {
 			});
 		});
 
-		//open a chat session
+		//delete chat session
 		$(".profile-page .chats").on("click", ".delete-chat", function (e) {
 			e.stopPropagation();
 			var chatId = $(this).parents(".session").data("sessionId");
