@@ -140,9 +140,18 @@ class Users_control extends REST_Controller {
 	{
 		$this->load->model('data_sources/messages');
 		$this->load->model('data_sources/chat_sessions');
+		$this->load->model('data_sources/deleted_chat_sessions');
 		if($this->input->get('chat_session_id')){
+			$user_id = $this->current_user->user_id;
 			$chat_id = $this->input->get('chat_session_id');
-			$chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
+			$deleted_check = $this->deleted_chat_sessions->get_by(array('user_id' => $user_id , 'chat_session_id' => $chat_id) , true);
+		   	$data = array('chat_session_id' => $chat_id);
+		    if($deleted_check){
+		   	  	if($deleted_check->is_shown == 1){
+		   	  		$data['created_at >'] = $deleted_check->modified_at;
+		   	  	}
+		   	}
+			$chat_messages = $this->messages->get_by($data);
 			if($chat_messages){ // set chat session to seen
 			    $changed_session = $this->chat_sessions->change_seen_status($chat_id , $this->current_user->user_id);
 			}
@@ -153,7 +162,14 @@ class Users_control extends REST_Controller {
 		   $chat_session_info = $this->chat_sessions->check_by_seller_or_user($ad_id , $user_id);
 		   if($chat_session_info){
 		   	  $chat_id = $chat_session_info->chat_session_id;
-			  $chat_messages = $this->messages->get_by(array('chat_session_id'=>$chat_id));
+		   	  $deleted_check = $this->deleted_chat_sessions->get_by(array('user_id' => $user_id , 'chat_session_id' => $chat_id) , true);
+		   	  $data = array('chat_session_id' => $chat_id);
+		   	  if($deleted_check){
+		   	  	if($deleted_check->is_shown == 1){
+		   	  		$data['created_at >'] = $deleted_check->modified_at;
+		   	  	}
+		   	  }
+			  $chat_messages = $this->messages->get_by($data);
 			  if($chat_messages){ // set chat session to seen
 				    $changed_session = $this->chat_sessions->change_seen_status($chat_id , $this->current_user->user_id);
 			  }
@@ -181,14 +197,46 @@ class Users_control extends REST_Controller {
 		    $msg_id = $this->messages->send_msg($ad_id ,$chat_session_id ,  $msg , $user_id);
 			if($msg_id){
 				$msg_info = $this->messages->get($msg_id);
+				// check if this chat session is deleted for the users.
+				$this->load->model('data_sources/deleted_chat_sessions');
+				$deleted_chat_sessions = $this->deleted_chat_sessions->get_by(array('chat_session_id' => $chat_session_id));
+			    if($deleted_chat_sessions){
+			    	foreach ($deleted_chat_sessions as $key => $row) {
+			    		//update the shown status to shown for the deleted chat sessions if it's not already shown.
+			    		if($row->is_shown != 1){
+			    			$this->deleted_chat_sessions->save(array('is_shown'=> 1) , $row->deleted_chat_session_id);
+			    		}
+			    	}
+			    } 
 				$this->response(array('status' => true, 'data' => $msg_info, "message" => $this->lang->line('sucess')));
 			}else{
 				$this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('failed')));
 			}
 		}
 	}
+
+
+   public function delete_chat_post(){
+   	    $this->form_validation->set_rules('chat_id', 'Chat ID', 'required');   
+	    if (!$this->form_validation->run()) {
+	        throw new Validation_Exception(validation_errors());
+		}else{	
+			$this->load->model('data_sources/deleted_chat_sessions');
+			$data = array('chat_session_id' => $this->post('chat_id') , 'user_id' => $this->current_user->user_id);
+			$already_deleted = $this->deleted_chat_sessions->get_by($data , true);
+			if($already_deleted != null){
+				$this->deleted_chat_sessions->delete($already_deleted->deleted_chat_session_id);
+			}
+		   $res_id = $this->deleted_chat_sessions->save($data);
+		   if($res_id){
+		   	   $this->response(array('status' => true, 'data' =>$res_id, "message" => 'Deleted successfully' ));
+		   }else{
+		   	   $this->response(array('status' => false, 'data' =>$res_id, "message" => 'Something went wrong' ));
+		   }	
+		}
+   }
 	
-    public function upload_personal_image_post()
+   public function upload_personal_image_post()
 	{
 	  $image_name = date('m-d-Y_hia').'-'.'1';
       $image = upload_attachement($this, PERSONAL_IMAGES_PATH , $image_name);

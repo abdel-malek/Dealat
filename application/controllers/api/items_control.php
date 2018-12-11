@@ -237,6 +237,19 @@ class Items_control extends REST_Controller {
         }
 		$this->response(array('status' => true, 'data' =>$data, 'message' => $this->lang->line('sucess')));
    }
+
+
+  public function save_no_result_search_post(){
+  	    $this->load->model('data_sources/no_result_searches');
+		$user_id = $this->current_user->user_id;
+		$data_json = json_encode($this->input->post());
+		$data = array(
+		  'user_id' => $user_id , 
+		  'query' => $data_json
+		);
+		$bookmark = $this->user_search_bookmarks->save($data); 
+		$this->response(array('status' => true, 'data' => $bookmark, "message" => $this->lang->line('sucess')));
+  }
 	
   public function get_bookmark_search_get()
    {

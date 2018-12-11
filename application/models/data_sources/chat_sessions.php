@@ -16,12 +16,16 @@ class Chat_sessions extends MY_Model {
 		                   s.personal_image as seller_pic ,
 		                   ads.title as ad_title, 
 		                   ads.ad_id as ad_id, 
-		                   categories.tamplate_id as template_id
+		                   categories.tamplate_id as template_id,
+		                   deleted_chat_sessions.user_id as deleted_at_user, 
+		                   deleted_chat_sessions.is_shown
 		                  ');
 		$this->db->join('users as u' , 'u.user_id = chat_sessions.user_id' , 'left');
 		$this->db->join('users as s' , 's.user_id = chat_sessions.seller_id' , 'left');
 		$this->db->join('ads' , 'chat_sessions.ad_id = ads.ad_id' , 'left');
 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+		$this->db->join('deleted_chat_sessions' , 'deleted_chat_sessions.chat_session_id = chat_sessions.chat_session_id' , 'left outer');
+		$this->db->where("(deleted_chat_sessions.deleted_chat_session_id IS NULL OR deleted_chat_sessions.user_id != '$user_id' OR is_shown = '1')");
 		$this->db->where("(chat_sessions.user_id = '$user_id' OR chat_sessions.seller_id = '$user_id')");
 		$this->db->where('u.is_deleted' , 0);
 		$this->db->where('s.is_deleted' , 0);
