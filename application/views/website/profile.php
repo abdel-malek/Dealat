@@ -212,12 +212,12 @@
 									<div class="is_automatic"><span class="is_automatic-lbl"><?php echo $this->lang->line('motion'); ?>: </span><span class="is_automatic-val">{{query.automatic_name}}</span></div>{{/query.automatic_name}} {{#query.state_name}}
 									<div class="is_new"><span class="is_new-lbl"></span>
 										<?php echo $this->lang->line('item_status'); ?>: <span class="is_new-val">{{query.state_name}}</span></div>{{/query.state_name}} {{#query.kilometers_min}}
-									<div class="kilometers"><span class="kilometers-lbl"><?php echo $this->lang->line('kilometers'); ?>: </span><span class="kilometers-val">from: {{query.kilometers_min}} to: {{query.kilometers_max}}</span></div>{{/query.kilometers_min}} {{#query.space_min}}
+									<div class="kilometers"><span class="kilometers-lbl"><?php echo $this->lang->line('kilometers'); ?>: </span><span class="kilometers-val"><?php echo $this->lang->line('from'); ?>: {{query.kilometers_min}} <?php echo $this->lang->line('to'); ?>: {{query.kilometers_max}}</span></div>{{/query.kilometers_min}} {{#query.space_min}}
 
 									<div class="space"><span class="space-lbl"><?php echo $this->lang->line('space'); ?>: </span><span class="space-val"><?php echo $this->lang->line('from'); ?>: {{query.space_min}} <?php echo $this->lang->line('to'); ?>: {{query.space_max}}</span></div>{{/query.space_min}} {{#query.rooms_num_min}}
 									<div class="rooms_num"><span class="rooms_num-lbl"><?php echo $this->lang->line('rooms_num'); ?>: </span><span class="rooms_num-val"><?php echo $this->lang->line('from'); ?>: {{query.rooms_num_min}} <?php echo $this->lang->line('to'); ?>: {{query.rooms_num_max}}</span></div>{{/query.rooms_num_min}} {{#query.floor_min}}
-									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val">from: {{query.floor_min}} to: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.floors_number_min}}
-									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val">from: {{query.floors_number_min}} to: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} 
+									<div class="floor"><span class="floor-lbl"><?php echo $this->lang->line('floor'); ?>: </span><span class="floor-val"><?php echo $this->lang->line('from'); ?>: {{query.floor_min}} <?php echo $this->lang->line('to'); ?>: {{query.floor_max}}</span></div>{{/query.floor_min}} {{#query.floors_number_min}}
+									<div class="floors_number"><span class="floors_number-lbl"><?php echo $this->lang->line('floors_number'); ?>: </span><span class="floors_number-val"><?php echo $this->lang->line('from'); ?>: {{query.floors_number_min}} <?php echo $this->lang->line('to'); ?>: {{query.floors_number_max}}</span></div>{{/query.floors_number_min}} 
 									{{#query.property_state_name}}
 									<div class="education property_state_name"><span class="education-lbl"><?php echo $this->lang->line('state'); ?>: </span><span class="education-val">{{query.property_state_name}}</span></div>{{/query.property_state_name}}
 									{{#query.furniture_name}}
