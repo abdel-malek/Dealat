@@ -12,7 +12,7 @@
 
 $(function () {
 	if ($(".profile-page").length > 0) {
-		
+
 		var userRateValue = 2;
 		var i, template, rendered;
 		//get my ads
@@ -82,10 +82,10 @@ $(function () {
 
 					//add commas to price
 					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
-					
+
 					//convert emojis shortnames to native unicode
 					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
-					
+
 					if (data.data[i].publish_date) {
 						adData = {
 							ad: data.data[i],
@@ -167,11 +167,11 @@ $(function () {
 
 					//add commas to price
 					data.data[i].price = new Intl.NumberFormat().format(data.data[i].price);
-					
+
 					//convert emojis shortnames to native unicode
 					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
 					data.data[i].description = emojione.shortnameToUnicode(data.data[i].description);
-					
+
 					adData = {
 						ad: data.data[i],
 						date: data.data[i].publish_date.split(' ')[0],
@@ -572,11 +572,11 @@ $(function () {
 						$("#edit-ad-modal input[name='price']").val("");
 						$("#edit-ad-modal input[name='is_negotiable']").closest(".form-group").removeClass("d-none");
 					}
-					
+
 					//convert emojis shortnames to native unicode
 					data.data.title = emojione.shortnameToUnicode(data.data.title);
 					data.data.description = emojione.shortnameToUnicode(data.data.description);
-					
+
 					$("#edit-ad-modal input[name='ad_id']").val(data.data.ad_id);
 					$("#edit-ad-modal input[name='title']").val(data.data.title);
 					$("#edit-ad-modal select[name='show_period']").val(data.data.show_period);
@@ -949,7 +949,7 @@ $(function () {
 		$("#edit-ad-form").submit(function (e) {
 			e.preventDefault();
 			e.stopPropagation();
-			
+
 			var i,
 				secondary_imgs = [],
 				adStatus;
@@ -960,19 +960,19 @@ $(function () {
 			// convert native unicode emoji to their shortnames upon form submission.
 			var title = $(this).find('input[name="title"]').val();
 			title = emojione.toShort(title);
-			
+
 			editAdData.push({
-					name: "title",
-					value: title
-				});
+				name: "title",
+				value: title
+			});
 			var desc = $(this).find('textarea[name="description"]').val();
 			desc = emojione.toShort(desc);
-			
+
 			editAdData.push({
-					name: "description",
-					value: desc
-				});
-			
+				name: "description",
+				value: desc
+			});
+
 			if (adStatus) {
 				editAdData.push({
 					name: "edit_status",
@@ -1144,7 +1144,7 @@ $(function () {
 			url: base_url + '/api/users_control/get_my_chat_sessions',
 			dataType: "json",
 			data: $(this).serialize()
-		}).done(function (data) { 
+		}).done(function (data) {
 			if (data.status === false) {} else {
 				var sessionData, sessionImage, username;
 				for (i in data.data) {
@@ -1159,10 +1159,10 @@ $(function () {
 					if (!sessionImage) {
 						sessionImage = '/assets/images/user1.jpg';
 					}
-					
+
 					//convert emojis shortnames to native unicode
 					data.data[i].ad_title = emojione.shortnameToUnicode(data.data[i].ad_title);
-					
+
 					sessionData = {
 						image: sessionImage,
 						username: username,
@@ -1200,7 +1200,7 @@ $(function () {
 
 		//open a chat session
 		$(".profile-page .chats").on("click", ".session", function () {
-			var adId,templateId, sessionId, sellerId, isSeller;
+			var adId, templateId, sessionId, sellerId, isSeller;
 			adId = $(this).data("adId");
 			templateId = $(this).data("templateId");
 			sessionId = $(this).data("sessionId");
@@ -1288,9 +1288,10 @@ $(function () {
 						}
 					}
 					$("#chat-modal").modal("show");
-					$("#chat-modal .chat").stop().animate({
-						scrollTop: $("#chat-modal .chat")[0].scrollHeight
-					}, 1000);
+//					$("#chat-modal .chat").stop().animate({
+//						scrollTop: $("#chat-modal .chat")[0].scrollHeight
+//					}, 1000);
+//					$("#chat-modal .chat").stop().scrollTop($("#chat-modal .chat")[0].scrollHeight);
 				}
 			});
 		});
@@ -1309,7 +1310,7 @@ $(function () {
 					chat_id: chatId
 				}
 			}).done(function (data) {
-				if (data.status)  {
+				if (data.status) {
 					btn.parents(".session").next("hr").remove();
 					btn.parents(".session").remove();
 					if (lang === "ar") {
@@ -1324,7 +1325,7 @@ $(function () {
 				}
 			});
 		});
-		
+
 		//get saved bookmarks
 		$.ajax({
 			type: "get",
@@ -1335,16 +1336,16 @@ $(function () {
 				for (i in data.data) {
 					data.data[i].query = $.parseJSON(data.data[i].query);
 					data.data[i].filter = $.param(data.data[i].query);
-					
+
 					//add commas to price
 					var numbersWithComma = ["price_min", "kilometers_min", "space_min", "salary_min", "price_max", "kilometers_max", "space_max", "salary_max"];
-		
-					for(var k in numbersWithComma){
-						if(data.data[i].query[numbersWithComma[k]]){
+
+					for (var k in numbersWithComma) {
+						if (data.data[i].query[numbersWithComma[k]]) {
 							data.data[i].query[numbersWithComma[k]] = new Intl.NumberFormat().format(data.data[i].query[numbersWithComma[k]]);
 						}
 					}
-					
+
 					template = $('#saved-bookmarks-template').html();
 					Mustache.parse(template);
 					rendered = Mustache.render(template, data.data[i]);
@@ -1419,231 +1420,232 @@ $(function () {
 				}
 			});
 		});
-		
-		$(".profile-page #chat-modal .ad-name").click(function(){
+
+		$(".profile-page #chat-modal .ad-name").click(function () {
+			$("#card-modal .card").remove();
 			//copied from openCardModal function except for ajax data
 			$.ajax({
-			type: "get",
-			url: base_url + '/api/items_control/get_item_details',
-			dataType: "json",
-			global: false, // this makes sure ajaxStart is not triggered
-			data: {
-				ad_id: $("#chat-form .ad-id").val(),
-				template_id: $("#chat-form .template-id").val()
-			},
-			beforeSend: function () {
-				ajaxLoadTimeout = setTimeout(function () {
-					$(".loading-overlay1").fadeIn("fast");
-				}, 100);
-			},
-			complete: function () {
-				clearTimeout(ajaxLoadTimeout);
-				$(".loading-overlay1").fadeOut("fast");
-			}
-		}).done(function (data) {
-			if (data.status === false) {} else {
-				var adData, negotiable, automatic, status, furniture, type, templateId;
+				type: "get",
+				url: base_url + '/api/items_control/get_item_details',
+				dataType: "json",
+				global: false, // this makes sure ajaxStart is not triggered
+				data: {
+					ad_id: $("#chat-form .ad-id").val(),
+					template_id: $("#chat-form .template-id").val()
+				},
+				beforeSend: function () {
+					ajaxLoadTimeout = setTimeout(function () {
+						$(".loading-overlay1").fadeIn("fast");
+					}, 100);
+				},
+				complete: function () {
+					clearTimeout(ajaxLoadTimeout);
+					$(".loading-overlay1").fadeOut("fast");
+				}
+			}).done(function (data) {
+				if (data.status === false) {} else {
+					var adData, negotiable, automatic, status, furniture, type, templateId;
 
-				if (data.data.is_negotiable === "0") {
-					if (lang === "ar") {
-						negotiable = "غير قابل للتفاوض";
+					if (data.data.is_negotiable === "0") {
+						if (lang === "ar") {
+							negotiable = "غير قابل للتفاوض";
+						} else {
+							negotiable = "Not negotiable";
+						}
+
 					} else {
-						negotiable = "Not negotiable";
-					}
-
-				} else {
-					if (lang === "ar") {
-						negotiable = "قابل للتفاوض";
-					} else {
-						negotiable = "Negotiable";
-					}
-				}
-				if (data.data.is_automatic === "0") {
-					if (lang === "ar") {
-						automatic = "يدوي";
-					} else {
-						automatic = "Manual";
-					}
-
-				} else {
-					if (lang === "ar") {
-						automatic = "اوتوماتيكي";
-					} else {
-						automatic = "Automatic";
-					}
-				}
-				if (data.data.with_furniture === "0") {
-					if (lang === "ar") {
-						furniture = "لا";
-					} else {
-						furniture = "No";
-					}
-
-				} else {
-					if (lang === "ar") {
-						furniture = "نعم";
-					} else {
-						furniture = "Yes";
-					}
-				}
-				if (data.data.is_new === "0") {
-					if (lang === "ar") {
-						status = "مستعمل";
-					} else {
-						status = "Used";
-					}
-
-				} else {
-					if (lang === "ar") {
-						status = "جديد";
-					} else {
-						status = "New";
-					}
-				}
-
-				if (data.data.gender === "1") {
-					if (lang === "ar") {
-						data.data.gender = "ذكر";
-					} else {
-						data.data.gender = "Male";
-					}
-
-				} else if (data.data.gender === "2") {
-					if (lang === "ar") {
-						data.data.gender = "أنثى";
-					} else {
-						data.data.gender = "Female";
-					}
-				}
-
-				if (!data.data.main_image && !data.data.main_video) {
-					data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
-				}
-
-				//add commas to price
-				if (data.data.price) {
-					data.data.price = new Intl.NumberFormat().format(data.data.price);
-				}
-				if (data.data.kilometer) {
-					data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
-				}
-				if (data.data.space) {
-					data.data.space = new Intl.NumberFormat().format(data.data.space);
-				}
-				if (data.data.salary) {
-					data.data.salary = new Intl.NumberFormat().format(data.data.salary);
-				}
-
-				adData = {
-					ad: data.data,
-					date: data.data.publish_date.split(' ')[0],
-					negotiable: negotiable,
-					automatic: automatic,
-					status: status,
-					furniture: furniture
-				};
-
-				template = $('#ad-details-template').html();
-				Mustache.parse(template);
-				rendered = Mustache.render(template, adData);
-				$("#card-modal .modal-body").append(rendered);
-
-				$('#card-modal .card-img-slider').slick({
-					infinite: true,
-					slidesToShow: 1,
-					mobileFirst: true,
-					swipeToSlide: true
-				});
-
-				$('.card-img-slider').slickLightbox({
-					src: 'src',
-					itemSelector: '.card-img-top img'
-				});
-
-				if (adData.ad.seller_phone) {
-					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
-				}
-
-				if (data.data.seller_id === user_id) {
-					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
-				} else {
-					$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
-					if (data.data.is_admin === 1) {
-						$("#card-modal .chat").addClass("d-none");
-					} 
-				}
-
-				if (data.data.is_admin === 1) {
-					$("#card-modal .seller").addClass("d-none");
-				} else {
-					$("#card-modal .seller").removeClass("d-none");
-				}
-
-				//category job then remove price circle
-				if (data.data.tamplate_id === "8") {
-					$("#card-modal .price").addClass("d-none");
-					$("#card-modal .negotiable").addClass("d-none");
-				} else {
-					$("#card-modal .price").removeClass("d-none");
-					$("#card-modal .negotiable").removeClass("d-none");
-				}
-
-				if (!logged) {
-					$("#card-modal .fav .icon").data("added", 0);
-				}
-
-				$("#card-modal .templates [class*='-val']").each(function () {
-					if ($(this).text() === " ") {
-						$(this).text(" -");
-					}
-				});
-
-				var subId = data.data.category_id;
-				//put all fields as shown
-				$("#card-modal .field").each(function () {
-					$(this).removeClass("d-none");
-				});
-
-				//hide fields from template according to hiddenFields array
-				var hideArr = [];
-				for (i in hiddenFields) {
-					if (hiddenFields[i].categoryId == subId) {
-						hideArr = hiddenFields[i].hidden;
-						for (j in hideArr) {
-							$("#card-modal .field." + hideArr[j]).addClass("d-none");
+						if (lang === "ar") {
+							negotiable = "قابل للتفاوض";
+						} else {
+							negotiable = "Negotiable";
 						}
 					}
-				}
+					if (data.data.is_automatic === "0") {
+						if (lang === "ar") {
+							automatic = "يدوي";
+						} else {
+							automatic = "Manual";
+						}
 
-				templateId = parseInt(data.data.tamplate_id, 10);
-				$("#card-modal .template").each(function () {
-					if ($(this).data("templateId") === templateId) {
-
-						$(this).removeClass("d-none");
+					} else {
+						if (lang === "ar") {
+							automatic = "اوتوماتيكي";
+						} else {
+							automatic = "Automatic";
+						}
 					}
-				});
+					if (data.data.with_furniture === "0") {
+						if (lang === "ar") {
+							furniture = "لا";
+						} else {
+							furniture = "No";
+						}
 
-				if ($(".card .fav .icon").data("added") === 0) {
-					$(".card .fav .icon").html('<i class="far fa-heart fa-2x"></i>');
-					$(".card .fav .icon").css("color", "#bbb");
-				} else if ($(".card .fav .icon").data("added") === 1) {
-					$(".card .fav .icon").html('<i class="fas fa-heart fa-2x"></i>');
-					$(".card .fav .icon").css("color", "#FF87A0");
-				}
-$("#chat-modal").modal("hide");
-				setTimeout(function () {
-					$("#card-modal").modal("show");
+					} else {
+						if (lang === "ar") {
+							furniture = "نعم";
+						} else {
+							furniture = "Yes";
+						}
+					}
+					if (data.data.is_new === "0") {
+						if (lang === "ar") {
+							status = "مستعمل";
+						} else {
+							status = "Used";
+						}
+
+					} else {
+						if (lang === "ar") {
+							status = "جديد";
+						} else {
+							status = "New";
+						}
+					}
+
+					if (data.data.gender === "1") {
+						if (lang === "ar") {
+							data.data.gender = "ذكر";
+						} else {
+							data.data.gender = "Male";
+						}
+
+					} else if (data.data.gender === "2") {
+						if (lang === "ar") {
+							data.data.gender = "أنثى";
+						} else {
+							data.data.gender = "Female";
+						}
+					}
+
+					if (!data.data.main_image && !data.data.main_video) {
+						data.data.main_image = 'assets/images/default_ad/' + data.data.tamplate_id + '.png';
+					}
+
+					//add commas to price
+					if (data.data.price) {
+						data.data.price = new Intl.NumberFormat().format(data.data.price);
+					}
+					if (data.data.kilometer) {
+						data.data.kilometer = new Intl.NumberFormat().format(data.data.kilometer);
+					}
+					if (data.data.space) {
+						data.data.space = new Intl.NumberFormat().format(data.data.space);
+					}
+					if (data.data.salary) {
+						data.data.salary = new Intl.NumberFormat().format(data.data.salary);
+					}
+
+					adData = {
+						ad: data.data,
+						date: data.data.publish_date.split(' ')[0],
+						negotiable: negotiable,
+						automatic: automatic,
+						status: status,
+						furniture: furniture
+					};
+
+					template = $('#ad-details-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, adData);
+					$("#card-modal .modal-body").append(rendered);
+
+					$('#card-modal .card-img-slider').slick({
+						infinite: true,
+						slidesToShow: 1,
+						mobileFirst: true,
+						swipeToSlide: true
+					});
+
+					$('.card-img-slider').slickLightbox({
+						src: 'src',
+						itemSelector: '.card-img-top img'
+					});
+
+					if (adData.ad.seller_phone) {
+						$("#card-modal .seller-phone").val(adData.ad.seller_phone);
+					}
+
+					if (data.data.seller_id === user_id) {
+						$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
+					} else {
+						$("#card-modal .chat, #card-modal .report, #card-modal .fav").removeClass("d-none");
+						if (data.data.is_admin === 1) {
+							$("#card-modal .chat").addClass("d-none");
+						}
+					}
+
+					if (data.data.is_admin === 1) {
+						$("#card-modal .seller").addClass("d-none");
+					} else {
+						$("#card-modal .seller").removeClass("d-none");
+					}
+
+					//category job then remove price circle
+					if (data.data.tamplate_id === "8") {
+						$("#card-modal .price").addClass("d-none");
+						$("#card-modal .negotiable").addClass("d-none");
+					} else {
+						$("#card-modal .price").removeClass("d-none");
+						$("#card-modal .negotiable").removeClass("d-none");
+					}
+
+					if (!logged) {
+						$("#card-modal .fav .icon").data("added", 0);
+					}
+
+					$("#card-modal .templates [class*='-val']").each(function () {
+						if ($(this).text() === " ") {
+							$(this).text(" -");
+						}
+					});
+
+					var subId = data.data.category_id;
+					//put all fields as shown
+					$("#card-modal .field").each(function () {
+						$(this).removeClass("d-none");
+					});
+
+					//hide fields from template according to hiddenFields array
+					var hideArr = [];
+					for (i in hiddenFields) {
+						if (hiddenFields[i].categoryId == subId) {
+							hideArr = hiddenFields[i].hidden;
+							for (j in hideArr) {
+								$("#card-modal .field." + hideArr[j]).addClass("d-none");
+							}
+						}
+					}
+
+					templateId = parseInt(data.data.tamplate_id, 10);
+					$("#card-modal .template").each(function () {
+						if ($(this).data("templateId") === templateId) {
+
+							$(this).removeClass("d-none");
+						}
+					});
+
+					if ($(".card .fav .icon").data("added") === 0) {
+						$(".card .fav .icon").html('<i class="far fa-heart fa-2x"></i>');
+						$(".card .fav .icon").css("color", "#bbb");
+					} else if ($(".card .fav .icon").data("added") === 1) {
+						$(".card .fav .icon").html('<i class="fas fa-heart fa-2x"></i>');
+						$(".card .fav .icon").css("color", "#FF87A0");
+					}
+					$("#chat-modal").modal("hide");
 					setTimeout(function () {
-					$(".card-img-slider").slick("refresh");
-				}, 200);
-				}, 500);
-				
-				
-			}
+						$("#card-modal").modal("show");
+						setTimeout(function () {
+							$(".card-img-slider").slick("refresh");
+						}, 200);
+					}, 500);
+
+
+				}
+			});
+
+
 		});
-			
-			
-		});
-		
+
 	}
 });
