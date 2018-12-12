@@ -875,7 +875,6 @@ $(function () {
 					$("#card-modal .seller-phone").val(adData.ad.seller_phone);
 				}
 
-				//				console.log(data.data);
 				if (data.data.seller_id === user_id) {
 					$("#card-modal .chat, #card-modal .report, #card-modal .fav").addClass("d-none");
 				} else {
@@ -1548,7 +1547,6 @@ $(function () {
 				value: desc
 			});
 		
-		//console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -1948,7 +1946,7 @@ $(function () {
 		}
 
 		//remove commas from numbers before sending the request
-		var numbersWithComma = ["price_min", "kilometer_min", "space_min", "salary_min", "price_max", "kilometer_max", "space_max", "salary_max"];
+		var numbersWithComma = ["price_min", "kilometers_min", "space_min", "salary_min", "price_max", "kilometers_max", "space_max", "salary_max"];
 
 		for (i in data) {
 			if (numbersWithComma.indexOf(data[i].name) > -1) {

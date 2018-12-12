@@ -155,7 +155,7 @@
 			</div>
 
 			<div id="chats" class="chats">
-				<div class="container">
+<!--				<div class="container">-->
 					<ul class="sessions">
 						<script id="chat-sessions-template" type="text/template">
 							<li class="session" data-username="{{username}}" data-adname="{{details.ad_title}}" data-session-id="{{details.chat_session_id}}" data-ad-id="{{details.ad_id}}" data-template-id="{{details.template_id}}" data-seller-id="{{details.seller_id}}">
@@ -183,7 +183,7 @@
 							<hr>
 						</script>
 					</ul>
-				</div>
+<!--				</div>-->
 			</div>
 
 			<div id="bookmarks" class="bookmarks">
