@@ -63,17 +63,19 @@ public class MainCatAdapter extends BaseAdapter {
         TextView textViewCounts = view.findViewById(R.id.textView);
 
         Category category = getItem(i);
-
-        textView.setText(category.getName());
+//        if (MyApplication.getLocale().toString().equals("ar"))
+//            textView.setText(category.getName() + "<");
+//        else
+            textView.setText(category.getName() /*+ ">"*/);
         textViewCounts.setText(((MasterActivity) context).formattedNumber(((MasterActivity) context).getFullAdsCount(category)));
 
-        if (i % 2 == 0) {
+       /* if (i % 2 == 0) {
             textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
             textViewCounts.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         } else {
             textView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
             textViewCounts.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-        }
+        }*/
 
         int defaultDrawable = ((MasterActivity) context).getTemplateDefaultImage(category.getTemplateId());
 

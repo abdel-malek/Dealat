@@ -98,6 +98,7 @@ public class HomeActivity extends DrawerActivity {
 
                 mainCategory.setSubCategories(((MyApplication) getApplication()).getSubCatsById("0"));
 
+
                 listView.setAdapter(new MainCatAdapter(mContext, mainCategory.getSubCategories()));
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

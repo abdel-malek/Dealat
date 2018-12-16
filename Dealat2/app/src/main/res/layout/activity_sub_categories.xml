@@ -25,18 +25,16 @@
             <ImageButton
                 android:id="@+id/buttonTrue"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
-                android:visibility="invisible"
-                android:src="@drawable/arrow_back"
+                android:visibility="gone"
+                android:src="@drawable/back"
                 android:background="@null"
                 />
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textAppearance="@style/textHeadline"

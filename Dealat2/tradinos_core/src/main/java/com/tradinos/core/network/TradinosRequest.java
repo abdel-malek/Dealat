@@ -133,13 +133,17 @@ public class TradinosRequest<T> extends Request<JSONObject> {
 
             responseCode = response.statusCode;
 
+            Log.d("response",data);
             JSONObject json = new JSONObject(data); // just for now
+
             // JSONObject json = new JSONObject(data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1));
             return Response.success(
                     json,
                     HttpHeaderParser.parseCacheHeaders(response));
 
         } catch (JSONException e) {
+            Log.e("JsonException", e.getMessage());
+
             return Response.error(new ParseError(e));
         } catch (UnsupportedEncodingException e) {
             Log.e("EncodingException", e.getMessage());
@@ -201,6 +205,8 @@ public class TradinosRequest<T> extends Request<JSONObject> {
             }
         } catch (JSONException e) {
             faildCallback.OnFaild(Code.ParsingError, "Parsing Error", "");
+            Log.e("JsonException", e.getMessage());
+
         }
     }
 

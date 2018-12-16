@@ -159,7 +159,7 @@ public class ViewAdsActivity extends DrawerActivity {
 
         } else {
             findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
-            textViewCount.setText(formattedNumber(pagingAdapter.getItemCount()) + " " + getString(R.string.ad));
+            textViewCount.setText(formattedNumber(pagingAdapter.getItemCount()) + "\n" + getString(R.string.ad));
         }
 
         if (result.size() < PAGE_SIZE)
@@ -249,7 +249,7 @@ public class ViewAdsActivity extends DrawerActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    searchView.setIconified(true);
+//                    searchView.setIconified(true);
                     searchParameters.remove("query");
                     bookmarkId = null;
                 }

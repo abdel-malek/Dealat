@@ -45,11 +45,13 @@ public class URLBuilder {
 
 //              SERVER_URL = "http://192.168.0.125/Dealat/index.php/api";
             //  SERVER_URL = "http://dealat.tradinos.com/index.php/api";
+//            SERVER_URL = "http://192.168.1.11/dealat/index.php/api";
             SERVER_URL = "http://deal-at.com/index.php/api";
             // SERVER_URL = "http://dealat-sy.tradinos.com/index.php/api";
         else {
 //             SERVER_URL = preferences.getString("server_url", "http://192.168.0.125/Dealat/index.php/api" + "");
             //   SERVER_URL = preferences.getString("server_url", "http://dealat.tradinos.com/index.php/api" + "");
+//            SERVER_URL = preferences.getString("server_url", "http://192.168.1.11/dealat/index.php/api" + "");
             SERVER_URL = preferences.getString("server_url", "http://deal-at.com/index.php/api" + "");
             //   SERVER_URL = preferences.getString("server_url", "http://dealat-sy.tradinos.com/index.php/api" + "");
         }

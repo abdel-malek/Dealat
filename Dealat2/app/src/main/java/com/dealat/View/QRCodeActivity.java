@@ -41,10 +41,8 @@ public class QRCodeActivity extends MasterActivity implements ZXingScannerView.R
         // Set the scanner view as the content view
         // setContentView(mScannerView);
 
-        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(QRCodeActivity.this,
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(QRCodeActivity.this,
-                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(QRCodeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(QRCodeActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
         } else
             mScannerView.startCamera();
     }

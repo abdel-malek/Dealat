@@ -165,7 +165,7 @@
     <string name="hintVerificationCode">رمز التحقق</string>
     <string name="hintChooseLocation">اختر منطقة</string>
     <string name="hintSearch">ابحث</string>
-    <string name="hintTitle">عنوان الإعلان</string>
+    <string name="hintTitle">اسم الإعلان</string>
     <string name="hintDesc">الوصف...</string>
     <string name="hintPrice">السعر (ل.س)</string>
     <string name="hintExperience">الخبرة</string>
@@ -191,7 +191,7 @@
     <string name="buttonMarkAsMain">تحديد كصورة رئيسية</string>
     <string name="buttonDelete">حذف</string>
     <string name="buttonBack">رجوع</string>
-    <string name="buttonFilter">بحث</string>
+    <string name="buttonFilter">بحث متقدم</string>
     <string name="buttonShow">عرض</string>
     <string name="buttonSave">حفظ</string>
     <string name="buttonSend">إرسال</string>

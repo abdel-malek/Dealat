@@ -1,5 +1,6 @@
 package com.dealat.Parser.Parser.Bookmark;
 
+import com.google.android.gms.common.util.JsonUtils;
 import com.tradinos.core.network.TradinosParser;
 import com.dealat.Model.Bookmark;
 
@@ -24,7 +25,11 @@ public class BookmarkListParser implements TradinosParser<List<Bookmark>> {
         JSONObject jsonObject;
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
-            bookmarks.add(new BookmarkParser().Parse(jsonObject));
+            try {
+                bookmarks.add(new BookmarkParser().Parse(jsonObject));
+
+            } catch (JSONException e) {
+            }
         }
 
         return bookmarks;

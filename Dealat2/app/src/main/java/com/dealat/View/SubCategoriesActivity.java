@@ -175,7 +175,7 @@ public class SubCategoriesActivity extends MasterActivity {
 
             animate(1);
             if (category.getId().equals("0"))
-                buttonBack.setVisibility(View.INVISIBLE);
+                buttonBack.setVisibility(View.GONE);
 
         } else if (view.getId() == R.id.container)
             finish();
