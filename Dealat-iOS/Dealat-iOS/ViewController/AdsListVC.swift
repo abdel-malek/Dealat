@@ -26,34 +26,21 @@ class AdsListVC: BaseVC {
     var isDataLoading : Bool = false
     var isAllDataFetched : Bool = false
     let indicater : UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
-
+    
     
     var x1 = -1
     var timer : Timer = Timer()
     var viewsType : Int = 1
     
-//    var type : Int = 0 // 0 from category, 1 from search
+    var fromBookmark : Bool = false
     var fromFilter : Bool = false
     var filter : FilterParams!
     var query = String()
-
+    var bookmark : UserBookmark!
     
-    //Search Fields
-//    var selectedCategory : Cat!
-//    var selectedLocation : Location!
-
-    
-//    var commericals : [String]{
-//        var ar = [String]()
-//        ar.append("ad_image_39")
-//        ar.append("ad_image_40")
-//        ar.append("ad_image_42")
-//        ar.append("ad_image_43")
-//        return ar
-//    }
     
     var commericals : [Commercial] = [Commercial]()
-
+    
     
     var cat = Cat()
     var ads : [AD] = [AD]()
@@ -63,10 +50,36 @@ class AdsListVC: BaseVC {
         
         getData()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(openFilter))
+        
+        self.setupFilterButton()
         
         Provider.setScreenName("ViewAdsActivity")
     }
+    
+    func setupFilterButton(){
+        let btn = UIButton.init()
+        let image = #imageLiteral(resourceName: "filter-tool-black-shape").resized(toWidth: 15)?.withRenderingMode(.alwaysTemplate)
+        btn.setImage(image, for: UIControl.State.normal)
+        btn.setTitle("Filter".localized, for: UIControl.State.normal)
+        btn.setTitleColor(Theme.Color.red, for: UIControl.State.normal)
+        btn.titleLabel?.font = Theme.Font.Calibri.withSize(16)
+        btn.contentEdgeInsets = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
+        btn.tintColor = Theme.Color.red
+        btn.backgroundColor = .white
+        btn.cornerRadius = 10
+        if Provider.isArabic{
+            btn.imageEdgeInsets.right = -8
+            btn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }else{
+            btn.imageEdgeInsets.left = -8
+        }
+        btn.addTarget(self, action: #selector(self.openFilter), for: UIControl.Event.touchUpInside)
+        let barButton = UIBarButtonItem.init(customView: btn)
+        self.navigationItem.rightBarButtonItem = barButton
+    }
+    
     
     override func getRefreshing() {
         self.isDataLoading = false
@@ -77,28 +90,38 @@ class AdsListVC: BaseVC {
     }
     
     func getRefreshing2(){
-        if !self.fromFilter && self.query.isEmpty{
-            Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue,page_num : self.pageNumber) { (ads,commercials) in
+        
+        if self.fromBookmark{
+            Communication.shared.get_bookmark_search(page_num : self.pageNumber,user_bookmark_id: bookmark.user_bookmark_id.intValue, callback: { (commercials,ads) in
                 self.hideLoading()
-//                self.ads = ads
-//                self.collectionView2.reloadData()
                 self.onDataRecived(ads)
                 self.refreshTopAds(commercials)
-            }
-        }else{
-            Communication.shared.search(page_num : self.pageNumber,query: self.query, filter : Provider.filter, callback: { (ads,commercials) in
-                self.hideLoading()
-                //self.ads = ads
-                //self.collectionView2.reloadData()
-                self.onDataRecived(ads)
-
                 self.categoryNameLbl.title = nil
                 self.categoryImg.image = nil
-                self.markImg.image = #imageLiteral(resourceName: "star_copy")
-                self.markImg.target = self
-                self.markImg.action = #selector(self.markAction)
-                self.refreshTopAds(commercials)
+                self.markImg.image = nil
             })
+        }else{
+            if !self.fromFilter && self.query.isEmpty{
+                Communication.shared.get_ads_by_main_category(self.cat.category_id.intValue,page_num : self.pageNumber) { (ads,commercials) in
+                    self.hideLoading()
+                    self.onDataRecived(ads)
+                    self.refreshTopAds(commercials)
+                }
+            }else{
+                Communication.shared.search(page_num : self.pageNumber,query: self.query, filter : Provider.filter, callback: { (ads,commercials) in
+                    self.hideLoading()
+                    self.onDataRecived(ads)
+                    
+                    if ads.isEmpty {self.collectionView2.EmptyMessage()} else {self.collectionView2.backgroundView = nil}
+                    
+                    self.categoryNameLbl.title = nil
+                    self.categoryImg.image = nil
+                    self.markImg.image = #imageLiteral(resourceName: "star_copy")
+                    self.markImg.target = self
+                    self.markImg.action = #selector(self.markAction)
+                    self.refreshTopAds(commercials)
+                })
+            }
         }
     }
     
@@ -107,14 +130,12 @@ class AdsListVC: BaseVC {
         self.hideLoading()
         self.collectionView2.isHidden = false
         isDataLoading = false
-//        self.collectionView2.footer = nil //TODO
         
         
         if self.pageNumber == 1{
             self.ads = res
         }else{
             self.ads = self.ads + res
-            //            self.restaurants += res
         }
         
         if (res.count < Provider.PAGE_SIZE)
@@ -124,11 +145,8 @@ class AdsListVC: BaseVC {
         
         self.collectionView2.reloadData()
         
-        // TODO
-        //        if !self.restaurants.isEmpty{
         if !self.ads.isEmpty, self.pageNumber == 1{
             self.collectionView2.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
-//            self.tableView.scrollToRow(at: IndexPath.init(row: 0, section: 0), at: .top, animated: false)
         }
     }
     
@@ -146,16 +164,12 @@ class AdsListVC: BaseVC {
         indicater.startAnimating()
         indicater.hidesWhenStopped = true
         indicater.frame.size.height = 40
-        print("TES TES TES :\(indicater.frame.size.height)")
-        
-//        self.collectionView2.tableFooterView = indicater // TODO
-        
         
         getRefreshing2()
     }
     
     func refreshTopAds(_ commercials : [Commercial] = [Commercial]() ){
-
+        
         if pageNumber == 1{
             self.commericals = commercials
             if commercials.isEmpty{
@@ -167,32 +181,6 @@ class AdsListVC: BaseVC {
             }
             self.collectionView.reloadData()
         }
-        
-        /*var cat_id = 0
-        if !self.fromFilter && self.query.isEmpty{
-            cat_id = self.cat.category_id.intValue
-        }else if Provider.selectedCategory != nil{
-            cat_id = Provider.selectedCategory.category_id.intValue
-        }
-         
-        Communication.shared.get_commercial_ads(cat_id) { (res) in
-            if let coms = res{
-                self.hideLoading()
-                self.commericals = coms
-                
-                self.pageControl.numberOfPages = self.commericals.count
-                self.timer.invalidate()
-                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
-                self.timer.fire()
-                self.collectionView.reloadData()
-                
-                if coms.isEmpty{
-                    let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
-                    im.contentMode = .scaleAspectFit
-                    self.collectionView.backgroundView = im
-                }
-            }
-        }*/
     }
     
     @objc func markAction(){
@@ -210,19 +198,29 @@ class AdsListVC: BaseVC {
         collectionView.delegate = self
         collectionView2.dataSource = self
         collectionView2.delegate = self
+        collectionView2.addSubview(ref)
         
         // Search bar
         self.setupSearchBar()
         
+        
+        
         // TODO
-        if self.fromFilter || !self.query.isEmpty{
-            self.searchBar.text = self.query
+        
+        if self.fromBookmark{
+            self.categoryNameLbl.title = nil
+            self.categoryImg.image = nil
             self.markImg.image = nil
+
         }else{
-            self.categoryNameLbl.title = self.cat.category_name
-            self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            if self.fromFilter || !self.query.isEmpty{
+                self.searchBar.text = self.query
+                self.markImg.image = nil
+            }else{
+                self.categoryNameLbl.title = self.cat.category_name
+                self.categoryImg.image = UIImage.init(named: "cat\(self.cat.tamplate_id.stringValue)")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
+            }
         }
-    
     }
     
     
@@ -260,7 +258,6 @@ class AdsListVC: BaseVC {
         
         let u = x1 % cnt
         
-        
         self.collectionView.setContentOffset(CGPoint(x: self.collectionView.frame.size.width * CGFloat(u), y: 0) , animated: true)
     }
     
@@ -270,7 +267,7 @@ class AdsListVC: BaseVC {
         
         if let searchBarText = searchBar.text {
             self.query = searchBarText
-//            Provider.searchText = searchBarText
+            //            Provider.searchText = searchBarText
             self.getData()
         }
     }
@@ -312,7 +309,6 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
         
         if collectionView == self.collectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
-//            cell.imageName = self.commericals[indexPath.row]
             cell.commercial = self.commericals[indexPath.row]
             return cell
         }else{
@@ -330,13 +326,13 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
             {
                 loadItems()
             }
-
+            
             cell.ad = self.ads[indexPath.row]
             return cell
         }
     }
     
-
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView{
@@ -346,7 +342,7 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
                 }
             }
         }
-        
+            
         else if collectionView == self.collectionView2{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
             vc.tamplateId = self.ads[indexPath.row].tamplate_id.intValue

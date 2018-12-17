@@ -6,6 +6,7 @@
   Copyright © 2018 Tradinos UG. All rights reserved.
 */
 
+
 //Register
 "Register" = "Register";
 "Name" = "Name";
@@ -202,3 +203,7 @@
 "views" = "views";
 "TryAgain" = "Try again";
 "ConnectionError" = "Error in connection!";
+
+"No search results" = "No search results";
+"Confirmation" = "Confirmation";
+"ConfirmDissNew" = "Are you sure you want to discard this ad?";

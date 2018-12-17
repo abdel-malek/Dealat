@@ -18,12 +18,24 @@ class NewAddBaesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let customBackButton = UIBarButtonItem.init(barButtonSystemItem: .stop, target: self, action: #selector(self.confirmAlert))
+        navigationItem.leftBarButtonItem = customBackButton
+        
         if ad != nil{
             Provider.setScreenName("EditAdActivity")
         }else{
             Provider.setScreenName("SubmitAdActivity")
         }
+    }
+    
+    @objc func confirmAlert(){
+        let alert = UIAlertController.init(title: "Confirmation".localized, message: "ConfirmDissNew".localized, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction.init(title: "OK".localized, style: UIAlertAction.Style.default, handler: { (ac) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: UIAlertAction.Style.cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

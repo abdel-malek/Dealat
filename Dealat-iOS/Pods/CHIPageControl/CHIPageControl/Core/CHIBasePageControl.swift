@@ -25,7 +25,9 @@
 
 import UIKit
 
-@IBDesignable open class CHIBasePageControl: UIControl, CHIPageControllable {
+open class CHIBasePageControl: UIControl, CHIPageControllable {
+//@IBDesignable open class CHIBasePageControl: UIControl, CHIPageControllable {
+
 
     @IBInspectable open var numberOfPages: Int = 0 {
         didSet {

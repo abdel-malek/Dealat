@@ -45,6 +45,7 @@ pod 'GrowingTextView'#, '~> 0.5.5'
 pod 'ActiveLabel'
 pod 'Lightbox'
 #pod 'Emoji-swift'
+pod 'Hue'
 
 
 pod 'AttributedTextView'#, '~> 1.1.0'

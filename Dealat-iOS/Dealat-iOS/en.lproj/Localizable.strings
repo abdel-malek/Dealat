@@ -203,3 +203,7 @@
 "views" = "views";
 "TryAgain" = "Try again";
 "ConnectionError" = "Connection error!";
+
+"No search results" = "No search results";
+"Confirmation" = "Confirmation";
+"ConfirmDissNew" = "Are you sure you want to discard this ad?";

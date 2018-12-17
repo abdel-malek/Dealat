@@ -9,7 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 
-class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,IndicatorInfoProvider {
+class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,IndicatorInfoProvider {
     
     @IBOutlet weak var collectionView : UICollectionView!
     var chats = [Chat]()
@@ -18,10 +18,10 @@ class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,Indi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = CGSize(width: 1,height: 1)
-        }
-
+//        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//            flowLayout.estimatedItemSize = CGSize(width: 1,height: 1)
+//        }
+//
         getData()
         
         Provider.setScreenName("My Chats")
@@ -30,6 +30,7 @@ class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,Indi
     override func setupViews() {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        self.collectionView.addSubview(ref)
     }
     
     override func getRefreshing() {
@@ -42,31 +43,28 @@ class MyChatsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,Indi
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("TTCCCCC : \(chats.count)")
         return chats.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ChatCell
         cell.chat = self.chats[indexPath.row]
+        print("CELL : \(self.chats[indexPath.row].ad_title)")
         return cell
-        
-        
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailsVC") as! ChatDetailsVC
         vc.chat = self.chats[indexPath.row]
+        vc.parentMyChat = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return CGSize.init(width: collectionView.frame.width, height: UIScreen.main.bounds.width / 4)
-//    }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //let h = UIScreen.main.bounds.width / 4
+        return CGSize.init(width: collectionView.frame.width, height: UIScreen.main.bounds.width / 4)
+    }
     
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {

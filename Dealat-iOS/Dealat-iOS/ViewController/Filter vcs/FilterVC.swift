@@ -92,8 +92,12 @@ class FilterVC: BaseTVC {
     
     @objc func myTextFieldDidChange(_ textField: UITextField) {
         
-        if let amountString = textField.text?.currencyInputFormatting() {
-            textField.text = amountString
+//        if let amountString = textField.text?.currencyInputFormatting() {
+//            textField.text = amountString
+//        }
+        // TODO
+        if let text = textField.text{
+            textField.text = Provider.getEnglishNumber(text.deleteDecimal()).currencyInputFormatting()
         }
     }
 
@@ -334,15 +338,14 @@ class FilterVC: BaseTVC {
         }else{
             self.tfPropertyName.text = allString
         }
-
-
+        
         self.filter.searchText = self.tfSearch.text
         
-        self.filter.price.min = self.tfPrice1.text
-        self.filter.price.max = self.tfPrice2.text
+        self.filter.price.min = self.tfPrice1.text?.deleteDecimal()
+        self.filter.price.max = self.tfPrice2.text?.deleteDecimal()
         
-        self.filter.kilometer.min = self.tfKilometers1.text
-        self.filter.kilometer.max = self.tfKilometers2.text
+        self.filter.kilometer.min = self.tfKilometers1.text?.deleteDecimal()
+        self.filter.kilometer.max = self.tfKilometers2.text?.deleteDecimal()
 
         self.filter.rooms_num.min = self.tfRooms_num1.text
         self.filter.rooms_num.max = self.tfRooms_num2.text
@@ -351,17 +354,17 @@ class FilterVC: BaseTVC {
         self.filter.floors_number.max = self.tfFloors_number2.text
 
         
-        self.filter.space.min = self.tfSpace1.text
-        self.filter.space.max = self.tfSpace2.text
+        self.filter.space.min = self.tfSpace1.text?.deleteDecimal()
+        self.filter.space.max = self.tfSpace2.text?.deleteDecimal()
 
         self.filter.floor.min = self.tfFloor1.text
         self.filter.floor.max = self.tfFloor2.text
 
-        self.filter.salary.min = self.tfSalary1.text
-        self.filter.salary.max = self.tfSalary2.text
+        self.filter.salary.min = self.tfSalary1.text?.deleteDecimal()
+        self.filter.salary.max = self.tfSalary2.text?.deleteDecimal()
         
-        self.filter.engine_capacity.min = self.tfCapacity1.text
-        self.filter.engine_capacity.max = self.tfCapacity2.text
+        self.filter.engine_capacity.min = self.tfCapacity1.text?.deleteDecimal()
+        self.filter.engine_capacity.max = self.tfCapacity2.text?.deleteDecimal()
 
         self.tableView.reloadData()
     }

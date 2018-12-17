@@ -1291,8 +1291,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional : params) { (res) in
                 self.hideLoading()
                 
-                self.navigationController?.popViewController(animated: true)
-                
+//                self.navigationController?.popViewController(animated: true) //TODO
+                self.dismiss(animated: false, completion: nil)
                 
                 let alert = UIAlertController.init(title: "Successful".localized, message: "AdDone".localized, preferredStyle: .alert)
                 alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: nil))

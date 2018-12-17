@@ -31,6 +31,7 @@ class ChatDetailsVC: BaseVC {
     static var messagesRT = [(TimeInterval,Bool)]()
     static var isSending : Bool = false
 
+    var parentMyChat : MyChatsVC?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,12 +51,13 @@ class ChatDetailsVC: BaseVC {
         
         let infoBtn = UIButton.init(type: .infoLight)
         infoBtn.addTarget(self, action: #selector(self.goToDetails), for: UIControl.Event.touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: infoBtn)
+        let infoBarButton = UIBarButtonItem.init(customView: infoBtn)
+        self.navigationItem.rightBarButtonItems = [infoBarButton]
         
+
         getData()
         
         Provider.setScreenName("ChatActivity")
-
     }
     
     @objc func goToDetails(){
@@ -75,6 +77,33 @@ class ChatDetailsVC: BaseVC {
         vc.tamplateId = tamplateId
         vc.ad = AD.init(JSON : ["title" : adTitle,"ad_id" : self.chat.ad_id.intValue,"tamplate_id" : tamplateId, "category_id" : 0])
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    @objc func deleteChat(){
+        var chat_session_id : String! = nil
+        
+        if let id = self.chat.chat_session_id{
+            chat_session_id = id.stringValue
+        }else if let id = self.messages.first?.chat_session_id{
+            chat_session_id = id.stringValue
+        }
+        
+        if chat_session_id != nil{
+            let alert = UIAlertController.init(title: "Delete chat", message: "Are you sure you want to delete this chat?", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: { (ac) in
+                self.showLoading()
+                Communication.shared.delete_chat(chat_id: chat_session_id, callback: { (res) in
+                    self.hideLoading()
+                    // TODO
+                    self.navigationController?.popViewController(animated: true)
+                    
+                    self.parentMyChat?.getRefreshing()
+                })
+            }))
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -227,6 +256,11 @@ class ChatDetailsVC: BaseVC {
             self.tableView.alpha = 0
             self.messages = res
             self.fixMessages()
+            
+            if !res.isEmpty{
+                let deleteBarButton = UIBarButtonItem.init(barButtonSystemItem: .trash, target: self, action: #selector(self.deleteChat))
+                self.navigationItem.rightBarButtonItems?.append(deleteBarButton)
+            }
         }
     }
     
@@ -360,7 +394,8 @@ class ChatDetailsVC: BaseVC {
 
                 Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: self.messages[mm].text.emojiEscapedString, callback: { (res) in
                     
-
+                    self.chat.chat_session_id = res.chat_session_id
+                    
                     self.messages[mm].isNew = false
                     self.messages[mm].created_at = res.created_at
                     
@@ -452,6 +487,7 @@ extension ChatDetailsVC : UITableViewDelegate, UITableViewDataSource{
             chat_session_id = self.chat.chat_session_id.intValue
         }
 
+        cell.parentVC = self
         cell.chat = self.chat
         cell.chat_session_id = chat_session_id
         cell.message = self.messages2[indexPath.section].1[indexPath.row]

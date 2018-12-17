@@ -163,7 +163,7 @@ class BaseVC: UIViewController,UITextFieldDelegate, UITextViewDelegate, UIGestur
         
         //setup back button
         self.navigationItem.hidesBackButton = false
-        let rr = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action:nil)
+        let rr = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = rr
         //        }
         

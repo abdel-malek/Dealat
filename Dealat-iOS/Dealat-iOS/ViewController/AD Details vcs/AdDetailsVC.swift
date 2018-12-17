@@ -20,7 +20,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var collectionViewHeight : NSLayoutConstraint!
     var parentBase: AdDetailsBaseVC?
     var imagesController = LightboxController.init()
-
+    
     
     //General
     @IBOutlet weak var adStatusLbl : UILabel!
@@ -28,8 +28,8 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     @IBOutlet weak var adExpiresDatebl : UILabel!
     @IBOutlet weak var adExpiresStack : UIStackView!
-
-
+    
+    
     @IBOutlet weak var adRejectionLbl : UILabel!
     @IBOutlet weak var adRejectionStack : UIStackView!
     
@@ -38,10 +38,10 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var numberLbl : UILabel!
     @IBOutlet weak var nameLbl : UILabel!
     @IBOutlet weak var priceLbl : UILabel!
-//    @IBOutlet weak var viewsLbl : UILabel!
+    //    @IBOutlet weak var viewsLbl : UILabel!
     @IBOutlet weak var dateLbl : UILabel!
     @IBOutlet weak var catLbl : UILabel!
-//    @IBOutlet weak var sellerLbl : UILabel!
+    //    @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var negotiableLbl : UILabel!
     @IBOutlet weak var cityLbl : UILabel!
     @IBOutlet weak var locationLbl : UILabel!
@@ -49,10 +49,10 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     @IBOutlet weak var favVV : UIView!
     @IBOutlet weak var imgFav : UIImageView!
-
+    
     @IBOutlet weak var viewLbl : UILabel!
-
-
+    
+    
     // 1 Vehicle
     @IBOutlet weak var manufacture_dateLbl : UILabel!
     @IBOutlet weak var is_automaticLbl : UILabel!
@@ -61,7 +61,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var type_nameLbl : UILabel!
     @IBOutlet weak var type_model_nameLbl : UILabel!
     @IBOutlet weak var engine_capacityLbl : UILabel!
-
+    
     
     // 2 Property
     @IBOutlet weak var stateLbl : UILabel!
@@ -80,7 +80,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var is_new4 : UILabel!
     @IBOutlet weak var type_nameLbl4 : UILabel!
     @IBOutlet weak var sizeLbl : UILabel!
-
+    
     
     // 5 Fashion
     @IBOutlet weak var is_new5 : UILabel!
@@ -98,15 +98,15 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @IBOutlet weak var genderLbl : UILabel!
     @IBOutlet weak var experienceLbl : UILabel!
     @IBOutlet weak var salaryLbl : UILabel!
-
+    
     
     // 9 Industry
     @IBOutlet weak var is_new9 : UILabel!
     
     var selectedIndex : Int = 0
     var ad : AD!
-
-
+    
+    
     func ifHidden(index : IndexPath) -> Bool{
         
         
@@ -126,7 +126,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             case (1,4): return s2.first(where: {$0 == "is_new"}) != nil
             case (1,5): return s2.first(where: {$0 == "kilometer"}) != nil
             case (1,6): return s2.first(where: {$0 == "engine_capacity"}) != nil
-
+                
             case (2,0): return s2.first(where: {$0 == "space"}) != nil
             case (2,1): return s2.first(where: {$0 == "rooms_num"}) != nil
             case (2,2): return s2.first(where: {$0 == "floors_number"}) != nil
@@ -161,7 +161,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         
         return false
     }
-
+    
     
     override func viewDidLoad() {
         
@@ -173,11 +173,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     override func getRefreshing() {
         Communication.shared.get_ad_details(ad_id: self.ad.ad_id.intValue, template_id: self.ad.tamplate_id.intValue) { (res) in
             self.hideLoading()
-
+            
             let expairy_date = self.ad.expiry_date
             
             self.ad = res
-
+            
             if res.expiry_date == nil || res.expiry_date.isEmpty{
                 self.ad.expiry_date = expairy_date
             }
@@ -206,8 +206,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     func refreshData(){
         self.title = ad.title.emojiUnescapedString
         
-        print("TTTT : \(ad.title.emojiUnescapedString)")
         Provider.sd_setImage(self.img, urlString: ad.main_image)
+        
+        if Provider.isArabic{
+            self.collectionView2.transform = CGAffineTransform.init(scaleX: -1.0, y: 1.0)
+        }
         
         if let views_num = ad.views_num{
             self.viewLbl.text = "\(views_num.stringValue) " + "views".localized
@@ -246,7 +249,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 }else{
                     self.adExpiresStack.isHidden = false
                 }
-
+                
             }
         }
         
@@ -270,7 +273,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.priceLbl.text =  "S.P".localized
         }
         
-            
+        
         if ad.publish_date != nil{
             let d = Date.init(fromString: ad.publish_date, format: .custom("yyyy-MM-dd hh:mm:ss"))
             self.dateLbl.text = d?.toString(format: DateFormatType.isoDate)
@@ -282,18 +285,20 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         cat += (ad.category_name != nil) ? "\(ad.category_name!)" : ""
         self.catLbl.text = "\(cat)"
         
-//        var loc = ""
-//        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
-//        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
+        //        var loc = ""
+        //        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
+        //        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
         self.cityLbl.text = ad.city_name
-
-//        var loc = ""
-//        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
-//        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
+        
+        //        var loc = ""
+        //        loc += (ad.city_name != nil) ? "\(ad.city_name!) - " : ""
+        //        loc += (ad.location_name != nil) ? "\(ad.location_name!)" : ""
         self.locationLbl.text = ad.location_name
         
-//        self.sellerLbl.text = ad.seller_name
+        //        self.sellerLbl.text = ad.seller_name
         self.parentBase?.sellerLbl.text = ad.seller_name
+        self.parentBase?.phoneLbl.text = ad.seller_phone
+
         if ad.is_negotiable != nil{
             self.negotiableLbl.text = ad.is_negotiable.Boolean ? "yes".localized : "no".localized
         }else{
@@ -349,7 +354,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.is_new3.text = ad.mobile.is_new.Boolean ? "new".localized : "old".localized
             }
             self.type_nameLbl3.text = ad.mobile.type_name
-
+            
         }
         
         //4 Electronic
@@ -417,17 +422,17 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.imgFav.isUserInteractionEnabled = true
             if let is_favorite = self.ad.is_favorite{
                 self.imgFav.image = (is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
-                self.favVV.backgroundColor = (is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
+                self.favVV.backgroundColor = UIColor.lightGray//(is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
                 self.favVV.borderColor = Theme.Color.red
-                self.favVV.borderWidth = 1
-
+                self.favVV.borderWidth = 0//1
+                
             }else{
                 self.favVV.isHidden = true
             }
         }else{
             self.favVV.isHidden = true
         }
-
+        
         
         self.tableView.reloadData()
         self.collectionView.reloadData()
@@ -448,9 +453,9 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             }, completion: nil)
         
         self.imgFav.image = (self.ad.is_favorite.Boolean) ? #imageLiteral(resourceName: "star") :  #imageLiteral(resourceName: "star_copy")
-        self.favVV.backgroundColor = (self.ad.is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
+        self.favVV.backgroundColor = UIColor.lightGray//(self.ad.is_favorite.Boolean) ? Theme.Color.White :  Theme.Color.red
         self.favVV.borderColor = Theme.Color.red
-        self.favVV.borderWidth = 1
+        self.favVV.borderWidth = 0//1
     }
     
     @objc func changeFav(){
@@ -501,7 +506,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         
         switch indexPath.section {
         case 0:
-
+            
             if indexPath.row == 0{
                 if User.isRegistered(){
                     let same = self.ad.seller_id.intValue == User.getID()
@@ -529,7 +534,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CommericalCell
         
-        cell.im = self.ad.images[indexPath.row]
+        if Provider.isArabic,collectionView == collectionView2{
+            var images2 = Array(self.ad.images.reversed())
+            cell.im = images2[indexPath.row]
+        }else{
+            cell.im = self.ad.images[indexPath.row]
+        }
         
         if collectionView.tag != 2{
             if indexPath.row == self.selectedIndex{
@@ -572,14 +582,16 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 }
             }
             
+            if Provider.isArabic{
+                images = images.reversed()
+            }
             
             self.imagesController = LightboxController(images: images)
-            
             
             self.imagesController.headerView.deleteButton.isHidden = false
             self.imagesController.headerView.deleteButton.isEnabled = true
             self.imagesController.headerView.deleteButton.setImage(#imageLiteral(resourceName: "share"), for: .normal)
-
+            
             self.imagesController.headerView.deleteButton.addTarget(self, action: #selector(shareImage), for: .touchUpInside)
             
             if indexPath.row < images.count{
@@ -600,57 +612,64 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     @objc func shareImage(){
         
         if !self.ad.images[self.imagesController.currentPage].isVideo{
-        let imgV = UIImageView()
-        
-        Provider.sd_setImage(imgV, urlString: self.ad.images[self.imagesController.currentPage].image)
-        
-        guard let imgg = imgV.image else {
-            return
-        }
-        
+            let imgV = UIImageView()
+            
+            var image = self.ad.images[self.imagesController.currentPage].image
+            
+            if Provider.isArabic{
+                image = self.ad.images.reversed()[self.imagesController.currentPage].image
+            }
+            
+            Provider.sd_setImage(imgV, urlString: image)
+            
+            
+            guard let imgg = imgV.image else {
+                return
+            }
+            
             let imageToShare = [ imgg ]
             let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
             
             activityViewController.excludedActivityTypes = [  ]
-        //UIActivityType.airDrop, UIActivityType.postToFacebook
+            //UIActivityType.airDrop, UIActivityType.postToFacebook
             
             self.imagesController.present(activityViewController, animated: true, completion: nil)
         }else{
             
             let urlString = Communication.shared.baseImgsURL +  self.ad.images[self.imagesController.currentPage].image
-//            if let urlToShare = URL.init(string: urlString){
+            //            if let urlToShare = URL.init(string: urlString){
             
-
-                DispatchQueue.global(qos: .background).async {
-                    if let url = URL(string: urlString),
-                        let urlData = NSData(contentsOf: url) {
-                        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-                        let filePath="\(documentsPath)/dealat.mp4"
-                        DispatchQueue.main.async {
-                            urlData.write(toFile: filePath, atomically: true)
-                            
-                            // share video
-                            let activityViewController = UIActivityViewController(activityItems: [URL(fileURLWithPath: filePath)], applicationActivities: nil)
-                            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-                            activityViewController.excludedActivityTypes = [  ]
-                            //UIActivityType.airDrop, UIActivityType.postToFacebook
-                            
-                            self.imagesController.present(activityViewController, animated: true, completion: nil)
-                            
-                            
-                            // sace video
-                           /* PHPhotoLibrary.shared().performChanges({
-                                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-                            }) { completed, error in
-                                if completed {
-                                    print("Video is saved!")
-                                }
-                            }*/
-                            
-                        }
+            
+            DispatchQueue.global(qos: .background).async {
+                if let url = URL(string: urlString),
+                    let urlData = NSData(contentsOf: url) {
+                    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+                    let filePath="\(documentsPath)/dealat.mp4"
+                    DispatchQueue.main.async {
+                        urlData.write(toFile: filePath, atomically: true)
+                        
+                        // share video
+                        let activityViewController = UIActivityViewController(activityItems: [URL(fileURLWithPath: filePath)], applicationActivities: nil)
+                        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+                        activityViewController.excludedActivityTypes = [  ]
+                        //UIActivityType.airDrop, UIActivityType.postToFacebook
+                        
+                        self.imagesController.present(activityViewController, animated: true, completion: nil)
+                        
+                        
+                        // sace video
+                        /* PHPhotoLibrary.shared().performChanges({
+                         PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+                         }) { completed, error in
+                         if completed {
+                         print("Video is saved!")
+                         }
+                         }*/
+                        
                     }
                 }
+            }
         }
     }
     

@@ -30,12 +30,12 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
         getData()
         
         Provider.setScreenName("My Favorites")
-
     }
     
     override func setupViews() {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        self.collectionView.addSubview(ref)
     }
     
     override func getRefreshing() {
@@ -54,9 +54,9 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
             }
         }else{
 //            self.title = self.bookmark.getName()
-            Communication.shared.get_bookmark_search(page_num : self.pageNumber,user_bookmark_id: bookmark.user_bookmark_id.intValue, callback: { (res) in
+            Communication.shared.get_bookmark_search(page_num : self.pageNumber,user_bookmark_id: bookmark.user_bookmark_id.intValue, callback: { (commercials, ads) in
                 self.hideLoading()
-                self.onDataRecived(res)
+                self.onDataRecived(ads)
             })
         }
     }

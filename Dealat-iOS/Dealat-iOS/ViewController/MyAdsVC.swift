@@ -41,6 +41,7 @@ class MyAdsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,UIColl
     override func setupViews() {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        self.collectionView.addSubview(ref)
     }
     
     override func getRefreshing() {

@@ -13,7 +13,7 @@ class ChatCell: UICollectionViewCell {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var sellerLbl : UILabel!
     @IBOutlet weak var adLbl : UILabel!
-    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
 
     
     var chat : Chat!{
@@ -40,9 +40,9 @@ class ChatCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        let screenWidth = UIScreen.main.bounds.size.width
-        widthConstraint.constant = screenWidth - (2 * 12)
+//        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+//        let screenWidth = UIScreen.main.bounds.size.width
+//        widthConstraint.constant = screenWidth - (2 * 12)
     }
 
 

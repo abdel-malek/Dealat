@@ -47,6 +47,7 @@ class RegisterVC: BaseVC {
         
         self.getData()
         
+        
         Provider.setScreenName("RegisterActivity")
     }
     
@@ -127,7 +128,12 @@ class RegisterVC: BaseVC {
                 (textField.text!.count == 10  && string != ""){
                 return false
             }
+            else if !string.isEmpty{
+                tfPhone.text = Provider.getEnglishNumber(textField.text! + string)
+                return false
+            }
         }
+        
         
         
         return true

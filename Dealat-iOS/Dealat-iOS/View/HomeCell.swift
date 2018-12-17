@@ -11,24 +11,36 @@ import UIKit
 class HomeCell: BaseCell {
 
     @IBOutlet weak var img: UIImageView!
-    @IBOutlet weak var lbl: UILabel!
     
-    @IBOutlet weak var cntRight: UILabel!
-    @IBOutlet weak var cntLeft: UILabel!
+    
+    @IBOutlet weak var rightLbl: UILabel!
+    @IBOutlet weak var leftLbl: UILabel!
+    
+    @IBOutlet weak var leftImg: UIImageView!
+    @IBOutlet weak var rightImg: UIImageView!
+
+//    @IBOutlet weak var cntRight: UILabel!
+//    @IBOutlet weak var cntLeft: UILabel!
 
     
     var cat : Cat!{
         didSet{
             Provider.sd_setImage(img, urlString: cat.mobile_image)
-            self.lbl.text = cat.category_name
+            
+//            self.lbl.text = cat.category_name
+//            self.lbl.textAlignment = (self.tag % 2 == 0) ? .right : .left
+            
+//            self.cntLeft.text = (self.tag % 2 == 0) ? "\(cat.ads_count2)" : nil
+//            self.cntRight.text = (self.tag % 2 == 0) ? nil : "\(cat.ads_count2)"
+            
+            self.rightLbl.text = "\(cat.ads_count2)"
+            self.rightImg.image = Provider.isArabic ? #imageLiteral(resourceName: "leftleft") : #imageLiteral(resourceName: "rightright")
+            self.rightImg.isHidden = false
+            
+            self.leftLbl.text = cat.category_name
+            self.leftImg.isHidden = true
 
-            self.lbl.textAlignment = (self.tag % 2 == 0) ? .right : .left
             
-            
-            
-            self.cntLeft.text = (self.tag % 2 == 0) ? "\(cat.ads_count2)" : nil
-            self.cntRight.text = (self.tag % 2 == 0) ? nil : "\(cat.ads_count2)"
-
         }
     }
     

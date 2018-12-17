@@ -66,10 +66,14 @@ class SavedSearchesVC: BaseVC, UITableViewDelegate,UITableViewDataSource {
     }
     
     func showBookmark(_ bookmark : UserBookmark){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyFavoritesVC") as! MyFavoritesVC
-        vc.type = 1
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdsListVC") as! AdsListVC
+        vc.fromBookmark = true
         vc.bookmark = bookmark
         self.navigationController?.pushViewController(vc, animated: true)
+        //        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyFavoritesVC") as! MyFavoritesVC
+        //        vc.type = 1
+        //        vc.bookmark = bookmark
+        //        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func deleteBookmark(_ bookmark : UserBookmark){

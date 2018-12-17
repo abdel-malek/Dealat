@@ -8,6 +8,7 @@
 
 import UIKit
 import AFDateHelper
+import SwiftyJSON
 
 class MessageCell: BaseCell {
     
@@ -22,6 +23,7 @@ class MessageCell: BaseCell {
     
     var chat : Chat!
     var chat_session_id : Int!
+    var parentVC : ChatDetailsVC?
     
     func sendMaessage(){
         if let m = self.message{
@@ -29,6 +31,8 @@ class MessageCell: BaseCell {
             self.vv2.backgroundColor = Theme.Color.White.withAlphaComponent(0.5)
 
             Communication.shared.send_msg(ad_id: self.chat.ad_id.intValue,chat_session_id: chat_session_id, msg: m.text.emojiEscapedString, callback: { (res) in
+                self.parentVC?.chat.chat_session_id = JSON(res.chat_session_id.intValue)
+                
                 if let i = ChatDetailsVC.messagesRT.index(where: {$0.0 == m.timeStamp}){
                     ChatDetailsVC.messagesRT[i].1 = true
                     self.vv1.backgroundColor = Theme.Color.red

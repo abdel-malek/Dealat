@@ -83,7 +83,34 @@ class HomeVC: BaseVC {
         
         self.setupSearchBar()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(goToFilter))
+        self.setupFilterButton()
+        
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(goToFilter))
+        
+    }
+    
+    func setupFilterButton(){
+        let btn = UIButton.init()
+        let image = #imageLiteral(resourceName: "filter-tool-black-shape").resized(toWidth: 15)?.withRenderingMode(.alwaysTemplate)
+        btn.setImage(image, for: UIControl.State.normal)
+        btn.setTitle("Filter".localized, for: UIControl.State.normal)
+        btn.setTitleColor(Theme.Color.red, for: UIControl.State.normal)
+        btn.titleLabel?.font = Theme.Font.Calibri.withSize(16)
+        btn.contentEdgeInsets = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8)
+        btn.tintColor = Theme.Color.red
+        btn.backgroundColor = .white
+        btn.cornerRadius = 10
+        if Provider.isArabic{
+            btn.imageEdgeInsets.right = -8
+            btn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btn.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btn.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }else{
+            btn.imageEdgeInsets.left = -8
+        }
+        btn.addTarget(self, action: #selector(self.goToFilter), for: UIControl.Event.touchUpInside)
+        let barButton = UIBarButtonItem.init(customView: btn)
+        self.navigationItem.rightBarButtonItem = barButton
     }
     
     @objc func goToFilter(){
@@ -170,7 +197,10 @@ class HomeVC: BaseVC {
         if User.isRegistered(){
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewAddBaesVC") as! NewAddBaesVC
             vc.homeVC = self
-            self.navigationController?.pushViewController(vc, animated: true)
+//            self.navigationController?.pushViewController(vc, animated: true)
+            
+            let nv = UINavigationController.init(rootViewController: vc)
+            self.present(nv, animated: true, completion: nil)
         }else{
             let me = User.getCurrentUser()
             let txt = me.statues_key == (User.USER_STATUES.NEW_USER.rawValue) ? "needRegister1".localized : "needRegister2".localized

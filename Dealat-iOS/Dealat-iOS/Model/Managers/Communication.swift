@@ -74,7 +74,8 @@ class Communication: BaseManager {
     let logoutURL = "/users_control/logout/format/json"
     var get_about_infoURL  = "/data_control/get_about_info/format/json"
     let delete_my_accountURL = "/users_control/delete_my_account/format/json"
-    
+    let delete_chatURL = "/users_control/delete_chat/format/json"
+
     let QR_code_scanURL = "/QR_users_control/QR_code_scan/format/json"
     
     
@@ -1137,8 +1138,6 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    
-                    
                     callback(true)
                     
                 }else{
@@ -1186,7 +1185,7 @@ class Communication: BaseManager {
     }
     
     
-    func get_bookmark_search(page_num : Int, user_bookmark_id : Int, callback : @escaping ([AD]) -> Void){
+    func get_bookmark_search(page_num : Int, user_bookmark_id : Int, callback : @escaping (_ commercials : [Commercial] , _ ads: [AD]) -> Void){
         
         let url = URL(string: baseURL + get_bookmark_searchURL)!
         let params = ["user_bookmark_id" : user_bookmark_id,"page_size" : Provider.PAGE_SIZE,"page_num" : page_num]
@@ -1201,14 +1200,20 @@ class Communication: BaseManager {
                 
                 if value.status{
                     
-                    var res = [AD]()
+                    var ads = [AD]()
+                    var commercials = [Commercial]()
                     
-                    for i in value.data.arrayValue{
+                    for i in value.data["ads"].arrayValue{
                         let a = AD(JSON: i.dictionaryObject!)!
-                        res.append(a)
+                        ads.append(a)
                     }
                     
-                    callback(res)
+                    for i in value.data["commercials"].arrayValue{
+                        let a = Commercial(JSON: i.dictionaryObject!)!
+                        commercials.append(a)
+                    }
+                    
+                    callback(commercials, ads)
                 }else{
                     notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
                 }
@@ -1364,6 +1369,35 @@ class Communication: BaseManager {
     }
     
     
+    
+    func delete_chat(chat_id : String, callback : @escaping (String) -> Void){
+        
+        let url = URL(string: baseURL + delete_chatURL)!
+        let params = ["chat_id" : chat_id]
+        
+        Alamofire.request(url, method: .post, parameters: params, encoding : encodingBody, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    callback(value.data.stringValue)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
     
     func output(_ res : DataResponse<CustomResponse>){
         if let urlString = res.request?.url?.absoluteString{

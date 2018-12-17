@@ -12,6 +12,8 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView : UITableView!
     @IBOutlet weak var vv : UIView!
+    @IBOutlet weak var okBtn : UIButton!
+
     
     var multi : Bool = false
     var parentVC: FilterVC!
@@ -71,6 +73,9 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if type == -1{
+            self.okBtn.isHidden = true
+        }
         
     }
     
@@ -386,6 +391,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             case -1:
                 self.parentVC.filter.location = nil
                 self.parentVC.filter.city = nil
+                self.dismiss(animated: true, completion: nil) //TODO
             case 1:
                 self.parentVC.filter.location = nil
             case 2:
@@ -427,6 +433,7 @@ class PopupVC: BaseVC, UITableViewDelegate, UITableViewDataSource {
             case -1:
                 self.parentVC.filter.location = nil
                 self.parentVC.filter.city = self.parentVC.cities[index]
+                self.dismiss(animated: true, completion: nil) //TODO
             case 1:
                 if let c = self.parentVC.filter.city{
                     self.parentVC.filter.location = c.locations[index]

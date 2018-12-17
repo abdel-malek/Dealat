@@ -71,6 +71,7 @@ PODS:
   - GoogleUtilities/UserDefaults (5.3.6):
     - GoogleUtilities/Logger
   - GrowingTextView (0.6.1)
+  - Hue (3.0.1)
   - Imaginary (4.2.0):
     - Cache (~> 5.0)
   - IQDropDownTextField (1.1.1)
@@ -118,6 +119,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - GoogleAnalytics
   - GrowingTextView
+  - Hue
   - IQDropDownTextField
   - IQKeyboardManagerSwift
   - JGProgressHUD
@@ -160,6 +162,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - GrowingTextView
+    - Hue
     - Imaginary
     - IQDropDownTextField
     - IQKeyboardManagerSwift
@@ -204,6 +207,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   GrowingTextView: 335aefa45df7df06b01edede1363414d6ee5d6bc
+  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
   Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   IQDropDownTextField: 3d2e5728a2b83ff5dbb14cb9b497a80005124cbe
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
@@ -225,6 +229,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   YangMingShan: 561cfbb769e8cf679d3f23d8ae7030402ddb6495
 
-PODFILE CHECKSUM: b599d38daf99a80ecfe61e9322fc3acd7a149330
+PODFILE CHECKSUM: 71b94747c9166c0eaf17af746a5b9839ffd58a76
 
 COCOAPODS: 1.5.3

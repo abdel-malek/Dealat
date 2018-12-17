@@ -24,9 +24,12 @@ class AdDetailsBaseVC: UIViewController {
     @IBOutlet weak var deleteBtn : UIButton!
     
     @IBOutlet weak var sellerLbl : UILabel!
+    @IBOutlet weak var phoneLbl : UILabel!
+
     
     @IBOutlet weak var sallerVVHeight : NSLayoutConstraint!
     @IBOutlet weak var contactVVHeight : NSLayoutConstraint!
+    @IBOutlet weak var phoneVVHeight : NSLayoutConstraint!
 
     
     var msg : String = ""
@@ -42,6 +45,7 @@ class AdDetailsBaseVC: UIViewController {
         
         self.sallerVVHeight.constant = 0
         self.contactVVHeight.constant = 0
+        self.phoneVVHeight.constant = 0
 
         
         Provider.setScreenName("AdDetailsActivity")
@@ -192,8 +196,9 @@ class AdDetailsBaseVC: UIViewController {
     
     
     func refreshBar(){
-        self.sallerVVHeight.constant = 50
+        self.sallerVVHeight.constant = 35
         self.contactVVHeight.constant = 50
+        self.phoneVVHeight.constant = 30
 
         
         if User.isRegistered(){
@@ -230,8 +235,14 @@ class AdDetailsBaseVC: UIViewController {
             if !same && self.messageBtn.isHidden && self.callBtn.isHidden{
                 self.contactVVHeight.constant = 0
             }
-            
         }
+        
+        if User.isRegistered(), !self.callBtn.isHidden, self.contactVVHeight.constant != 0{
+            self.phoneVVHeight.constant = 30
+        }else{
+            self.phoneVVHeight.constant = 0
+        }
+
         
     }
     

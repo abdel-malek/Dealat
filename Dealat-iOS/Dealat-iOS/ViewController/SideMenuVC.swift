@@ -229,9 +229,9 @@ class SideMenuVC: BaseVC {
         
         if User.isRegistered(), let refreshedToken = Messaging.messaging().fcmToken {
             print("TOKEEEN : \(refreshedToken)")
-            self.showLoading()
+            self.homeVC.showLoading()
             Communication.shared.save_user_token(refreshedToken) { (res) in
-                self.hideLoading()
+                self.homeVC.hideLoading()
                 
                 appDelegate.window?.rootViewController = nv
             }

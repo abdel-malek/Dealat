@@ -426,3 +426,36 @@ extension String {
     }
 }
 
+
+extension UITableView{
+    
+    func EmptyMessage(message : String = "No search results".localized) {
+        let rect = CGRect.init(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height)
+        let messageLabel = UILabel(frame: rect)
+        messageLabel.text = message
+        messageLabel.textColor = UIColor.black
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = .center;
+        messageLabel.font = Theme.Font.Calibri
+        messageLabel.sizeToFit()
+        
+        self.backgroundView = messageLabel;
+        self.separatorStyle = .none;
+    }
+}
+
+extension UICollectionView{
+    
+    func EmptyMessage(message : String = "No search results".localized) {
+        let rect = CGRect.init(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height)
+        let messageLabel = UILabel(frame: rect)
+        messageLabel.text = message
+        messageLabel.textColor = UIColor.black
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = .center;
+        messageLabel.font = Theme.Font.Calibri
+        messageLabel.sizeToFit()
+        
+        self.backgroundView = messageLabel;
+    }
+}
