@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.dealat.Adapter.MessageAdapter;
 import com.dealat.Controller.CurrentAndroidUser;
+import com.dealat.Controller.UserController;
 import com.dealat.Model.Ad;
 import com.tradinos.core.network.SuccessCallback;
 import com.dealat.Controller.ChatController;
@@ -57,7 +58,7 @@ public class ChatActivity extends MasterActivity {
     private ChatReceiver receiver;
     private User user;
     private Chat currentChat;
-
+    private Menu mMenu;
     private MessageAdapter adapter;
 
     // views
@@ -119,7 +120,8 @@ public class ChatActivity extends MasterActivity {
             public void OnSuccess(List<Message> result) {
                 HideProgressDialog();
                 adapter = new MessageAdapter(mContext, result, amISeller());
-
+                if (result.size() > 0)
+                    currentChat.setChatId(result.get(0).getChatSessionId());
                 recyclerView.setAdapter(adapter);
                 recyclerView.scrollToPosition(adapter.getItemCount() - 1);
             }
@@ -231,18 +233,42 @@ public class ChatActivity extends MasterActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (currentChat.getChatId() == null)
+            menu.findItem(R.id.opt_delete).setVisible(false);
+        else
+            menu.findItem(R.id.opt_delete).setVisible(true);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         switch (id) {
             case R.id.opt_details:
-                Intent intent = new Intent(mContext, AdDetailsActivity.class);
+                final Intent intent = new Intent(mContext, AdDetailsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Ad ad = new Ad();
                 ad.setId(currentChat.getAdId());
                 ad.setTemplate(Integer.valueOf(currentChat.getTemplateId()));
                 intent.putExtra("ad", ad);
                 startActivity(intent);
+                break;
+
+            case R.id.opt_delete:
+                ShowProgressDialog();
+                UserController.getInstance(getController()).deleteChat(currentChat.getChatId(), new SuccessCallback<String>() {
+                    @Override
+                    public void OnSuccess(String result) {
+                        HideProgressDialog();
+                        Intent intent1 = new Intent();
+                        intent1.putExtra("chat", currentChat);
+                        setResult(RESULT_OK, intent1);
+                        finish();
+                    }
+                });
                 break;
         }
 
@@ -303,6 +329,8 @@ public class ChatActivity extends MasterActivity {
                 public void OnSuccess(Message result) {
                     adapter.getItem(position).setSent(true);
                     adapter.notifyDataSetChanged();
+                    if (currentChat.getChatId() == null)
+                        currentChat.setChatId(result.getChatSessionId());
                 }
             });
 

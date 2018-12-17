@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dealat.Controller.CurrentAndroidUser;
+import com.dealat.Fragment.ChatsFragment;
 import com.dealat.Model.Chat;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
@@ -31,13 +32,14 @@ public class ChatPagingAdapter extends RecyclerView.Adapter<ChatPagingAdapter.Vi
 
     private User user;
     private List<Chat> chats;
+    private ChatsFragment mChatsFragment;
 
-
-    public ChatPagingAdapter(Context context) {
+    public ChatPagingAdapter(Context context, ChatsFragment chatsFragment) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.chats = new ArrayList<>();
         user = new CurrentAndroidUser(context).Get();
+        mChatsFragment = chatsFragment;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class ChatPagingAdapter extends RecyclerView.Adapter<ChatPagingAdapter.Vi
 
                         intent.putExtra("chat", item);
 
-                        context.startActivity(intent);
+                        mChatsFragment.startActivityForResult(intent, ChatsFragment.VIEW_CHAT);
                     }
                 });
 
@@ -116,6 +118,13 @@ public class ChatPagingAdapter extends RecyclerView.Adapter<ChatPagingAdapter.Vi
     public void clear() {
         if (this.chats != null)
             this.chats.clear();
+    }
+
+    public void removeChat(Chat chat) {
+        if (this.chats != null) {
+            this.chats.remove(chat);
+            notifyDataSetChanged();
+        }
     }
 
     public void addLoadingFooter() {

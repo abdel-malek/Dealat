@@ -7,6 +7,7 @@ package com.dealat.Model;
 public class Message {
     private String id, text, createdAt;
     private boolean toSeller, sent;
+    private String chatSessionId;
 
     public String getId() {
         return id;
@@ -46,5 +47,13 @@ public class Message {
 
     public void setSent(boolean sent) {
         this.sent = sent;
+    }
+
+    public String getChatSessionId() {
+        return chatSessionId;
+    }
+
+    public void setChatSessionId(String chatSessionId) {
+        this.chatSessionId = chatSessionId;
     }
 }

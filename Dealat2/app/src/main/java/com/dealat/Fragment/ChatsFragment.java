@@ -1,5 +1,7 @@
 package com.dealat.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dealat.Adapter.ChatPagingAdapter;
 import com.dealat.Controller.ChatController;
@@ -28,6 +31,7 @@ import java.util.List;
 
 public class ChatsFragment extends Fragment {
 
+    public static final int VIEW_CHAT = 222;
     public final int PAGE_SIZE = 20;
 
     // Indicates if footer ProgressBar is shown (i.e. next page is loading)
@@ -67,7 +71,7 @@ public class ChatsFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerView);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        pagingAdapter = new ChatPagingAdapter(getContext());
+        pagingAdapter = new ChatPagingAdapter(getContext(), this);
         pagingAdapter.addAll(chats);
 
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -148,5 +152,20 @@ public class ChatsFragment extends Fragment {
                     pagingAdapter.addLoadingFooter();
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == VIEW_CHAT) {
+            pagingAdapter.removeChat((Chat) data.getSerializableExtra("chat"));
+            if (pagingAdapter.getItemCount() == 0)
+                layoutEmpty.setVisibility(View.VISIBLE);
+            else
+                layoutEmpty.setVisibility(View.GONE);
+
+        }
+//            Toast.makeText(getContext(), "finished", Toast.LENGTH_SHORT).show();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

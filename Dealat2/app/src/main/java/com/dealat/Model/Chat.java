@@ -110,4 +110,9 @@ public class Chat implements Serializable {
     public void setSellerSeen(boolean sellerSeen) {
         this.sellerSeen = sellerSeen;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.chatId.equals(((Chat) obj).getChatId());
+    }
 }

@@ -225,7 +225,7 @@
                     android:padding="6dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/flag"
-                    android:background="@null"
+                    android:background="@drawable/circel_gray_light_transparent"
                     />
 
             </RelativeLayout>

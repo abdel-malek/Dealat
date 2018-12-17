@@ -5,4 +5,8 @@
         android:id="@+id/opt_details"
         android:title="@string/opt_details"
         />
+    <item
+        android:id="@+id/opt_delete"
+        android:title="@string/delete_chat"
+        />
 </menu>

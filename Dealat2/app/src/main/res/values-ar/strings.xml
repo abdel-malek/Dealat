@@ -260,5 +260,6 @@
     <string name="logout_messg">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
     <string name="connection_error">حدث خطأ ما, يرجى إعادة المحاولة.</string>
     <string name="try_again">إعادة المحاولة</string>
+    <string name="delete_chat">حذف المحادثة</string>
 
 </resources>

@@ -134,6 +134,7 @@ public class MyProfileActivity extends MasterActivity {
                                 R.drawable.ic_person_48dp, R.drawable.ic_person_48dp));
             }
         }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override

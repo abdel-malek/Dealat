@@ -43,7 +43,6 @@ import java.util.Locale;
 
 public abstract class DrawerActivity extends MasterActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     private int currentPage = 0;
     protected Handler handler = new Handler();
     protected Runnable update;
@@ -51,6 +50,7 @@ public abstract class DrawerActivity extends MasterActivity
     CommercialAdapter commercialAdapter;
     //views
     ViewPager commercialPager;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public abstract class DrawerActivity extends MasterActivity
         Button buttonRegister = navigationView.getHeaderView(0).findViewById(R.id.buttonRegister);
         TextView textViewName = navigationView.getHeaderView(0).findViewById(R.id.textName);
         //TextView textViewCity = navigationView.getHeaderView(0).findViewById(R.id.textCity);
-        Menu menu = navigationView.getMenu();
+        menu = navigationView.getMenu();
 
         switch (MyApplication.getUserState()) {
             case User.PENDING:
@@ -179,6 +179,7 @@ public abstract class DrawerActivity extends MasterActivity
                 }
             }
         }
+
     }
 
     @Override

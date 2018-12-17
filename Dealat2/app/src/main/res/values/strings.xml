@@ -263,5 +263,6 @@
     <string name="logout_messg">Are you sure you want to logout?</string>
     <string name="connection_error">A connection error occurred, please check your internet connection</string>
     <string name="try_again">Try again</string>
+    <string name="delete_chat">Delete chat</string>
 
 </resources>

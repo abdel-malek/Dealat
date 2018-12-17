@@ -225,6 +225,14 @@ public class UserController extends ParentController {
         authenticationRequired(request);
         request.Call();
     }
+    public void deleteChat(String chatId, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.users, "delete_chat").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
+        request.addParameter("chat_id",chatId);
+        addToHeader(request);
+        authenticationRequired(request);
+        request.Call();
+    }
 
     public void rateSeller(String sellerId, double rate, SuccessCallback<String> successCallback) {
         String url = new URLBuilder(APIModel.users, "rate_seller").getURL(getmContext());

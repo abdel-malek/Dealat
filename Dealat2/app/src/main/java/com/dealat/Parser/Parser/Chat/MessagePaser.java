@@ -23,7 +23,7 @@ public class MessagePaser implements TradinosParser<Message> {
         message.setText(jsonObject.getString("text"));
         message.setCreatedAt(jsonObject.getString("created_at"));
         message.setSent(true);
-
+        message.setChatSessionId(jsonObject.getString("chat_session_id"));
         if (jsonObject.getInt("to_seller") == 1)
             message.setToSeller(true);
         else
