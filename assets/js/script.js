@@ -1710,7 +1710,7 @@ $(function () {
 		key = e.which;
 		query = $(this).val();
 
-		if (key === 13) {
+		if (key === 13 && query != "") {
 			data = {
 				query: $(this).val()
 			};

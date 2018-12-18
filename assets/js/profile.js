@@ -141,6 +141,7 @@ $(function () {
 		$("#user-ads .filter-dropdown .filter-item").click(function () {
 			$(this).closest(".dropdown-menu").siblings(".dropdown-toggle").text($(this).text());
 		});
+
 		//get my fav ads
 		$.ajax({
 			type: "get",
@@ -204,14 +205,6 @@ $(function () {
 				rendered = Mustache.render(template, userInfo);
 				$(".profile-page .user-details .row.first").append(rendered);
 
-				$(".profile-page .rating .rate-group").each(function () {
-					if ($(this).data("value") <= userRateValue) {
-						$(this).children("label").css("color", "#FFCC36");
-					} else {
-						$(this).children("label").css("color", "#ddd");
-					}
-				});
-
 				//fill edit user info modal with data
 				$("#edit-user-info-form input[name='name']").val(data.data.name);
 				$("#edit-user-info-form input[name='location_id']").val(data.data.city_id);
@@ -269,6 +262,16 @@ $(function () {
 
 		//edit user info
 		$(".profile-page").on("click", ".edit-user-info", function () {
+			//fill edit user info modal with data
+			$("#edit-user-info-form input[name='name']").val(userInfo.name);
+			$("#edit-user-info-form input[name='location_id']").val(userInfo.city_id);
+			$("#edit-user-info-form .city-select").val(userInfo.city_id);
+			$("#edit-user-info-form .gender-select").val(userInfo.user_gender);
+			$("#edit-user-info-form input[name='email']").val(userInfo.email);
+			$("#edit-user-info-form input[name='phone']").val(userInfo.phone);
+			$("#edit-user-info-form input[name='whatsup_number']").val(userInfo.whatsup_number);
+			$("#edit-user-info-form input[name='birthday']").val(userInfo.birthday);
+
 			$('#edit-user-info-modal .city-select')[0].sumo.reload();
 			$('#edit-user-info-modal .gender-select')[0].sumo.reload();
 			$("#edit-user-info-modal").modal("show");
@@ -992,7 +995,7 @@ $(function () {
 				var templateId = $("#edit-ad-form .template-id").val();
 				if (templateId == 1) {
 					if (lang === "ar") {
-						$('#edit-ad-modal .error-message').html("الرجاء إرفاق صورة واحدة للإعلان على الأقل ثم حاول مجدداً");
+						$('#edit-ad-modal .error-message').html("الرجاء إرفاق صورة واحدة للإعلان على الأقل ثم المحاولة مجدداً");
 					} else {
 						$('#edit-ad-modal .error-message').html("Please upload at least one image and try again");
 					}
@@ -1288,10 +1291,10 @@ $(function () {
 						}
 					}
 					$("#chat-modal").modal("show");
-//					$("#chat-modal .chat").stop().animate({
-//						scrollTop: $("#chat-modal .chat")[0].scrollHeight
-//					}, 1000);
-//					$("#chat-modal .chat").stop().scrollTop($("#chat-modal .chat")[0].scrollHeight);
+					//					$("#chat-modal .chat").stop().animate({
+					//						scrollTop: $("#chat-modal .chat")[0].scrollHeight
+					//					}, 1000);
+					//					$("#chat-modal .chat").stop().scrollTop($("#chat-modal .chat")[0].scrollHeight);
 				}
 			});
 		});
