@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081B870B21C90CDD00888801 /* MessagePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081B870A21C90CDD00888801 /* MessagePopupVC.swift */; };
 		6EDC59CD649ACE509FA18C96 /* Pods_Dealat_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A80EAEF46234EA904EA977 /* Pods_Dealat_iOS.framework */; };
 		82049450207E080700E57CF9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8204944F207E080700E57CF9 /* BookmarkCell.swift */; };
 		82049452207E0CC100E57CF9 /* BookmarkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82049451207E0CC100E57CF9 /* BookmarkQuery.swift */; };
@@ -158,6 +159,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		081B870A21C90CDD00888801 /* MessagePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePopupVC.swift; sourceTree = "<group>"; };
 		379630157520095B14F2457A /* Pods-Dealat-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dealat-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dealat-iOS/Pods-Dealat-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8204944F207E080700E57CF9 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		82049451207E0CC100E57CF9 /* BookmarkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkQuery.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				826A6CC820920386006978B0 /* TermsVC.swift */,
 				82BF1E8A20A858CD0013D2CD /* ScanQRCodeVC.swift */,
 				82B87CA42104AB26002BC214 /* FirstVC.swift */,
+				081B870A21C90CDD00888801 /* MessagePopupVC.swift */,
 				828DEB58203AF69E00D6E43A /* Ctegories */,
 				828DEB59203AF6C700D6E43A /* AD Details vcs */,
 				828DEB5A203AF6E100D6E43A /* Filter vcs */,
@@ -919,6 +922,7 @@
 				82E56E55205E5CBC00938CD7 /* PopupVC.swift in Sources */,
 				8226F007202882F00077FA74 /* Cat.swift in Sources */,
 				82B97A7420551F4200ADF51B /* ActiveLabel.swift in Sources */,
+				081B870B21C90CDD00888801 /* MessagePopupVC.swift in Sources */,
 				82893DBC2032E480009151FC /* BaseTVC.swift in Sources */,
 				82FAEA57208F2F590082823F /* Emoji.swift in Sources */,
 				82B97A7820551F4200ADF51B /* RegexParser.swift in Sources */,

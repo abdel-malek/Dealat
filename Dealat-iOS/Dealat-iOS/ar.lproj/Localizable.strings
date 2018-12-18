@@ -211,3 +211,5 @@
 "No search results" = "لا يوجد نتائج";
 "Confirmation" = "تأكيد";
 "ConfirmDissNew" = "هل أنت متأكد أنك تريد تجاهل هذا الإعلان؟";
+"AddToBookmark" = "هل تريد حفظ البحث؟";
+"SearchSaved" = "تم حفظ البحث بنجاح";

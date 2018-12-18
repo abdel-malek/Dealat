@@ -135,12 +135,17 @@ class HomeVC: BaseVC {
                     self.tableView.reloadData()
                     
                     self.commericals = commercials
+                    
                     if commercials.isEmpty{
                         let im = UIImageView.init(image: #imageLiteral(resourceName: "add_images"))
                         im.contentMode = .scaleAspectFit
                         self.collectionView.backgroundView = im
                     }else{
                         self.collectionView.backgroundView = nil
+                        self.pageControl.numberOfPages = self.commericals.count
+                        self.timer.invalidate()
+                        self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                        self.timer.fire()
                     }
                     self.collectionView.reloadData()
                     
@@ -319,7 +324,8 @@ extension HomeVC : UITableViewDelegate,UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        Provider.filter = FilterParams()
+
         for i in self.cats[indexPath.row].children{
             print("i.name \(i.category_name) - i.ads_count2 \(i.ads_count2)")
         }

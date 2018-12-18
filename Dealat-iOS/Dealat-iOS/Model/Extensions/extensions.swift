@@ -321,30 +321,36 @@ extension UIViewController{
                         let not = JSON(notification["ntf_type"])
                         let type = not.intValue
                         
-                        if type == 3{
+                        if type == 3 || type == 4{
                             publicNot = true
                         }
                     }catch let err{ print("ERROR: \(err.localizedDescription)")}
 
-                    
                     let title = ((msg["title"] as? String) != nil) ? msg["title"] as! String : "Dealat"
                     let body = ((msg["body"] as? String) != nil) ? msg["body"] as! String : ""
 
-                    print("MSG")
-                    
+                    /*
                     let alert = UIAlertController(title: title, message: body.emojiUnescapedString, preferredStyle: .alert)
-                    
-                    
                     alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
-                    
                     if !publicNot {
                         alert.addAction(UIAlertAction(title: view, style: .default, handler: { (ac) in
                             PushManager.handleNotificationTapping2(data: data)
                         }))
                     }
-                    
-                    
                     self.present(alert, animated: true, completion: nil)
+                    */
+                    
+                    let stor = UIStoryboard.init(name: "Main", bundle: nil)
+                    let vc = stor.instantiateViewController(withIdentifier: "MessagePopupVC") as! MessagePopupVC
+                    vc.modalPresentationStyle = .overCurrentContext
+                    vc.modalTransitionStyle = .crossDissolve
+                    vc.tit = title
+                    vc.message = body.emojiUnescapedString
+                    vc.viewString = view
+                    vc.cancelString = cancel
+                    vc.publicNot = publicNot
+                    vc.data = data
+                    self.present(vc, animated: true, completion: nil)
                 }
             }
         }

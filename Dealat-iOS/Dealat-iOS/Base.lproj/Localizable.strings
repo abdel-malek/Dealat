@@ -207,3 +207,5 @@
 "No search results" = "No search results";
 "Confirmation" = "Confirmation";
 "ConfirmDissNew" = "Are you sure you want to discard this ad?";
+"AddToBookmark" = "Would you like to save the search?";
+"SearchSaved" = "The search has saved successfully";

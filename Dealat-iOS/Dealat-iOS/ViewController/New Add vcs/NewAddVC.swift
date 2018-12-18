@@ -1288,7 +1288,10 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             
         }else{
             self.showLoading()
-            Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional : params) { (res) in
+            //TODO
+            //Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional : params) { (res) in
+
+            Communication.shared.post_new_ad(category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional : params) { (res) in
                 self.hideLoading()
                 
 //                self.navigationController?.popViewController(animated: true) //TODO

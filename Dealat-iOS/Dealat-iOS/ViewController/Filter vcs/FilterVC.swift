@@ -230,13 +230,8 @@ class FilterVC: BaseTVC {
             
             self.typesBase = self.typesBase2.filter({ (t) -> Bool in
                 return cats.map({$0.category_id.intValue}).contains(t.category_id.intValue)
-                
-//                if let c = t.tamplate_id, let c2 = filter.category.tamplate_id{
-//                    return c.intValue == c2.intValue
-//                }
-//                return false
             })
-
+            print("typesBase : \(self.typesBase.map({$0.full_type_name})) - \(self.typesBase.map({$0.name})) ")
         }else{
             self.tfCategory.text = allString
         }
@@ -382,6 +377,8 @@ class FilterVC: BaseTVC {
             self.schedules = schedules
             self.certificates = certificates
             self.states = states
+            
+            self.refreshData() // TODO
         }
     }
     

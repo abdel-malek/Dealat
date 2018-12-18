@@ -178,18 +178,30 @@ class AdsListVC: BaseVC {
                 self.collectionView.backgroundView = im
             }else{
                 self.collectionView.backgroundView = nil
+                self.pageControl.numberOfPages = self.commericals.count
+                self.timer.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.rotate), userInfo: nil, repeats: true)
+                self.timer.fire()
+                
             }
             self.collectionView.reloadData()
         }
+        
     }
     
     @objc func markAction(){
-        self.showLoading()
-        Communication.shared.mark_search { (true) in
-            self.hideLoading()
-            self.markImg.image = nil
-            
-        }
+        
+        let alert = UIAlertController.init(title: "AddToBookmark".localized, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "OK".localized, style: UIAlertAction.Style.default, handler: { (ac) in
+            self.showLoading()
+            Communication.shared.mark_search { (true) in
+                self.hideLoading()
+                self.markImg.image = nil
+                self.showErrorMessage(text: "SearchSaved".localized)
+            }
+        }))
+        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func setupViews() {
@@ -199,11 +211,13 @@ class AdsListVC: BaseVC {
         collectionView2.dataSource = self
         collectionView2.delegate = self
         collectionView2.addSubview(ref)
+//        ref.layer.zPosition = 10
+//        ref.bounds = CGRect.init(x: ref.bounds.origin.x, y: -50, width: ref.bounds.size.width, height: ref.bounds.size.height)
+
+        
         
         // Search bar
         self.setupSearchBar()
-        
-        
         
         // TODO
         

@@ -744,6 +744,8 @@ class Communication: BaseManager {
     func save_user_token(_ token : String, callback : @escaping (Bool) -> Void){
         
         let url = URL(string: "http://www.deal-at.com/index.php/api" + save_user_tokenURL)!
+//        let url = URL(string: "http://192.168.9.129/Dealat/index.php/api" + save_user_tokenURL)!
+
         
         let lang = AppDelegate.isArabic() ? "ar" : "en"
         let params : [String : Any] = ["token" : token,"os" : 2,"lang" : lang]

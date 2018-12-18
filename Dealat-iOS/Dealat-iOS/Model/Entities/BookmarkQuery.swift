@@ -109,16 +109,16 @@ class BookmarkQuery : BaseEntity {
         values += (isNotNull(location_name)) ? (location_name! + "\n") : ""
         
         keys += (isNotNull(price_min)) ? ("Price".localized + " " + "From".localized + ":\n") : ""
-        values += (isNotNull(price_min)) ? (price_min! + "\n") : ""
+        values += (isNotNull(price_min)) ? (Provider.getEnglishNumber(price_min!.deleteDecimal()).currencyInputFormatting() + "\n") : ""
         
         keys += (isNotNull(price_max)) ? ("Price".localized + " " + "To".localized + ":\n") : ""
-        values += (isNotNull(price_max)) ? (price_max! + "\n") : ""
+        values += (isNotNull(price_max)) ? (Provider.getEnglishNumber(price_max!.deleteDecimal()).currencyInputFormatting() + "\n") : "" //price_max!
         
         keys += (isNotNull(space_min)) ? ("Space".localized + " " + "From".localized + ":\n") : ""
-        values += (isNotNull(space_min)) ? (space_min! + "\n") : ""
+        values += (isNotNull(space_min)) ? (Provider.getEnglishNumber(space_min!.deleteDecimal()).currencyInputFormatting() + "\n") : ""
         
         keys += (isNotNull(space_max)) ? ("Space".localized + " " + "To".localized + ":\n") : ""
-        values += (isNotNull(space_max)) ? (space_max! + "\n") : ""
+        values += (isNotNull(space_max)) ? (Provider.getEnglishNumber(space_max!.deleteDecimal()).currencyInputFormatting() + "\n") : ""
         
         keys += (isNotNull(rooms_num_min)) ? ("Rooms".localized + " " + "From".localized + ":\n") : ""
         values += (isNotNull(rooms_num_min)) ? (rooms_num_min! + "\n") : ""
@@ -167,10 +167,10 @@ class BookmarkQuery : BaseEntity {
         values += (isNotNull(model_name)) ? (model_name! + "\n") : ""
         
         keys += (isNotNull(kilometer_min)) ? ("Kilometer".localized + " " + "From".localized + ":\n") : ""
-        values += (isNotNull(kilometer_min)) ? (kilometer_min! + "\n") : ""
+        values += (isNotNull(kilometer_min)) ? (Provider.getEnglishNumber(kilometer_min!.deleteDecimal()).currencyInputFormatting() + "\n") : ""
         
         keys += (isNotNull(kilometer_max)) ? ("Kilometer".localized + " " + "To".localized + ":\n") : ""
-        values += (isNotNull(kilometer_max)) ? (kilometer_max! + "\n") : ""
+        values += (isNotNull(kilometer_max)) ? (Provider.getEnglishNumber(kilometer_max!.deleteDecimal()).currencyInputFormatting() + "\n") : ""
         
         keys += (isNotNull(automatic_name)) ? ("Automatic".localized + ":\n") : ""
         values += (isNotNull(automatic_name)) ? (automatic_name! + "\n") : ""
