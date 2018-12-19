@@ -72,7 +72,9 @@ class MY_Model extends CI_Model {
             $now = $time_zone->format('Y-m-d H:i:s');
 			//$now = date('Y-m-d H:i:s');
 			$id || $data['created_at'] = $now;
-			$data['modified_at'] = $now;
+			if(!isset($data['modified_at'])){
+				$data['modified_at'] = $now;
+			}
 		}
 		
 		// Insert

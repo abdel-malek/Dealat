@@ -252,4 +252,26 @@ class Items_manage extends REST_Controller {
 		   }
       }
    }
+
+
+   public function get_no_result_searches_get(){
+   	   $this->load->model('data_sources/No_result_searches');
+	   $results = $this->No_result_searches->get_all();
+	   $output = array("aaData" => array());
+		foreach ($results as $row) {
+			$recorde = array();
+			$recorde[] = $row->no_result_search_id;
+			$recorde[] = $row->created_at;
+			$recorde[] = $row->name;
+			$recorde[] = $row->phone;
+			$recorde[] = $row->query;
+			if($row->is_notifiable){
+				$recorde[] = $this->lang->line('yes');
+			}else{
+				$recorde[] = $this->lang->line('no');
+			}
+			$output['aaData'][] = $recorde;
+		}
+		echo json_encode($output);
+   }
 }

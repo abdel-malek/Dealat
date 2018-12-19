@@ -39,6 +39,7 @@ class Messages extends MY_Model {
 				// chane seller seen status to 0 
 				$this->chat_sessions->save(array('seller_seen' => 0) , $check_exist_result->chat_session_id);
 				$msg_id = parent::save($data);
+
 			}else{ // no chat session so create new one 
 			    if($seller_id == $user_id){ // the seller is sending msg to his self so we can not create a chat session!!
 			    	 $this->db->trans_rollback();

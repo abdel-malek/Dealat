@@ -111,12 +111,16 @@
  				 <li><a href="<?php echo base_url('index.php/admin/dashboard'); ?>"><i class="fa fa-home"></i><?php echo $this->lang->line('home') ?></a></li>
  				  
  				 <!-- ads manage -->
- 				  <?php if(PERMISSION::Check_permission(PERMISSION::ADS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+ 				          <?php if(PERMISSION::Check_permission(PERMISSION::ADS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                      <li><a href="<?php echo base_url('index.php/admin/items_manage'); ?>"><i class="fa fa-gears"></i><?php echo $this->lang->line('ads_management') ?></a></li>
                   <?php endif; ?>  
                   <!-- reported ads manage -->
                   <?php if(PERMISSION::Check_permission(PERMISSION::REPORTS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
                      <li><a href="<?php echo base_url('index.php/admin/items_manage/load_reported_items_page'); ?>"><i class="fa fa-ban"></i><?php echo $this->lang->line('reported_ads_management') ?></a></li>
+                  <?php endif; ?> 
+
+                  <?php if(PERMISSION::Check_permission(PERMISSION::ADS_MANAGE , $this->session->userdata('LOGIN_USER_ID_ADMIN'))): ?>
+                     <li><a href="<?php echo base_url('index.php/admin/dashboard/load_searches_report'); ?>"><i class="fa fa-search"></i><?php echo $this->lang->line('no_result_searhes') ?></a></li>
                   <?php endif; ?> 
                   
                   <!-- user manage  -->

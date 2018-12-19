@@ -3,6 +3,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . '/libraries/REST_Controller.php';
 
+require(APPPATH . '/libraries/emojis/RulesetInterface.php');
+require(APPPATH . '/libraries/emojis/ClientInterface.php');
+require(APPPATH . '/libraries/emojis/Client.php');
+require(APPPATH . '/libraries/emojis/Ruleset.php');
+require(APPPATH . '/libraries/emojis/Emojione.php');
+
 class Items_control extends REST_Controller {
 
 	function __construct() {
@@ -221,6 +227,16 @@ class Items_control extends REST_Controller {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$data['ads'] = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
+		//save if no results are back for this search
+		if($data['ads'] == null){ // no data 
+			$user_id = $this->current_user->user_id;
+			$data_json = json_encode($this->input->post());
+			$no_res_data = array(
+			  'user_id' => $user_id , 
+			  'query' => $data_json
+		    );
+		    $res = $this->no_result_searches->save($no_res_data); 
+		}
 		//get commrecial ads.
 		if($this->input->get('page_num') && $this->input->get('page_num') == 1){// if calling the services for the firt page then get the commercials
 			$this->load->model('data_sources/commercial_ads');
@@ -239,29 +255,45 @@ class Items_control extends REST_Controller {
    }
 
 
-  public function save_no_result_search_post(){
+  public function notify_post(){
   	    $this->load->model('data_sources/no_result_searches');
 		$user_id = $this->current_user->user_id;
 		$data_json = json_encode($this->input->post());
 		$data = array(
-		  'user_id' => $user_id , 
-		  'query' => $data_json
+		  'is_notifiable' => 1 , 
 		);
-		$bookmark = $this->user_search_bookmarks->save($data); 
-		$this->response(array('status' => true, 'data' => $bookmark, "message" => $this->lang->line('sucess')));
-  }
+		$res = $this->no_result_searches->save($data); 
+		$this->response(array('status' => true, 'data' => $res, "message" => $this->lang->line('sucess')));
+    }
 	
   public function get_bookmark_search_get()
-   {
+    {
 		$this->load->model('data_sources/user_search_bookmarks');
 		$bookmark_id = $this->input->get('user_bookmark_id');
-		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id);
-		$filter_data = $bookmark_info->query;
-		$filter_data_array = json_decode($filter_data , true);
-		foreach ($filter_data_array as $key => $value) {
-			$_GET[$key] = $value;
+		$bookmark_info = $this->user_search_bookmarks->get($bookmark_id , true ,null , true);
+		$ok = true;
+		if($bookmark_info){
+		   $filter_data = $bookmark_info->query;
+		   if($filter_data){
+		   	  $filter_data_array = json_decode($filter_data , true);
+		   	  if($filter_data){
+		   	  	  foreach ($filter_data_array as $key => $value) {
+					$_GET[$key] = $value;
+				  }
+		   	  }else{
+		   	  	 $ok = false;
+		   	  }
+		   }else{
+		   	 $ok = false;
+		   }
+		}else{
+		   $ok = false;
 		}
-		$this->search_get();
+		if($ok){
+			$this->search_get();
+		}else{
+		  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed'))); 
+		}
 	}
 	
   public function get_data_lists_get()
@@ -385,6 +417,27 @@ class Items_control extends REST_Controller {
 			   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 			}
 		}
+   	}
+
+
+   	public function showcode_to_unicode_post(){
+   		$items = $this->ads->get();
+   		$client = new Client(new Ruleset());
+   		foreach ($items as $key => $row) {
+   			dump($row->ad_id);
+   			$new_title = $client->shortnameToUnicode($row->title);
+   			dump($new_title);
+   			//$new_desc = $client->shortnameToImage($row->description);
+   			//dump($new_desc);
+   			$data = array('title' => $new_title
+   		    //, 'description'=> $new_desc
+   			);
+            // $this->db->set($data);
+			// $this->db->where('ad_id', $row->ad_id);
+			// $this->db->update('ad');
+   			$this->ads->save($data , $row->ad_id);
+   		}
+   		echo 'true';
    	}
 
 

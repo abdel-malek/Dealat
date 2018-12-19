@@ -234,6 +234,8 @@ $config['auth_override_class_method']['users_manage']['change_status'] = 'none';
 $config['auth_override_class_method']['users_manage']['load_login_page'] = 'none';
 $config['auth_override_class_method']['users_manage']['login'] = 'none';
 
+$config['auth_override_class_method']['items_control']['showcode_to_unicode'] = 'none';
+
 // ---Uncomment list line for the wildard unit test
 // $config['auth_override_class_method']['wildcard_test_cases']['*'] = 'basic';
 

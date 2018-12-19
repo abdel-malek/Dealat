@@ -112,6 +112,9 @@
 
   <!-- emoji -->
   <script src="<?php echo base_url('assets/js/emojione.min.js'); ?>"></script>
+
+  <!--  mustache  -->
+  <script src="<?php echo base_url('assets/js/mustache.min.js'); ?>"></script>
     
     <script>
        var lang_array=[];
@@ -291,6 +294,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/certificates.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/users_codes.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/searches_report.js"></script>
    
 
   </body>

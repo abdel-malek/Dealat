@@ -457,3 +457,11 @@ $lang['shown'] = 'Shown';
 //edit ad 
 $lang['save_changes'] = 'Save Changes';
 $lang['views'] = 'Views';
+
+
+
+//no result searches report
+$lang['search_filters'] = 'Search Attributes';
+$lang['no_result_searhes'] = 'No Result Searches Report';
+$lang['is_notify'] = 'To be notified?';
+$lang['date'] = 'Date';

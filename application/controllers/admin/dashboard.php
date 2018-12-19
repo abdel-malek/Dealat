@@ -20,6 +20,14 @@ class Dashboard extends REST_Controller {
 	   $this -> data['subview'] = 'admin/home_page';
 	   $this -> load -> view('admin/_main_layout', $this -> data); 
 	}
+
+	public function load_searches_report_get(){
+	   $this->load->model('data_sources/No_result_searches');
+	   $results = $this->No_result_searches->get_all();
+	   $this -> data['subview'] = 'admin/reports/searches';
+	   $this -> data['searches'] = $results;
+	   $this -> load -> view('admin/_main_layout', $this -> data); 
+	}
 	
 	
 }

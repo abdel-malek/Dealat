@@ -148,7 +148,8 @@ class Users_control extends REST_Controller {
 		   	$data = array('chat_session_id' => $chat_id);
 		    if($deleted_check){
 		   	  	if($deleted_check->is_shown == 1){
-		   	  		$data['created_at >'] = $deleted_check->modified_at;
+		   	  		//$data['DATE_ADD(created_at, INTERVAL +15 SECOND) >='] = $deleted_check->modified_at;
+		   	  		$data['created_at >='] = $deleted_check->modified_at;
 		   	  	}
 		   	}
 			$chat_messages = $this->messages->get_by($data);
@@ -165,9 +166,10 @@ class Users_control extends REST_Controller {
 		   	  $deleted_check = $this->deleted_chat_sessions->get_by(array('user_id' => $user_id , 'chat_session_id' => $chat_id) , true);
 		   	  $data = array('chat_session_id' => $chat_id);
 		   	  if($deleted_check){
-		   	  	if($deleted_check->is_shown == 1){
-		   	  		$data['created_at >'] = $deleted_check->modified_at;
-		   	  	}
+		   	  	//if($deleted_check->is_shown == 1){
+		   	  		//$data['DATE_ADD(created_at, INTERVAL +15 SECOND) >='] = $deleted_check->modified_at;
+		   	  		$data['created_at >='] = $deleted_check->modified_at;
+		   	  	//}
 		   	  }
 			  $chat_messages = $this->messages->get_by($data);
 			  if($chat_messages){ // set chat session to seen
@@ -199,12 +201,13 @@ class Users_control extends REST_Controller {
 				$msg_info = $this->messages->get($msg_id);
 				// check if this chat session is deleted for the users.
 				$this->load->model('data_sources/deleted_chat_sessions');
-				$deleted_chat_sessions = $this->deleted_chat_sessions->get_by(array('chat_session_id' => $chat_session_id));
+				$deleted_chat_sessions = $this->deleted_chat_sessions->get_by(array('chat_session_id' => $msg_info->chat_session_id));
 			    if($deleted_chat_sessions){
 			    	foreach ($deleted_chat_sessions as $key => $row) {
 			    		//update the shown status to shown for the deleted chat sessions if it's not already shown.
 			    		if($row->is_shown != 1){
-			    			$this->deleted_chat_sessions->save(array('is_shown'=> 1) , $row->deleted_chat_session_id);
+			    			$this->deleted_chat_sessions->save(array('is_shown'=> 1 ,
+			    			                                         'modified_at' => $msg_info->modified_at) , $row->deleted_chat_session_id);
 			    		}
 			    	}
 			    } 
@@ -234,7 +237,7 @@ class Users_control extends REST_Controller {
 		   	   $this->response(array('status' => false, 'data' =>$res_id, "message" => 'Something went wrong' ));
 		   }	
 		}
-   }
+    }
 	
    public function upload_personal_image_post()
 	{
