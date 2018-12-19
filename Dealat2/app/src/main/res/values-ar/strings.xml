@@ -261,5 +261,6 @@
     <string name="connection_error">حدث خطأ ما, يرجى إعادة المحاولة.</string>
     <string name="try_again">إعادة المحاولة</string>
     <string name="delete_chat">حذف المحادثة</string>
+    <string name="no_results">لا يوجد نتائج مطابقة</string>
 
 </resources>

@@ -109,7 +109,7 @@
             android:layout_width="@dimen/imageXSmall"
             android:layout_height="@dimen/imageXSmall"
             android:layout_margin="4dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:background="@null"
             android:src="@drawable/ic_star_border_white_24dp"
             />

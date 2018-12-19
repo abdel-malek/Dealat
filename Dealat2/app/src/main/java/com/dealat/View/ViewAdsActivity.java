@@ -88,6 +88,8 @@ public class ViewAdsActivity extends DrawerActivity {
 
         if (action == ACTION_SEARCH)
             searchParameters = (HashMap<String, String>) getIntent().getSerializableExtra("parameters");
+        if (searchParameters.size() == 0)
+            buttonFav.setVisibility(View.GONE);
 
         getAds();
     }
@@ -150,12 +152,16 @@ public class ViewAdsActivity extends DrawerActivity {
 
         pagingAdapter.removeLoadingFooter();
         isLoading = false;
-
+        if (MyApplication.getUserState() == User.REGISTERED && action == ACTION_SEARCH)
+            buttonFav.setVisibility(View.VISIBLE);
         pagingAdapter.addAll(result);
+
 
         if (pagingAdapter.getItemCount() == 0) {
             findViewById(R.id.layoutEmpty).setVisibility(View.VISIBLE);
             textViewCount.setText("");
+            if (action == ACTION_SEARCH)
+                ((TextView) findViewById(R.id.layoutEmpty)).setText(R.string.no_results);
 
         } else {
             findViewById(R.id.layoutEmpty).setVisibility(View.GONE);
@@ -178,8 +184,6 @@ public class ViewAdsActivity extends DrawerActivity {
 
         buttonViews.setImageDrawable(ContextCompat.getDrawable(mContext, getButtonViewsResource()));
 
-        if (MyApplication.getUserState() == User.REGISTERED)
-            buttonFav.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -273,39 +277,39 @@ public class ViewAdsActivity extends DrawerActivity {
         buttonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (bookmarkId == null) {
-                    if (!searchParameters.isEmpty()) {
-                        ShowProgressDialog();
-                        UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
-                            @Override
-                            public void OnSuccess(String result) {
-                                HideProgressDialog();
-                                showMessageInToast(getString(R.string.toastBookmark));
-                                bookmarkId = result;
-
-                                Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
-                                mAnimation.setDuration(800);
-                                buttonFav.startAnimation(mAnimation);
-                                buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_white_24dp));
-                            }
-                        });
-                    }
-                } else {
+//                if (bookmarkId == null) {
+                if (!searchParameters.isEmpty()) {
                     ShowProgressDialog();
-                    UserController.getInstance(mController).deleteBookmark(bookmarkId, new SuccessCallback<String>() {
+                    UserController.getInstance(mController).bookmarkSearch(searchParameters, new SuccessCallback<String>() {
                         @Override
                         public void OnSuccess(String result) {
                             HideProgressDialog();
-                            showMessageInToast(R.string.toastUnBookmark);
-                            bookmarkId = null;
+                            showMessageInToast(getString(R.string.toastBookmark));
+                            bookmarkId = result;
 
                             Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
                             mAnimation.setDuration(800);
                             buttonFav.startAnimation(mAnimation);
-                            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
+                            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_white_24dp));
                         }
                     });
                 }
+//                } else {
+//                    ShowProgressDialog();
+//                    UserController.getInstance(mController).deleteBookmark(bookmarkId, new SuccessCallback<String>() {
+//                        @Override
+//                        public void OnSuccess(String result) {
+//                            HideProgressDialog();
+//                            showMessageInToast(R.string.toastUnBookmark);
+//                            bookmarkId = null;
+//
+//                            Animation mAnimation = new AlphaAnimation(0.0f, 1.0f);
+//                            mAnimation.setDuration(800);
+//                            buttonFav.startAnimation(mAnimation);
+//                            buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
+//                        }
+//                    });
+//                }
             }
         });
 
@@ -348,6 +352,8 @@ public class ViewAdsActivity extends DrawerActivity {
                 searchParameters = (HashMap<String, String>) data.getSerializableExtra("parameters");
                 bookmarkId = null;
                 buttonFav.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_white_24dp));
+                if (searchParameters.size() == 0)
+                    buttonFav.setVisibility(View.GONE);
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
 

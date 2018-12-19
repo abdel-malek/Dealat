@@ -17,6 +17,7 @@ import com.dealat.MyApplication;
 import com.dealat.R;
 import com.dealat.View.ChatActivity;
 import com.squareup.picasso.Picasso;
+import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,12 +67,13 @@ public class ChatPagingAdapter extends RecyclerView.Adapter<ChatPagingAdapter.Vi
                         Intent intent = new Intent(context, ChatActivity.class);
 
                         intent.putExtra("chat", item);
+                        intent.putExtra("from_chat_list", true);
 
                         mChatsFragment.startActivityForResult(intent, ChatsFragment.VIEW_CHAT);
                     }
                 });
 
-                holder.textViewTitle.setText(item.getAdTitle());
+                holder.textViewTitle.setText(EmojiParser.parseToUnicode(item.getAdTitle()));
 
                 String url = null;
                 if (user != null) {

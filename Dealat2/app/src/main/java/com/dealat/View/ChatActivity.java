@@ -130,7 +130,7 @@ public class ChatActivity extends MasterActivity {
 
     @Override
     public void showData() {
-        ((TextView) findViewById(R.id.title)).setText(currentChat.getAdTitle());
+        ((TextView) findViewById(R.id.title)).setText(EmojiParser.parseToUnicode(currentChat.getAdTitle()));
 
         if (amISeller())
             ((TextView) findViewById(R.id.textName)).setText(currentChat.getUserName());
@@ -254,6 +254,7 @@ public class ChatActivity extends MasterActivity {
                 ad.setId(currentChat.getAdId());
                 ad.setTemplate(Integer.valueOf(currentChat.getTemplateId()));
                 intent.putExtra("ad", ad);
+                intent.putExtra("from_chat",getIntent().getBooleanExtra("from_chat_list",false));
                 startActivity(intent);
                 break;
 

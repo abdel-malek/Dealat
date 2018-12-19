@@ -655,8 +655,8 @@ public class EditAdActivity extends MasterActivity {
 
             parameters.put("ad_id", currentAd.getId());
 
-            parameters.put("title", EmojiParser.parseToAliases(editTitle.getText().toString()));
-            parameters.put("description", EmojiParser.parseToAliases(editDesc.getText().toString()));
+            parameters.put("title", /*EmojiParser.parseToAliases(*/editTitle.getText().toString()/*)*/);
+            parameters.put("description", /*EmojiParser.parseToAliases(*/editDesc.getText().toString()/*)*/);
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
 

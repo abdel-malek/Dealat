@@ -406,20 +406,23 @@ public class AdDetailsActivity extends MasterActivity {
                     break;
 
                 case R.id.buttonMessage:
-                    intent = new Intent(mContext, ChatActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    Chat chat = new Chat();
-                    chat.setAdId(currentAd.getId());
-                    chat.setTemplateId(String.valueOf(currentAd.getTemplate()));
-                    chat.setSellerId(currentAd.getSellerId());
-                    chat.setSellerName(currentAd.getSellerName());
-                    chat.setUserId(user.Get().getId());
-                    chat.setUserName(user.Get().getName());
-                    chat.setAdTitle(currentAd.getTitle());
 
-                    intent.putExtra("chat", chat);
-                    startActivity(intent);
-
+                    if (getIntent().getBooleanExtra("from_chat", false))//to keep ability to handle delete chat in onactivity result in ChatsFragment (if the user go from chat adapter to chat details to ad details the press chat)
+                        finish();
+                    else {
+                        intent = new Intent(mContext, ChatActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Chat chat = new Chat();
+                        chat.setAdId(currentAd.getId());
+                        chat.setTemplateId(String.valueOf(currentAd.getTemplate()));
+                        chat.setSellerId(currentAd.getSellerId());
+                        chat.setSellerName(currentAd.getSellerName());
+                        chat.setUserId(user.Get().getId());
+                        chat.setUserName(user.Get().getName());
+                        chat.setAdTitle(currentAd.getTitle());
+                        intent.putExtra("chat", chat);
+                        startActivity(intent);
+                    }
                     break;
 
                 case R.id.buttonEdit:

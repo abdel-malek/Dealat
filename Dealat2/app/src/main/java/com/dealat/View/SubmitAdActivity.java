@@ -852,7 +852,7 @@ public class SubmitAdActivity extends MasterActivity {
                 parameters.put("is_featured", "1");
 
             parameters.put("title", stringInput(editTitle));
-            parameters.put("description", EmojiParser.parseToAliases(editDesc.getText().toString()));
+            parameters.put("description", /*EmojiParser.parseToAliases(*/editDesc.getText().toString()/*)*/);
             parameters.put("category_id", selectedCategory.getId());
             parameters.put("show_period", ((Item) spinnerPeriod.getSelectedItem()).getId());
             parameters.put("city_id", ((City) spinnerCity.getSelectedItem()).getId());
