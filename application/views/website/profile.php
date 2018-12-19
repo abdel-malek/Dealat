@@ -172,8 +172,11 @@
 									<div class="col-4 col-sm-4 col-md-3">
 										<div class="username">{{username}}</div>
 									</div>
-									<div class="col-4 col-sm-5 col-md-6">
+									<div class="col-4 col-sm-5 col-md-3">
 										<div class="chat-name">{{details.ad_title}}</div>
+									</div>
+									<div class="col-md-3 text-right text-md-center">
+										<button class="btn button2 delete-chat"><?php echo $this->lang->line('delete'); ?></button>
 									</div>
 								</div>
 							</li>
@@ -182,14 +185,7 @@
 					</ul>
 <!--				</div>-->
 			</div>
-<!--
-			<div class="col-4 col-sm-5 col-md-3">
-				<div class="chat-name">{{details.ad_title}}</div>
-			</div>
-			<div class="col-md-3 text-right text-md-center">
-				<button class="btn button2 delete-chat"><?php echo $this->lang->line('delete'); ?></button>
-			</div>
--->
+
 
 			<div id="bookmarks" class="bookmarks">
 				<ul class="bookmarks-list">
