@@ -5197,7 +5197,7 @@ $</string>
                                 <items>
                                     <barButtonItem style="plain" id="PHd-Le-oQH"/>
                                     <barButtonItem style="plain" id="wgL-nH-tbG"/>
-                                    <barButtonItem title="Vehicls" id="Mdl-UV-JYH"/>
+                                    <barButtonItem title=" " id="Mdl-UV-JYH"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="0lA-oX-S0l"/>
                                     <barButtonItem style="plain" id="XA1-Dx-fpl">
                                         <view key="customView" contentMode="scaleToFill" id="rcG-rH-yx0">
@@ -6462,7 +6462,7 @@ $</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xei-up-1Fx">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xei-up-1Fx">
                                                 <rect key="frame" x="0.0" y="36.5" width="277.5" height="60"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="18"/>

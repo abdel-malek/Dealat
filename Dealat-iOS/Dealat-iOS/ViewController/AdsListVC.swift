@@ -8,6 +8,7 @@
 
 import UIKit
 import CHIPageControl
+import SwiftyJSON
 
 class AdsListVC: BaseVC {
     
@@ -120,6 +121,26 @@ class AdsListVC: BaseVC {
                     self.markImg.target = self
                     self.markImg.action = #selector(self.markAction)
                     self.refreshTopAds(commercials)
+                    
+                    
+                    // HIDE bookmark when select all caegory only
+                    //-----
+                    var allNull : Bool = true
+                    var categoryID : Any!
+                    for i in  FilterParams.getParams(Provider.filter){
+                        if i.key == "category_id"{
+                            categoryID = i.value
+                        }else{
+                            if JSON(i.value).string != nil, !JSON(i.value).stringValue.isEmpty{
+                                allNull = false
+                            }
+                        }
+                    }
+                    if allNull, categoryID == nil{
+                        self.markImg.image = nil
+                    }
+                    //-----
+                    
                 })
             }
         }
@@ -191,17 +212,28 @@ class AdsListVC: BaseVC {
     
     @objc func markAction(){
         
-        let alert = UIAlertController.init(title: "AddToBookmark".localized, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction.init(title: "OK".localized, style: UIAlertAction.Style.default, handler: { (ac) in
-            self.showLoading()
-            Communication.shared.mark_search { (true) in
-                self.hideLoading()
-                self.markImg.image = nil
-                self.showErrorMessage(text: "SearchSaved".localized)
-            }
-        }))
-        alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        if User.isRegistered(){
+            let alert = UIAlertController.init(title: "AddToBookmark".localized, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: UIAlertAction.Style.default, handler: { (ac) in
+                self.showLoading()
+                Communication.shared.mark_search { (true) in
+                    self.hideLoading()
+                    self.markImg.image = nil
+                    self.showErrorMessage(text: "SearchSaved".localized)
+                }
+            }))
+            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let me = User.getCurrentUser()
+            let txt = me.statues_key == (User.USER_STATUES.NEW_USER.rawValue) ? "needRegister1".localized : "needRegister2".localized
+            let alert = UIAlertController.init(title: txt, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
+                AppDelegate.setupViews()
+            }))
+            alert.addAction(UIAlertAction.init(title: "Cancel".localized, style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     override func setupViews() {

@@ -229,7 +229,7 @@ class ChatDetailsVC: BaseVC {
                 titleString += (self.chat.seller_name)
             }
         }
-        titleLbl.text = titleString
+        titleLbl.text = titleString.emojiUnescapedString
         titleLbl.textColor = UIColor.white
         titleLbl.numberOfLines = 0
 //        titleLbl.font = Theme.Font.CenturyGothic

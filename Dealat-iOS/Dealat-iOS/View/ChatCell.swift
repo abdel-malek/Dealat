@@ -33,7 +33,7 @@ class ChatCell: UICollectionViewCell {
                 }
             }
             
-            self.adLbl.text = chat.ad_title
+            self.adLbl.text = chat.ad_title.emojiUnescapedString
         }
     }
     

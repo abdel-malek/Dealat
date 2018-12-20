@@ -1278,7 +1278,8 @@ class NewAddVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,UIC
             let alert  = UIAlertController.init(title: "Alert!".localized, message: "AdDone2".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction.init(title: "OK".localized, style: .default, handler: { (ac) in
                 self.showLoading()
-                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
+//                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd.emojiEscapedString, description: desAd.emojiEscapedString, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
+                Communication.shared.edit_item(ad_id: self.ad.ad_id.intValue, category_id: category_id.intValue, title: titleAd, description: desAd, images: self.imagesPaths,paramsAdditional: params, edit_status : self.ad.status.intValue) { (res) in
                     self.hideLoading()
                     self.performSegue(withIdentifier: "unwindSegueToVC1", sender: res)
                 }

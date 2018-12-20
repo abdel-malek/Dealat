@@ -197,6 +197,12 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
                 self.ad.images.insert(video, at: 0)
             }
             
+            if let views_num = res.views_num{
+                self.viewLbl.text = "\(views_num.stringValue) " + "views".localized
+            }else{
+                self.viewLbl.text = nil
+            }
+
             
             self.parentBase?.refreshBar()
             self.refreshData()
@@ -212,11 +218,11 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
             self.collectionView2.transform = CGAffineTransform.init(scaleX: -1.0, y: 1.0)
         }
         
-        if let views_num = ad.views_num{
-            self.viewLbl.text = "\(views_num.stringValue) " + "views".localized
-        }else{
-            self.viewLbl.text = nil
-        }
+//        if let views_num = ad.views_num{
+//            self.viewLbl.text = "\(views_num.stringValue) " + "views".localized
+//        }else{
+//            self.viewLbl.text = nil
+//        }
         
         if User.isRegistered(){
             let same = self.ad.seller_id.intValue == User.getID()
