@@ -46,10 +46,13 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$cities = $this->_get_cities_names($row -> commercial_ad_id);
-			$recorde[] = $cities;
+			$this->load->model('data_sources/commercials_cities');
+			$cities = $this->commercials_cities->get_cities($row-> commercial_ad_id , $this->data['lang']);
+			$cities_names = $this->_get_cities_names($cities);
+			$cities_ids = $this->_get_cities_ids($cities);
+			$recorde[] = $cities_names;
 			if(PERMISSION::Check_permission(PERMISSION::SHOW_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
-			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $row->city_id);
+			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $cities_ids);
 			else{
 			   if($row->is_active == 1){
 			   	  $recorde[] = $this->lang->line('shown');
@@ -78,10 +81,13 @@ class Commercial_items_manage extends REST_Controller {
 			   $recorde[] = $this->lang->line('not_set'); 
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
-			$cities = $this->_get_cities_names($row -> commercial_ad_id);
-			$recorde[] = $cities;
+			$this->load->model('data_sources/commercials_cities');
+    	    $cities = $this->commercials_cities->get_cities($row-> commercial_ad_id , $this->data['lang']);
+			$cities_names = $this->_get_cities_names($cities);
+			$cities_ids = $this->_get_cities_ids($cities);
+			$recorde[] = $cities_names;
 		    if(PERMISSION::Check_permission(PERMISSION::SHOW_MAIN_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
-			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $row->city_id);
+			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $cities_ids);
 			else{
 			   if($row->is_active == 1){
 			   	  $recorde[] = $this->lang->line('shown');
@@ -96,9 +102,7 @@ class Commercial_items_manage extends REST_Controller {
     }
 
 
-    private function _get_cities_names($comm_id){
-    	$this->load->model('data_sources/commercials_cities');
-    	$cities = $this->commercials_cities->get_cities($comm_id , $this->data['lang']);
+    private function _get_cities_names($cities){
 		$cities_names = '';
 		foreach ($cities as $key => $city_row) {
 		   if($cities_names != ''){
@@ -108,6 +112,18 @@ class Commercial_items_manage extends REST_Controller {
 		   }
 		}
 		return $cities_names;
+    }
+
+    private function _get_cities_ids($cities){
+		$cities_ids = '';
+		foreach ($cities as $key => $city_row) {
+		   if($cities_ids != ''){
+		   	  $cities_ids .= '-'.$city_row->city_id;
+		   }else{
+		   	  $cities_ids .= $city_row->city_id;
+		   }
+		}
+		return $cities_ids;
     }
 
 }

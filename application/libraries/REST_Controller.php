@@ -287,6 +287,7 @@ abstract class REST_Controller extends CI_Controller {
 		$this->response->city = $this->_detect_city();
 		$this->response->os = $this->_detect_os();
 		$this->response->version = $this->_detect_version();
+        $this->response->build = $this->_detect_build();
 		$this->response->is_auth = $this->_detect_auth();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
@@ -785,6 +786,19 @@ abstract class REST_Controller extends CI_Controller {
             return '1.0';
         }
         return $this->session->userdata('version');
+   }
+
+   protected function _detect_build() {
+        $header = $this->input->request_headers();
+        if (isset($header['Build'])) {
+            $this->session->set_userdata(array('build' => $header['Build']));
+            return $header['Build'];
+        }
+        if (!$this->session->userdata('build')) {
+            $this->session->set_userdata(array('build' => '1'));
+            return '1';
+        }
+        return $this->session->userdata('build');
    }
 	
    protected function _detect_auth() {

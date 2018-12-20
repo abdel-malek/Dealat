@@ -228,15 +228,15 @@ class Items_control extends REST_Controller {
 		$category_id = $this->input->get('category_id');
 		$data['ads'] = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
 		//save if no results are back for this search
-		if($data['ads'] == null){ // no data 
-			$user_id = $this->current_user->user_id;
-			$data_json = json_encode($this->input->post());
-			$no_res_data = array(
-			  'user_id' => $user_id , 
-			  'query' => $data_json
-		    );
-		    $res = $this->no_result_searches->save($no_res_data); 
-		}
+		// if($data['ads'] == null){ // no data 
+		// 	$user_id = $this->current_user->user_id;
+		// 	$data_json = json_encode($this->input->post());
+		// 	$no_res_data = array(
+		// 	  'user_id' => $user_id , 
+		// 	  'query' => $data_json
+		//     );
+		//     $res = $this->no_result_searches->save($no_res_data); 
+		// }
 		//get commrecial ads.
 		if($this->input->get('page_num') && $this->input->get('page_num') == 1){// if calling the services for the firt page then get the commercials
 			$this->load->model('data_sources/commercial_ads');
@@ -421,22 +421,31 @@ class Items_control extends REST_Controller {
 
 
    	public function showcode_to_unicode_post(){
-   		$items = $this->ads->get();
    		$client = new Client(new Ruleset());
-   		foreach ($items as $key => $row) {
-   			dump($row->ad_id);
-   			$new_title = $client->shortnameToUnicode($row->title);
-   			dump($new_title);
-   			//$new_desc = $client->shortnameToImage($row->description);
-   			//dump($new_desc);
-   			$data = array('title' => $new_title
-   		    //, 'description'=> $new_desc
-   			);
-            // $this->db->set($data);
-			// $this->db->where('ad_id', $row->ad_id);
-			// $this->db->update('ad');
-   			$this->ads->save($data , $row->ad_id);
-   		}
+   // 		$items = $this->ads->get();
+   // 		foreach ($items as $key => $row) {
+   // 			dump($row->ad_id);
+   // 			$new_title = $client->shortnameToUnicode($row->title);
+   // 			dump($new_title);
+   // 			//$new_desc = $client->shortnameToImage($row->description);
+   // 			//dump($new_desc);
+   // 			$data = array('title' => $new_title
+   // 		    //, 'description'=> $new_desc
+   // 			);
+   //          // $this->db->set($data);
+			// // $this->db->where('ad_id', $row->ad_id);
+			// // $this->db->update('ad');
+   // 			$this->ads->save($data , $row->ad_id);
+   // 		}
+
+   		$ad_id = 188;
+   		$item = $this->ads->get($ad_id, true,null, true );
+        $test = 'تجربة بالعربي  :smile:';
+   		$new_title = $client->shortnameToUnicode($test);
+   		dump($new_title);
+   		$new_desc =  $client->shortnameToUnicode($item->description);
+   		$data = array('title' => $new_title , 'description' => $new_desc);
+   		//$this->ads->save($data , $item->ad_id);
    		echo 'true';
    	}
 

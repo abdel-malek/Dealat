@@ -77,15 +77,25 @@ class Commercial_ads extends MY_Model {
 	
 	public function check_active_number($category , $position , $city)
 	{
-		$this->db->select('COUNT(commercial_ad_id) as  active_count');
-		$q = parent::get_by(array('category_id' => $category , 'is_active' => 1 , 'position' => $position , 'city_id' => $city));
-	    $count = $q[0]->active_count;
-		$limit = POSITION::get_limit($position);
-		if($count >= $limit){
-			return false;
-		}else{
-			return true;
+		$cities = explode("-",$city);
+		$ok = true;
+		if($cities){
+			foreach ($cities as $key => $city) {
+				$this->db->select('COUNT(commercial_ad_id) as  active_count');
+				$this->db->join('commercials_cities' , 'commercial_ads.commercial_ad_id = commercials_cities.commercial_id', 'left');
+				$this->db->where('commercials_cities.city_id' , $city);
+				$q = parent::get_by(array('category_id' => $category , 'is_active' => 1 , 'position' => $position));
+			    $count = $q[0]->active_count;
+				$limit = POSITION::get_limit($position);
+				if($count >= $limit){
+					$ok = false;
+					break;
+				}else{
+					$ok = true;
+				}
+			}
 		}
+		return $ok;
 	}
 	
 	public function get_all_main($lang)

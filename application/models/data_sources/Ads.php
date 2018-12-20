@@ -521,12 +521,12 @@ class Ads extends MY_Model {
 	 $this->db->where('status' , STATUS::ACCEPTED );
 	//serach
 	 if($query_string != null){
-	      if(strlen($query_string) < 3){
-	        $this->db->where("ads.title LIKE '%".$query_string."%' OR ads.description  LIKE '%".$query_string."%' )",NULL, FALSE);	
-	   	 }else{
-		 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
-		 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
-		 }
+	   //   if(strlen($query_string) < 3){
+	        $this->db->where("(ads.title LIKE '%".$query_string."%' OR ads.description  LIKE '%".$query_string."%' )",NULL, FALSE);	
+	  //  	 }else{
+		 // 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
+		 // 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
+		 // }
 	 }
 	 $this->db->join('categories as c1' , 'ads.category_id = c1.category_id' , 'left');
 	 $this->db->join('categories as c' , 'c.category_id = c1.parent_id' , 'left outer');
