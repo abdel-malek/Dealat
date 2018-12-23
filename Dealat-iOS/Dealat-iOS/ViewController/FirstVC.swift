@@ -30,7 +30,9 @@ class FirstVC: UIViewController {
     func getUrlConnection(){
 //        self.showLoading()
         
-        let url = URL(string: "http://deal-at.com/index.php/api/users_control/get_urls/format/json")!
+//        let url = URL(string: "http://deal-at.com/index.php/api/users_control/get_urls/format/json")!
+        let url = URL(string: "http://dealat.tradinos.com/index.php/api/users_control/get_urls/format/json")!
+
         
         Alamofire.request(url, method: .get, parameters: nil, encoding : URLEncoding(destination: .queryString), headers: Communication.shared.getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
             
