@@ -13,7 +13,7 @@
 
 					</div>
 					<div class="col-md-2 text-center mt-2">
-						<div class="name">{{name}}</div>
+						<div class="name">{{{name}}}</div>
 					</div>
 					<div class="col-md-5 offset-md-1 mt-2">
 						<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{city_name}}</span></div>
@@ -78,7 +78,7 @@
 												</div>
 												<div class="col-md-6">
 													<div class="card-body">
-														<div class="card-title mb-1">{{ad.title}}</div>
+														<div class="card-title mb-1">{{{ad.title}}}</div>
 														<div class="category"><span class="category-lbl"><?php echo $this->lang->line('category'); ?>: </span><span class="category-val">{{ad.parent_category_name}} - {{ad.category_name}}</span></div>
 														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>
 
@@ -136,8 +136,8 @@
 												</div>
 												<div class="col-md-6">
 													<div class="card-body">
-														<div class="card-title mb-1">{{ad.title}}</div>
-														<div class="details mb-2">{{ad.description}}</div>
+														<div class="card-title mb-1">{{{ad.title}}}</div>
+														<div class="details mb-2">{{{ad.description}}}</div>
 														{{#ad.city_name}}
 														<div class="location"><span class="location-lbl"><?php echo $this->lang->line('location'); ?>: </span><span class="location-val">{{ad.city_name}}{{#ad.location_name}} - {{/ad.location_name}}{{ad.location_name}}</span></div>{{/ad.city_name}}
 
@@ -173,7 +173,7 @@
 										<div class="username">{{username}}</div>
 									</div>
 									<div class="col-4 col-sm-5 col-md-3">
-										<div class="chat-name">{{details.ad_title}}</div>
+										<div class="chat-name">{{{details.ad_title}}}</div>
 									</div>
 									<div class="col-md-3 text-right text-md-center">
 										<button class="btn button2 delete-chat"><?php echo $this->lang->line('delete'); ?></button>

@@ -165,7 +165,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn button2 chat"><i class="far fa-comment-alt fa-lg"></i></button>
+					<button type="button" class="btn button2 chat" title="Chat"><i class="far fa-comment-alt fa-lg"></i></button>
 				</div>
 			</div>
 		</div>
@@ -194,8 +194,8 @@
 
 				<div class="row">
 					<div class="col-12 mb-4 text-center">
-						<div class="card-title">{{ad.title}}</div>
-						<div class="details">{{ad.description}}</div>
+						<div class="card-title">{{{ad.title}}}</div>
+						<div class="details">{{{ad.description}}}</div>
 					</div>
 
 					<div class="col-sm-4 info-col mb-1 border-middle">
@@ -1165,10 +1165,9 @@
 				</ol>
 
 				<script id="chat-self-template" type="text/template">
-
 					<li class="self" data-msg-id="{{message_id}}">
 						<div class="msg">
-							<p>{{text}}</p>
+							<p>{{{text}}}</p>
 							<time>{{time}}</time>
 						</div>
 					</li>
@@ -1177,7 +1176,7 @@
 				<script id="chat-other-template" type="text/template">
 					<li class="other" data-msg-id="{{message_id}}">
 						<div class="msg">
-							<p>{{text}}</p>
+							<p>{{{text}}}</p>
 							<time>{{time}}</time>
 						</div>
 					</li>
@@ -1192,7 +1191,7 @@
 
 						<div class="row no-gutters">
 							<div class="col-11">
-								<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>">
+								<input type="text" class="form-control form-control-sm mt-2" name="msg" placeholder="<?php echo $this->lang->line('write_message'); ?>" required>
 							</div>
 							<div class="col-1">
 								<button type="submit" class="btn button2 submit telegram" form="chat-form"><i class="fab fa-telegram-plane"></i></button>

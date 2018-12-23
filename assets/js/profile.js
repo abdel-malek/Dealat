@@ -962,14 +962,14 @@ $(function () {
 
 			// convert native unicode emoji to their shortnames upon form submission.
 			var title = $(this).find('input[name="title"]').val();
-			title = emojione.toShort(title);
+//			title = emojione.toShort(title);
 
 			editAdData.push({
 				name: "title",
 				value: title
 			});
 			var desc = $(this).find('textarea[name="description"]').val();
-			desc = emojione.toShort(desc);
+//			desc = emojione.toShort(desc);
 
 			editAdData.push({
 				name: "description",

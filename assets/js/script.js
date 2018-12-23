@@ -3,14 +3,14 @@
 
 $(function () {
 	//convert emojis shortnames to native unicode
-	$(".card-title").each(function(){
+	$(".card-title").each(function () {
 		$(this).html(emojione.shortnameToUnicode($(this).html()));
 	});
-	
-	$(".details").each(function(){
+
+	$(".details").each(function () {
 		$(this).html(emojione.shortnameToUnicode($(this).html()));
 	});
-	
+
 	//css
 	$(".header-account-logged  ul").css("min-width", $(".header-account-logged").width());
 
@@ -225,72 +225,74 @@ $(function () {
 	});
 
 	//get commercial ads
-	$.ajax({
-		type: "get",
-		url: base_url + '/api/commercial_items_control/get_commercial_items',
-		dataType: "json",
-		data: {
-			category_id: category_id,
-			from_web: 1
-		}
-	}).done(function (data) {
-		if (data.status === false) {} else {
-			var adData, sliderDefaultImg, sliderImgCount = 0,
-				sideImgCount = 0,
-				sideDefaultImg;
+	if ($(".profile-page").length == 0) {
+		$.ajax({
+			type: "get",
+			url: base_url + '/api/commercial_items_control/get_commercial_items',
+			dataType: "json",
+			data: {
+				category_id: category_id,
+				from_web: 1
+			}
+		}).done(function (data) {
+			if (data.status === false) {} else {
+				var adData, sliderDefaultImg, sliderImgCount = 0,
+					sideImgCount = 0,
+					sideDefaultImg;
 
-			sliderDefaultImg = {
-				image: "assets/images/default_top.jpg"
-			};
-			sideDefaultImg = {
-				image: "assets/images/default-side_ad.jpg"
-			};
+				sliderDefaultImg = {
+					image: "assets/images/default_top.jpg"
+				};
+				sideDefaultImg = {
+					image: "assets/images/default-side_ad.jpg"
+				};
 
-			if (data.data.length !== 0) {
-				for (i in data.data) {
-					if (data.data[i].ad_url) {
-						var pos = data.data[i].ad_url.search("http");
-						if (pos === -1) {
-							data.data[i].ad_url = "http://" + data.data[i].ad_url;
+				if (data.data.length !== 0) {
+					for (i in data.data) {
+						if (data.data[i].ad_url) {
+							var pos = data.data[i].ad_url.search("http");
+							if (pos === -1) {
+								data.data[i].ad_url = "http://" + data.data[i].ad_url;
+							}
+						}
+						if (data.data[i].position === "2") {
+							//top slider ad
+							sliderImgCount += 1;
+							template = $('#main-commercial-ads-template').html();
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$(".ads-slider").append(rendered);
+							$(".ads-slider").slick("refresh");
+						} else if (data.data[i].position === "1") {
+							//side ad
+							sideImgCount += 1;
+							template = $('#side-commercial-ads-template').html();
+							Mustache.parse(template);
+							rendered = Mustache.render(template, data.data[i]);
+							$("aside.banners").append(rendered);
 						}
 					}
-					if (data.data[i].position === "2") {
-						//top slider ad
-						sliderImgCount += 1;
-						template = $('#main-commercial-ads-template').html();
-						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i]);
-						$(".ads-slider").append(rendered);
-						$(".ads-slider").slick("refresh");
-					} else if (data.data[i].position === "1") {
-						//side ad
-						sideImgCount += 1;
+				}
+				if (data.data.length === 0 || sliderImgCount === 0) {
+					//view default ads in slider
+					template = $('#main-commercial-ads-template').html();
+					Mustache.parse(template);
+					rendered = Mustache.render(template, sliderDefaultImg);
+					$(".ads-slider").append(rendered);
+					$(".ads-slider").slick("refresh");
+				}
+				if (data.data.length === 0 || sideImgCount === 0) {
+					//view default ads in and side
+					for (i = 0; i < 2; i += 1) {
 						template = $('#side-commercial-ads-template').html();
 						Mustache.parse(template);
-						rendered = Mustache.render(template, data.data[i]);
+						rendered = Mustache.render(template, sideDefaultImg);
 						$("aside.banners").append(rendered);
 					}
 				}
 			}
-			if (data.data.length === 0 || sliderImgCount === 0) {
-				//view default ads in slider
-				template = $('#main-commercial-ads-template').html();
-				Mustache.parse(template);
-				rendered = Mustache.render(template, sliderDefaultImg);
-				$(".ads-slider").append(rendered);
-				$(".ads-slider").slick("refresh");
-			}
-			if (data.data.length === 0 || sideImgCount === 0) {
-				//view default ads in and side
-				for (i = 0; i < 2; i += 1) {
-					template = $('#side-commercial-ads-template').html();
-					Mustache.parse(template);
-					rendered = Mustache.render(template, sideDefaultImg);
-					$("aside.banners").append(rendered);
-				}
-			}
-		}
-	});
+		});
+	}
 
 	//get categories and subcategories
 	$.ajax({
@@ -1530,23 +1532,23 @@ $(function () {
 				data[i].value = data[i].value.replace(/,/g, '');
 			}
 		}
-		
+
 		// convert native unicode emoji to their shortnames upon form submission.
 		var title = $(this).find('input[name="title"]').val();
-//		title = emojione.toShort(title);
+		//		title = emojione.toShort(title);
 
 		data.push({
-				name: "title",
-				value: title
-			});
+			name: "title",
+			value: title
+		});
 		var desc = $(this).find('textarea[name="description"]').val();
-//		desc = emojione.toShort(desc);
+		//		desc = emojione.toShort(desc);
 
 		data.push({
-				name: "description",
-				value: desc
-			});
-		
+			name: "description",
+			value: desc
+		});
+
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -2086,6 +2088,7 @@ $(function () {
 				}
 				var existingSessionID = [];
 				if ($(".profile-page").length > 0) {
+					//clear all new message styles of sessions in chat page and re-put them for previous and new added ones 
 					$(".profile-page .sessions .session").each(function (i) {
 						existingSessionID.push($(this).data("sessionId"));
 						$(this).removeAttr("style");
@@ -2124,6 +2127,10 @@ $(function () {
 								if (!sessionImage) {
 									sessionImage = '/assets/images/user1.jpg';
 								}
+
+								//convert emojis shortnames to native unicode
+								data.data[i].ad_title = emojione.shortnameToUnicode(data.data[i].ad_title);
+
 								sessionData = {
 									image: sessionImage,
 									username: username,
@@ -2141,6 +2148,7 @@ $(function () {
 
 			}
 		});
+		//check for new messages every 1 second
 		notSeenInterval = setTimeout(checkNewMsgs, 1000);
 	}
 
@@ -2150,6 +2158,7 @@ $(function () {
 
 	//auto check for new messages for an opened chat session and append it
 	function checkLiveSessionMsg() {
+		//		$(".loading-overlay1").fadeOut("fast");
 		//get chat messages for a live(opened) chat session
 		$.ajax({
 			type: "get",
@@ -2157,9 +2166,15 @@ $(function () {
 			dataType: "json",
 			global: false, // this makes sure ajaxStart is not triggered
 			data: $("#chat-form").serialize()
+			//			beforeSend: function () {
+			//				$(".loading-overlay1").fadeIn("fast");
+			//			},
+			//			complete: function () {
+			//				$(".loading-overlay1").fadeOut("fast");
+			//			}
 		}).done(function (data) {
 			if (data.status === false) {} else {
-				//there are previous chat messages
+				//check if there are previous chat messages, cause first message is appended in send_msgs service, other msgs is appended here
 				if ($('#chat-modal .chat li').length > 0 && data.data.length > 0) {
 					var lastMsgId, msgDate, startIndex, isSeller;
 					lastMsgId = $('#chat-modal .chat li').last().data("msgId");
@@ -2176,31 +2191,41 @@ $(function () {
 								break;
 							}
 						}
+
 						for (i = startIndex + 1; i < data.data.length; i += 1) {
 							//check msg date
-
 							if (data.data[i].created_at.split(' ')[0] !== msgDate) {
 								//update msg date
 								msgDate = data.data[i].created_at.split(' ')[0];
 								$("#chat-modal .chat").append('<div class="day">' + msgDate + '</div>');
 							}
+
 							data.data[i].time = new Date(data.data[i].created_at).toLocaleString('en-US', {
 								hour: 'numeric',
 								minute: 'numeric',
 								hour12: true
 							});
 
-
 							if ((isSeller === "1" && data.data[i].to_seller === "1") || (isSeller === "0" && data.data[i].to_seller === "0")) {
 								template = $('#chat-other-template').html();
+								data.data[i].text = emojione.shortnameToUnicode(data.data[i].text);
+								Mustache.parse(template);
+								rendered = Mustache.render(template, data.data[i]);
+								$("#chat-modal .chat").append(rendered);
 							} else {
 								//already viewed with send_msg service
-								template = $('#chat-self-template').html();
+								//								template = $('#chat-self-template').html();
+								//								$("#chat-form .submit").removeAttr("disabled");
+								//								$("#chat-form input[name='msg']").val("");
+								//								$("#chat-form input[name='msg']").focus();
+								//								clearTimeout(msgLoadTimeout);
+								//								$(".loading-overlay1").fadeOut("fast");
 							}
+							//							data.data[i].text = emojione.shortnameToUnicode(data.data[i].text);
+							//							Mustache.parse(template);
+							//							rendered = Mustache.render(template, data.data[i]);
+							//							$("#chat-modal .chat").append(rendered);
 
-							Mustache.parse(template);
-							rendered = Mustache.render(template, data.data[i]);
-							$("#chat-modal .chat").append(rendered);
 						}
 						$("#chat-modal .chat").stop().animate({
 							scrollTop: $("#chat-modal .chat")[0].scrollHeight
@@ -2219,7 +2244,6 @@ $(function () {
 			scrollTop: $("#chat-modal .chat")[0].scrollHeight
 		}, 300);
 		$("#chat-modal input[name='msg']").focus();
-		//		var lastMsgId;
 		intervalId = setTimeout(checkLiveSessionMsg);
 	});
 
@@ -2231,30 +2255,50 @@ $(function () {
 		e.preventDefault();
 		e.stopPropagation();
 
+		//disable sending a new msg while sending current msg is not finished
+		$("#chat-form input[name='msg']").on('keypress keydown keyup', function (ev) {
+			if (ev.keyCode == 13) {
+				ev.preventDefault();
+			}
+		});
+		$("#chat-form .submit").attr("disabled", true);
+		
+		//display loader if new msg sent and appended took more than 500 ms
+//		msgLoadTimeout = setTimeout(function () {
+//			$(".loading-overlay1").fadeIn("fast");
+//		}, 500);
+
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/users_control/send_msg',
 			dataType: "json",
-			global: false, // this makes sure ajaxStart is not triggered
+//			global: false, // this makes sure ajaxStart is not triggered
 			data: $(this).serialize()
 		}).done(function (data) {
 			if (data.status === false) {} else {
+				//always rely on checkLiveSessionMsg() function to append msgs even the send ones except if there is no previous msgs (new chat session) then display only the first send
+				//				if ($('#chat-modal .chat li').length === 0) {
 				data.data.time = new Date(data.data.created_at).toLocaleString('en-US', {
 					hour: 'numeric',
 					minute: 'numeric',
 					hour12: true
 				});
 
+				data.data.text = emojione.shortnameToUnicode(data.data.text);
+
 				template = $('#chat-self-template').html();
 				Mustache.parse(template);
 				rendered = Mustache.render(template, data.data);
-				//always rely on checkLiveSessionMsg() function to append msgs even the send ones except if there is no previous msgs (new chat session) then display only the first send
-				if ($('#chat-modal .chat li').length === 0) {
-					$("#chat-modal .chat").append(rendered);
-				}
 
+				$("#chat-form .submit").removeAttr("disabled");
 				$("#chat-form input[name='msg']").val("");
 				$("#chat-form input[name='msg']").focus();
+//				clearTimeout(msgLoadTimeout);
+				$(".loading-overlay1").fadeOut("fast");
+
+				$("#chat-modal .chat").append(rendered);
+				$("#chat-form input[name='msg']").off('keypress keydown keyup');
+				//				}
 
 				$("#chat-modal .chat").stop().animate({
 					scrollTop: $("#chat-modal .chat")[0].scrollHeight
