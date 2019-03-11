@@ -136,6 +136,10 @@
 <script src="<?php echo base_url('assets/js/jquery.form.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
 
+<!--convert url text to hyperlink-->
+<script src="<?php echo base_url('assets/js/linkify.min.js'); ?>"></script>  
+<script src="<?php echo base_url('assets/js/linkify-string.min.js'); ?>"></script>  
+
 <!-- main js file -->
 <script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/profile.js'); ?>"></script>

@@ -1262,6 +1262,26 @@
 	</div>
 </div>
 
+<!--admin notification modal-->
+<div id="admin-notification-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+			<div class="modal-body text-center">
+				<h5 class="title" style="overflow-wrap: break-word;"></h5>
+				<h6 class="text"  style="overflow-wrap: break-word;"></h6>
+			</div>
+			<div class="modal-footer">
+				<button class="btn button2" data-dismiss="modal"><?php echo $this->lang->line('ok'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!--terms modal-->
 <div id="terms-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
