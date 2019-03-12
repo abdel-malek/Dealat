@@ -791,6 +791,14 @@ class Ads extends MY_Model {
 	   $this->db->where('ad_id' , $ad_id);
 	   return $this->db->update($this->_table_name);
    }
+
+   public function get_ad_template($ad_id){
+        $this->db->select('categories.tamplate_id , ads.ad_id');
+        $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+        $this->db->where('ads.ad_id' , $ad_id);
+        $q = parent::get();
+        return $q[0]->tamplate_id;
+   }
 }
 
 

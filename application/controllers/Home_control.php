@@ -61,4 +61,11 @@ class Home_control extends REST_Controller {
        $this->data['category_name']= $category_name;
        echo $this -> load -> view('website/category_div', $this -> data);
     }
+
+    public function load_ad_details_get(){
+	    $this->data['ad_id'] = $this->input->get('ad_id');
+        $this->data['template_id']  = $this->ads->get_ad_template($this->data['ad_id']);
+        $this->data['subview'] = 'website/ad_details';
+        $this->load->view('website/_main_layout', $this -> data);
+    }
 }
