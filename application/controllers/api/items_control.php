@@ -103,12 +103,23 @@ class Items_control extends REST_Controller {
 		if (!$this -> form_validation -> run()) {
 			throw new Validation_Exception(validation_errors());
 		}else {
+		   $title = $this->input->post('title');
+		   $description = $this->input->post('description');
+		   if($this->data['version'] < '1.3'){
+		   		// remove all emojies short names.
+			   $this->load->helper('emojies');
+			   $emojies_array = Eomjies::emojies_array();
+			   foreach ($emojies_array as  $emoji){
+			   	  $title = str_replace($emoji,"",$title);
+			   	  $description = str_replace($emoji,"",$description);
+			   }
+		   }
 		   $basic_data = array(
 		     'user_id' => $this->current_user->user_id,
 		     'city_id' => $this->input->post('city_id'),
 		     'show_period' => $this->input->post('show_period'),
 		     'price' => $this->input->post('price'),
-		     'title' => $this->input->post('title'),
+		     'title' => $title,
 		     'category_id' => $this->input->post('category_id'),
 		     'is_featured' => $this->input->post('is_featured'),
 		     'is_negotiable' => $this->input->post('is_negotiable'),
@@ -121,7 +132,7 @@ class Items_control extends REST_Controller {
 		   	  $basic_data['location_id'] = $this->input->post('location_id');
 		   }
 		   if($this->input->post('description') && $this->input->post('description')!=''){
-		   	  $basic_data['description'] = $this->input->post('description');
+		   	  $basic_data['description'] = $description;
 		   }
 		   $main_image = null;
 		   if ($this->input->post('main_image') && $this->input->post('main_image') != '') {
@@ -346,7 +357,7 @@ class Items_control extends REST_Controller {
 		 }else{
 		 	$this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		 }
-	 }
+	  }
    }
 
   public function remove_from_favorite_post()
@@ -420,8 +431,8 @@ class Items_control extends REST_Controller {
    	}
 
 
-   	public function showcode_to_unicode_post(){
-   		$client = new Client(new Ruleset());
+   	public function showcode_to_unicode_get(){
+   	//	$client = new Client(new Ruleset());
    // 		$items = $this->ads->get();
    // 		foreach ($items as $key => $row) {
    // 			dump($row->ad_id);
@@ -438,15 +449,27 @@ class Items_control extends REST_Controller {
    // 			$this->ads->save($data , $row->ad_id);
    // 		}
 
-   		$ad_id = 188;
-   		$item = $this->ads->get($ad_id, true,null, true );
-        $test = 'تجربة بالعربي  :smile:';
-   		$new_title = $client->shortnameToUnicode($test);
-   		dump($new_title);
-   		$new_desc =  $client->shortnameToUnicode($item->description);
-   		$data = array('title' => $new_title , 'description' => $new_desc);
-   		//$this->ads->save($data , $item->ad_id);
-   		echo 'true';
+   		// $ad_id = 188;
+   		// $item = $this->ads->get($ad_id, true,null, true );
+     //    $test = 'تجربة بالعربي  :smile:';
+   		// $new_title = $client->shortnameToUnicode($test);
+   		// dump($new_title);
+   		// $new_desc =  $client->shortnameToUnicode($item->description);
+   		// $data = array('title' => $new_title , 'description' => $new_desc);
+   		// //$this->ads->save($data , $item->ad_id);
+   		// echo 'true';
+   		// echo '<script src="'.base_url().'assets/js/emojione.min.js"></script>';
+   		// echo '<script type="text/javascript">'. 
+   		//         'console.log(emojione.shortnameToUnicode("تجربة بالعربي :smile:"))'.
+   		//      '</script>';
+   		$this->load->helper('emojies');
+   		$emojies_array = Eomjies::emojies_array();
+   		$title = "	test :lion_face::water_buffalo::cow::leopard::heart_eyes::kissing_closed_eyes::hugging::kissing_closed_eyes::kissing_heart::blush:";
+	    foreach ($emojies_array as  $emoji){
+	   	  $title = str_replace($emoji,"",$title);
+	   	 // $description = str_replace($emoji,"",$description);
+	    }
+	    echo $title;
    	}
 
 

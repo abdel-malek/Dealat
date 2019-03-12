@@ -49,7 +49,10 @@ class Users extends MY_Model {
             $new_user_id = $this->save($data);
 		    $code = $this->user_activation_codes->generate_activation_code();
 			$user_activation_id = $this->user_activation_codes->add_new_for_user($code , $new_user_id);
-			$this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
+			$result = $this->user_activation_codes->send_code_SMS($data['phone'], $this->lang->line('verification_msg') . $code);
+            if(!$result){
+
+            }
 			$user = parent::get($new_user_id);
         }
 	   //send verification code  and user info to email.

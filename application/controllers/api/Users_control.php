@@ -18,7 +18,7 @@ class Users_control extends REST_Controller {
 	}
 
 	public function index_get() {
-		dump($this->data['city']);
+		//dump($this->data['city']);
 	}
 
 	

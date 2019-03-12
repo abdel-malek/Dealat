@@ -25,8 +25,9 @@ class TAMPLATES {
 	      	    TAMPLATES::KIDS => 'Kids' , 
 	      	    TAMPLATES::SPORTS => 'Sposts' , 
 	      	    TAMPLATES::JOB_POSITIONS => 'Job Positions',
-	      	    TAMPLATES::INDUSTRIES => 'Industries' , 
-	      	    TAMPLATES::BASIC =>'Basic'
+	      	    TAMPLATES::INDUSTRIES => 'Industries' ,
+                TAMPLATES::SERVICES => 'Services' ,
+                TAMPLATES::BASIC =>'Basic'
 			 );
 	      }else{
 	        return array(
@@ -38,7 +39,8 @@ class TAMPLATES {
 	      	    TAMPLATES::KIDS => 'مستلزمات أطفال' , 
 	      	    TAMPLATES::SPORTS => 'مستلزمات رياضية' , 
 	      	    TAMPLATES::JOB_POSITIONS => 'فرص عمل',
-	      	    TAMPLATES::INDUSTRIES => 'صناعة وتجارة' , 
+	      	    TAMPLATES::INDUSTRIES => 'صناعة وتجارة' ,
+                TAMPLATES::SERVICES => 'خدمات' ,
 	      	    TAMPLATES::BASIC =>'أساسي'
 			 );
 	      }

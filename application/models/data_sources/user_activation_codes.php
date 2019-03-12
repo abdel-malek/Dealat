@@ -74,7 +74,7 @@ class User_activation_codes extends MY_Model {
 		 $message = $this->ToUnicode($msg);
 		 $url = 'http://services.mtn.com.sy/General/MTNSERVICES/ConcatenatedSender.aspx?User=DE111201&Pass=ddeell111&From=Dealat&Gsm=963' . $phone. '&Msg=' . $message . '&Lang=0';
 	     try {
-	       $result = file_get_contents($url);
+	       $result = @file_get_contents($url);
 	       if ($result) {
 	           return 1;
 	       } else

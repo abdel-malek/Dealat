@@ -47,7 +47,7 @@ class Commercial_ads extends MY_Model {
 	     $this->db->join('commercials_cities' ,'commercials_cities.commercial_id = commercial_ads.commercial_ad_id' , 'left outer');
 	     $this->db->where("(categories.category_id = '$category_id' OR sun_cat.category_id = '$category_id' OR sun_sun_cat.category_id = '$category_id')");
 	     $this->db->where('commercials_cities.city_id' ,$city );
-	     $this->db->group_by('commercial_ads.category_id');
+	     $this->db->group_by('commercial_ads.commercial_ad_id , commercial_ads.category_id');
 	   }
 	   if($from_web == null){
 	   	 $this->db->where('position' , POSITION::MOBILE);
