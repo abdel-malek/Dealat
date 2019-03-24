@@ -183,6 +183,7 @@ $config['auth_override_class_method']['home_control']['load_ads_by_category_page
 $config['auth_override_class_method']['home_control']['load_ads_by_category_page_all'] = 'none';
 $config['auth_override_class_method']['home_control']['load_subcategories_div'] = 'none';
 $config['auth_override_class_method']['home_control']['index'] = 'none';
+$config['auth_override_class_method']['home_control']['load_ad_details'] = 'none';
 $config['auth_override_class_method']['search_control']['index'] = 'none';
 $config['auth_override_class_method']['items_control']['get_latest_items'] = 'none';
 $config['auth_override_class_method']['items_control']['get_items_by_main_category'] = 'none';
