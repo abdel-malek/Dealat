@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Model.CommercialAd;
@@ -56,22 +57,25 @@ public class CommercialAdFragment extends Fragment {
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (commercialAd.getAdUrl() != null) {
-                        Uri webpage = Uri.parse(commercialAd.getAdUrl());
-
-                        if (!commercialAd.getAdUrl().startsWith("http://") && !commercialAd.getAdUrl().startsWith("https://")) {
-                            webpage = Uri.parse("http://" + commercialAd.getAdUrl());
-                        }
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-
-                        if (intent.resolveActivity(getContext().getPackageManager()) != null)
-                            getContext().startActivity(intent);
-                    }
                 }
             });
         }
 
         return rootView;
+    }
+
+    public void onClicked(){
+        if (commercialAd.getAdUrl() != null) {
+            Uri webpage = Uri.parse(commercialAd.getAdUrl());
+
+            if (!commercialAd.getAdUrl().startsWith("http://") && !commercialAd.getAdUrl().startsWith("https://")) {
+                webpage = Uri.parse("http://" + commercialAd.getAdUrl());
+            }
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+            if (intent.resolveActivity(getContext().getPackageManager()) != null)
+                getContext().startActivity(intent);
+        }
     }
 }

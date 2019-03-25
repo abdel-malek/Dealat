@@ -1,5 +1,6 @@
 package com.dealat.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -17,17 +18,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.dealat.Adapter.CommercialAdapter;
 import com.dealat.Controller.CurrentAndroidUser;
 import com.dealat.Controller.UserController;
+import com.dealat.Fragment.CommercialAdFragment;
 import com.dealat.Model.CommercialAd;
 import com.dealat.Model.User;
 import com.dealat.MyApplication;
@@ -38,6 +42,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,10 +52,12 @@ public abstract class DrawerActivity extends MasterActivity
     protected Handler handler = new Handler();
     protected Runnable update;
 
+
     CommercialAdapter commercialAdapter;
     //views
     ViewPager commercialPager;
     Menu menu;
+    private Date touchDownSliderDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,11 +280,39 @@ public abstract class DrawerActivity extends MasterActivity
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     protected void getCommercialAds(List<CommercialAd> commercialAds) {
         handler.removeCallbacks(update);
 
         commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), commercialAds);
         commercialPager.setAdapter(commercialAdapter);
+        commercialPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        handler.removeCallbacks(update);
+                        DrawerActivity.this.touchDownSliderDate = new Date();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        handler.postDelayed(update, 100);
+                        if(new Date().getTime() - DrawerActivity.this.touchDownSliderDate.getTime() < 100)
+                        {
+                            commercialAdapter.getCurrentFragment().onClicked();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+//        commercialPager.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "WHAT THE HELL THIS SHOULD TRIGGERED", Toast.LENGTH_SHORT).show();
+//                commercialAdapter.getCurrentFragment().onClicked();
+//            }
+//        });
 
         handler.postDelayed(update, 100);
     }
