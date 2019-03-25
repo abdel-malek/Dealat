@@ -3,9 +3,9 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b id=""><?php echo $this->lang->line('users_list') ?></b></h3>  
+	                 <h3><b id=""><?php echo $this->lang->line('users_list') ?></b></h3>
 	              </div>
-	        
+
 	              	 <!-- filter form -->
 		             <!-- <div class="row" id="filter_panel">
 		              <div class="col-md-12 col-sm-12 col-xs-12">
@@ -22,7 +22,7 @@
 		                         	<?php if($status!= null): foreach ($status as $key => $value): ?>
 		                         		  <option value="<?php echo $key; ?>"><?php echo $value ?></option>
 		                            <?php  endforeach; ?>
-		                            <?php endif; ?> 
+		                            <?php endif; ?>
 		                          </select>
 		                        </div>
 		                     </div>
@@ -31,11 +31,11 @@
 		                </div>
 		              </div> -->
 		             <!-- /filter form -->
-	             </div> 
+	             </div>
 	            </div>
 	           <!-- orders list -->
 	          <div class="clearfix"></div>
-	
+
 	            <div class="row">
 	              <div class="col-md-12 col-sm-12 col-xs-12">
 	                <div class="x_panel">
@@ -50,7 +50,8 @@
 	                          <th><?php echo $this->lang->line('city') ?></th>
 	                          <th><?php echo $this->lang->line('ads_num') ?></th>
 	                          <th><?php echo $this->lang->line('user_status') ?></th>
-	                          <th><?php echo $this->lang->line('admin_status') ?></th>
+														<th><?php echo $this->lang->line('is_blocked') ?></th>
+														<th><?php echo $this->lang->line('admin_status') ?></th>
 	                          <th><?php echo $this->lang->line('details') ?></th>
 	                          <th><?php echo $this->lang->line('chats') ?></th>
 	                        </tr>

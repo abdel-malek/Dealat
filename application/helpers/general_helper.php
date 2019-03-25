@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.
@@ -8,15 +8,15 @@
 if (!function_exists('dump')) {
     function dump ($var, $label = 'Dump', $echo = TRUE)
     {
-        // Store dump in variable 
+        // Store dump in variable
         ob_start();
         var_dump($var);
         $output = ob_get_clean();
-        
+
         // Add formatting
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
         $output = '<pre style="background: #FFFEEF; color: #000; border: 1px dotted #000; padding: 10px; margin: 10px 0; text-align: left;">' . $label . ' => ' . $output . '</pre>';
-        
+
         // Output
         if ($echo == TRUE) {
             echo $output;
@@ -34,14 +34,14 @@ function commercila_status_checkbox($is_active  , $id , $category_id , $position
 	    $html .=  '<label>';
 	    $html .=  '<input id="comm_status_check" comm_id=' .$id. '  position=' .$position. '  onclick="change_status(' .$id. ',' .$category_id. ',' .$position. ',' .$city. ','. 0 . ');"  type="checkbox" class="js-switch" checked></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
+	    $html .=  '</div>';
     }else{
         $html  =  '<div class="">';
 	    $html .=  '<label>';
 	    $html .=  '<input id="comm_status_check" comm_id=' .$id. ' position=' .$position. ' onclick="change_status(' .$id. ',' .$category_id. ',' .$position. ',' .$city. ',' . 1 . ');" type="checkbox" class="js-switch"></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
-    }   
+	    $html .=  '</div>';
+    }
     return $html;
 }
 
@@ -52,14 +52,32 @@ function user_status_checkbox($is_active  , $id)
 	    $html .=  '<label>';
 	    $html .=  '<input id="user_status_check" user_id=' .$id. '  onclick="change_user_status(' .$id. ',' .$is_active. ');"  type="checkbox" class="js-switch" checked></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
+	    $html .=  '</div>';
     }else{
      	$html  =  '<div class="">';
 	    $html .=  '<label>';
 	    $html .=  '<input id="user_status_check" user_id=' .$id. '  onclick="change_user_status(' .$id. ',' .$is_active. ');"  type="checkbox" class="js-switch"></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
-    }   
+	    $html .=  '</div>';
+    }
+    return  $html;
+}
+
+function user_block_checkbox($is_blocked  , $id)
+{
+    if($is_blocked ==1){
+      	$html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="user_block_chec" user_id=' .$id. '  onclick="change_user_block(' .$id. ',' .$is_blocked. ');"  type="checkbox" class="js-switch" checked></input>';
+	    $html .=  '</label>';
+	    $html .=  '</div>';
+    }else{
+     	$html  =  '<div class="">';
+	    $html .=  '<label>';
+	    $html .=  '<input id="user_block_chec" user_id=' .$id. '  onclick="change_user_block(' .$id. ',' .$is_blocked. ');"  type="checkbox" class="js-switch"></input>';
+	    $html .=  '</label>';
+	    $html .=  '</div>';
+    }
     return  $html;
 }
 
@@ -70,14 +88,14 @@ function user_is_admin_status_checkbox($is_admin  , $id)
 	    $html .=  '<label>';
 	    $html .=  '<input id="user_admin_status_check" user_id=' .$id. '  onclick="change_user_admin_status(' .$id. ',' .$is_admin. ');"  type="checkbox" class="js-switch" checked></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
+	    $html .=  '</div>';
     }else{
      	$html  =  '<div class="">';
 	    $html .=  '<label>';
 	    $html .=  '<input id="user_admin_status_check" user_id=' .$id. '  onclick="change_user_admin_status(' .$id. ',' .$is_admin. ');"  type="checkbox" class="js-switch"></input>';
 	    $html .=  '</label>';
-	    $html .=  '</div>';	
-    }   
+	    $html .=  '</div>';
+    }
     return  $html;
 }
 

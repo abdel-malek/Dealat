@@ -6,12 +6,12 @@ class Ads extends MY_Model {
 	protected $_order_by = 'is_featured DESC , publish_date DESC'; //ASC
 	protected $_timestamps = TRUE;
 	public $rules = array();
-	
+
     function __construct() {
 		parent::__construct();
 	}
-	
-	
+
+
 	public function get_latest_ads($lang)
 	 {
 		$this->db->select('ads.* ,
@@ -33,11 +33,11 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-        $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');                              
+        $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
         $q = parent::get(null , false, 12);
-		return $q; 
+		return $q;
 	 }
-	
+
    public function get_ads_by_category($main_category_id , $lang)
 	 {
 	    $this->db->select('ads.* ,
@@ -59,7 +59,7 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-    	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
+    	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
@@ -86,12 +86,12 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-    //	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');   
+    //	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
 		$q = parent::get();
 		return $q;
     }
-    
+
    public function get_ad_details($ad_id , $lang , $tamplate_id = TAMPLATES::BASIC , $user_id = null)
 	{
 	    $this->db->select('ads.* ,
@@ -211,19 +211,19 @@ class Ads extends MY_Model {
 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
 		return parent::get($ad_id , true);
     }
-	
+
    public function get_ad_images($ad_id)
 	{
 	   $this->load->model('data_sources/ad_images');
 	   return $this->ad_images->get_by(array('ad_id'=>$ad_id));
 	}
-	
+
    public function create_an_ad($basic_data,$main_image, $second_images , $tamplate_id = TAMPLATES::BASIC)
     {
    	 	$this -> db -> trans_start();
 		// save basic info
 		$new_ad_id = $this->save($basic_data);
-		// save tamplate info 
+		// save tamplate info
 		$tamplate_date = array();
 		$tamplate_date['ad_id'] = $new_ad_id;
 		$tamplate_name = 'basic';
@@ -248,7 +248,7 @@ class Ads extends MY_Model {
 	    	//$ad_main_image = ADS_IMAGES_PATH.'default/'.$tamplate_name.'.png';
 	    }
 		$updated_ad_id = $this->save(array('main_image'=>$ad_main_image) , $new_ad_id);
-        // save ad images 
+        // save ad images
         if($second_images!= null && is_array($second_images)){
         	$this->load->model('data_sources/ad_images');
         	foreach ($second_images as $image) {
@@ -256,19 +256,19 @@ class Ads extends MY_Model {
 				$this->ad_images->save($data);
 			}
         }
-        
-		//delete unwanted images 
+
+		//delete unwanted images
 		if($this->input->post('deleted_images')){
 	   	  $deleted_images =  json_decode($this -> input -> post('deleted_images'), true);
 		  $this->delete_images($deleted_images);
 	    }
-        
+
 		//delete unwanted vedios
 	    if($this->input->post('deleted_videos')){
 	   	  $deleted_vedios =  json_decode($this -> input -> post('deleted_videos'), true);
 		  $this->delete_videos($deleted_vedios);
 	    }
-		
+
 		$this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
 			if($main_image != null){
@@ -300,7 +300,7 @@ class Ads extends MY_Model {
 			return false;
 		  }
    	  }
-	  //delete from favorate table 
+	  //delete from favorate table
 	  $fav_deleted = $this->db->delete('user_favorite_ads' , array('ad_id' => $ad_id));
 	  if(!$fav_deleted){
 	  	$this -> db -> trans_rollback();
@@ -313,22 +313,22 @@ class Ads extends MY_Model {
 	  	 $this -> db -> trans_rollback();
 		 return false;
 	  }
-	  
+
 	  //delete from reported ads
 	  $report_deleted = $this->db->delete('reported_ads' , array('ad_id' => $ad_id));
 	  if(!$report_deleted){
 	  	$this -> db -> trans_rollback();
 		return false;
 	  }
-	  
+
 	  // delete ad images (the deleted images must be deleted from the server.)
 	  $images_deleted = $this->db->delete('ad_images' , array('ad_id' => $ad_id));
 	  if(!$report_deleted){
 	  	$this -> db -> trans_rollback();
 		return false;
 	  }
-	  
-	  // delete from ads table 
+
+	  // delete from ads table
 	  parent::delete($ad_id);
 	  $this -> db -> trans_complete();
 	  if ($this -> db -> trans_status() === FALSE) {
@@ -337,9 +337,9 @@ class Ads extends MY_Model {
 	  } else {
 		  $this -> db -> trans_commit();
 		  return true;
-	  } 
+	  }
   }
- 
+
   public function edit($ad_id , $category_id , $from_admin = 0)
   {
   	   $this->load->model('data_sources/categories');
@@ -353,7 +353,7 @@ class Ads extends MY_Model {
 	   	 	$data['location_id'] = NULL;
 	   	 }else{
 	   	 	$data['location_id'] = $this->input->post('location_id');
-	   	 } 
+	   	 }
 	   }
 	   if($this->input->post('price')){
 	   	  $data['price'] = $this->input->post('price');
@@ -399,20 +399,20 @@ class Ads extends MY_Model {
 		  $this->db->delete('ad_images');
 		  $this->delete_images($deleted_images);
 	   }
-	   
+
 	   	//delete unwanted vedios
 	   if($this->input->post('deleted_videos')){
 	   	  $deleted_vedios =  json_decode($this -> input -> post('deleted_videos'), true);
 		  $this->delete_videos($deleted_vedios);
 	   }
-	   
+
 	   //add new second images
 	   if($this->input->post('images')){
 	   	  $this->load->model('data_sources/ad_images');
 	   	   $ads_images_paths = json_decode($this -> input -> post('images'), true);
 		   if($ads_images_paths!= null && is_array($ads_images_paths)){
         	$this->load->model('data_sources/ad_images');
-			// delete all ad's images. 
+			// delete all ad's images.
 			$this->ad_images->delete_ad_images($ad_id);
         	foreach ($ads_images_paths as $image) {
 				$data_images = array('ad_id'=>$ad_id , 'image'=>$image);
@@ -427,7 +427,7 @@ class Ads extends MY_Model {
 	   	 $data['status'] = STATUS::PENDING;
 	   }
 	   $edited_ad_id = parent::save($data  , $ad_id);
-	   
+
 	   //save tamplate edits
 	   $category_info = $this->categories->get($category_id);
 	   $tamplate_id = $category_info->tamplate_id;
@@ -456,20 +456,20 @@ class Ads extends MY_Model {
   {
   	  $ok = true;
       foreach ($images_array as $image_path) {
-      	  $ok = unlink(PUBPATH.$image_path);	
+      	  $ok = unlink(PUBPATH.$image_path);
       }
 	  return $ok;
   }
-  
+
   public function delete_videos($videos_array)
   {
   	  $ok = true;
       foreach ($videos_array as $path) {
-      	  $ok = unlink(PUBPATH.$path);	
+      	  $ok = unlink(PUBPATH.$path);
       }
 	  return $ok;
   }
- 
+
   public function serach_with_filter($lang , $query_string = null , $category_id = null)
    {
 	 //filter
@@ -493,7 +493,7 @@ class Ads extends MY_Model {
 					           tamplate.*,
 					           show_periods.days,
 		                      ');
-			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');	
+			$this->db->join($tamplate_name.'_tamplate as tamplate', 'ads.ad_id = tamplate.ad_id', 'left outer');
 		}else{
 			$this->db->select('ads.* ,
 			                   c1.'.$lang.'_name as category_name ,
@@ -522,7 +522,7 @@ class Ads extends MY_Model {
 	//serach
 	 if($query_string != null){
 	   //   if(strlen($query_string) < 3){
-	        $this->db->where("(ads.title LIKE '%".$query_string."%' OR ads.description  LIKE '%".$query_string."%' )",NULL, FALSE);	
+	        $this->db->where("(ads.title LIKE '%".$query_string."%' OR ads.description  LIKE '%".$query_string."%' )",NULL, FALSE);
 	  //  	 }else{
 		 // 	$this->db->where("(MATCH(ads.title) AGAINST (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE)
 		 // 	                   OR MATCH(ads.description) AGAINST  (\"<" . $this->db->escape($query_string) . "*\"  IN BOOLEAN MODE))", NULL, FALSE);
@@ -535,10 +535,10 @@ class Ads extends MY_Model {
 	 $this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
 	 $this->db->join('show_periods', 'show_periods.show_period_id = ads.show_period', 'left outer');
 	 //not expired
-	 $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())'); 
+	 $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
 	 // the user is not deleted
 	 $this->db->where('users.is_deleted' , 0);
-	 // the category is activated. 
+	 // the category is activated.
      $this->db->where('c1.is_active' , 1);
 	 if($this->input->get('location_id')){
 	 	$this->db->where('ads.location_id' , $this->input->get('location_id'));
@@ -549,13 +549,13 @@ class Ads extends MY_Model {
 	 if($this->input->get('price_max') && $this->input->get('price_max') != ''){
 	   	 $this->db->where('price <= ' , $this->input->get('price_max'));
 	 }
-	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){	
-		$this->db->where('price >= ' , $this->input->get('price_min')); 
+	 if($this->input->get('price_min') && $this->input->get('price_min')!=''){
+		$this->db->where('price >= ' , $this->input->get('price_min'));
 	 }
-     return parent::get(); 
+     return parent::get();
    }
 
- 
+
   public function get_lists($lang)
    {
 	 $this->load->model('data_sources/types');
@@ -566,7 +566,7 @@ class Ads extends MY_Model {
 	 $types = $this->types->get_all($lang);
 	 $educations = $this->educations->get_all($lang);
 	 $schedules = $this->schedules->get_all($lang);
-	 
+
 	 $data = array('location' =>$locations , 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules);
 	 return $data;
     }
@@ -586,7 +586,7 @@ class Ads extends MY_Model {
 	   	 return false;
 	   }
 	}
-	
+
    public function check_category_ads_existence_for_add($category_id)
 	{
 	   $this->load->model('data_sources/categories');
@@ -597,7 +597,7 @@ class Ads extends MY_Model {
 	   	 return false;
 	   }
 	}
-	
+
    public function get_all_ads_with_details($lang)
 	{
 	    $this->db->select('ads.* ,
@@ -627,7 +627,7 @@ class Ads extends MY_Model {
 		$this->db->order_by('ads.modified_at DESC');
 		return parent::get();
 	}
-	
+
   public function get_user_ads($user_id , $lang)
 	{
 	  $this->db->select('ads.* ,
@@ -659,7 +659,7 @@ class Ads extends MY_Model {
 	  }
 	  return parent::get();
    }
-  
+
   public function get_user_ads_os($user_id , $lang)
 	{
 	  $this->db->select('ads.* ,
@@ -682,7 +682,7 @@ class Ads extends MY_Model {
 	  $this->db->where('ads.status != ' , STATUS::DELETED);
 	  return parent::get();
 	}
-  
+
   public function get_user_ads_without_details($user_id)
    {
        $this->db->where('ads.user_id'  ,$user_id);
@@ -699,13 +699,13 @@ class Ads extends MY_Model {
 	  $q = parent::get();
 	  return $q[0]->unssen_count;
   }
-  
+
   public function change_ads_seen_status($user_id)
   {
      $this->db->where('user_id' , $user_id);
 	 $this->db->where('user_seen' , 0);
 	 $this->db->set('user_seen' , 1);
-	 $this->db->update($this->_table_name); 
+	 $this->db->update($this->_table_name);
   }
 
   public function get_seller_id($ad_id)
@@ -739,7 +739,7 @@ class Ads extends MY_Model {
     }
 
   public function get_pending_ads_counts()
-   { 
+   {
    	  $this->db->select('count(ad_id) as pending_count');
 	  $this->db->join('users' , 'users.user_id = ads.user_id' , 'left');
 	  $this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
@@ -750,7 +750,7 @@ class Ads extends MY_Model {
 	  $q = parent::get();
 	  return $q[0]->pending_count;
    }
-   
+
    public function send_pending_email($ad_id , $after_edit = false)
    {
 		// $to      = 'dealat.co@gmail.com';
@@ -758,7 +758,7 @@ class Ads extends MY_Model {
 		// if($after_edit){
 		   // $message =  $this->lang->line('pending_after_edit_email') . $ad_id;
 		// }else{
-		   // $message =  $this->lang->line('pending_email') . $ad_id;	
+		   // $message =  $this->lang->line('pending_email') . $ad_id;
 		// }
 	    // mail($to, $subject, $message,  "From: ola@tradinos.com");
 	   $this->load->library('email');
@@ -779,18 +779,25 @@ class Ads extends MY_Model {
 	   if($after_edit){
 		   $message =  $this->lang->line('pending_after_edit_email') . $ad_id;
 	   }else{
-		   $message =  $this->lang->line('pending_email') . $ad_id;	
+		   $message =  $this->lang->line('pending_email') . $ad_id;
 	   }
 	   $this->email->message($message);
    }
-   
-   
+
+
    public function increment_views($ad_id)
    {
        $this->db->set('views_num' , 'views_num + 1' , false);
 	   $this->db->where('ad_id' , $ad_id);
 	   return $this->db->update($this->_table_name);
    }
+
+	 public function increment_clicks($ad_id)
+	 {
+			 $this->db->set('clicks_num' , 'clicks_num + 1' , false);
+		$this->db->where('ad_id' , $ad_id);
+		return $this->db->update($this->_table_name);
+	 }
 
    public function get_ad_template($ad_id){
         $this->db->select('categories.tamplate_id , ads.ad_id');
@@ -800,6 +807,3 @@ class Ads extends MY_Model {
         return $q[0]->tamplate_id;
    }
 }
-
-
-

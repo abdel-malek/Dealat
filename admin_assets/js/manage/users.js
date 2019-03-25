@@ -15,9 +15,9 @@ if(lang == 'en'){
    };
 }
  $(document).ready(function() {
- 	
+
  	if($.inArray(EXPORT_USERS, permissions) != -1){
-		  users_buttons.push( 
+		  users_buttons.push(
 		  	 {
               extend: "excel",
               text: lang_array['export_to_excel'],
@@ -81,15 +81,15 @@ if(lang == 'en'){
           };
         }();
 
-       users_TableManageButtons.init();  
+       users_TableManageButtons.init();
  });
- 
+
 function change_user_status(user_id , is_active){
 	var data = {
-		user_id : user_id , 
+		user_id : user_id ,
 		is_active : is_active
 	};
-	
+
 	var url = base_url + '/admin/users_manage/change_status/format/json';
     $.ajax({
 	        url: url,
@@ -133,12 +133,62 @@ function change_user_status(user_id , is_active){
 	     });
 }
 
+//
+function change_user_block(user_id , is_blocked){
+	var data = {
+		user_id : user_id ,
+		is_blocked : is_blocked
+	};
+
+	var url = base_url + '/admin/users_manage/change_block/format/json';
+    $.ajax({
+	        url: url,
+	        type: "post",
+	        dataType: "json",
+	        data: data,
+	        success: function(response) {
+	            if(response.status == false){
+	           	  new PNotify({
+		                  title: lang_array['attention'],
+		                  text: response.message,
+		                  type: 'error',
+		                  styling: 'bootstrap3',
+		                  buttons: {
+						        sticker: false
+						}
+		          });
+	            }else{
+	                new PNotify({
+	                  title:  lang_array['success'],
+	                  text: lang_array['user_block_changed'],
+	                  type: 'success',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					 }
+	               });
+	             }
+	             users_table.ajax.url(base_url + '/admin/users_manage/get_all/format/json').load();
+	        },error: function(xhr, status, error){
+	        	new PNotify({
+	                  title: lang_array['attention'],
+	                  text: lang_array['something_wrong'],
+	                  type: 'error',
+	                  styling: 'bootstrap3',
+	                  buttons: {
+					        sticker: false
+					}
+	            });
+	        }
+	     });
+}
+//
 function change_user_admin_status(user_id , is_admin){
 	var data = {
-		user_id : user_id , 
+		user_id : user_id ,
 		is_admin : is_admin
 	};
-	
+
 	var url = base_url + '/admin/users_manage/change_is_admin_status/format/json';
     $.ajax({
 	        url: url,
@@ -190,7 +240,7 @@ function change_admin_lang (lang) {
 	        dataType: "json",
 	        async : false,
 	        complete: function(response) {
-	            window.location.reload();  
+	            window.location.reload();
  	        },error: function(xhr, status, error){
 	        	new PNotify({
 	                  title: lang_array['attention'],
@@ -260,15 +310,15 @@ function show_user_chats (user_id) {
           };
         }();
 
-       user_chats_TableManageButtons.init(); 
+       user_chats_TableManageButtons.init();
     $('.user_chats_modal').modal('show');
 }
 
  $('.user_chats_modal').on('hidden.bs.modal', function () {
   	 users_chat_table.destroy();
  });
- 
- 
+
+
 function show_chat_messages (chat_id , seller_name , user_name) {
      var messages_TableButtons = function() {
        messages_table = $("#messages_table").DataTable({
@@ -315,7 +365,7 @@ function show_chat_messages (chat_id , seller_name , user_name) {
           };
         }();
 
-        messages_TableManageButtons.init(); 
+        messages_TableManageButtons.init();
     $('.messages_modal').modal('show');
 }
 
@@ -323,7 +373,7 @@ function show_chat_messages (chat_id , seller_name , user_name) {
   	 messages_table.destroy();
   	 $("body").addClass("modal-open");
  });
- 
+
  function show_user_details (user_id) {
        $.ajax({
         url: base_url + '/admin/users_manage/get_user_info/format/json?user_id='+user_id,
@@ -336,7 +386,7 @@ function show_chat_messages (chat_id , seller_name , user_name) {
               $('.user_details #user_phone').html(response.data.phone);
               $('.user_details #user_whatsup_number').html(response.data.whatsup_number);
               if(response.data.email != null && response.data.email != '' ){
-              	  $('.user_details #user_email').html(response.data.email); 
+              	  $('.user_details #user_email').html(response.data.email);
               }else{
               	  $('.user_details #user_email').html(lang_array['not_set']);
               }
@@ -355,7 +405,7 @@ function show_chat_messages (chat_id , seller_name , user_name) {
               }else{
               	  $('.user_details #user_is_deleted').html(lang_array['no']);
               }
-              var user_image = ''; 
+              var user_image = '';
               if(response.data.personal_image != null){
               	 user_image = ' <img style="margin: auto; height:100%;  width:100%"';
               	 user_image += 'src= "'+ site_url+response.data.personal_image +'"/>';
@@ -363,7 +413,7 @@ function show_chat_messages (chat_id , seller_name , user_name) {
               	 user_image += '<label class="form-control" value>'+ lang_array['not_set']+'</label>';
               }
               $('.user_details #user_image').html(user_image);
-        },error: function(xhr, status, error){ 
+        },error: function(xhr, status, error){
         	new PNotify({
                   title: lang_array['attention'],
                   text: lang_array['something_wrong'],
@@ -377,6 +427,3 @@ function show_chat_messages (chat_id , seller_name , user_name) {
      });
     $('.user_details').modal('show');
  }
-
-
-

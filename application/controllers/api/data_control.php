@@ -8,7 +8,7 @@ class Data_control extends REST_Controller {
 		parent::__construct();
 		$this->data['lang']=  $this->response->lang;
 	}
-	
+
 	public function get_type_info_get()
 	{
 		$this->load->model('data_sources/categories');
@@ -23,15 +23,15 @@ class Data_control extends REST_Controller {
 		}
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
     public function get_type_model_info_get()
 	{
 		$this->load->model('data_sources/type_models');
 		$info = $this->type_models->get($this->input->get('type_model_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
-	
+
+
 	public function get_education_info_get()
 	{
 		$this->load->model('data_sources/educations');
@@ -45,40 +45,45 @@ class Data_control extends REST_Controller {
 		$info = $this->schedules->get($this->input->get('schedule_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
    public function get_city_info_get()
 	{
 	    $this->load->model('data_sources/locations');
 		$info = $this->locations->get_city_info($this->input->get('city_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+	public function get_feature_info_get()
+ {
+		 $this->load->model('data_sources/features');
+	 $info = $this->features->get_feature_info($this->input->get('feature_id'));
+	 $this->response(array('status' => true, 'data' =>$info, 'message' => ''));
+ }
 	public function get_location_info_get()
 	{
 	    $this->load->model('data_sources/locations');
 		$info = $this->locations->get($this->input->get('location_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
 	public function get_about_info_get()
 	{
 		$this->load->model('data_sources/about_info');
 		$info = $this->about_info->get_info($this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
 	public function get_certificate_info_get()
 	{
 		$this->load->model('data_sources/certificates');
 		$info = $this->certificates->get($this->input->get('certificate_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
 	public function get_period_info_get()
 	{
 		$this->load->model('data_sources/show_periods');
 		$info = $this->show_periods->get($this->input->get('period_id'));
 		$this->response(array('status' => true, 'data' =>$info, 'message' => ''));
 	}
-	
+
 }

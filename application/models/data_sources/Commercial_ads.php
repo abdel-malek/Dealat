@@ -6,7 +6,7 @@ class Commercial_ads extends MY_Model {
 	protected $_order_by = 'commercial_ad_id';
 	//protected $_order_by = '';
 	public $rules = array();
-	
+
 	// public function get_commercial_ads($category_id, $lang ,$city, $from_web = null )
 	// {
 	//    if($category_id == 0){
@@ -57,24 +57,32 @@ class Commercial_ads extends MY_Model {
 	   $this->db->where('commercial_ads.is_active' , 1);
 	   return parent::get();
 	}
-	
+
    public function get_all($lang)
 	{
 	   $this->db->select('commercial_ads.* ,
 		                 categories.'.$lang.'_name as category_name ,
 		                 ');
 	   $this->db->where('commercial_ads.category_id !=' , 0 );
-	   $this->db->join('categories' , 'commercial_ads.category_id = categories.category_id' , 'left'); 
+	   $this->db->join('categories' , 'commercial_ads.category_id = categories.category_id' , 'left');
 	  // $this->db->join('cites' , 'commercial_ads.city_id = cites.city_id' , 'left');
 	   return parent::get();
 	}
-	
+
    public function delete_image($image)
     {
       $ok = unlink(PUBPATH.$image);
 	  return $ok;
 	}
-	
+ // ------------------------------------------
+	public function increment_clicks($commercial_ad_id)
+	{
+	 $this->db->set('clicks_num' , 'clicks_num + 1' , false);
+	 $this->db->where('commercial_ad_id' , $commercial_ad_id);
+	 $this->db->update($this->_table_name);
+	 return 1;
+	}
+	//------------------------------------------
 	public function check_active_number($category , $position , $city)
 	{
 		$cities = explode("-",$city);
@@ -97,12 +105,12 @@ class Commercial_ads extends MY_Model {
 		}
 		return $ok;
 	}
-	
+
 	public function get_all_main($lang)
 	{
 		$this->db->select('commercial_ads.*' );
 	//	$this->db->join('cites' , 'commercial_ads.city_id = cites.city_id' , 'left');
 		$this->db->where('category_id' , 0);
 		return parent::get();
-	}	
+	}
 }

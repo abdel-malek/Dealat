@@ -216,6 +216,7 @@ $config['auth_override_class_method']['users_control']['get_countries'] = 'none'
 $config['auth_override_class_method']['users_control']['upload_personal_image'] = 'none';
 $config['auth_override_class_method']['users_control']['get_urls'] = 'none';
 $config['auth_override_class_method']['commercial_items_control']['get_commercial_items'] = 'none';
+$config['auth_override_class_method']['commercial_items_control']['increment_clicks'] = 'none';
 $config['auth_override_class_method']['items_control']['get_data'] = 'none';
 $config['auth_override_class_method']['items_control']['action'] = 'none';
 $config['auth_override_class_method']['data_control']['get_type_info'] = 'none';

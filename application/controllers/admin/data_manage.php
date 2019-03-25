@@ -15,7 +15,7 @@ class Data_manage extends REST_Controller {
 		   $this -> data['current_lang'] = 'Arabic';
 		}
 	}
-	
+
 	public function load_types_page_get()
 	{
 	  $this->load->model('data_sources/categories');
@@ -23,7 +23,7 @@ class Data_manage extends REST_Controller {
       $this -> data['subview'] = 'admin/types/index';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
+
 	public function get_all_types_get()
 	{
 	   $this->load->model('data_sources/types');
@@ -39,8 +39,8 @@ class Data_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
-	
-  
+
+
   public function get_types_models_get()
 	{
 	   $this->load->model('data_sources/type_models');
@@ -56,7 +56,7 @@ class Data_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
-	 
+
    public function add_type_post()
    {
         $this -> form_validation -> set_rules('en_name', 'english name', 'required');
@@ -78,7 +78,7 @@ class Data_manage extends REST_Controller {
 			$this->response(array('status' => true, 'data' =>$type_id, 'message' => ''));
 		}
    }
-   
+
   public function edit_type_post()
    {
         $this -> form_validation -> set_rules('type_id', 'type id', 'required');
@@ -99,7 +99,7 @@ class Data_manage extends REST_Controller {
 			}
 		}
    }
-   
+
    public function delete_type_post()
    {
    	    $this -> form_validation -> set_rules('type_id', 'type id', 'required');
@@ -112,7 +112,7 @@ class Data_manage extends REST_Controller {
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 		}
    }
-   
+
    public function save_type_model_post()
    {
         $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -132,7 +132,7 @@ class Data_manage extends REST_Controller {
 			   $type_model_id = $this->type_models->save($data , $type_model_id);
 			   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_BRAND_MODEL , $type_model_id);
 			}else{ // add
-			   $type_model_id = $this->type_models->save($data);	
+			   $type_model_id = $this->type_models->save($data);
 			   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_BRAND_MODEL , $type_model_id);
 			}
 			$this->response(array('status' => true, 'data' =>$type_model_id, 'message' => ''));
@@ -149,7 +149,7 @@ class Data_manage extends REST_Controller {
 			$type_model_id = $this->type_models->save(array('is_active' => 0) ,$this->input->post('type_model_id'));
 			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_BRAND_MODEL , $type_model_id);
 			$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-			
+
 		}
   }
 
@@ -171,7 +171,7 @@ class Data_manage extends REST_Controller {
 			$recorde[] = $row -> ar_name;
 			$output['aaData'][] = $recorde;
 		}
-	echo json_encode($output);  
+	echo json_encode($output);
   }
 
   public function save_education_post()
@@ -192,12 +192,12 @@ class Data_manage extends REST_Controller {
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_EDUCATION , $new_id);
 		}else{ // add
 		   $new_id = $this->educations->save($data);
-		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_EDUCATION , $new_id);	
+		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_EDUCATION , $new_id);
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
   }
-  
+
  public function delete_education_post()
  {
     $this -> form_validation -> set_rules('education_id', 'education_id', 'required');
@@ -210,14 +210,14 @@ class Data_manage extends REST_Controller {
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
 	}
  }
- 
- 
+
+
  public function load_schedules_page_get($value='')
  {
 	  $this -> data['subview'] = 'admin/schedules/index';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
  }
- 
+
  public function get_all_schedules_get()
   {
   	$this->load->model('data_sources/schedules');
@@ -230,9 +230,9 @@ class Data_manage extends REST_Controller {
 			$recorde[] = $row -> ar_name;
 			$output['aaData'][] = $recorde;
 		}
-	echo json_encode($output);  
+	echo json_encode($output);
   }
- 
+
  public function save_schedule_post()
  {
      $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -250,13 +250,13 @@ class Data_manage extends REST_Controller {
 		   $new_id = $this->schedules->save($data , $id);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_SCHEDUAL , $new_id);
 		}else{ // add
-		   $new_id = $this->schedules->save($data);	
+		   $new_id = $this->schedules->save($data);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_SCHEDUAL , $new_id);
 		}
       $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
     }
   }
- 
+
  public function delete_schedule_post()
  {
     $this -> form_validation -> set_rules('schedule_id', 'schedule_id', 'required');
@@ -267,16 +267,68 @@ class Data_manage extends REST_Controller {
 		$id = $this->schedules->save(array('is_active' => 0) ,$this->input->post('schedule_id'));
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_SCHEDUAL , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-	} 
+	}
  }
- 
- 
+
+
  public function load_cities_page_get()
  {
     $this -> data['subview'] = 'admin/cities/index';
     $this -> load -> view('admin/_main_layout', $this -> data);
  }
- 
+
+ public function load_features_page_get()
+ {
+		$this -> data['subview'] = 'admin/features/index';
+		$this -> load -> view('admin/_main_layout', $this -> data);
+ }
+
+public function get_all_features_get()
+{
+
+	 $this->load->model('data_sources/features');
+   $features = $this->features->get_all();
+	 $output = array("aaData" => array());
+	 // var_dump($features);die();
+ foreach ($features as $row) {
+		 $recorde = array();
+		 $recorde[] = $row->feature_id;
+		 $recorde[] = $row->name_en;
+		 $recorde[] = $row->name_ar;
+		 $output['aaData'][] = $recorde;
+	 }
+ echo json_encode($output);
+}
+public function save_features_post(){
+	var_dump('2');
+	die();
+}
+public function save_feature_post()
+{
+	var_dump('2');
+	die();
+	 $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
+	 $this -> form_validation -> set_rules('ar_name', 'ar_name', 'required');
+ if (!$this -> form_validation -> run()) {
+	 throw new Validation_Exception(validation_errors());
+ } else {
+	 $this->load->model('data_sources/features');
+	 $data = array(
+			'name_en' => $this->input->post('en_name'),
+			'name_ar' => $this->input->post('ar_name'),
+	 );
+	 $id = $this->input->post('feature_id');
+	 if($id != 0){ // edit
+			$new_id = $this->cities->save($data , $id);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CITY , $new_id);
+	 }else{ // add
+			$new_id = $this->cities->save($data);
+			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CITY , $new_id);
+	 }
+	 $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
+ }
+}
+
  public function get_all_cities_get()
  {
     $this->load->model('data_sources/locations');
@@ -289,9 +341,9 @@ class Data_manage extends REST_Controller {
 			$recorde[] = $row['ar_name'];
 			$output['aaData'][] = $recorde;
 		}
-	echo json_encode($output);  
+	echo json_encode($output);
  }
- 
+
  public function get_city_areas_get()
  {
     $this->load->model('data_sources/locations');
@@ -304,9 +356,9 @@ class Data_manage extends REST_Controller {
 			$recorde[] = $row -> ar_name;
 			$output['aaData'][] = $recorde;
 		}
-	echo json_encode($output);  
+	echo json_encode($output);
  }
- 
+
  public function save_city_post()
  {
     $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -324,13 +376,13 @@ class Data_manage extends REST_Controller {
 		   $new_id = $this->cities->save($data , $id);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CITY , $new_id);
 		}else{ // add
-		   $new_id = $this->cities->save($data);	
+		   $new_id = $this->cities->save($data);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CITY , $new_id);
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
  }
- 
+
  public function delete_city_post()
  {
     $this -> form_validation -> set_rules('city_id', 'city_id', 'required');
@@ -341,9 +393,9 @@ class Data_manage extends REST_Controller {
 		$id = $this->cities->save(array('is_active' => 0) ,$this->input->post('city_id'));
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_CITY , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-	}  
+	}
  }
- 
+
  public function save_location_post()
  {
     $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -363,13 +415,13 @@ class Data_manage extends REST_Controller {
 		   $new_id = $this->locations->save($data , $id);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_LOCATION , $new_id);
 		}else{ // add
-		   $new_id = $this->locations->save($data);	
+		   $new_id = $this->locations->save($data);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_LOCATION , $new_id);
 		}
 		$this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
 	}
  }
- 
+
  public function delete_location_post()
  {
     $this -> form_validation -> set_rules('location_id', 'location_id', 'required');
@@ -380,10 +432,10 @@ class Data_manage extends REST_Controller {
 		$id = $this->locations->save(array('is_active' => 0) ,$this->input->post('location_id'));
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_LOCATION , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-	}  
+	}
  }
- 
- 
+
+
  public function load_about_manage_get()
  {
  	$this->load->model('data_sources/about_info');
@@ -391,7 +443,7 @@ class Data_manage extends REST_Controller {
     $this -> data['subview'] = 'admin/about_manage';
     $this -> load -> view('admin/_main_layout', $this -> data);
  }
- 
+
  public function save_about_post()
  {
     if(!PERMISSION::Check_permission(PERMISSION::UPDATE_ABOUT_INFO , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
@@ -419,11 +471,11 @@ class Data_manage extends REST_Controller {
 	   $this->response(array('status' => true, 'data' =>$saved, 'message' => 'sucess'));
     }
  }
- 
+
  public function load_certificates_page_get()
  {
     $this -> data['subview'] = 'admin/certificates/index';
-    $this -> load -> view('admin/_main_layout', $this -> data); 
+    $this -> load -> view('admin/_main_layout', $this -> data);
  }
 
  public function get_all_certificates_get()
@@ -438,9 +490,9 @@ class Data_manage extends REST_Controller {
 			$recorde[] = $row -> ar_name;
 			$output['aaData'][] = $recorde;
 		}
-	echo json_encode($output);  
+	echo json_encode($output);
  }
- 
+
  public function save_certificate_post()
  {
      $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -458,13 +510,13 @@ class Data_manage extends REST_Controller {
 		   $new_id = $this->certificates->save($data , $id);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_CERTIFICATE , $new_id);
 		}else{ // add
-		   $new_id = $this->certificates->save($data);	
+		   $new_id = $this->certificates->save($data);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_CERTIFICATE , $new_id);
 		}
       $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
     }
   }
- 
+
  public function delete_certificate_post()
  {
     $this -> form_validation -> set_rules('certificate_id', 'certificate_id', 'required');
@@ -475,15 +527,15 @@ class Data_manage extends REST_Controller {
 		$id = $this->certificates->save(array('is_active' => 0) ,$this->input->post('certificate_id'));
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_CERTIFICATE , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-	} 
+	}
  }
- 
+
  public function load_periods_page_get()
  {
     $this -> data['subview'] = 'admin/show_periods/index';
-    $this -> load -> view('admin/_main_layout', $this -> data);  
+    $this -> load -> view('admin/_main_layout', $this -> data);
  }
- 
+
  public function get_show_periods_get()
  {
  	$this->load->model('data_sources/show_periods');
@@ -498,9 +550,9 @@ class Data_manage extends REST_Controller {
 			$output['aaData'][] = $recorde;
 		}
 	echo json_encode($output);
-     
+
  }
- 
+
  public function save_period_post()
  {
     $this -> form_validation -> set_rules('en_name', 'en_name', 'required');
@@ -520,11 +572,11 @@ class Data_manage extends REST_Controller {
 		   $new_id = $this->show_periods->save($data , $id);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_PERIOD , $new_id);
 		}else{ // add
-		   $new_id = $this->show_periods->save($data);	
+		   $new_id = $this->show_periods->save($data);
 		   $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_PERIOD , $new_id);
 		}
       $this->response(array('status' => true, 'data' =>$new_id, 'message' => ''));
-    } 
+    }
  }
 
  public function delete_period_post()
@@ -537,8 +589,8 @@ class Data_manage extends REST_Controller {
 		$id = $this->show_periods->save(array('is_active' => 0) ,$this->input->post('period_id'));
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_PERIOD , $id);
 		$this->response(array('status' => true, 'data' =>"", 'message' => 'sucess'));
-	} 
+	}
  }
- 
- 
+
+
 }

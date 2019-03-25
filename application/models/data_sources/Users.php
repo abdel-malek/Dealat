@@ -5,26 +5,28 @@ class Users extends MY_Model {
 	protected $_primary_key = 'user_id';
 	protected $_order_by = 'name';
 	public $rules = array();
-	
+
 
 	public function check_authentication($username, $password , $type) {
 		if($type == ACCOUNT_TYPE::MOBILE){
-	  		return $this -> db -> select("users.*") 
+	  		return $this -> db -> select("users.*")
                    -> from('users')
-				   -> where('phone', $username) 
-				   -> where('server_key', $password) 
+				   -> where('phone', $username)
+				   -> where('server_key', $password)
 				   -> where('is_active', 1)
+					 -> where('is_blocked', 0)
 				   -> where('is_deleted' , 0)
-				   -> get() 
+				   -> get()
 				   -> row();
 		}else{
-		    return $this -> db -> select("users.*") 
+		    return $this -> db -> select("users.*")
 	               -> from('users')
-				   -> where('phone', $username) 
-				   -> where('password', $password) 
+				   -> where('phone', $username)
+				   -> where('password', $password)
 				   -> where('is_active', 1)
+					 -> where('is_blocked', 0)
 				   -> where('is_deleted' , 0)
-				   -> get() 
+				   -> get()
 				   -> row();
 	   }
     }
@@ -42,8 +44,8 @@ class Users extends MY_Model {
 		    if($user->account_type != $account_type && $user->account_type !=  ACCOUNT_TYPE::BOTH){
 		    	$data['account_type'] = ACCOUNT_TYPE::BOTH;
 		    }
-            $new_user_id = $this->save($data , $user_id);	
-			$this->user_activation_codes->send_code_SMS($user->phone, $this->lang->line('verification_msg') . $code);		
+            $new_user_id = $this->save($data , $user_id);
+			$this->user_activation_codes->send_code_SMS($user->phone, $this->lang->line('verification_msg') . $code);
         } else {
 			$data['account_type'] = $account_type;
             $new_user_id = $this->save($data);
@@ -58,8 +60,8 @@ class Users extends MY_Model {
 	   //send verification code  and user info to email.
 		// $to      = 'dealat.co@gmail.com';
         // $subject = $this->lang->line('new_user_subject');
-        // $message = $this->lang->line('new_user_email').$user->name. 
-                   // $this->lang->line('user_phone').$user->phone. 
+        // $message = $this->lang->line('new_user_email').$user->name.
+                   // $this->lang->line('user_phone').$user->phone.
                    // $this->lang->line('user_code'). $code;
         //mail($to, $subject, $message,  "From: ola@tradinos.com");
 	       $this->load->library('email');
@@ -77,8 +79,8 @@ class Users extends MY_Model {
 		   $this->email->from('app@deal-at.com');
 		   $this->email->to('dealat.co@gmail.com' );
 		   $this->email->subject($this->lang->line('new_user_subject'));
-		   $message = $this->lang->line('new_user_email').$user->name. 
-                      $this->lang->line('user_phone').$user->phone. 
+		   $message = $this->lang->line('new_user_email').$user->name.
+                      $this->lang->line('user_phone').$user->phone.
                       $this->lang->line('user_code'). $code;
 		   $this->email->message($message);
 		$user = $this->get($new_user_id);
@@ -120,7 +122,7 @@ class Users extends MY_Model {
 		$account_type = $user->account_type;
 		$data = array();
 		if($account_type == ACCOUNT_TYPE::MOBILE || $account_type == ACCOUNT_TYPE::BOTH){
-		  if($is_multi == 0){ // for the fisrt time and when the user don't want to enter from deffrent devices. 
+		  if($is_multi == 0){ // for the fisrt time and when the user don't want to enter from deffrent devices.
 		  	    $server_key = uniqid();
 		        while ($this->get_by(array('server_key'=>md5($server_key)))) {
 		            $server_key = uniqid();
@@ -128,19 +130,19 @@ class Users extends MY_Model {
 				$data['server_key'] =  md5($server_key);
 		  }
 	    }
-	    // checking the user code ,update the state of this code to active code 
+	    // checking the user code ,update the state of this code to active code
 	    $activatin_code = $this->user_activation_codes->activate_user_code($user_id , $code);
 		if($activatin_code){
-		   // update the state of the user to active user 
+		   // update the state of the user to active user
 		    $data['is_active'] = 1;
 			$saved_user  = parent::save($data , $user_id);
-			 // return the user  
+			 // return the user
 			return parent::get($saved_user , true , 1);
 		}else{
 			return false;
 		}
 	  }else{
-	  	return false; 
+	  	return false;
 	  }
   }
 
@@ -157,7 +159,7 @@ class Users extends MY_Model {
 	  $this->db->join('cites', 'users.city_id = cites.city_id', 'left');
 	  return parent::get();
   }
-  
+
   public function get_with_ads_info($lang)
   {
       $this->db->select('users.* , cites.'.$lang.'_name as city_name , COUNT(ad_id) ads_num , cites.country_code');
@@ -166,19 +168,19 @@ class Users extends MY_Model {
 	  $this->db->group_by('users.user_id' );
 	  return parent::get();
   }
-  
+
   public function get_user_ids_by_city($city_id)
   {
       $users = parent::get_by(array('city_id' => $city_id));
 	  $ids_array = array();
 	  if($users){
 	  	foreach ($users as $row) {
-			$ids_array[] = $row->user_id;  
+			$ids_array[] = $row->user_id;
 		}
 	  }
 	  return $ids_array;
   }
-  
+
   public function get_users_ids()
   {
  	 if($this->input->post('city_id') != null){
@@ -197,18 +199,18 @@ class Users extends MY_Model {
 	 $ids_array = array();
 	  if($users){
 	  	foreach ($users as $row) {
-			$ids_array[] = $row->user_id;  
+			$ids_array[] = $row->user_id;
 		}
 	  }
 	  return $ids_array;
   }
-  
+
   public function get_users()
   {
      $q = parent::get_by(array('is_active' => 1 , 'is_deleted' =>0));
 	 return $q;
   }
-  
+
   public function get_users_with_activation_codes()
   {
   	$this->db->select('users.name , users.phone , user_activation_codes.code , user_activation_codes.is_active as code_active , user_activation_codes.created_at , user_activation_codes.activation_code_id');

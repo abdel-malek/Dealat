@@ -16,20 +16,20 @@ class Users_manage extends REST_Controller {
 		   $this -> data['current_lang'] = 'Arabic';
 		 }
 	}
-	
+
 	public function index_get()
 	{
 	  $this -> data['subview'] = 'admin/users/index';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
-	
+
+
 	public function load_login_page_get()
 	{
 	  $this -> load -> view('admin/users/login', $this -> data);
 	}
-	
-	
+
+
 	public function login_post()
 	{
 		if($this->session->userdata('IS_LOGGED_IN')!= null && $this->session->userdata('IS_USER') == 1){
@@ -52,7 +52,7 @@ class Users_manage extends REST_Controller {
 			}
 		}
 	}
-	
+
 	public function logout_get()
 	{
 	   // Remove user data from session
@@ -60,7 +60,7 @@ class Users_manage extends REST_Controller {
        // Redirect to login page
        redirect('admin/users_manage/load_login_page');
 	}
-	
+
 	public function get_all_get()
 	{
 		$users = $this->users->get_with_ads_info($this->data['lang']);
@@ -77,7 +77,7 @@ class Users_manage extends REST_Controller {
 			if($row -> email != null){
 				$recorde[] = $row -> email;
 			}else{
-				$recorde[] = $this->lang->line('not_set'); 
+				$recorde[] = $this->lang->line('not_set');
 			}
 			$recorde[] = $row -> city_name;
 			if($row->ads_num == 0){
@@ -87,24 +87,32 @@ class Users_manage extends REST_Controller {
 			}
 			if(PERMISSION::Check_permission(PERMISSION::BLOCK_USER , $this->session->userdata('LOGIN_USER_ID_ADMIN'))){
 				$recorde[] = user_status_checkbox($row->is_active , $row->user_id);
+				$recorde[] = user_block_checkbox($row->is_blocked , $row->user_id);
 				$recorde[] = user_is_admin_status_checkbox($row->is_admin , $row->user_id);
 			}else{
+
 			   if($row->is_active == 1){
 			   	  $recorde[] = $this->lang->line('active');
 			   }else{
 			   	  $recorde[] = $this->lang->line('inactive');
 			   }
+				 if($row->is_blocked == 1){
+						$recorde[] = $this->lang->line('is_blocked');
+				 }else{
+						$recorde[] = $this->lang->line('not_blocked');
+				 }
 			   if($row->is_admin == 1){
 			   	  $recorde[] = $this->lang->line('admin');
 			   }else{
 			   	  $recorde[] = $this->lang->line('not_admin');
 			   }
+
 			}
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
 	}
-	
+
 	public function change_language_get()
 	{
 	  $current_lang = $this->input->get('lang');
@@ -112,7 +120,7 @@ class Users_manage extends REST_Controller {
 	  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	 // redirect('admin/items_manage');
 	}
-	
+
 	public function change_is_admin_status_post()
 	{
 		$user_id = $this->input->post('user_id');
@@ -121,7 +129,7 @@ class Users_manage extends REST_Controller {
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_USER_STATUS , $updated_user_id);
 		$this -> response(array('status' => true, 'data' => $updated_user_id, 'message' => $this->lang->line('sucess')));
 	}
-	
+
 	public function change_status_post()
 	{
 		$user_id = $this->input->post('user_id');
@@ -130,19 +138,29 @@ class Users_manage extends REST_Controller {
 		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_USER_STATUS , $updated_user_id);
 		$this -> response(array('status' => true, 'data' => $updated_user_id, 'message' => $this->lang->line('sucess')));
 	}
-	
+
+	public function change_block_post()
+	{
+		$user_id = $this->input->post('user_id');
+		$block_status = $this->input->post('is_blocked');
+		$updated_user_id = $this->users->save(array('is_blocked'=> !$block_status) , $user_id);
+		$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::CHANGE_USER_STATUS , $updated_user_id);
+		$this -> response(array('status' => true, 'data' => $updated_user_id, 'message' => $this->lang->line('sucess')));
+	}
+
+
 	public function load_notification_page_get()
 	{
 	   $this -> data['subview'] = 'admin/users/notification';
 	   $this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
+
 	// not used
     public function send_notifications_by_city_post()
     {
-   	  $this->form_validation->set_rules('city_id', 'city_id', 'required'); 
-	  $this->form_validation->set_rules('body', 'body', 'required'); 
-	  $this->form_validation->set_rules('title', 'title', 'required');  
+   	  $this->form_validation->set_rules('city_id', 'city_id', 'required');
+	  $this->form_validation->set_rules('body', 'body', 'required');
+	  $this->form_validation->set_rules('title', 'title', 'required');
 	  if (!$this->form_validation->run()) {
 	 	 throw new Validation_Exception(validation_errors());
 	  }else{
@@ -150,12 +168,12 @@ class Users_manage extends REST_Controller {
 		  $text = $this->input->post('body');
 		  $title = $this->input->post('title');
 		  $user_id = $this->current_user->user_id;
-		  //save notification 
+		  //save notification
 		  $this->load->model('data_sources/public_notifications');
 		  $data = array(
 		    'title' => $title,
-		    'body' => $text , 
-		    'city_id' => $city_id , 
+		    'body' => $text ,
+		    'city_id' => $city_id ,
 		    'user_id' => $user_id
 		  );
 		  $notification_id = $this->public_notifications->save($data);
@@ -174,19 +192,19 @@ class Users_manage extends REST_Controller {
 
    public function send_notifications_to_group_post()
     {
-	  $this->form_validation->set_rules('body', 'body', 'required'); 
-	  $this->form_validation->set_rules('title', 'title', 'required');  
+	  $this->form_validation->set_rules('body', 'body', 'required');
+	  $this->form_validation->set_rules('title', 'title', 'required');
 	  if (!$this->form_validation->run()) {
 	 	 throw new Validation_Exception(validation_errors());
 	  }else{
 		  $text = $this->input->post('body');
 		  $title = $this->input->post('title');
 		  $user_id = $this->current_user->user_id;
-		  //save notification 
+		  //save notification
 		  $this->load->model('data_sources/public_notifications');
 		  $data = array(
 		    'title' => $title,
-		    'body' => $text , 
+		    'body' => $text ,
 		    'user_id' => $user_id
 		  );
 		  if($this->input->post('city_id') != null){
@@ -214,11 +232,11 @@ class Users_manage extends REST_Controller {
 		  }
 	  }
    }
-	
+
    public function send_public_notification_post()
    {
-   	  $this->form_validation->set_rules('body', 'body', 'required'); 
-	  $this->form_validation->set_rules('title', 'title', 'required');  
+   	  $this->form_validation->set_rules('body', 'body', 'required');
+	  $this->form_validation->set_rules('title', 'title', 'required');
 	  if (!$this->form_validation->run()) {
 	 	 throw new Validation_Exception(validation_errors());
 	  }else{
@@ -226,11 +244,11 @@ class Users_manage extends REST_Controller {
 		  $text = $this->input->post('body');
 		  $title = $this->input->post('title');
 		  $user_id = $this->current_user->user_id;
-		  //save notification 
+		  //save notification
 		  $this->load->model('data_sources/public_notifications');
 		  $data = array(
 		    'title' => $title,
-		    'body' => $text , 
+		    'body' => $text ,
 		    'user_id' => $user_id
 		  );
 		  $notification_id = $this->public_notifications->save($data);
@@ -243,8 +261,8 @@ class Users_manage extends REST_Controller {
 
  public function send_notification_to_user_post()
  {
-     $this->form_validation->set_rules('body', 'body', 'required'); 
-	 $this->form_validation->set_rules('title', 'title', 'required');  
+     $this->form_validation->set_rules('body', 'body', 'required');
+	 $this->form_validation->set_rules('title', 'title', 'required');
 	 $this->form_validation->set_rules('to_user_id', 'user_id', 'required');
 	  if (!$this->form_validation->run()) {
 	 	 throw new Validation_Exception(validation_errors());
@@ -254,11 +272,11 @@ class Users_manage extends REST_Controller {
 		  $title = $this->input->post('title');
 		  $user_id = $this->current_user->user_id;
 		  $to_user_id = $this->input->post('to_user_id');
-		  //save notification 
+		  //save notification
 		  $this->load->model('data_sources/public_notifications');
 		  $data = array(
 		    'title' => $title,
-		    'body' => $text , 
+		    'body' => $text ,
 		    'user_id' => $user_id,
 		    'to_user_id' => $to_user_id
 		  );
@@ -269,7 +287,7 @@ class Users_manage extends REST_Controller {
 		  $this->response(array('status' => true, 'data' => '', "message" => $this->lang->line('sucess')));
 	  }
  }
-   
+
  public function get_user_chat_sessions_get()
 	{
 	       $this->load->model('data_sources/chat_sessions');
@@ -289,7 +307,7 @@ class Users_manage extends REST_Controller {
 			}
 			echo json_encode($output);
 	}
-	
+
 	public function get_chat_messages_get()
 	{
 	    $this->load->model('data_sources/messages');
@@ -309,26 +327,26 @@ class Users_manage extends REST_Controller {
 		        	$recorde[] =  $seller_name;
 		        	$recorde[]  = $user_name;
 		        }
-			
+
 				$recorde[] = $row -> text;
 				$output['aaData'][] = $recorde;
 			}
 			echo json_encode($output);
 	}
-	
-	
+
+
    public function get_user_info_get()
 	{
 	   $user_id = $this->input->get('user_id');
-	   $user_info = $this->users->get_user_info($this->data['lang'] , $user_id); 
+	   $user_info = $this->users->get_user_info($this->data['lang'] , $user_id);
 	   if($user_info){
 	   	  $this->response(array('status' => true, 'data' => $user_info, "message" => $this->lang->line('sucess')));
 	   }else{
 	   	  $this->response(array('status' => false, 'data' => '', "message" => 'No such user!'));
 	   }
 	}
-	
-   
+
+
   public function get_all_notifications_get()
   {
       $this->load->model('data_sources/public_notifications');
@@ -370,13 +388,13 @@ class Users_manage extends REST_Controller {
 		}
 	 echo json_encode($output);
   }
-  
+
   public function load_admins_page_get()
   {
       $this -> data['subview'] = 'admin/admins/index';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
   }
-  
+
   public function get_admins_get()
   {
       $admins = $this->admins->get();
@@ -393,7 +411,7 @@ class Users_manage extends REST_Controller {
 			$recorde[] = '';
 			$recorde[] = '';
 			$output['aaData'][] = $recorde;
-      	  } 
+      	  }
       	}else{
       	  if($row->admin_id != $current_admin){
       	  if($row->name != 'Ola_dev'){
@@ -411,7 +429,7 @@ class Users_manage extends REST_Controller {
 	   }
 	  echo json_encode($output);
   }
-  
+
   public function get_admin_info_get()
   {
      $id = $this->input->get('admin_id');
@@ -419,12 +437,12 @@ class Users_manage extends REST_Controller {
 	 $this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess')));
   }
 
-  
+
   public function save_admin_post()
   {
-      $this->form_validation->set_rules('name', 'name', 'required'); 
-	  $this->form_validation->set_rules('username', 'username', 'required'); 
-	  // $this->form_validation->set_rules('password', 'title', 'required');  
+      $this->form_validation->set_rules('name', 'name', 'required');
+	  $this->form_validation->set_rules('username', 'username', 'required');
+	  // $this->form_validation->set_rules('password', 'title', 'required');
 	  if (!$this->form_validation->run()) {
 	  	 throw new Validation_Exception(validation_errors());
 	  }else{
@@ -432,8 +450,8 @@ class Users_manage extends REST_Controller {
 		 $name = $this->input->post('name');
 		 $user_name = $this->input->post('username');
 		 $data = array(
-		   'name' => $name, 
-		   'username' => $user_name, 
+		   'name' => $name,
+		   'username' => $user_name,
 		 );
 		 if($this->input->post('password')){
 		 	 $data['password']= md5($this->input->post('password'));
@@ -449,19 +467,19 @@ class Users_manage extends REST_Controller {
 		 $this->response(array('status' => true, 'data' => $saved_id, "message" => $this->lang->line('sucess')));
 	  }
   }
-  
+
   public function delete_admin_post()
   {
      $id = $this->input->post('admin_id');
 	 $deleted = $this->admins->delete($id);
 	 if($deleted){
 	 	$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_ADMIN , $this->input->post('admin_id'));
-	 	$this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess'))); 
+	 	$this->response(array('status' => true, 'data' => $info, "message" => $this->lang->line('sucess')));
 	 }else{
 	    $this->response(array('status' => false, 'data' => '', "message" => $this->lang->line('faild')));
 	 }
   }
-  
+
   public function get_admin_permissions_get()
   {
   	 $this->load->model('data_sources/user_permission');
@@ -469,11 +487,11 @@ class Users_manage extends REST_Controller {
 	 $permissions_ids = $this->user_permission->get_user_permissions_ids($admin_id);
 	 $this->response(array('status' => true, 'data' => $permissions_ids, "message" => $this->lang->line('sucess')));
   }
-  
+
   public function save_admin_permissions_post()
   {
-      $this->form_validation->set_rules('admin_id', 'admin id', 'required'); 
-	  $this->form_validation->set_rules('permissions', 'permissions', 'required'); 
+      $this->form_validation->set_rules('admin_id', 'admin id', 'required');
+	  $this->form_validation->set_rules('permissions', 'permissions', 'required');
 	  if (!$this->form_validation->run()) {
 	  	 throw new Validation_Exception(validation_errors());
 	  }else{
@@ -486,7 +504,7 @@ class Users_manage extends REST_Controller {
 		 $saved;
 		 foreach ($permissions_array as $permission_id) {
 			 $data = array(
-			   'user_id' => $admin_id, 
+			   'user_id' => $admin_id,
 			   'permission_id' => $permission_id,
 			 );
 			$saved = $this->user_permission->save($data);
@@ -505,7 +523,7 @@ class Users_manage extends REST_Controller {
       $this -> data['subview'] = 'admin/admins/actions_log';
 	  $this -> load -> view('admin/_main_layout', $this -> data);
   }
-  
+
   public function get_admins_log_get()
   {
       $actions = $this->admin_actions_log->get_log($this->data['lang']);
@@ -522,16 +540,16 @@ class Users_manage extends REST_Controller {
 	   }
 	  echo json_encode($output);
   }
-  
+
   public function load_activation_codes_page_get()
   {
   	 $this -> data['subview'] = 'admin/users/activation_codes_report';
 	 $this -> load -> view('admin/_main_layout', $this -> data);
   }
-  
+
   public function get_users_activation_codes_get()
   {
-  	  
+
       $users = $this->users->get_users_with_activation_codes();
 	  $output = array("aaData" => array());
       foreach ($users as $row) {
@@ -551,6 +569,6 @@ class Users_manage extends REST_Controller {
 	   }
 	  echo json_encode($output);
   }
-  
+
 
 }

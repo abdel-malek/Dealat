@@ -15,8 +15,8 @@ class Commercial_items_manage extends REST_Controller {
 		   $this -> data['current_lang'] = 'Arabic';
 		}
 	}
-    
-	
+
+
 	public function index_get()
 	{
 		$this->load->model('data_sources/categories');
@@ -24,13 +24,13 @@ class Commercial_items_manage extends REST_Controller {
 	    $this -> data['subview'] = 'admin/commercial_ads/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
+
 	public function load_main_manage_page_get()
 	{
 	    $this -> data['subview'] = 'admin/commercial_ads/main_ads';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
+
 	public function get_without_main_get()
 	{
 		$items = $this->commercial_ads->get_all($this->data['lang']);
@@ -43,7 +43,7 @@ class Commercial_items_manage extends REST_Controller {
 			if($row -> title != null){
 			   $recorde[] = $row -> title;
 			}else{
-			   $recorde[] = $this->lang->line('not_set'); 
+			   $recorde[] = $this->lang->line('not_set');
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
 			$this->load->model('data_sources/commercials_cities');
@@ -51,6 +51,7 @@ class Commercial_items_manage extends REST_Controller {
 			$cities_names = $this->_get_cities_names($cities);
 			$cities_ids = $this->_get_cities_ids($cities);
 			$recorde[] = $cities_names;
+			$recorde[] = $row->clicks_num;
 			if(PERMISSION::Check_permission(PERMISSION::SHOW_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
 			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $cities_ids);
 			else{
@@ -78,7 +79,7 @@ class Commercial_items_manage extends REST_Controller {
 		    if($row -> title != null){
 			   $recorde[] = $row -> title;
 			}else{
-			   $recorde[] = $this->lang->line('not_set'); 
+			   $recorde[] = $this->lang->line('not_set');
 			}
 			$recorde[] = POSITION::get_position_name($row->position, $this->data['lang']);
 			$this->load->model('data_sources/commercials_cities');

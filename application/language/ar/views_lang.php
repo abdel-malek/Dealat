@@ -134,7 +134,7 @@ $lang['notifications'] = 'الإشعارات';
 $lang['about_us_manage'] = 'إدارة معلومات حول';
 $lang['admins_manage'] = 'إدارة مستخدمي لوحة التحكم';
 $lang['admins_log'] = 'سجل الإجراءات';
-$lang['users_report'] = 'تقرير المستخدمين'; 
+$lang['users_report'] = 'تقرير المستخدمين';
 $lang['activation_codes_report'] = 'تقرير رموز التفعيل';
 
 
@@ -202,7 +202,7 @@ $lang['user'] = 'المستخدم';
 
 
 
-//commercial ads manage 
+//commercial ads manage
 $lang['commercial_ads_list'] = "قائمة الإعلانات التجارية";
 $lang['commercial_ads_by_category'] = "قائمة الإعلانات التجارية حسب الصنف";
 $lang['category'] = "الصنف";
@@ -226,7 +226,7 @@ $lang['expected_ratio_main_banner'] = 'أبعاد الصورة المتوقعة 
 
 
 //users manage
-$lang['users_manage'] = "إدارة المستخدمين"; 
+$lang['users_manage'] = "إدارة المستخدمين";
 $lang['users_list'] = "قائمة المستخدمين";
 $lang['active'] = "فعّال";
 $lang['inactive'] = "غير فعّال";
@@ -241,7 +241,7 @@ $lang['chats'] = 'الدردشات';
 $lang['messages'] = 'الرسائل';
 $lang['ad_title'] = 'عنوان الإعلان';
 $lang['chats_list'] = 'قائمة الدردشات';
-$lang['text'] = 'الرسالة'; 
+$lang['text'] = 'الرسالة';
 $lang['send_date'] = 'تاريخ الإرسال';
 $lang['whatsup_number'] = 'رقم الواتس اب ';
 $lang['birthday'] = 'تاريخ الميلاد';
@@ -314,7 +314,7 @@ $lang['city_details'] = 'تفاصيل المحافظة';
 $lang['locations_list'] = 'قائمة المناطق';
 $lang['locations_details'] = 'تفاصيل المنطقة';
 
-//notification 
+//notification
 $lang['send_public_notification'] = 'إرسال الإشعارات ';
 $lang['notify_text'] = 'محتوى الإشعار';
 $lang['notify_title'] = 'عنوان الإشعار';
@@ -383,7 +383,7 @@ $lang['certificates_list'] = 'قائمة الشهادات';
 $lang['add_certificate'] = 'إضافة شهادة';
 $lang['certificate_details'] = 'تفاصيل الشهادة';
 
-//show periods 
+//show periods
 $lang['show_periods'] = 'مدة الظهور';
 $lang['periods_list'] = 'قائمة فترات الظهور';
 $lang['add_period'] = 'إضافة فترة';
@@ -455,6 +455,12 @@ $lang['export'] = 'تصدير';
 
 $lang['shown'] = 'ظاهر';
 
-//edit ad 
+//edit ad
 $lang['save_changes'] = 'حفظ التغيرات';
 $lang['views'] = 'المشاهدات';
+//
+//
+$lang['External'] = 'خارجي';
+$lang['clicks_num'] = 'ضغطات';
+$lang['is_blocked'] = 'محجوب';
+$lang['not_blocked'] = 'غير محجوب';

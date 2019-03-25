@@ -11,7 +11,7 @@ class Commercial_items_control extends REST_Controller {
 		$this->data['lang']=  $this->response->lang;
 		$this->data['city'] = $this->response->city;
 	}
-	
+
 	public function get_commercial_items_get()
     {
         if($this->input->get('category_id') == null){
@@ -23,7 +23,16 @@ class Commercial_items_control extends REST_Controller {
           $this->response(array('status' => true, 'data' =>$ads, 'message' => ''));
         }
     }
-	
+
+public function increment_clicks_get(){
+	  $commercial_ad_id = $this->input->get('commercial_ad_id');
+	if (	$this->commercial_ads->increment_clicks($commercial_ad_id) ==1) {
+		$this->response(array('status' => true, 'data' =>'', 'message' => ''));
+	}
+	$this->response(array('status' => false, 'data' =>'', 'message' => ''));
+}
+
+
 	public function get_info_get()
 	{
 
@@ -68,17 +77,17 @@ class Commercial_items_control extends REST_Controller {
 		}
 	    $deleted = $this->commercial_ads->delete_image($image);
 		if($deleted){
-		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}else{
 		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
 	}
-	
+
   public function save_post()
   {
   	  $this->load->model('data_sources/commercials_cities');
       $comm_id = $this->input->post('comm_id');
-	  $data = array( 
+	  $data = array(
 	    // 'title' => $this->input->post('title'),
 	    // 'description' => $this->input->post('description'),
 	    // 'ad_url' => $this->input->post('ad_url'),
@@ -108,7 +117,9 @@ class Commercial_items_control extends REST_Controller {
 	  if($this->input->post('category_id')){
 	  	 $data['category_id'] = $this->input->post('category_id');
 	  }
-
+		if($this->input->post('external')){
+			$data['external'] = $this->input->post('external');
+	 }
 	  $cities = $this->input->post('city_id');
 	  if($comm_id == 0){ // add
 	     if(!$this->input->post('image')){
@@ -117,7 +128,7 @@ class Commercial_items_control extends REST_Controller {
 	     	$comm_id = $this->commercial_ads->save($data);
 			$this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::ADD_COMMERCIAL , $comm_id);
 	     }
-	  }else{ // edit 
+	  }else{ // edit
 	  	 $comm_id = $this->commercial_ads->save($data, $comm_id);
 		 $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::EDIT_COMMERCIAL , $comm_id);
 	  }
@@ -136,10 +147,10 @@ class Commercial_items_control extends REST_Controller {
 		 $this -> response(array('status' => true, 'data' => $deleted, 'message' => $this->lang->line('sucess')));
       }
   }
-  
+
   public function change_status_post()
   {
-  	  // check activation number 
+  	  // check activation number
   	  $category_id = $this->input->post('category_id');
 	  $position = $this->input->post('position');
 	  $to_active = $this->input->post('to_active');
@@ -149,7 +160,7 @@ class Commercial_items_control extends REST_Controller {
 	     $is_ok = $this->commercial_ads->check_active_number($category_id , $position ,$city_id);
 	  }
 	  if(!$is_ok){
-	  	  throw new Parent_Exception($this->lang->line('excced_limit')); 
+	  	  throw new Parent_Exception($this->lang->line('excced_limit'));
 	  }else{
 	  	  $id = $this->input->post('comm_id');
 		  $current_comm = $this->commercial_ads->get($id);
@@ -159,6 +170,6 @@ class Commercial_items_control extends REST_Controller {
 		  $this -> response(array('status' => true, 'data' => $edited_id, 'message' => $this->lang->line('sucess')));
 	  }
   }
-	
-	
+
+
 }

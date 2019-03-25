@@ -15,12 +15,12 @@
     <!-- <script src="<?php echo base_url() ?>Files/vendors/jquery/jquery_new.js"></script> -->
     <!-- Bootstrap -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    
+
     <!-- FastClick -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/nprogress/nprogress.js"></script>
-    
+
     <!-- bootstrap confirmation -->
     <script src="<?php echo base_url() ?>admin_assets/js/bootstrap-confirmation.js"></script>
     <!-- FastClick -->
@@ -45,8 +45,8 @@
     <script src="<?php echo base_url() ?>admin_assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/vendors/datatable_fixedColumns/dataTables.fixedColumns.min.js"></script>
-    
-    
+
+
      <!-- Switchery -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/switchery/dist/switchery.min.js"></script>
      <!-- Select2 -->
@@ -57,36 +57,36 @@
     <!-- Datatables -->
     <script src="<?php echo base_url() ?>admin_assets/build/js/moment.min.js"></script>
     <!-- /Datatables -->
-    
+
     <!-- sortable -->
     <script src="<?php echo base_url() ?>admin_assets/js/jquery-sortable-min.js"></script>
-    
+
     <!-- notify sound -->
     <script src="<?php echo base_url() ?>admin_assets/js/jquery.playSound.js"></script>
-    
+
     <!-- bootstrap-daterangepicker -->
     <!-- <script src="<?php echo base_url() ?>Files/js/datepicker/daterangepicker.js"></script>    -->
-    
+
     <!-- echarts -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/echarts/dist/echarts.min.js"></script>
-    
+
    <!-- PNotify -->
     <script src="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/vendors/pnotify/dist/pnotify.nonblock.js"></script>
-    
+
     <!-- datepicker -->
     <!-- <link href="<?php echo base_url() ?>Files/datepicker/datepicker.min.js" rel="stylesheet"> -->
     <script src="<?php echo base_url() ?>admin_assets/datepicker/datepicker.min.js"></script>
-    
-    <!-- vars --> 
+
+    <!-- vars -->
 
    <!--slick slider  -->
    <script src="<?php echo base_url('assets/js/slick.min.js'); ?>"></script>
-   
+
    <!-- jquery uploader -->
    <script src="<?php echo base_url('assets/js/jquery.uploadfile.min.js'); ?>"></script>
-    
+
     <!-- tinymce -->
     <script src="<?php echo base_url() ?>/admin_assets/js/tiny_mce/tiny_mce.js"></script>
     <script type="text/javascript">
@@ -97,7 +97,7 @@
             editor_selector : "tinymce",
 			theme : "advanced",
 			plugins : "autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,autosave,visualblocks",
-	
+
 			// Theme options
 			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
@@ -115,7 +115,7 @@
 
   <!--  mustache  -->
   <script src="<?php echo base_url('assets/js/mustache.min.js'); ?>"></script>
-    
+
     <script>
        var lang_array=[];
        if(lang == 'en'){
@@ -143,6 +143,7 @@
        	 lang_array['education_saved'] = 'Education is saved';
        	 lang_array['education_deleted'] = 'Education is Deleted';
        	 lang_array['user_status_changed'] = 'User activation status has been changed';
+         lang_array['user_block_changed'] = 'User block status has been changed';
        	 lang_array['city_saved'] = 'City is saved' ;
        	 lang_array['city_deleted'] = 'City is Deleted' ;
        	 lang_array['location_saved'] = 'Area is saved' ;
@@ -179,6 +180,7 @@
        	 lang_array['sPrevious'] = 'Last' ;
        	 lang_array['sNext'] = "Next" ;
        	 lang_array['sLast'] = 'Previous' ;
+
        }else if (lang == 'ar'){
        	 lang_array['attention'] = 'الرجاء الانتباه' ;
        	 lang_array['something_wrong'] = 'حدث خطأ ما، الرجاء تحديث الصفحة';
@@ -204,6 +206,8 @@
        	 lang_array['education_saved'] = 'تم حفظ المستوى التعليمي ';
        	 lang_array['education_deleted'] = 'تم حذف المستوى التعليمي ';
        	 lang_array['user_status_changed'] = 'تم تغيير حالة فعالية المستخدم';
+         lang_array['user_block_changed'] = 'تم تغير حالة الحجب للمستخدم';
+
          lang_array['city_saved'] = 'تم حفظ المحافظة' ;
        	 lang_array['city_deleted'] = 'تم حذف المحافظة' ;
        	 lang_array['location_saved'] = 'تم حفظ المنطقة' ;
@@ -239,8 +243,9 @@
        	 lang_array['sPrevious'] = "السابق" ;
        	 lang_array['sNext'] = "التالي" ;
        	 lang_array['sLast'] = "الأخير" ;
+
        }
-       
+
        //permissions
        const EXPORT_ADS = "2",
              EXPORT_REPORTS = "4",
@@ -251,15 +256,15 @@
              EXPORT_NOTIFICATIONS = "14",
              EXPORT_ADMINS = "16",
              EXPORT_ACTIONS_LOG = "19";
-             ACCEPT_AD = "20", 
+             ACCEPT_AD = "20",
 		     REJECT_AD = "21",
-		     HIDE_AD = "22", 
-		     DELETE_AD = "23", 
+		     HIDE_AD = "22",
+		     DELETE_AD = "23",
 		     HIDE_AFTER_REPORT = "25",
 		     REJECT_AFTER_REPORT = "26",
 		     DELETE_AFTER_REPORT = "27",
-		     REJECT_AFTER_ACCEPT = "50" , 
-		     HIDE_AFTER_ACCEPT = "51", 
+		     REJECT_AFTER_ACCEPT = "50" ,
+		     HIDE_AFTER_ACCEPT = "51",
 		     DELETE_AFTER_ACCEPT = "52",
 		     DELETE_MAIN_COMMERCIAL = "32",
 		     DELETE_OTHER_COMMERCIAL = "35",
@@ -268,14 +273,14 @@
 		     HIDE_MAIN_CAT = "40",
 		     HIDE_SUB_CAT = "42",
 		     ADD_DATA = "44",
-		     UPDATE_DATA = "45", 
+		     UPDATE_DATA = "45",
 		     DELETE_DATA = "46",
 		     EXPORT_MAIN_COMMERCIALS = "54";
 
     </script>
-    
+
     <!-- my js -->
-    
+
     <script src="<?php echo base_url() ?>admin_assets/js/general.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/ad.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/commercial_ads.js"></script>
@@ -287,6 +292,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/educations.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/schedules.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/cities.js"></script>
+    <script src="<?php echo base_url() ?>admin_assets/js/manage/features.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/notifications.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/about.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/admins.js"></script>
@@ -295,7 +301,7 @@
     <script src="<?php echo base_url() ?>admin_assets/js/manage/show_periods.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/users_codes.js"></script>
     <script src="<?php echo base_url() ?>admin_assets/js/manage/searches_report.js"></script>
-   
+
 
   </body>
 </html>

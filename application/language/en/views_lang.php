@@ -123,7 +123,7 @@ $lang['categories_management'] = "Categories Manage";
 $lang['ads_management'] = "Users Ads Manage";
 $lang['commercial_ads_manage'] = "Commercials Manage";
 $lang['users_manage'] = "Users Manage";
-$lang['users_report'] = 'Users Report'; 
+$lang['users_report'] = 'Users Report';
 $lang['activation_codes_report'] = 'Activation Cods Report';
 $lang['data_manage']= 'Data Manage';
 $lang['types']= 'Brands';
@@ -199,7 +199,7 @@ $lang['currency'] = 'SP';
 $lang['user'] = 'User';
 
 
-//commercial ads manage 
+//commercial ads manage
 $lang['commercial_ads_list'] = "Commercial Ads";
 $lang['commercial_ads_by_category'] = "Commercial Ads list by category";
 $lang['category'] = "Category";
@@ -236,7 +236,7 @@ $lang['chats'] = 'Chats';
 $lang['messages'] = 'Messages';
 $lang['ad_title'] = 'Ad title';
 $lang['chats_list'] = 'Chats list';
-$lang['text'] = 'Message'; 
+$lang['text'] = 'Message';
 $lang['send_date'] = 'Send Date';
 $lang['whatsup_number'] = 'WhatsApp';
 $lang['birthday'] = 'Birthday';
@@ -309,7 +309,7 @@ $lang['city_details'] = 'City Details';
 $lang['locations_list'] = 'Areas List';
 $lang['locations_details'] = 'Area Deatils';
 
-//notification 
+//notification
 $lang['send_public_notification'] = 'Send Notification';
 $lang['notify_text'] = 'Notification Message';
 $lang['notify_title'] = 'Notification Title';
@@ -380,7 +380,7 @@ $lang['certificates_list'] = 'Certificates List';
 $lang['add_certificate'] = 'Add Certificate';
 $lang['certificate_details'] = 'Certificate Details';
 
-//show periods 
+//show periods
 $lang['show_periods'] = 'Show Periods';
 $lang['periods_list'] = 'Show Periods List';
 $lang['add_period'] = 'Add Period';
@@ -454,7 +454,7 @@ $lang[''] = '';
 
 $lang['shown'] = 'Shown';
 
-//edit ad 
+//edit ad
 $lang['save_changes'] = 'Save Changes';
 $lang['views'] = 'Views';
 
@@ -465,3 +465,10 @@ $lang['search_filters'] = 'Search Attributes';
 $lang['no_result_searhes'] = 'No Result Searches Report';
 $lang['is_notify'] = 'To be notified?';
 $lang['date'] = 'Date';
+
+//
+$lang['External'] = 'External';
+$lang['clicks_num'] = 'Clicks';
+$lang['is_blocked'] = 'Blocked';
+$lang['not_blocked'] = 'Not blocked';
+$lang['all_features_list'] = 'All features list';

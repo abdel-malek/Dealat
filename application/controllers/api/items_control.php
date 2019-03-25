@@ -18,18 +18,18 @@ class Items_control extends REST_Controller {
 		$this->data['version'] = $this->response->version;
 		$this->data['city'] = $this->response->city;
 		if($this->response->os == OS::IOS){
-			$this->data['os'] = '_os'; 
+			$this->data['os'] = '_os';
 		}else{
 			$this->data['os']= '';
 		}
 	}
-	
+
 	public function get_latest_items_get()
 	{
     	$ads_list  = $this->ads->get_latest_ads($this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
-	
+
 	public function get_items_by_main_category_get()
 	{
 		$main_category_id = $this->input->get('category_id');
@@ -48,19 +48,19 @@ class Items_control extends REST_Controller {
         }
 		$this->response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
-	
+
 	public function get_pending_items_get()
 	{
 		$ads_list = $this->ads->get_pending_ads($this->data['lang']);
 		$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
-	
+
 	public function get_pending_count_get()
 	{
 		$count = $this->ads->get_pending_ads_counts();
 		$this->response(array('status' => true, 'data' =>$count, 'message' => ''));
 	}
-	
+
 	public function get_item_details_get()
     {
         $user_id = null;
@@ -78,13 +78,15 @@ class Items_control extends REST_Controller {
 			// increent the number of views for this ad.
 			if(isset($user_id)&& $user_id != null){
 				if($deatils->user_id != $user_id){
-				   $this->ads->increment_views($ad_id);	
+				   // $this->ads->increment_views($ad_id);
+					  $this->ads->increment_clicks($ad_id);
 				}
 			}else{
-			   $this->ads->increment_views($ad_id);	
+			   $this->ads->increment_views($ad_id);
+				 $this->ads->increment_clicks($ad_id);
 			}
 			if(floatval($this->data['version']) >= 1.2){
-        	   $deatils->views_num = null; 
+        	   $deatils->views_num = null;
             }
 			$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
 		}else{
@@ -146,7 +148,7 @@ class Items_control extends REST_Controller {
 		   $tamplate_id = $category_info->tamplate_id;
 		   $save_result = $this->ads->create_an_ad($basic_data, $main_image , $ads_images_paths , $tamplate_id);
 		   if($save_result != false){
-		   	 // send an email 
+		   	 // send an email
 		   	 $this->ads->send_pending_email($save_result);
 		   	 $this -> response(array('status' => true, 'data' => $save_result, 'message' => $this->lang->line('sucess')));
 		   }else{
@@ -175,7 +177,7 @@ class Items_control extends REST_Controller {
 		   	  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		   }
 		}
-      } 
+      }
     }
 
   public function item_images_upload_post()
@@ -189,11 +191,11 @@ class Items_control extends REST_Controller {
            $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
       }
    }
-	
+
   public function item_video_upload_post()
    {
    	  $vedio_name = date('m-d-Y_hia').'-'.$this->current_user->user_id;
-	  $vedio = upload_attachement($this, ADS_VEDIO_PATH , $vedio_name, true); 
+	  $vedio = upload_attachement($this, ADS_VEDIO_PATH , $vedio_name, true);
 	  if (isset($vedio['video'])) {
           $vedio_path =  ADS_VEDIO_PATH.$vedio['video']['upload_data']['file_name'];
           $this -> response(array('status' => true, 'data' => $vedio_path, 'message' => $this->lang->line('sucess')));
@@ -201,7 +203,7 @@ class Items_control extends REST_Controller {
           $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
       }
    }
-   
+
   public function delete_vedios_post()
    {
         $videos = $this -> input -> post('videos');
@@ -211,12 +213,12 @@ class Items_control extends REST_Controller {
 		$videos_array = json_decode($videos, true);
 	    $deleted = $this->ads->delete_videos($videos_array);
 		if($deleted){
-		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}else{
 		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
-   }	
-	
+   }
+
   public function delete_images_post()
    {
 		$images = $this -> input -> post('images');
@@ -226,27 +228,27 @@ class Items_control extends REST_Controller {
 		$images_array = json_decode($images, true);
 	    $deleted = $this->ads->delete_images($images_array);
 		if($deleted){
-		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));	
+		   $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}else{
 		   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
    }
 
-	
+
   public function search_get()
    {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$data['ads'] = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
 		//save if no results are back for this search
-		// if($data['ads'] == null){ // no data 
+		// if($data['ads'] == null){ // no data
 		// 	$user_id = $this->current_user->user_id;
 		// 	$data_json = json_encode($this->input->post());
 		// 	$no_res_data = array(
-		// 	  'user_id' => $user_id , 
+		// 	  'user_id' => $user_id ,
 		// 	  'query' => $data_json
 		//     );
-		//     $res = $this->no_result_searches->save($no_res_data); 
+		//     $res = $this->no_result_searches->save($no_res_data);
 		// }
 		//get commrecial ads.
 		if($this->input->get('page_num') && $this->input->get('page_num') == 1){// if calling the services for the firt page then get the commercials
@@ -271,12 +273,12 @@ class Items_control extends REST_Controller {
 		$user_id = $this->current_user->user_id;
 		$data_json = json_encode($this->input->post());
 		$data = array(
-		  'is_notifiable' => 1 , 
+		  'is_notifiable' => 1 ,
 		);
-		$res = $this->no_result_searches->save($data); 
+		$res = $this->no_result_searches->save($data);
 		$this->response(array('status' => true, 'data' => $res, "message" => $this->lang->line('sucess')));
     }
-	
+
   public function get_bookmark_search_get()
     {
 		$this->load->model('data_sources/user_search_bookmarks');
@@ -303,10 +305,10 @@ class Items_control extends REST_Controller {
 		if($ok){
 			$this->search_get();
 		}else{
-		  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed'))); 
+		  $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 		}
 	}
-	
+
   public function get_data_lists_get()
 	{
 	     $this->load->model('data_sources/types');
@@ -330,7 +332,7 @@ class Items_control extends REST_Controller {
 		 $data = array('location' =>$locations ,'nested_locations'=>$nested_locations, 'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates , 'states' => $property_states);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
-	
+
   public function get_data_get()
 	{
 		$attrs = TAMPLATES::get_tamplate_attributes_array();
@@ -338,7 +340,7 @@ class Items_control extends REST_Controller {
 		$data = array('attrs'=>$attrs , 'status'=>$status);
 		$this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
-	
+
   public function set_as_favorite_post()
    {
    	 if(!$this->input->post('ad_id')){
@@ -376,8 +378,8 @@ class Items_control extends REST_Controller {
 		 }
    	  }
    }
-   
-   
+
+
 
   public function change_status_post()
 	{
@@ -392,14 +394,14 @@ class Items_control extends REST_Controller {
 	   	 }
  	  }
 	}
-	
+
   public function get_report_messages_get()
     {
 	    $this->load->model('data_sources/report_messages');
 	    $messages = $this->report_messages->get_all($this->data['lang']);
-	    $this -> response(array('status' => true, 'data' => $messages, 'message' => $this->lang->line('sucess'))); 
+	    $this -> response(array('status' => true, 'data' => $messages, 'message' => $this->lang->line('sucess')));
     }
-   
+
   public function report_item_post()
     {
 		$this -> form_validation -> set_rules('ad_id', 'ad_id', 'required');
@@ -423,7 +425,7 @@ class Items_control extends REST_Controller {
 			   $this->load->model('data_sources/report_messages');
 			   $message_info = $this->report_messages->get_info($this->input->post('report_message_id'), $this->data['lang']);
 			   $this->reported_ads->send_email($this->input->post('ad_id') , $message_info->msg);
-			   $this -> response(array('status' => true, 'data' => $repored_ad_id, 'message' => $this->lang->line('sucess')));	
+			   $this -> response(array('status' => true, 'data' => $repored_ad_id, 'message' => $this->lang->line('sucess')));
 			}else{
 			   $this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
 			}
@@ -459,7 +461,7 @@ class Items_control extends REST_Controller {
    		// //$this->ads->save($data , $item->ad_id);
    		// echo 'true';
    		// echo '<script src="'.base_url().'assets/js/emojione.min.js"></script>';
-   		// echo '<script type="text/javascript">'. 
+   		// echo '<script type="text/javascript">'.
    		//         'console.log(emojione.shortnameToUnicode("تجربة بالعربي :smile:"))'.
    		//      '</script>';
    		$this->load->helper('emojies');

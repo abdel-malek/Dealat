@@ -16,14 +16,14 @@ var test = 0;
 var ads_buttons =[];
 var types;
 var current_type_index;
-var chosen_type_models; 
-var current_template; 
+var chosen_type_models;
+var current_template;
 
-//var current_type_model_id = 0; 
+//var current_type_model_id = 0;
 
  $(document).ready(function() {
  	if($.inArray(EXPORT_ADS, permissions) != -1){
-		  ads_buttons.push( 
+		  ads_buttons.push(
 		  	 {
               extend: "excel",
               text: lang_array['export_to_excel'],
@@ -35,7 +35,7 @@ var current_template;
              }
 		 );
  	}
-	 	
+
 	if(lang == 'en'){
 	   status_array_for_label ={
 	   	    0 : 'All',
@@ -48,10 +48,10 @@ var current_template;
 		edit_status_array ={
 			0: 'All',
 			7: 'Not edited',
-			1: 'While Waiting' , 
-			2 : 'After Accept' , 
+			1: 'While Waiting' ,
+			2 : 'After Accept' ,
 			5 : 'After Reject',
-			4: 'After Hidden', 
+			4: 'After Hidden',
 			3 : 'After Expired'
 		};
 	}else{
@@ -66,15 +66,15 @@ var current_template;
 		edit_status_array ={
 			0 : 'الكل',
 			7: 'غير معدّل',
-			1: 'خلال الانتظار' , 
-			2 : 'بعد القبول' , 
+			1: 'خلال الانتظار' ,
+			2 : 'بعد القبول' ,
 			5 : 'بعد الرفض',
-			4: 'بعد الإخفاء', 
+			4: 'بعد الإخفاء',
 			3 : 'بعد الانتهاء'
 		};
 	}
 
- 	// get templates attrbutes. 
+ 	// get templates attrbutes.
  	$.ajax({
         url: base_url + '/api/items_control/get_data/format/json',
         type: "get",
@@ -94,8 +94,8 @@ var current_template;
             });
         }
      });
- 	
- 	
+
+
  	var ads_TableButtons = function() {
            ads_table = $("#ads_table").DataTable({
              "oLanguage": {
@@ -141,7 +141,7 @@ var current_template;
               "scrollX": true,
               buttons: ads_buttons,
               "initComplete": function(settings, json) {
-			      
+
 			  }
             });
         };
@@ -154,10 +154,10 @@ var current_template;
           };
         }();
 
-       ads_TableManageButtons.init();  
-       
-      
-  
+       ads_TableManageButtons.init();
+
+
+
   // get penind count
      $.ajax({
         url: base_url + '/api/items_control/get_pending_count/format/json',
@@ -170,8 +170,8 @@ var current_template;
         },error: function(xhr, status, error){
         }
      });
-     
- // reload to get new pending ads.      
+
+ // reload to get new pending ads.
    setInterval(function() {
 		$.ajax({
         url: base_url + '/api/items_control/get_pending_count/format/json',
@@ -180,7 +180,7 @@ var current_template;
         global: false,     // this makes sure ajaxStart is not triggered
         success: function(response) {
         	$('#ads_table > tbody > tr').removeAttr('style');
-            // highlight the new pendeing rows. 
+            // highlight the new pendeing rows.
             var new_count = response.data;
             //console.log(new_count);
             var diff = new_count - current_pending_count;
@@ -217,17 +217,17 @@ var current_template;
         }
      });
 	 }, 6000 );  // 4000
-	// set select to pending 
-     $("#status_select").val(PENDING).trigger('change'); 
+	// set select to pending
+     $("#status_select").val(PENDING).trigger('change');
  });
- 
-// filter by status 
+
+// filter by status
  $('#status_select').change(function(event) {
- 	
+
     status_val = $("#status_select").val();
     $('#status_count_label').html(status_array_for_label[status_val]);
     if(status_val == PENDING){
-    	// show count circle 
+    	// show count circle
     	$('.countIcon').css('display' , 'inline');
     }else{
         $('.countIcon').css('display' , 'none');
@@ -244,7 +244,7 @@ var current_template;
 		 .columns().search( '' )
 		 .draw();
       }
-  
+
     }else{
         status_name = $(this).find("option:selected").text();
         if(edit_status_val != 0){
@@ -252,10 +252,10 @@ var current_template;
         }else{
         	ads_table.search( status_name).draw();
         }
-    	
+
     }
  });
-//  
+//
  // //filter by edit status
   // $('#edit_status_select').change(function(event) {
     // edit_status_val = $("#edit_status_select").val();
@@ -278,17 +278,17 @@ var current_template;
       // }else{
       	// ads_table.search(edit_status_name).draw();
       // }
-// 	  
+//
     // }
   // });
-  
-  
-  // filter by status 
+
+
+  // filter by status
  $('#status_select').change(function(event) {
     status_val = $("#status_select").val();
     $('#status_count_label').html(status_array_for_label[status_val]);
     if(status_val == PENDING){
-    	// show count circle 
+    	// show count circle
     	$('.countIcon').css('display' , 'inline');
     }else{
         $('.countIcon').css('display' , 'none');
@@ -297,7 +297,7 @@ var current_template;
     check_filter_values();
     ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
  });
- 
+
  //filter by edit status
   $('#edit_status_select').change(function(event) {
     edit_status_val = $("#edit_status_select").val();
@@ -305,8 +305,8 @@ var current_template;
     check_filter_values();
     ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
   });
-  
-  
+
+
    //filter by user
   $('#user_ad_select').change(function(event) {
     user_ad_val = $("#user_ad_select").val();
@@ -314,7 +314,7 @@ var current_template;
     check_filter_values();
     ads_table.search( status_name+' '+edit_status_name+' '+user_ad_name).draw();
   });
-  
+
   function check_filter_values() {
       if(status_val == 0){
       	 status_name = '';
@@ -326,7 +326,7 @@ var current_template;
       	 user_ad_name = '';
       }
   }
- 
+
  function show_ad_details (ad_id , tamplate_id , from_reports) {
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.ads_details  #ad_details_template_id').val(tamplate_id);
@@ -338,10 +338,10 @@ var current_template;
         type: "get",
         dataType: "json",
         success: function(response) {
-           // console.log(response.data);   
+           // console.log(response.data);
             $item_info = response.data;
             $('.ads_details  #ad_details_category_id').val($item_info['category_id']);
-            
+
             $('#delete_ad_btn').attr('template_id' , $item_info['tamplate_id']);
             if(lang == 'en'){
             	$('#ad_deatils_title').html('Ad #'+$item_info['ad_id']+' Details');
@@ -361,41 +361,46 @@ var current_template;
             		}else{
             			$('#ad_deatils_title').append('<div class="pull-left"><h2 style="color: red"><b>منتهي</b></h2></div>');
             		}
-            		
+
             	}
             }
             //fill basic info
             $('.ads_details  #ad_title').html($item_info['title']);
             $('.ads_details  #ad_input_title').val($item_info['title']);
             if($item_info['description'] != null){
-               $('.ads_details  #ad_description').html($item_info['description']);	
-               $('.ads_details  #ad_input_description').val($item_info['description']);	
-            } 
-            // image slider 
+               $('.ads_details  #ad_description').html($item_info['description']);
+               $('.ads_details  #ad_input_description').val($item_info['description']);
+            }
+            // image slider
              var main_image = $item_info['main_image'];
+             var main_video = $item_info['main_video'];
              $('.images-slider').append('<div> <img style="margin: auto; height:100%" src="'+site_url+main_image+'"  alt=""></div>');
+             if (main_video) {
+                 $('.images-slider').append('<div><video width="400" controls><source src="mov_bbb.mp4" type="video/mp4"><source src="'+site_url+main_video+'" type="video/mp4">  </div>');
+             }
+
              var images = $item_info['images'];
              if(images.length != 0){ // not empty
              //  $('.images-slider').css('display', 'inline');
                var str ='';
-               $.each( images, function( key, value ) {	
+               $.each( images, function( key, value ) {
                	   //console.log(value);
-               	   str +='<div>'; 
-               	   str +='<img   style="margin: auto; height:100%" src="'+site_url+value.image+'"  alt="">'; 
+               	   str +='<div>';
+               	   str +='<img   style="margin: auto; height:100%" src="'+site_url+value.image+'"  alt="">';
                	   str += '</div>';
                });
                //console.log(str);
                 $('.images-slider').append(str);
              }
-             
+
              $('.images-slider').slick({
 		        infinite: true,
 		        slidesToShow: 1,
 		        mobileFirst: true,
 		        swipeToSlide: true,
 		        touchThreshold: 20
-		      }); 
-             
+		      });
+
             // fill deteilad basic info
             $('.ads_details  #ad_id').html($item_info['ad_id']);
             $('.ads_details  #ad_creation_date').html($item_info['created_at']);
@@ -413,7 +418,7 @@ var current_template;
 	        	    $('.ads_details #ad_input_city').append($('<option/>', {
 	                  value: value.id,
 	                  text: value.name,
-	                }));	
+	                }));
 	        	 }
 		    });
 		    $.each(response.data.locations, function(index, value) {
@@ -428,7 +433,7 @@ var current_template;
 	        	    $('.ads_details #ad_input_location').append($('<option/>', {
 	                  value: value.id,
 	                  text: value.name,
-	                }));	
+	                }));
 	        	}
 		    });
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
@@ -446,31 +451,31 @@ var current_template;
             	$('.ads_details  #ad_featured').html('No');
             }
             $('.ads_details  #select_featured').val($item_info['is_featured']);
-            
+
             // fill temaplet info
             var template_attr = templates_attrs[tamplate_id];
             $.each( template_attr, function( key, value ) {
                if(value == 'is_automatic'){
             	   if($item_info[value] == 1){
-            	   	 $('.ads_details  #ad_is_automatic').html('Automatic'); 
+            	   	 $('.ads_details  #ad_is_automatic').html('Automatic');
             	   }else{
-            	   	 $('.ads_details  #ad_is_automatic').html('Manual'); 
+            	   	 $('.ads_details  #ad_is_automatic').html('Manual');
             	   }
             	}
                else if(value == 'with_furniture'){
             	   if($item_info[value] == 1){
-            	   	 $('.ads_details  #ad_with_furniture').html('Yes'); 
+            	   	 $('.ads_details  #ad_with_furniture').html('Yes');
             	   }
               }else if(value == 'is_new'){
             	   $('.ads_details  .is_new').css('display', 'inline');
             	   if($item_info[value] == 1){
-            	   	 $('.ads_details  #ad_is_new').html('Yes'); 
+            	   	 $('.ads_details  #ad_is_new').html('Yes');
             	   }else{
             	   	 $('.ads_details  #ad_is_new').html('No');
             	   }
-              }else if(value == 'salary' || value =='kilometer' || value == 'size' || value == 'space'){ // format numbers. 
+              }else if(value == 'salary' || value =='kilometer' || value == 'size' || value == 'space'){ // format numbers.
             	   if($item_info[value] != null){
-            	   	 $('.ads_details  #ad_'+value).html(new Intl.NumberFormat('ja-JP').format($item_info[value])); 
+            	   	 $('.ads_details  #ad_'+value).html(new Intl.NumberFormat('ja-JP').format($item_info[value]));
             	   }
               }else{
             	  if($item_info[value] != null){
@@ -479,8 +484,8 @@ var current_template;
             	  }
               }
 		   });
-			
-			
+
+
 			//fill seller info
 			$('.ads_details  #ad_seller_name').html($item_info['seller_name']);
 			$('.ads_details  #ad_seller_phone').html($item_info['seller_phone']);
@@ -491,7 +496,7 @@ var current_template;
 			}
             $('.ads_details  .'+tamplate_id+'_info').css('display', 'inline');
             $('.editable_elem').css('display' , 'none');
-            
+
             //show hide btns
             show_delete_btn(from_reports , $item_info['publish_date']);
             if($item_info['status'] ==  PENDING){
@@ -512,7 +517,7 @@ var current_template;
             	// $('.ads_details  #show_btn').css('display', 'inline');
             	show_hide_btn(from_reports , 1 , $item_info['publish_date']);
             }
-            
+
             //fill rejects notes
             if($item_info['reject_note'] != null  && ($item_info['status'] == REJECTED|| $item_info['edit_status'] == REJECTED)){ // rejected or pending after reject
             	$('#reject_note_label').css('display' , 'inline');
@@ -547,7 +552,7 @@ var current_template;
        }
     }
  }
- 
+
  function show_reject_btn (from_reported , publish_date) {
  	if(from_reported == 0){ // before report
  	   if($.inArray(REJECT_AD, permissions) != -1){ // if he have the permission to reject => always reject
@@ -562,10 +567,10 @@ var current_template;
    }else{ // after report
       if($.inArray(REJECT_AFTER_REPORT, permissions) != -1){
  	   	  $('.ads_details  #reject_btn').css('display', 'inline');
-      }	
+      }
    }
  }
- 
+
  function show_hide_btn (from_reported , show_btn , publish_date) {
  	if(from_reported == 0){ // before report
  	   if($.inArray(HIDE_AD, permissions) != -1){
@@ -592,10 +597,10 @@ var current_template;
  	   	 }else{
  	   	 	$('.ads_details  #show_btn').css('display', 'inline');
  	   	 }
-      }	
+      }
    }
  }
- 
+
  function show_delete_btn (from_reported , publish_date) {
  	if(from_reported == 0){ // before report
  	   if($.inArray(DELETE_AD, permissions) != -1){
@@ -610,10 +615,10 @@ var current_template;
    }else{ // after report
       if($.inArray(DELETE_AFTER_REPORT, permissions) != -1){
  	   	  $('.ads_details  #delete_ad_btn').css('display', 'inline');
-      }	
+      }
    }
  }
- 
+
  $('.ads_details').on('hidden.bs.modal', function () {
       $('.ads_details  .template_info').css('display', 'none');
  	  $('.images-slider').remove();
@@ -631,10 +636,10 @@ var current_template;
       $('#edit_btn').css('display' ,'inline');
       $('#save_ad_edits_btn').css('display' , 'none');
  });
- 
- 
+
+
  // function make_ad_eitable () {
-//  	
+//
     // $('.readonly_elem').css('display' , 'none');
     // $('.editable_elem').css('display' , 'inline');
     // $('#edit_btn').css('display' ,'none');
@@ -650,7 +655,7 @@ var current_template;
 		   // }
       // });
  // }
- 
+
  function make_ad_eitable () {
  	 tamplate_id = $('.ads_details  #ad_details_template_id').val();
  	 current_template = tamplate_id;
@@ -661,7 +666,7 @@ var current_template;
         type: "get",
         dataType: "json",
         success: function(response) {
-        	 // hide labels and  show inputs 
+        	 // hide labels and  show inputs
 	         $('.readonly_elem').css('display' , 'none');
 	         $('.editable_elem.'+tamplate_id+'_info').css('display' , 'inline');
 	         $('.editable_elem.basics').css('display' , 'inline');
@@ -669,12 +674,12 @@ var current_template;
 	         $('#save_ad_edits_btn').css('display' , 'inline');
         	//console.log(response.data);
             $item_info = response.data.info;
-            //fill basic inputs 
+            //fill basic inputs
             $('.ads_details  #ad_input_title').val($item_info['title']);
             if($item_info['description'] != null){
-               $('.ads_details  #ad_input_description').val($item_info['description']);	
-            } 
-             
+               $('.ads_details  #ad_input_description').val($item_info['description']);
+            }
+
             // fill deteilad basic inputs
             $('.ads_details  #ad_input_price').val($item_info['price']);
             $('.ads_details  #ad_input_negotiable').val($item_info['is_negotiable']);
@@ -692,7 +697,7 @@ var current_template;
 	        	    $('.ads_details #ad_input_city').append($('<option/>', {
 	                  value: value.city_id,
 	                  text: value.name,
-	                }));	
+	                }));
 	        	 }
 		    });
 		     $('.ads_details #ad_input_location').append('<option><option/>');
@@ -708,13 +713,13 @@ var current_template;
 	        	    $('.ads_details #ad_input_location').append($('<option/>', {
 	                  value: value.location_id,
 	                  text: value.location_name,
-	                }));	
+	                }));
 	        	}
 		    });
-            // fill temaplet info inputs 
+            // fill temaplet info inputs
             var template_attr = templates_attrs[tamplate_id];
             //console.log(template_attr);
-        
+
             $.each( template_attr, function( key, value ) {
              if(value == 'type_name' || value == 'type_model_name' || value == 'education_name' || value == 'schedule_name' || value == 'schedule_name' || value == 'certificate_name' || value == 'property_state_name'){
              	if(value == 'type_name'){
@@ -735,7 +740,7 @@ var current_template;
 			                  value: value.type_id,
 			                  text: value.full_type_name,
 			                  type_index : index,
-			                }));	
+			                }));
 			        	}
 				   });
               }
@@ -758,7 +763,7 @@ var current_template;
 			        	    // $('.ads_details #ad_input_type_model_name').append($('<option/>', {
 			                  // value: value.type_model_id,
 			                  // text: value.name,
-			                // }));	
+			                // }));
 			        	// }
 				   // });
               }
@@ -775,7 +780,7 @@ var current_template;
 			        	    $('.ads_details #ad_input_education_name').append($('<option/>', {
 			                  value: value.education_id,
 			                  text: value.name,
-			                }));	
+			                }));
 			        	}
 				    });
                }
@@ -792,7 +797,7 @@ var current_template;
 			        	    $('.ads_details #ad_input_schedule_name').append($('<option/>', {
 			                  value: value.schedule_id,
 			                  text: value.name,
-			                }));	
+			                }));
 			        	}
 				    });
                }
@@ -809,7 +814,7 @@ var current_template;
 			        	    $('.ads_details #ad_input_certificate_name').append($('<option/>', {
 			                  value: value.certificate_id,
 			                  text: value.name,
-			                }));	
+			                }));
 			        	}
 				    });
                }
@@ -826,7 +831,7 @@ var current_template;
 			        	    $('.ads_details #ad_input_property_state_name').append($('<option/>', {
 			                  value: value.property_state_id,
 			                  text: value.name,
-			                }));	
+			                }));
 			        	}
 				    });
                 }
@@ -851,8 +856,8 @@ var current_template;
          }
      });
  }
- 
- // change types model acording to selected type. 
+
+ // change types model acording to selected type.
  $('#ad_input_type_name').change(function(event) {
       current_type_index =  $(this).find("option:selected").attr('type_index');
       //console.log(current_type_index);
@@ -864,11 +869,11 @@ var current_template;
 	    	    $('.ads_details #ad_input_type_model_name').append($('<option/>', {
 	              value: value.type_model_id,
 	              text: value.name,
-	            }));	
+	            }));
 		  });
       }
- });  
- 
+ });
+
 function save_ad_edits(){
  	ad_id = $('.ads_details  #post_id').val();
  	var data = {
@@ -895,7 +900,7 @@ function save_ad_edits(){
  	if(desc != ''){
  	    data['description'] = desc;
  	}else{
- 	    data['description'] = -1; 
+ 	    data['description'] = -1;
  	}
  	data['city_id'] =  city;
  	if(location != null && location != '' && location != 0){
@@ -907,7 +912,7 @@ function save_ad_edits(){
  	data['is_featured'] = is_featuerd;
  	var template_attr = templates_attrs[tamplate_id];
     //console.log(template_attr);
-    $.each( template_attr, function( key, attr_name ) { 
+    $.each( template_attr, function( key, attr_name ) {
     	 attr_id = attr_name.replace("name", "id");
     	 value = $('#ad_input_'+attr_name).val();
     	 if(value != null && value != ''){
@@ -960,9 +965,9 @@ function save_ad_edits(){
 	        }
 	     });
  }
- 
+
 function perform_action (action) {
- 	 var can_proceed = true; 
+ 	 var can_proceed = true;
  	 if(can_proceed == true){
  	 	var conatct_phone = $('.ads_details  #ad_contact_phone').val();
  	 	var user_phone = $('.ads_details  #ad_seller_phone').html();
@@ -1057,16 +1062,6 @@ function perform_action (action) {
 					}
 	          });
 	        }
-	     });	
+	     });
  	 }
  }
-
-
-
-  
-  
-  
-
-        
-  
-

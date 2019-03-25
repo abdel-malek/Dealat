@@ -3,9 +3,9 @@
 	          <div class="">
 	            <div class="page-title">
 	              <div class="title_left">
-	                 <h3><b id="pending_label"><?php echo $this->lang->line('commercial_ads_list') ?></b></h3>  
+	                 <h3><b id="pending_label"><?php echo $this->lang->line('commercial_ads_list') ?></b></h3>
 	              </div>
-	                    
+
 	              	 <!-- filter form -->
 		             <div class="row" id="filter_panel">
 		              <div class="col-md-12 col-sm-12 col-xs-12">
@@ -22,11 +22,11 @@
 		                         	<?php if($positions!= null): foreach ($positions as $key => $value): ?>
 		                         		  <option value="<?php echo $key; ?>"><?php echo $value ?></option>
 		                            <?php  endforeach; ?>
-		                            <?php endif; ?> 
+		                            <?php endif; ?>
 		                         </select>
 		                        </div>
-		                        
-		                        
+
+
 		                         <!-- city filter -->
 		                        <div class="col-md-4">
 		                      	 <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo $this->lang->line('city') ?></label>
@@ -36,20 +36,20 @@
 		                         	<?php if($data!= null): foreach ($data as $key => $value): ?>
 		                         		  <option value="<?php echo $value['city_id']; ?>"><?php echo $value['name'] ?></option>
 		                            <?php  endforeach; ?>
-		                            <?php endif; ?> 
+		                            <?php endif; ?>
 		                         </select>
 		                        </div>
-		                        
+
 		                     </div>
-		                     
-		                     
-		                     
+
+
+
 		                    </div>
 		                  </div>
 		                </div>
 		              </div>
-	              
-	     
+
+
 		        </div>
 	           </div>
 	          <div class="clearfix"></div>
@@ -74,7 +74,7 @@
 	                        <?php endif; ?>
 	                      </ul>
 	                    </div>
-	
+
 	                    <div class="col-xs-9">
 	                      <!-- Tab panes -->
 	                      <div class="tab-content">
@@ -93,6 +93,7 @@
 			                          <th><?php echo $this->lang->line('title') ?></th>
 			                          <th><?php echo $this->lang->line('position') ?></th>
 			                          <th><?php echo $this->lang->line('city') ?></th>
+																<th><?php echo $this->lang->line('clicks_num') ?></th>
 			                          <th><?php echo $this->lang->line('show_status') ?></th>
 			                          <th><?php echo $this->lang->line('details') ?></th>
 			                        </tr>
@@ -106,15 +107,15 @@
 	                        <div class="tab-pane" id="settings">Settings Tab.</div> -->
 	                      </div>
 	                    </div>
-	
+
 	                    <div class="clearfix"></div>
-	
+
 	                  </div>
-	                </div>   
+	                </div>
 	            </div>
 	          </div>
 	        </div>
 	       <!-- </div>
 	      </div> -->
-        
+
         <!-- /page content -->

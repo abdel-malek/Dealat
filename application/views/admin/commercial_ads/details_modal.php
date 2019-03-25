@@ -14,29 +14,29 @@
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	           <label class="form-control"  id='comm_created_at'>ad date</label>
 	      	         </div>
-	               </div> 
-	               
+	               </div>
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('title') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	           <input type='text' class="form-control"  id='comm_title' value='<?php echo $this->lang->line('not_set') ?>'></input>
 	      	         </div>
-	               </div> 
-	               
+	               </div>
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('description') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <textarea  class="form-control col-md-7 col-xs-12" id="comm_description" value='<?php echo $this->lang->line('not_set') ?>'><?php echo $this->lang->line('not_set') ?></textarea>
 	      	         </div>
-	               </div> 
-	               
+	               </div>
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('url') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <input  class="form-control col-md-7 col-xs-12" id="comm_url" placeholder="http://www.example.com"></input>
 	      	         </div>
-	               </div> 
-	                  
+	               </div>
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('position') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
@@ -45,15 +45,26 @@
 	                         	<?php if($positions!= null): foreach ($positions as $key => $value): ?>
 	                         		  <option value="<?php echo $key; ?>"><?php echo $value ?></option>
 	                            <?php  endforeach; ?>
-	                            <?php endif; ?> 
+	                            <?php endif; ?>
 		                   </select>
 	      	         </div>
 	      	         <label style="display: none" class='image_ration_note' id="label1"><?php echo $this->lang->line('expected_ratio_side') ?></label>
 	      	         <label style="display: none" class='image_ration_note'  id="label2"> <?php echo $this->lang->line('expected_ratio_main_banner') ?></label>
 	      	         <label style="display: none" class='image_ration_note'  id="label3"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
-	               </div> 
-	               
-	               
+	               </div>
+                 <div class="form-group">
+                   <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('External') ?></label>
+                   <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
+                         <select class="form-control select2_single" id="comm_external" tabindex="-1" >
+                           
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+
+
+                       </select>
+                   </div>
+                 </div>
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
@@ -62,25 +73,25 @@
 	                         	<?php if($data!= null): foreach ($data as $key => $value): ?>
 	                         		  <option value="<?php echo $value['city_id']; ?>"><?php echo $value['name'] ?></option>
 	                            <?php  endforeach; ?>
-	                            <?php endif; ?>  
+	                            <?php endif; ?>
 		                   </select>
 	      	         </div>
 	      	       </div>
-	               
+
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('upload_image') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <div id="fileuploader-comm_ad">Upload</div>
 	      	         </div>
 	               </div>
-	              
+
 	               <div class="form-group " id='image_div' style="display: none">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('comm_image') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <img id='comm_image' style="margin: auto; height:100%;  width:100%"  src="<?php echo base_url('assets/images/google-play-badge.png'); ?>" />
 	      	         </div>
 	               </div>
-	               
+
                 </form>
           </div>
         <!-- </div> -->
