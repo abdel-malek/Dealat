@@ -1,10 +1,12 @@
 package com.dealat.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.dealat.Controller.CommercialAdsController;
 import com.dealat.Model.CommercialAd;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.dealat.View.MasterActivity;
+import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.InternetManager;
+import com.tradinos.core.network.SuccessCallback;
 
 /**
  * Created by developer on 19.02.18.
@@ -65,6 +71,13 @@ public class CommercialAdFragment extends Fragment {
     }
 
     public void onClicked(){
+        MasterActivity activity = (MasterActivity) getActivity();
+
+        CommercialAdsController.getInstance(activity.getController()).registerClick(commercialAd.getId(), new SuccessCallback<String>() {
+            @Override
+            public void OnSuccess(String result) {
+            }
+        });
         if (commercialAd.getAdUrl() != null) {
             Uri webpage = Uri.parse(commercialAd.getAdUrl());
 

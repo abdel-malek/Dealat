@@ -4,6 +4,7 @@ import com.dealat.API.APIModel;
 import com.dealat.API.URLBuilder;
 import com.dealat.Model.CommercialAd;
 import com.dealat.Parser.Parser.CommercialAd.CommercialAdListParser;
+import com.dealat.Parser.Parser.StringParser;
 import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.RequestMethod;
 import com.tradinos.core.network.SuccessCallback;
@@ -30,6 +31,16 @@ public class CommercialAdsController extends ParentController {
         TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new CommercialAdListParser(), successCallback,getmFaildCallback());
 
         request.addParameter("category_id", categoryId);
+
+        addToHeader(request);
+        request.Call();
+    }
+
+    public void registerClick(String commercialId, SuccessCallback<String> successCallback){
+        String url = new URLBuilder(APIModel.commercialAds, "increment_clicks").getURL(getmContext());
+        TradinosRequest request = new TradinosRequest(getmContext(),url, RequestMethod.Get, new StringParser(), successCallback,getmFaildCallback());
+
+        request.addParameter("commercial_ad_id", commercialId);
 
         addToHeader(request);
         request.Call();
