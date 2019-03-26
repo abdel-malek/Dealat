@@ -370,12 +370,32 @@ extension HomeVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let urlString = self.commericals[indexPath.row].ad_url, let url = URL.init(string: urlString){
-            if UIApplication.shared.canOpenURL(url){
-                UIApplication.shared.openURL(url)
+        let commerical = self.commericals[indexPath.row]
+        
+        self.showLoading()
+        Communication.shared.increment_clicks(commercial_ad_id: commerical.commercial_ad_id.stringValue) { (res) in
+            self.hideLoading()
+            self.openCommercial(commerical)
+        }
+        
+    }
+    
+    func openCommercial(_ commerical : Commercial){
+        guard let ad_url = commerical.ad_url else {
+            return
+        }
+        if commerical.external.Boolean{
+            if let url = URL.init(string: ad_url){
+                if UIApplication.shared.canOpenURL(url){
+                    UIApplication.shared.openURL(url)
+                }
             }
+        }else{
+            print("EXTERNAL TO \(ad_url)")
+            
         }
     }
+    
     
     //Delegate With ScrollView (scroll item photos)
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

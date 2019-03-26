@@ -79,6 +79,8 @@ class Communication: BaseManager {
     let QR_code_scanURL = "/QR_users_control/QR_code_scan/format/json"
     
     
+    let increment_clicksURL = "/commercial_items_control/increment_clicks/format/json"
+    
     func get_latest_ads(_ callback : @escaping ([AD]) -> Void){
         let url = URL(string: baseURL + get_latest_itemsURL)!
         
@@ -1399,6 +1401,37 @@ class Communication: BaseManager {
             }
         }
     }
+    
+    
+    
+    func increment_clicks(commercial_ad_id : String, callback : @escaping (String) -> Void){
+        
+        let url = URL(string: baseURL + increment_clicksURL)!
+        let params = ["commercial_ad_id" : commercial_ad_id]
+        
+        Alamofire.request(url, method: .get, parameters: params, encoding : encodingQuery, headers: getHearders()).responseObject { (response : DataResponse<CustomResponse>) in
+            
+            self.output(response)
+            
+            switch response.result{
+            case .success(let value):
+                
+                if value.status{
+                    
+                    
+                    callback(value.data.stringValue)
+                    
+                }else{
+                    notific.post(name:_RequestErrorNotificationReceived.not, object: value.message)
+                }
+                break
+            case .failure(let error):
+                notific.post(name: _ConnectionErrorNotification.not, object: error.localizedDescription)
+                break
+            }
+        }
+    }
+
 
     
     func output(_ res : DataResponse<CustomResponse>){

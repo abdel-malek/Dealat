@@ -382,10 +382,11 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView{
-            if let urlString = self.commericals[indexPath.row].ad_url, let url = URL.init(string: urlString){
-                if UIApplication.shared.canOpenURL(url){
-                    UIApplication.shared.openURL(url)
-                }
+            let commerical = self.commericals[indexPath.row]
+            self.showLoading()
+            Communication.shared.increment_clicks(commercial_ad_id: commerical.commercial_ad_id.stringValue) { (res) in
+                self.hideLoading()
+                self.openCommercial(commerical)
             }
         }
             
@@ -396,6 +397,29 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    
+    func openCommercial(_ commerical : Commercial){
+        guard let ad_url = commerical.ad_url else {
+            return
+        }
+        if commerical.external.Boolean{
+            if let url = URL.init(string: ad_url){
+                if UIApplication.shared.canOpenURL(url){
+                    UIApplication.shared.openURL(url)
+                }
+            }
+            print("EXTERNAL TO \(ad_url)")
+
+        }else{
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailsBaseVC") as! AdDetailsBaseVC
+//            vc.tamplateId = self.ads[indexPath.row].tamplate_id.intValue
+            let ad = AD.init(JSON : ["ad_id" : 188,"tamplate_id" : 0,"category_id" : 0])
+            vc.ad = ad
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.collectionView{

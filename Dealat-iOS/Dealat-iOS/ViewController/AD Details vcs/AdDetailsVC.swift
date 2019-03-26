@@ -109,8 +109,6 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
     
     func ifHidden(index : IndexPath) -> Bool{
         
-        
-        
         if let cat = Provider.shared.catsFull.filter({$0.category_id.intValue == self.ad.category_id.intValue}).first,cat.hidden_fields != nil,cat.hidden_fields != "0" {
             
             let s1 = cat.hidden_fields!.replacingOccurrences(of: "\"", with: "")

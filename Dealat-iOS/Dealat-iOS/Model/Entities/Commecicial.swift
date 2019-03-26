@@ -23,6 +23,8 @@ class Commercial : BaseEntity {
     var category_name : String!
     var parent_category_name : String!
     
+    var external : JSON!
+
     // Mappable
     override func mapping(map: Map) {
         commercial_ad_id <- map["commercial_ad_id"]
@@ -35,6 +37,8 @@ class Commercial : BaseEntity {
         ad_url <- map["ad_url"]
         category_name <- map["category_name"]
         parent_category_name <- map["parent_category_name"]
+        
+        external <- map["external"]
     }
 }
 

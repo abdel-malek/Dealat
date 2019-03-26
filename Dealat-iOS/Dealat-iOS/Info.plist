@@ -35,7 +35,7 @@
 	<string>10</string>
 	<key>LSApplicationQueriesSchemes </key>
 	<array>
-		<string>whatsapp</string>
+		<string>whatsapp2</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
