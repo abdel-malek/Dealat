@@ -248,6 +248,7 @@
     <string name="toastSelectReport">من فضلك، اختر سبب الإبلاغ</string>
     <string name="toastUploadError">لم يتم تحميل الصورة!</string>
     <string name="toastUploadVideoError">لم يتم تحميل الفيديو!</string>
+    <string name="commercial_has_no_link_message">نأسف هذا الاعلان لا يملك رابط لموقع الكتروني</string>
 
 
     <!-- Alert Dialog -->

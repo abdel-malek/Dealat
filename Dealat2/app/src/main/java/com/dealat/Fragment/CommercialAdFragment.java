@@ -77,5 +77,8 @@ public class CommercialAdFragment extends Fragment {
             if (intent.resolveActivity(getContext().getPackageManager()) != null)
                 getContext().startActivity(intent);
         }
+        else{
+            Toast.makeText(getActivity(), R.string.commercial_has_no_link_message, Toast.LENGTH_SHORT).show();
+        }
     }
 }

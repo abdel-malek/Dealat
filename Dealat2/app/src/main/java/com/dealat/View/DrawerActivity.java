@@ -55,9 +55,10 @@ public abstract class DrawerActivity extends MasterActivity
 
     CommercialAdapter commercialAdapter;
     //views
-    ViewPager commercialPager;
+    ViewPagerPauseAble commercialPager;
     Menu menu;
-    private Date touchDownSliderDate;
+    public static final int START_SLIDER_DELAY = 100;
+    public static final int NEXT_ITEM_DELAY = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,11 +154,15 @@ public abstract class DrawerActivity extends MasterActivity
         commercialPager = findViewById(R.id.viewpager);
         update = new Runnable() {
             public void run() {
-                if (currentPage == commercialAdapter.getCount()) {
+                if (DrawerActivity.this.commercialPager.getCurrentItem() == commercialAdapter.getCount() - 1) {
                     currentPage = 0;
+                    commercialPager.setCurrentItem(0);
                 }
-                commercialPager.setCurrentItem(currentPage++, true);
-                handler.postDelayed(this, 5000);
+                else{
+                    commercialPager.setCurrentItem(DrawerActivity.this.commercialPager.getCurrentItem() + 1, true);
+                }
+                currentPage++;
+                handler.postDelayed(this, NEXT_ITEM_DELAY);
             }
         };
 
@@ -280,41 +285,28 @@ public abstract class DrawerActivity extends MasterActivity
         return true;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     protected void getCommercialAds(List<CommercialAd> commercialAds) {
         handler.removeCallbacks(update);
 
         commercialAdapter = new CommercialAdapter(getSupportFragmentManager(), commercialAds);
         commercialPager.setAdapter(commercialAdapter);
-        commercialPager.setOnTouchListener(new View.OnTouchListener() {
+        commercialPager.setViewPagerInteractions(new ViewPagerPauseAble.ViewPagerInteractions() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        handler.removeCallbacks(update);
-                        DrawerActivity.this.touchDownSliderDate = new Date();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        handler.postDelayed(update, 100);
-                        if(new Date().getTime() - DrawerActivity.this.touchDownSliderDate.getTime() < 100)
-                        {
-                            commercialAdapter.getCurrentFragment().onClicked();
-                        }
-                        break;
-                }
-                return true;
+            public void onItemClicked() {
+                commercialAdapter.getCurrentFragment().onClicked();
+            }
+
+            @Override
+            public void onActionDown() {
+                handler.removeCallbacks(update);
+            }
+
+            @Override
+            public void onActionUp(int delay ) {
+                handler.postDelayed(update, delay);
             }
         });
-//        commercialPager.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(mContext, "WHAT THE HELL THIS SHOULD TRIGGERED", Toast.LENGTH_SHORT).show();
-//                commercialAdapter.getCurrentFragment().onClicked();
-//            }
-//        });
-
-        handler.postDelayed(update, 100);
+        handler.postDelayed(update,START_SLIDER_DELAY);
     }
 
     private void setLocale(String lang) {

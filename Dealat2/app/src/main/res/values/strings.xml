@@ -251,6 +251,7 @@
     <string name="toastSelectReport">Please, Select reporting reason</string>
     <string name="toastUploadError">Image wasn\'t uploaded!</string>
     <string name="toastUploadVideoError">Video wasn\'t uploaded!</string>
+    <string name="commercial_has_no_link_message">We are sorry this commercial has no link to it.</string>
 
 
     <!-- Alert Dialog -->
