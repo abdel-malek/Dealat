@@ -175,7 +175,6 @@ public class AdController extends ParentController {
 
         request.addParameter("ad_id", adId);
 
-        authenticationRequired(request);
         addToHeader(request);
         request.Call();
     }

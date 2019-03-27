@@ -264,4 +264,10 @@
     <string name="delete_chat">حذف المحادثة</string>
     <string name="no_results">لا يوجد نتائج مطابقة</string>
 
+    <string name="rate_dialog_title">قيم هذا التطبيق</string>
+    <string name="rate_dialog_message">إذا كنت تستمتع بتشغيل هذا التطبيق ، فهل تمانع في قضاء بعض الوقت لتقييمه؟ لن يستغرق الأمر أكثر من دقيقة. شكرا لدعمك!</string>
+    <string name="rate_dialog_ok">قيم فوراً</string>
+    <string name="rate_dialog_cancel">ذكرني لاحقاً</string>
+    <string name="rate_dialog_no">لا, شكراً</string>
+
 </resources>

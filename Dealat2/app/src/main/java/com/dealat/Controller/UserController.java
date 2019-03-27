@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import hotchemi.android.rate.AppRate;
+
 
 /**
  * Created by developer on 12.03.18.
@@ -84,6 +86,8 @@ public class UserController extends ParentController {
     }
 
     public void logOut(String token, SuccessCallback<String> successCallback) {
+        AppRate.with(getmContext()).clearAgreeShowDialog();
+
         String url = new URLBuilder(APIModel.users, "logout").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Post, new StringParser(), successCallback, getmFaildCallback());
 

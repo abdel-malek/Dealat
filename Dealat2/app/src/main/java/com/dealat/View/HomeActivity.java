@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,6 +28,9 @@ import com.tradinos.core.network.SuccessCallback;
 
 import java.util.HashMap;
 
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
+
 /**
  * Created by developer on 19.02.18.
  */
@@ -45,6 +49,23 @@ public class HomeActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_home);
         super.onCreate(savedInstanceState);
+
+
+        AppRate.with(this)
+                .setInstallDays(7) // default 10, 0 means install day.
+                .setRemindInterval(4) // default 1
+                .setShowLaterButton(true) // default true
+                .setDebug(false) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        Log.d(HomeActivity.class.getName(), Integer.toString(which));
+                    }
+                })
+                .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
     }
 
     @Override
