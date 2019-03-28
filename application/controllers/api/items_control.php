@@ -72,6 +72,12 @@ class Items_control extends REST_Controller {
         }
         $ad_id = $this->input->get('ad_id');
         $tamplate_id = $this->input->get('template_id');
+				if (! $tamplate_id) {
+				  	$ad=$this->ads->get_info(	$ad_id,'en');
+						  $tamplate_id = $ad->tamplate_id;
+					// 	$this->load->model('data_sources/categories');
+					// $ad_id=$this->categories->get_info()
+				}
 		//$method = 'get_ad_details'.$this->data['os'];
         $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id , $user_id);
 		if($deatils){
