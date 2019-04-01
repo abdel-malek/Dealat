@@ -79,7 +79,7 @@ public class ViewPagerPauseAble extends ViewPager {
                     // Check if swipe to left or right.
                     if(x1 > x2) {
                         if (this.getCurrentItem() == this.getAdapter().getCount() - 1) {
-                            this.setCurrentItem(0);
+                            this.setCurrentItem(0,true);
                         } else {
                             this.setCurrentItem(this.getCurrentItem() + 1, true);
                         }

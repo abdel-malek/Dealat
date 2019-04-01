@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -58,7 +59,7 @@ public abstract class DrawerActivity extends MasterActivity
     ViewPagerPauseAble commercialPager;
     Menu menu;
     public static final int START_SLIDER_DELAY = 100;
-    public static final int NEXT_ITEM_DELAY = 2000;
+    public static final int NEXT_ITEM_DELAY = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +157,7 @@ public abstract class DrawerActivity extends MasterActivity
             public void run() {
                 if (DrawerActivity.this.commercialPager.getCurrentItem() == commercialAdapter.getCount() - 1) {
                     currentPage = 0;
-                    commercialPager.setCurrentItem(0);
+                    commercialPager.setCurrentItem(0,true);
                 }
                 else{
                     commercialPager.setCurrentItem(DrawerActivity.this.commercialPager.getCurrentItem() + 1, true);
@@ -220,6 +221,11 @@ public abstract class DrawerActivity extends MasterActivity
                     finish();
                 }
 
+                break;
+            case R.id.share_app:
+                Uri appURL = Uri.parse("http://www.deal-at.com");
+                intent = new Intent(Intent.ACTION_VIEW, appURL);
+                startActivity(intent);
                 break;
 
             case R.id.nav_MyAds:

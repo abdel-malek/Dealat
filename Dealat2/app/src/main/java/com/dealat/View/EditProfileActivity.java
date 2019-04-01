@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.dealat.View.HomeActivity.FIRST_LOGIN;
+
 /**
  * Created by developer on 14.03.18.
  */
@@ -287,6 +289,9 @@ public class EditProfileActivity extends MasterActivity implements SelectDateFra
     private void continueToHome() {
         if (action.equals(HOME)) {
             Intent intent = new Intent(mContext, HomeActivity.class);
+            if(getIntent().getBooleanExtra(FIRST_LOGIN,false)) {
+                intent.putExtra(FIRST_LOGIN, true);
+            }
             startActivity(intent);
         }
     }

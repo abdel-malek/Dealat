@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:layoutDirection="ltr"
             android:id="@+id/container1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/view3Height"
@@ -52,10 +53,22 @@
             android:padding="8dp"
             >
 
+            <ImageButton
+                android:id="@+id/buttonShare"
+                android:layout_width="@dimen/imageSmallButNotX"
+                android:layout_height="@dimen/imageSmallButNotX"
+                android:layout_alignParentEnd="true"
+                android:onClick="onClick"
+                android:padding="6dp"
+                android:src="@drawable/ic_share_red_24dp"
+                android:background="@drawable/circel_gray_light_transparent"
+                />
+
             <TextView
                 android:id="@+id/textViewPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/buttonShare"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/red"
@@ -66,7 +79,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewPrice"
+                android:layout_below="@+id/buttonShare"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAlignment="viewStart"

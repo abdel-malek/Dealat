@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,8 @@ public class CustomAlertDialog extends Dialog {
     String alertText;
     Button buttonTrue;
     boolean isOneButtonDialog;
+    private String oneButtonButtonText = getContext().getString(R.string.try_again);
+
     public CustomAlertDialog(@NonNull Context context, String alertText) {
         super(context);
         this.alertText = alertText;
@@ -48,7 +51,7 @@ public class CustomAlertDialog extends Dialog {
         if (isOneButtonDialog) {
             setCancelable(false);
             buttonFalse.setVisibility(View.GONE);
-            buttonTrue.setText(getContext().getString(R.string.try_again));
+            buttonTrue.setText(oneButtonButtonText);
         }
         buttonFalse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,10 @@ public class CustomAlertDialog extends Dialog {
 
     public void setOneButtonDialog(boolean isOneButtonDialog) {
         this.isOneButtonDialog = isOneButtonDialog;
+    }
+
+    public void setOneButtonButtonText(String str) {
+        this.oneButtonButtonText = str;
     }
 
 }

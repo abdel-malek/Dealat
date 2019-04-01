@@ -13,6 +13,7 @@
         >
 
         <FrameLayout
+            android:layoutDirection="ltr"
             android:id="@+id/container1"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -56,6 +57,7 @@
             >
 
             <TextView
+                android:text="180000000 ل.س"
                 android:id="@+id/textViewPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,6 +76,16 @@
                 android:maxLines="2"
                 android:textAlignment="viewStart"
                 android:textColor="@color/grayDark"
+                />
+            <ImageButton
+                android:id="@+id/buttonShare"
+                android:layout_width="@dimen/imageSmallButNotX"
+                android:layout_height="@dimen/imageSmallButNotX"
+                android:layout_below="@id/title"
+                android:onClick="onClick"
+                android:padding="6dp"
+                android:src="@drawable/ic_share_red_24dp"
+                android:background="@drawable/circel_gray_light_transparent"
                 />
 
             <TextView
@@ -95,6 +107,7 @@
         </RelativeLayout>
 
         <FrameLayout
+            android:layoutDirection="ltr"
             android:id="@+id/container2"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -109,10 +122,10 @@
                 />
 
             <ImageView
+                android:visibility="invisible"
                 android:id="@+id/imageViewFeatured2"
                 android:layout_width="@dimen/imageViewMedium"
                 android:layout_height="@dimen/imageViewMedium"
-                android:visibility="invisible"
                 android:src="@drawable/featured"
                 />
 

@@ -191,7 +191,7 @@ public class EditAdActivity extends MasterActivity {
         editCategory.setText(currentCategory.getFullName());
 
         ShowProgressDialog();
-        AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
+        AdController.getInstance(mController).getAdDetails(currentAd.getId(), new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
 

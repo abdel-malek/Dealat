@@ -1,6 +1,8 @@
 package com.dealat.View;
 
 import android.content.Intent;
+import android.content.UriMatcher;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -38,6 +40,7 @@ import hotchemi.android.rate.OnClickButtonListener;
 public class HomeActivity extends DrawerActivity {
 
     private Category mainCategory;
+    public static final String FIRST_LOGIN  = "first_login";
 
     //views
     private ListView listView;
@@ -136,6 +139,26 @@ public class HomeActivity extends DrawerActivity {
                 });
 
                 getCommercialAds(result.getCommercialAds());
+
+                if(getIntent() != null && getIntent().getBooleanExtra(FIRST_LOGIN,false)){
+                    final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.welcome_message));
+                    dialog.setOneButtonDialog(true);
+                    dialog.setOneButtonButtonText(getString(R.string.dismiss));
+                    dialog.show();
+
+                    dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
+
+                Uri webpage = Uri.parse("http://www.deal-at.com/index.php/home_control/load_ad_details?ad_id=14033#section-name");
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(webpage);
+                startActivity(intent);
             }
         });
     }

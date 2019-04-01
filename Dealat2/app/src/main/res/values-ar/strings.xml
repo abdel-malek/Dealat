@@ -207,6 +207,7 @@
 
     <!-- Drawer -->
     <string name="navHome">الرئيسية</string>
+    <string name="shareApp">مشاركة التطبيق</string>
     <string name="navSavedSearches">عمليات البحث المحفوظة</string>
     <string name="navLanguage">اللغة</string>
     <string name="navSettings">الإعدادات</string>
@@ -263,6 +264,11 @@
     <string name="try_again">إعادة المحاولة</string>
     <string name="delete_chat">حذف المحادثة</string>
     <string name="no_results">لا يوجد نتائج مطابقة</string>
+    <string name="welcome_message">
+        شكرا لاستخدام خدماتنا لاتمام ثفقات تجارية,
+        أفضل الحظ بثفقاتك.
+    </string>
+    <string name="dismiss">استبعاد</string>
 
     <string name="rate_dialog_title">قيم هذا التطبيق</string>
     <string name="rate_dialog_message">إذا كنت تستمتع بتشغيل هذا التطبيق ، فهل تمانع في قضاء بعض الوقت لتقييمه؟ لن يستغرق الأمر أكثر من دقيقة. شكرا لدعمك!</string>
@@ -270,4 +276,6 @@
     <string name="rate_dialog_cancel">ذكرني لاحقاً</string>
     <string name="rate_dialog_no">لا, شكراً</string>
 
+    //disambiguation dialog title
+    <string name="share_url">مشاركة الاعلان</string>
 </resources>

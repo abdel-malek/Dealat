@@ -80,7 +80,30 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.dealat.View.AdDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:scheme="http"
+                    android:host="www.deal-at.com"
+                    android:pathPrefix="/index.php/home_control/load_ad_details" />
+            </intent-filter>
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="com.dealat.commercial_details" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                android:host="www.deal-at.com"/>
+            </intent-filter>
+
+        </activity>
 
         <activity
             android:name="com.dealat.View.ReportActivity"

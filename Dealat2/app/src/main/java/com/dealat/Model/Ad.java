@@ -20,10 +20,10 @@ public class Ad implements Serializable {
     private String rejectNote;
     private String mainImageUrl, mainVideoUrl;
     private double price;
-    private int  template, status, showPeriod, expiresAfter, days; //days is the number of days of showPeriod
+    private int  template, status, showPeriod, expiresAfter,featured , days; //days is the number of days of showPeriod
     private Integer  views;
     // but here showPeriod stands for the id of it as we intent to make a management for it
-    private boolean negotiable, featured, favorite, visiblePhone, adminSeller;
+    private boolean negotiable, favorite, visiblePhone, adminSeller;
     private List<String> imagesPaths;
     public Ad(){
         description = "";
@@ -244,11 +244,7 @@ public class Ad implements Serializable {
     }
 
     public boolean isFeatured() {
-        return featured;
-    }
-
-    public void setFeatured(boolean featured) {
-        this.featured = featured;
+        return featured > 0 && featured < 4;
     }
 
     public boolean isFavorite() {
@@ -301,5 +297,13 @@ public class Ad implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public void setFeatured(int featured) {
+        this.featured = featured;
+    }
+
+    public int getFeatured() {
+        return featured;
     }
 }

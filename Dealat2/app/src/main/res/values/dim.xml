@@ -6,6 +6,7 @@
     <dimen name="largeHeight">180dp</dimen>
 
     <dimen name="imageXSmall">20dp</dimen>
+    <dimen name="imageSmallButNotX">30dp</dimen>
     <dimen name="imageSmall">36dp</dimen>
     <dimen name="imageViewMedium">56dp</dimen>
     <dimen name="imageViewLarge">100dp</dimen>

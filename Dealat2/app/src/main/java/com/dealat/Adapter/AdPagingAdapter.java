@@ -24,6 +24,8 @@ import com.vdurmont.emoji.EmojiParser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dealat.Utils.Helper.GenerateAdDetailsURL;
+
 public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHolder> {
 
     private static final int ITEM = 0;
@@ -119,14 +121,48 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
                     holder.textViewDate.setText(context.getString(R.string.published)
                             + " " + ((MasterActivity) context).formattedDate(item.getPublishDate()));
 
+
 //                if (item.isFavorite())
 //                    holder.buttonFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.star));
 
+                // Check if ad featured and set the appropriate ribbon
                 if (item.isFeatured())
+                {
                     featured.setVisibility(View.VISIBLE);
+                    int ribbonImageId = R.drawable.featured;
+                    if(item.getFeatured() == 1)
+                    {
+                        ribbonImageId =  R.drawable.featured;
+                    }
+                    else if(item.getFeatured() == 2)
+                    {
+                        ribbonImageId =  R.drawable.featured;
+                    }
+                    else if(item.getFeatured() == 3)
+                    {
+                        ribbonImageId =  R.drawable.featured;
+                    }
+                    Picasso.with(context)
+                            .load(ribbonImageId)
+                            .into(featured);
+                }
                 else
                     featured.setVisibility(View.INVISIBLE);
 
+                if(holder.buttonShare != null)
+                {
+                    holder.buttonShare.setOnClickListener(new View.OnClickListener(){
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            i.putExtra(Intent.EXTRA_TEXT, GenerateAdDetailsURL(item.getId(),item.getTemplate()));
+                            context.startActivity(Intent.createChooser(i, context.getString(R.string.share_url)));
+                        }
+                    });
+
+                }
                 break;
 
             case LOADING:
@@ -182,6 +218,7 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
         ImageView imageView, imageViewFeatured, imageView2, imageViewFeatured2;
         TextView textViewPrice, textViewTitle, textView, textViewDate;
         ImageButton buttonFav;
+        ImageButton buttonShare;
         View container;
 
         FrameLayout frameLayout1, frameLayout2;
@@ -197,6 +234,7 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
             textView = view.findViewById(R.id.textView);
             textViewDate = view.findViewById(R.id.textViewDate);
             buttonFav = view.findViewById(R.id.buttonFav);
+            buttonShare = view.findViewById(R.id.buttonShare);
 
             frameLayout1 = view.findViewById(R.id.container1);
             frameLayout2 = view.findViewById(R.id.container2);

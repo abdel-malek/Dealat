@@ -209,6 +209,7 @@
 
     <!-- Drawer -->
     <string name="navHome">Home</string>
+    <string name="shareApp">Share App</string>
     <string name="navSavedSearches">Saved Searches</string>
     <string name="navLanguage">Language</string>
     <string name="navSettings">Settings</string>
@@ -266,6 +267,11 @@
     <string name="try_again">Try again</string>
     <string name="delete_chat">Delete chat</string>
     <string name="no_results">No results to show</string>
+    <string name="welcome_message">
+        thanks for using our services to make your deals,
+        have a good deal.
+    </string>
+    <string name="dismiss">Dismiss</string>
 
 
     <string name="rate_dialog_title">Rate this app</string>
@@ -274,4 +280,11 @@
     <string name="rate_dialog_cancel">Remind Me Later</string>
     <string name="rate_dialog_no">No, Thanks</string>
 
+    // Intent Actions
+    <string name="intent_action_commercial_details">com.dealat.commercial_details</string>
+
+    //disambiguation dialog title
+    <string name="share_url">Share Ad</string>
+
+    
 </resources>

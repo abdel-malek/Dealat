@@ -8,6 +8,7 @@ public class CommercialAd {
     private String id, categoryId,
             title, description, imageUrl,
             adUrl;
+    private int external;
 
     public String getId() {
         return id;
@@ -56,4 +57,13 @@ public class CommercialAd {
     public void setAdUrl(String adUrl) {
         this.adUrl = adUrl;
     }
+
+    public int getExternal() {
+        return external;
+    }
+
+    public void setExternal(int external) {
+        this.external = external;
+    }
+
 }

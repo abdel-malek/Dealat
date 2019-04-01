@@ -12,11 +12,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +48,12 @@ import com.dealat.R;
 import com.dealat.Utils.CustomAlertDialog;
 import com.vdurmont.emoji.EmojiParser;
 
+import static com.dealat.GlobalConstants.QUERY_PARA_AD_ID;
+import static com.dealat.GlobalConstants.QUERY_PARA_TEMPLATE_ID;
+import static com.dealat.GlobalConstants.URL_AUTHORITY;
+import static com.dealat.GlobalConstants.URL_SCHEME;
+import static com.dealat.Utils.Helper.GenerateAdDetailsURL;
+
 /**
  * Created by developer on 01.03.18.
  */
@@ -58,6 +66,8 @@ public class AdDetailsActivity extends MasterActivity {
 
     private CurrentAndroidUser user;
     private Ad currentAd;
+    private String currentAdId;
+    private int currentAdTemplate;
     private Category currentCategory;
 
     // textViewViews
@@ -92,18 +102,38 @@ public class AdDetailsActivity extends MasterActivity {
     public void getData() {
 
         user = new CurrentAndroidUser(mContext);
-        currentAd = (Ad) getIntent().getSerializableExtra("ad");
+        if(getIntent() != null
+                && getIntent().getAction() != null
+                && (getIntent().getAction().equals(Intent.ACTION_VIEW))){
+            Uri data = getIntent().getData();
+            this.currentAdId = data.getQueryParameter(QUERY_PARA_AD_ID);
+
+        } else if(getIntent() != null
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(getString(R.string.intent_action_commercial_details))){
+            this.currentAdId = getIntent().getStringExtra(QUERY_PARA_AD_ID);
+
+        } else{
+            currentAd = (Ad) getIntent().getSerializableExtra("ad");
+            this.currentAdId = currentAd.getId();
+            this.currentAdTemplate = currentAd.getTemplate();
+        }
 
         getAd();
     }
 
     private void getAd() {
         ShowProgressDialog();
-        AdController.getInstance(mController).getAdDetails(currentAd.getId(), currentAd.getTemplate(), new SuccessCallback<Ad>() {
+        AdController.getInstance(mController).getAdDetails(this.currentAdId, new SuccessCallback<Ad>() {
             @Override
             public void OnSuccess(Ad result) {
                 enabled = true;
 
+                if(currentAd == null){
+                    currentAd = new Ad();
+                }
+                currentAd.setId(result.getId());
+                currentAd.setTemplate(result.getTemplate());
                 currentAd.setTitle(result.getTitle());
                 currentAd.setSellerId(result.getSellerId());
                 currentAd.setSellerPhone(result.getSellerPhone());
@@ -454,6 +484,13 @@ public class AdDetailsActivity extends MasterActivity {
                                     });
                         }
                     });
+                    break;
+                case R.id.buttonShare:
+
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_TEXT, GenerateAdDetailsURL(this.currentAd.getId(),this.currentAd.getTemplate()));
+                    startActivity(Intent.createChooser(i, getString(R.string.share_url)));
 
                     break;
             }

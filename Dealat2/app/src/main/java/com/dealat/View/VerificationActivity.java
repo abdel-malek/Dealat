@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.dealat.View.HomeActivity.FIRST_LOGIN;
+
 /**
  * Created by developer on 12.03.18.
  */
@@ -183,13 +185,18 @@ public class VerificationActivity extends MasterActivity {
                 new CurrentAndroidUser(mContext).Save(result);
 
                 final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                final Intent intent = new Intent(mContext, EditProfileActivity.class);
+                intent.putExtra("action", "home");
+                if(false) {
+                    intent.putExtra(FIRST_LOGIN, true);
+                }
+
                 UserController.getInstance(new ParentController(mContext, new FaildCallback() {
                     @Override
                     public void OnFaild(Code errorCode, String Message, String data) {
                         HideProgressDialog();
 
-                        Intent intent = new Intent(mContext, EditProfileActivity.class);
-                        intent.putExtra("action", "home");
                         startActivity(intent);
                         finish();
                     }
@@ -198,8 +205,6 @@ public class VerificationActivity extends MasterActivity {
                     public void OnSuccess(String result) {
                         HideProgressDialog();
 
-                        Intent intent = new Intent(mContext, EditProfileActivity.class);
-                        intent.putExtra("action", "home");
                         startActivity(intent);
                         finish();
                     }

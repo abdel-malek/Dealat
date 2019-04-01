@@ -261,10 +261,11 @@ public class AdDetailsParser implements TradinosParser<Ad> {
         else
             ad.setNegotiable(true);
 
-        if (jsonObject.getInt("is_featured") == 0)
-            ad.setFeatured(false);
-        else
-            ad.setFeatured(true);
+        ad.setFeatured(jsonObject.getInt("is_featured"));
+//        if (jsonObject.getInt("is_featured") == 0)
+//            ad.setFeatured(false);
+//        else
+//            ad.setFeatured(true);
 
         if (jsonObject.has("is_favorite")) {
             if (jsonObject.getInt("is_favorite") == 0)

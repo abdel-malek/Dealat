@@ -7,6 +7,9 @@
             android:id="@+id/nav_home"
             android:title="@string/navHome" />
         <item
+            android:id="@+id/share_app"
+            android:title="@string/shareApp" />
+        <item
             android:id="@+id/nav_MyAds"
             android:title="@string/tabMyAds"
             android:visible="false"

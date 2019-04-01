@@ -9,11 +9,15 @@ public enum APIModel {
     ads,
     categories,
     commercialAds,
+    homeControl,
     data;
 
     @Override
     public String toString () {
         switch (this){
+            case homeControl :
+                return "home_control" ;
+
             case users :
                 return "users_control" ;
 

@@ -18,10 +18,13 @@ import com.dealat.Controller.CommercialAdsController;
 import com.dealat.Model.CommercialAd;
 import com.dealat.MyApplication;
 import com.dealat.R;
+import com.dealat.View.AdDetailsActivity;
 import com.dealat.View.MasterActivity;
 import com.tradinos.core.network.Controller;
 import com.tradinos.core.network.InternetManager;
 import com.tradinos.core.network.SuccessCallback;
+
+import static com.dealat.GlobalConstants.QUERY_PARA_AD_ID;
 
 /**
  * Created by developer on 19.02.18.
@@ -85,10 +88,21 @@ public class CommercialAdFragment extends Fragment {
                 webpage = Uri.parse("http://" + commercialAd.getAdUrl());
             }
 
-            Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+            Intent intent = new Intent();
+            if(commercialAd.getExternal() == 1)
+            {
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(webpage);
+            }
+            else{
+                intent.setClass(getActivity(), AdDetailsActivity.class);
+                intent.setAction(getString(R.string.intent_action_commercial_details));
+                intent.putExtra(QUERY_PARA_AD_ID,commercialAd.getAdUrl());
+            }
 
-            if (intent.resolveActivity(getContext().getPackageManager()) != null)
+            if (intent.resolveActivity(getContext().getPackageManager()) != null) {
                 getContext().startActivity(intent);
+            }
         }
         else{
             Toast.makeText(getActivity(), R.string.commercial_has_no_link_message, Toast.LENGTH_SHORT).show();

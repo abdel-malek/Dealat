@@ -130,12 +130,13 @@ public class AdController extends ParentController {
         request.Call();
     }
 
-    public void getAdDetails(String adId, int templateId, SuccessCallback<Ad> successCallback) {
+    public void getAdDetails(String adId, SuccessCallback<Ad> successCallback) {
         String url = new URLBuilder(APIModel.ads, "get_item_details").getURL(getmContext());
         TradinosRequest request = new TradinosRequest(getmContext(), url, RequestMethod.Get, new AdDetailsParser(), successCallback, getmFaildCallback());
 
         request.addParameter("ad_id", adId);
-        request.addParameter("template_id", String.valueOf(templateId));
+        // DEPRECATED
+//        request.addParameter("template_id", String.valueOf(templateId));
 
         authenticationRequired(request);
         addToHeader(request);
