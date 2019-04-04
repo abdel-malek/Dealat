@@ -22,14 +22,17 @@ $(function () {
 	//global variables
 	var typesData, adImgs, mixer, category_id, category_name, i, template, rendered, subcategories = [];
 	adImgs = [];
-	mixer = mixitup('.products', {
-		selectors: {
-			control: '[data-mixitup-control]'
+	if($(".ad-details-page").length == 0){
+		   mixer = mixitup('.products', {
+			selectors: {
+				control: '[data-mixitup-control]'
+			}
+		});
+		if ($(".profile-page").length > 0) {
+			mixer.destroy();
 		}
-	});
-	if ($(".profile-page").length > 0) {
-		mixer.destroy();
-	}
+   }
+	
 	category_id = $("body").data("categoryId");
 	if (!category_id) {
 		//home page
@@ -234,7 +237,7 @@ $(function () {
 				category_id: category_id,
 				from_web: 1
 			}
-		}).done(function (data) {
+		}).done(function (data) {console.log(data);
 			if (data.status === false) {} else {
 				var adData, sliderDefaultImg, sliderImgCount = 0,
 					sideImgCount = 0,
@@ -291,6 +294,34 @@ $(function () {
 					}
 				}
 			}
+		});
+		
+		function commercialClick(e){
+			e.preventDefault();
+			var commercial_ad_id = $(this).data("commercial_ad_id");
+			$.ajax({
+				type: "get",
+				url: base_url + '/api/commercial_items_control/increment_clicks',
+				dataType: "json",
+				data: {
+					commercial_ad_id: commercial_ad_id
+				}
+			}).done((data)=>{
+				console.log(data);
+				var url = $(this).attr("href");
+				console.log(url);
+				if(url){
+					window.location= url;
+				}
+			});
+		}
+		
+		$(".ads-slider").on("click", ".slide a", function(e){
+			commercialClick(e);
+		});
+		
+		$(".banners").on("click", ".banner a", function(e){
+			commercialClick(e);
 		});
 	}
 
@@ -953,12 +984,13 @@ $(function () {
 		});
 	}
 
-	$("#card-modal").on("click", ".show-contact", function () {
-		var phone, whatsapp;
+	$("#card-modal, #ad-details").on("click", ".show-contact", function () {
+		var phone, card;
+		card = $(this).parents(".card");
 		phone = $(this).parents(".card").find(".seller-phone").val();
-		$("#card-modal .details .mobile-val a").text("+963 " + phone);
-		$("#card-modal .details .mobile-val a").attr("href", "tel:+963" + phone);
-		$("#card-modal .details").removeClass("d-none");
+		card.find(".details .mobile-val a").text("+963 " + phone);
+		card.find(".details .mobile-val a").attr("href", "tel:+963" + phone);
+		card.find(".details").removeClass("d-none");
 	});
 
 
@@ -1598,6 +1630,7 @@ $(function () {
 		});
 	});
 
+	if($(".ad-details-page").length == 0){
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > $(".products").offset().top) {
 			$(".categories").css({
@@ -1630,7 +1663,8 @@ $(function () {
 			$(".place-ad").removeAttr("style");
 		}
 	});
-
+	}
+	
 	//display rating in card modal
 	var userRateValue = 2;
 	$("#card-modal").on("show.bs.modal", function () {
@@ -1710,7 +1744,7 @@ $(function () {
 	$('input[type="search"]').keypress(function (e) {
 		var key, data, query = 0;
 		key = e.which;
-		query = $(this).val();
+		query = $.trim($(this).val());
 
 		if (key === 13 && query != "") {
 			data = {
@@ -1973,8 +2007,9 @@ $(function () {
 		});
 	});
 
+	//TODO #ad-details chat btn
 	//open chat modal when click on chat with seller
-	$("#card-modal button.chat").click(function () {
+	$("#card-modal button.chat, .ad-details-page button.chat").click(function () {
 		if (!logged) {
 			$("#card-modal").modal("hide");
 
@@ -2573,11 +2608,11 @@ $(function () {
 	});
 
 	//favorite icon hover
-	$("#card-modal").on("mouseenter", ".card .fav .icon", function () {
+	$("#card-modal, #ad-details").on("mouseenter", ".card .fav .icon", function () {
 		$(this).css("color", "#FF87A0");
 	});
 
-	$("#card-modal").on("mouseleave", ".card .fav .icon", function () {
+	$("#card-modal, #ad-details").on("mouseleave", ".card .fav .icon", function () {
 		if ($(this).data("added") === 0) {
 			$(this).css("color", "#bbb");
 		} else if ($(this).data("added") === 1) {
@@ -2586,7 +2621,7 @@ $(function () {
 	});
 
 	//add/remove from favorite
-	$("#card-modal").on("click", ".card .fav .icon", function () {
+	$("#card-modal, #ad-details").on("click", ".card .fav .icon", function () {
 		if (!logged) {
 			$("#card-modal").modal("hide");
 			setTimeout(function () {
@@ -2644,7 +2679,7 @@ $(function () {
 		}
 	});
 
-	$("#card-modal").on("click", ".report", function () {
+	$("#card-modal, #ad-details").on("click", ".report", function () {
 		$("#report-form .ad-id").val($("#card-modal .card").data("adId"));
 		$("#card-modal").modal("hide");
 		setTimeout(function () {
@@ -2989,10 +3024,9 @@ $(function () {
 			type: "get",
 			url: base_url + '/api/items_control/get_item_details',
 			dataType: "json",
-			global: false, // this makes sure ajaxStart is not triggered
 			data: {
-				ad_id: $("#ad_id").val(),
-				template_id: $("#template_id").val()
+				ad_id: $("#ad_id").val()
+//				template_id: $("#template_id").val()
 			},
 			beforeSend: function () {
 				ajaxLoadTimeout = setTimeout(function () {
@@ -3136,7 +3170,7 @@ $(function () {
 				} else {
 					$("#ad-details .chat, #ad-details .report, #ad-details .fav").removeClass("d-none");
 					if (data.data.is_admin == 1) {
-						$("#ad-details .chat").addClass("d-none");
+						$(".ad-details-page .chat").addClass("d-none");
 					}
 				}
 
@@ -3198,7 +3232,7 @@ $(function () {
 					$(".card .fav .icon").css("color", "#FF87A0");
 				}
 
-				$("#ad-details").modal("show");
+//				$("#ad-details").modal("show");
 				setTimeout(function () {
 					$(".card-img-slider").slick("refresh");
 				}, 200);

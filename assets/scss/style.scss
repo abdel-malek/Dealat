@@ -1543,6 +1543,196 @@ select option.placeholder {
 	}
 
 } //End card modal
+
+//ad details page
+.ad-details-page{
+	.details-wrapper{
+		background-color: #fff;
+		border-radius: 10px
+	}
+	.card {
+		font-size: .8rem;
+		border: none;
+		box-shadow: 0 0 0 0;
+		background-color: transparent;
+		border-radius: .25rem;
+		.card-img-slider{
+			padding: 10px 0;
+		}
+		
+		.card-img-top {
+			background: no-repeat center;
+			background-size: contain;
+			display: block;
+			height: 200px;
+			position: relative;
+			z-index: 1;
+		}
+		.card-body {
+			padding: 10px;
+			padding-left: 40px;
+			padding-right: 40px;
+			position: relative;
+			.price {
+				position: absolute;
+				font-weight: bold;
+				height: 82px;
+				width: 82px;
+				padding: 0 2px;
+				border-radius: 50%;
+				background-color: $main;
+				text-align: center;
+				top: -35px;
+				left: -30px;
+				z-index: 1;
+				color: #fff;
+				font-size: .75rem;
+				box-shadow: 2px 1px 10px 0px #a8a8a8;
+
+			}
+			@media(max-width: 576px) {
+				.price {
+					left: -1px;
+				}
+			}
+
+			.label {
+				font-size: .7rem;
+				font-family: $second-font;
+				color: #888
+			}
+			.price-val {
+//				margin-top: 38%
+				margin-top: 31px
+			} //			.views-lbl,
+			//			.likes-lbl {
+			//				padding-right: 20px
+			//			} 
+			//temp fav
+			.fav {
+				position: absolute;
+				text-align: center;
+				top: 0px;
+				right: 20px;
+				z-index: 3;
+				color: #bbb;
+				font-size: .7rem;
+				.icon {
+					transition: .1s
+				}
+				.icon:hover {
+					font-size: .75rem;
+					cursor: pointer
+				}
+			}
+			.report {
+				position: absolute;
+				text-align: center;
+				top: 0px;
+				right: 70px;
+				z-index: 3;
+				color: #bbb;
+				font-size: .65rem;
+				.icon {
+					transition: .1s
+				}
+				.icon:hover {
+					font-size: .7rem;
+					color: #FF87A0;
+					cursor: pointer
+				}
+			}
+		}
+		.card-title {
+			font-family: $second-font;
+			font-weight: bold;
+			margin-bottom: 0;
+			color: $main;
+			font-size: .9rem
+		}
+		.show-contact {
+			font-size: .7rem;
+			color: $main;
+			text-decoration: underline;
+			font-family: $second-font;
+		}
+		.show-contact:hover {
+			cursor: pointer;
+			color: #8e0c28
+		}
+	}
+	.card-img-slider {
+		.slick-slide {
+			img {
+				margin: auto;
+				height: inherit
+			}
+			img:hover {
+				cursor: pointer
+			}
+		}
+
+	}
+	.slick-arrow {
+		top: 45%;
+	}
+	.slick-prev {
+		left: 25px
+	}
+
+	.slick-next {
+		right: 25px
+	}
+
+	/* Rating Star Widgets Style */
+	.rating-widget,
+	.rating-stars {
+		display: inline
+	}
+	.rating-stars ul {
+		list-style-type: none;
+		padding: 0;
+		letter-spacing: -10px;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		display: inline
+	}
+	.rating-stars ul > li.star {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+	}
+
+	/* Idle State of the stars */
+	.rating-stars ul > li.star > svg {
+		font-size: .8rem;
+		/* Change the size of the stars */
+		color: #ccc;
+		/* Color on idle state */
+	}
+
+	/* Hover state of the stars */
+	.rating-stars ul > li.star.hover > svg {
+		color: #FFCC36;
+	}
+
+	/* Selected state of the stars */
+	.rating-stars ul > li.star.selected > svg {
+		color: #FF912C;
+	}
+
+	.btn.report {
+		width: 30px;
+		height: 30px;
+		min-height: 10px;
+		padding: 0;
+		line-height: normal;
+		position: absolute;
+		left: 0;
+	}
+
+} //End ad details page
+
 //file uploader
 #fileuploader-edit-ad,
 #fileuploader-ad,

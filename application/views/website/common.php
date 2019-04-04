@@ -1364,7 +1364,7 @@
 <script id="main-commercial-ads-template" type="text/template">
 	{{#.}}
 	<div class="slide">
-		<a href="{{ad_url}}">
+		<a {{#ad_url}} href="{{ad_url}}" {{/ad_url}} data-commercial_ad_id="{{commercial_ad_id}}">
 				<div class="ad-image" title="{{title}}" data-commercial_ad_id="{{commercial_ad_id}}" style="background-image: url('<?php echo base_url("{{image}}"); ?>')"></div>
 			</a>
 	</div>
@@ -1374,7 +1374,7 @@
 <script id="side-commercial-ads-template" type="text/template">
 	{{#.}}
 	<div class="banner">
-		<a href="{{ad_url}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}}" title="{{title}}"></a>
+		<a {{#ad_url}} href="{{ad_url}}" {{/ad_url}} data-commercial_ad_id="{{commercial_ad_id}}"><img src="<?php echo base_url("{{image}}"); ?>" class="img-fluid" alt="{{title}}" title="{{title}}"></a>
 	</div>
 	{{/.}}
 </script>

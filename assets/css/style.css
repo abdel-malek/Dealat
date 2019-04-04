@@ -1230,6 +1230,142 @@ select option.placeholder {
     position: absolute;
     left: 0; }
 
+.ad-details-page {
+  /* Rating Star Widgets Style */
+  /* Idle State of the stars */
+  /* Hover state of the stars */
+  /* Selected state of the stars */ }
+  .ad-details-page .details-wrapper {
+    background-color: #fff;
+    border-radius: 10px; }
+  .ad-details-page .card {
+    font-size: .8rem;
+    border: none;
+    box-shadow: 0 0 0 0;
+    background-color: transparent;
+    border-radius: .25rem; }
+    .ad-details-page .card .card-img-slider {
+      padding: 10px 0; }
+    .ad-details-page .card .card-img-top {
+      background: no-repeat center;
+      background-size: contain;
+      display: block;
+      height: 200px;
+      position: relative;
+      z-index: 1; }
+    .ad-details-page .card .card-body {
+      padding: 10px;
+      padding-left: 40px;
+      padding-right: 40px;
+      position: relative; }
+      .ad-details-page .card .card-body .price {
+        position: absolute;
+        font-weight: bold;
+        height: 82px;
+        width: 82px;
+        padding: 0 2px;
+        border-radius: 50%;
+        background-color: #c30a30;
+        text-align: center;
+        top: -35px;
+        left: -30px;
+        z-index: 1;
+        color: #fff;
+        font-size: .75rem;
+        box-shadow: 2px 1px 10px 0px #a8a8a8; }
+      @media (max-width: 576px) {
+        .ad-details-page .card .card-body .price {
+          left: -1px; } }
+      .ad-details-page .card .card-body .label {
+        font-size: .7rem;
+        font-family: "gothic", sans-serif;
+        color: #888; }
+      .ad-details-page .card .card-body .price-val {
+        margin-top: 31px; }
+      .ad-details-page .card .card-body .fav {
+        position: absolute;
+        text-align: center;
+        top: 0px;
+        right: 20px;
+        z-index: 3;
+        color: #bbb;
+        font-size: .7rem; }
+        .ad-details-page .card .card-body .fav .icon {
+          transition: 0.1s; }
+        .ad-details-page .card .card-body .fav .icon:hover {
+          font-size: .75rem;
+          cursor: pointer; }
+      .ad-details-page .card .card-body .report {
+        position: absolute;
+        text-align: center;
+        top: 0px;
+        right: 70px;
+        z-index: 3;
+        color: #bbb;
+        font-size: .65rem; }
+        .ad-details-page .card .card-body .report .icon {
+          transition: 0.1s; }
+        .ad-details-page .card .card-body .report .icon:hover {
+          font-size: .7rem;
+          color: #FF87A0;
+          cursor: pointer; }
+    .ad-details-page .card .card-title {
+      font-family: "gothic", sans-serif;
+      font-weight: bold;
+      margin-bottom: 0;
+      color: #c30a30;
+      font-size: 0.9rem; }
+    .ad-details-page .card .show-contact {
+      font-size: .7rem;
+      color: #c30a30;
+      text-decoration: underline;
+      font-family: "gothic", sans-serif; }
+    .ad-details-page .card .show-contact:hover {
+      cursor: pointer;
+      color: #8e0c28; }
+  .ad-details-page .card-img-slider .slick-slide img {
+    margin: auto;
+    height: inherit; }
+  .ad-details-page .card-img-slider .slick-slide img:hover {
+    cursor: pointer; }
+  .ad-details-page .slick-arrow {
+    top: 45%; }
+  .ad-details-page .slick-prev {
+    left: 25px; }
+  .ad-details-page .slick-next {
+    right: 25px; }
+  .ad-details-page .rating-widget,
+  .ad-details-page .rating-stars {
+    display: inline; }
+  .ad-details-page .rating-stars ul {
+    list-style-type: none;
+    padding: 0;
+    letter-spacing: -10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    display: inline; }
+  .ad-details-page .rating-stars ul > li.star {
+    display: inline-block;
+    padding: 0;
+    margin: 0; }
+  .ad-details-page .rating-stars ul > li.star > svg {
+    font-size: .8rem;
+    /* Change the size of the stars */
+    color: #ccc;
+    /* Color on idle state */ }
+  .ad-details-page .rating-stars ul > li.star.hover > svg {
+    color: #FFCC36; }
+  .ad-details-page .rating-stars ul > li.star.selected > svg {
+    color: #FF912C; }
+  .ad-details-page .btn.report {
+    width: 30px;
+    height: 30px;
+    min-height: 10px;
+    padding: 0;
+    line-height: normal;
+    position: absolute;
+    left: 0; }
+
 #fileuploader-edit-ad .ajax-upload-dragdrop,
 #fileuploader-ad .ajax-upload-dragdrop,
 #fileuploader-edit-ad-main .ajax-upload-dragdrop,
