@@ -4,7 +4,7 @@
 	<div class=" my-5">
 	<div class="container">
 	<div class="details-wrapper">
-		<input id="ad_id" type="hidden" value="177">
+		<input id="ad_id" type="hidden" value="<?php echo $ad_id ?>">
 <!--		<input id="template_id" type="hidden" value="11">-->
 		<div id="ad-details">
 			

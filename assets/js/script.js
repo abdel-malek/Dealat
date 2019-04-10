@@ -258,6 +258,14 @@ $(function () {
 								data.data[i].ad_url = "http://" + data.data[i].ad_url;
 							}
 						}
+						
+						//TODO test
+						//case of internal link
+						if(data.data[i].external == 0){
+							data.data[i].ad_url = base_url + "home_control/load_ad_details?ad_id=" + data.data[i].ad_url
+						}
+						
+						
 						if (data.data[i].position === "2") {
 							//top slider ad
 							sliderImgCount += 1;
@@ -274,6 +282,7 @@ $(function () {
 							rendered = Mustache.render(template, data.data[i]);
 							$("aside.banners").append(rendered);
 						}
+						
 					}
 				}
 				if (data.data.length === 0 || sliderImgCount === 0) {
