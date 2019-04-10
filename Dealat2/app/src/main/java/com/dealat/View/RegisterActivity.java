@@ -2,6 +2,7 @@ package com.dealat.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -89,6 +90,7 @@ public class RegisterActivity extends MasterActivity {
                             parameters.put("name", stringInput(editTextName));
                             parameters.put("lang", MyApplication.getLocale().toString());
                             parameters.put("city_id", MyApplication.getCity());
+                            parameters.put("welcome_message", "");
 
                             ShowProgressDialog();
                             UserController.getInstance(mController).registerUser(parameters, new SuccessCallback<User>() {
@@ -97,6 +99,16 @@ public class RegisterActivity extends MasterActivity {
                                     HideProgressDialog();
                                     MyApplication.saveUserState(User.PENDING);
                                     MyApplication.saveCodeRequestDate(new Date());
+                                    Log.d("SAED", "OnSuccess: " + result.getWelcomeMessage());
+
+                                    if(result.getServerKey() == null){
+                                        MyApplication.setFirstLogin(true);
+                                    }
+                                    else{
+                                        MyApplication.setFirstLogin(false);
+                                    }
+
+                                    MyApplication.setWelcomeMessage(result.getWelcomeMessage());
 
                                     new CurrentAndroidUser(mContext).Save(result);
 

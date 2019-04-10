@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String serverKey, cityId, cityName;
     private String imageUrl;
     private String birthday;
+    private String welcomeMessage;
     private int gender;
 
     public String getId() {
@@ -102,8 +103,18 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
+
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    public void setWelcomeMessage(String welcomeMessage) {
+        this.welcomeMessage = welcomeMessage;
+    }
+
     @Override
     public String toString() {
         return this.name;
     }
+
 }

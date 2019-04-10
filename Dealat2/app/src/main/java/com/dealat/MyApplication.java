@@ -233,6 +233,27 @@ public class MyApplication extends Application {
         editor.apply();
     }
 
+    public static void setWelcomeMessage(String msg){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("welcome_message", msg);
+        editor.apply();
+    }
+
+    public static String getWelcomeMessage(){
+        return sharedPreferences.getString("welcome_message", null);
+    }
+
+    public static void setFirstLogin(boolean isFirstLogin){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("is_first_login", isFirstLogin);
+        editor.apply();
+    }
+
+    public static boolean isFirstLogin(){
+        return sharedPreferences.getBoolean("is_first_login", false);
+    }
+
+
     public static String getBaseUrl() {
         // return "http://dealat.tradinos.com/";
         // return "http://192.168.9.96/Dealat/";

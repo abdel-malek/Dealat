@@ -129,18 +129,18 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
                 if (item.isFeatured())
                 {
                     featured.setVisibility(View.VISIBLE);
-                    int ribbonImageId = R.drawable.featured;
+                    int ribbonImageId = R.drawable.ribbon_bronze;
                     if(item.getFeatured() == 1)
                     {
-                        ribbonImageId =  R.drawable.featured;
+                        ribbonImageId =  R.drawable.ribbon_gold;
                     }
                     else if(item.getFeatured() == 2)
                     {
-                        ribbonImageId =  R.drawable.featured;
+                        ribbonImageId =  R.drawable.ribbon_silver;
                     }
                     else if(item.getFeatured() == 3)
                     {
-                        ribbonImageId =  R.drawable.featured;
+                        ribbonImageId =  R.drawable.ribbon_bronze;
                     }
                     Picasso.with(context)
                             .load(ribbonImageId)

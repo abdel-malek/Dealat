@@ -47,6 +47,7 @@ public class URLBuilder {
             //  SERVER_URL = "http://dealat.tradinos.com/index.php/api";
 //            SERVER_URL = "http://192.168.9.129/Dealat/index.php/api";
 //            SERVER_URL = "http://192.168.9.129/dealat/index.php/api";
+//            SERVER_URL = "http://192.168.9.161/tradinos/Dealat/index.php/api";
             SERVER_URL = "http://deal-at.com/index.php/api";
             // SERVER_URL = "http://dealat-sy.tradinos.com/index.php/api";
         else {
@@ -54,6 +55,7 @@ public class URLBuilder {
             //   SERVER_URL = preferences.getString("server_url", "http://dealat.tradinos.com/index.php/api" + "");
 //            SERVER_URL = preferences.getString("server_url", "http://192.168.9.129/Dealat/index.php/api" + "");
             SERVER_URL = preferences.getString("server_url", "http://deal-at.com/index.php/api" + "");
+//            SERVER_URL = preferences.getString("server_url", "http://192.168.9.161/tradinos/Dealat/index.php/api" + "");
 //            SERVER_URL = preferences.getString("server_url", "http://192.168.9.129/dealat/index.php/api");
             //   SERVER_URL = preferences.getString("server_url", "http://dealat-sy.tradinos.com/index.php/api" + "");
         }

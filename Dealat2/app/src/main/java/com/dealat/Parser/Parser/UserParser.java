@@ -42,6 +42,9 @@ public class UserParser implements TradinosParser<User> {
         if (validData(jsonObject.getString("personal_image")))
             user.setImageUrl(jsonObject.getString("personal_image"));
 
+        if (jsonObject.has("msg") && validData(jsonObject.getString("msg")))
+            user.setWelcomeMessage(jsonObject.getString("msg"));
+
         return user;
     }
 

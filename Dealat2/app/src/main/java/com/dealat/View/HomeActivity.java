@@ -140,11 +140,13 @@ public class HomeActivity extends DrawerActivity {
 
                 getCommercialAds(result.getCommercialAds());
 
-                if(getIntent() != null && getIntent().getBooleanExtra(FIRST_LOGIN,false)){
+                if(MyApplication.isFirstLogin()){
                     final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.welcome_message));
                     dialog.setOneButtonDialog(true);
                     dialog.setOneButtonButtonText(getString(R.string.dismiss));
                     dialog.show();
+
+                    MyApplication.setFirstLogin(false);
 
                     dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -153,12 +155,6 @@ public class HomeActivity extends DrawerActivity {
                         }
                     });
                 }
-
-                Uri webpage = Uri.parse("http://www.deal-at.com/index.php/home_control/load_ad_details?ad_id=14033#section-name");
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(webpage);
-                startActivity(intent);
             }
         });
     }
