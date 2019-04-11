@@ -237,7 +237,7 @@ $(function () {
 				category_id: category_id,
 				from_web: 1
 			}
-		}).done(function (data) {console.log(data);
+		}).done(function (data) {
 			if (data.status === false) {} else {
 				var adData, sliderDefaultImg, sliderImgCount = 0,
 					sideImgCount = 0,
@@ -316,9 +316,9 @@ $(function () {
 					commercial_ad_id: commercial_ad_id
 				}
 			}).done((data)=>{
-				console.log(data);
+//				console.log(data);
 				var url = $(this).attr("href");
-				console.log(url);
+//				console.log(url);
 				if(url){
 					window.location= url;
 				}
@@ -789,7 +789,7 @@ $(function () {
 				clearTimeout(ajaxLoadTimeout);
 				$(".loading-overlay1").fadeOut("fast");
 			}
-		}).done(function (data) {console.log(data);
+		}).done(function (data) {
 			if (data.status === false) {} else {
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
@@ -1590,6 +1590,7 @@ $(function () {
 			value: desc
 		});
 
+//		console.log(data);
 		$.ajax({
 			type: "post",
 			url: base_url + '/api/items_control/post_new_item',
@@ -2853,6 +2854,8 @@ $(function () {
 					} else {
 						data.data[i].new = "0";
 					}
+					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
+					data.data[i].body = emojione.shortnameToUnicode(data.data[i].body);
 				}
 				template = $('#notifications-template').html();
 				Mustache.parse(template);
@@ -2959,6 +2962,10 @@ $(function () {
 							data.data[i].status = "Rejected";
 						}
 					}
+					
+					//to convert emoji if existed
+					data.data[i].title = emojione.shortnameToUnicode(data.data[i].title);
+					
 					rendered = Mustache.render(template, data.data[i]);
 					$("header .notes-dropdown .dropdown-menu").append(rendered);
 					//					}
@@ -3046,7 +3053,7 @@ $(function () {
 				clearTimeout(ajaxLoadTimeout);
 				$(".loading-overlay1").fadeOut("fast");
 			}
-		}).done(function (data) {console.log(data);
+		}).done(function (data) {
 			if (data.status === true) {
 				var adData, negotiable, automatic, status, furniture, type, templateId;
 
@@ -3175,9 +3182,9 @@ $(function () {
 				}
 
 				if (data.data.seller_id === user_id) {
-					$("#ad-details .chat, #ad-details .report, #ad-details .fav").addClass("d-none");
+					$(".ad-details-page .chat, .ad-details-page .report, .ad-details-page .fav").addClass("d-none");
 				} else {
-					$("#ad-details .chat, #ad-details .report, #ad-details .fav").removeClass("d-none");
+					$(".ad-details-page .chat, .ad-details-page .report, .ad-details-page .fav").removeClass("d-none");
 					if (data.data.is_admin == 1) {
 						$(".ad-details-page .chat").addClass("d-none");
 					}

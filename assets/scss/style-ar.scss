@@ -207,7 +207,7 @@ section.search {
 }
 
 //card modal
-#card-modal {
+#card-modal, .ad-details-page {
 	.card {
 		//		font-size: .9rem;
 	}
@@ -217,12 +217,18 @@ section.search {
 	.info-col {
 		text-align: right;
 	}
+	.card-body .label,.show-contact{
+		font-size: .8rem;
+	}
+	.card-body .price {
+		direction: rtl
+	}
 }
 
-#card-modal .card .card-body .label,
-#card-modal .card .show-contact {
-	font-size: .8rem;
-}
+//#card-modal .card .card-body .label,
+//#card-modal .card .show-contact {
+//	font-size: .8rem;
+//}
 
 //footer
 footer {
@@ -267,10 +273,6 @@ footer {
 .profile-page .products .card .price {
 	left: auto;
 	right: -35px
-}
-
-#card-modal .card .card-body .price {
-	direction: rtl
 }
 
 .search-page .products .card .card-body,

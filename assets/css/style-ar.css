@@ -165,14 +165,14 @@ section.search {
 #fileuploader-register .ajax-upload-dragdrop {
   text-align: right; }
 
-#card-modal .card-body .row {
+#card-modal .card-body .row, .ad-details-page .card-body .row {
   direction: rtl; }
-#card-modal .info-col {
+#card-modal .info-col, .ad-details-page .info-col {
   text-align: right; }
-
-#card-modal .card .card-body .label,
-#card-modal .card .show-contact {
+#card-modal .card-body .label, #card-modal .show-contact, .ad-details-page .card-body .label, .ad-details-page .show-contact {
   font-size: .8rem; }
+#card-modal .card-body .price, .ad-details-page .card-body .price {
+  direction: rtl; }
 
 footer {
   direction: rtl; }
@@ -207,9 +207,6 @@ footer {
 .profile-page .products .card .price {
   left: auto;
   right: -35px; }
-
-#card-modal .card .card-body .price {
-  direction: rtl; }
 
 .search-page .products .card .card-body,
 .profile-page .products .card .card-body {

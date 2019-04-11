@@ -86,12 +86,26 @@
 									</div>
 								</div>
 
-								<?php if($ad->is_featured != 0): ?>
+								<?php if($ad->is_featured == 1): ?>
 								<div class="feat feat-ar">
-								<img class="" src="<?php echo base_url('assets/images/featured/featured_ad_ar.png'); ?>" alt="">
+									<img class="" src="<?php echo base_url('assets/images/featured/gold-ar.png'); ?>" alt="">
 								</div>
 								<div class="feat feat-en">
-								<img class="" src="<?php echo base_url('assets/images/featured/featured-ads-new.png'); ?>" alt="">
+									<img class="" src="<?php echo base_url('assets/images/featured/gold.png'); ?>" alt="">
+								</div>
+								<?php elseif($ad->is_featured == 2): ?>
+								<div class="feat feat-ar">
+									<img class="" src="<?php echo base_url('assets/images/featured/silver-ar.png'); ?>" alt="">
+								</div>
+								<div class="feat feat-en">
+									<img class="" src="<?php echo base_url('assets/images/featured/silver.png'); ?>" alt="">
+								</div>
+								<?php elseif($ad->is_featured == 3): ?>
+								<div class="feat feat-ar">
+									<img class="" src="<?php echo base_url('assets/images/featured/bronze-ar.png'); ?>" alt="">
+								</div>
+								<div class="feat feat-en">
+									<img class="" src="<?php echo base_url('assets/images/featured/bronze.png'); ?>" alt="">
 								</div>
 								<?php endif; ?>
 
