@@ -507,10 +507,15 @@ function getCategory(id) {
             	$('.ads_details  #ad_negotiable').html('No');
             }
             if($item_info['is_featured'] == '1'){
-            	$('.ads_details  #ad_featured').html('Yes');
-            }else{
-            	$('.ads_details  #ad_featured').html('No');
+            	$('.ads_details  #ad_featured').html('Gold');
+            }else if($item_info['is_featured'] == '2'){
+            	$('.ads_details  #ad_featured').html('Silver');
+            }else if($item_info['is_featured'] == '3'){
+            	$('.ads_details  #ad_featured').html('Bronze');
+            }else {
+                	$('.ads_details  #ad_featured').html('Not Featured');
             }
+
             $('.ads_details  #select_featured').val($item_info['is_featured']);
 
             // fill temaplet info
@@ -741,6 +746,9 @@ function getCategory(id) {
 
            $('.category_div').css('display' , 'none');
            $('.category_select_div').css('display' , 'inline');
+
+           $('.featured_div').css('display' , 'none');
+           $('.featured_select_div').css('display' , 'inline');
 
 
         	//console.log(response.data);

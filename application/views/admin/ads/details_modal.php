@@ -154,9 +154,9 @@
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <select id="select_featured" class='form-control' style="margin-bottom: 10px;">
                          <option value="0">Not featured</option>
-		      	           	  <option value="1">Diamond</option>
-		      	           	  <option value="2">Gold</option>
-                          <option value="3">Silver</option>
+		      	           	  <option value="1">Gold</option>
+		      	           	  <option value="2">Silver</option>
+                          <option value="3">Bronze</option>
 		      	           </select>
 		      	         </div>
 		             </div>
