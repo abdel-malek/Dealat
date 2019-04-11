@@ -6,10 +6,10 @@
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
           <h4 class="modal-title" id="ad_deatils_title"><?php echo $this->lang->line('ad_details') ?></h4>
-          
+
         </div>
         <div class="modal-body">
-        	
+
             <div class="" role="tabpanel" data-example-id="togglable-tabs">
               <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('basic_info') ?></a>
@@ -28,15 +28,15 @@
 		      	           <label class="form-control readonly_elem"  id='ad_title'>ad title</label>
 		      	           <input style="display:  none" class="form-control editable_elem basics"  id='ad_input_title' />
 		      	         </div>
-		               </div> 
-		               
+		               </div>
+
 		               <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('description') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <p class="readonly_elem"  id='ad_description' style="padding: 10px;"><?php echo $this->lang->line('not_set') ?></p>
 		      	           <textarea style="display:  none" class="form-control editable_elem basics"  id="ad_input_description" name="ad_input_description"   rows="4" cols="50" style="margin: 0px; width: 259px; height: 136px;"></textarea>
 		      	         </div>
-		               </div> 
+		               </div>
                     </form>
 	               	<!-- <div class="images-slider slick-slider">
 					</div> -->
@@ -67,35 +67,44 @@
 		      	           <label class="form-control"  id='ad_creation_date'> 2-19-2017</label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group" style="display: none" id='publish_date_div'>
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('published_at') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_publish_date'></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group" style="display: none" id='expiry_date_div'>
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('expire_at') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_expire_date'></label>
 		      	         </div>
 		             </div>
-		             
-		             <div class="form-group">
+
+		             <div class="form-group category_div">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('category') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_category'></label>
 		      	         </div>
 		             </div>
-		             
+                 <div class="form-group category_select_div" style="display: none">
+                     <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('category') ?></label>
+                     <div class="col-md-6 col-sm-6 col-xs-12 category_select_sub_div">
+                       <select id="select_category" class='form-control' style="margin-bottom: 10px;">
+
+
+                       </select>
+                     </div>
+                 </div>
+
 		             <div class="form-group readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('location') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control readonly_elem"  id='ad_location'> syria</label>
 		      	         </div>
 		             </div>
-		             
+
 		             <!-- location edit inputs  -->
 		             <div class="form-group editable_elem basics" style="display: none;">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>
@@ -104,7 +113,7 @@
 		                    </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group editable_elem basics" style="display: none;">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('location') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -112,8 +121,8 @@
 		                    </select>
 		      	         </div>
 		             </div>
-		             <!-- end  location edit inputs  --> 
-		             
+		             <!-- end  location edit inputs  -->
+
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('price') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -121,7 +130,7 @@
 		      	           <input class="form-control  editable_elem basics"  id='ad_input_price' style="display:  none" />
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_negotiable') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -132,26 +141,28 @@
 		                   </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group featured_div">
-		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_featured') ?></label>
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('feature_level') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_featured'>No</label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group featured_select_div" style="display: none">
-		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_featured') ?></label>
+		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('feature_level') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <select id="select_featured" class='form-control' style="margin-bottom: 10px;">
-		      	           	  <option value="1">Yes</option>
-		      	           	  <option value="0">No</option>
+                         <option value="0">Not featured</option>
+		      	           	  <option value="1">Diamond</option>
+		      	           	  <option value="2">Gold</option>
+                          <option value="3">Silver</option>
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <!-- tamplates info  -->
-		             
+
 		             <div class="form-group template_info is_new">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('is_new') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -162,16 +173,16 @@
 		                    </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <!-- vehicles -->
-		             
+
 		             <div class="form-group template_info 1_info 3_info 4_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('type') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_type_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display: none !important" class="form-group template_info 1_info 3_info 4_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('type') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -179,14 +190,14 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 1_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('type_model') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_type_model_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display: none !important" class="form-group template_info 1_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('type_model') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -194,7 +205,7 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 1_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('manufacture_date') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -206,7 +217,7 @@
 		                    </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 1_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('kilometrage') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -214,7 +225,7 @@
 		      	           <input class="form-control editable_elem 1_info"  id='ad_input_kilometer' style="display: none" />
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 1_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('motion') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -225,7 +236,7 @@
 		                   </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 1_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('engine_capacity') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -237,9 +248,9 @@
 		                   </select>
 		      	         </div>
 		             </div>
-		             
-		             <!-- propertis --> 
-		             
+
+		             <!-- propertis -->
+
 		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('with_furniture') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -250,7 +261,7 @@
 		                   </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('space') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -258,7 +269,7 @@
 		      	           <input style="display: none" class="form-control editable_elem 2_info" id="ad_input_space"  />
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('rooms_num') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -266,7 +277,7 @@
 		      	           <input style="display: none" type='number' class="form-control editable_elem 2_info" id="ad_input_rooms_num"  />
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('floor') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -274,7 +285,7 @@
 		      	           <input style="display: none" type='number' class="form-control editable_elem 2_info" id="ad_input_floor"  />
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 2_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('floors_number') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -282,14 +293,14 @@
 		      	           <input style="display: none" type='number' class="form-control editable_elem 2_info" id="ad_input_floors_number"  />
 		      	         </div>
 		             </div>
-		             
+
 		            <div class="form-group template_info 2_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('state') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control "  id='ad_property_state_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 2_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('state') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -297,11 +308,11 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
-		             
-		             
+
+
+
 		             <!-- electronics -->
-		             
+
 		              <div class="form-group template_info 4_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('size') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -309,16 +320,16 @@
 		      	           <input style="display: none" type='number' class="form-control editable_elem 4_info" id="ad_input_size"  />
 		      	         </div>
 		              </div>
-		             
+
 		             <!-- job postions -->
-		             
+
 		             <div class="form-group template_info 8_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('education') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_education_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display : none" class="form-group template_info 8_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('education') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -326,14 +337,14 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 8_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('certificate') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_certificate_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display : none"  class="form-group template_info 8_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('certificate') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -341,14 +352,14 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 8_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('schedule') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_schedule_name'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display : none" class="form-group template_info 8_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('schedule') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -356,16 +367,16 @@
 		      	            </select>
 		      	         </div>
 		             </div>
-		             
-		             
-		             
+
+
+
 		             <div class="form-group template_info 8_info readonly_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('experience') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
 		      	           <label class="form-control"  id='ad_experience'><?php echo $this->lang->line('not_set') ?></label>
 		      	         </div>
 		             </div>
-		             
+
 		             <div style="display : none" class="form-group template_info 8_info editable_elem">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('experience') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12 fit_select_ad_details_div">
@@ -373,7 +384,7 @@
 		      	           </select>
 		      	         </div>
 		             </div>
-		             
+
 		             <div class="form-group template_info 8_info">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('salary') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -381,7 +392,7 @@
 		      	           <input style="display: none" type='number' class="form-control editable_elem 8_info" id="ad_input_salary" />
 		      	         </div>
 		             </div>
-		             
+
 		           </form>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">

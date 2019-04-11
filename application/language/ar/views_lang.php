@@ -152,6 +152,7 @@ $lang['location'] = 'الموقع';
 $lang['details'] = 'التفاصيل';
 $lang['is_negotiable']= 'قابل للنقاش';
 $lang['is_featured']= 'إعلان مميَز';
+$lang['feature_level']= 'مستوى التميز';
 $lang['is_new']= 'جديد';
 $lang['type'] = 'الماركة';
 $lang['type_model'] = 'الموديل';

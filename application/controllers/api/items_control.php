@@ -24,6 +24,41 @@ class Items_control extends REST_Controller {
 		}
 	}
 
+	public function get_Accepted_items_get()
+	{
+		 $this->load->model('notification');
+		 	$this->load->model('data_sources/users');
+
+		$ads_list = $this->ads->get_latest_ads($this->data['lang']);
+		foreach ($ads_list as $key => $value) {
+			$value->end_date=date('Y-m-d', strtotime($value->publish_date. ' + '.$value->days.' day'));
+			$str=strtotime(date("Y-m-d"))-strtotime($value->end_date);
+			$value->exper_in=floor($str/3600/24);
+			$user_info = $this->users->get_user_info($this->data['lang'] , $value->user_id );
+		 	$title=$value->title;
+			$text = (	$user_info->lang=='en') ? 'Sorry, your ad will expire within 24 hours' : 'عذرًا ، سوف تنتهي صلاحية إعلانك خلال 24 ساعة' ;
+			// $value->exper= 0 ;
+			  // $data = (array) $value;
+		     $data = array();
+
+				if ($value->exper_in==-1) {
+					    $value->expire = 1 ;
+						$data['expire']=1;
+						     $edit_result = $this->ads->update($data , $value->ad_id);
+
+				    $this->notification->send_notification($value->user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
+				}
+
+		}
+
+	 	$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
+	}
+
+	public function expiryDate()
+	{
+
+	}
+
 	public function get_latest_items_get()
 	{
     	$ads_list  = $this->ads->get_latest_ads($this->data['lang']);
@@ -43,9 +78,13 @@ class Items_control extends REST_Controller {
 			$data['commercials'] = $commercials;
 		}
         // for old versions
-        if($this->data['version'] == '1.0'){
-        	 $data = $ads_list;
-        }
+				if( $this->data['version'] <= '1.3'){
+					 $data = $ads_list;
+					 foreach ($data as $key => $value) {
+						 $value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
+
+					 }
+				}
 		$this->response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
 
@@ -93,7 +132,16 @@ class Items_control extends REST_Controller {
 			}
 			if(floatval($this->data['version']) >= 1.2){
         	   $deatils->views_num = null;
-            }
+      }
+			if( $this->data['version'] <= '1.3'){
+
+				foreach ($data as $key => $value) {
+ 				$value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
+
+ 			}
+
+
+			}
 			$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
 		}else{
 			$this -> response(array('status' => false, 'data' => '', 'message' => $this->lang->line('failed')));
@@ -246,6 +294,10 @@ class Items_control extends REST_Controller {
 		$query_string = $this->input->get('query');
 		$category_id = $this->input->get('category_id');
 		$data['ads'] = $this->ads->serach_with_filter( $this->data['lang']  , $query_string , $category_id);
+		// foreach ($data as $key => $value) {
+		// var_dump($value);
+		// }
+		// die();
 		//save if no results are back for this search
 		// if($data['ads'] == null){ // no data
 		// 	$user_id = $this->current_user->user_id;
@@ -266,9 +318,23 @@ class Items_control extends REST_Controller {
 		    }
 			$data['commercials'] = $commercials;
 		}
-		// for old versions
-        if($this->data['version'] == '1.0'){
-        	 $data = $data['ads'];
+		// for old versions  $this->data['version'] == '1.0'
+        if( $this->data['version'] <= '1.3'){
+
+				 	if ($this->data['version'] == '1.1') {
+				 			 $data =$data['ads'];
+							 foreach ($data as $key => $value) {
+								$value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
+
+							}
+				 	} else {
+						foreach ($data['ads'] as $key => $value) {
+							$value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
+
+						}
+				 	}
+
+
         }
 		$this->response(array('status' => true, 'data' =>$data, 'message' => $this->lang->line('sucess')));
    }

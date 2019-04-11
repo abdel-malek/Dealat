@@ -151,6 +151,7 @@ $lang['location'] = 'Location';
 $lang['details'] = 'Details';
 $lang['is_negotiable']= 'Is negotiable';
 $lang['is_featured']= 'Is featured';
+$lang['feature_level']= 'Feature Level';
 $lang['is_new']= 'Is New';
 $lang['type'] = 'Type';
 $lang['type_model'] = 'Type Model';

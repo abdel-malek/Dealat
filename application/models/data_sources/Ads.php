@@ -97,6 +97,7 @@ class Ads extends MY_Model {
 	    $this->db->select('ads.* ,
 		                   categories.'.$lang.'_name as category_name ,
 		                   c.'.$lang.'_name as parent_category_name ,
+											 c.category_id as parent_category_id ,
 		                   categories.tamplate_id,
 		                   users.user_id as seller_id,
 		                   users.name as seller_name,
@@ -340,11 +341,19 @@ class Ads extends MY_Model {
 	  }
   }
 
+  public function update($data,$ad_id)
+  {
+
+    return	parent::save($data,$ad_id);
+	
+  }
+
   public function edit($ad_id , $category_id , $from_admin = 0)
   {
   	   $this->load->model('data_sources/categories');
   	   $this -> db -> trans_start();
 	   $data = array();
+
 	   if($this->input->post('city_id')){
 	   	  $data['city_id'] = $this->input->post('city_id');
 	   }
@@ -426,10 +435,22 @@ class Ads extends MY_Model {
 	   if(!$from_admin){
 	   	 $data['status'] = STATUS::PENDING;
 	   }
+		 if ($this->input->post('category')) {
+		 	$data['category_id']=$this->input->post('category');
+		 }
+
 	   $edited_ad_id = parent::save($data  , $ad_id);
 
 	   //save tamplate edits
-	   $category_info = $this->categories->get($category_id);
+
+	   if ($this->input->post('category')) {
+
+	   	$category_info = $this->categories->get($this->input->post('category'));
+	   } else {
+	    $category_info = $this->categories->get($category_id);
+	   }
+		 // var_dump($category_info);die();
+
 	   $tamplate_id = $category_info->tamplate_id;
 	   $tamplate_name = 'basic';
 	   if($tamplate_id !=  TAMPLATES::BASIC){

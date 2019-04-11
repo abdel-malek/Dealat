@@ -207,6 +207,15 @@ function show_comm_ad_modal (id , is_main) {
         	if(info['ad_url']!= null){
         	  $('#comm_url').val(info['ad_url']);
         	}
+          if (info['external']!= null) {
+            if (info['external']==1) {
+              $("#comm_external option[value=1]").attr('selected', 'selected');
+
+            } else {
+              $("#comm_external option[value=0]").attr('selected', 'selected');
+            }
+          }
+
         	$('#image_div').css('display', 'inline');
             $("#comm_image").attr("src",site_url + info['image']);
             $('#comm_position').val(info['position']).trigger('change');

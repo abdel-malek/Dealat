@@ -31,7 +31,7 @@
 	               </div>
 
 	               <div class="form-group">
-	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('url') ?></label>
+	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 " id="lableUrl"><?php echo $this->lang->line('url') ?></label>
 	      	         <div class="col-md-6 col-sm-6 col-xs-12">
 	      	            <input  class="form-control col-md-7 col-xs-12" id="comm_url" placeholder="http://www.example.com"></input>
 	      	         </div>
@@ -56,9 +56,9 @@
                    <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('External') ?></label>
                    <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
                          <select class="form-control select2_single" id="comm_external" tabindex="-1" >
-                           
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value="-1" selected disabled>select an option please</option>
+                                <option value="1" >Yes</option>
+                                <option value="0" >No</option>
 
 
                        </select>

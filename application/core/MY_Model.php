@@ -1,6 +1,6 @@
 <?php
 class MY_Model extends CI_Model {
-	
+
 	protected $_table_name = '';
 	protected $_primary_key = 'id';
 	protected $_primary_filter = 'intval';
@@ -8,11 +8,11 @@ class MY_Model extends CI_Model {
 	protected $is_dec_order = false;
 	public $rules = array();
 	protected $_timestamps = FALSE;
-	
+
 	function __construct() {
 		parent::__construct();
 	}
-	
+
 	public function array_from_post($fields){
 		$data = array();
 		foreach ($fields as $field) {
@@ -24,9 +24,9 @@ class MY_Model extends CI_Model {
 		}
 		return $data;
 	}
-	
+
 	public function get($id = NULL, $single = FALSE , $limit= null , $get_all = FALSE){
-		
+
 		if ($id != NULL) {
 			$filter = $this->_primary_filter;
 			$id = $filter($id);
@@ -46,8 +46,8 @@ class MY_Model extends CI_Model {
 		   	  $this->db->order_by($this->_order_by);
 		   }
 	   }
-	   // for pageing 
-	   if($this->input->get('page_size')!= null && $this->input->get('page_num') != null && !$get_all){ 
+	   // for pageing
+	   if($this->input->get('page_size')!= null && $this->input->get('page_num') != null && !$get_all){
 			$page_size = $this->input->get('page_size');
 			$page_num = $this->input->get('page_num');
 			$offset = $page_num * $page_size - $page_size;
@@ -58,14 +58,14 @@ class MY_Model extends CI_Model {
 	   	    return $this->db->get($this->_table_name , $limit)->$method();
 	   }
 	}
-	
+
 	public function get_by($where, $single = FALSE, $limit= null, $get_all = FALSE){
 		$this->db->where($where);
 		return $this->get(NULL, $single,$limit,$get_all);
 	}
-	
+
 	public function save($data, $id = NULL){
-		
+
 		// Set timestamps
 		if ($this->_timestamps == TRUE) {
 			$time_zone = new DateTime(null, new DateTimeZone('Asia/Damascus'));
@@ -76,7 +76,7 @@ class MY_Model extends CI_Model {
 				$data['modified_at'] = $now;
 			}
 		}
-		
+
 		// Insert
 		if ($id === NULL) {
 			!isset($data[$this->_primary_key]) || $data[$this->_primary_key] = NULL;
@@ -96,14 +96,14 @@ class MY_Model extends CI_Model {
 			   throw new Database_Exception();
 			}
 		}
-		
+
 		return $id;
 	}
-	
+
 	public function delete($id){
 		$filter = $this->_primary_filter;
 		$id = $filter($id);
-		
+
 		if (!$id) {
 			return FALSE;
 		}

@@ -327,12 +327,32 @@ var current_template;
       }
   }
 
+
+function getCategory(id) {
+  console.log('cc'+id);
+  var cdata;
+  var url_Category =  base_url + '/api/categories_control/get_nested_categories_from_id/format/json?category_id='+id;
+  console.log(url_Category);
+ $.ajax({
+   url: url_Category,
+   type: "get",
+   dataType: "json",
+   async:false,
+   success: function(response) {
+         cdata=response.data;
+      console.log('response'+response.data[12]);
+   }
+ });
+  return cdata;
+}
+
  function show_ad_details (ad_id , tamplate_id , from_reports) {
  	  $('.ads_details  #post_id').val(ad_id);
  	  $('.ads_details  #ad_details_template_id').val(tamplate_id);
  	  $('.slider_div').append('<div class="images-slider slick-slider"></div>');
  	  $('.ads_details  .template_info').css('display', 'none');
  	  var url_details =  base_url + '/admin/items_manage/get_item_details/format/json?ad_id='+ad_id+'&template_id='+tamplate_id;
+    console.log(url_details);
       $.ajax({
         url: url_details,
         type: "get",
@@ -400,6 +420,47 @@ var current_template;
 		        swipeToSlide: true,
 		        touchThreshold: 20
 		      });
+
+
+
+             $categories=getCategory($item_info['parent_category_id']);
+             console.log($categories);
+
+             $.each($categories, function(index, value) {
+               if (value.grandson_name != null) {
+                 name=value.category_name+' => '+value.sun_name+' => '+value.grandson_name;
+               } else {
+                 name=value.category_name+' => '+value.sun_name;
+               }
+               var category_id=(value.grandson_id)? value.grandson_id: value.sun_id;
+
+              if($item_info['category_id']  == category_id) {
+                    $('.ads_details #select_category').append($('<option/>', {
+                        value: category_id,
+                        text: name,
+                        selected : true,
+                      }));
+               } else {
+                 $('.ads_details #select_category').append($('<option/>', {
+                     value: category_id,
+                     text: name,
+                   }));
+               }
+
+                 // if($item_info['category_id']  == value.id){
+                 //     $('.ads_details #ad_input_location').append($('<option/>', {
+                 //         value: value.id,
+                 //         text: value.name,
+                 //         selected : true,
+                 //       }));
+                 //       $('.ads_details #ad_input_location').trigger('change');
+                 // }else{
+                 //     $('.ads_details #ad_input_location').append($('<option/>', {
+                 //         value: value.id,
+                 //         text: value.name,
+                 //       }));
+                 // }
+             });
 
             // fill deteilad basic info
             $('.ads_details  #ad_id').html($item_info['ad_id']);
@@ -635,6 +696,11 @@ var current_template;
       $('.editable_elem').css('display' , 'none');
       $('#edit_btn').css('display' ,'inline');
       $('#save_ad_edits_btn').css('display' , 'none');
+
+      $('.ads_details .category_div').css('display' , 'inline');
+      $('.ads_details .category_select_div').css('display' , 'none');
+      $('.ads_details  #select_category').html('');
+
  });
 
 
@@ -672,6 +738,11 @@ var current_template;
 	         $('.editable_elem.basics').css('display' , 'inline');
 	         $('#edit_btn').css('display' ,'none');
 	         $('#save_ad_edits_btn').css('display' , 'inline');
+
+           $('.category_div').css('display' , 'none');
+           $('.category_select_div').css('display' , 'inline');
+
+
         	//console.log(response.data);
             $item_info = response.data.info;
             //fill basic inputs
@@ -885,9 +956,15 @@ function save_ad_edits(){
  	var desc = $('#ad_input_description').val();
  	var city = $('#ad_input_city').val();
  	var location = $('#ad_input_location').val();
- 	console.log(location);
+  var category = $('#select_category').val();
+ console.log('category'+category);
  	var is_negotiable = $('#ad_input_negotiable').val();
  	var is_featuerd = $('#select_featured').val();
+
+  if(category != ''){
+     data['category'] = category;
+ }
+
  	if(price != ''){
  	    data['price'] = price;
  	}

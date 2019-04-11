@@ -1,13 +1,13 @@
-<?php 
+<?php
 class STATUS{
-	
+
 	const PENDING = 1;
 	const ACCEPTED = 2;
 	const EXPIRED = 3;
 	const HIDDEN = 4;
 	const REJECTED = 5;
 	const DELETED = 6;
-	
+
     public static function get_name($id , $lang)
 	{
 		if($lang == 'en'){
@@ -32,7 +32,7 @@ class STATUS{
 				break;
 			default :
 				return 'no net';
-			}	
+			}
 		}else{
 		  switch($id) {
 			case 1 :
@@ -58,14 +58,14 @@ class STATUS{
 			}
 		}
 	}
-	
+
 	public static function get_list($lang = 'en')
 	{
 		if($lang == 'en'){
 	      return array(
 			   1 => 'pending',
 			   2 => 'Accepted',
-			  // 3 => 'Expired',
+			   3 => 'Expired',
 			   4 => 'Hidden',
 			   5 => 'Rejected',
 			   6 => 'Deleted'
@@ -74,7 +74,7 @@ class STATUS{
 		  return array(
 			   1 => 'قيد الانتظار',
 			   2 => 'مقبول',
-			 //  3 => 'منتهي',
+			   3 => 'منتهي',
 			   4 => 'مخفي',
 			   5 => 'مرفوض',
 			   6 => 'محذوف'

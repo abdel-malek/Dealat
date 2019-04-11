@@ -6,7 +6,7 @@ class Categories extends MY_Model {
 	protected $_order_by = 'categories.parent_id ,	categories.queue ,categories.is_other, categories.category_id';
 	public $rules = array();
 
-	
+
 	public function get_nested($lang)
     {
         $this->db->select('categories.'.$lang.'_name as category_name , description,  categories.category_id , parent_id  , web_image, mobile_image , tamplate_id  , hidden_fields , count(ads_temp.ad_id) as ads_count');
@@ -15,17 +15,17 @@ class Categories extends MY_Model {
                          left join show_periods on ads.show_period = show_periods.show_period_id) as ads_temp" ,
                         "ads_temp.category_id = categories.category_id AND ads_temp.status = 2 AND (DATE_ADD(publish_date, INTERVAL days DAY) > NOW())" ,
                         "left outer" , false);
-        $this->db->where('is_active', 1); 
+        $this->db->where('is_active', 1);
         $this->db->group_by('categories.category_id');
         $this->db->where('is_active', 1);
         $this -> db -> order_by($this -> _order_by);
         $categories = $this -> db -> get('categories') -> result_array();
         // create an array to hold the references
         $refs = array();
-    
+
        // create an array to hold the root parents list
         $list = array();
-    
+
        // loop over the results
         foreach($categories as $data)
         {
@@ -45,13 +45,13 @@ class Categories extends MY_Model {
            // if there is no parent id
            if ($data['parent_id']== 0)
            {
-              $list[ $data['category_id'] ] = &$thisref; 
+              $list[ $data['category_id'] ] = &$thisref;
            }
            else
            {
               $refs[ $data['parent_id'] ]['children'][ ] = &$thisref;
            }
-        
+
        }
         $result_array = array();
         foreach ($list as $key => $value) {
@@ -68,11 +68,11 @@ class Categories extends MY_Model {
 					     left join show_periods on ads.show_period = show_periods.show_period_id) as ads_temp" ,
 					    "ads_temp.category_id = categories.category_id AND ads_temp.status = 2 AND (DATE_ADD(publish_date, INTERVAL days DAY) > NOW())" ,
 				        "left outer" , false);
-	   $this->db->where('is_active', 1); 
+	   $this->db->where('is_active', 1);
 	   $this->db->group_by('categories.category_id');
 	   return parent::get();
     }
-	
+
    public function get_main_categories($lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
@@ -85,7 +85,7 @@ class Categories extends MY_Model {
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
 		return parent::get_by(array('parent_id'=>0));
 	}
-	
+
    public function get_category_subcategories($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name , category_id , parent_id , web_image, mobile_image , tamplate_id , description , hidden_fields');
@@ -98,12 +98,12 @@ class Categories extends MY_Model {
 		}
 		return $array;
 	}
-	
+
 	// for manage
    public function get_subcats_with_parents($category_id , $lang)
 	{
 		$this->db->select('categories.'.$lang.'_name as category_name ,
-		                  p.'.$lang.'_name as parent_name , 
+		                  p.'.$lang.'_name as parent_name ,
 		                  categories.category_id , categories.parent_id , categories.web_image, categories.mobile_image ,
 		                  categories.tamplate_id , categories.description , categories.hidden_fields');
 		$this->db->join('categories as p' , 'categories.parent_id = p.category_id' , 'outer left');
@@ -116,7 +116,7 @@ class Categories extends MY_Model {
 		}
 		return $array;
 	}
-	
+
    public function create_category()
 	{
 	    $this -> db -> trans_start();
@@ -124,25 +124,25 @@ class Categories extends MY_Model {
 		//check if it is main category
 	    $parent_id = $this->input->post('parent_id');
 		if($parent_id != 0){ // not main category
-		  	// then check if it's parent have any ads 
+		  	// then check if it's parent have any ads
 		  	$has_ads = $this->ads->check_category_ads_existence_for_add($parent_id);
 			if($has_ads){
-			   // get the parent category info	
+			   // get the parent category info
 			   $parent_info = $this->get($parent_id);
 			   // create new category with the same name and the same info
 			   $data = array(
 			    'en_name' =>$parent_info->en_name,
-			    'ar_name' =>$parent_info->ar_name, 
-			    'tamplate_id'=>$parent_info->tamplate_id , 
+			    'ar_name' =>$parent_info->ar_name,
+			    'tamplate_id'=>$parent_info->tamplate_id ,
 			    'tamplate_name' => TAMPLATES::get_tamplate_name($parent_info->tamplate_id),
-			    'web_image' =>$parent_info->web_image, 
+			    'web_image' =>$parent_info->web_image,
 			    'mobile_image' =>$parent_info->mobile_image,
 			    'description' =>$parent_info->description,
 			    'queue' => $this->max_queue($parent_id)
 			   );
-			   
+
 			   $new_parent = $this->save($data);
-			   //change the current name to other and change the parent id to be the newly created category 
+			   //change the current name to other and change the parent id to be the newly created category
 			   $this->save(array('en_name'=>'Others', 'ar_name'=>'أخرى', 'parent_id'=>$new_parent), $parent_id);
 			   // and then create the wanted subcategory with parent id of the new parent created
 			   $parent_id = $new_parent;
@@ -166,7 +166,7 @@ class Categories extends MY_Model {
 	   	  $parent_info = parent::get($parent_id);
 	   	  $category_data['is_active'] = $parent_info->is_active;
 	   }
-	   // set the new category order. 
+	   // set the new category order.
 	   $new_subcategory = $this->save($category_data);
        $this -> db -> trans_complete();
 		if ($this -> db -> trans_status() === FALSE) {
@@ -188,7 +188,7 @@ class Categories extends MY_Model {
 	  	return 0;
 	  }
    }
-   
+
   public function get_nested_ids($category_id )
    {
        $this->db->select('categories.category_id as category_id , sun_cat.category_id as sun_id, sun_sun_cat.category_id as sun_sun_id');
@@ -208,27 +208,53 @@ class Categories extends MY_Model {
 	   }
        return $ids;
    }
-   
+
+	 public function get_nested_info($category_id )
+		{
+				$this->db->select('categories.en_name as category_name,categories.category_id as category_id , sun_cat.en_name as sun_name,sun_cat.category_id as sun_id , sun_sun_cat.en_name as grandson_name, sun_sun_cat.category_id as grandson_id');
+		 $this->db->join('categories as sun_cat' ,'sun_cat.parent_id = categories.category_id' , 'left outer');
+		 $this->db->join('categories as sun_sun_cat' ,'sun_sun_cat.parent_id = sun_cat.category_id' , 'left outer');
+		 $this->db->where('categories.category_id' , $category_id);
+		 $q =  $this->db->get('categories')->result();
+		 	// return $q;
+		 $ids = array();
+		 $ids[$category_id] = $category_id;
+	 		return $q;
+		 foreach ($q as $row) {
+				 if($row->sun_id != null){
+						$ids[$row->sun_id] = $row->sun_id;
+
+				 }
+				 if($row->grandson_id){
+						$ids[$row->grandson_id] = $row->grandson_id;
+
+				 }
+		 }
+				return $ids;
+		}
+
+
+
   public function diactivate($ids)
    {
 	  $this->db->set('is_active' , 0);
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->update('categories');
    }
-   
+
   public function activate($ids)
    {
 	  $this->db->set('is_active' , 1);
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->update('categories');
    }
-   
+
   public function delete_cats($ids)
    {
 	  $this->db->where_in('category_id' , $ids);
 	  return $this->db->delete('categories');
    }
-   
+
   public function update_queue($parent_id , $cats_queue)
    {
         $queue = 0;
@@ -239,11 +265,11 @@ class Categories extends MY_Model {
 	    }
         return $result;
    }
-   
+
   public function get_childs_only($lang)
    {
        $this->db->select('categories.'.$lang.'_name as category_name ,
-		                  parent_category.'.$lang.'_name as parent_name , 
+		                  parent_category.'.$lang.'_name as parent_name ,
 		                  categories.category_id , categories.parent_id , categories.web_image, categories.mobile_image ,
 		                  categories.tamplate_id , categories.description');
 	   $this->db-> join('categories as child_category' , 'child_category.parent_id = categories.category_id' , 'left outer');
@@ -253,11 +279,11 @@ class Categories extends MY_Model {
 	   $this->db->where('categories.is_active' , 1);
 	   return parent::get();
    }
-   
+
   public function get_category_name($cat_id , $lang)
    {
        $this->db->select('categories.'.$lang.'_name as category_name ,
-		                  parent_category.'.$lang.'_name as parent_name , 
+		                  parent_category.'.$lang.'_name as parent_name ,
 		                ');
 	   $this->db-> join('categories as parent_category' , 'categories.parent_id = parent_category.category_id' , 'left outer');
 	   $this->db->where('categories.category_id' , $cat_id);
@@ -273,11 +299,11 @@ class Categories extends MY_Model {
 	    if($res != null){
 			return $res->queue + 1;
 		}else{
-		    return 0;	
+		    return 0;
 		}
      //   return $res ? $res->queue : 0;
    }
-   
+
   public function get_counts_by_category()
    {
       // $this->db->select('count(ads.ad_id) as ads_count  , categories.category_id' );
@@ -288,16 +314,16 @@ class Categories extends MY_Model {
 	  $this->db->select('count(ads.ad_id) as ad_count , categories.category_id as category_id , sun_cat.category_id as sun_id, sun_sun_cat.category_id as sun_sun_id');
 	  $this->db->join('categories as sun_cat' ,'sun_cat.parent_id = categories.category_id' , 'left outer');
 	  $this->db->join('categories as sun_sun_cat' ,'sun_sun_cat.parent_id = sun_cat.category_id' , 'left outer');
-	  
-	  
-	   
+
+
+
    }
-   
+
   public function get_info($id)
   {
   	$this->db->select('*');
 	$this->db->from($this->_table_name);
 	$this->db->where('category_id' , $id);
-	return $this->db->get()->row(); 
+	return $this->db->get()->row();
   }
 }

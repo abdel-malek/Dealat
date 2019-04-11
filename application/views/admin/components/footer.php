@@ -116,6 +116,20 @@
   <!--  mustache  -->
   <script src="<?php echo base_url('assets/js/mustache.min.js'); ?>"></script>
 
+  <script type="text/javascript">
+  $('#comm_external').on('change', function() {
+
+         if (this.value ==1) {
+           $('#lableUrl').html('Ads ID');
+            $('#comm_url').attr("placeholder", "Add your ads id");
+         }else {
+           $('#lableUrl').html('Url');
+           $('#comm_url').attr("placeholder", "http://www.example.com");
+         }
+});
+
+  </script>
+
     <script>
        var lang_array=[];
        if(lang == 'en'){

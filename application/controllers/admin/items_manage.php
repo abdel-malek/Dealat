@@ -15,20 +15,20 @@ class Items_manage extends REST_Controller {
 		   $this -> data['current_lang'] = 'Arabic';
 		}
 	}
-	
+
 	public function index_get()
 	{
 		$this -> data['subview'] = 'admin/ads/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
-	
+
+
 	public function load_reported_items_page_get()
 	{
 		$this -> data['subview'] = 'admin/ads/reported_ads/index';
 		$this -> load -> view('admin/_main_layout', $this -> data);
 	}
-	
+
 	public function all_get()
 	{
 	   $filter_option = array();
@@ -48,7 +48,7 @@ class Items_manage extends REST_Controller {
 			if($row -> publish_date != null){
 			   $recorde[] = $row -> publish_date;
 			}else{
-			   $recorde[] = $this->lang->line('not_set'); 
+			   $recorde[] = $this->lang->line('not_set');
 			}
 			$recorde[] = number_format($row -> price, 0, '.', ',').' '.$this->lang->line('currency');
 			$recorde[] = $row -> city_name. ' - '.$row->location_name;
@@ -61,7 +61,7 @@ class Items_manage extends REST_Controller {
 		echo json_encode($output);
 	}
 
-   
+
    public function get_item_details_get()
     {
         $ad_id = $this->input->get('ad_id');
@@ -69,7 +69,7 @@ class Items_manage extends REST_Controller {
         $deatils = $this->ads->get_ad_details($ad_id , $this->data['lang'] , $tamplate_id);
         $this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
     }
-	
+
    public function get_data_lists_get()
 	{
 	     $this->load->model('data_sources/types');
@@ -94,7 +94,7 @@ class Items_manage extends REST_Controller {
 		 $data = array('info'=>$deatils ,'location' =>$locations ,'cities'=>$cities ,  'types' =>$types , 'educations' =>$educations , 'schedules'=>$schedules , 'show_periods'=>$show_periods , 'certificates'=>$certificates , 'states' => $property_states);
 		 $this -> response(array('status' => true, 'data' => $data, 'message' => ''));
 	}
-	
+
    public function get_all_reported_items_get()
 	{
 		$this->load->model('data_sources/reported_ads');
@@ -113,7 +113,7 @@ class Items_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
-	
+
     public function get_item_reports_get()
 	{
 		$this->load->model('data_sources/reported_ads');
@@ -133,24 +133,24 @@ class Items_manage extends REST_Controller {
 		}
 		echo json_encode($output);
 	}
-	
+
 	public function set_reports_to_seen_post()
 	{
 	   $this->load->model('data_sources/reported_ads');
 	   $this->reported_ads->set_to_seen();
 	   $this -> response(array('status' => true, 'data' =>'', 'message' => $this->lang->line('sucess')));
 	}
-	
-	
+
+
    public function get_not_seen_reported_get()
     {
       $this->load->model('data_sources/reported_ads');
 	  $ads = $this->reported_ads->get_not_seen();
-	  // set to seen 
+	  // set to seen
 	  $this->reported_ads->set_to_seen();
 	  $this -> response(array('status' => true, 'data' =>$ads, 'message' => $this->lang->line('sucess')));
     }
-	
+
 	public function send_email_post()
 	{
 		$res = $this->ads->send_pending_email();
@@ -160,7 +160,7 @@ class Items_manage extends REST_Controller {
 			 $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
 	}
-	
+
     public function action_post()
 	{
 		$this->load->model('notification');
@@ -181,7 +181,7 @@ class Items_manage extends REST_Controller {
 			}
 			if($action == 'accept'){
 				if(!$this->input->post('publish_date')){
-				  throw new Parent_Exception('you have to provide a publish date');	
+				  throw new Parent_Exception('you have to provide a publish date');
 				}else{
 				   $ad_info = $this->ads->get_info($ad_id , $this->data['lang']);
 				   $data['is_featured'] = $this->input->post('is_featured');
@@ -222,11 +222,11 @@ class Items_manage extends REST_Controller {
 		    	$template_id = $this->input->post('template_id');
 				$result = $this->ads->delete_an_ad($ad_id , $template_id);
 				if(!$result){
-					 throw new Parent_Exception('Some thing wrong'); 	 
+					 throw new Parent_Exception('Some thing wrong');
 				}
 			    $this->admin_actions_log->add_log($this->current_user->user_id , LOG_ACTIONS::DELETE_AD , $ad_id);
 			}else{
-			   throw new Parent_Exception('No Such action'); 	
+			   throw new Parent_Exception('No Such action');
 			}
 		  $this -> response(array('status' => true, 'data' => '', 'message' => $this->lang->line('sucess')));
 		}
