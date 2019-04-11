@@ -46,6 +46,7 @@ pod 'ActiveLabel'
 pod 'Lightbox'
 #pod 'Emoji-swift'
 pod 'Hue'
+pod 'EggRating'
 
 
 pod 'AttributedTextView'#, '~> 1.1.0'

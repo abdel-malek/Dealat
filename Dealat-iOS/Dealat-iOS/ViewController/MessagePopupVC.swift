@@ -2,7 +2,7 @@
 //  MessagePopupVC.swift
 //  Dealat-iOS
 //
-//  Created by iOS Developer on 12/18/18.
+//  Created by Yahya Tabba on 12/18/18.
 //  Copyright © 2018 Tradinos UG. All rights reserved.
 //
 

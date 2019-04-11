@@ -207,7 +207,6 @@ class PushManager{
         }
         
         print("false")
-
     }
 
     

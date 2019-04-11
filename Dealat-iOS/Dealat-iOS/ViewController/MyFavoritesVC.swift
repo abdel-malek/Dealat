@@ -108,6 +108,7 @@ class MyFavoritesVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AdCell
+        cell.parentVC = self
             cell.ad = self.ads[indexPath.row]
         
         //check if it is the last item at the list

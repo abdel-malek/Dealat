@@ -73,6 +73,9 @@ class VerificationVC: BaseVC {
                 }))
                 self.present(alert, animated: true, completion: nil)
             }else{
+                let me = User.getCurrentUser()
+                me.isFirst = true
+                User.saveMe(me: me)
                 self.sendVerificationCode(code: code, is_multi: 0)
             }
         }

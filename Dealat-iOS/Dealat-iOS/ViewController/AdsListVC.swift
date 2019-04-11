@@ -366,6 +366,7 @@ extension AdsListVC : UICollectionViewDelegate, UICollectionViewDataSource,UICol
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! AdCell
+            cell.parentVC = self
             
             //check if it is the last item at the list
             if(indexPath.row == self.ads.count - 1)

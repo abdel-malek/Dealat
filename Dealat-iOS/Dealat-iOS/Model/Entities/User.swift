@@ -31,6 +31,9 @@ class User : NSObject, NSCoding{
     var birthday : String!
     var user_gender : Int!
     var visible_phone : Int!
+    var msg : String!
+    var isFirst : Bool = false
+
     
     //MARK: Local data
     var statues_key: String? = USER_STATUES.NEW_USER.rawValue
@@ -95,6 +98,7 @@ class User : NSObject, NSCoding{
         self.birthday = decoder.decodeObject(forKey: "birthday") as? String
         self.user_gender = decoder.decodeObject(forKey: "user_gender") as? Int
         self.visible_phone = decoder.decodeObject(forKey: "visible_phone") as? Int
+        self.msg = decoder.decodeObject(forKey: "msg") as? String
     }
     
     
@@ -119,6 +123,7 @@ class User : NSObject, NSCoding{
         coder.encode(birthday, forKey: "birthday")
         coder.encode(user_gender, forKey: "user_gender")
         coder.encode(visible_phone, forKey: "visible_phone")
+        coder.encode(msg, forKey: "msg")
     }
     
     
@@ -137,6 +142,8 @@ class User : NSObject, NSCoding{
         me.password =  dic["password"] as? String
         me.name =  dic["name"] as? String
         me.phone =  dic["phone"] as? String
+        me.msg = dic["msg"] as? String
+        
         if let x = dic["city_id"] as? String, let i = Int(x){
             me.city_id = i
         }

@@ -15,6 +15,8 @@ import UserNotifications
 import SwiftyJSON
 import Fabric
 import Crashlytics
+import StoreKit
+import EggRating
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,6 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupNotification(application)
         
         Fabric.with([Crashlytics.self])
+        
+        
+        //TODO IMP
+//        EggRating.debugMode = true
+//        EggRating.itunesId = "1397149787"
+
         
         return true
     }
@@ -270,7 +278,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                 }
             }catch let err{ print("ERROR: \(err.localizedDescription)")}
 
-        print("isHere :\(isHere) - \(userInfo["gcm.message_id"] as! String)")
+        print("isHere :\(isHere) - \(userInfo["gcm.message_id"] as? String)")
         
         if isHere{
             

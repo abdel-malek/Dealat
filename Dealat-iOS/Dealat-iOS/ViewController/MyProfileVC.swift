@@ -9,6 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import KSToastView
+import UserNotifications
 
 class MyProfileVC: ButtonBarPagerTabStripViewController {
 

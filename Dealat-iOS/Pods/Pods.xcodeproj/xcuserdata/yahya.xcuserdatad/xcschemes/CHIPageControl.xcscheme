@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E7C5CA40470B81FA510AF37B6E1D392D"
+               BlueprintIdentifier = "0BF49C8E48CF341EB47009819C44D532"
                BlueprintName = "CHIPageControl"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "CHIPageControl.framework">

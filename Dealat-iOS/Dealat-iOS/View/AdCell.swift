@@ -19,8 +19,11 @@ class AdCell : UICollectionViewCell{
     @IBOutlet weak var expiry_date : UILabel!
     @IBOutlet weak var featuredImg : UIImageView!
 
-    
+    @IBOutlet weak var shareVV : UIView!
+
     @IBOutlet weak var imgStatus : UIImageView!
+    
+    var parentVC : BaseVC?
 
     
     var ad : AD!{
@@ -85,6 +88,23 @@ class AdCell : UICollectionViewCell{
             }
             
         }
+    }
+    
+    
+    @objc func shareAd(){
+        guard let url = URL.init(string: Communication.shared.baseImgsURL + "index.php/home_control/load_ad_details?ad_id=\(self.ad.ad_id.stringValue)") else{
+            return
+        }
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [ ]
+        self.parentVC?.present(activityViewController, animated: false, completion: nil)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.shareVV.isUserInteractionEnabled = true
+        self.shareVV.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.shareAd)))
     }
     
     

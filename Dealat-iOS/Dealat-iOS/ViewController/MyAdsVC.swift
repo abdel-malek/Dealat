@@ -178,6 +178,7 @@ class MyAdsVC: BaseVC,UICollectionViewDelegate,UICollectionViewDataSource,UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AdCell
+        cell.parentVC = self
         cell.ad = self.ads[indexPath.row]
         cell.fromMyAds = true
         

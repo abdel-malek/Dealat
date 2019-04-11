@@ -143,6 +143,14 @@ class SideMenuVC: BaseVC {
                 self.homeVC.navigationController?.pushViewController(vc, animated: true)
             }
 
+            if i.tag == 12{
+                guard let url = URL.init(string: Communication.shared.baseImgsURL) else{
+                    return
+                }
+                let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                activityViewController.excludedActivityTypes = [ ]
+                self.homeVC?.present(activityViewController, animated: false, completion: nil)
+            }
             
             
             // CHANGE LANGUAGE

@@ -258,7 +258,7 @@ class AdDetailsVC: BaseTVC, UICollectionViewDelegate,UICollectionViewDataSource,
         }
         
         var number = ""
-        let n = 5 - self.ad.ad_id.stringValue.count
+        let n : Int = 5 - (self.ad.ad_id.string?.count ?? 0)
         for _ in 0..<n{
             number += "0"
         }

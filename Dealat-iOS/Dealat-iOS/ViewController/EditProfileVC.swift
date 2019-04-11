@@ -12,6 +12,7 @@ import SwiftyJSON
 import Alamofire
 import DatePickerDialog
 import AFDateHelper
+import UserNotifications
 
 
 class EditProfileVC: BaseVC {
@@ -291,6 +292,33 @@ class EditProfileVC: BaseVC {
                                     me.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
                                     User.saveMe(me: me)
                                     AppDelegate.setupViews()
+                                    
+                                    //WELCOME MESSAGE
+                                    if me.isFirst{
+                                        if #available(iOS 10.0, *) {
+                                            let center = UNUserNotificationCenter.current()
+                                            let content = UNMutableNotificationContent.init()
+                                            content.title = "Dealat"
+                                            content.body = me.msg
+                                            content.sound = UNNotificationSound.default
+                                            let date = Date.init(timeIntervalSinceNow: 1)
+                                            let triggerOnce = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
+                                            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerOnce, repeats: false)
+                                            let identifier = "user_welcome_\(me.server_key ?? "22")"
+                                            let request = UNNotificationRequest(identifier: identifier,
+                                                                                content: content, trigger: trigger)
+                                            center.add(request, withCompletionHandler: { (err) in
+                                                if let error = err {
+                                                    print(error)
+                                                }
+                                                let me = User.getCurrentUser()
+                                                me.isFirst = false
+                                                User.saveMe(me: me)
+                                            })
+                                        }
+                                    }
+                                    //----------
+                                    
                                 }
                                     
                                     

@@ -57,7 +57,21 @@ class AdDetailsBaseVC: UIViewController {
         self.navigationItem.hidesBackButton = false
         let rr = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action:nil)
         self.navigationItem.backBarButtonItem = rr
+        
+        
+        let shareBtn = UIBarButtonItem.init(image: #imageLiteral(resourceName: "share-over-image"), style: .plain, target: self, action: #selector(self.shareAd))
+        self.navigationItem.rightBarButtonItem = shareBtn
     }
+    
+    @objc func shareAd(){
+        guard let url = URL.init(string: Communication.shared.baseImgsURL + "index.php/home_control/load_ad_details?ad_id=\(self.ad.ad_id.stringValue)") else{
+            return
+        }
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [ ]
+        self.present(activityViewController, animated: false, completion: nil)
+    }
+    
     
     @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
         print("unwindToVC1")

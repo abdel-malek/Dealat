@@ -10,6 +10,8 @@ import UIKit
 import SideMenu
 import CHIPageControl
 import Crashlytics
+import EggRating
+import StoreKit
 
 class HomeVC: BaseVC {
     
@@ -85,8 +87,31 @@ class HomeVC: BaseVC {
         
         self.setupFilterButton()
         
+        setupRate()
+        
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Filter".localized, style: .plain, target: self, action: #selector(goToFilter))
         
+    }
+    
+    
+    func setupRate(){
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            if let start_date = UserDefaults.standard.value(forKey: "start_date_\(version)") as? Date{
+                
+                if let _ = UserDefaults.standard.value(forKey: "is_rated_\(version)") as? Bool{
+                }else if start_date.compare(with: Date(), only: Calendar.Component.day) >= 10{
+                    UserDefaults.standard.set(true, forKey: "is_rated_\(version)")
+                    
+                    if #available(iOS 10.3, *) {
+                        SKStoreReviewController.requestReview()
+                    }else{
+                        EggRating.promptRateUs(in: self)
+                    }
+                }
+            }else{
+                UserDefaults.standard.set(Date(), forKey: "start_date_\(version)")
+            }
+        }
     }
     
     func setupFilterButton(){

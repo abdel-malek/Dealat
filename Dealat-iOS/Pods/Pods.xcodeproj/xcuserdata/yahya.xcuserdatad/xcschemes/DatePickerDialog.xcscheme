@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "69A6F57798E3BF12E1D3CF9DEFE50455"
+               BlueprintIdentifier = "0CAAA70A173676E59B684878DB8BB639"
                BlueprintName = "DatePickerDialog"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "DatePickerDialog.framework">

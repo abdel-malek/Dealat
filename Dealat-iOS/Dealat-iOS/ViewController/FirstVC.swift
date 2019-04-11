@@ -84,12 +84,12 @@ class FirstVC: UIViewController {
     
     func setDefault(_ urlString : String, img : String! = nil) {
         
-        Communication.shared.baseImgsURL = "\(urlString)/"
-        Communication.shared.baseURL = "\(urlString)/" + "index.php/api"
+//        Communication.shared.baseImgsURL = "\(urlString)/"
+//        Communication.shared.baseURL = "\(urlString)/" + "index.php/api"
         
         //TODO IMPORTNANT
-        Communication.shared.baseImgsURL = "http://192.168.9.177/tradinos/Dealat/"
-        Communication.shared.baseURL = "http://192.168.9.177/tradinos/Dealat/index.php/api"
+        Communication.shared.baseImgsURL = "http://192.168.9.161/tradinos/Dealat/"
+        Communication.shared.baseURL = "http://192.168.9.161/tradinos/Dealat/index.php/api"
         
         if let imgString = img,let url = URL.init(string: imgString){
             

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "77C36D6D9ED175C0126E2FB753CC136A"
+               BlueprintIdentifier = "F9BFD3FE1F9A4F7992230E0D081173D3"
                BlueprintName = "Hue"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Hue.framework">
