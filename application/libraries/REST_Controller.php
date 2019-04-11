@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * A fully RESTful server implementation for CodeIgniter using one library, one config file and one controller.
  *
  * @package        	CodeIgniter
- * 
+ *
  * @subpackage    	Libraries
  * @category    	Libraries
  * @author        	Phil Sturgeon, Chris Kacerguis
@@ -190,7 +190,7 @@ abstract class REST_Controller extends CI_Controller {
      * Developers can extend this class and add a check in here.
      */
     protected function early_checks() {
-        
+
     }
 
     /**
@@ -291,7 +291,7 @@ abstract class REST_Controller extends CI_Controller {
 		$this->response->is_auth = $this->_detect_auth();
         $this->load->language(array('controllers', 'views','form_validation'),  $this->response->lang);
 
-	    
+
         $this->rest = new StdClass();
         // Load DB if its enabled
         if (config_item('rest_database_group') AND ( config_item('rest_enable_keys') OR config_item('rest_enable_logging'))) {
@@ -312,10 +312,10 @@ abstract class REST_Controller extends CI_Controller {
         if (!$this->input->is_ajax_request() AND config_item('rest_ajax_only')) {
             $this->response(array('status' => false, 'error' => 'Only AJAX requests are accepted.'), 505);
         }
-       
+
 	   // call remote services
-	   
-	   //load meta data 
+
+	   //load meta data
 	   $this->load->model('data_sources/about_info');
 	   $info = $this->about_info->get(null, true , 1 , true); // the last true for get_all
 	   $this->data['meta_description'] = $info->meta_description;
@@ -445,14 +445,14 @@ abstract class REST_Controller extends CI_Controller {
      */
     public function response($data = null, $http_code = 200, $view = null) {
         global $CFG;
-		
+
 		// by ola
         //set headers to NOT cache a page
 		 header("Cache-Control: no-cache, must-revalidate"); //HTTP 1.1
 		 header("Pragma: no-cache"); //HTTP 1.0
 	     header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-	     
-	     
+
+
         // If data is NULL and not code provide, error and bail
         if ($data === NULL && $http_code === null) {
             $http_code = 404;
@@ -492,7 +492,7 @@ abstract class REST_Controller extends CI_Controller {
                 // Set the correct format header
                 header('Content-Type: ' . $this->_supported_formats[$this->response->format]);
 
-//                if($status) { 
+//                if($status) {
 //                    if ($this->response->format == "html" && @file_exists(APPPATH . "views/" . $data_keys[0] . ".php")) {
 //                        $data_keys = array_keys($data);
 //                        $data['user'] = $this->current_user;
@@ -731,7 +731,7 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @return null|string The language code.
      */
-	
+
 	protected function _detect_lang() {
         $header = $this->input->request_headers();
         if (isset($header['Lang'])) {
@@ -744,7 +744,7 @@ abstract class REST_Controller extends CI_Controller {
         }
         return $this->session->userdata('language');
    }
-	
+
   protected function _detect_city() {
         $header = $this->input->request_headers();
         if (isset($header['City'])) {
@@ -757,10 +757,10 @@ abstract class REST_Controller extends CI_Controller {
         }
 		//print_r($this->session->userdata);
         return $this->session->userdata('city');
-		
+
    }
-  
-    
+
+
    protected function _detect_os() {
         $header = $this->input->request_headers();
         if (isset($header['Os'])) {
@@ -782,8 +782,8 @@ abstract class REST_Controller extends CI_Controller {
             return $header['Version'];
         }
         if (!$this->session->userdata('Version')) {
-            $this->session->set_userdata(array('version' => '1.0'));
-            return '1.0';
+            $this->session->set_userdata(array('version' => '0'));
+            return '0';
         }
         return $this->session->userdata('version');
    }
@@ -800,14 +800,14 @@ abstract class REST_Controller extends CI_Controller {
         }
         return $this->session->userdata('build');
    }
-	
+
    protected function _detect_auth() {
         $header = $this->input->request_headers();
 		//dump($header);
 	    if (isset($header['Authorization'])) {
 		     $this->_prepare_basic_auth();
 	         if(isset($this->current_user) && $this->current_user != null){
-	           return $this->current_user->user_id;	
+	           return $this->current_user->user_id;
 	         }else{
 	           return false;
 	         }
@@ -1277,7 +1277,7 @@ abstract class REST_Controller extends CI_Controller {
             return false;
         }
 		//check user's account type (mobile ,web , both)
-		$user_type; 
+		$user_type;
 		$header = $this->input->request_headers();
 	    if (isset($header['Api-call']) && $header['Api-call'] == 1) {
             $user_type = ACCOUNT_TYPE::MOBILE;
@@ -1494,7 +1494,7 @@ abstract class REST_Controller extends CI_Controller {
         // When there is no specific override for the current class/method, use the default auth value set in the config
         if ($this->auth_override !== TRUE) {
             if ($this->response->format == "html"){
-                redirect(site_url('home_control')); //login	
+                redirect(site_url('home_control')); //login
             }
             else {
                 $this->response(array('message' => 'Not authorized', 'status' => false, 'mode' => 'full_page') , 403);

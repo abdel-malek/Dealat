@@ -133,13 +133,11 @@ class Items_control extends REST_Controller {
 			if(floatval($this->data['version']) >= 1.2){
         	   $deatils->views_num = null;
       }
-			if( $this->data['version'] <= '1.3'){
+			// var_dump( $this->data['version']);
+			if( $this->data['version'] <= '1.3' &&  $this->data['version'] !=0){
 
 
  				$deatils->is_featured  = ($deatils->is_featured >=1) ? 1 : 0 ;
-
- 		 
-
 
 			}
 			$this->response(array('status' => true, 'data' =>$deatils, 'message' => ''));
@@ -161,7 +159,7 @@ class Items_control extends REST_Controller {
 		}else {
 		   $title = $this->input->post('title');
 		   $description = $this->input->post('description');
-		   if($this->data['version'] < '1.3'){
+		   if($this->data['version'] < '1.3' &&  $this->data['version'] !=0){
 		   		// remove all emojies short names.
 			   $this->load->helper('emojies');
 			   $emojies_array = Eomjies::emojies_array();
@@ -319,9 +317,9 @@ class Items_control extends REST_Controller {
 			$data['commercials'] = $commercials;
 		}
 		// for old versions  $this->data['version'] == '1.0'
-        if( $this->data['version'] <= '1.3'){
+        if( $this->data['version'] <= '1.3' &&  $this->data['version'] !=0){
 
-				 	if ($this->data['version'] == '1.1') {
+				 	if ($this->data['version'] == '1.1' ) {
 				 			 $data =$data['ads'];
 							 foreach ($data as $key => $value) {
 								$value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
