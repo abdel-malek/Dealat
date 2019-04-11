@@ -29,7 +29,7 @@ class Items_control extends REST_Controller {
 		 $this->load->model('notification');
 		 	$this->load->model('data_sources/users');
 
-		$ads_list = $this->ads->get_latest_ads($this->data['lang']);
+		$ads_list = $this->ads->get_latest_ads_all($this->data['lang']);
 		foreach ($ads_list as $key => $value) {
 			$value->end_date=date('Y-m-d', strtotime($value->publish_date. ' + '.$value->days.' day'));
 			$str=strtotime(date("Y-m-d"))-strtotime($value->end_date);
@@ -46,7 +46,7 @@ class Items_control extends REST_Controller {
 						$data['expire']=1;
 						     $edit_result = $this->ads->update($data , $value->ad_id);
 
-				    $this->notification->send_notification($value->user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
+				   // $this->notification->send_notification($value->user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
 				}
 
 		}
@@ -135,10 +135,10 @@ class Items_control extends REST_Controller {
       }
 			if( $this->data['version'] <= '1.3'){
 
-				foreach ($data as $key => $value) {
- 				$value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;
 
- 			}
+ 				$deatils->is_featured  = ($deatils->is_featured >=1) ? 1 : 0 ;
+
+ 		 
 
 
 			}
