@@ -31,9 +31,13 @@ class Items_control extends REST_Controller {
 
 		$ads_list = $this->ads->get_latest_ads_all($this->data['lang']);
 		foreach ($ads_list as $key => $value) {
-			$value->end_date=date('Y-m-d', strtotime($value->publish_date. ' + '.$value->days.' day'));
-			$str=strtotime(date("Y-m-d"))-strtotime($value->end_date);
-			$value->exper_in=floor($str/3600/24);
+			$value->end_date=date('Y-m-d H:i:s', strtotime($value->publish_date. ' + '.$value->days.' day'));
+			$dteStart = new DateTime(date("Y-m-d H:i:s"));
+			$dteEnd=	new DateTime($value->end_date);
+			 $dteDiff =$dteStart->diff($dteEnd);
+			// $str=strtotime(date("Y-m-d H"))-strtotime($value->end_date);
+			// $value->exper_in=floor($str/3600/24);
+			$value->exper_in=$dteDiff->format("%d")*24+$dteDiff->format("%H");
 			$user_info = $this->users->get_user_info($this->data['lang'] , $value->user_id );
 		 	$title=$value->title;
 			$text = (	$user_info->lang=='en') ? 'Sorry, your ad will expire within 24 hours' : 'عذرًا ، سوف تنتهي صلاحية إعلانك خلال 24 ساعة' ;
@@ -41,12 +45,15 @@ class Items_control extends REST_Controller {
 			  // $data = (array) $value;
 		     $data = array();
 
-				if ($value->exper_in==-1) {
+				if ($value->exper_in==0) {
 					    $value->expire = 1 ;
 						$data['expire']=1;
 						     $edit_result = $this->ads->update($data , $value->ad_id);
 
 				   // $this->notification->send_notification($value->user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
+				}
+				if ($value->exper_in==24) {
+					$this->notification->send_notification($value->user_id , $text , null , $title ,  NotificationHelper::ADMIN_TO_USER);
 				}
 
 		}
@@ -78,7 +85,7 @@ class Items_control extends REST_Controller {
 			$data['commercials'] = $commercials;
 		}
         // for old versions
-				if( $this->data['version'] <= '1.3'){
+				if( $this->data['version'] <= '1.3' &&  $this->data['version'] !=0){
 					 $data = $ads_list;
 					 foreach ($data as $key => $value) {
 						 $value->is_featured  = ($value->is_featured >=1) ? 1 : 0 ;

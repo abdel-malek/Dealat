@@ -144,6 +144,8 @@ $lang['status'] = "Ad Status";
 $lang['all'] = "All";
 $lang['created_at'] = "Created at";
 $lang['tamplate_name'] = 'Template';
+$lang['expire'] = 'Expired';
+
 $lang['title'] = 'Title';
 $lang['publish_date'] = 'Publish Date';
 $lang['price'] = 'Price (SP)';

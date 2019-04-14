@@ -33,11 +33,36 @@ class Ads extends MY_Model {
 		$this->db->where('users.is_active' , 1);
 		$this->db->where('categories.is_active' , 1);
 		$this->db->where('categories.is_deleted' , 0);
-        $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
-        $q = parent::get(null , false, 12);
+    $this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
+    $q = parent::get(null , false, 12);
 		return $q;
 	 }
 
+	 public function get_latest_ads_all($lang)
+ 	 {
+ 		$this->db->select('ads.* ,
+ 		                  categories.'.$lang.'_name as category_name ,
+ 		                  categories.tamplate_id,
+ 		                  c.'.$lang.'_name as parent_category_name ,
+ 		                  locations.'.$lang.'_name as location_name ,
+ 		                  cites.'.$lang.'_name as  city_name,
+ 		                  show_periods.days
+ 		                 ');
+ 		$this->db->join('categories' , 'ads.category_id = categories.category_id' , 'left');
+     	$this->db->join('categories as c' , 'c.category_id = categories.parent_id' , 'left outer');
+ 	    $this->db->join('locations' , 'ads.location_id = locations.location_id' , 'left outer');
+ 		$this->db->join('cites', 'ads.city_id = cites.city_id', 'left');
+ 		$this->db->join('show_periods', 'ads.show_period = show_periods.show_period_id', 'left outer');
+ 		$this->db->join('users', 'ads.user_id = users.user_id', 'left');
+ 		$this->db->where('status' , STATUS::ACCEPTED);
+ 		$this->db->where('users.is_deleted' , 0);
+ 		$this->db->where('users.is_active' , 1);
+ 		$this->db->where('categories.is_active' , 1);
+ 		$this->db->where('categories.is_deleted' , 0);
+     $this->db->where('(DATE_ADD(DATE_ADD(publish_date, INTERVAL days DAY), INTERVAL HOUR(publish_date) HOUR)  > NOW())');
+     $q = parent::get(null , false, null);
+ 		return $q;
+ 	 }
    public function get_ads_by_category($main_category_id , $lang)
 	 {
 	    $this->db->select('ads.* ,
@@ -61,6 +86,7 @@ class Ads extends MY_Model {
 		$this->db->where('categories.is_deleted' , 0);
     	$this->db->where('(DATE_ADD(publish_date, INTERVAL days DAY) > NOW())');
 		$this->db->where("(categories.category_id = '$main_category_id' OR categories.parent_id = '$main_category_id' OR c.parent_id = '$main_category_id')");
+		$this->db->order_by('is_featured', 'DESC');
 		$q = parent::get();
 		return $q;
 	 }
@@ -345,7 +371,7 @@ class Ads extends MY_Model {
   {
 
     return	parent::save($data,$ad_id);
-	
+
   }
 
   public function edit($ad_id , $category_id , $from_admin = 0)

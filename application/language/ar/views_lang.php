@@ -145,6 +145,7 @@ $lang['status'] = "حالة الإعلان";
 $lang['all'] = "الكل";
 $lang['created_at'] = "تاريخ الإنشاء";
 $lang['tamplate_name'] = 'القالب';
+$lang['expire'] = 'منتهي الصلاحية';
 $lang['publish_date'] = 'تاريخ النشر';
 $lang['title'] = 'العنوان';
 $lang['price'] = 'السعر (ل.س)';

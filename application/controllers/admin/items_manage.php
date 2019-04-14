@@ -38,6 +38,8 @@ class Items_manage extends REST_Controller {
 	   $ads = $this->ads->get_all_ads_with_details($this->data['lang']);
 	   $output = array("aaData" => array());
 		foreach ($ads as $row) {
+			$expire = ($row ->expire ==1) ? STATUS::get_name('3' , $this->data['lang']) : 'Not yet' ;
+
 			$recorde = array();
 			$recorde[] = $row -> ad_id;
 			$recorde[] = $row -> created_at;
@@ -54,6 +56,7 @@ class Items_manage extends REST_Controller {
 			$recorde[] = $row -> city_name. ' - '.$row->location_name;
 			$recorde[] = STATUS::get_name($row -> status  , $this->data['lang']);
 			$recorde[] = EDIT_STATUS::get_edit_status_name($row->edit_status , $this->data['lang']);
+			$recorde[] = $expire;
 			$recorde[] = $row -> tamplate_id;
 		//	$recorde[] = $row -> tamplate_id .''.$row->expired_after;
 			$output['aaData'][] = $recorde;

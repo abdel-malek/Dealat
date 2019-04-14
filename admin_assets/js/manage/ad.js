@@ -7,7 +7,7 @@ var user_ad_val = $("#user_ad_select").val();
 var user_ad_name = $("#user_ad_select").find("option:selected").text();
 var templates_attrs;
 var status_array;
-var ACCEPTED = 2 , PENDING = 1 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
+var ACCEPTED = 2 , PENDING = 1 ,EXPIRED = 3 , HIDDEN = 4 , REJECTED = 5 , DELETED = 6;
 var status_array_for_label;
 var edit_status_array;
 var current_pending_count = 0;
