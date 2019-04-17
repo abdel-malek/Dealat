@@ -117,9 +117,10 @@ public function increment_clicks_get(){
 	  if($this->input->post('category_id')){
 	  	 $data['category_id'] = $this->input->post('category_id');
 	  }
-		if($this->input->post('external')){
+		if(isset($_POST['external'])){
 			$data['external'] = $this->input->post('external');
 	 }
+	  // var_dump($data['external']);var_dump($this->input->post('external'));die();
 	  $cities = $this->input->post('city_id');
 	  if($comm_id == 0){ // add
 	     if(!$this->input->post('image')){
