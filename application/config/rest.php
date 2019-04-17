@@ -225,6 +225,8 @@ $config['auth_override_class_method']['commercial_items_control']['get_commercia
 $config['auth_override_class_method']['commercial_items_control']['increment_clicks'] = 'none';
 $config['auth_override_class_method']['items_control']['get_data'] = 'none';
 $config['auth_override_class_method']['items_control']['action'] = 'none';
+$config['auth_override_class_method']['items_control']['expired_ads'] = 'none';
+
 $config['auth_override_class_method']['data_control']['get_type_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_type_model_info'] = 'none';
 $config['auth_override_class_method']['data_control']['get_education_info'] = 'none';

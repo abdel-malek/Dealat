@@ -61,10 +61,27 @@ class Items_control extends REST_Controller {
 	 	$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
 	}
 
-	public function expiryDate()
+	public function expired_ads_get()
 	{
+		$this->load->model('data_sources/users');
 
+	$ads_list = $this->ads->get_all_ads_with_details($this->data['lang']);
+	foreach ($ads_list as $key => $value) {
+		 
+		$data = array();
+
+	 if ($value->expired_after < 0) {
+
+			 $data['expire']=1;
+						$edit_result = $this->ads->update($data , $value->ad_id);
+	 }
 	}
+
+	$this->response(array('status' => true, 'data' =>$ads_list, 'message' => ''));
+}
+
+
+
 
 	public function get_latest_items_get()
 	{
