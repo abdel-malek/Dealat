@@ -241,6 +241,9 @@ function show_comm_ad_modal (id , is_main) {
       });
    }else{  // add
    	 var current_pos = $('#comm_position').val();
+     $("#comm_external option[value=1]").attr('selected', 'selected');
+     $('#lableUrl').html('Url');
+     $('#comm_url').attr("placeholder", "http://www.example.com");
    	 $('#label'+current_pos).css('display' , 'inline');
    }
    //show the delete btn
