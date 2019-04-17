@@ -475,3 +475,4 @@ $lang['clicks_num'] = 'Clicks';
 $lang['is_blocked'] = 'Blocked';
 $lang['not_blocked'] = 'Not blocked';
 $lang['all_features_list'] = 'All features list';
+$lang['is_blocked_msg'] = 'Sorry your account blocked';

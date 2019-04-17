@@ -466,3 +466,4 @@ $lang['External'] = 'خارجي';
 $lang['clicks_num'] = 'ضغطات';
 $lang['is_blocked'] = 'محجوب';
 $lang['not_blocked'] = 'غير محجوب';
+$lang['is_blocked_msg'] = 'عذرا حسابك محظور';

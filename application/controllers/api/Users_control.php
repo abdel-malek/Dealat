@@ -40,7 +40,10 @@ class Users_control extends REST_Controller {
             $user = $this->users->register($data ,ACCOUNT_TYPE::MOBILE);
 
 			if($user != null){
+				if ($user->is_blocked==1) {
+					$this->response(array('status' => false, 'data' => $user, "message" => $this->lang->line('is_blocked_msg')));
 
+				}
 				$msg_en='Congratulation '.$user->name.' you have been registered successfully in dealat app.';
 				$msg_ar=' تهانينا '.$user->name.' لقد تم إنشاء حسابك على تطبيق ديلات ';
 				$msg = ($user->lang=='en') ? $msg_en : $msg_ar ;
