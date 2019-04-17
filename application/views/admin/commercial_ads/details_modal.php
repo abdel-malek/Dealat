@@ -52,10 +52,12 @@
 	      	         <label style="display: none" class='image_ration_note'  id="label2"> <?php echo $this->lang->line('expected_ratio_main_banner') ?></label>
 	      	         <label style="display: none" class='image_ration_note'  id="label3"> <?php echo $this->lang->line('expected_ratio_slider') ?></label>
 	               </div>
+
+
                  <div class="form-group">
                    <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('External') ?></label>
-                   <div class="col-md-6 col-sm-6 col-xs-12 fit_select_div">
-                         <select class="form-control select2_single" id="comm_external" tabindex="-1" >
+                   <div class="col-md-6 col-sm-6 col-xs-12 ">
+                         <select class="form-control " id="comm_external" >
                                 <option value="-1" selected disabled>select an option please</option>
                                 <option value="1" >Yes</option>
                                 <option value="0" >No</option>
@@ -64,6 +66,8 @@
                        </select>
                    </div>
                  </div>
+
+
 
 	               <div class="form-group">
 	      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('city') ?></label>

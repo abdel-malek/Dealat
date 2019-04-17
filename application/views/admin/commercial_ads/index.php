@@ -94,6 +94,7 @@
 			                          <th><?php echo $this->lang->line('position') ?></th>
 			                          <th><?php echo $this->lang->line('city') ?></th>
 																<th><?php echo $this->lang->line('clicks_num') ?></th>
+																	<th><?php echo $this->lang->line('External') ?></th>
 			                          <th><?php echo $this->lang->line('show_status') ?></th>
 			                          <th><?php echo $this->lang->line('details') ?></th>
 			                        </tr>

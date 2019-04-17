@@ -49,6 +49,19 @@
 		      	           <label class="form-control"  id='ad_id'>1</label>
 		      	         </div>
 		             </div>
+                 <div class="form-group">
+                     <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('clicks_num') ?></label>
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+                       <label class="form-control"  id='ad_clicks_num'> </label>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('views') ?></label>
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+                       <label class="form-control"  id='ad_views_num'> </label>
+                     </div>
+                 </div>
+
 		             <div class="form-group">
 		      	         <label class="control-label col-md-3 col-sm-3 col-xs-12 "><?php echo $this->lang->line('status') ?></label>
 		      	         <div class="col-md-6 col-sm-6 col-xs-12">

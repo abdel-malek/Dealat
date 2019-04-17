@@ -133,7 +133,7 @@ var current_template;
                     "mRender": function(date, type, full) {
                       // var full9 = full[9].split(" ");
                        //var template_id = full9[0];
-                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[11] + '\', \'' + 0 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
+                       return '<button id="" onclick="show_ad_details(\'' + full[0] + '\', \'' + full[12] + '\', \'' + 0 + '\');" type="button" class="btn btn-primary" >'+lang_array['view']+'</button>';
 		             }
 		         },
 	          ],
@@ -224,7 +224,10 @@ var current_template;
 // filter by status
  $('#status_select').change(function(event) {
 
+   ads_table.search( '' ).columns().search( '' ).draw();
+
     status_val = $("#status_select").val();
+    status_name = $(this).find("option:selected").text();
     $('#status_count_label').html(status_array_for_label[status_val]);
     if(status_val == PENDING){
     	// show count circle
@@ -245,12 +248,19 @@ var current_template;
 		 .draw();
       }
 
-    }else{
+    }
+    else{
         status_name = $(this).find("option:selected").text();
-        if(edit_status_val != 0){
+
+       if(edit_status_val != 0 && status_val!=3){
         	ads_table.search( status_name +' '+edit_status_name).draw();
-        }else{
-        	ads_table.search( status_name).draw();
+          }else{
+            if(status_val == 3) {
+                 ads_table.columns(11).search( status_name ).draw();
+               }else {
+                  	ads_table.search( status_name).draw();
+               }
+
         }
 
     }
@@ -498,6 +508,8 @@ function getCategory(id) {
 	        	}
 		    });
             $('.ads_details  #ad_status').html(status_array[$item_info['status']]);
+            $('.ads_details  #ad_clicks_num').html($item_info['clicks_num']);
+            $('.ads_details  #ad_views_num').html($item_info['views_num']);
             $('.ads_details  #ad_edit_status').html(edit_status_array[$item_info['edit_status']]);
             $('.ads_details  #ad_price').html(new Intl.NumberFormat('ja-JP').format($item_info['price']));
             $('.ads_details  #ad_input_price').val($item_info['price']);

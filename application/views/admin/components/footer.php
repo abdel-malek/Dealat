@@ -119,7 +119,7 @@
   <script type="text/javascript">
   $('#comm_external').on('change', function() {
 
-         if (this.value ==1) {
+         if (this.value ==0) {
            $('#lableUrl').html('Ads ID');
             $('#comm_url').attr("placeholder", "Add your ads id");
          }else {

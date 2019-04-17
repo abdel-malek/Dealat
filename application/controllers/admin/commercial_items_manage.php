@@ -52,6 +52,7 @@ class Commercial_items_manage extends REST_Controller {
 			$cities_ids = $this->_get_cities_ids($cities);
 			$recorde[] = $cities_names;
 			$recorde[] = $row->clicks_num;
+			$recorde[] =  ($row->external==1) ? 'Yes' : 'No' ;;
 			if(PERMISSION::Check_permission(PERMISSION::SHOW_OTHER_COMMERCIAL , $this->session->userdata('LOGIN_USER_ID_ADMIN')))
 			  $recorde[] = commercila_status_checkbox($row->is_active , $row -> commercial_ad_id , $row->category_id , $row->position , $cities_ids);
 			else{
@@ -96,7 +97,8 @@ class Commercial_items_manage extends REST_Controller {
 			   	  $recorde[] = $this->lang->line('hidden');
 			   }
 			}
-			$recorde[] = $row->position;
+			$recorde[] = $row->clicks_num;
+			$recorde[] =  ($row->external==1) ? 'Yes' : 'No' ;;
 			$output['aaData'][] = $recorde;
 		}
 		echo json_encode($output);
