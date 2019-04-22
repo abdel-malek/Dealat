@@ -32,7 +32,7 @@ class User : NSObject, NSCoding{
     var user_gender : Int!
     var visible_phone : Int!
     var msg : String!
-    var isFirst : Bool = false
+    var isFirst : String! = "0"
 
     
     //MARK: Local data
@@ -99,6 +99,7 @@ class User : NSObject, NSCoding{
         self.user_gender = decoder.decodeObject(forKey: "user_gender") as? Int
         self.visible_phone = decoder.decodeObject(forKey: "visible_phone") as? Int
         self.msg = decoder.decodeObject(forKey: "msg") as? String
+        self.isFirst = decoder.decodeObject(forKey: "isFirst") as? String
     }
     
     
@@ -124,6 +125,7 @@ class User : NSObject, NSCoding{
         coder.encode(user_gender, forKey: "user_gender")
         coder.encode(visible_phone, forKey: "visible_phone")
         coder.encode(msg, forKey: "msg")
+        coder.encode(isFirst, forKey: "isFirst")
     }
     
     
@@ -142,7 +144,10 @@ class User : NSObject, NSCoding{
         me.password =  dic["password"] as? String
         me.name =  dic["name"] as? String
         me.phone =  dic["phone"] as? String
-        me.msg = dic["msg"] as? String
+        
+        if let ms = dic["msg"] as? String{
+            me.msg = ms
+        }
         
         if let x = dic["city_id"] as? String, let i = Int(x){
             me.city_id = i
@@ -165,12 +170,10 @@ class User : NSObject, NSCoding{
 
         me.whatsup_number = dic["whatsup_number"] as? String
         me.birthday = dic["birthday"] as? String
-
         
         if let x = dic["user_gender"] as? String, let i = Int(x){
             me.user_gender = i
         }
-        
         
         if let x = dic["visible_phone"] as? String, let i = Int(x){
             me.visible_phone = i
@@ -179,8 +182,6 @@ class User : NSObject, NSCoding{
         if let x = dic["visible_phone"] as? Int{
             me.visible_phone = x
         }
-
-        
 
         return me
     }

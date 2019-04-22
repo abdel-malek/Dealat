@@ -88,8 +88,9 @@ class FirstVC: UIViewController {
 //        Communication.shared.baseURL = "\(urlString)/" + "index.php/api"
         
         //TODO IMPORTNANT
-        Communication.shared.baseImgsURL = "http://192.168.9.161/tradinos/Dealat/"
-        Communication.shared.baseURL = "http://192.168.9.161/tradinos/Dealat/index.php/api"
+        Communication.shared.baseImgsURL = "http://192.168.9.129/dealat/"
+        Communication.shared.baseURL = "http://192.168.9.129/dealat/index.php/api"
+        
         
         if let imgString = img,let url = URL.init(string: imgString){
             

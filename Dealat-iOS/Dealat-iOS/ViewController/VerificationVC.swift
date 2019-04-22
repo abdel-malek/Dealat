@@ -74,8 +74,10 @@ class VerificationVC: BaseVC {
                 self.present(alert, animated: true, completion: nil)
             }else{
                 let me = User.getCurrentUser()
-                me.isFirst = true
+                me.isFirst = "1"
                 User.saveMe(me: me)
+                let us = User.getCurrentUser()
+                print("US : \(us.isFirst)")
                 self.sendVerificationCode(code: code, is_multi: 0)
             }
         }

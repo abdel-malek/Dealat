@@ -277,24 +277,20 @@ class EditProfileVC: BaseVC {
                             if value.status{
                                 
                                 if !self.fromRegister{
-                                if let i = value.data, let obj = i.dictionaryObject{
-                                    let newUser = User.getObject(obj)
-                                    User.saveMe(me: newUser)
-                                }
-                                
-                                self.navigationController?.popViewController(animated: true)
-                                    self.homeVC?.showErrorMessage(text: value.message)
+                                    if let i = value.data, let obj = i.dictionaryObject{
+                                        let newUser = User.getObject(obj)
+                                        User.saveMe(me: newUser)
+                                    }
                                     
+                                    self.navigationController?.popViewController(animated: true)
+                                    self.homeVC?.showErrorMessage(text: value.message)
                                     self.myProfile?.showErrorMessage(text: value.message)
-
+                                    
                                 }else{
                                     let me = User.getCurrentUser()
-                                    me.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
-                                    User.saveMe(me: me)
-                                    AppDelegate.setupViews()
-                                    
+
                                     //WELCOME MESSAGE
-                                    if me.isFirst{
+                                    if me.isFirst == "1"{
                                         if #available(iOS 10.0, *) {
                                             let center = UNUserNotificationCenter.current()
                                             let content = UNMutableNotificationContent.init()
@@ -304,20 +300,25 @@ class EditProfileVC: BaseVC {
                                             let date = Date.init(timeIntervalSinceNow: 1)
                                             let triggerOnce = Calendar.current.dateComponents([.hour,.minute,.second], from: date)
                                             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerOnce, repeats: false)
-                                            let identifier = "user_welcome_\(me.server_key ?? "22")"
+                                            let identifier = "user_welcome_\(me.server_key ?? "\(CGFloat.random())")"
                                             let request = UNNotificationRequest(identifier: identifier,
                                                                                 content: content, trigger: trigger)
                                             center.add(request, withCompletionHandler: { (err) in
                                                 if let error = err {
                                                     print(error)
                                                 }
+                                                print("UNUserNotificationCenter ADD : \(err?.localizedDescription)")
                                                 let me = User.getCurrentUser()
-                                                me.isFirst = false
+                                                me.isFirst = "0"
                                                 User.saveMe(me: me)
                                             })
                                         }
                                     }
                                     //----------
+                                    
+                                    me.statues_key = User.USER_STATUES.USER_REGISTERED.rawValue
+                                    User.saveMe(me: me)
+                                    AppDelegate.setupViews()
                                     
                                 }
                                     

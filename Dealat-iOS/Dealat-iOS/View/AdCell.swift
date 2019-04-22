@@ -31,9 +31,16 @@ class AdCell : UICollectionViewCell{
             //self.img.image = UIImage.init(named: ad.main_image)
             
             if featuredImg != nil{
-                if let feature = ad.is_featured,feature.Boolean{
+                if let feature = ad.is_featured{
+                    let f = feature.intValue
                     self.featuredImg.isHidden = false
-                    self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "featured_ads_arabic") : #imageLiteral(resourceName: "featured_ads2")
+                    switch f{
+                    case 1: self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "gold_ar") : #imageLiteral(resourceName: "gold_en")
+                    case 2: self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "silver_ar") : #imageLiteral(resourceName: "silver_en")
+                    case 3: self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "bronze_ar") : #imageLiteral(resourceName: "bronze_en")
+                    default: self.featuredImg.image = nil
+                    }
+//self.featuredImg.image = Provider.isArabic ? #imageLiteral(resourceName: "featured_ads_arabic") : #imageLiteral(resourceName: "featured_ads2")
                 }else{
                     self.featuredImg.isHidden = true
                 }
