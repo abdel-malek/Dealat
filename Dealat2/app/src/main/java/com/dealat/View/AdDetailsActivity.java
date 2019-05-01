@@ -383,6 +383,15 @@ public class AdDetailsActivity extends MasterActivity {
     @Override
     public void onClick(View view) {
 
+        switch (view.getId()){
+            case R.id.buttonShare:
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, GenerateAdDetailsURL(this.currentAd.getId(),this.currentAd.getTemplate()));
+                startActivity(Intent.createChooser(i, getString(R.string.share_url)));
+                return;
+        }
         if (registered() && user.IsLogged()) {
 
             Intent intent;
@@ -484,14 +493,6 @@ public class AdDetailsActivity extends MasterActivity {
                                     });
                         }
                     });
-                    break;
-                case R.id.buttonShare:
-
-                    Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_TEXT, GenerateAdDetailsURL(this.currentAd.getId(),this.currentAd.getTemplate()));
-                    startActivity(Intent.createChooser(i, getString(R.string.share_url)));
-
                     break;
             }
         }

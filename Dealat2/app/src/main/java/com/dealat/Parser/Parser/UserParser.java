@@ -45,6 +45,15 @@ public class UserParser implements TradinosParser<User> {
         if (jsonObject.has("msg") && validData(jsonObject.getString("msg")))
             user.setWelcomeMessage(jsonObject.getString("msg"));
 
+        if (jsonObject.has("is_blocked") && validData(jsonObject.getString("is_blocked")))
+        {
+            if (jsonObject.getInt("is_blocked") == 0)
+                user.setBlocked(false);
+            else
+                user.setBlocked(true);
+        }
+
+
         return user;
     }
 

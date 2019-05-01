@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String birthday;
     private String welcomeMessage;
     private int gender;
+    private boolean blocked;
 
     public String getId() {
         return id;
@@ -117,4 +118,11 @@ public class User implements Serializable {
         return this.name;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 }

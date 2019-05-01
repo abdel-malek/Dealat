@@ -2,8 +2,11 @@ package com.dealat.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.vdurmont.emoji.EmojiParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.dealat.Utils.Helper.GenerateAdDetailsURL;
 
@@ -128,20 +132,49 @@ public class AdPagingAdapter extends RecyclerView.Adapter<AdPagingAdapter.ViewHo
                 // Check if ad featured and set the appropriate ribbon
                 if (item.isFeatured())
                 {
-                    featured.setVisibility(View.VISIBLE);
+
+                    String locale = "en";
+                    Configuration conf = context.getResources().getConfiguration();
                     int ribbonImageId = R.drawable.ribbon_bronze;
-                    if(item.getFeatured() == 1)
-                    {
-                        ribbonImageId =  R.drawable.ribbon_gold;
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        locale = conf.getLocales().get(0).getLanguage();
+                    } else{
+                        locale = conf.locale.getLanguage();
                     }
-                    else if(item.getFeatured() == 2)
-                    {
-                        ribbonImageId =  R.drawable.ribbon_silver;
+                    Log.d("SAED", "onBindViewHolder: " + locale);
+                    if(locale == "ar"){
+                        if(item.getFeatured() == 1)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_gold_ar;
+                        }
+                        else if(item.getFeatured() == 2)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_silver_ar;
+                        }
+                        else if(item.getFeatured() == 3)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_bronze_ar;
+                        }
+
                     }
-                    else if(item.getFeatured() == 3)
+                    else
                     {
-                        ribbonImageId =  R.drawable.ribbon_bronze;
+                        if(item.getFeatured() == 1)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_gold;
+                        }
+                        else if(item.getFeatured() == 2)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_silver;
+                        }
+                        else if(item.getFeatured() == 3)
+                        {
+                            ribbonImageId =  R.drawable.ribbon_bronze;
+                        }
+
                     }
+                    featured.setVisibility(View.VISIBLE);
                     Picasso.with(context)
                             .load(ribbonImageId)
                             .into(featured);

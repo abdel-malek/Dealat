@@ -9,8 +9,6 @@ import static com.dealat.GlobalConstants.URL_SCHEME;
 
 public class Helper {
     public static String GenerateAdDetailsURL(String id, Integer template){
-
-
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(URL_SCHEME)
                 .authority(URL_AUTHORITY)
@@ -22,4 +20,14 @@ public class Helper {
 
         return builder.build().toString();
     }
+
+    public static String GenerateHomeURL(){
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(URL_SCHEME)
+                .authority(URL_AUTHORITY);
+
+        return builder.build().toString();
+    }
+
 }

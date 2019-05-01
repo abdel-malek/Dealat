@@ -55,7 +55,7 @@ public class HomeActivity extends DrawerActivity {
 
 
         AppRate.with(this)
-                .setInstallDays(7) // default 10, 0 means install day.
+                .setInstallDays(0) // default 10, 0 means install day.
                 .setRemindInterval(4) // default 1
                 .setShowLaterButton(true) // default true
                 .setDebug(false) // default false
@@ -141,7 +141,7 @@ public class HomeActivity extends DrawerActivity {
                 getCommercialAds(result.getCommercialAds());
 
                 if(MyApplication.isFirstLogin()){
-                    final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.welcome_message));
+                    final CustomAlertDialog dialog = new CustomAlertDialog(mContext, MyApplication.getWelcomeMessage());
                     dialog.setOneButtonDialog(true);
                     dialog.setOneButtonButtonText(getString(R.string.dismiss));
                     dialog.show();

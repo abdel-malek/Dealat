@@ -77,13 +77,15 @@ public class RegisterActivity extends MasterActivity {
 
                 if (isNetworkAvailable() && checkInput()) {
 
-                    CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.labelNumberConfirm));
+                    final CustomAlertDialog dialog = new CustomAlertDialog(mContext, getString(R.string.labelNumberConfirm));
                     dialog.show();
+
                     dialog.setExtraText(getPhoneNumber(stringInput(editTextPhone)));
 
                     dialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
                             HashMap<String, String> parameters = new HashMap<>();
 
                             parameters.put("phone", stringInput(editTextPhone));
@@ -92,11 +94,32 @@ public class RegisterActivity extends MasterActivity {
                             parameters.put("city_id", MyApplication.getCity());
                             parameters.put("welcome_message", "");
 
+                            dialog.dismiss();
                             ShowProgressDialog();
                             UserController.getInstance(mController).registerUser(parameters, new SuccessCallback<User>() {
                                 @Override
                                 public void OnSuccess(User result) {
                                     HideProgressDialog();
+//                                    if(result.isBlocked()){
+//                                        final CustomAlertDialog blockedDialog = new CustomAlertDialog(mContext, getString(R.string.blocked_message));
+//                                        blockedDialog.setOneButtonDialog(true);
+//                                        blockedDialog.setOneButtonButtonText(getString(R.string.dismiss));
+//                                        blockedDialog.show();
+//
+//                                        MyApplication.setFirstLogin(false);
+//
+//                                        blockedDialog.getButtonTrue().setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View view) {
+//                                                blockedDialog.dismiss();
+//                                                Intent intent = new Intent(mContext, HomeActivity.class);
+//                                                startActivity(intent);
+//                                                finish();
+//                                            }
+//                                        });
+//
+//                                        return;
+//                                    }
                                     MyApplication.saveUserState(User.PENDING);
                                     MyApplication.saveCodeRequestDate(new Date());
                                     Log.d("SAED", "OnSuccess: " + result.getWelcomeMessage());

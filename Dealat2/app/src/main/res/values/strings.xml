@@ -271,6 +271,11 @@
         thanks for using our services to make your deals,
         have a good deal.
     </string>
+
+    <string name="blocked_message">
+        sorry, but your account was blocked.
+        please contact the support team.
+    </string>
     <string name="dismiss">Dismiss</string>
 
 
@@ -285,6 +290,7 @@
 
     //disambiguation dialog title
     <string name="share_url">Share Ad</string>
+    <string name="share_app">share app</string>
 
     
 </resources>

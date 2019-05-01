@@ -17,6 +17,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -46,6 +47,8 @@ import com.tradinos.core.network.SuccessCallback;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static com.dealat.Utils.Helper.GenerateHomeURL;
 
 public abstract class DrawerActivity extends MasterActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -223,9 +226,10 @@ public abstract class DrawerActivity extends MasterActivity
 
                 break;
             case R.id.share_app:
-                Uri appURL = Uri.parse("http://www.deal-at.com");
-                intent = new Intent(Intent.ACTION_VIEW, appURL);
-                startActivity(intent);
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, GenerateHomeURL());
+                startActivity(Intent.createChooser(i, getString(R.string.share_url)));
                 break;
 
             case R.id.nav_MyAds:
@@ -321,11 +325,15 @@ public abstract class DrawerActivity extends MasterActivity
         Configuration conf = getResources().getConfiguration();
         conf.setLocale(myLocale);
         MyApplication.setLocale(myLocale);
+        double density = getResources().getDisplayMetrics().density;
+        Log.d("SAED", "setLocale: " + density);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Locale.setDefault(conf.getLocales().get(0));
-        else
+        } else{
             Locale.setDefault(conf.locale);
+        }
 
         mContext.getResources().updateConfiguration(conf,
                 getResources().getDisplayMetrics());

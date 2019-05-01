@@ -2,6 +2,7 @@ package com.tradinos.core.network;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -148,6 +149,8 @@ public class TradinosRequest2<T>  extends  TradinosRequest{
             T result = (T) parser.Parse(jsonObject.toString());
             successCallback.OnSuccess(result);
         } catch (JSONException e) {
+            e.printStackTrace();
+//            Log.d("Parsing ", "deliverResponse: ");
             faildCallback.OnFaild(Code.ParsingError, "Parsing Error", "");
         }
     }

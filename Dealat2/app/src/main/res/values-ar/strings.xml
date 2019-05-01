@@ -268,6 +268,10 @@
         شكرا لاستخدام خدماتنا لاتمام ثفقات تجارية,
         أفضل الحظ بثفقاتك.
     </string>
+    <string name="blocked_message">
+        عذرا, حسابك قد تم حجبه,
+        الرجاء التواصل مع الفريق التقني.
+    </string>
     <string name="dismiss">استبعاد</string>
 
     <string name="rate_dialog_title">قيم هذا التطبيق</string>
@@ -278,4 +282,5 @@
 
     //disambiguation dialog title
     <string name="share_url">مشاركة الاعلان</string>
+    <string name="share_app">مشارك التطبيق </string>
 </resources>

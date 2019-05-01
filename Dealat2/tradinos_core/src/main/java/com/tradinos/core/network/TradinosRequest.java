@@ -55,6 +55,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
                 } else if (error instanceof NetworkError) {
                     faildCallback.OnFaild(Code.NetworkError, "Network Error !", "");
                 } else if (error instanceof ParseError) {
+                    Log.d("PARSING", "onErrorResponse: " + ((ParseError)error).getMessage());
                     faildCallback.OnFaild(Code.ParsingError, "Parsing Error !", "");
                 } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     faildCallback.OnFaild(Code.TimeOutError, "Timeout Error !", "");
@@ -204,6 +205,7 @@ public class TradinosRequest<T> extends Request<JSONObject> {
                     faildCallback.OnFaild(Code.ServerError, message, data);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
             faildCallback.OnFaild(Code.ParsingError, "Parsing Error", "");
             Log.e("JsonException", e.getMessage());
 
